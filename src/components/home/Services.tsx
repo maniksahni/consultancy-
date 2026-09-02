@@ -112,75 +112,73 @@ const servicesList: ServiceItem[] = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-16 sm:py-24 bg-white border-b border-slate-200/80">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section id="services" className="py-20 sm:py-28 bg-[#030712] relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute top-1/2 left-[-10%] h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[130px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-100 px-3.5 py-1 text-xs font-semibold text-blue-700">
-            <Sparkles className="h-4 w-4" /> End-to-End Overseas Support
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20">
+            <Sparkles className="h-4 w-4" /> Comprehensive Overseas Guidance
           </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-5xl font-display">
             Our Core Consultancy Services
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-600">
-            From initial university shortlisting to landing in your dream country, our comprehensive suite covers every single milestone.
+          <p className="mt-3 text-sm sm:text-base text-slate-400">
+            From university shortlisting to post-landing settlement, our specialized wings cover every critical milestone.
           </p>
         </div>
 
-        {/* 6-Card Services Grid */}
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {servicesList.map((service) => {
             const Icon = service.icon;
             return (
               <div
                 key={service.id}
-                className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/50 p-6 sm:p-7 shadow-sm transition hover:bg-white hover:shadow-md hover:border-blue-400 group"
+                className="flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-slate-900/40 p-6 sm:p-7 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-blue-500/50 hover:bg-slate-900/70 hover:shadow-[0_0_35px_rgba(59,130,246,0.18)] hover:-translate-y-1 group"
               >
                 <div className="space-y-4">
-                  {/* Top Bar with Icon & Badge */}
                   <div className="flex items-center justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm transition group-hover:scale-110">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-emerald-500 text-white shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                       <Icon className="h-6 w-6" />
                     </div>
                     {service.badge && (
-                      <span className="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                      <span className="rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-[11px] font-bold text-blue-400">
                         {service.badge}
                       </span>
                     )}
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-lg font-bold text-white group-hover:text-blue-300 transition-colors">
                       {service.title}
                     </h3>
-                    <p className="text-xs font-medium text-blue-600 mt-0.5">
+                    <p className="text-xs font-semibold text-emerald-400 mt-0.5">
                       {service.tagline}
                     </p>
                   </div>
 
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs text-slate-300 leading-relaxed">
                     {service.description}
                   </p>
 
-                  {/* Bullet Highlights */}
-                  <div className="space-y-2 pt-2 border-t border-slate-200/80">
+                  <div className="space-y-2 pt-3 border-t border-slate-800/80">
                     {service.features.map((feat, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Bottom CTA */}
-                <div className="mt-6 pt-4 border-t border-slate-200/80">
+                <div className="mt-6 pt-4 border-t border-slate-800/80">
                   <a
                     href="#eligibility-form"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors group-hover:translate-x-1 duration-200"
                   >
                     <span>Request Free Consultation</span>
-                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </a>
                 </div>
               </div>

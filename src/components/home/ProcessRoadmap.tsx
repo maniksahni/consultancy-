@@ -71,37 +71,37 @@ const steps: RoadmapStep[] = [
 
 export default function ProcessRoadmap() {
   return (
-    <section id="process" className="py-16 sm:py-24 bg-slate-900 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section id="process" className="py-20 sm:py-28 bg-[#030712] text-white relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[450px] w-[600px] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-3.5 py-1 text-xs font-semibold text-blue-400 border border-blue-500/20">
             <Sparkles className="h-4 w-4" /> Proven 5-Stage Framework
           </span>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl font-display">
             Step-by-Step Study Abroad Roadmap
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-400">
+          <p className="mt-3 text-sm sm:text-base text-slate-400">
             From initial transcript evaluation to landing on campus, our structured 5-step process ensures zero delays and maximum visa success.
           </p>
         </div>
 
-        {/* 5-Step Timeline Grid */}
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((step, idx) => {
             const Icon = step.icon;
             return (
               <div
                 key={idx}
-                className="relative flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-950 p-6 shadow-xl transition hover:border-blue-500 hover:shadow-2xl group"
+                className="relative flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-slate-900/40 p-6 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-blue-500/50 hover:bg-slate-900/70 hover:shadow-[0_0_35px_rgba(59,130,246,0.18)] hover:-translate-y-1 group"
               >
-                {/* Step Number & Icon */}
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-black text-blue-500 font-mono">
+                    <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-mono">
                       {step.stepNumber}
                     </span>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-blue-400 border border-slate-800 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 border border-slate-800 text-blue-400 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
@@ -115,12 +115,11 @@ export default function ProcessRoadmap() {
                     </h3>
                   </div>
 
-                  <p className="mt-2.5 text-xs text-slate-400 leading-relaxed">
+                  <p className="mt-2.5 text-xs text-slate-300 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Key Deliverable Box */}
                 <div className="mt-6 pt-4 border-t border-slate-800/80">
                   <div className="flex items-start gap-1.5 text-[11px] text-slate-300">
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -132,8 +131,7 @@ export default function ProcessRoadmap() {
           })}
         </div>
 
-        {/* Bottom CTA Banner */}
-        <div className="mt-12 rounded-2xl border border-slate-800 bg-slate-950/60 p-6 text-center sm:flex sm:items-center sm:justify-between sm:text-left">
+        <div className="mt-12 rounded-2xl border border-white/[0.08] bg-slate-900/50 p-6 sm:p-7 backdrop-blur-xl text-center sm:flex sm:items-center sm:justify-between sm:text-left shadow-2xl">
           <div>
             <h4 className="text-base font-bold text-white">Ready to begin Step 01?</h4>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -143,7 +141,7 @@ export default function ProcessRoadmap() {
           <div className="mt-4 sm:mt-0">
             <a
               href="#eligibility-form"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-500 px-6 py-3 text-xs font-bold text-white shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all"
             >
               Start Free Assessment <ArrowRight className="h-4 w-4" />
             </a>
