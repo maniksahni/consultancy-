@@ -25,7 +25,7 @@ export default function Footer({ onOpenConsultation }: FooterProps) {
     { name: "SOP, LOR & Resume Editing", href: "#services" },
     { name: "Visa Filing & Mock Interviews", href: "#services" },
     { name: "Scholarship Hunting Assistance", href: "#services" },
-    { name: "Collateral-Free Education Loans", href: "#services" },
+    { name: "IELTS & PTE Test Coaching", href: "#services" },
     { name: "Pre-Departure & Forex Guidance", href: "#services" },
   ];
 
@@ -85,7 +85,7 @@ export default function Footer({ onOpenConsultation }: FooterProps) {
             </Link>
 
             <p className="text-xs leading-relaxed text-slate-400 max-w-sm">
-              GlobalEdu is a premier international education consultancy providing end-to-end guidance for university admissions, merit scholarships, collateral-free loans, and consular visa filing across the UK, USA, Canada, Australia, Germany, and Ireland.
+              GlobalEdu is a premier international education consultancy providing end-to-end guidance for university admissions, merit scholarships, standardized test prep, and consular visa filing across the UK, USA, Canada, Australia, Germany, and Ireland.
             </p>
 
             <div className="pt-2">

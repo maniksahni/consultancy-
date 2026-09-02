@@ -6,7 +6,7 @@ import {
   FileEdit, 
   ShieldCheck, 
   Award, 
-  Coins, 
+  BookOpen, 
   Home, 
   ArrowRight, 
   CheckCircle2, 
@@ -81,18 +81,18 @@ const servicesList: ServiceItem[] = [
     badge: "₹25Cr+ Secured"
   },
   {
-    id: "education-loans",
-    title: "Collateral-Free Education Loans",
-    tagline: "Quick Sanctions with 12+ Lending Partners",
+    id: "test-prep",
+    title: "IELTS, PTE & Language Coaching",
+    tagline: "Score 7.5+ Band / 70+ in 30 Days",
     description:
-      "Sanction your education loan without pledging property. We partner with HDFC Credila, Prodigy Finance, Leap, Avanse, and Axis Bank at competitive interest rates.",
-    icon: Coins,
+      "Certified master trainers provide 1-on-1 speaking evaluations, full-length timed mock tests, and MOI waiver clearance strategies for UK and European universities.",
+    icon: BookOpen,
     features: [
-      "Unsecured loans up to ₹75 Lakhs ($100,000)",
-      "Doorstep documentation & 48-hour sanctions",
-      "Pre-visa sanction letters for proof-of-funds"
+      "Daily 1-on-1 speaking interview practice",
+      "Official Cambridge & Pearson mock tests",
+      "MOI (Medium of Instruction) waiver guidance"
     ],
-    badge: "0% Collateral"
+    badge: "7.5+ Band Avg."
   },
   {
     id: "predeparture-forex-housing",
@@ -102,7 +102,7 @@ const servicesList: ServiceItem[] = [
       "Arrive abroad with complete peace of mind. We book verified student apartments near campus, arrange zero-markup multi-currency Forex cards, and discounted student flights.",
     icon: Home,
     features: [
-      "Verified student accommodations (Amber, Casita)",
+      "Verified student accommodations near campus",
       "Zero-markup multi-currency Forex debit cards",
       "Student flight ticket discounts with extra 40kg baggage"
     ],

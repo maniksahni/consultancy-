@@ -26,7 +26,7 @@ const faqs: FAQItem[] = [
     category: "Financials & Visa",
     question: "How much bank balance is required for a student visa?",
     answer:
-      "Typically, embassies require proof of funds covering 1st-year tuition fees plus 9 to 12 months of living expenses (usually £9k-£13k in the UK, $12k-$18k in the US, CAD $20,635 in Canada with GIC, or €11,208 in a German Blocked Account). We assist you in securing 0% collateral education loan sanction letters from certified lending partners that embassies accept as valid proof of funds."
+      "Typically, embassies require proof of funds covering 1st-year tuition fees plus 9 to 12 months of living expenses (usually £9k-£13k in the UK, $12k-$18k in the US, CAD $20,635 in Canada with GIC, or €11,208 in a German Blocked Account). We assist you in assembling authenticated sponsor affidavits, CA valuation summaries, and embassy-compliant financial dossiers."
   },
   {
     category: "Scholarships & Grants",
@@ -53,7 +53,7 @@ export default function FAQ() {
     <section id="faq" className="py-16 sm:py-24 bg-slate-900 border-b border-slate-800 text-white">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-3.5 py-1 text-xs font-semibold text-blue-400 border border-blue-500/20">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400 border border-blue-500/20">
             <HelpCircle className="h-4 w-4" /> Got Questions? We Have Answers
           </span>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
@@ -64,7 +64,7 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* Accordion Container */}
+        {/* Accordion List */}
         <div className="mt-12 space-y-3.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
@@ -111,7 +111,7 @@ export default function FAQ() {
           })}
         </div>
 
-        {/* Support Help Banner */}
+        {/* WhatsApp Direct Help Banner */}
         <div className="mt-12 rounded-2xl border border-slate-800 bg-slate-950 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex-shrink-0">

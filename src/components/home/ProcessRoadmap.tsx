@@ -42,12 +42,12 @@ const steps: RoadmapStep[] = [
   },
   {
     stepNumber: "03",
-    title: "Financials & Education Loans",
+    title: "Financial Proofs & Blocked Accounts",
     duration: "Week 4 - 6",
     description:
-      "Facilitating 0% collateral education loans, opening German Blocked Accounts (Expatrio) or Canadian GIC, and organizing proof-of-funds dossiers.",
+      "Opening German Blocked Accounts (Expatrio) or Canadian GIC, CA net worth valuation reports, and organizing embassy proof-of-funds dossiers.",
     icon: Banknote,
-    keyDeliverable: "Collateral-Free Loan Sanction Letter"
+    keyDeliverable: "Embassy-Compliant Financial Dossier"
   },
   {
     stepNumber: "04",

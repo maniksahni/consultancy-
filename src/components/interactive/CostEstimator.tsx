@@ -3,13 +3,10 @@
 import React, { useState } from "react";
 import { 
   Calculator, 
-  DollarSign, 
   Coins, 
   Briefcase, 
-  Sparkles, 
   ArrowRight, 
   Building2, 
-  TrendingDown, 
   Info 
 } from "lucide-react";
 
@@ -93,11 +90,9 @@ export default function CostEstimator() {
   const totalAnnualCost = avgTuition + degreeCost.livingCost;
   const netCostAfterPartTime = Math.max(0, totalAnnualCost - degreeCost.partTimePotential);
 
-  // INR conversions
   const totalInr = Math.round((totalAnnualCost * current.inrMultiplier) / 100000);
   const netInr = Math.round((netCostAfterPartTime * current.inrMultiplier) / 100000);
 
-  // Percentage breakdown
   const tuitionPct = Math.round((avgTuition / totalAnnualCost) * 100) || 10;
   const livingPct = 100 - tuitionPct;
 
@@ -117,7 +112,7 @@ export default function CostEstimator() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Controls Column */}
+          {/* Controls */}
           <div className="lg:col-span-5 rounded-2xl border border-slate-800 bg-slate-900/80 p-6 sm:p-7 shadow-xl space-y-6">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
@@ -182,7 +177,7 @@ export default function CostEstimator() {
             </div>
           </div>
 
-          {/* Results Display Column */}
+          {/* Results */}
           <div className="lg:col-span-7 rounded-2xl border border-slate-800 bg-slate-900/80 p-6 sm:p-8 shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
               <div>
@@ -198,7 +193,7 @@ export default function CostEstimator() {
               </div>
             </div>
 
-            {/* Breakdown Stats Grid */}
+            {/* Breakdown Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-xl bg-slate-950 border border-slate-800 p-4 space-y-1">
                 <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
@@ -227,7 +222,7 @@ export default function CostEstimator() {
               </div>
             </div>
 
-            {/* Progress Bar Breakdown */}
+            {/* Progress Breakdown */}
             <div className="space-y-2 pt-2">
               <div className="flex justify-between text-xs text-slate-400 font-medium">
                 <span>Tuition ({tuitionPct}%)</span>
@@ -239,7 +234,7 @@ export default function CostEstimator() {
               </div>
             </div>
 
-            {/* Part-Time Earning Potential */}
+            {/* Part Time Offset */}
             <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-0.5">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
@@ -255,13 +250,13 @@ export default function CostEstimator() {
               </div>
             </div>
 
-            {/* Loan CTA */}
+            {/* Assessment CTA */}
             <div className="pt-2">
               <a
                 href="#eligibility-form"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
               >
-                <span>Get 0% Collateral Education Loan Assistance</span>
+                <span>Get Free University Shortlist & Assessment</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>

@@ -9,7 +9,6 @@ import {
   ArrowRight, 
   Sparkles, 
   CheckCircle2, 
-  PlaneTakeoff,
   Users,
   Compass
 } from "lucide-react";
@@ -94,10 +93,10 @@ export default function Hero() {
           </h1>
 
           <p className="mx-auto max-w-2xl text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
-            End-to-end guidance from ex-consular visa strategists. We handle university shortlisting, SOP editing, 0% collateral education loans, and visa interview simulations.
+            End-to-end guidance from ex-consular visa strategists. We handle university shortlisting, SOP editing, merit scholarships, and visa interview simulations.
           </p>
 
-          {/* Dual Luxury Action CTAs */}
+          {/* Dual Action CTAs */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#eligibility-form"
@@ -142,7 +141,6 @@ export default function Hero() {
                 key={idx}
                 className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-slate-900/40 p-6 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/70 hover:shadow-blue-500/10 hover:-translate-y-1"
               >
-                {/* Ambient Top Glow */}
                 <div className={`absolute -top-12 -right-12 h-24 w-24 rounded-full bg-gradient-to-br ${stat.glow} blur-2xl group-hover:scale-150 transition-transform`} />
 
                 <div className="relative space-y-3">
