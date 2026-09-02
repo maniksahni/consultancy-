@@ -1,8 +1,5 @@
-"use client";
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { notFound, useParams, useRouter } from 'next/navigation';
 import { 
   ArrowLeft, 
   DollarSign, 
@@ -23,16 +20,21 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import ConsultationModal from '@/components/modals/ConsultationModal';
 import { DESTINATIONS } from '@/data/mockData';
 
-export default function DestinationDetailPage() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params?.slug as string;
+export function generateStaticParams() {
+  return [
+    { slug: 'uk' },
+    { slug: 'usa' },
+    { slug: 'canada' },
+    { slug: 'australia' },
+    { slug: 'germany' },
+    { slug: 'ireland' },
+  ];
+}
 
-  const [consultationOpen, setConsultationOpen] = useState(false);
-
+export default function DestinationDetailPage({ params }: { params: { slug: string } }) {
+  const slug = params?.slug;
   const destination = DESTINATIONS.find((d) => d.slug.toLowerCase() === slug?.toLowerCase());
 
   if (!destination) {
@@ -96,13 +98,13 @@ export default function DestinationDetailPage() {
                 </p>
 
                 <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <button
-                    onClick={() => setConsultationOpen(true)}
+                  <a
+                    href="/#eligibility-form"
                     className="px-6 py-3.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2"
                   >
                     <PhoneCall className="w-4 h-4" />
-                    <span>Book {destination.name} Strategy Call</span>
-                  </button>
+                    <span>Check Eligibility for {destination.name}</span>
+                  </a>
 
                   <a
                     href="#universities"
@@ -218,12 +220,12 @@ export default function DestinationDetailPage() {
                   </div>
 
                   <div className="pt-4 mt-4 border-t border-slate-800">
-                    <button
-                      onClick={() => setConsultationOpen(true)}
-                      className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-xl transition-colors"
+                    <a
+                      href="/#eligibility-form"
+                      className="block text-center w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-xl transition-colors"
                     >
                       Check Admission Odds
-                    </button>
+                    </a>
                   </div>
                 </div>
               ))}
@@ -280,12 +282,12 @@ export default function DestinationDetailPage() {
               </div>
 
               <div className="pt-4 border-t border-slate-800">
-                <button
-                  onClick={() => setConsultationOpen(true)}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md"
+                <a
+                  href="/#eligibility-form"
+                  className="block text-center w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md"
                 >
                   Start Your {destination.name} Application Today
-                </button>
+                </a>
               </div>
             </div>
           </section>
@@ -293,12 +295,6 @@ export default function DestinationDetailPage() {
       </main>
 
       <Footer />
-
-      <ConsultationModal 
-        isOpen={consultationOpen} 
-        onClose={() => setConsultationOpen(false)}
-        defaultCountry={destination.name}
-      />
     </div>
   );
 }
