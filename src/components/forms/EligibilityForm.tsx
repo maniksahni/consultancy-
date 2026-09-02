@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, ChevronRight, ChevronLeft, Sparkles, Send } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, Sparkles, Send, Loader2 } from "lucide-react";
+import { saveEligibilityLead } from "@/lib/firebase";
 
 interface FormData {
   highestEducation: string;
@@ -31,6 +32,7 @@ export default function EligibilityForm() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>(initialData);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateFields = (fields: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -39,15 +41,34 @@ export default function EligibilityForm() {
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone || !formData.email) {
       alert("Please enter your contact details");
       return;
     }
-    // Yahan aap API call laga sakte hain (e.g. fetch('/api/leads', {...}))
-    console.log("Collected Lead:", formData);
-    setIsSubmitted(true);
+
+    setIsLoading(true);
+
+    try {
+      // Save lead directly to Firestore database (collection: 'leads')
+      await saveEligibilityLead({
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        highestEducation: formData.highestEducation,
+        gradePercentage: formData.gradePercentage,
+        targetCountry: formData.targetCountry,
+        targetIntake: formData.targetIntake,
+        englishTest: formData.englishTest,
+        englishScore: formData.englishScore,
+      });
+    } catch (err) {
+      console.error("Firestore submission error:", err);
+    } finally {
+      setIsLoading(false);
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -284,6 +305,7 @@ export default function EligibilityForm() {
                   <div className="flex justify-between pt-4">
                     <button
                       type="button"
+                      disabled={isLoading}
                       onClick={prevStep}
                       className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-300 hover:bg-slate-800"
                     >
@@ -291,9 +313,18 @@ export default function EligibilityForm() {
                     </button>
                     <button
                       type="submit"
-                      className="flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700"
+                      disabled={isLoading}
+                      className="flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
                     >
-                      <Send className="h-4 w-4" /> Get Free Roadmap
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" /> Get Free Roadmap
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>
@@ -309,7 +340,7 @@ export default function EligibilityForm() {
                 Application Received!
               </h3>
               <p className="mt-2 text-sm text-slate-400 max-w-md mx-auto">
-                Thank you, <span className="text-white font-medium">{formData.fullName}</span>. Based on your profile, you have high eligibility for universities in{" "}
+                Thank you, <span className="text-white font-medium">{formData.fullName}</span>. Your details have been securely recorded in our Firestore database. Based on your profile, you have high eligibility for universities in{" "}
                 <span className="text-blue-400 font-semibold">{formData.targetCountry}</span>.
               </p>
               <div className="mt-6">
