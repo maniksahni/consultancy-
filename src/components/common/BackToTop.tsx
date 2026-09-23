@@ -9,8 +9,12 @@ export default function BackToTop() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Appear after scrolling past approx 1 viewport height (or 500px)
-      const threshold = typeof window !== "undefined" ? Math.min(window.innerHeight * 0.8, 500) : 500;
+      // Only appear after scrolling well past the hero (≥ 1.2× viewport height, min 600px)
+      // This prevents any overlap with the hero heading text
+      const threshold =
+        typeof window !== "undefined"
+          ? Math.max(window.innerHeight * 1.2, 600)
+          : 600;
       setIsVisible(window.scrollY > threshold);
     };
 
@@ -36,10 +40,10 @@ export default function BackToTop() {
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           style={{
             position: "fixed",
-            bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
+            bottom: "max(20px, env(safe-area-inset-bottom, 20px))",
             left: "max(16px, env(safe-area-inset-left, 16px))",
           }}
-          className="z-40"
+          className="z-30" // z-30: below overlays/navbars (z-40+) but above section content
         >
           <button
             onClick={scrollToTop}

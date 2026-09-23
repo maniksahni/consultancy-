@@ -34,7 +34,7 @@ export default function BookingSection() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ fullName?: string; whatsapp?: string }>({});
   const [showFullForm, setShowFullForm] = useState(false);
 
@@ -78,8 +78,8 @@ export default function BookingSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage("");
-    
+    setHasError(false);
+
     // Field-level validation
     const errors: { fullName?: string; whatsapp?: string } = {};
     if (!formData.fullName.trim()) {
@@ -98,27 +98,43 @@ export default function BookingSection() {
     setFieldErrors({});
 
     setLoading(true);
+
+    // 5-second timeout so the spinner NEVER hangs indefinitely
+    const timeout = new Promise<void>((_, reject) =>
+      setTimeout(() => reject(new Error("timeout")), 5000)
+    );
+
     try {
       const utm = getStoredUTMParams();
-      await saveMentorshipBooking({
-        fullName: formData.fullName,
-        whatsapp: formData.whatsapp,
-        email: formData.email,
-        qualification: formData.qualification,
-        targetCountry: formData.targetCountry,
-        targetIntake: formData.targetIntake,
-        helpNeeded: formData.helpNeeded,
-        ...(utm ? { utm } : {}),
-      });
-      triggerConfetti();
-      setSubmitted(true);
+      await Promise.race([
+        saveMentorshipBooking({
+          fullName: formData.fullName,
+          whatsapp: formData.whatsapp,
+          email: formData.email,
+          qualification: formData.qualification,
+          targetCountry: formData.targetCountry,
+          targetIntake: formData.targetIntake,
+          helpNeeded: formData.helpNeeded,
+          ...(utm ? { utm } : {}),
+        }),
+        timeout,
+      ]);
     } catch {
-      setSubmitted(true);
-      triggerConfetti();
+      // Firestore failure or timeout — we still show success to the user
+      // (their data may not have been stored, but WhatsApp is the real follow-up channel)
     } finally {
       setLoading(false);
+      triggerConfetti();
+      setSubmitted(true);
+      // Auto-open WhatsApp with pre-filled details — this is the real follow-up channel
+      try {
+        window.open(getWhatsAppDirectUrl(), "_blank", "noopener,noreferrer");
+      } catch {
+        // If popup blocked, the button in the success view is the fallback
+      }
     }
   };
+
 
   const getWhatsAppDirectUrl = () => {
     const text = `Hi! My name is ${encodeURIComponent(formData.fullName || "Student")}. 
