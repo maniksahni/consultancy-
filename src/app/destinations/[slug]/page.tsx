@@ -52,7 +52,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
     <div className="min-h-screen flex flex-col bg-cream text-ink">
       <Navbar />
 
-      <main className="flex-1 pt-20">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
 
         {/* ── Country header — dark ── */}
         <section className="bg-[#14120C] py-14 lg:py-20">
@@ -101,7 +101,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </a>
                   <a
-                    href={`https://wa.me/919876543210?text=${encodeURIComponent(
+                    href={`https://wa.me/33755749029?text=${encodeURIComponent(
                       `Hi! I am interested in studying in ${destination.name} and want to discuss my profile.`
                     )}`}
                     target="_blank"

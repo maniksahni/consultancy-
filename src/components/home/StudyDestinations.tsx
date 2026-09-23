@@ -260,7 +260,7 @@ export default function StudyDestinations() {
                   {/* Actions with tactile buttons */}
                   <div className="space-y-2 pt-2 border-t border-current/10">
                     <a
-                      href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
+                      href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-tactile btn-tactile-dark"
@@ -392,7 +392,7 @@ export default function StudyDestinations() {
 
                   <div className="pt-2 flex flex-wrap items-center gap-5">
                     <a
-                      href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
+                      href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2 btn-tactile"

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   MessageCircle,
@@ -12,7 +12,50 @@ import {
   Linkedin,
   Instagram,
   Youtube,
+  Copy,
+  Check,
 } from "lucide-react";
+
+function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (navigator?.clipboard) {
+      navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <div className="relative inline-flex items-center">
+      <button
+        onClick={handleCopy}
+        aria-label={`Copy ${label} to clipboard`}
+        title={`Copy ${label}`}
+        className="p-1 text-cream/40 hover:text-terra transition-colors rounded hover:bg-cream/5 focus:outline-none focus:ring-1 focus:ring-terra/60 active:scale-95"
+      >
+        {copied ? (
+          <Check className="h-3.5 w-3.5 text-terra" />
+        ) : (
+          <Copy className="h-3.5 w-3.5" />
+        )}
+      </button>
+
+      {/* Confirmation tooltip */}
+      {copied && (
+        <span
+          role="status"
+          className="absolute -top-7 left-1/2 -translate-x-1/2 bg-terra text-cream text-[9px] font-sans font-medium px-2 py-0.5 shadow-lg whitespace-nowrap label pointer-events-none animate-slide-up-fade z-20"
+        >
+          Copied!
+        </span>
+      )}
+    </div>
+  );
+}
 
 export default function Footer() {
   return (
@@ -38,15 +81,18 @@ export default function Footer() {
               Independent, 1-on-1 overseas education and consular visa advisory. Operating with zero institutional recruitment kickbacks to deliver 100% objective, student-first admissions guidance.
             </p>
 
-            <a
-              href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20inquiry%20regarding%20study%20abroad%20admissions."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-cream/10 hover:border-terra/50 text-cream/40 hover:text-cream/70 px-4 py-2.5 label text-[10px] transition-all btn-tactile"
-            >
-              <MessageCircle className="h-4 w-4 text-terra" />
-              WhatsApp Advisory: +91 98765 43210
-            </a>
+            <div className="inline-flex items-center gap-2">
+              <a
+                href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20inquiry%20regarding%20study%20abroad%20admissions."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-cream/10 hover:border-terra/50 text-cream/40 hover:text-cream/70 px-4 py-2.5 label text-[10px] transition-all btn-tactile"
+              >
+                <MessageCircle className="h-4 w-4 text-terra" />
+                WhatsApp Advisory: +33 7 55 74 90 29
+              </a>
+              <CopyButton textToCopy="+33 7 55 74 90 29" label="WhatsApp number" />
+            </div>
           </div>
 
           {/* Navigation — 2 cols */}
@@ -90,7 +136,7 @@ export default function Footer() {
                 { label: "Ireland (Tech Hub)", href: "/destinations/ireland" },
               ].map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="hover:text-cream/70 transition-colors">
+                  <Link href={item.href} className="hover:text-terra transition-colors">
                     {item.label}
                   </Link>
                 </li>
@@ -102,20 +148,26 @@ export default function Footer() {
           <div className="lg:col-span-3 space-y-3">
             <h4 className="label text-cream/50">Direct Advisory</h4>
             <div className="space-y-3 text-xs font-light">
-              <a
-                href="mailto:admissions@pathwaysglobal.org"
-                className="flex items-center gap-2.5 hover:text-cream/70 transition-colors"
-              >
-                <Mail className="h-4 w-4 text-terra/60 flex-shrink-0" />
-                admissions@pathwaysglobal.org
-              </a>
-              <a
-                href="tel:+919876543210"
-                className="flex items-center gap-2.5 hover:text-cream/70 transition-colors"
-              >
-                <Phone className="h-4 w-4 text-terra/60 flex-shrink-0" />
-                +91 98765 43210 (Direct Cell)
-              </a>
+              <div className="flex items-center justify-between">
+                <a
+                  href="mailto:admissions@pathwaysglobal.org"
+                  className="flex items-center gap-2.5 hover:text-terra transition-colors"
+                >
+                  <Mail className="h-4 w-4 text-terra/60 flex-shrink-0" />
+                  admissions@pathwaysglobal.org
+                </a>
+                <CopyButton textToCopy="admissions@pathwaysglobal.org" label="email address" />
+              </div>
+              <div className="flex items-center justify-between">
+                <a
+                  href="tel:+33755749029"
+                  className="flex items-center gap-2.5 hover:text-terra transition-colors"
+                >
+                  <Phone className="h-4 w-4 text-terra/60 flex-shrink-0" />
+                  +33 7 55 74 90 29 (Direct Cell)
+                </a>
+                <CopyButton textToCopy="+33 7 55 74 90 29" label="phone number" />
+              </div>
               <div className="flex items-start gap-2.5">
                 <Clock className="h-4 w-4 text-cream/20 flex-shrink-0 mt-0.5" />
                 Mon — Sat, 10:00 AM — 8:00 PM IST (By Prior Booking)
@@ -139,7 +191,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="h-8 w-8 border border-cream/10 hover:border-terra/40 hover:text-cream/70 flex items-center justify-center transition-all"
+                  className="h-8 w-8 border border-cream/10 hover:border-terra hover:text-terra text-cream/40 flex items-center justify-center transition-all btn-tactile"
                 >
                   <Icon className="h-3.5 w-3.5" />
                 </a>

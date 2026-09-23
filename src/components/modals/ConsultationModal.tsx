@@ -225,7 +225,7 @@ export default function ConsultationModal({ isOpen, onClose, defaultCountry = "U
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Direct WhatsApp Contact:</span>
-                <span className="text-white font-medium">+1 (800) 492-7284</span>
+                <span className="text-white font-medium">+33 7 55 74 90 29</span>
               </div>
             </div>
 

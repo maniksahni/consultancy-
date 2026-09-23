@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
 
 const WHATSAPP_URL =
-  "https://wa.me/919876543210?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1.";
+  "https://wa.me/33755749029?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1.";
 
 export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
@@ -180,11 +180,11 @@ export default function FloatingWhatsApp() {
 
             {/* Phone */}
             <a
-              href="tel:+919876543210"
+              href="tel:+33755749029"
               className="flex items-center justify-center gap-2 w-full border border-ink/10 hover:border-ink/20 text-stone min-h-[44px] py-2 label text-[10px] transition-colors"
             >
               <Phone className="h-3.5 w-3.5 text-terra" />
-              Call Advisory: +91 98765 43210
+              Call Advisory: +33 7 55 74 90 29
             </a>
           </div>
         </div>

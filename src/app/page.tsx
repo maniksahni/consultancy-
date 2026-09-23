@@ -9,7 +9,7 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-cream text-ink flex flex-col overflow-x-hidden max-w-full w-full">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-cream text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none">
       {/* 1. Header / Navbar */}
       <Navbar />
 

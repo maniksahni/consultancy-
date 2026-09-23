@@ -109,7 +109,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
 • Target Intake: ${encodeURIComponent(formData.targetIntake)}
 • Academic Background: ${encodeURIComponent(formData.qualification || "Not specified")}
 • Assistance Needed: ${encodeURIComponent(formData.helpNeeded)}`;
-    return `https://wa.me/919876543210?text=${text}`;
+    return `https://wa.me/33755749029?text=${text}`;
   };
 
   const LabelEl = ({ icon: Icon, children }: { icon: any; children: React.ReactNode }) => (
@@ -214,7 +214,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98765 43210"
+                      placeholder="+33 7 55 74 90 29"
                       value={formData.whatsapp}
                       onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                       className="input-dark py-2 text-sm min-h-[44px]"
@@ -418,7 +418,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                 </p>
                 <p className="text-cream/35 text-xs mb-4 font-light">Message directly on WhatsApp for immediate priority review</p>
                 <a
-                  href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
+                  href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 border border-cream/15 hover:border-terra/50 text-cream/70 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-colors"
@@ -519,7 +519,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                       <input
                         type="tel"
                         required
-                        placeholder="+91 98765 43210"
+                        placeholder="+33 7 55 74 90 29"
                         value={formData.whatsapp}
                         onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                         className="input-dark"

@@ -133,7 +133,7 @@ export default function FAQ() {
           </div>
 
           <a
-            href="https://wa.me/919876543210?text=Hello%20GlobalEdu,%20I%20would%20like%20to%20request%20a%20statutory%20visa%20and%20profile%20evaluation."
+            href="https://wa.me/33755749029?text=Hello%20GlobalEdu,%20I%20would%20like%20to%20request%20a%20statutory%20visa%20and%20profile%20evaluation."
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-6 py-4 text-xs font-bold text-white transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] whitespace-nowrap active:scale-[0.98]"

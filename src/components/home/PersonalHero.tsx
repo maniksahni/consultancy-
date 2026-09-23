@@ -100,7 +100,7 @@ export default function PersonalHero() {
               </a>
 
               <a
-                href="https://wa.me/919876543210?text=Hi!%20I%20would%20like%20to%20chat%20directly%20about%20my%20study%20abroad%20plans."
+                href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20chat%20directly%20about%20my%20study%20abroad%20plans."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-emerald-500/30 bg-slate-900/80 hover:bg-emerald-950/40 hover:border-emerald-500/50 px-6 py-4 text-sm font-semibold text-emerald-300 backdrop-blur-md transition-all shadow-md"

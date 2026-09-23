@@ -29,7 +29,7 @@ export default function ScholarshipsPage() {
     <div className="min-h-screen flex flex-col bg-cream text-ink">
       <Navbar />
 
-      <main className="flex-1 pt-20">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
 
         {/* ── Header — dark ── */}
         <section className="bg-[#14120C] py-14 lg:py-20">

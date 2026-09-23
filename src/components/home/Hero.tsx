@@ -19,7 +19,12 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden">
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.65, ease: EASE }}
+      className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
+    >
       {/* Subtle parchment grid texture with restrained parallax */}
       <motion.div
         className="absolute inset-0 opacity-[0.032] pointer-events-none"
@@ -135,7 +140,7 @@ export default function Hero() {
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
             </a>
             <a
-              href="https://wa.me/919876543210?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
+              href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[48px] border border-cream/15 hover:border-cream/40 px-5 py-3 transition-all text-center btn-tactile"
@@ -146,6 +151,6 @@ export default function Hero() {
           </div>
         </div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 }
