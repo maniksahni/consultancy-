@@ -10,12 +10,12 @@ import {
   ArrowUpRight,
   Briefcase
 } from "lucide-react";
+import CountryFlag from "@/components/common/CountryFlag";
 
 export default function StudyDestinations() {
   const hubs = [
     {
       country: "United Kingdom",
-      flag: "🇬🇧",
       stream: "Student Route (Subclass)",
       psw: "2 Years Graduate Route (3 Years PhD)",
       avgTuition: "£14,000 – £26,000 / yr",
@@ -30,7 +30,6 @@ export default function StudyDestinations() {
     },
     {
       country: "United States",
-      flag: "🇺🇸",
       stream: "F-1 Non-Immigrant Visa",
       psw: "Up to 3 Years STEM OPT",
       avgTuition: "$24,000 – $48,000 / yr",
@@ -45,7 +44,6 @@ export default function StudyDestinations() {
     },
     {
       country: "Canada",
-      flag: "🇨🇦",
       stream: "Study Permit (SDS / Non-SDS)",
       psw: "Up to 3 Years PGWP",
       avgTuition: "CAD 18,000 – 34,000 / yr",
@@ -60,7 +58,6 @@ export default function StudyDestinations() {
     },
     {
       country: "Germany",
-      flag: "🇩🇪",
       stream: "National Visa (§16b AufenthG)",
       psw: "18 Months Jobseeker Residence Permit",
       avgTuition: "€0 Tuition (Nominal €350/sem fee)",
@@ -75,7 +72,6 @@ export default function StudyDestinations() {
     },
     {
       country: "Australia",
-      flag: "🇦🇺",
       stream: "Subclass 500 Student Visa",
       psw: "2 to 4 Years Temporary Graduate (485)",
       avgTuition: "AUD 28,000 – 44,000 / yr",
@@ -90,7 +86,6 @@ export default function StudyDestinations() {
     },
     {
       country: "Ireland",
-      flag: "🇮🇪",
       stream: "Irish Student Visa (AVATS)",
       psw: "2 Years Stamp 1G Graduate Scheme",
       avgTuition: "€13,000 – €24,000 / yr",
@@ -106,106 +101,103 @@ export default function StudyDestinations() {
   ];
 
   return (
-    <section id="destinations" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden w-full max-w-full">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[800px] h-[350px] sm:h-[500px] bg-blue-600/5 blur-[120px] sm:blur-[160px] pointer-events-none rounded-full" />
-
+    <section id="destinations" className="relative py-20 lg:py-28 overflow-hidden w-full max-w-full bg-[#070A11] border-t border-white/[0.06]">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1 text-xs font-semibold text-blue-400 mb-4">
-            <Globe2 className="h-3.5 w-3.5" />
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A880]/30 bg-[#0B0F19] px-3.5 py-1 text-xs font-medium tracking-wider uppercase text-[#DBCBAA] mb-4">
+            <Globe2 className="h-3.5 w-3.5 text-[#C5A880]" />
             <span>Curated Global Study Hubs</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-tight">
             Targeted Country Expertise.{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">
+            <span className="italic text-[#E5D3B3]">
               Clear Admissions Data.
             </span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-stone-300 font-light leading-relaxed max-w-2xl mx-auto">
             Every country enforces distinct financial proofs, post-study work regulations, and visa thresholds. We guide you through the verified data without guesswork.
           </p>
         </div>
 
-        {/* 6 High-Density Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 6 Curated Architectural Dossier Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
           {hubs.map((hub) => (
             <div
               key={hub.country}
-              className="group relative rounded-2xl border border-slate-800/80 bg-slate-900/40 p-6 backdrop-blur-xl hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all duration-300 flex flex-col justify-between"
+              className="group relative rounded-xl border border-white/[0.09] bg-[#0B0F19]/70 p-6 sm:p-7 hover:border-[#C5A880]/50 hover:bg-[#0E1424] transition-all duration-300 flex flex-col justify-between shadow-lg"
             >
               <div>
-                {/* Header: Flag, Name, Tag */}
-                <div className="flex items-start justify-between gap-3 mb-4">
+                {/* Header: Bespoke Vector Flag + Title + Formal Pill */}
+                <div className="flex items-start justify-between gap-3 mb-5">
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl filter drop-shadow">{hub.flag}</span>
+                    <CountryFlag country={hub.country} size="md" />
                     <div>
-                      <h3 className="text-lg font-bold text-white font-display">
+                      <h3 className="font-serif text-xl font-medium text-white tracking-tight">
                         {hub.country}
                       </h3>
-                      <p className="text-[11px] text-slate-400 font-medium">
+                      <p className="text-[11px] font-medium tracking-wide text-stone-400 mt-0.5">
                         {hub.stream}
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-semibold border border-blue-500/30 bg-blue-500/10 text-blue-300 rounded-full px-2.5 py-0.5 whitespace-nowrap">
+                  <span className="text-[10px] font-medium tracking-wider uppercase border border-[#C5A880]/30 bg-[#C5A880]/10 text-[#E5D3B3] rounded px-2 py-0.5 whitespace-nowrap">
                     {hub.tag}
                   </span>
                 </div>
 
-                {/* Key Metrics: Tuition, Proof of Funds, PSW */}
-                <div className="space-y-2 my-4 rounded-xl bg-slate-950/60 border border-slate-800/60 p-3 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5 text-[11px]">
-                      <Briefcase className="h-3.5 w-3.5 text-blue-400" /> Post-Study Work:
+                {/* Key Metrics Ledger Table */}
+                <div className="space-y-2.5 my-5 rounded-lg bg-[#070A11]/80 border border-white/[0.06] p-3.5 text-xs">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                      <Briefcase className="h-3.5 w-3.5 text-[#C5A880]" /> Post-Study Work:
                     </span>
-                    <span className="font-semibold text-white text-[11px]">{hub.psw}</span>
+                    <span className="font-medium text-white text-[11px]">{hub.psw}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5 text-[11px]">
-                      <Banknote className="h-3.5 w-3.5 text-emerald-400" /> Avg. Tuition:
+                  <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
+                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                      <Banknote className="h-3.5 w-3.5 text-[#C5A880]" /> Avg. Tuition:
                     </span>
-                    <span className="font-semibold text-emerald-300 text-[11px]">{hub.avgTuition}</span>
+                    <span className="font-medium text-[#E5D3B3] text-[11px]">{hub.avgTuition}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400 flex items-center gap-1.5 text-[11px]">
-                      <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" /> Proof of Funds:
+                  <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
+                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#C5A880]" /> Proof of Funds:
                     </span>
-                    <span className="font-semibold text-slate-300 text-[11px] text-right truncate max-w-[150px]">{hub.proofOfFunds}</span>
+                    <span className="font-medium text-stone-300 text-[11px] text-right truncate max-w-[150px]">{hub.proofOfFunds}</span>
                   </div>
                 </div>
 
-                {/* Bullet Advantages */}
-                <div className="space-y-2 my-5">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                {/* Strategic Advantages Checklist */}
+                <div className="space-y-2.5 my-6">
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#C5A880]">
                     Strategic Advantages:
                   </p>
                   {hub.advantages.map((adv, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <span className="leading-snug">{adv}</span>
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-stone-300 font-light">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#C5A880] flex-shrink-0 mt-1.5" />
+                      <span className="leading-relaxed">{adv}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Action Link */}
-              <div className="pt-4 border-t border-slate-800/60 flex items-center justify-between">
+              {/* Action Links */}
+              <div className="pt-4 border-t border-white/[0.07] flex items-center justify-between">
                 <a
                   href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
+                  className="text-xs font-medium text-[#DBCBAA] hover:text-white flex items-center gap-1 transition-colors"
                 >
                   <span>Discuss {hub.country} Strategy</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
 
                 <a
                   href="#booking"
-                  className="text-[11px] font-medium text-slate-400 hover:text-white transition-colors"
+                  className="text-[11px] font-light text-stone-400 hover:text-white transition-colors"
                 >
                   Book Assessment &rarr;
                 </a>

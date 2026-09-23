@@ -37,11 +37,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link 
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" 
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" 
           rel="stylesheet" 
         />
       </head>
-      <body className="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white antialiased overflow-x-hidden max-w-full w-full">
+      <body className="bg-[#070A11] text-stone-200 min-h-screen flex flex-col font-sans selection:bg-[#C5A880]/30 selection:text-white antialiased overflow-x-hidden max-w-full w-full">
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <div className="flex-1 flex flex-col w-full max-w-full overflow-x-hidden">
             {children}
