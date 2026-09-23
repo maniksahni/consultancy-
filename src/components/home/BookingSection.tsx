@@ -80,7 +80,7 @@ export default function BookingSection() {
     e.preventDefault();
     setHasError(false);
 
-    // Field-level validation
+    // Field-level validation (synchronous — must run before any async work)
     const errors: { fullName?: string; whatsapp?: string } = {};
     if (!formData.fullName.trim()) {
       errors.fullName = "Please enter your full name.";
@@ -97,41 +97,46 @@ export default function BookingSection() {
     }
     setFieldErrors({});
 
+    // ── CRITICAL: Open WhatsApp SYNCHRONOUSLY within the user click gesture ──
+    // window.open() called here, before any await, so browsers cannot block it
+    // as a "popup not tied to user gesture".
+    const waUrl = getWhatsAppDirectUrl();
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+
     setLoading(true);
 
-    // 5-second timeout so the spinner NEVER hangs indefinitely
+    // Run Firestore save + minimum 1.5s loading feel in parallel, capped at 5s total
+    const minDelay = new Promise<void>((resolve) => setTimeout(resolve, 1500));
+    const firestoreSave = (async () => {
+      const utm = getStoredUTMParams();
+      await saveMentorshipBooking({
+        fullName: formData.fullName,
+        whatsapp: formData.whatsapp,
+        email: formData.email,
+        qualification: formData.qualification,
+        targetCountry: formData.targetCountry,
+        targetIntake: formData.targetIntake,
+        helpNeeded: formData.helpNeeded,
+        ...(utm ? { utm } : {}),
+      });
+    })();
     const timeout = new Promise<void>((_, reject) =>
       setTimeout(() => reject(new Error("timeout")), 5000)
     );
 
     try {
-      const utm = getStoredUTMParams();
+      // Wait for both the minimum delay AND the Firestore save (or timeout, whichever is first)
       await Promise.race([
-        saveMentorshipBooking({
-          fullName: formData.fullName,
-          whatsapp: formData.whatsapp,
-          email: formData.email,
-          qualification: formData.qualification,
-          targetCountry: formData.targetCountry,
-          targetIntake: formData.targetIntake,
-          helpNeeded: formData.helpNeeded,
-          ...(utm ? { utm } : {}),
-        }),
+        Promise.all([minDelay, firestoreSave]),
         timeout,
       ]);
     } catch {
-      // Firestore failure or timeout — we still show success to the user
-      // (their data may not have been stored, but WhatsApp is the real follow-up channel)
+      // Firestore failure or timeout — ensure minimum delay still passes before showing success
+      await minDelay;
     } finally {
       setLoading(false);
       triggerConfetti();
       setSubmitted(true);
-      // Auto-open WhatsApp with pre-filled details — this is the real follow-up channel
-      try {
-        window.open(getWhatsAppDirectUrl(), "_blank", "noopener,noreferrer");
-      } catch {
-        // If popup blocked, the button in the success view is the fallback
-      }
     }
   };
 
@@ -182,16 +187,19 @@ export default function BookingSection() {
                 </div>
               </div>
 
-              <div className="space-y-2 pt-2">
-                <a
-                  href={getWhatsAppDirectUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] py-3 label text-xs transition-colors btn-tactile btn-tactile-dark"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Ping on WhatsApp Directly
-                </a>
+              <div className="space-y-3 pt-2">
+                {/* Fallback link — shown if the auto-open was blocked by the browser/OS */}
+                <p className="text-center text-cream/40 text-[11px] font-light leading-relaxed">
+                  WhatsApp should open automatically.{" "}
+                  <a
+                    href={getWhatsAppDirectUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-terra hover:text-terra-dark underline underline-offset-2 transition-colors"
+                  >
+                    Tap here if it didn&apos;t open.
+                  </a>
+                </p>
                 <button
                   onClick={() => {
                     setSubmitted(false);
@@ -205,7 +213,7 @@ export default function BookingSection() {
                       helpNeeded: "End-to-End Mentorship (Shortlisting + SOP + Visa)",
                     });
                   }}
-                  className="text-cream/35 hover:text-cream/60 text-xs py-2 transition-colors"
+                  className="w-full text-cream/30 hover:text-cream/60 text-xs py-1.5 transition-colors"
                 >
                   Submit Another Profile
                 </button>
@@ -537,16 +545,19 @@ export default function BookingSection() {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-center gap-4 pt-2">
-                    <a
-                      href={getWhatsAppDirectUrl()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-terra hover:bg-terra-dark text-cream px-6 py-3 label transition-colors min-h-[48px] btn-tactile btn-tactile-dark"
-                    >
-                      <MessageCircle className="h-4 w-4" />
-                      Ping on WhatsApp Directly
-                    </a>
+                  <div className="flex flex-col items-center gap-3 pt-2">
+                    {/* Fallback link — shown if the auto-open was blocked by the browser/OS */}
+                    <p className="text-cream/40 text-xs font-light">
+                      WhatsApp should have opened automatically.{" "}
+                      <a
+                        href={getWhatsAppDirectUrl()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-terra hover:text-terra-dark underline underline-offset-2 transition-colors"
+                      >
+                        Click here if it didn&apos;t.
+                      </a>
+                    </p>
                     <button
                       onClick={() => {
                         setSubmitted(false);
@@ -557,7 +568,7 @@ export default function BookingSection() {
                           helpNeeded: "End-to-End Mentorship (Shortlisting + SOP + Visa)",
                         });
                       }}
-                      className="text-cream/35 hover:text-cream/60 text-xs border-b border-cream/20 pb-0.5 transition-colors"
+                      className="text-cream/25 hover:text-cream/50 text-xs border-b border-cream/15 pb-0.5 transition-colors"
                     >
                       Submit Another Profile
                     </button>
