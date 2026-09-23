@@ -99,7 +99,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
                 <div className="pt-2 flex flex-wrap items-center gap-3">
                   <a
-                    href="/#eligibility-form"
+                    href="/#eligibility"
                     className="px-6 py-3.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2"
                   >
                     <PhoneCall className="w-4 h-4" />
@@ -221,8 +221,8 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
                   <div className="pt-4 mt-4 border-t border-slate-800">
                     <a
-                      href="/#eligibility-form"
-                      className="block text-center w-full py-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs rounded-xl transition-colors"
+                      href="/#eligibility"
+                      className="block text-center w-full py-2.5 bg-slate-900 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-all"
                     >
                       Check Admission Odds
                     </a>
@@ -234,21 +234,21 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
           {/* Visa Requirements & Checklist Grid */}
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5">
+            <div className="bg-[#0a0f1c] border border-slate-800/80 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl backdrop-blur-xl">
               <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Student Visa Requirements</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
+              <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
                 Mandatory Documentation Checklist
               </h3>
               <p className="text-xs text-slate-300">
-                Our ex-consulate certified coaches audit each item prior to official embassy submission:
+                Our certified education counselors audit each statutory document prior to embassy submission:
               </p>
 
               <div className="space-y-3">
                 {destination.visaRequirements.map((req, i) => (
-                  <div key={i} className="p-3 bg-slate-950 border border-slate-800 rounded-xl flex items-start gap-2.5 text-xs text-slate-300">
+                  <div key={i} className="p-3 bg-slate-950/80 border border-slate-800/80 rounded-xl flex items-start gap-2.5 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                     <span>{req}</span>
                   </div>
@@ -256,15 +256,15 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
               </div>
             </div>
 
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-5">
+            <div className="bg-[#0a0f1c] border border-slate-800/80 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl backdrop-blur-xl">
               <div className="flex items-center gap-2 text-blue-400 text-xs font-bold uppercase tracking-wider">
                 <Briefcase className="w-4 h-4" />
-                <span>Post-Study Work (PSW) & Stay Back</span>
+                <span>Post-Study Work (PSW) &amp; Stay Back</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
-                Work Rights & Career Pathways
+              <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
+                Work Rights &amp; Career Pathways
               </h3>
-              <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-300 leading-relaxed">
+              <div className="p-4 bg-slate-950/80 border border-slate-800/80 rounded-xl text-xs text-slate-300 leading-relaxed">
                 <strong className="text-emerald-400 block mb-1">Employment Regulations:</strong>
                 {destination.workPermitRules}
               </div>
@@ -283,8 +283,8 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
 
               <div className="pt-4 border-t border-slate-800">
                 <a
-                  href="/#eligibility-form"
-                  className="block text-center w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md"
+                  href="/#eligibility"
+                  className="block text-center w-full py-3.5 bg-gradient-to-r from-blue-600 to-emerald-500 hover:from-blue-500 hover:to-emerald-400 text-white font-bold text-xs rounded-xl shadow-lg shadow-blue-500/20 transition-all hover:scale-[1.01]"
                 >
                   Start Your {destination.name} Application Today
                 </a>

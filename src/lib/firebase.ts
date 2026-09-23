@@ -46,6 +46,12 @@ export async function saveEligibilityLead(data: {
   targetIntake?: string;
   englishTest?: string;
   englishScore?: string;
+  // Extended eligibility calculator fields
+  backlogCount?: string;
+  workExperience?: string;
+  budgetPerYear?: string;
+  admitScore?: number;
+  scholarshipScore?: number;
 }) {
   try {
     const docRef = await addDoc(collection(db, "leads"), {
@@ -59,6 +65,34 @@ export async function saveEligibilityLead(data: {
     return { success: false, error: error.message };
   }
 }
+
+/**
+ * Save a 1-on-1 Mentorship Booking to Firestore database
+ */
+export async function saveMentorshipBooking(data: {
+  fullName: string;
+  whatsapp: string;
+  email?: string;
+  qualification: string;
+  targetCountry: string;
+  targetIntake: string;
+  helpNeeded: string;
+  preferredSlot?: string;
+}) {
+  try {
+    const docRef = await addDoc(collection(db, "mentorship_bookings"), {
+      ...data,
+      source: "personal_mentorship_booking",
+      createdAt: serverTimestamp(),
+      status: "pending_review",
+    });
+    return { success: true, id: docRef.id };
+  } catch (error: any) {
+    console.error("Error saving mentorship booking to Firestore:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 
 /**
  * Firebase Authentication Helper: Email & Password Sign Up

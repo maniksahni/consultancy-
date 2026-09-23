@@ -1,87 +1,145 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-inter: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-outfit: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
 }
 
 @layer base {
   body {
     @apply bg-[#030712] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-white;
+    letter-spacing: -0.025em;
   }
 }
 
-/* Luxury Glow & Float Animations */
+/* ============================================================
+   LUXURY ANIMATIONS
+============================================================ */
+
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-8px) rotate(0.5deg);
-  }
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.08);
-  }
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-ring-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16,185,129,0.6), 0 0 15px 2px rgba(16,185,129,0.3);
   }
-  100% {
-    background-position: 200% 0;
+  50% {
+    box-shadow: 0 0 0 8px rgba(16,185,129,0), 0 0 25px 6px rgba(16,185,129,0.15);
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-float-delayed {
-  animation: float 7s ease-in-out 2s infinite;
+@keyframes probability-fill {
+  from { width: 0%; }
+  to { width: var(--fill-width, 80%); }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 8s ease-in-out infinite;
+@keyframes carousel-enter-right {
+  from { opacity: 0; transform: translateX(40px) scale(0.97); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
+
+@keyframes carousel-enter-left {
+  from { opacity: 0; transform: translateX(-40px) scale(0.97); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ============================================================
+   ANIMATION CLASSES
+============================================================ */
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float 7s ease-in-out 2s infinite; }
+.animate-pulse-glow { animation: pulse-glow 8s ease-in-out infinite; }
 
 .animate-marquee {
   display: flex;
   width: max-content;
   animation: marquee 28s linear infinite;
 }
+.animate-marquee:hover { animation-play-state: paused; }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 32s linear infinite;
+}
+.animate-marquee-reverse:hover { animation-play-state: paused; }
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 35s linear infinite;
 }
 
-/* Radiant Text Shimmer */
+.animate-glow-ring { animation: glow-ring-pulse 2s ease-in-out infinite; }
+.animate-slide-up-fade { animation: slide-up-fade 0.35s ease-out forwards; }
+
+.animate-carousel-enter-right {
+  animation: carousel-enter-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-carousel-enter-left {
+  animation: carousel-enter-left 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ============================================================
+   PROBABILITY BAR FILL
+============================================================ */
+
+.probability-bar-fill {
+  width: 0%;
+  animation: probability-fill 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+/* ============================================================
+   TYPOGRAPHY EFFECTS
+============================================================ */
+
 .text-shimmer {
   background: linear-gradient(90deg, #FFFFFF 0%, #93C5FD 25%, #60A5FA 50%, #34D399 75%, #FFFFFF 100%);
   background-size: 200% auto;
@@ -103,7 +161,10 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Glassmorphism & Spotlight Cards */
+/* ============================================================
+   GLASSMORPHISM CARDS
+============================================================ */
+
 .glass-panel {
   background: rgba(15, 23, 42, 0.55);
   backdrop-filter: blur(20px);
@@ -133,28 +194,34 @@
   transform: translateY(-4px);
 }
 
-/* Seamless Section Dividers */
+/* ============================================================
+   SECTION UTILITIES
+============================================================ */
+
 .section-divider {
   height: 1px;
   width: 100%;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(255, 255, 255, 0) 100%);
 }
 
-/* Custom Smooth Scrollbar */
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+/* ============================================================
+   SCROLLBAR
+============================================================ */
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: #030712; }
+::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+
+/* ============================================================
+   DESTINATION CAROUSEL TRACK — JS-CONTROLLED
+============================================================ */
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
-::-webkit-scrollbar-track {
-  background: #030712;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3B82F6;
-}
+/* Drag cursor while swiping */
+.carousel-dragging { cursor: grabbing !important; user-select: none; }
