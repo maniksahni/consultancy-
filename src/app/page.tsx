@@ -16,17 +16,17 @@ export default function Home() {
       {/* 2. Hero Section */}
       <Hero />
 
-      {/* 3. Curated Global Study Hubs */}
+      {/* 3. Direct Consultation Booking (First Scroll) */}
+      <BookingSection />
+
+      {/* 4. Curated Global Study Hubs */}
       <StudyDestinations />
 
-      {/* 4. Why Choose Dedicated 1-on-1 Mentorship */}
+      {/* 5. Why Choose Dedicated 1-on-1 Mentorship */}
       <ComparisonSection />
 
-      {/* 5. The 4-Stage Mentorship Journey */}
+      {/* 6. The 4-Stage Mentorship Journey */}
       <ProcessRoadmap />
-
-      {/* 6. Direct Consultation Booking */}
-      <BookingSection />
 
       {/* 7. Verified Student Outcomes */}
       <StudentOutcomes />

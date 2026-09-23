@@ -28,7 +28,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!isHome) return;
-    const sectionIds = ["destinations", "comparison", "process", "booking", "outcomes"];
+    const sectionIds = ["booking", "destinations", "comparison", "process", "outcomes"];
 
     const observer = new IntersectionObserver(
       (entries) => {

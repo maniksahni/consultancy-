@@ -122,7 +122,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
   return (
     <section
       id="booking"
-      className="bg-[#14120C] grain-ink py-8 sm:py-12 lg:py-24 overflow-hidden w-full relative"
+      className="bg-[#14120C] grain-ink py-8 sm:py-12 lg:py-24 overflow-hidden w-full relative border-t border-cream/10"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
