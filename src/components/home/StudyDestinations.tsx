@@ -2,23 +2,28 @@
 
 import React from "react";
 import Link from "next/link";
-import { 
-  Globe2, 
-  ArrowUpRight,
-  Briefcase,
-  Banknote,
-  ShieldCheck,
-  ArrowRight
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import CountryFlag from "@/components/common/CountryFlag";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const slugMap: Record<string, string> = {
   "United Kingdom": "uk",
   "United States": "usa",
-  "Canada": "canada",
-  "Germany": "germany",
-  "Australia": "australia",
-  "Ireland": "ireland",
+  Canada: "canada",
+  Germany: "germany",
+  Australia: "australia",
+  Ireland: "ireland",
+};
+
+const countryCodes: Record<string, string> = {
+  "United Kingdom": "UK",
+  "United States": "US",
+  Canada: "CA",
+  Germany: "DE",
+  Australia: "AU",
+  Ireland: "IE",
 };
 
 export default function StudyDestinations() {
@@ -28,7 +33,7 @@ export default function StudyDestinations() {
       stream: "Student Route (Subclass)",
       psw: "2 Years Graduate Route (3 Years PhD)",
       avgTuition: "£14,000 – £26,000 / yr",
-      proofOfFunds: "28-Day Maintenance Fund Rule (~£12k-£15k)",
+      proofOfFunds: "28-Day Maintenance Fund Rule (~£12k–£15k)",
       advantages: [
         "1-Year accelerated Master's saving 50% tuition & living cost",
         "IELTS waiver (MOI) options based on Class 12 English score",
@@ -91,7 +96,8 @@ export default function StudyDestinations() {
         "Regional post-study extensions available for high-growth sectors",
       ],
       tag: "Go8 Excellence",
-      whatsappMsg: "Hi! I need guidance for Australia Subclass 500 and Genuine Student statement.",
+      whatsappMsg:
+        "Hi! I need guidance for Australia Subclass 500 and Genuine Student statement.",
     },
     {
       country: "Ireland",
@@ -105,121 +111,135 @@ export default function StudyDestinations() {
         "Uncapped career mobility under the 2-Year Stamp 1G visa",
       ],
       tag: "Silicon Docks",
-      whatsappMsg: "Hi! I want to discuss Ireland 1-Year Master's and Silicon Docks tech opportunities.",
+      whatsappMsg:
+        "Hi! I want to discuss Ireland 1-Year Master's and Silicon Docks tech opportunities.",
     },
   ];
 
   return (
-    <section id="destinations" className="relative py-20 lg:py-28 overflow-hidden w-full max-w-full bg-[#070A11] border-t border-white/[0.06]">
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A880]/30 bg-[#0B0F19] px-3.5 py-1 text-xs font-medium tracking-wider uppercase text-[#DBCBAA] mb-4">
-            <Globe2 className="h-3.5 w-3.5 text-[#C5A880]" />
-            <span>Curated Global Study Hubs</span>
+    <section
+      id="destinations"
+      className="bg-cream py-16 lg:py-24 overflow-hidden w-full"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+
+        {/* ── Section header ── */}
+        <div className="border-t border-ink/12 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div>
+            <div className="label text-stone mb-4">Curated Global Study Hubs</div>
+            <h2
+              className="font-display font-normal text-ink leading-[0.93] tracking-tight"
+              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
+            >
+              Targeted Country Expertise.<br />
+              <em>Clear Admissions Data.</em>
+            </h2>
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal text-white tracking-tight">
-            Targeted Country Expertise.{" "}
-            <span className="italic text-[#E5D3B3]">
-              Clear Admissions Data.
-            </span>
-          </h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base md:text-lg text-stone-300 font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-stone text-sm leading-relaxed max-w-sm font-light">
             Every country enforces distinct financial proofs, post-study work regulations, and visa thresholds. We guide you through the verified data without guesswork.
           </p>
         </div>
 
-        {/* 6 Curated Architectural Dossier Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-          {hubs.map((hub) => {
+        {/* ── Country strips (not a grid) ── */}
+        <div>
+          {hubs.map((hub, i) => {
             const slug = slugMap[hub.country];
+            const code = countryCodes[hub.country];
             return (
-              <div
+              <motion.div
                 key={hub.country}
-                className="group relative rounded-xl border border-white/[0.09] bg-[#0B0F19]/70 p-6 sm:p-7 hover:border-[#C5A880]/50 hover:bg-[#0E1424] transition-all duration-300 flex flex-col justify-between shadow-lg"
+                className="border-t border-ink/10 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 group"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-8%" }}
+                transition={{ duration: 0.55, ease: EASE, delay: i * 0.04 }}
               >
-                <div>
-                  {/* Header: Bespoke Vector Flag + Title + Formal Pill */}
-                  <div className="flex items-start justify-between gap-3 mb-5">
-                    <div className="flex items-center gap-3">
+                {/* Large country code — decorative typography */}
+                <div className="lg:col-span-2 flex items-start gap-3">
+                  <div>
+                    <div
+                      className="font-display font-light text-ink/10 leading-none tracking-tighter select-none"
+                      style={{ fontSize: "clamp(56px, 5.5vw, 80px)" }}
+                    >
+                      {code}
+                    </div>
+                    <div className="mt-2">
                       <CountryFlag country={hub.country} size="md" />
-                      <div>
-                        <h3 className="font-serif text-xl font-medium text-white tracking-tight">
-                          {hub.country}
-                        </h3>
-                        <p className="text-[11px] font-medium tracking-wide text-stone-400 mt-0.5">
-                          {hub.stream}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-medium tracking-wider uppercase border border-[#C5A880]/30 bg-[#C5A880]/10 text-[#E5D3B3] rounded px-2 py-0.5 whitespace-nowrap">
-                      {hub.tag}
-                    </span>
-                  </div>
-
-                  {/* Key Metrics Ledger Table */}
-                  <div className="space-y-2.5 my-5 rounded-lg bg-[#070A11]/80 border border-white/[0.06] p-3.5 text-xs">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                        <Briefcase className="h-3.5 w-3.5 text-[#C5A880]" /> Post-Study Work:
-                      </span>
-                      <span className="font-medium text-white text-[11px]">{hub.psw}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
-                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                        <Banknote className="h-3.5 w-3.5 text-[#C5A880]" /> Avg. Tuition:
-                      </span>
-                      <span className="font-medium text-[#E5D3B3] text-[11px]">{hub.avgTuition}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
-                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                        <ShieldCheck className="h-3.5 w-3.5 text-[#C5A880]" /> Proof of Funds:
-                      </span>
-                      <span className="font-medium text-stone-300 text-[11px] text-right truncate max-w-[150px]">{hub.proofOfFunds}</span>
                     </div>
                   </div>
+                </div>
 
-                  {/* Strategic Advantages Checklist */}
-                  <div className="space-y-2.5 my-6">
-                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#C5A880]">
-                      Strategic Advantages:
-                    </p>
-                    {hub.advantages.map((adv, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-stone-300 font-light">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#C5A880] flex-shrink-0 mt-1.5" />
-                        <span className="leading-relaxed">{adv}</span>
+                {/* Country name + tag + advantages */}
+                <div className="lg:col-span-5 space-y-4">
+                  <div>
+                    <h3
+                      className="font-display font-normal text-ink tracking-tight leading-none"
+                      style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
+                    >
+                      {hub.country}
+                    </h3>
+                    <div className="label text-stone mt-1.5">{hub.stream}</div>
+                  </div>
+
+                  <div className="inline-flex items-center border border-terra/25 bg-terra/[0.06] text-terra px-3 py-1 label">
+                    {hub.tag}
+                  </div>
+
+                  <ul className="space-y-3 pt-1">
+                    {hub.advantages.map((adv, j) => (
+                      <li key={j} className="flex items-start gap-3 text-sm text-stone font-light leading-relaxed">
+                        <span className="text-terra mt-[3px] flex-shrink-0 text-base leading-none">–</span>
+                        <span>{adv}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Metrics ledger + CTAs */}
+                <div className="lg:col-span-5 space-y-5">
+                  <div className="space-y-0">
+                    {[
+                      { label: "Post-Study Work", value: hub.psw },
+                      { label: "Average Tuition", value: hub.avgTuition },
+                      { label: "Proof of Funds", value: hub.proofOfFunds },
+                    ].map(({ label, value }) => (
+                      <div
+                        key={label}
+                        className="border-t border-ink/8 pt-3 pb-3 grid grid-cols-2 gap-4 items-start"
+                      >
+                        <span className="label text-stone">{label}</span>
+                        <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>
                       </div>
                     ))}
                   </div>
-                </div>
 
-                {/* Action Links */}
-                <div className="pt-4 border-t border-white/[0.07] flex items-center justify-between">
-                  <a
-                    href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-medium text-[#DBCBAA] hover:text-white flex items-center gap-1 transition-colors"
-                  >
-                    <span>Discuss {hub.country} Strategy</span>
-                    <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
-
-                  {slug && (
-                    <Link
-                      href={`/destinations/${slug}`}
-                      className="text-[11px] font-light text-stone-400 hover:text-[#E5D3B3] transition-colors flex items-center gap-1"
+                  <div className="pt-2 flex flex-wrap items-center gap-5">
+                    <a
+                      href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2"
                     >
-                      Full Guide <ArrowRight className="h-3 w-3" />
-                    </Link>
-                  )}
+                      Discuss {hub.country} Strategy
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                    {slug && (
+                      <Link
+                        href={`/destinations/${slug}`}
+                        className="text-sm text-stone border-b border-stone/25 hover:border-stone/70 hover:text-ink pb-0.5 transition-colors"
+                      >
+                        Full Country Guide →
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
 
+          {/* Close with bottom rule */}
+          <div className="border-t border-ink/10" />
+        </div>
       </div>
     </section>
   );

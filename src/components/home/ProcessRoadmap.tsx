@@ -1,149 +1,152 @@
 "use client";
 
 import React from "react";
-import { 
-  Compass, 
-  Layers, 
-  FileEdit, 
-  ShieldCheck, 
-  ArrowRight, 
-  Check, 
-  Milestone
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const steps = [
+  {
+    numeral: "I",
+    number: "01",
+    title: "Profile Audit & Goal Alignment",
+    subtitle: "Deep Dive into GPA, Budget & Career ROI",
+    desc: "Comprehensive diagnostic of your academic history, backlogs, work experience, and financial budget to determine realistic admissions targets.",
+    milestone: "Diagnostic Dossier & Financial Roadmap",
+  },
+  {
+    numeral: "II",
+    number: "02",
+    title: "Strategic Shortlisting",
+    subtitle: "Safe, Target & Ambitious University Matrix",
+    desc: "Curating a tailored 8-to-10 university portfolio without commercial bias, balancing high-prestige reach programs with guaranteed scholarship admits.",
+    milestone: "Personalized University Shortlist Matrix",
+  },
+  {
+    numeral: "III",
+    number: "03",
+    title: "Application & Essay Mastery",
+    subtitle: "Compelling Narrative with 0% AI Detection",
+    desc: "Sentence-by-sentence editorial review of your SOPs, LORs, and CV. We develop an authentic, compelling story that passes strict admissions committee screeners.",
+    milestone: "Polished SOPs & Finalised Application Portals",
+  },
+  {
+    numeral: "IV",
+    number: "04",
+    title: "Embassy Visa Preparation",
+    subtitle: "Document Scrutiny & Consular Mock Simulations",
+    desc: "Forensic audit of proof-of-funds, DS-160/CAS paperwork, and intensive 1-on-1 mock interviews simulating real consular officers' cross-examination.",
+    milestone: "Foolproof Visa Dossier & Mock Certification",
+  },
+];
 
 export default function ProcessRoadmap() {
-  const steps = [
-    {
-      number: "01",
-      roman: "Stage I",
-      title: "Profile Audit & Goal Alignment",
-      subtitle: "Deep Dive into GPA, Budget & Career ROI",
-      desc: "Comprehensive diagnostic of your academic history, backlogs, work experience, and financial budget to determine realistic admissions targets.",
-      milestone: "Diagnostic Dossier & Financial Roadmap",
-      icon: Compass,
-    },
-    {
-      number: "02",
-      roman: "Stage II",
-      title: "Strategic Shortlisting",
-      subtitle: "Safe, Target & Ambitious University Matrix",
-      desc: "Curating a tailored 8-to-10 university portfolio without commercial bias, balancing high-prestige reach programs with guaranteed scholarship admits.",
-      milestone: "Personalized University Shortlist Matrix",
-      icon: Layers,
-    },
-    {
-      number: "03",
-      roman: "Stage III",
-      title: "Application & Essay Mastery",
-      subtitle: "Compelling Narrative with 0% AI Detection",
-      desc: "Sentence-by-sentence editorial review of your SOPs, LORs, and CV. We develop an authentic, compelling story that passes strict admissions committee screeners.",
-      milestone: "Polished SOPs & Finalised Application Portals",
-      icon: FileEdit,
-    },
-    {
-      number: "04",
-      roman: "Stage IV",
-      title: "Embassy Visa Preparation",
-      subtitle: "Document Scrutiny & Consular Mock Simulations",
-      desc: "Forensic audit of proof-of-funds, DS-160/CAS paperwork, and intensive 1-on-1 mock interviews simulating real consular officers' cross-examination.",
-      milestone: "Foolproof Visa Dossier & Mock Certification",
-      icon: ShieldCheck,
-    },
-  ];
-
   return (
-    <section id="process" className="relative py-20 sm:py-28 overflow-hidden bg-[#070A11] w-full max-w-full">
-      {/* Background ambient light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#C5A880]/[0.02] blur-[150px] pointer-events-none rounded-full" />
+    <section
+      id="process"
+      className="bg-cream-50 py-16 lg:py-24 overflow-hidden w-full"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A880]/30 bg-[#C5A880]/[0.06] px-4 py-1.5 text-[11px] font-medium tracking-widest text-[#E5D3B3] uppercase mb-5">
-            <Milestone className="h-3.5 w-3.5 text-[#C5A880]" />
-            <span>The 4-Stage Mentorship Journey</span>
+        {/* ── Section header ── */}
+        <motion.div
+          className="border-t border-ink/12 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-8%" }}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
+          <div>
+            <div className="label text-stone mb-4">The 4-Stage Mentorship Journey</div>
+            <h2
+              className="font-display font-normal text-ink leading-[0.93] tracking-tight"
+              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
+            >
+              A Transparent, Precision-Engineered<br />
+              <em>Admissions Roadmap</em>
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal text-stone-100 tracking-tight font-serif">
-            A Transparent, Precision-Engineered{" "}
-            <span className="italic text-[#C5A880]">
-              Admissions Roadmap
-            </span>
-          </h2>
-          <p className="mt-4 text-sm sm:text-base text-stone-400 font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-stone text-sm leading-relaxed max-w-sm font-light">
             From your very first diagnostic call to passport stamping, every single stage is personally managed and audited by your dedicated mentor.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 4 Syllabus Stage Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {steps.map((step) => (
-            <div
+        {/* ── 4 stage entries ── */}
+        <div>
+          {steps.map((step, i) => (
+            <motion.div
               key={step.number}
-              className="group relative rounded-2xl border border-white/[0.08] bg-[#0E131F]/90 p-6 sm:p-7 backdrop-blur-md hover:border-[#C5A880]/40 transition-all duration-300 flex flex-col justify-between"
+              className="border-t border-ink/10 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ duration: 0.55, ease: EASE, delay: i * 0.05 }}
             >
-              <div>
-                {/* Header: Serif Step Number & Icon */}
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.06]">
-                  <div>
-                    <span className="text-2xl font-serif text-[#C5A880] tracking-tight block">
-                      {step.number}
-                    </span>
-                    <span className="text-[10px] font-semibold text-stone-400 tracking-widest uppercase">
-                      {step.roman}
-                    </span>
-                  </div>
-                  <div className="h-10 w-10 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-[#C5A880] group-hover:border-[#C5A880]/30 transition-colors">
-                    <step.icon className="h-5 w-5 stroke-[1.5]" />
-                  </div>
-                </div>
+              {/* Large Roman numeral — decorative */}
+              <div className="lg:col-span-1 flex-shrink-0">
+                <span
+                  className="font-display font-light text-ink/10 leading-none select-none block"
+                  style={{ fontSize: "clamp(64px, 6vw, 96px)" }}
+                >
+                  {step.numeral}
+                </span>
+              </div>
 
-                {/* Title & Subtitle */}
-                <h3 className="text-lg font-serif text-stone-100 tracking-tight leading-snug">
+              {/* Stage content */}
+              <div className="lg:col-span-6 space-y-3">
+                <div className="label text-terra">{step.subtitle}</div>
+                <h3
+                  className="font-display font-normal text-ink leading-tight tracking-tight"
+                  style={{ fontSize: "clamp(22px, 2.4vw, 30px)" }}
+                >
                   {step.title}
                 </h3>
-                <p className="text-[11px] font-medium text-[#C5A880] mt-1 mb-3.5 tracking-wide">
-                  {step.subtitle}
-                </p>
-
-                {/* Description */}
-                <p className="text-xs text-stone-400 leading-relaxed font-light mb-6">
+                <p className="text-stone text-sm leading-relaxed font-light max-w-lg">
                   {step.desc}
                 </p>
               </div>
 
-              {/* Milestone Deliverable Footer */}
-              <div className="pt-4 border-t border-white/[0.06] mt-auto bg-black/20 -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-4 sm:p-5 rounded-b-2xl">
-                <span className="text-[9px] uppercase font-bold text-stone-400 tracking-widest block mb-1.5">
-                  Stage Deliverable:
-                </span>
-                <div className="flex items-start gap-2 text-xs text-[#E5D3B3] font-medium">
-                  <Check className="h-3.5 w-3.5 text-[#C5A880] flex-shrink-0 mt-0.5 stroke-[2.5]" />
-                  <span className="leading-snug text-stone-300">{step.milestone}</span>
+              {/* Deliverable — formal bordered block */}
+              <div className="lg:col-span-5 lg:pl-8">
+                <div className="border border-ink/12 p-5 bg-cream">
+                  <div className="label text-stone mb-2.5">Stage Deliverable</div>
+                  <p className="text-ink text-sm font-medium leading-relaxed">
+                    {step.milestone}
+                  </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
+
+          {/* Close rule */}
+          <div className="border-t border-ink/10" />
         </div>
 
-        {/* Action Callout */}
-        <div className="mt-14 rounded-2xl border border-white/[0.1] bg-[#0E131F] p-7 sm:p-9 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center sm:text-left">
-            <h4 className="text-lg sm:text-xl font-serif text-stone-100 tracking-tight">
+        {/* ── Bottom CTA callout ── */}
+        <motion.div
+          className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-5%" }}
+          transition={{ duration: 0.5, ease: EASE }}
+        >
+          <div>
+            <h4 className="font-display text-xl font-normal text-ink tracking-tight">
               Ready to begin Stage 01 with an experienced mentor?
             </h4>
-            <p className="text-xs sm:text-sm text-stone-400 font-light">
+            <p className="text-stone text-sm mt-1 font-light">
               Schedule your 30-minute discovery call to evaluate your profile and target intake.
             </p>
           </div>
           <a
             href="#booking"
-            className="flex-shrink-0 inline-flex items-center gap-2.5 rounded-lg bg-[#C5A880] hover:bg-[#D4AF37] px-6 py-3.5 text-xs sm:text-sm font-semibold text-[#070A11] tracking-wide transition-all shadow-md group"
+            className="flex-shrink-0 inline-flex items-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 px-7 py-3.5 label transition-colors group"
           >
-            <span>Start Your Diagnostic Audit</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+            Start Your Diagnostic Audit
+            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
           </a>
-        </div>
+        </motion.div>
 
       </div>
     </section>

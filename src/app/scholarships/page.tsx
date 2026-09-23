@@ -1,169 +1,173 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { 
-  Award, 
-  Search, 
-  ArrowLeft, 
-  ArrowRight
-} from 'lucide-react';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import { SCHOLARSHIPS } from '@/data/mockData';
+import React, { useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight, Search, Award } from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { SCHOLARSHIPS } from "@/data/mockData";
 
 export default function ScholarshipsPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('All');
-  const [selectedCoverage, setSelectedCoverage] = useState('All');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("All");
+  const [selectedCoverage, setSelectedCoverage] = useState("All");
 
   const filteredScholarships = SCHOLARSHIPS.filter((sch) => {
-    const matchesSearch = sch.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          sch.eligibility.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCountry = selectedCountry === 'All' || sch.country.toLowerCase() === selectedCountry.toLowerCase();
-    const matchesCoverage = selectedCoverage === 'All' || sch.coverage.toLowerCase().includes(selectedCoverage.toLowerCase());
+    const matchesSearch =
+      sch.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sch.eligibility.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCountry =
+      selectedCountry === "All" ||
+      sch.country.toLowerCase() === selectedCountry.toLowerCase();
+    const matchesCoverage =
+      selectedCoverage === "All" ||
+      sch.coverage.toLowerCase().includes(selectedCoverage.toLowerCase());
     return matchesSearch && matchesCountry && matchesCoverage;
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#070A11] text-stone-200">
+    <div className="min-h-screen flex flex-col bg-cream text-ink">
       <Navbar />
 
-      <main className="flex-1 pt-24 pb-20">
+      <main className="flex-1 pt-20">
 
-        {/* Header */}
-        <section className="relative py-14 border-b border-white/[0.08] overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[#C5A880]/[0.025] blur-[120px] pointer-events-none rounded-full" />
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ── Header — dark ── */}
+        <section className="bg-[#14120C] py-14 lg:py-20">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-xs font-medium text-stone-400 hover:text-[#E5D3B3] transition-colors mb-8 group"
+              className="inline-flex items-center gap-2 label text-cream/30 hover:text-cream/60 transition-colors mb-10 group"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Home</span>
+              Back to Home
             </Link>
 
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
               <div className="space-y-4 max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A880]/30 bg-[#C5A880]/[0.06] px-3.5 py-1 text-[11px] font-medium tracking-widest text-[#E5D3B3] uppercase">
-                  <Award className="w-3.5 h-3.5 text-[#C5A880]" />
-                  <span>₹25Cr+ Merit &amp; Need-Based Funding Indexed</span>
+                <div className="inline-flex items-center gap-2 border border-cream/10 px-3 py-1.5">
+                  <Award className="w-3.5 h-3.5 text-terra" />
+                  <span className="label text-cream/35 text-[10px]">₹25 Cr+ Merit &amp; Need-Based Funding Indexed</span>
                 </div>
-                <h1 className="font-serif text-3xl sm:text-5xl font-normal text-white tracking-tight">
-                  Global Scholarship Directory{" "}
-                  <span className="italic text-[#C5A880]">(2026/27)</span>
+                <h1
+                  className="font-display font-normal text-cream leading-[0.9] tracking-tight"
+                  style={{ fontSize: "clamp(40px, 7vw, 88px)" }}
+                >
+                  Global Scholarship<br />
+                  Directory{" "}
+                  <em className="text-terra">(2026/27)</em>
                 </h1>
-                <p className="text-sm sm:text-base text-stone-300 font-light leading-relaxed max-w-xl">
+                <p className="text-sm text-cream/50 font-light leading-relaxed max-w-xl">
                   Explore full-ride government awards (Chevening, Fulbright, DAAD) and university-specific merit fellowships with our expert application support.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-white/[0.1] bg-[#0E131F] p-6 shadow-xl w-full lg:w-72 flex-shrink-0 space-y-2">
-                <div className="text-[10px] font-semibold text-[#C5A880] uppercase tracking-widest">Average Student Grant</div>
-                <div className="font-serif text-3xl text-[#E5D3B3] font-normal">$14,500</div>
-                <p className="text-xs text-stone-400 font-light leading-relaxed">82% of applicants qualify for partial or full-ride financial aid.</p>
+              <div className="border border-cream/10 p-6 w-full lg:w-64 flex-shrink-0 space-y-2">
+                <div className="label text-cream/25">Average Student Grant</div>
+                <div className="font-display text-4xl text-terra font-normal leading-none">$14,500</div>
+                <p className="text-xs text-cream/30 font-light leading-relaxed">
+                  82% of applicants qualify for partial or full-ride financial aid.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Filter & Scholarship Cards */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+        {/* ── Filter + Scholarship cards — light ── */}
+        <section className="max-w-7xl mx-auto px-6 lg:px-12 py-12 space-y-8">
 
-          {/* Filter Controls */}
-          <div className="rounded-xl border border-white/[0.08] bg-[#0E131F] p-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Filter row */}
+          <div className="border border-ink/10 bg-cream-50 p-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-3 w-4 h-4 text-stone-500 pointer-events-none" />
+              <Search className="absolute left-0 top-2.5 w-4 h-4 text-stone pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search scholarship name or criteria..."
+                placeholder="Search by name or criteria…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-[#070A11] border border-white/[0.1] rounded-lg text-xs text-white placeholder:text-stone-500 focus:outline-none focus:border-[#C5A880] transition-colors"
+                className="w-full pl-6 pr-0 text-sm text-ink placeholder:text-stone font-light bg-transparent border-b border-ink/15 py-2 focus:outline-none focus:border-terra transition-colors"
               />
             </div>
-
             {/* Country */}
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-              className="w-full py-2 px-3 bg-[#070A11] border border-white/[0.1] rounded-lg text-xs text-white focus:outline-none focus:border-[#C5A880] transition-colors cursor-pointer"
-            >
-              <option value="All">All Study Destinations</option>
-              <option value="USA">USA Scholarships</option>
-              <option value="UK">UK (Chevening &amp; University)</option>
-              <option value="Germany">Germany (DAAD &amp; State)</option>
-              <option value="Australia">Australia Awards</option>
-            </select>
-
+            <div className="relative">
+              <select
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="w-full text-sm text-ink bg-transparent border-b border-ink/15 py-2 focus:outline-none focus:border-terra transition-colors appearance-none cursor-pointer"
+              >
+                <option value="All">All Study Destinations</option>
+                <option value="USA">USA Scholarships</option>
+                <option value="UK">UK (Chevening &amp; University)</option>
+                <option value="Germany">Germany (DAAD &amp; State)</option>
+                <option value="Australia">Australia Awards</option>
+              </select>
+              <div className="absolute right-0 bottom-2.5 pointer-events-none text-stone text-[10px]">▾</div>
+            </div>
             {/* Coverage */}
-            <select
-              value={selectedCoverage}
-              onChange={(e) => setSelectedCoverage(e.target.value)}
-              className="w-full py-2 px-3 bg-[#070A11] border border-white/[0.1] rounded-lg text-xs text-white focus:outline-none focus:border-[#C5A880] transition-colors cursor-pointer"
-            >
-              <option value="All">All Coverage Tiers</option>
-              <option value="Full Ride">Full Ride (Tuition + Stipend)</option>
-              <option value="Partial Tuition">Partial Tuition Waivers</option>
-              <option value="Full Living Support">Living Cost Grants</option>
-            </select>
+            <div className="relative">
+              <select
+                value={selectedCoverage}
+                onChange={(e) => setSelectedCoverage(e.target.value)}
+                className="w-full text-sm text-ink bg-transparent border-b border-ink/15 py-2 focus:outline-none focus:border-terra transition-colors appearance-none cursor-pointer"
+              >
+                <option value="All">All Coverage Tiers</option>
+                <option value="Full Ride">Full Ride (Tuition + Stipend)</option>
+                <option value="Partial Tuition">Partial Tuition Waivers</option>
+                <option value="Full Living Support">Living Cost Grants</option>
+              </select>
+              <div className="absolute right-0 bottom-2.5 pointer-events-none text-stone text-[10px]">▾</div>
+            </div>
           </div>
 
-          {/* Scholarship Cards */}
+          {/* Cards */}
           {filteredScholarships.length === 0 ? (
-            <div className="text-center py-16 text-stone-400 font-light text-sm">
+            <div className="text-center py-16 text-stone font-light text-sm border border-ink/8">
               No scholarships match the selected filters.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/10">
               {filteredScholarships.map((sch) => (
                 <div
                   key={sch.id}
-                  className="rounded-xl border border-white/[0.08] bg-[#0E131F] p-6 hover:border-[#C5A880]/40 transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-cream p-7 flex flex-col justify-between hover:bg-cream-50 transition-colors"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-1 border border-[#C5A880]/25 bg-[#C5A880]/[0.06] text-[#E5D3B3] text-[10px] font-medium rounded">
+                      <span className="border border-terra/25 bg-terra/[0.05] text-terra label text-[10px] px-2.5 py-1">
                         {sch.tag}
                       </span>
-                      <span className="text-xs font-light text-stone-400">{sch.country}</span>
+                      <span className="label text-stone text-[10px]">{sch.country}</span>
                     </div>
 
                     <div>
-                      <h3 className="font-serif text-lg font-normal text-white group-hover:text-[#E5D3B3] transition-colors leading-snug">
+                      <h3 className="font-display text-xl font-normal text-ink leading-snug tracking-tight">
                         {sch.name}
                       </h3>
-                      <div className="text-xs font-medium text-[#C5A880] mt-1">
-                        {sch.amount}
-                      </div>
+                      <div className="label text-terra mt-1.5 text-[10px]">{sch.amount}</div>
                     </div>
 
-                    <div className="space-y-2 text-xs text-stone-300 pt-3 border-t border-white/[0.06]">
-                      <div className="flex items-start gap-1.5 font-light">
-                        <span className="text-stone-500 font-medium flex-shrink-0">Eligibility:</span>
-                        <span>{sch.eligibility}</span>
+                    <div className="border-t border-ink/8 pt-3 space-y-2 text-xs text-stone font-light">
+                      <div className="flex items-start gap-1.5">
+                        <span className="font-medium text-ink/60 flex-shrink-0">Eligibility:</span>
+                        <span className="leading-relaxed">{sch.eligibility}</span>
                       </div>
-
-                      <div className="flex justify-between text-stone-400 pt-1 font-light">
+                      <div className="flex justify-between pt-1">
                         <span>Deadline:</span>
-                        <span className="text-stone-200 font-medium">{sch.deadline}</span>
+                        <span className="text-ink font-medium">{sch.deadline}</span>
                       </div>
-
-                      <div className="flex justify-between text-stone-400 font-light">
+                      <div className="flex justify-between">
                         <span>Target Level:</span>
-                        <span className="text-stone-200">{sch.level}</span>
+                        <span className="text-ink">{sch.level}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-white/[0.06]">
+                  <div className="pt-5 mt-5 border-t border-ink/8">
                     <a
                       href="/#booking"
-                      className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-lg border border-[#C5A880]/30 bg-[#C5A880]/[0.06] hover:bg-[#C5A880]/[0.12] text-[#E5D3B3] font-medium text-xs transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-1.5 border border-terra/30 hover:border-terra bg-terra/[0.04] hover:bg-terra/[0.08] text-terra py-2.5 label text-[10px] transition-colors"
                     >
-                      <span>Apply with Senior Mentor</span>
+                      Apply with Senior Mentor
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -171,8 +175,8 @@ export default function ScholarshipsPage() {
               ))}
             </div>
           )}
-
         </section>
+
       </main>
 
       <Footer />

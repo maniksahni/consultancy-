@@ -1,239 +1,158 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
 :root {
-  --font-inter: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-outfit: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-outfit);
+  --cream: #F2EDE4;
+  --cream-50: #FAF7F2;
+  --ink: #14120C;
+  --ink-soft: #2C271E;
+  --terra: #C25B1A;
+  --stone: #786B5E;
+  --sand: #E0D9CE;
 }
 
+/* ============================================================
+   BASE RESET
+============================================================ */
 @layer base {
-  html,
-  body {
+  html {
     overflow-x: hidden;
-    max-width: 100vw;
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    background-color: #F2EDE4;
+    color: #14120C;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
     width: 100%;
+    max-width: 100vw;
     position: relative;
   }
 
-  body {
-    @apply bg-[#070A11] text-stone-200 font-sans antialiased selection:bg-[#C5A880]/30 selection:text-white;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
+  /* All headings default to Cormorant Garamond */
   h1, h2, h3, h4 {
-    @apply font-serif tracking-tight text-white;
-    letter-spacing: -0.015em;
+    font-family: 'Cormorant Garamond', Georgia, Cambria, serif;
+    letter-spacing: -0.02em;
   }
 
   h5, h6 {
-    @apply font-sans tracking-wide text-white;
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  }
+
+  ::selection {
+    background-color: #C25B1A;
+    color: #FAF7F2;
   }
 }
 
 /* ============================================================
-   LUXURY ANIMATIONS
+   EDITORIAL UTILITY CLASSES
 ============================================================ */
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(0.5deg); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.08); }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0%); }
-}
-
-@keyframes ticker-scroll {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes glow-ring-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(16,185,129,0.6), 0 0 15px 2px rgba(16,185,129,0.3);
+@layer components {
+  /* Label: small uppercase tracking — used like a category tag */
+  .label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
-  50% {
-    box-shadow: 0 0 0 8px rgba(16,185,129,0), 0 0 25px 6px rgba(16,185,129,0.15);
+
+  /* Rule: thin horizontal separator */
+  .rule {
+    border-top: 1px solid currentColor;
   }
+
+  /* ── LIGHT-BACKGROUND INPUTS ── */
+  .input-light {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(20, 18, 12, 0.18);
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #14120C;
+    transition: border-color 0.2s;
+  }
+  .input-light::placeholder { color: #A09286; }
+  .input-light:focus { outline: none; border-bottom-color: #C25B1A; }
+
+  .select-light {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(20, 18, 12, 0.18);
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #14120C;
+    transition: border-color 0.2s;
+    appearance: none;
+    cursor: pointer;
+  }
+  .select-light:focus { outline: none; border-bottom-color: #C25B1A; }
+  .select-light option { background: #F2EDE4; color: #14120C; }
+
+  /* ── DARK-BACKGROUND INPUTS ── */
+  .input-dark {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(242, 237, 228, 0.18);
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #F2EDE4;
+    transition: border-color 0.2s;
+  }
+  .input-dark::placeholder { color: rgba(242, 237, 228, 0.35); }
+  .input-dark:focus { outline: none; border-bottom-color: #C25B1A; }
+
+  .select-dark {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(242, 237, 228, 0.18);
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #F2EDE4;
+    transition: border-color 0.2s;
+    appearance: none;
+    cursor: pointer;
+  }
+  .select-dark:focus { outline: none; border-bottom-color: #C25B1A; }
+  .select-dark option { background: #14120C; color: #F2EDE4; }
 }
 
+/* ============================================================
+   ANIMATIONS
+============================================================ */
 @keyframes slide-up-fade {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.animate-slide-up-fade { animation: slide-up-fade 0.3s ease-out forwards; }
 
-@keyframes probability-fill {
-  from { width: 0%; }
-  to { width: var(--fill-width, 80%); }
-}
-
-@keyframes carousel-enter-right {
-  from { opacity: 0; transform: translateX(40px) scale(0.97); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-@keyframes carousel-enter-left {
-  from { opacity: 0; transform: translateX(-40px) scale(0.97); }
-  to { opacity: 1; transform: translateX(0) scale(1); }
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
 }
 
 /* ============================================================
-   ANIMATION CLASSES
+   SCROLLBAR — terracotta accent
 ============================================================ */
-
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-float-delayed { animation: float 7s ease-in-out 2s infinite; }
-.animate-pulse-glow { animation: pulse-glow 8s ease-in-out infinite; }
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 28s linear infinite;
-}
-.animate-marquee:hover { animation-play-state: paused; }
-
-.animate-marquee-reverse {
-  display: flex;
-  width: max-content;
-  animation: marquee-reverse 32s linear infinite;
-}
-.animate-marquee-reverse:hover { animation-play-state: paused; }
-
-.animate-ticker {
-  display: flex;
-  width: max-content;
-  animation: ticker-scroll 35s linear infinite;
-}
-
-.animate-glow-ring { animation: glow-ring-pulse 2s ease-in-out infinite; }
-.animate-slide-up-fade { animation: slide-up-fade 0.35s ease-out forwards; }
-
-.animate-carousel-enter-right {
-  animation: carousel-enter-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-carousel-enter-left {
-  animation: carousel-enter-left 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* ============================================================
-   PROBABILITY BAR FILL
-============================================================ */
-
-.probability-bar-fill {
-  width: 0%;
-  animation: probability-fill 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-}
-
-/* ============================================================
-   TYPOGRAPHY EFFECTS
-============================================================ */
-
-.text-shimmer {
-  background: linear-gradient(90deg, #FFFFFF 0%, #93C5FD 25%, #60A5FA 50%, #34D399 75%, #FFFFFF 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: shimmer 8s linear infinite;
-}
-
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 50%, #34D399 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ============================================================
-   GLASSMORPHISM CARDS
-============================================================ */
-
-.glass-panel {
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-card {
-  background: rgba(15, 23, 42, 0.5);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-card:hover {
-  background: rgba(14, 19, 31, 0.85);
-  border-color: rgba(197, 168, 128, 0.3);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(197, 168, 128, 0.08);
-  transform: translateY(-3px);
-}
-
-.glass-card-emerald:hover {
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(16, 185, 129, 0.18);
-  transform: translateY(-4px);
-}
-
-/* ============================================================
-   SECTION UTILITIES
-============================================================ */
-
-.section-divider {
-  height: 1px;
-  width: 100%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(255, 255, 255, 0) 100%);
-}
-
-/* ============================================================
-   SCROLLBAR
-============================================================ */
-
-::-webkit-scrollbar { width: 7px; height: 7px; }
-::-webkit-scrollbar-track { background: #070A11; }
-::-webkit-scrollbar-thumb { background: #1E2535; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #C5A880; }
-
-/* ============================================================
-   DESTINATION CAROUSEL TRACK — JS-CONTROLLED
-============================================================ */
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-/* Drag cursor while swiping */
-.carousel-dragging { cursor: grabbing !important; user-select: none; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #F2EDE4; }
+::-webkit-scrollbar-thumb { background: #C25B1A; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #9E4812; }

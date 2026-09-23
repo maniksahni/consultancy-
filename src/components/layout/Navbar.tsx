@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,15 +12,13 @@ export default function Navbar() {
   const isHome = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // On inner pages, anchor links must be prefixed with "/" to navigate home first
   const href = (hash: string) => (isHome ? hash : `/${hash}`);
+  const bookingHref = isHome ? "#booking" : "/#booking";
 
   const navLinks = [
     { name: "Study Hubs", href: href("#destinations") },
@@ -29,99 +27,116 @@ export default function Navbar() {
     { name: "Outcomes", href: href("#outcomes") },
   ];
 
-  const bookingHref = isHome ? "#booking" : "/#booking";
+  const isLightNav = scrolled || isOpen;
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "border-b border-[#C5A880]/15 bg-[#070A11]/95 backdrop-blur-2xl shadow-xl shadow-black/60"
-          : "border-b border-white/[0.07] bg-[#070A11]/80 backdrop-blur-xl"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isLightNav
+          ? "bg-cream-50/95 backdrop-blur-xl shadow-[0_1px_0_0_rgba(20,18,12,0.08)]"
+          : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        {/* Boutique Crest & Brand Identity */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#C5A880]/30 bg-[#0B0F19] text-[#C5A880] shadow-sm group-hover:border-[#C5A880]/60 transition-all">
-            <Compass className="h-4.5 w-4.5 stroke-[1.75] text-[#C5A880] group-hover:rotate-45 transition-transform duration-500" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-lg tracking-tight text-white font-medium">
-                Pathways<span className="font-sans text-stone-400 font-light text-sm ml-1">Global</span>
-              </span>
-              <span className="hidden sm:inline-flex items-center rounded-full border border-[#C5A880]/25 bg-[#C5A880]/10 px-2 py-0.5 text-[9px] font-medium tracking-wider uppercase text-[#DBCBAA]">
-                1-on-1 Advisory
-              </span>
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex items-center justify-between">
+
+        {/* Logo — editorial wordmark */}
+        <Link href="/" className="flex items-center gap-px group">
+          <span
+            className={`font-serif text-xl font-normal tracking-[-0.02em] transition-colors ${
+              isLightNav
+                ? "text-ink group-hover:text-ink-soft"
+                : "text-cream group-hover:text-cream/80"
+            }`}
+          >
+            Pathways
+          </span>
+          <span className="font-serif text-xl text-terra mx-0.5 font-light">/</span>
+          <span
+            className={`font-sans text-sm font-light tracking-wide mt-0.5 transition-colors ${
+              isLightNav
+                ? "text-stone group-hover:text-ink"
+                : "text-cream/50 group-hover:text-cream"
+            }`}
+          >
+            Global
+          </span>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-9">
+        {/* Desktop nav — label style, uppercase */}
+        <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-xs font-medium tracking-wider uppercase text-stone-400 hover:text-white transition-colors"
+              className={`label transition-colors ${
+                isLightNav
+                  ? "text-stone hover:text-ink"
+                  : "text-cream/60 hover:text-cream"
+              }`}
             >
               {link.name}
             </Link>
           ))}
         </nav>
 
-        {/* Understated Executive CTA */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Desktop CTA — square, editorial */}
+        <div className="hidden md:flex items-center gap-4">
           <a
             href={bookingHref}
-            className="group relative inline-flex items-center gap-2 rounded-lg border border-[#C5A880]/40 bg-[#0E1424] hover:bg-[#151D33] hover:border-[#C5A880]/70 px-4 py-2 text-xs font-medium tracking-wide text-[#E8DEC9] transition-all shadow-sm active:scale-[0.98]"
-          >
-            <span>Schedule 1-on-1 Call</span>
-            <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
-        </div>
-
-        {/* Mobile Hamburger */}
-        <div className="flex items-center gap-2 md:hidden">
-          <a
-            href={bookingHref}
-            className="rounded-lg border border-[#C5A880]/30 bg-[#0E1424] px-2.5 py-1.5 text-xs font-medium text-[#E8DEC9]"
+            className={`label border px-5 py-2.5 transition-colors ${
+              isLightNav
+                ? "border-ink/20 hover:border-terra hover:text-terra text-ink"
+                : "border-cream/25 hover:border-terra hover:text-terra text-cream"
+            }`}
           >
             Schedule Call
           </a>
+        </div>
+
+        {/* Mobile controls */}
+        <div className="flex items-center gap-3 md:hidden">
+          <a
+            href={bookingHref}
+            className={`label border px-3 py-2 text-[10px] transition-colors ${
+              isLightNav
+                ? "border-ink/20 text-ink"
+                : "border-cream/25 text-cream"
+            }`}
+          >
+            Call
+          </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-2 text-stone-300 hover:bg-stone-900 border border-white/[0.08]"
-            aria-label="Toggle Menu"
+            className={`p-2 transition-colors ${
+              isLightNav ? "text-ink" : "text-cream"
+            }`}
+            aria-label="Toggle menu"
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile drawer */}
       {isOpen && (
-        <div className="border-t border-[#C5A880]/15 bg-[#070A11]/98 text-stone-200 backdrop-blur-2xl px-5 pt-3 pb-6 md:hidden space-y-3">
-          <div className="flex flex-col gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="py-2.5 px-3 rounded-lg text-sm font-medium tracking-wide text-stone-300 hover:bg-stone-900/60 hover:text-white transition"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-          <div className="pt-3 border-t border-white/[0.08]">
+        <div className="md:hidden bg-cream-50 border-t border-ink/8 px-6 py-6 space-y-1 animate-slide-up-fade">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="block py-3 border-b border-ink/6 text-sm text-stone hover:text-ink transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
+          <div className="pt-4">
             <a
               href={bookingHref}
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full rounded-lg border border-[#C5A880]/40 bg-[#0E1424] py-3 text-xs font-medium uppercase tracking-wider text-[#E8DEC9]"
+              className="block w-full text-center bg-ink text-cream-50 py-3.5 label hover:bg-ink-soft transition-colors"
             >
-              <span>Schedule 1-on-1 Call</span>
-              <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880]" />
+              Schedule 1-on-1 Call
             </a>
           </div>
         </div>
