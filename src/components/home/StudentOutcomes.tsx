@@ -88,11 +88,11 @@ export default function StudentOutcomes() {
   ];
 
   return (
-    <section id="outcomes" className="relative py-20 lg:py-28 overflow-hidden">
+    <section id="outcomes" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden w-full max-w-full">
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 right-1/4 w-[750px] h-[450px] bg-emerald-500/5 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 right-1/4 w-[90vw] max-w-[750px] h-[300px] sm:h-[450px] bg-emerald-500/5 blur-[120px] sm:blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

@@ -10,18 +10,18 @@ export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-5 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 sm:bottom-6 right-3 sm:right-5 z-50 flex flex-col items-end gap-3 max-w-[calc(100vw-1.5rem)]">
       {/* ─── EXPANDED CARD ─── */}
       {expanded && (
-        <div className="animate-slide-up-fade w-72 sm:w-80 rounded-2xl border border-slate-700/80 bg-slate-900/95 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden">
+        <div className="animate-slide-up-fade w-[calc(100vw-2rem)] max-w-xs sm:w-80 rounded-2xl border border-slate-700/80 bg-slate-900/95 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden">
           {/* Card header */}
           <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 px-4 py-3.5 flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl border border-white/20 flex-shrink-0 bg-slate-950 flex items-center justify-center text-white">
-              <Compass className="h-4.5 w-4.5 text-blue-400" />
+            <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-xl border border-white/20 flex-shrink-0 bg-slate-950 flex items-center justify-center text-white">
+              <Compass className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
-                <p className="text-sm font-bold text-white">Pathways Global</p>
+                <p className="text-xs sm:text-sm font-bold text-white truncate">Pathways Global</p>
                 <span className="text-[9px] bg-white/20 text-white rounded-full px-1.5 py-0.2">1-on-1</span>
                 {/* Online indicator */}
                 <span className="flex h-2 w-2 flex-shrink-0">
@@ -29,14 +29,14 @@ export default function FloatingWhatsApp() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] text-blue-100">
+              <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-blue-100 truncate">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
                 <span>Senior Advisor Online &bull; Direct Replies</span>
               </div>
             </div>
             <button
               onClick={() => setExpanded(false)}
-              className="text-white/70 hover:text-white transition"
+              className="text-white/70 hover:text-white transition p-1"
               aria-label="Close"
             >
               <X className="h-4 w-4" />
@@ -44,7 +44,7 @@ export default function FloatingWhatsApp() {
           </div>
 
           {/* Chat bubble */}
-          <div className="p-4 space-y-3">
+          <div className="p-3.5 sm:p-4 space-y-3">
             <div className="flex gap-2.5">
               <div className="h-6 w-6 rounded-lg bg-blue-500/20 border border-blue-500/40 flex-shrink-0 mt-0.5 flex items-center justify-center text-blue-400">
                 <Compass className="h-3.5 w-3.5" />
@@ -87,7 +87,7 @@ export default function FloatingWhatsApp() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between gap-2 w-full rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 text-white py-3 px-4 hover:opacity-95 transition-all group shadow-md shadow-blue-500/20"
+              className="flex items-center justify-between gap-2 w-full rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 text-white py-2.5 sm:py-3 px-3.5 sm:px-4 hover:opacity-95 transition-all group shadow-md shadow-blue-500/20"
             >
               <div className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
@@ -109,8 +109,9 @@ export default function FloatingWhatsApp() {
 
       {/* ─── FLOATING TRIGGER BUTTON ─── */}
       <div className="relative flex items-center">
+        {/* Tooltip label (Desktop only to prevent mobile overflow) */}
         {!expanded && (
-          <div className="absolute right-full mr-3 animate-slide-up-fade">
+          <div className="hidden sm:block absolute right-full mr-3 animate-slide-up-fade pointer-events-none">
             <div className="flex items-center gap-2 rounded-xl bg-slate-900/95 border border-slate-700/80 backdrop-blur-xl px-3.5 py-2 shadow-xl whitespace-nowrap">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -125,12 +126,12 @@ export default function FloatingWhatsApp() {
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="relative flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 via-indigo-600 to-emerald-500 text-white shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95"
+          className="relative flex items-center justify-center h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-gradient-to-br from-blue-600 via-indigo-600 to-emerald-500 text-white shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95"
         >
           {expanded ? (
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
           ) : (
-            <MessageCircle className="h-6 w-6 fill-white" />
+            <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 fill-white" />
           )}
         </button>
       </div>

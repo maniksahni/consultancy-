@@ -117,11 +117,11 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
   };
 
   return (
-    <section id="booking" className="relative py-20 lg:py-28 overflow-hidden bg-slate-950/40 border-t border-b border-slate-800/80">
+    <section id="booking" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden bg-slate-950/40 border-t border-b border-slate-800/80 w-full max-w-full">
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-600/5 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[800px] h-[300px] sm:h-[500px] bg-blue-600/5 blur-[120px] sm:blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -224,8 +224,8 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
           </div>
 
           {/* Right Column: Modern Distraction-Free Booking Form */}
-          <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-6 sm:p-9 backdrop-blur-xl shadow-2xl relative">
+          <div className="lg:col-span-7 w-full max-w-full">
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-4 sm:p-8 backdrop-blur-xl shadow-2xl relative w-full">
               
               {submitted ? (
                 /* Success View */

@@ -49,11 +49,11 @@ export default function ProcessRoadmap() {
   ];
 
   return (
-    <section id="process" className="relative py-20 lg:py-28 overflow-hidden">
+    <section id="process" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden w-full max-w-full">
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] bg-indigo-600/5 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[850px] h-[300px] sm:h-[400px] bg-indigo-600/5 blur-[120px] sm:blur-[160px] pointer-events-none rounded-full" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

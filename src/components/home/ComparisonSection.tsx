@@ -5,10 +5,6 @@ import {
   XCircle, 
   CheckCircle2, 
   ShieldCheck, 
-  Sparkles, 
-  UserCheck, 
-  FileText, 
-  AlertTriangle,
   Compass
 } from "lucide-react";
 
@@ -42,34 +38,34 @@ export default function ComparisonSection() {
   ];
 
   return (
-    <section id="comparison" className="relative py-20 lg:py-28 overflow-hidden bg-slate-950/40 border-t border-b border-slate-800/80">
+    <section id="comparison" className="relative py-16 sm:py-20 lg:py-28 overflow-hidden bg-slate-950/40 border-t border-b border-slate-800/80 w-full max-w-full">
       {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-blue-600/5 blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-blue-600/5 blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-500/5 blur-[140px] pointer-events-none" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3.5 py-1 text-xs font-semibold text-blue-400 mb-4">
             <Compass className="h-3.5 w-3.5" />
             <span>The Mentorship Advantage</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
             Why Choose Dedicated{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">
               1-on-1 Mentorship
             </span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed">
             The study-abroad industry is dominated by mass-processing factories that treat students as recruitment volumes. Here is how Pathways Global differs fundamentally.
           </p>
         </div>
 
-        {/* 2-Column High-Contrast Comparison Card */}
-        <div className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 sm:p-10 backdrop-blur-xl shadow-2xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+        {/* Desktop View: Linear Style Table */}
+        <div className="hidden md:block rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 sm:p-10 backdrop-blur-xl shadow-2xl overflow-hidden w-full">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-left border-collapse min-w-[640px]">
               <thead>
                 <tr className="border-b border-slate-800">
                   <th className="py-4 px-4 text-xs font-bold text-slate-400 uppercase tracking-wider w-1/4">
@@ -120,6 +116,53 @@ export default function ComparisonSection() {
               <span>Zero Institutional Kickbacks &bull; 100% Student-Aligned Interests</span>
             </div>
             <a href="#booking" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+              Schedule Your Free Discovery Call &rarr;
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile View: Stacked Comparison Cards (Zero Overflow Guarantee) */}
+        <div className="block md:hidden space-y-4 w-full">
+          {comparisonItems.map((item, idx) => (
+            <div 
+              key={idx} 
+              className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-4 backdrop-blur-xl space-y-3"
+            >
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-slate-800/60 pb-2">
+                {item.factor}
+              </h4>
+              
+              {/* Pathways Global Column (Priority) */}
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-3 space-y-1">
+                <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Pathways Global 1-on-1</span>
+                </div>
+                <p className="text-xs text-emerald-100/90 leading-relaxed">
+                  {item.pathways}
+                </p>
+              </div>
+
+              {/* Mass Agencies Column */}
+              <div className="rounded-xl border border-rose-900/30 bg-rose-950/15 p-3 space-y-1">
+                <div className="flex items-center gap-1.5 text-rose-400 text-xs font-bold">
+                  <XCircle className="h-3.5 w-3.5 text-rose-400" />
+                  <span>Mass Processing Agencies</span>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {item.agency}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {/* Mobile Bottom Note */}
+          <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-4 text-center space-y-2">
+            <div className="flex items-center justify-center gap-2 text-xs text-emerald-300 font-medium">
+              <ShieldCheck className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+              <span>Zero Institutional Kickbacks</span>
+            </div>
+            <a href="#booking" className="block text-xs text-blue-400 font-bold hover:underline">
               Schedule Your Free Discovery Call &rarr;
             </a>
           </div>

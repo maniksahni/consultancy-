@@ -41,9 +41,9 @@ export default function RootLayout({
           rel="stylesheet" 
         />
       </head>
-      <body className="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white antialiased">
+      <body className="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white antialiased overflow-x-hidden max-w-full w-full">
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col w-full max-w-full overflow-x-hidden">
             {children}
           </div>
           <FloatingWhatsApp />

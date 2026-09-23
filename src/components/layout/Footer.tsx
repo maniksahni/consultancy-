@@ -18,11 +18,11 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-slate-800/80 bg-[#02050E] text-slate-400 pt-16 pb-12 overflow-hidden">
+    <footer className="relative border-t border-slate-800/80 bg-[#02050E] text-slate-400 pt-16 pb-12 overflow-hidden w-full max-w-full">
       {/* Ambient background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-blue-600/5 blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90vw] max-w-[700px] h-[250px] sm:h-[300px] bg-blue-600/5 blur-[120px] sm:blur-[140px] pointer-events-none rounded-full" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* 4-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
