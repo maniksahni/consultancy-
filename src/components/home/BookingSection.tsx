@@ -86,9 +86,9 @@ export default function BookingSection() {
       errors.fullName = "Please enter your full name.";
     }
     if (!formData.whatsapp.trim()) {
-      errors.whatsapp = "Please enter your WhatsApp contact number.";
-    } else if (formData.whatsapp.replace(/\D/g, "").length < 7) {
-      errors.whatsapp = "Please enter a valid phone/WhatsApp number.";
+      errors.whatsapp = "Please enter a valid 10-digit WhatsApp number.";
+    } else if (formData.whatsapp.length !== 10) {
+      errors.whatsapp = "Please enter a valid 10-digit WhatsApp number.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -137,12 +137,9 @@ export default function BookingSection() {
 
 
   const getWhatsAppDirectUrl = () => {
-    const text = `Hi! My name is ${encodeURIComponent(formData.fullName || "Student")}. 
-I would like to schedule a 1-on-1 strategy call with Pathways Global.
-• Target Country: ${encodeURIComponent(formData.targetCountry)}
-• Target Intake: ${encodeURIComponent(formData.targetIntake)}
-• Academic Background: ${encodeURIComponent(formData.qualification || "Not specified")}
-• Assistance Needed: ${encodeURIComponent(formData.helpNeeded)}`;
+    // Prepend India country code (+91) in the message body since form collects 10-digit local number
+    const text = `Hi! My name is ${encodeURIComponent(formData.fullName || "Student")}. \nI would like to schedule a 1-on-1 strategy call with Pathways Global.\n• My WhatsApp: ${encodeURIComponent("+91 " + (formData.whatsapp || "—"))}\n• Target Country: ${encodeURIComponent(formData.targetCountry)}\n• Target Intake: ${encodeURIComponent(formData.targetIntake)}\n• Academic Background: ${encodeURIComponent(formData.qualification || "Not specified")}\n• Assistance Needed: ${encodeURIComponent(formData.helpNeeded)}`;
+    // wa.me destination is still the business's number; customer number is in the message body
     return `https://wa.me/33755749029?text=${text}`;
   };
 
@@ -257,10 +254,21 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     <label className="label text-cream/40 text-[9px] block mb-1">WhatsApp Number *</label>
                     <input
                       type="tel"
-                      placeholder="e.g. +91 98765 43210"
+                      inputMode="numeric"
+                      placeholder="e.g. 9876543210"
+                      maxLength={10}
                       value={formData.whatsapp}
+                      onKeyDown={(e) => {
+                        // Allow: backspace, delete, tab, escape, enter, arrow keys
+                        const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+                        if (allowed.includes(e.key)) return;
+                        // Block anything that isn't a digit 0–9
+                        if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+                      }}
                       onChange={(e) => {
-                        setFormData({ ...formData, whatsapp: e.target.value });
+                        // Strip any non-digit characters that could arrive via paste
+                        const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                        setFormData({ ...formData, whatsapp: digits });
                         if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
                       }}
                       className={`input-dark py-2 text-sm min-h-[44px] ${
@@ -591,10 +599,18 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                       <LabelEl icon={Phone}>WhatsApp Number *</LabelEl>
                       <input
                         type="tel"
-                        placeholder="e.g. +91 98765 43210"
+                        inputMode="numeric"
+                        placeholder="e.g. 9876543210"
+                        maxLength={10}
                         value={formData.whatsapp}
+                        onKeyDown={(e) => {
+                          const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+                          if (allowed.includes(e.key)) return;
+                          if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+                        }}
                         onChange={(e) => {
-                          setFormData({ ...formData, whatsapp: e.target.value });
+                          const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                          setFormData({ ...formData, whatsapp: digits });
                           if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
                         }}
                         className={`input-dark ${
