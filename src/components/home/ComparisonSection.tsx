@@ -41,7 +41,8 @@ export default function ComparisonSection() {
   const handleMobileScroll = () => {
     if (!carouselRef.current) return;
     const container = carouselRef.current;
-    const cardWidth = container.firstElementChild?.clientWidth || 300;
+    const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+    const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
     const index = Math.round(container.scrollLeft / (cardWidth + 14));
     setActiveMobileIndex(Math.min(Math.max(index, 0), comparisonItems.length - 1));
   };
@@ -81,12 +82,15 @@ export default function ComparisonSection() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-2 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-2 scrollbar-none carousel-snap"
           >
+            {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
+
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-start flex-none w-[86vw] max-w-[340px] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm carousel-snap-item"
+                className="snap-center flex-none w-[86vw] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm carousel-snap-item relative"
               >
                 <div>
                   {/* Factor Header */}
@@ -130,6 +134,8 @@ export default function ComparisonSection() {
                 </div>
               </div>
             ))}
+            {/* Trailing spacer for true centering of last card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
           </div>
 
           {/* Dot pagination indicator with smooth width-expand */}
@@ -140,10 +146,9 @@ export default function ComparisonSection() {
                 onClick={() => {
                   if (!carouselRef.current) return;
                   const container = carouselRef.current;
-                  const card = container.children[idx] as HTMLElement;
-                  if (card) {
-                    container.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
-                  }
+                  const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+                  const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
+                  container.scrollTo({ left: idx * (cardWidth + 14), behavior: "smooth" });
                 }}
                 aria-label={`Go to comparison ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ease-out ${

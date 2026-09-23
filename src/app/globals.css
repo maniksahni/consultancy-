@@ -208,15 +208,17 @@
     scrollbar-width: none;
   }
 
-  /* ── SMOOTH TOUCH CAROUSEL SCROLL-SNAP ── */
+  /* ── SMOOTH TOUCH CAROUSEL SCROLL-SNAP (CENTERED ACTIVE CARD) ── */
   .carousel-snap {
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory !important;
     scroll-behavior: smooth;
+    scroll-padding-inline: calc((100vw - 86vw) / 2) !important;
+    overscroll-behavior-x: contain;
   }
   .carousel-snap-item {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important;
   }
 }
 

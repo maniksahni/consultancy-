@@ -122,7 +122,8 @@ export default function StudyDestinations() {
   const handleMobileScroll = () => {
     if (!carouselRef.current) return;
     const container = carouselRef.current;
-    const cardWidth = container.firstElementChild?.clientWidth || 300;
+    const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+    const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
     const index = Math.round(container.scrollLeft / (cardWidth + 14));
     setActiveMobileIndex(Math.min(Math.max(index, 0), hubs.length - 1));
   };
@@ -156,8 +157,11 @@ export default function StudyDestinations() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-3 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-3 scrollbar-none carousel-snap"
           >
+            {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
+
             {hubs.map((hub, i) => {
               const slug = slugMap[hub.country];
               const code = countryCodes[hub.country];
@@ -166,7 +170,7 @@ export default function StudyDestinations() {
               return (
                 <div
                   key={hub.country}
-                  className={`snap-start flex-none w-[86vw] max-w-[340px] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item relative ${
+                  className={`snap-center flex-none w-[86vw] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item relative ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10"
                       : "bg-cream-50 text-ink border-ink/10"
@@ -280,6 +284,8 @@ export default function StudyDestinations() {
                 </div>
               );
             })}
+            {/* Trailing spacer for true centering of last card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
           </div>
 
           {/* Dot pagination indicator with width-expand animation */}
@@ -290,10 +296,9 @@ export default function StudyDestinations() {
                 onClick={() => {
                   if (!carouselRef.current) return;
                   const container = carouselRef.current;
-                  const card = container.children[idx] as HTMLElement;
-                  if (card) {
-                    container.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
-                  }
+                  const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+                  const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
+                  container.scrollTo({ left: idx * (cardWidth + 14), behavior: "smooth" });
                 }}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
