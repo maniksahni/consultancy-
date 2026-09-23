@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import {
   Calendar,
@@ -122,9 +122,9 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
   return (
     <section
       id="booking"
-      className="bg-[#14120C] py-8 sm:py-12 lg:py-24 overflow-hidden w-full"
+      className="bg-[#14120C] grain-ink py-8 sm:py-12 lg:py-24 overflow-hidden w-full relative"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── MOBILE: Self-contained, fits above the fold on first scroll ── */}
         <div className="lg:hidden">
@@ -235,67 +235,85 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                   </div>
                 </div>
 
-                {/* Progressive Disclosure Toggle */}
+                {/* Progressive Disclosure Toggle with Rotating Icon */}
                 <div className="pt-0.5">
                   <button
                     type="button"
                     onClick={() => setShowFullForm((prev) => !prev)}
-                    className="text-left text-xs label text-terra hover:text-terra-dark py-1 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="text-left text-xs label text-terra hover:text-terra-dark py-1 flex items-center gap-1.5 transition-colors cursor-pointer group"
                   >
-                    <span>{showFullForm ? "– Hide optional details" : "+ Add intake & academic details (optional)"}</span>
+                    <span
+                      className={`inline-flex items-center justify-center h-4 w-4 text-sm font-light transition-transform duration-300 ease-out flex-shrink-0 ${
+                        showFullForm ? "rotate-45 text-terra" : "rotate-0 text-terra"
+                      }`}
+                    >
+                      +
+                    </span>
+                    <span>{showFullForm ? "Hide optional details" : "Add intake & academic details (optional)"}</span>
                   </button>
                 </div>
 
-                {/* Collapsible Secondary Fields */}
-                {showFullForm && (
-                  <div className="space-y-2.5 pt-1 border-t border-cream/10 animate-slide-up-fade">
-                    <div className="relative">
-                      <label className="label text-cream/40 text-[9px] block mb-1">Target Intake</label>
-                      <select
-                        value={formData.targetIntake}
-                        onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                        className="select-dark py-2 text-sm min-h-[44px]"
-                      >
-                        {intakes.map((itk) => (
-                          <option key={itk} value={itk}>{itk}</option>
-                        ))}
-                      </select>
-                      <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                    </div>
+                {/* Collapsible Secondary Fields with Smooth Height Transition */}
+                <AnimatePresence initial={false}>
+                  {showFullForm && (
+                    <motion.div
+                      key="collapsible-form"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-2.5 pt-2 pb-1 border-t border-cream/10">
+                        <div className="relative">
+                          <label className="label text-cream/40 text-[9px] block mb-1">Target Intake</label>
+                          <select
+                            value={formData.targetIntake}
+                            onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
+                            className="select-dark py-2 text-sm min-h-[44px]"
+                          >
+                            {intakes.map((itk) => (
+                              <option key={itk} value={itk}>{itk}</option>
+                            ))}
+                          </select>
+                          <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
+                        </div>
 
-                    <div>
-                      <label className="label text-cream/40 text-[9px] block mb-1">Current Academic Background</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. B.Tech CS (7.6 CGPA)"
-                        value={formData.qualification}
-                        onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
-                        className="input-dark py-2 text-sm min-h-[44px]"
-                      />
-                    </div>
+                        <div>
+                          <label className="label text-cream/40 text-[9px] block mb-1">Current Academic Background</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. B.Tech CS (7.6 CGPA)"
+                            value={formData.qualification}
+                            onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                            className="input-dark py-2 text-sm min-h-[44px]"
+                          />
+                        </div>
 
-                    <div className="relative">
-                      <label className="label text-cream/40 text-[9px] block mb-1">Assistance Needed</label>
-                      <select
-                        value={formData.helpNeeded}
-                        onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
-                        className="select-dark py-2 text-sm min-h-[44px]"
-                      >
-                        {helpOptions.map((opt) => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                      <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                    </div>
-                  </div>
-                )}
+                        <div className="relative">
+                          <label className="label text-cream/40 text-[9px] block mb-1">Assistance Needed</label>
+                          <select
+                            value={formData.helpNeeded}
+                            onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
+                            className="select-dark py-2 text-sm min-h-[44px]"
+                          >
+                            {helpOptions.map((opt) => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                          <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                {/* Primary CTA Button — directly above fold */}
+                {/* Primary CTA Button — directly above fold with satisfying tactile press */}
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[48px] py-3.5 label text-xs tracking-wider transition-colors cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[48px] py-3.5 label text-xs tracking-wider transition-colors cursor-pointer btn-tactile btn-tactile-dark active:scale-[0.98]"
                   >
                     {loading ? (
                       <>
@@ -571,7 +589,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-4 label transition-colors cursor-pointer text-xs tracking-wider"
+                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-tactile btn-tactile-dark active:scale-[0.98]"
                     >
                       {loading ? (
                         <>

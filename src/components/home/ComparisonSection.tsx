@@ -49,9 +49,9 @@ export default function ComparisonSection() {
   return (
     <section
       id="comparison"
-      className="bg-[#14120C] py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-[#14120C] grain-ink py-16 lg:py-24 overflow-hidden w-full relative"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── Section header ── */}
         <motion.div
@@ -81,12 +81,12 @@ export default function ComparisonSection() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-2 scrollbar-none"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-2 scrollbar-none carousel-snap"
           >
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-start flex-none w-[86vw] max-w-[340px] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm"
+                className="snap-start flex-none w-[86vw] max-w-[340px] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm carousel-snap-item"
               >
                 <div>
                   {/* Factor Header */}
@@ -132,13 +132,22 @@ export default function ComparisonSection() {
             ))}
           </div>
 
-          {/* Dot pagination indicator */}
+          {/* Dot pagination indicator with smooth width-expand */}
           <div className="flex items-center justify-center gap-1.5 pt-4 pb-1">
             {comparisonItems.map((_, idx) => (
-              <span
+              <button
                 key={idx}
-                className={`h-1.5 transition-all duration-200 ${
-                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-cream/20"
+                onClick={() => {
+                  if (!carouselRef.current) return;
+                  const container = carouselRef.current;
+                  const card = container.children[idx] as HTMLElement;
+                  if (card) {
+                    container.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
+                  }
+                }}
+                aria-label={`Go to comparison ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
+                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-cream/20 hover:bg-cream/40"
                 }`}
               />
             ))}
@@ -177,7 +186,7 @@ export default function ComparisonSection() {
           {comparisonItems.map((item, i) => (
             <div
               key={i}
-              className="grid grid-cols-[1fr_1px_1fr] border-b border-cream/8 last:border-b-0"
+              className="grid grid-cols-[1fr_1px_1fr] border-b border-cream/8 last:border-b-0 hover:bg-cream/[0.015] transition-colors"
             >
               {/* Left: Agency */}
               <div className="px-6 py-6 bg-cream/[0.015]">
@@ -207,7 +216,7 @@ export default function ComparisonSection() {
           </div>
           <a
             href="#booking"
-            className="text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors"
+            className="text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors btn-tactile"
           >
             Schedule Your Free Discovery Call →
           </a>

@@ -16,8 +16,8 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#14120C] text-cream/40 pt-16 pb-10 overflow-hidden w-full border-t border-cream/8">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <footer className="bg-[#14120C] grain-ink text-cream/40 pt-16 pb-10 overflow-hidden w-full border-t border-cream/8 relative">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── Main grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-14">
@@ -42,7 +42,7 @@ export default function Footer() {
               href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20inquiry%20regarding%20study%20abroad%20admissions."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-cream/10 hover:border-terra/50 text-cream/40 hover:text-cream/70 px-4 py-2.5 label text-[10px] transition-all"
+              className="inline-flex items-center gap-2 border border-cream/10 hover:border-terra/50 text-cream/40 hover:text-cream/70 px-4 py-2.5 label text-[10px] transition-all btn-tactile"
             >
               <MessageCircle className="h-4 w-4 text-terra" />
               WhatsApp Advisory: +91 98765 43210

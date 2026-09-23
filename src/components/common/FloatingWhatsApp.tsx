@@ -9,11 +9,22 @@ const WHATSAPP_URL =
 export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+
     const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
       // Appear after the hero section is scrolled past (approx 380px)
-      setIsVisible(window.scrollY > 380);
+      setIsVisible(currentScrollY > 380);
+
+      // Determine scroll direction with threshold
+      if (Math.abs(currentScrollY - lastScrollY) > 6) {
+        setIsScrollingUp(currentScrollY < lastScrollY);
+        lastScrollY = currentScrollY;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -21,11 +32,16 @@ export default function FloatingWhatsApp() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Show if past hero, and either expanded OR scrolling up (on desktop, always visible if past hero)
+  const showMobile = isVisible && (isScrollingUp || expanded);
+
   return (
     <div
       className={`fixed bottom-5 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 max-w-[calc(100vw-2rem)] transition-all duration-300 ${
         isVisible
-          ? "opacity-100 translate-y-0 pointer-events-auto"
+          ? showMobile
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "max-sm:opacity-0 max-sm:translate-y-8 max-sm:pointer-events-none opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-6 pointer-events-none"
       }`}
     >
@@ -125,7 +141,7 @@ export default function FloatingWhatsApp() {
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="inline-flex items-center gap-2 bg-[#14120C] text-cream border border-terra/60 px-4 py-2.5 shadow-2xl active:scale-95 transition-all min-h-[44px]"
+          className="inline-flex items-center gap-2 bg-[#14120C] text-cream border border-terra/60 px-4 py-2.5 shadow-2xl btn-tactile active:scale-[0.98] min-h-[44px]"
         >
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
@@ -156,7 +172,7 @@ export default function FloatingWhatsApp() {
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="relative flex items-center justify-center h-12 w-12 border border-ink/20 bg-cream-50 hover:border-terra text-ink hover:text-terra shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95"
+          className="relative flex items-center justify-center h-12 w-12 border border-ink/20 bg-cream-50 hover:border-terra text-ink hover:text-terra shadow-lg hover:shadow-xl btn-tactile active:scale-[0.98]"
         >
           {expanded ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         </button>

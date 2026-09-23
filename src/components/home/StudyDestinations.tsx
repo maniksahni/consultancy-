@@ -156,7 +156,7 @@ export default function StudyDestinations() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-3 scrollbar-none"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-3 scrollbar-none carousel-snap"
           >
             {hubs.map((hub, i) => {
               const slug = slugMap[hub.country];
@@ -166,7 +166,7 @@ export default function StudyDestinations() {
               return (
                 <div
                   key={hub.country}
-                  className={`snap-start flex-none w-[86vw] max-w-[340px] p-6 border transition-colors flex flex-col justify-between shadow-sm ${
+                  className={`snap-start flex-none w-[86vw] max-w-[340px] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10"
                       : "bg-cream-50 text-ink border-ink/10"
@@ -251,13 +251,13 @@ export default function StudyDestinations() {
                     </ul>
                   </div>
 
-                  {/* Actions */}
+                  {/* Actions with tactile buttons */}
                   <div className="space-y-2 pt-2 border-t border-current/10">
                     <a
                       href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-tactile btn-tactile-dark"
                     >
                       Discuss {hub.country} Strategy
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -265,7 +265,7 @@ export default function StudyDestinations() {
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className={`w-full flex items-center justify-center gap-1.5 border min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors ${
+                        className={`w-full flex items-center justify-center gap-1.5 border min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-tactile ${
                           isDark
                             ? "border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream"
                             : "border-ink/20 text-ink/70 hover:border-ink hover:text-ink"
@@ -280,13 +280,22 @@ export default function StudyDestinations() {
             })}
           </div>
 
-          {/* Dot pagination indicator (swiping is primary, dots show position) */}
+          {/* Dot pagination indicator with width-expand animation */}
           <div className="flex items-center justify-center gap-1.5 pt-4 pb-1">
             {hubs.map((_, idx) => (
-              <span
+              <button
                 key={idx}
-                className={`h-1.5 transition-all duration-200 ${
-                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-ink/20"
+                onClick={() => {
+                  if (!carouselRef.current) return;
+                  const container = carouselRef.current;
+                  const card = container.children[idx] as HTMLElement;
+                  if (card) {
+                    container.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
+                  }
+                }}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
+                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-ink/20 hover:bg-ink/40"
                 }`}
               />
             ))}
@@ -323,7 +332,7 @@ export default function StudyDestinations() {
                   </div>
                 </div>
 
-                {/* Country name + tag + advantages */}
+                {/* Country name + tag + advantages (staggered list) */}
                 <div className="col-span-5 space-y-4">
                   <div>
                     <h3
@@ -341,10 +350,17 @@ export default function StudyDestinations() {
 
                   <ul className="space-y-3 pt-1">
                     {hub.advantages.map((adv, j) => (
-                      <li key={j} className="flex items-start gap-3 text-sm text-stone font-light leading-relaxed">
+                      <motion.li
+                        key={j}
+                        initial={{ opacity: 0, x: -6 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.1 + j * 0.07, ease: EASE }}
+                        className="flex items-start gap-3 text-sm text-stone font-light leading-relaxed"
+                      >
                         <span className="text-terra mt-[3px] flex-shrink-0 text-base leading-none">–</span>
                         <span>{adv}</span>
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>
@@ -372,7 +388,7 @@ export default function StudyDestinations() {
                       href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2"
+                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2 btn-tactile"
                     >
                       Discuss {hub.country} Strategy
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -380,7 +396,7 @@ export default function StudyDestinations() {
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className="text-sm text-stone border-b border-stone/25 hover:border-stone/70 hover:text-ink pb-0.5 transition-colors"
+                        className="text-sm text-stone border-b border-stone/25 hover:border-stone/70 hover:text-ink pb-0.5 transition-colors btn-tactile"
                       >
                         Full Country Guide →
                       </Link>

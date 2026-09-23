@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
 import CountryFlag from "@/components/common/CountryFlag";
@@ -71,6 +71,17 @@ const outcomes = [
 ];
 
 export default function StudentOutcomes() {
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleMobileScroll = () => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const cardWidth = container.firstElementChild?.clientWidth || 280;
+    const index = Math.round(container.scrollLeft / (cardWidth + 14));
+    setActiveMobileIndex(Math.min(Math.max(index, 0), outcomes.length - 1));
+  };
+
   return (
     <section
       id="outcomes"
@@ -108,11 +119,15 @@ export default function StudentOutcomes() {
             <span className="text-terra">Swipe Dossiers →</span>
           </div>
 
-          <div className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 pb-4 scrollbar-none -mx-6 px-6">
+          <div
+            ref={carouselRef}
+            onScroll={handleMobileScroll}
+            className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 pb-3 scrollbar-none -mx-6 px-6 carousel-snap"
+          >
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[82vw] max-w-[315px] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between shadow-sm"
+                className="snap-start flex-none w-[82vw] max-w-[315px] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between shadow-sm carousel-snap-item"
               >
                 {/* Record header */}
                 <div className="border-b border-ink/10 pb-3 mb-4 flex items-center justify-between gap-2">
@@ -160,7 +175,28 @@ export default function StudentOutcomes() {
             ))}
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-stone font-light px-1 pt-1">
+          {/* Dot pagination indicator */}
+          <div className="flex items-center justify-center gap-1.5 pt-3 pb-1">
+            {outcomes.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  if (!carouselRef.current) return;
+                  const container = carouselRef.current;
+                  const card = container.children[idx] as HTMLElement;
+                  if (card) {
+                    container.scrollTo({ left: card.offsetLeft - 24, behavior: "smooth" });
+                  }
+                }}
+                aria-label={`Go to dossier ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
+                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-ink/20 hover:bg-ink/40"
+                }`}
+              />
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-stone font-light px-1 pt-2">
             <span>Scroll sideways to view all admissions</span>
             <span className="text-terra label text-[10px]">6 of 6 Verified</span>
           </div>
@@ -171,7 +207,7 @@ export default function StudentOutcomes() {
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 
+              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 transition-all duration-300 hover:bg-cream-50/70 hover:shadow-sm
                 ${i % 3 === 2 ? "lg:border-r-0" : ""}
                 ${i % 2 === 1 ? "md:border-r-0 lg:border-r" : ""}
                 ${i % 3 === 2 && i % 2 === 1 ? "md:border-r-0" : ""}
