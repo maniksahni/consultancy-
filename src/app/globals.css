@@ -193,10 +193,10 @@
 }
 
 .glass-card:hover {
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(59, 130, 246, 0.18);
-  transform: translateY(-4px);
+  background: rgba(14, 19, 31, 0.85);
+  border-color: rgba(197, 168, 128, 0.3);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px rgba(197, 168, 128, 0.08);
+  transform: translateY(-3px);
 }
 
 .glass-card-emerald:hover {
@@ -221,9 +221,9 @@
 ============================================================ */
 
 ::-webkit-scrollbar { width: 7px; height: 7px; }
-::-webkit-scrollbar-track { background: #030712; }
-::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
+::-webkit-scrollbar-track { background: #070A11; }
+::-webkit-scrollbar-thumb { background: #1E2535; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #C5A880; }
 
 /* ============================================================
    DESTINATION CAROUSEL TRACK — JS-CONTROLLED

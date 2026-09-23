@@ -1,16 +1,25 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { 
   Globe2, 
-  CheckCircle2, 
-  Clock, 
-  Banknote, 
-  ShieldCheck, 
   ArrowUpRight,
-  Briefcase
+  Briefcase,
+  Banknote,
+  ShieldCheck,
+  ArrowRight
 } from "lucide-react";
 import CountryFlag from "@/components/common/CountryFlag";
+
+const slugMap: Record<string, string> = {
+  "United Kingdom": "uk",
+  "United States": "usa",
+  "Canada": "canada",
+  "Germany": "germany",
+  "Australia": "australia",
+  "Ireland": "ireland",
+};
 
 export default function StudyDestinations() {
   const hubs = [
@@ -123,87 +132,92 @@ export default function StudyDestinations() {
 
         {/* 6 Curated Architectural Dossier Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-          {hubs.map((hub) => (
-            <div
-              key={hub.country}
-              className="group relative rounded-xl border border-white/[0.09] bg-[#0B0F19]/70 p-6 sm:p-7 hover:border-[#C5A880]/50 hover:bg-[#0E1424] transition-all duration-300 flex flex-col justify-between shadow-lg"
-            >
-              <div>
-                {/* Header: Bespoke Vector Flag + Title + Formal Pill */}
-                <div className="flex items-start justify-between gap-3 mb-5">
-                  <div className="flex items-center gap-3">
-                    <CountryFlag country={hub.country} size="md" />
-                    <div>
-                      <h3 className="font-serif text-xl font-medium text-white tracking-tight">
-                        {hub.country}
-                      </h3>
-                      <p className="text-[11px] font-medium tracking-wide text-stone-400 mt-0.5">
-                        {hub.stream}
-                      </p>
+          {hubs.map((hub) => {
+            const slug = slugMap[hub.country];
+            return (
+              <div
+                key={hub.country}
+                className="group relative rounded-xl border border-white/[0.09] bg-[#0B0F19]/70 p-6 sm:p-7 hover:border-[#C5A880]/50 hover:bg-[#0E1424] transition-all duration-300 flex flex-col justify-between shadow-lg"
+              >
+                <div>
+                  {/* Header: Bespoke Vector Flag + Title + Formal Pill */}
+                  <div className="flex items-start justify-between gap-3 mb-5">
+                    <div className="flex items-center gap-3">
+                      <CountryFlag country={hub.country} size="md" />
+                      <div>
+                        <h3 className="font-serif text-xl font-medium text-white tracking-tight">
+                          {hub.country}
+                        </h3>
+                        <p className="text-[11px] font-medium tracking-wide text-stone-400 mt-0.5">
+                          {hub.stream}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-medium tracking-wider uppercase border border-[#C5A880]/30 bg-[#C5A880]/10 text-[#E5D3B3] rounded px-2 py-0.5 whitespace-nowrap">
+                      {hub.tag}
+                    </span>
+                  </div>
+
+                  {/* Key Metrics Ledger Table */}
+                  <div className="space-y-2.5 my-5 rounded-lg bg-[#070A11]/80 border border-white/[0.06] p-3.5 text-xs">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                        <Briefcase className="h-3.5 w-3.5 text-[#C5A880]" /> Post-Study Work:
+                      </span>
+                      <span className="font-medium text-white text-[11px]">{hub.psw}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
+                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                        <Banknote className="h-3.5 w-3.5 text-[#C5A880]" /> Avg. Tuition:
+                      </span>
+                      <span className="font-medium text-[#E5D3B3] text-[11px]">{hub.avgTuition}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
+                      <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
+                        <ShieldCheck className="h-3.5 w-3.5 text-[#C5A880]" /> Proof of Funds:
+                      </span>
+                      <span className="font-medium text-stone-300 text-[11px] text-right truncate max-w-[150px]">{hub.proofOfFunds}</span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-medium tracking-wider uppercase border border-[#C5A880]/30 bg-[#C5A880]/10 text-[#E5D3B3] rounded px-2 py-0.5 whitespace-nowrap">
-                    {hub.tag}
-                  </span>
-                </div>
 
-                {/* Key Metrics Ledger Table */}
-                <div className="space-y-2.5 my-5 rounded-lg bg-[#070A11]/80 border border-white/[0.06] p-3.5 text-xs">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                      <Briefcase className="h-3.5 w-3.5 text-[#C5A880]" /> Post-Study Work:
-                    </span>
-                    <span className="font-medium text-white text-[11px]">{hub.psw}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
-                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                      <Banknote className="h-3.5 w-3.5 text-[#C5A880]" /> Avg. Tuition:
-                    </span>
-                    <span className="font-medium text-[#E5D3B3] text-[11px]">{hub.avgTuition}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs border-t border-white/[0.04] pt-2">
-                    <span className="text-stone-400 flex items-center gap-1.5 text-[11px] font-light">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#C5A880]" /> Proof of Funds:
-                    </span>
-                    <span className="font-medium text-stone-300 text-[11px] text-right truncate max-w-[150px]">{hub.proofOfFunds}</span>
+                  {/* Strategic Advantages Checklist */}
+                  <div className="space-y-2.5 my-6">
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-[#C5A880]">
+                      Strategic Advantages:
+                    </p>
+                    {hub.advantages.map((adv, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-xs text-stone-300 font-light">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#C5A880] flex-shrink-0 mt-1.5" />
+                        <span className="leading-relaxed">{adv}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Strategic Advantages Checklist */}
-                <div className="space-y-2.5 my-6">
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-[#C5A880]">
-                    Strategic Advantages:
-                  </p>
-                  {hub.advantages.map((adv, i) => (
-                    <div key={i} className="flex items-start gap-2.5 text-xs text-stone-300 font-light">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#C5A880] flex-shrink-0 mt-1.5" />
-                      <span className="leading-relaxed">{adv}</span>
-                    </div>
-                  ))}
+                {/* Action Links */}
+                <div className="pt-4 border-t border-white/[0.07] flex items-center justify-between">
+                  <a
+                    href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-medium text-[#DBCBAA] hover:text-white flex items-center gap-1 transition-colors"
+                  >
+                    <span>Discuss {hub.country} Strategy</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+
+                  {slug && (
+                    <Link
+                      href={`/destinations/${slug}`}
+                      className="text-[11px] font-light text-stone-400 hover:text-[#E5D3B3] transition-colors flex items-center gap-1"
+                    >
+                      Full Guide <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  )}
                 </div>
               </div>
-
-              {/* Action Links */}
-              <div className="pt-4 border-t border-white/[0.07] flex items-center justify-between">
-                <a
-                  href={`https://wa.me/919876543210?text=${encodeURIComponent(hub.whatsappMsg)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-medium text-[#DBCBAA] hover:text-white flex items-center gap-1 transition-colors"
-                >
-                  <span>Discuss {hub.country} Strategy</span>
-                  <ArrowUpRight className="h-3.5 w-3.5 text-[#C5A880] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
-                <a
-                  href="#booking"
-                  className="text-[11px] font-light text-stone-400 hover:text-white transition-colors"
-                >
-                  Book Assessment &rarr;
-                </a>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

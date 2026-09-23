@@ -2,11 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Compass, Menu, X, ArrowUpRight } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,12 +19,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // On inner pages, anchor links must be prefixed with "/" to navigate home first
+  const href = (hash: string) => (isHome ? hash : `/${hash}`);
+
   const navLinks = [
-    { name: "Study Hubs", href: "#destinations" },
-    { name: "Mentorship", href: "#comparison" },
-    { name: "Roadmap", href: "#process" },
-    { name: "Outcomes", href: "#outcomes" },
+    { name: "Study Hubs", href: href("#destinations") },
+    { name: "Mentorship", href: href("#comparison") },
+    { name: "Roadmap", href: href("#process") },
+    { name: "Outcomes", href: href("#outcomes") },
   ];
+
+  const bookingHref = isHome ? "#booking" : "/#booking";
 
   return (
     <header
@@ -49,7 +57,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links (Refined Editorial Spacing) */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-9">
           {navLinks.map((link) => (
             <Link
@@ -65,7 +73,7 @@ export default function Navbar() {
         {/* Understated Executive CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="#booking"
+            href={bookingHref}
             className="group relative inline-flex items-center gap-2 rounded-lg border border-[#C5A880]/40 bg-[#0E1424] hover:bg-[#151D33] hover:border-[#C5A880]/70 px-4 py-2 text-xs font-medium tracking-wide text-[#E8DEC9] transition-all shadow-sm active:scale-[0.98]"
           >
             <span>Schedule 1-on-1 Call</span>
@@ -76,7 +84,7 @@ export default function Navbar() {
         {/* Mobile Hamburger */}
         <div className="flex items-center gap-2 md:hidden">
           <a
-            href="#booking"
+            href={bookingHref}
             className="rounded-lg border border-[#C5A880]/30 bg-[#0E1424] px-2.5 py-1.5 text-xs font-medium text-[#E8DEC9]"
           >
             Schedule Call
@@ -108,7 +116,7 @@ export default function Navbar() {
           </div>
           <div className="pt-3 border-t border-white/[0.08]">
             <a
-              href="#booking"
+              href={bookingHref}
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-center gap-2 w-full rounded-lg border border-[#C5A880]/40 bg-[#0E1424] py-3 text-xs font-medium uppercase tracking-wider text-[#E8DEC9]"
             >

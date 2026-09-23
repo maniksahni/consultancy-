@@ -212,7 +212,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Pathways Global Advisory. All rights reserved.
           </p>
           <p>
-            Designed to elite Apple &amp; Linear product standards.
+            Independent 1-on-1 Overseas Education &amp; Visa Advisory.
           </p>
         </div>
 
