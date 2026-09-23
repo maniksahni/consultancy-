@@ -1,38 +1,38 @@
 import Navbar from "@/components/layout/Navbar";
-import PersonalHero from "@/components/home/PersonalHero";
-import AboutMentor from "@/components/home/AboutMentor";
-import MentorDestinations from "@/components/home/MentorDestinations";
-import MentorshipProcess from "@/components/home/MentorshipProcess";
+import Hero from "@/components/home/Hero";
+import StudyDestinations from "@/components/home/StudyDestinations";
+import ComparisonSection from "@/components/home/ComparisonSection";
+import ProcessRoadmap from "@/components/home/ProcessRoadmap";
 import BookingSection from "@/components/home/BookingSection";
-import StudentReviews from "@/components/home/StudentReviews";
-import PersonalFooter from "@/components/layout/PersonalFooter";
+import StudentOutcomes from "@/components/home/StudentOutcomes";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#030712] text-white flex flex-col selection:bg-emerald-600 selection:text-white">
-      {/* 1. Personal Header & Navigation */}
+    <main className="min-h-screen bg-[#030712] text-white flex flex-col selection:bg-blue-600 selection:text-white">
+      {/* 1. Header / Navbar */}
       <Navbar />
 
-      {/* 2. Personal Hero Section with 1-on-1 Mentor Value Proposition & Photo Showcase */}
-      <PersonalHero />
+      {/* 2. Hero Section */}
+      <Hero />
 
-      {/* 3. Meet Your Mentor — Bio, Philosophy & Mass Agency Comparison */}
-      <AboutMentor />
+      {/* 3. Curated Global Study Hubs */}
+      <StudyDestinations />
 
-      {/* 4. Target Destinations (6 Sleek Glassmorphic Cards) */}
-      <MentorDestinations />
+      {/* 4. Why Choose Dedicated 1-on-1 Mentorship */}
+      <ComparisonSection />
 
-      {/* 5. How She Works With Students (The 4-Step Journey) */}
-      <MentorshipProcess />
+      {/* 5. The 4-Stage Mentorship Journey */}
+      <ProcessRoadmap />
 
-      {/* 6. Direct Appointment & Consultation Booking Form */}
+      {/* 6. Direct Consultation Booking */}
       <BookingSection />
 
-      {/* 7. Student Reviews & Genuine Thanks (WhatsApp Chat Cards) */}
-      <StudentReviews />
+      {/* 7. Verified Student Outcomes */}
+      <StudentOutcomes />
 
-      {/* 8. Personal Footer with Direct Contact & Anti-Agency Transparency */}
-      <PersonalFooter />
+      {/* 8. Minimalist Footer */}
+      <Footer />
     </main>
   );
 }

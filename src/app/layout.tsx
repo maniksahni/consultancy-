@@ -4,23 +4,23 @@ import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Global Pathway | Senior Study-Abroad Mentor & Visa Advisor (1-on-1)",
-  description: "Personalized, end-to-end study abroad mentorship — from profile-first university shortlisting and authentic SOP editorial reviews to intensive 1-on-1 embassy mock interviews. 99.2% visa approval record across UK, USA, Canada, Germany, Australia & Ireland.",
+  title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
+  description: "Bypass mass-processing agencies. Personalized profile assessment, Ivy League & Russell Group SOP curation, and foolproof consular visa preparation directly from a dedicated senior mentor. 99.2% visa grant record.",
   keywords: [
-    "Study abroad mentor",
-    "Senior visa advisor",
-    "Independent education consultant",
-    "1-on-1 study abroad counselling",
-    "US F1 visa interview prep",
-    "UK 1 year masters admissions",
-    "Germany public university tuition free APS",
+    "Pathways Global",
+    "Study abroad mentorship",
+    "1-on-1 overseas education advisory",
+    "Student visa consultancy",
+    "US F1 visa preparation",
+    "UK graduate route admissions",
+    "Germany public university APS",
     "Canada study permit SDS",
     "Australia Genuine Student statement",
-    "SOP review line by line"
+    "Elite SOP editorial"
   ],
   openGraph: {
-    title: "Global Pathway | Senior Study-Abroad Mentor & Visa Advisor",
-    description: "No automated mass-applications. Direct 1-on-1 senior mentorship from shortlisting to visa approval with a 99.2% grant record.",
+    title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
+    description: "Bypass mass-processing agencies. 100% unbiased advisory, Ivy League & Russell Group admissions strategy, and verified consular preparation.",
     type: "website",
     locale: "en_US",
   },
@@ -41,7 +41,7 @@ export default function RootLayout({
           rel="stylesheet" 
         />
       </head>
-      <body className="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-emerald-600 selection:text-white antialiased">
+      <body className="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <div className="flex-1 flex flex-col">
             {children}
