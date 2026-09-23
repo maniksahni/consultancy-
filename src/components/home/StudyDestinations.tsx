@@ -166,7 +166,7 @@ export default function StudyDestinations() {
               return (
                 <div
                   key={hub.country}
-                  className={`snap-start flex-none w-[86vw] max-w-[340px] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item ${
+                  className={`snap-start flex-none w-[86vw] max-w-[340px] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item relative ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10"
                       : "bg-cream-50 text-ink border-ink/10"
@@ -175,9 +175,11 @@ export default function StudyDestinations() {
                   {/* Passport Header */}
                   <div>
                     <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <CountryFlag country={hub.country} size="lg" />
-                        <div>
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className="relative flex-shrink-0 mt-0.5 flex items-center justify-center">
+                          <CountryFlag country={hub.country} size="lg" />
+                        </div>
+                        <div className="min-w-0 flex-1">
                           <h3 className="font-display font-normal text-2xl leading-tight">
                             {hub.country}
                           </h3>
@@ -326,7 +328,7 @@ export default function StudyDestinations() {
                     >
                       {code}
                     </div>
-                    <div className="mt-2">
+                    <div className="mt-2 relative inline-flex items-center justify-center">
                       <CountryFlag country={hub.country} size="md" />
                     </div>
                   </div>
