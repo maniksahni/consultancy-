@@ -176,7 +176,7 @@ export default function StudentOutcomes() {
           </div>
 
           {/* Dot pagination indicator */}
-          <div className="flex items-center justify-center gap-1.5 pt-3 pb-1">
+          <div className="flex items-center justify-center gap-1.5 pt-3 pb-2">
             {outcomes.map((_, idx) => (
               <button
                 key={idx}
@@ -196,7 +196,7 @@ export default function StudentOutcomes() {
             ))}
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-stone font-light px-1 pt-2">
+          <div className="flex items-center justify-between text-[11px] text-stone font-light px-1 pt-2 pb-6">
             <span>Scroll sideways to view all admissions</span>
             <span className="text-terra label text-[10px]">6 of 6 Verified</span>
           </div>

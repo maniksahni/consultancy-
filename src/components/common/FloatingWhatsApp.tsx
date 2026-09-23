@@ -10,7 +10,10 @@ export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
+  const [isBookingInView, setIsBookingInView] = useState(false);
+  const [isNearCarousel, setIsNearCarousel] = useState(false);
 
+  // 1. Scroll listener for hero threshold & scroll-direction
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
@@ -32,22 +35,73 @@ export default function FloatingWhatsApp() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Show if past hero, and either expanded OR scrolling up (on desktop, always visible if past hero)
-  const showMobile = isVisible && (isScrollingUp || expanded);
+  // 2. IntersectionObserver to suppress entirely on/near the Booking section
+  useEffect(() => {
+    const bookingEl = document.getElementById("booking");
+    if (!bookingEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsBookingInView(entry.isIntersecting);
+      },
+      {
+        rootMargin: "80px 0px 80px 0px",
+        threshold: 0,
+      }
+    );
+
+    observer.observe(bookingEl);
+    return () => observer.disconnect();
+  }, []);
+
+  // 3. IntersectionObserver on carousels to shrink pill into a compact icon bubble
+  useEffect(() => {
+    const carouselIds = ["destinations", "comparison", "outcomes"];
+    const elements = carouselIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const anyIntersecting = entries.some((e) => e.isIntersecting);
+        setIsNearCarousel(anyIntersecting);
+      },
+      {
+        rootMargin: "-10% 0px -10% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  // Suppress entirely if not past hero, OR if booking section is in view
+  const shouldRender = isVisible && !isBookingInView;
+
+  // On mobile: show if scrolling up OR expanded; hide on scroll down
+  const showMobile = shouldRender && (isScrollingUp || expanded);
 
   return (
     <div
-      className={`fixed bottom-5 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 max-w-[calc(100vw-2rem)] transition-all duration-300 ${
-        isVisible
+      style={{
+        position: "fixed",
+        bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
+        right: "max(16px, env(safe-area-inset-right, 16px))",
+      }}
+      className={`z-50 flex flex-col items-end gap-3 pointer-events-none transition-all duration-300 ${
+        shouldRender
           ? showMobile
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "max-sm:opacity-0 max-sm:translate-y-8 max-sm:pointer-events-none opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 translate-y-6 pointer-events-none"
+            ? "opacity-100 translate-y-0"
+            : "max-sm:opacity-0 max-sm:translate-y-8 opacity-100 translate-y-0"
+          : "opacity-0 translate-y-8 pointer-events-none"
       }`}
     >
       {/* ─── Expanded card ─── */}
       {expanded && (
-        <div className="animate-slide-up-fade w-[calc(100vw-2rem)] max-w-xs sm:w-80 border border-ink/15 bg-cream-50 shadow-2xl overflow-hidden">
+        <div className="pointer-events-auto animate-slide-up-fade w-[calc(100vw-2rem)] max-w-xs sm:w-80 border border-ink/15 bg-cream-50 shadow-2xl overflow-hidden">
           {/* Card header */}
           <div className="bg-cream-200 border-b border-ink/10 px-4 py-3.5 flex items-center gap-3">
             <div className="h-9 w-9 border border-ink/15 flex-shrink-0 bg-cream flex items-center justify-center">
@@ -136,26 +190,32 @@ export default function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* ─── Mobile: Minimal Pill Trigger ─── */}
-      <div className="sm:hidden flex items-center">
+      {/* ─── Mobile Trigger: Adaptive Pill / Compact Icon Bubble ─── */}
+      <div className="sm:hidden flex items-center pointer-events-auto">
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="inline-flex items-center gap-2 bg-[#14120C] text-cream border border-terra/60 px-4 py-2.5 shadow-2xl btn-tactile active:scale-[0.98] min-h-[44px]"
+          className={`inline-flex items-center justify-center bg-[#14120C] text-cream border border-terra/60 shadow-2xl btn-tactile active:scale-[0.98] transition-all duration-300 min-h-[44px] ${
+            isNearCarousel && !expanded
+              ? "h-11 w-11 rounded-full p-0"
+              : "px-3.5 py-2.5 rounded-full gap-2"
+          }`}
         >
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
           </span>
           <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
-          <span className="label text-[10px] text-cream tracking-wider">
-            {expanded ? "Close" : "WhatsApp 1-on-1"}
-          </span>
+          {(!isNearCarousel || expanded) && (
+            <span className="label text-[10px] text-cream tracking-wider whitespace-nowrap">
+              {expanded ? "Close" : "WhatsApp 1-on-1"}
+            </span>
+          )}
         </button>
       </div>
 
       {/* ─── Desktop: Square Trigger Button with Tooltip ─── */}
-      <div className="hidden sm:flex relative items-center">
+      <div className="hidden sm:flex relative items-center pointer-events-auto">
         {!expanded && (
           <div className="absolute right-full mr-3 animate-slide-up-fade pointer-events-none">
             <div className="flex items-center gap-2 border border-ink/12 bg-cream px-3.5 py-2 shadow-lg whitespace-nowrap">

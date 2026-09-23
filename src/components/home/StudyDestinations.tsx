@@ -152,7 +152,7 @@ export default function StudyDestinations() {
         </div>
 
         {/* ── MOBILE: Finger-Swipeable Horizontal Carousel (No Arrow Buttons, Peek Reveal) ── */}
-        <div className="lg:hidden">
+        <div className="lg:hidden pb-6">
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
@@ -281,7 +281,7 @@ export default function StudyDestinations() {
           </div>
 
           {/* Dot pagination indicator with width-expand animation */}
-          <div className="flex items-center justify-center gap-1.5 pt-4 pb-1">
+          <div className="flex items-center justify-center gap-1.5 pt-4 pb-2">
             {hubs.map((_, idx) => (
               <button
                 key={idx}

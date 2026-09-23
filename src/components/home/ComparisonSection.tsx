@@ -133,7 +133,7 @@ export default function ComparisonSection() {
           </div>
 
           {/* Dot pagination indicator with smooth width-expand */}
-          <div className="flex items-center justify-center gap-1.5 pt-4 pb-1">
+          <div className="flex items-center justify-center gap-1.5 pt-4 pb-6">
             {comparisonItems.map((_, idx) => (
               <button
                 key={idx}
@@ -209,14 +209,14 @@ export default function ComparisonSection() {
         </motion.div>
 
         {/* ── Footer note ── */}
-        <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-8 sm:pb-0">
           <div className="flex items-center gap-2 text-cream/25 text-xs">
             <ShieldCheck className="h-4 w-4 text-cream/20 flex-shrink-0" />
             <span>Zero Institutional Kickbacks · 100% Student-Aligned Interests</span>
           </div>
           <a
             href="#booking"
-            className="text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors btn-tactile"
+            className="text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors btn-tactile max-w-[calc(100%-60px)]"
           >
             Schedule Your Free Discovery Call →
           </a>
