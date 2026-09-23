@@ -38,9 +38,8 @@ export default function StudyDestinations() {
       avgTuition: "£14,000 – £26,000 / yr",
       proofOfFunds: "28-Day Maintenance Fund Rule (~£12k–£15k)",
       advantages: [
-        "1-Year accelerated Master's saving 50% tuition & living cost",
+        "1-Year accelerated Master's — 50% lower tuition & living cost",
         "IELTS waiver (MOI) options based on Class 12 English score",
-        "Direct access to London & UK tech/fintech corporate hubs",
       ],
       tag: "1-Yr Masters",
       whatsappMsg: "Hi! I am interested in UK Master's and want to assess my profile.",
@@ -52,9 +51,8 @@ export default function StudyDestinations() {
       avgTuition: "$24,000 – $48,000 / yr",
       proofOfFunds: "1-Year Liquid Funds (I-20 estimate verification)",
       advantages: [
-        "Highest global starting compensation packages in Tech & STEM",
-        "OPT extensions granting 3 full years of post-study US employment",
-        "Unrivalled research endowment funding & university teaching assistantships",
+        "Highest global starting salaries in Tech & STEM",
+        "3-year OPT extension for STEM graduates",
       ],
       tag: "STEM OPT 3-Yr",
       whatsappMsg: "Hi! I am targeting US F-1 programs and need scholarship advice.",
@@ -66,9 +64,8 @@ export default function StudyDestinations() {
       avgTuition: "CAD 18,000 – 36,000 / yr",
       proofOfFunds: "CAD 20,635 GIC Deposit + First-Year Tuition",
       advantages: [
-        "Structured, legal pathway to Permanent Residency (Express Entry / PNP)",
-        "Spouse open work permit options during master's programs",
-        "Top-ranked public universities (UofT, UBC, McGill, Waterloo)",
+        "Clear legal pathway to Permanent Residency via Express Entry / PNP",
+        "Spouse open work permit during master's programs",
       ],
       tag: "PGWP to PR",
       whatsappMsg: "Hi! I want to understand Canada Master's and PGWP compliance.",
@@ -80,9 +77,8 @@ export default function StudyDestinations() {
       avgTuition: "€0 at Public Universities (Nominal admin fee)",
       proofOfFunds: "Blocked Account: €11,904 / yr (2026/27 threshold)",
       advantages: [
-        "Zero tuition fees at top-tier German Public Research Universities",
-        "Mandatory APS certification navigation with zero delays",
-        "Europe's strongest engineering, automotive & green-tech economy",
+        "Zero tuition at top-tier German public research universities",
+        "Europe's strongest engineering & green-tech economy",
       ],
       tag: "€0 Tuition Public",
       whatsappMsg: "Hi! I am aiming for tuition-free German Public Universities.",
@@ -95,8 +91,7 @@ export default function StudyDestinations() {
       proofOfFunds: "Annual Living AUD 29,710 + 1st Year Tuition",
       advantages: [
         "Group of Eight (Go8) world top-50 globally ranked institutions",
-        "Genuine Student (GS) assessment compliance & high part-time wages",
-        "Regional post-study extensions available for high-growth sectors",
+        "Regional post-study visa extensions for high-growth sectors",
       ],
       tag: "Go8 Excellence",
       whatsappMsg:
@@ -109,9 +104,8 @@ export default function StudyDestinations() {
       avgTuition: "€13,000 – €24,000 / yr",
       proofOfFunds: "€10,000 Immediate Living Proof + Course Fee",
       advantages: [
-        "European headquarters for Google, Apple, Meta, Pfizer & Stripe",
+        "European HQ for Google, Apple, Meta, Pfizer & Stripe",
         "English-speaking EU economy with fast-track 1-Year Master's",
-        "Uncapped career mobility under the 2-Year Stamp 1G visa",
       ],
       tag: "Silicon Docks",
       whatsappMsg:

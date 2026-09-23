@@ -205,7 +205,7 @@ export default function Footer() {
           <ShieldCheck className="h-5 w-5 text-terra/60 flex-shrink-0 mt-0.5" />
           <div>
             <strong className="text-cream/50 font-medium">Anti-Commission Ethics Standard: </strong>
-            Pathways Global operates strictly under an independent advisory contract. We do not accept recruiter commissions from universities or student loan brokers. All university recommendations and strategic advice are 100% fiduciary and aligned with candidate career ROI. Final admission and visa decisions rest with sovereign consular authorities and university academic boards.
+            Pathways Global accepts zero recruiter commissions from universities or loan brokers. All recommendations are 100% fiduciary, aligned with your career ROI. Final admission and visa decisions rest with consular authorities and academic boards.
           </div>
         </div>
 

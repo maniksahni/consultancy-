@@ -12,7 +12,7 @@ const steps = [
     number: "01",
     title: "Profile Audit & Goal Alignment",
     subtitle: "Deep Dive into GPA, Budget & Career ROI",
-    desc: "Comprehensive diagnostic of your academic history, backlogs, work experience, and financial budget to determine realistic admissions targets.",
+    desc: "Forensic review of your academics, backlogs, finances, and career goals to set realistic, unbiased admissions targets.",
     milestone: "Diagnostic Dossier & Financial Roadmap",
   },
   {
@@ -20,7 +20,7 @@ const steps = [
     number: "02",
     title: "Strategic Shortlisting",
     subtitle: "Safe, Target & Ambitious University Matrix",
-    desc: "Curating a tailored 8-to-10 university portfolio without commercial bias, balancing high-prestige reach programs with guaranteed scholarship admits.",
+    desc: "A bias-free 8–10 university portfolio balancing prestigious reach programs with scholarship-guaranteed admits.",
     milestone: "Personalized University Shortlist Matrix",
   },
   {
@@ -28,7 +28,7 @@ const steps = [
     number: "03",
     title: "Application & Essay Mastery",
     subtitle: "Compelling Narrative with 0% AI Detection",
-    desc: "Sentence-by-sentence editorial review of your SOPs, LORs, and CV. We develop an authentic, compelling story that passes strict admissions committee screeners.",
+    desc: "Sentence-by-sentence editorial review of your SOPs, LORs, and CV — authentic, compelling, and AI-screener-safe.",
     milestone: "Polished SOPs & Finalised Application Portals",
   },
   {
@@ -36,7 +36,7 @@ const steps = [
     number: "04",
     title: "Embassy Visa Preparation",
     subtitle: "Document Scrutiny & Consular Mock Simulations",
-    desc: "Forensic audit of proof-of-funds, DS-160/CAS paperwork, and intensive 1-on-1 mock interviews simulating real consular officers' cross-examination.",
+    desc: "Forensic audit of proof-of-funds paperwork and intensive 1-on-1 mock interviews replicating real consular cross-examination.",
     milestone: "Foolproof Visa Dossier & Mock Certification",
   },
 ];

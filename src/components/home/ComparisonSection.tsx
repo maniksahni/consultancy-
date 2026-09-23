@@ -9,28 +9,28 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const comparisonItems = [
   {
     factor: "Admissions Counselor Assigned",
-    agency: "Passed between unvetted telecallers, junior interns, and rotating sales reps",
-    pathways: "Single dedicated Senior Mentor who personally manages your entire journey",
+    agency: "Passed between unvetted telecallers and rotating sales reps",
+    pathways: "Single dedicated Senior Mentor managing your entire journey",
   },
   {
     factor: "University Recommendations",
-    agency: "Pushing partner colleges that pay high recruiter commissions (kickbacks)",
-    pathways: "100% unbiased shortlisting based strictly on your academic ROI & career goals",
+    agency: "Partner colleges selected for recruiter commission kickbacks",
+    pathways: "100% unbiased shortlisting based on your academic ROI & goals",
   },
   {
     factor: "SOP & LOR Editorial Quality",
-    agency: "Generic templates & copied ChatGPT drafts flagged by university AI screeners",
-    pathways: "Line-by-line narrative crafting highlighting your unique accomplishments & grit",
+    agency: "Generic templates and ChatGPT drafts flagged by AI screeners",
+    pathways: "Line-by-line narrative crafting highlighting your unique story",
   },
   {
     factor: "Consular Visa Preparation",
-    agency: "A 10-minute generic PDF checklist right before your appointment",
-    pathways: "Rigorous 1-on-1 mock consular grilling until your responses are confident & bulletproof",
+    agency: "A generic PDF checklist sent right before your appointment",
+    pathways: "1-on-1 mock consular grilling until your answers are bulletproof",
   },
   {
     factor: "Communication & Accountability",
-    agency: "Bureaucratic ticketing systems, slow replies, and ghosting post-payment",
-    pathways: "Direct WhatsApp line, scheduled strategy calls, and proactive weekly check-ins",
+    agency: "Slow ticketing systems and ghosting post-payment",
+    pathways: "Direct WhatsApp line, strategy calls, and weekly check-ins",
   },
 ];
 

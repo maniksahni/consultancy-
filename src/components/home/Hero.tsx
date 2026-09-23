@@ -128,8 +128,7 @@ export default function Hero() {
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
           <p className="text-cream/45 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
-            Bypass mass-processing agencies. Get personalized profile assessment, Ivy League &amp; Russell Group SOP
-            curation, and foolproof consular visa preparation directly from a dedicated mentor.
+            Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
             <a
