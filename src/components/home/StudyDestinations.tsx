@@ -141,7 +141,7 @@ export default function StudyDestinations() {
               <em>Clear Admissions Data.</em>
             </h2>
           </div>
-          <p className="text-stone text-sm leading-relaxed max-w-sm font-light">
+          <p className="text-stone text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
             Every country enforces distinct financial proofs, post-study work regulations, and visa thresholds. We guide you through the verified data without guesswork.
           </p>
         </div>

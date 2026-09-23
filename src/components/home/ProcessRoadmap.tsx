@@ -67,7 +67,7 @@ export default function ProcessRoadmap() {
               <em>Admissions Roadmap</em>
             </h2>
           </div>
-          <p className="text-stone text-sm leading-relaxed max-w-sm font-light">
+          <p className="text-stone text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
             From your very first diagnostic call to passport stamping, every single stage is personally managed and audited by your dedicated mentor.
           </p>
         </motion.div>
@@ -83,19 +83,27 @@ export default function ProcessRoadmap() {
               viewport={{ once: true, margin: "-8%" }}
               transition={{ duration: 0.55, ease: EASE, delay: i * 0.05 }}
             >
-              {/* Large Roman numeral — decorative */}
-              <div className="lg:col-span-1 flex-shrink-0">
-                <span
-                  className="font-display font-light text-ink/10 leading-none select-none block"
-                  style={{ fontSize: "clamp(64px, 6vw, 96px)" }}
-                >
-                  {step.numeral}
-                </span>
+              {/* Large Roman numeral — decorative, desktop only */}
+              <div className="hidden lg:flex lg:col-span-1 items-start gap-3 flex-shrink-0">
+                <div>
+                  <div
+                    className="font-display font-light text-ink/10 leading-none tracking-tighter select-none block"
+                    style={{ fontSize: "clamp(64px, 6vw, 96px)" }}
+                  >
+                    {step.numeral}
+                  </div>
+                </div>
               </div>
 
               {/* Stage content */}
               <div className="lg:col-span-6 space-y-3">
-                <div className="label text-terra">{step.subtitle}</div>
+                {/* Mobile: inline compact numeral + subtitle */}
+                <div className="flex items-center gap-3">
+                  <span className="lg:hidden font-display font-light text-ink/20 text-4xl leading-none select-none flex-shrink-0">
+                    {step.numeral}
+                  </span>
+                  <div className="label text-terra">{step.subtitle}</div>
+                </div>
                 <h3
                   className="font-display font-normal text-ink leading-tight tracking-tight"
                   style={{ fontSize: "clamp(22px, 2.4vw, 30px)" }}

@@ -108,7 +108,7 @@ export default function StudentOutcomes() {
               <em>Zero Generic Claims.</em>
             </h2>
           </div>
-          <p className="text-stone text-sm leading-relaxed max-w-sm font-light">
+          <p className="text-stone text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
             Real admissions across Ivy League, Russell Group, TU9, and U15 institutions achieved through tailored profile positioning and flawless visa dossiers.
           </p>
         </motion.div>

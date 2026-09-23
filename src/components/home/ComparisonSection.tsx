@@ -72,7 +72,7 @@ export default function ComparisonSection() {
               <em className="text-terra">1-on-1 Mentorship</em>
             </h2>
           </div>
-          <p className="text-cream/40 text-sm leading-relaxed max-w-sm font-light">
+          <p className="text-cream/40 text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
             The study-abroad industry is dominated by mass-processing factories that treat students as recruitment volumes. Here is how Pathways Global differs fundamentally.
           </p>
         </motion.div>
