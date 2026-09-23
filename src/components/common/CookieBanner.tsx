@@ -66,10 +66,10 @@ export default function CookieBanner() {
               </div>
               <button
                 onClick={handleDismiss}
-                className="text-cream/40 hover:text-cream transition-colors p-1 -mr-1 -mt-1"
+                className="text-cream/40 hover:text-cream transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2 -mt-2"
                 aria-label="Dismiss cookie notice"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -80,13 +80,13 @@ export default function CookieBanner() {
             <div className="flex items-center gap-2.5">
               <button
                 onClick={handleAccept}
-                className="flex-1 bg-terra hover:bg-terra-dark text-cream min-h-[38px] py-2 px-3.5 label text-[10px] text-center transition-colors btn-tactile btn-tactile-dark"
+                className="flex-1 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-3.5 label text-[10px] text-center transition-colors btn-tactile btn-tactile-dark"
               >
                 Accept &amp; Continue
               </button>
               <button
                 onClick={handleDismiss}
-                className="border border-cream/15 hover:border-cream/30 text-cream/60 hover:text-cream min-h-[38px] py-2 px-3 label text-[10px] text-center transition-colors btn-tactile"
+                className="border border-cream/15 hover:border-cream/30 text-cream/60 hover:text-cream min-h-[44px] py-2.5 px-3.5 label text-[10px] text-center transition-colors btn-tactile"
               >
                 Dismiss
               </button>

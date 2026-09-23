@@ -63,7 +63,7 @@ export default function Hero() {
             transition={{ duration: 0.85, ease: EASE, delay: 0.15 }}
           >
             <h1
-              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
+              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
             >
               Elite 1-on-1<br />
               Study Abroad<br />
