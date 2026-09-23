@@ -76,18 +76,62 @@ export default function BookingSection() {
     }
   };
 
+  // Helper to sanitize free-text inputs against HTML injection, script tags, and control characters
+  const sanitizeInput = (str: string | undefined | null, maxLength = 100): string => {
+    if (!str) return "";
+    return str
+      .replace(/<[^>]*>/g, "")
+      .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
+      .trim()
+      .slice(0, maxLength);
+  };
+
+  const getWhatsAppDirectUrl = (overrides?: {
+    fullName?: string;
+    whatsapp?: string;
+    qualification?: string;
+    targetCountry?: string;
+    targetIntake?: string;
+    helpNeeded?: string;
+  }) => {
+    const name = sanitizeInput(overrides?.fullName ?? formData.fullName, 100) || "Student";
+    const phone = (overrides?.whatsapp ?? formData.whatsapp).replace(/\D/g, "").slice(0, 10) || "—";
+    const country = overrides?.targetCountry ?? formData.targetCountry;
+    const intake = overrides?.targetIntake ?? formData.targetIntake;
+    const qual = sanitizeInput(overrides?.qualification ?? formData.qualification, 250) || "Not specified";
+    const help = overrides?.helpNeeded ?? formData.helpNeeded;
+
+    // Build plain-text message with clean line breaks
+    const messageLines = [
+      `Hi! My name is ${name}.`,
+      "I would like to schedule a 1-on-1 strategy call with Pathways Global.",
+      `• My WhatsApp: +91 ${phone}`,
+      `• Target Country: ${country}`,
+      `• Target Intake: ${intake}`,
+      `• Academic Background: ${qual}`,
+      `• Assistance Needed: ${help}`,
+    ];
+
+    // Safely encode the entire message payload for the URL query parameter
+    return `https://wa.me/33755749029?text=${encodeURIComponent(messageLines.join("\n"))}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasError(false);
 
+    // Sanitize values
+    const sanitizedFullName = sanitizeInput(formData.fullName, 100);
+    const sanitizedWhatsapp = formData.whatsapp.replace(/\D/g, "").slice(0, 10);
+    const sanitizedQualification = sanitizeInput(formData.qualification, 250);
+    const sanitizedEmail = formData.email ? sanitizeInput(formData.email, 100) : "";
+
     // Field-level validation (synchronous — must run before any async work)
     const errors: { fullName?: string; whatsapp?: string } = {};
-    if (!formData.fullName.trim()) {
+    if (!sanitizedFullName) {
       errors.fullName = "Please enter your full name.";
     }
-    if (!formData.whatsapp.trim()) {
-      errors.whatsapp = "Please enter a valid 10-digit WhatsApp number.";
-    } else if (formData.whatsapp.length !== 10) {
+    if (!sanitizedWhatsapp || sanitizedWhatsapp.length !== 10) {
       errors.whatsapp = "Please enter a valid 10-digit WhatsApp number.";
     }
 
@@ -98,9 +142,14 @@ export default function BookingSection() {
     setFieldErrors({});
 
     // ── CRITICAL: Open WhatsApp SYNCHRONOUSLY within the user click gesture ──
-    // window.open() called here, before any await, so browsers cannot block it
-    // as a "popup not tied to user gesture".
-    const waUrl = getWhatsAppDirectUrl();
+    const waUrl = getWhatsAppDirectUrl({
+      fullName: sanitizedFullName,
+      whatsapp: sanitizedWhatsapp,
+      qualification: sanitizedQualification,
+      targetCountry: formData.targetCountry,
+      targetIntake: formData.targetIntake,
+      helpNeeded: formData.helpNeeded,
+    });
     window.open(waUrl, "_blank", "noopener,noreferrer");
 
     setLoading(true);
@@ -110,10 +159,10 @@ export default function BookingSection() {
     const firestoreSave = (async () => {
       const utm = getStoredUTMParams();
       await saveMentorshipBooking({
-        fullName: formData.fullName,
-        whatsapp: formData.whatsapp,
-        email: formData.email,
-        qualification: formData.qualification,
+        fullName: sanitizedFullName,
+        whatsapp: sanitizedWhatsapp,
+        email: sanitizedEmail || undefined,
+        qualification: sanitizedQualification,
         targetCountry: formData.targetCountry,
         targetIntake: formData.targetIntake,
         helpNeeded: formData.helpNeeded,
@@ -138,14 +187,6 @@ export default function BookingSection() {
       triggerConfetti();
       setSubmitted(true);
     }
-  };
-
-
-  const getWhatsAppDirectUrl = () => {
-    // Prepend India country code (+91) in the message body since form collects 10-digit local number
-    const text = `Hi! My name is ${encodeURIComponent(formData.fullName || "Student")}. \nI would like to schedule a 1-on-1 strategy call with Pathways Global.\n• My WhatsApp: ${encodeURIComponent("+91 " + (formData.whatsapp || "—"))}\n• Target Country: ${encodeURIComponent(formData.targetCountry)}\n• Target Intake: ${encodeURIComponent(formData.targetIntake)}\n• Academic Background: ${encodeURIComponent(formData.qualification || "Not specified")}\n• Assistance Needed: ${encodeURIComponent(formData.helpNeeded)}`;
-    // wa.me destination is still the business's number; customer number is in the message body
-    return `https://wa.me/33755749029?text=${text}`;
   };
 
   const LabelEl = ({ icon: Icon, children }: { icon: any; children: React.ReactNode }) => (

@@ -81,12 +81,30 @@ export async function saveMentorshipBooking(data: {
   utm?: Record<string, any>;
 }) {
   try {
-    const docRef = await addDoc(collection(db, "mentorship_bookings"), {
-      ...data,
+    // Defensive input sanitization & length bounding
+    const payload: Record<string, any> = {
+      fullName: (data.fullName || "").replace(/<[^>]*>/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim().slice(0, 100),
+      whatsapp: (data.whatsapp || "").replace(/\D/g, "").slice(0, 10),
+      qualification: (data.qualification || "").replace(/<[^>]*>/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim().slice(0, 250),
+      targetCountry: (data.targetCountry || "").slice(0, 50),
+      targetIntake: (data.targetIntake || "").slice(0, 50),
+      helpNeeded: (data.helpNeeded || "").slice(0, 100),
       source: "personal_mentorship_booking",
       createdAt: serverTimestamp(),
       status: "pending_review",
-    });
+    };
+
+    if (data.email) {
+      payload.email = data.email.replace(/<[^>]*>/g, "").trim().slice(0, 100);
+    }
+    if (data.preferredSlot) {
+      payload.preferredSlot = data.preferredSlot.slice(0, 100);
+    }
+    if (data.utm && typeof data.utm === "object") {
+      payload.utm = data.utm;
+    }
+
+    const docRef = await addDoc(collection(db, "mentorship_bookings"), payload);
     return { success: true, id: docRef.id };
   } catch (error: any) {
     console.error("Error saving mentorship booking to Firestore:", error);
