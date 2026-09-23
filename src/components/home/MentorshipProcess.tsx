@@ -160,7 +160,7 @@ export default function MentorshipProcess() {
                   Personal Mentorship Touchpoint
                 </span>
                 <span className="text-emerald-400/80 font-medium group-hover:text-emerald-300 transition-colors">
-                  1-on-1 with Didi &rarr;
+                  Direct 1-on-1 Mentorship &rarr;
                 </span>
               </div>
             </div>

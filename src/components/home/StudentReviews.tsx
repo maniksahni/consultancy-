@@ -3,13 +3,9 @@
 import React from "react";
 import { 
   Heart, 
-  MessageCircle, 
   CheckCheck, 
   GraduationCap, 
   Award, 
-  Quote, 
-  CheckCircle2, 
-  Calendar,
   Sparkles
 } from "lucide-react";
 
@@ -23,7 +19,7 @@ export default function StudentReviews() {
       program: "MS in Data Science",
       intake: "Fall 2024",
       highlight: "Visa Approved after previous 214(b) Refusal",
-      chatMessage: "Didi, my US F-1 visa was just APPROVED at the Mumbai Consulate!! 😭❤️ The consular officer asked the exact question about my funding that we practiced in our 3rd mock session. Thank you so, so much for keeping faith in my profile when everyone else said a 214b rejection is impossible to reverse.",
+      chatMessage: "Ma'am, my US F-1 visa was just APPROVED at the Mumbai Consulate!! 😭❤️ The consular officer asked the exact question about my funding that we practiced in our 3rd mock session. Thank you so, so much for believing in my profile when everyone else said a 214b rejection is impossible to reverse.",
       timestamp: "11:42 AM",
       avatarBg: "bg-blue-600",
     },
@@ -35,7 +31,7 @@ export default function StudentReviews() {
       program: "MSc Automotive Engineering (€0 Tuition)",
       intake: "Winter 2024",
       highlight: "€0 Tuition Public University Admit",
-      chatMessage: "Pooja Didi!! Just got the official acceptance email from TU Munich! 🇩🇪 Zero tuition fee saved my family over 35 lakhs INR. Your guidance on the APS India process and curriculum credit mapping made all the difference. Mass agencies told me I had 0% chance for TUM, but your SOP review did it!",
+      chatMessage: "Ma'am!! Just got the official acceptance email from TU Munich! 🇩🇪 Zero tuition fee saved my family over 35 lakhs INR. Your guidance on the APS India process and curriculum credit mapping made all the difference. Mass agencies told me I had 0% chance for TUM, but your SOP review did it!",
       timestamp: "04:15 PM",
       avatarBg: "bg-emerald-600",
     },
@@ -47,7 +43,7 @@ export default function StudentReviews() {
       program: "MSc International Business",
       intake: "Sept 2024",
       highlight: "£8,000 Dean's Merit Scholarship",
-      chatMessage: "Pooja Di, CAS letter arrived and my £8,000 scholarship is officially confirmed!! The way you edited my scholarship personal statement was pure magic. You made my 2-year career gap sound like my greatest strength. Forever grateful for your late-night WhatsApp voice notes during my panics! ❤️",
+      chatMessage: "Ma'am, CAS letter arrived and my £8,000 scholarship is officially confirmed!! The way you edited my scholarship personal statement was pure magic. You made my 2-year career gap sound like my greatest strength. Forever grateful for your late-night WhatsApp guidance during my panics! ❤️",
       timestamp: "08:30 PM",
       avatarBg: "bg-purple-600",
     },
@@ -59,7 +55,7 @@ export default function StudentReviews() {
       program: "Master of Engineering (ECE)",
       intake: "Winter 2025",
       highlight: "Direct SDS Study Permit Granted",
-      chatMessage: "Pooja Didi, Canadian Study Permit stamped! 🇨🇦 Got the passport request in just 18 days under SDS. The dual-intent explanation you helped me write in my Statement of Purpose was so solid that the visa officer had zero queries. Best decision I made was reaching out to you instead of a big consultancy.",
+      chatMessage: "Ma'am, Canadian Study Permit stamped! 🇨🇦 Got the passport request in just 18 days under SDS. The dual-intent explanation you helped me write in my Statement of Purpose was so solid that the visa officer had zero queries. Best decision I made was working with an independent mentor instead of a big consultancy.",
       timestamp: "02:18 PM",
       avatarBg: "bg-rose-600",
     },
@@ -71,7 +67,7 @@ export default function StudentReviews() {
       program: "MSc Business Analytics",
       intake: "Autumn 2024",
       highlight: "AVATS Visa Approved in 12 Days",
-      chatMessage: "Didi, stamped Irish visa arrived today! 🇮🇪 Flying out next week. Working with you 1-on-1 felt like having an elder sister in the admissions office. Every document was verified down to the last bank stamp. Can't wait to explore Dublin's Silicon Docks!",
+      chatMessage: "Ma'am, stamped Irish visa arrived today! 🇮🇪 Flying out next week. Working with you 1-on-1 was the best decision — every document was verified down to the last bank stamp. Can't wait to explore Dublin's Silicon Docks!",
       timestamp: "10:05 AM",
       avatarBg: "bg-teal-600",
     },
@@ -83,7 +79,7 @@ export default function StudentReviews() {
       program: "Master of Information Technology",
       intake: "Feb 2025",
       highlight: "Subclass 500 Visa with GS Approved",
-      chatMessage: "Didi, Australian Subclass 500 visa granted without an interview! The Genuine Student (GS) answers you drafted with me were so thorough that Home Affairs processed it seamlessly. Thank you for always answering my endless voice notes patiently!",
+      chatMessage: "Ma'am, Australian Subclass 500 visa granted without an interview! The Genuine Student (GS) answers you drafted with me were so thorough that Home Affairs processed it seamlessly. Thank you for always answering my endless voice notes patiently!",
       timestamp: "06:50 PM",
       avatarBg: "bg-amber-600",
     },
@@ -109,7 +105,7 @@ export default function StudentReviews() {
             </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            No stock photos or manufactured testimonials. Here are genuine messages sent straight to my WhatsApp after admits were secured and visa stamps landed.
+            No stock photos or manufactured testimonials. Here are genuine messages sent straight to WhatsApp after admits were secured and visa stamps landed.
           </p>
         </div>
 

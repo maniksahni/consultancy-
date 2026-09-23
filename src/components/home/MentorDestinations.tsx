@@ -32,7 +32,7 @@ export default function MentorDestinations() {
         "MOI (Medium of Instruction) waiver guidance (No IELTS needed for eligible students)",
         "Russell Group strategic application framing",
       ],
-      whatsappMsg: "Hi Pooja Didi, I am interested in UK 1-Yr Masters and want to evaluate my profile.",
+      whatsappMsg: "Hi! I am interested in UK 1-Yr Masters and want to evaluate my profile.",
     },
     {
       country: "United States",
@@ -50,7 +50,7 @@ export default function MentorDestinations() {
         "DS-160 scrutiny to prevent 214(b) immigrant intent flags",
         "Research assistantship (RA/TA) & scholarship application guidance",
       ],
-      whatsappMsg: "Hi Pooja Didi, I need guidance for USA F-1 admissions, STEM OPT and visa interview prep.",
+      whatsappMsg: "Hi! I need guidance for USA F-1 admissions, STEM OPT and visa interview prep.",
     },
     {
       country: "Canada",
@@ -68,7 +68,7 @@ export default function MentorDestinations() {
         "GIC (Guaranteed Investment Certificate) and financial structuring",
         "Bulletproof SOP to clear dual-intent visa scrutiny",
       ],
-      whatsappMsg: "Hi Pooja Didi, I want help with Canadian university selection and Study Permit documentation.",
+      whatsappMsg: "Hi! I want help with Canadian university selection and Study Permit documentation.",
     },
     {
       country: "Germany",
@@ -86,7 +86,7 @@ export default function MentorDestinations() {
         "Blocked Account (Sperrkonto) setup & visa appointment navigation",
         "English-taught curriculum alignment & ECTS credit mapping",
       ],
-      whatsappMsg: "Hi Pooja Didi, I am aiming for tuition-free German Public Universities and need APS guidance.",
+      whatsappMsg: "Hi! I am aiming for tuition-free German Public Universities and need APS guidance.",
     },
     {
       country: "Australia",
@@ -104,7 +104,7 @@ export default function MentorDestinations() {
         "Group of Eight (Go8) university application strategy",
         "Regional study post-study extension advisory",
       ],
-      whatsappMsg: "Hi Pooja Didi, I need help with Australia Subclass 500 visa and Genuine Student (GS) statement.",
+      whatsappMsg: "Hi! I need help with Australia Subclass 500 visa and Genuine Student (GS) statement.",
     },
     {
       country: "Ireland",
@@ -122,7 +122,7 @@ export default function MentorDestinations() {
         "Fast-track 1-Year Master's degrees in Tech, Data & Finance",
         "Irish student visa (AVATS) document readiness",
       ],
-      whatsappMsg: "Hi Pooja Didi, I want to discuss Ireland 1-Year Master's and Silicon Docks tech opportunities.",
+      whatsappMsg: "Hi! I want to discuss Ireland 1-Year Master's and Silicon Docks tech opportunities.",
     },
   ];
 

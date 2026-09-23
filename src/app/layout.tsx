@@ -4,12 +4,12 @@ import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Pooja Sharma | Overseas Education & Visa Mentor (1-on-1)",
-  description: "Personalized, end-to-end study abroad mentorship — from profile-first university shortlisting and authentic SOP editing to intensive 1-on-1 embassy mock interviews. 99.2% visa approval record across UK, USA, Canada, Germany, Australia & Ireland.",
+  title: "Global Pathway | Senior Study-Abroad Mentor & Visa Advisor (1-on-1)",
+  description: "Personalized, end-to-end study abroad mentorship — from profile-first university shortlisting and authentic SOP editorial reviews to intensive 1-on-1 embassy mock interviews. 99.2% visa approval record across UK, USA, Canada, Germany, Australia & Ireland.",
   keywords: [
     "Study abroad mentor",
-    "Pooja Sharma mentor",
-    "Pooja Didi visa",
+    "Senior visa advisor",
+    "Independent education consultant",
     "1-on-1 study abroad counselling",
     "US F1 visa interview prep",
     "UK 1 year masters admissions",
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     "SOP review line by line"
   ],
   openGraph: {
-    title: "Pooja Sharma | Overseas Education & Visa Mentor",
-    description: "No automated mass-applications. Direct 1-on-1 guidance from shortlisting to visa approval with a 99.2% grant record.",
+    title: "Global Pathway | Senior Study-Abroad Mentor & Visa Advisor",
+    description: "No automated mass-applications. Direct 1-on-1 senior mentorship from shortlisting to visa approval with a 99.2% grant record.",
     type: "website",
     locale: "en_US",
   },

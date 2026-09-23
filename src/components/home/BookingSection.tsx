@@ -118,7 +118,7 @@ export default function BookingSection() {
   };
 
   const getWhatsAppDirectUrl = () => {
-    const text = `Hi Pooja Didi! My name is ${encodeURIComponent(formData.fullName || "Student")}. 
+    const text = `Hi! My name is ${encodeURIComponent(formData.fullName || "Student")}. 
 I would like to schedule a 1-on-1 strategy call with you.
 • Country: ${encodeURIComponent(formData.targetCountry)}
 • Target Intake: ${encodeURIComponent(formData.targetIntake)}
@@ -206,7 +206,7 @@ I would like to schedule a 1-on-1 strategy call with you.
                 </div>
                 <div className="flex items-center gap-2 text-xs text-slate-400">
                   <Clock className="h-4 w-4 text-slate-400" />
-                  <span>Personal reply directly from Pooja Didi within 4 business hours</span>
+                  <span>Personal reply directly from your Senior Mentor within 4 business hours</span>
                 </div>
               </div>
             </div>
@@ -219,14 +219,14 @@ I would like to schedule a 1-on-1 strategy call with you.
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">Need an urgent answer?</h4>
-                  <p className="text-xs text-emerald-300">Skip the form and message Pooja Didi directly</p>
+                  <p className="text-xs text-emerald-300">Skip the form and message your mentor directly</p>
                 </div>
               </div>
               <p className="text-xs text-slate-300 mb-4">
                 Have an urgent visa deadline, emergency interview slot, or offer letter question?
               </p>
               <a
-                href="https://wa.me/919876543210?text=Hi%20Pooja%20Didi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
+                href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-400 hover:to-teal-400 transition-all"
@@ -271,7 +271,7 @@ I would like to schedule a 1-on-1 strategy call with you.
                       className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3 text-xs font-bold text-white shadow-lg shadow-emerald-500/30 hover:scale-[1.02] transition-all"
                     >
                       <MessageCircle className="h-4 w-4" />
-                      <span>Ping Didi on WhatsApp Right Now</span>
+                      <span>Connect on WhatsApp Right Now</span>
                     </a>
                     <button
                       onClick={() => {
@@ -468,7 +468,7 @@ I would like to schedule a 1-on-1 strategy call with you.
                       {loading ? (
                         <>
                           <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Confirming Session with Didi...</span>
+                          <span>Confirming Session with Mentor...</span>
                         </>
                       ) : (
                         <>
@@ -479,7 +479,7 @@ I would like to schedule a 1-on-1 strategy call with you.
                       )}
                     </button>
                     <p className="text-[11px] text-center text-slate-400 mt-2.5">
-                      🔒 No obligations. No spam. You will be contacted directly on WhatsApp by Pooja Didi.
+                      🔒 No obligations. No spam. You will be contacted directly on WhatsApp by your Senior Mentor.
                     </p>
                   </div>
                 </form>

@@ -14,7 +14,7 @@ import {
   Linkedin,
   Instagram,
   Youtube,
-  ArrowUpRight
+  Compass
 } from "lucide-react";
 
 export default function PersonalFooter() {
@@ -33,15 +33,15 @@ export default function PersonalFooter() {
             <Link href="/" className="flex items-center gap-3">
               <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 p-[1.5px] shadow-lg shadow-emerald-500/20">
                 <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-slate-950 text-white">
-                  <GraduationCap className="h-5 w-5 text-emerald-400" />
+                  <Compass className="h-5 w-5 text-emerald-400" />
                 </div>
               </div>
               <div>
                 <span className="text-lg font-extrabold tracking-tight text-white font-display">
-                  Pooja Sharma
+                  Global Pathway
                 </span>
                 <p className="text-[11px] font-medium text-emerald-400">
-                  Senior Overseas Education &amp; Visa Mentor
+                  Senior Overseas Education &amp; Visa Advisory
                 </p>
               </div>
             </Link>
@@ -53,7 +53,7 @@ export default function PersonalFooter() {
             {/* Direct WhatsApp Quick Pill */}
             <div className="pt-2">
               <a
-                href="https://wa.me/919876543210?text=Hi%20Pooja%20Didi!%20I%20have%20a%20question%20regarding%20studying%20abroad."
+                href="https://wa.me/919876543210?text=Hi!%20I%20have%20a%20question%20regarding%20studying%20abroad."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all"
@@ -143,11 +143,11 @@ export default function PersonalFooter() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Direct Connect</h4>
             <div className="space-y-2.5 text-xs text-slate-300">
               <a
-                href="mailto:pooja@poojasharmamentor.com"
+                href="mailto:mentor@globalpathway.edu"
                 className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition"
               >
                 <Mail className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-                <span>pooja@poojasharmamentor.com</span>
+                <span>mentor@globalpathway.edu</span>
               </a>
 
               <a
@@ -155,7 +155,7 @@ export default function PersonalFooter() {
                 className="flex items-center gap-2 text-slate-300 hover:text-emerald-400 transition"
               >
                 <Phone className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-                <span>+91 98765 43210 (Direct Cell)</span>
+                <span>+91 98765 43210 (Direct Line)</span>
               </a>
 
               <div className="flex items-start gap-2 text-slate-400">
@@ -207,14 +207,14 @@ export default function PersonalFooter() {
         <div className="rounded-2xl border border-white/[0.06] bg-slate-950/60 p-4 text-[11px] text-slate-400 leading-relaxed mb-8 flex items-start gap-3">
           <ShieldCheck className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
           <div>
-            <strong className="text-slate-300">Independent Mentorship Transparency Notice:</strong> Pooja Sharma provides independent private mentoring, profile assessment, essay/SOP editorial guidance, and visa interview preparation. Admissions decisions and visa grants are subject to university admissions boards and sovereign consular immigration authorities.
+            <strong className="text-slate-300">Independent Mentorship Transparency Notice:</strong> Global Pathway provides independent private mentoring, profile assessment, essay/SOP editorial guidance, and visa interview preparation. Admissions decisions and visa grants are subject to university admissions boards and sovereign consular immigration authorities.
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>
-            &copy; {new Date().getFullYear()} Pooja Sharma. All rights reserved. Built for international aspirants.
+            &copy; {new Date().getFullYear()} Global Pathway. All rights reserved. Independent Overseas Education Advisory.
           </p>
           <div className="flex items-center gap-1 text-slate-400">
             <span>Guiding students with</span>

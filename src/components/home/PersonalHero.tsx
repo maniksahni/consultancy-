@@ -1,20 +1,21 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
   MessageCircle, 
   ArrowRight, 
-  CheckCircle2, 
   ShieldCheck, 
   UserCheck, 
   Award, 
   FileCheck2, 
   GraduationCap,
   Calendar,
-  Compass
+  Compass,
+  CheckCircle2,
+  Lock,
+  Star
 } from "lucide-react";
 
 export default function PersonalHero() {
@@ -22,7 +23,7 @@ export default function PersonalHero() {
     {
       icon: UserCheck,
       title: "Direct 1-on-1 Access",
-      desc: "Zero middlemen, call center reps, or junior counsellors. You work solely with me.",
+      desc: "Zero middlemen, call center reps, or junior counsellors. You work solely with your senior mentor.",
     },
     {
       icon: Compass,
@@ -34,13 +35,6 @@ export default function PersonalHero() {
       title: "100% Unbiased Guidance",
       desc: "Zero commission-driven university steering across UK, USA, Canada, Germany, Australia & Ireland.",
     },
-  ];
-
-  const quickStats = [
-    { value: "500+", label: "Students Guided Personally" },
-    { value: "99.2%", label: "Visa Approval Rate" },
-    { value: "₹4.8 Cr+", label: "Scholarships Secured" },
-    { value: "8+ Yrs", label: "Dedicated Mentorship" },
   ];
 
   return (
@@ -76,7 +70,7 @@ export default function PersonalHero() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               <span className="text-xs font-semibold tracking-wide text-emerald-300">
-                Independent Senior Study-Abroad &amp; Visa Advisor
+                Direct 1-on-1 Senior Mentorship &bull; Independent Visa Advisory
               </span>
             </div>
 
@@ -106,7 +100,7 @@ export default function PersonalHero() {
               </a>
 
               <a
-                href="https://wa.me/919876543210?text=Hi%20Pooja%20Didi!%20I%20would%20like%20to%20chat%20directly%20about%20my%20study%20abroad%20plans."
+                href="https://wa.me/919876543210?text=Hi!%20I%20would%20like%20to%20chat%20directly%20about%20my%20study%20abroad%20plans."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-emerald-500/30 bg-slate-900/80 hover:bg-emerald-950/40 hover:border-emerald-500/50 px-6 py-4 text-sm font-semibold text-emerald-300 backdrop-blur-md transition-all shadow-md"
@@ -138,62 +132,75 @@ export default function PersonalHero() {
 
           </motion.div>
 
-          {/* Right Column: Mentor Portrait & Trust Proof */}
+          {/* Right Column: Sleek Abstract Mentorship Credential Card */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="lg:col-span-5 flex flex-col items-center justify-center relative"
           >
-            {/* Portrait Card */}
+            {/* Ambient card back glow */}
             <div className="relative w-full max-w-md">
-              {/* Outer decorative glow */}
               <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-emerald-500/30 via-teal-500/20 to-blue-500/30 blur-xl opacity-75" />
 
-              <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-900/90 shadow-2xl backdrop-blur-xl p-2.5">
-                {/* Photo container */}
-                <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950">
-                  <Image
-                    src="/images/mentor.jpg"
-                    alt="Pooja Sharma - Senior Study Abroad & Visa Mentor"
-                    fill
-                    priority
-                    className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                  />
-                  
-                  {/* Subtle bottom gradient overlay for readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
-
-                  {/* Overlaid Mentor Name & Tagline */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/40 px-2.5 py-1 text-[11px] font-bold text-emerald-300 mb-1.5">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                      Personally Reviewed 500+ Profiles
+              <div className="relative overflow-hidden rounded-3xl border border-emerald-500/30 bg-slate-900/90 shadow-2xl backdrop-blur-xl p-6 sm:p-7">
+                {/* Top header badge */}
+                <div className="flex items-center justify-between border-b border-white/[0.08] pb-5 mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30">
+                      <GraduationCap className="h-6 w-6" />
                     </div>
-                    <h3 className="text-xl font-black text-white font-display">
-                      Pooja Sharma
-                    </h3>
-                    <p className="text-xs text-slate-300 font-medium">
-                      Senior Overseas Mentor &bull; Ex-International Admissions Advisor
-                    </p>
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
+                        Senior Practice
+                      </span>
+                      <h3 className="text-lg font-black text-white font-display">
+                        Your Personal Mentor
+                      </h3>
+                    </div>
                   </div>
-
-                  {/* Top-right Status Badge */}
-                  <div className="absolute top-3.5 right-3.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10 px-3 py-1 text-[11px] font-semibold text-slate-200 flex items-center gap-1.5 shadow-lg">
+                  <div className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-[11px] font-semibold text-emerald-300 flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    Intake: Fall 25 &amp; Spring 26 Open
+                    Admissions Open
                   </div>
                 </div>
 
-                {/* Micro Stats Bar */}
-                <div className="grid grid-cols-2 gap-2 mt-2.5 p-1">
-                  <div className="rounded-xl border border-white/[0.06] bg-slate-950/60 p-2.5 text-center">
-                    <p className="text-lg font-black text-white font-display">99.2%</p>
-                    <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Visa Grant Record</p>
+                {/* Core Credentials List */}
+                <div className="space-y-3.5 mb-6">
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/[0.04] bg-slate-950/60 p-3.5">
+                    <Award className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-xs font-bold text-white">8+ Years Senior Admissions Experience</h4>
+                      <p className="text-[11px] text-slate-400 mt-0.5">Advising international students on US, UK, Canada, Germany &amp; Australia admissions.</p>
+                    </div>
                   </div>
-                  <div className="rounded-xl border border-white/[0.06] bg-slate-950/60 p-2.5 text-center">
-                    <p className="text-lg font-black text-emerald-400 font-display">1-on-1</p>
-                    <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">Direct WhatsApp Access</p>
+
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/[0.04] bg-slate-950/60 p-3.5">
+                    <ShieldCheck className="h-5 w-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-xs font-bold text-white">99.2% Visa Grant Track Record</h4>
+                      <p className="text-[11px] text-slate-400 mt-0.5">Specialized in thorough financial audit, DS-160 scrutiny, and high-pressure mock interviews.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/[0.04] bg-slate-950/60 p-3.5">
+                    <FileCheck2 className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-xs font-bold text-white">Line-by-Line SOP &amp; LOR Curation</h4>
+                      <p className="text-[11px] text-slate-400 mt-0.5">Zero copy-paste templates or AI shortcuts. Every personal essay is crafted for maximum impact.</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2-Column High Stats Bar */}
+                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/[0.08]">
+                  <div className="rounded-xl border border-white/[0.06] bg-slate-950/70 p-3 text-center">
+                    <p className="text-2xl font-black text-white font-display">500+</p>
+                    <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider mt-0.5">Students Mentored</p>
+                  </div>
+                  <div className="rounded-xl border border-white/[0.06] bg-slate-950/70 p-3 text-center">
+                    <p className="text-2xl font-black text-emerald-400 font-display">₹4.8 Cr+</p>
+                    <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider mt-0.5">Scholarships Won</p>
                   </div>
                 </div>
               </div>
@@ -201,11 +208,11 @@ export default function PersonalHero() {
               {/* Floating verified badge */}
               <div className="absolute -bottom-5 -left-4 sm:-left-6 rounded-2xl border border-emerald-500/30 bg-slate-900/95 backdrop-blur-xl p-3 shadow-2xl flex items-center gap-3">
                 <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/30">
-                  <Award className="h-5 w-5" />
+                  <Star className="h-5 w-5 fill-white" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-white">Zero Agent Commissions</p>
-                  <p className="text-[10px] text-slate-400">100% Unbiased University Selection</p>
+                  <p className="text-xs font-bold text-white">100% Unbiased Advisory</p>
+                  <p className="text-[10px] text-slate-400">Zero Agent Commissions</p>
                 </div>
               </div>
             </div>

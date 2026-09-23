@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { 
   CheckCircle2, 
   XCircle, 
@@ -13,7 +12,8 @@ import {
   HeartHandshake,
   Sparkles,
   Award,
-  BookOpen
+  Compass,
+  CheckCheck
 } from "lucide-react";
 
 export default function AboutMentor() {
@@ -21,7 +21,7 @@ export default function AboutMentor() {
     {
       feature: "Who actually works on your application?",
       agency: "Passed between junior counsellors, interns & telecallers",
-      mentor: "Pooja Didi personally evaluates, writes strategy & files with you",
+      mentor: "Your Senior Mentor personally evaluates, strategizes & files directly with you",
     },
     {
       feature: "University Recommendations",
@@ -31,17 +31,17 @@ export default function AboutMentor() {
     {
       feature: "SOP & LOR Drafting",
       agency: "Copied ChatGPT & repetitive agency templates risking blacklisting",
-      mentor: "Iterative line-by-line personal review celebrating your true story",
+      mentor: "Iterative line-by-line personal review celebrating your true story and grit",
     },
     {
       feature: "Visa & Consular Interview Prep",
       agency: "A single 15-minute generic PDF checklist right before your appointment",
-      mentor: "Intensive 1-on-1 mock interviews grilled until you speak with zero fear",
+      mentor: "Intensive 1-on-1 mock interviews grilled until you speak with zero hesitation",
     },
     {
       feature: "Communication & Access",
-      agency: "Ticketing systems, unanswered office calls, receptionist gates",
-      mentor: "Direct personal WhatsApp voice notes & calls throughout your journey",
+      agency: "Ticketing systems, unanswered office calls, receptionist gatekeepers",
+      mentor: "Direct personal WhatsApp voice notes & calls throughout your application cycle",
     },
   ];
 
@@ -57,7 +57,7 @@ export default function AboutMentor() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-300 mb-4">
             <HeartHandshake className="h-3.5 w-3.5" />
-            <span>Meet Your Personal Mentor</span>
+            <span>Meet Your Overseas Mentor</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight font-display">
             The Mentor in Your Corner,{" "}
@@ -66,26 +66,35 @@ export default function AboutMentor() {
             </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            Studying abroad is one of the biggest investments of your life. You deserve an empathetic, experienced mentor who treats your dream as her own.
+            Studying abroad is one of the biggest investments of your life. You deserve an empathetic, highly experienced mentor who treats your dream as their own priority.
           </p>
         </div>
 
         {/* Bio Card & Philosophy */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20">
           
-          {/* Left Column: Portrait & Credentials */}
+          {/* Left Column: Neutral Credentials & Experience Card */}
           <div className="lg:col-span-5 rounded-3xl border border-white/[0.08] bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl relative">
-            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden mb-6 bg-slate-950 border border-white/[0.06]">
-              <Image
-                src="/images/mentor.jpg"
-                alt="Pooja Sharma - Senior Study Abroad Mentor"
-                fill
-                className="object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-              <div className="absolute bottom-3 left-4">
-                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Independent Advisory</span>
-                <p className="text-lg font-bold text-white font-display">Pooja Sharma (&ldquo;Pooja Didi&rdquo;)</p>
+            <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden mb-6 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/40 border border-emerald-500/20 p-6 flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                  <Compass className="h-6 w-6" />
+                </div>
+                <span className="text-[11px] font-bold text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 rounded-full px-2.5 py-1 uppercase tracking-wider">
+                  Independent Practice
+                </span>
+              </div>
+
+              <div>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                  Senior Overseas Admissions Advisor
+                </p>
+                <h3 className="text-2xl font-black text-white font-display mt-1">
+                  1-on-1 Guidance Model
+                </h3>
+                <p className="text-xs text-emerald-300 mt-1 flex items-center gap-1.5">
+                  <CheckCheck className="h-4 w-4" /> 8+ Years &bull; 500+ Profiles Audited
+                </p>
               </div>
             </div>
 
@@ -128,10 +137,10 @@ export default function AboutMentor() {
             </div>
           </div>
 
-          {/* Right Column: Her Philosophy & 3 Commitments */}
+          {/* Right Column: Philosophy & 3 Commitments */}
           <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
             <div className="rounded-3xl border border-white/[0.08] bg-slate-900/60 p-6 sm:p-8 backdrop-blur-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Mentor&apos;s Philosophy</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Mentorship Philosophy</span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-display mt-2 mb-4">
                 &ldquo;Why I chose independent mentorship over running a mass agency.&rdquo;
               </h3>
@@ -151,7 +160,7 @@ export default function AboutMentor() {
                   <MessageSquare className="h-5 w-5 text-emerald-400 mb-2" />
                   <h4 className="text-xs font-bold text-white mb-1">Direct WhatsApp Line</h4>
                   <p className="text-[11px] text-slate-400 leading-normal">
-                    Real-time updates and voice notes directly with me throughout your cycle.
+                    Real-time updates and voice notes directly with your senior mentor.
                   </p>
                 </div>
 
@@ -179,20 +188,20 @@ export default function AboutMentor() {
                 <Sparkles className="h-5 w-5" />
               </div>
               <p className="text-xs sm:text-sm text-emerald-200 font-medium italic">
-                &ldquo;You don&apos;t just need an application processor; you need someone who knows your name, your fears, and exactly how to position your profile for global victory.&rdquo;
+                &ldquo;You don&apos;t just need an application processor; you need someone who knows your profile, your fears, and exactly how to position your narrative for global victory.&rdquo;
               </p>
             </div>
           </div>
 
         </div>
 
-        {/* High-Impact Comparison: Mass Agency vs. 1-on-1 With Me */}
+        {/* High-Impact Comparison: Mass Agency vs. Personal Mentor */}
         <div className="rounded-3xl border border-white/[0.08] bg-slate-900/80 p-6 sm:p-10 backdrop-blur-2xl shadow-2xl">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-display">
-              Mass Processing Agency vs.{" "}
+              Why Choose a Personal Mentor Over{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
-                1-on-1 Mentorship With Me
+                Mass Agencies
               </span>
             </h3>
             <p className="text-xs sm:text-sm text-slate-400 mt-2">
@@ -216,7 +225,7 @@ export default function AboutMentor() {
                   <th className="py-4 px-4 text-xs font-bold text-emerald-400 uppercase tracking-wider w-1/3 bg-emerald-950/20 rounded-t-xl">
                     <span className="flex items-center gap-1.5">
                       <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                      1-on-1 With Pooja Didi
+                      1-on-1 Personal Senior Mentor
                     </span>
                   </th>
                 </tr>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { GraduationCap, Phone, Menu, X, ArrowRight, Sparkles, MessageCircle, ShieldCheck } from "lucide-react";
+import { GraduationCap, Phone, Menu, X, ArrowRight, Sparkles, MessageCircle, Compass } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,21 +33,21 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-        {/* Personal Branding */}
+        {/* Neutral High-Trust Brand Identity */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-blue-500 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all">
             <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-slate-950 text-white">
-              <GraduationCap className="h-5 w-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <Compass className="h-5 w-5 text-emerald-400 group-hover:rotate-45 transition-transform" />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-base sm:text-lg font-extrabold tracking-tight text-white font-display">
-                Pooja Sharma
+                Global Pathway
               </span>
               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Didi
+                Senior Advisor
               </span>
             </div>
             <p className="text-[11px] font-medium text-slate-400 tracking-wide">
@@ -72,7 +72,7 @@ export default function Navbar() {
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="https://wa.me/919876543210?text=Hi%20Pooja%20Didi!%20I%20want%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
+            href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 rounded-xl border border-emerald-500/25 bg-emerald-500/5 px-3 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/15 hover:border-emerald-500/40 transition-all"
@@ -129,7 +129,7 @@ export default function Navbar() {
 
           <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2.5">
             <a
-              href="https://wa.me/919876543210?text=Hi%20Pooja%20Didi!%20I%20want%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
+              href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
