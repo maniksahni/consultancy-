@@ -3,6 +3,8 @@ import "./globals.css";
 import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import BackToTop from "@/components/common/BackToTop";
 import SkipToContent from "@/components/common/SkipToContent";
+import CookieBanner from "@/components/common/CookieBanner";
+import UTMTracker from "@/components/common/UTMTracker";
 
 export const metadata: Metadata = {
   title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
@@ -41,12 +43,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full">
+        <UTMTracker />
         <SkipToContent />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">
           {children}
         </div>
         <BackToTop />
         <FloatingWhatsApp />
+        <CookieBanner />
       </body>
     </html>
   );

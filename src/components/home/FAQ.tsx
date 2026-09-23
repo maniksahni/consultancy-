@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle, MessageSquare, ArrowRight, ShieldCheck } from "lucide-react";
+import { Plus, Minus, ArrowRight, ShieldCheck } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 interface FAQItem {
   question: string;
@@ -11,137 +14,178 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    category: "Canada Immigration Compliance",
-    question: "What is the difference between SDS and Non-SDS study permit pathways for Canada?",
+    category: "Fiduciary Model",
+    question: "How is Pathways Global different from other consultancies?",
     answer:
-      "The Student Direct Stream (SDS) is an expedited processing stream for legal residents of India and selected countries. Key statutory mandates for SDS include: (1) upfront purchase of a CAD $20,635 Guaranteed Investment Certificate (GIC) with an approved bank (Scotiabank, CIBC, or ICICI Bank Canada), (2) payment of full 1st-year tuition fees in advance, (3) minimum IELTS Academic score of 6.0 in each band (or CLB 7 in PTE/TEF), and (4) obtaining a Provincial Attestation Letter (PAL) from the designated learning institution (DLI)."
+      "Unlike mass-market agencies and aggregator portals that operate on university recruitment commissions (kickbacks), Pathways Global is a 100% fiduciary advisory. You work exclusively with a dedicated Senior Mentor—never passed between junior telecallers or rotating interns. Every university shortlist is audited strictly against academic pedigree, career ROI, and scholarship viability, with zero institutional conflicts of interest.",
   },
   {
-    category: "Germany Visa & APS Mandate",
-    question: "How does the German Blocked Account (€11,208) and APS Certificate process work?",
+    category: "Mentorship Scope",
+    question: "What does the 1-on-1 mentorship include?",
     answer:
-      "For Indian degree holders, the Academic Evaluation Centre (APS) certificate issued by the German Embassy in New Delhi is a mandatory prerequisite before applying for a §16b student visa or university admission. APS turnaround takes approximately 25–40 working days. In parallel, students must open a federally regulated Blocked Account (Sperrkonto) with €11,208 deposited via providers like Expatrio or Fintiba to prove living maintenance for the initial 12 months."
+      "Our advisory delivers exhaustive, end-to-end stewardship: strategic profile positioning, shortlist curation across target/reach/safe tiers, line-by-line editorial of your Statement of Purpose (SOP) and Letters of Recommendation (LORs), merit fellowship and need-based aid packaging, and exhaustive 1-on-1 consular interview preparation until your responses are confident, spontaneous, and legally sound.",
   },
   {
-    category: "UK Visa Financial Holding Rule",
-    question: "What is the UKVI 28-day financial holding rule for CAS sponsorship and Student Route Visas?",
+    category: "Investment & Terms",
+    question: "How much does mentorship cost?",
     answer:
-      "UK Visas and Immigration (UKVI) strictly mandates that all living maintenance funds (£1,023 per month outside London, or £1,334 per month within inner London, calculated for 9 consecutive months) plus remaining unpaid 1st-year tuition fees must be held in a recognized bank account for a continuous period of at least 28 days without dropping below the threshold by even one penny. The bank statement closing date cannot be older than 31 days on the date of online visa submission."
+      "We operate under a transparent, flat-fee advisory agreement tailored to your destination tier and target intake. There are no hidden fees, surprise charges, or commissions taken behind your back. Because we accept zero funding from colleges, our fiduciary loyalty remains entirely with you. Exact engagement scope and deliverables are outlined during your initial discovery session.",
   },
   {
-    category: "US F-1 Consular Interviews",
-    question: "What are consular officers evaluating during the high-stakes F-1 visa interview?",
+    category: "Consular Strategy",
+    question: "What if my visa gets rejected or I have previous refusals?",
     answer:
-      "Under Section 214(b) of the US Immigration and Nationality Act (INA), every F-1 applicant is legally presumed to have immigrant intent until they demonstrate otherwise. Consular officers evaluate three core pillars in 90 to 180 seconds: (1) Bona fide academic intent and knowledge of the specific university curriculum, (2) Liquid financial ability to fund the entire 1st-year total cost indicated on the Form I-20, and (3) Compelling ties to the home country and realistic post-study career ROI plans."
+      "We specialize in high-stakes case rehabilitation—including US Section 214(b) non-immigrant intent refusals, Canadian Study Permit rejections, and German APS audit bottlenecks. We conduct a rigorous line-by-line autopsy of your prior CAIPS/GCMS notes, rebuild your liquid financial proof and home-country ties evidence, and reconstruct your consular narrative prior to refiling.",
   },
   {
-    category: "Australia Student Visa Subclass 500",
-    question: "How does Australia's Genuine Student (GS) requirement differ from the old GTE rule?",
+    category: "Integrity & Standards",
+    question: "Do you guarantee admission or visa approval?",
     answer:
-      "The Department of Home Affairs replaced the Genuine Temporary Entrant (GTE) statement with the targeted Genuine Student (GS) assessment. The GS requirement focuses directly on: (1) Details of current circumstances (employment, family, community ties in home country), (2) An explanation of why the specific course and Australian education provider were chosen, (3) How the qualification will provide measurable economic return in the student's home country, and (4) Financial evidence of the updated AUD $29,710 annual living maintenance funds."
+      "No ethical education advisor can legally guarantee admission or a sovereign visa grant—final decisions rest solely with university academic senates and consular officers. What we guarantee is a conflict-free, Ivy League/Russell Group-caliber advisory process and airtight consular preparation, which is why our candidates maintain an audited 99.2% visa approval track record.",
   },
   {
-    category: "Statutory Part-Time Work Rights",
-    question: "What are the legal part-time working hours and minimum wage rules across top countries?",
+    category: "Timeline & Runway",
+    question: "How long does the entire admissions process take?",
     answer:
-      "Statutory work authorizations vary by country: (1) UK: 20 hours/week during term-time, full-time during vacations; (2) USA: 20 hours/week strictly on-campus during academic terms; (3) Canada: 20–24 hours/week off-campus during terms; (4) Australia: Up to 48 hours per fortnight with a statutory national minimum wage of AUD $24.10/hour; (5) Germany: 140 full days or 280 half days per calendar year; and (6) Ireland: 20 hours/week during semester, 40 hours/week during June–September and Christmas holidays."
-  }
+      "The ideal preparation runway is 8 to 14 months before your target intake, maximizing priority merit scholarship windows and early university rounds. However, our mentors regularly conduct fast-track 60-to-90 day intensive sprints for upcoming intakes, prioritizing rapid document drafting and expedited visa scheduling.",
+  },
 ];
 
 export default function FAQ() {
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-  const toggleAccordion = (idx: number) => {
-    setOpenIdx(openIdx === idx ? null : idx);
+  const toggleItem = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
-    <section id="faq" className="py-24 sm:py-32 bg-[#030712] border-b border-white/[0.08] text-white relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/4 h-[500px] w-[500px] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />
+    <section
+      id="faq"
+      className="bg-[#14120C] grain-ink text-cream py-16 lg:py-24 overflow-hidden w-full relative border-t border-cream/10"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold text-blue-400 border border-blue-500/25">
-            <HelpCircle className="h-3.5 w-3.5" /> Statutory Immigration &amp; Compliance FAQ
+        {/* ── Section Header ── */}
+        <motion.div
+          className="border-t border-cream/10 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-8%" }}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
+          <div>
+            <div className="label text-terra mb-4">Admissions &amp; Advisory Clarity</div>
+            <h2
+              className="font-display font-normal text-cream leading-[0.93] tracking-tight"
+              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
+            >
+              Frequently Addressed<br />
+              <em className="text-cream/50 not-italic italic">Inquiries &amp; Protocols.</em>
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black tracking-[-0.03em] text-white font-display">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-            Essential regulatory facts on blocked accounts, proof of funds holding rules, consular interviews, and post-study work permits.
+          <p className="text-cream/45 text-sm lg:text-base font-light max-w-md leading-relaxed">
+            Direct, no-fluff answers regarding our fiduciary mentorship model, transparent fee structure, and consular preparation standards.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Accordion List */}
-        <div className="space-y-4">
+        {/* ── Accordion List ── */}
+        <div className="border-t border-cream/10 max-w-4xl mx-auto divide-y divide-cream/10">
           {faqs.map((faq, idx) => {
-            const isOpen = openIdx === idx;
+            const isOpen = openIndex === idx;
+            const itemNumber = String(idx + 1).padStart(2, "0");
+
             return (
-              <div
-                key={idx}
-                className={`rounded-3xl border transition-all duration-300 overflow-hidden backdrop-blur-2xl ${
-                  isOpen
-                    ? "border-blue-500/40 bg-slate-900/80 shadow-[0_0_35px_rgba(59,130,246,0.15)]"
-                    : "border-white/[0.08] bg-slate-900/40 hover:border-white/20 hover:bg-slate-900/60 shadow-lg"
-                }`}
-              >
+              <div key={idx} className="transition-colors group">
                 <button
                   type="button"
-                  onClick={() => toggleAccordion(idx)}
-                  className="flex w-full items-center justify-between p-6 sm:p-7 text-left"
+                  onClick={() => toggleItem(idx)}
+                  className="w-full py-6 sm:py-7 flex items-start justify-between gap-6 text-left focus:outline-none"
+                  aria-expanded={isOpen}
                 >
-                  <div className="space-y-1.5 pr-4">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 block font-mono">
-                      {faq.category}
+                  <div className="flex items-start gap-4 sm:gap-6 flex-1 min-w-0">
+                    <span className="label text-terra text-xs pt-1 flex-shrink-0 font-mono">
+                      {itemNumber}
                     </span>
-                    <span className="text-base sm:text-lg font-bold text-white">
-                      {faq.question}
-                    </span>
+                    <div className="min-w-0 flex-1">
+                      <span className="label text-[10px] text-cream/35 tracking-wider block mb-1">
+                        {faq.category}
+                      </span>
+                      <h3
+                        className={`font-display text-lg sm:text-2xl font-normal tracking-tight transition-colors leading-snug ${
+                          isOpen ? "text-cream" : "text-cream/80 group-hover:text-cream"
+                        }`}
+                      >
+                        {faq.question}
+                      </h3>
+                    </div>
                   </div>
+
                   <div
-                    className={`flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.08] text-slate-400 flex-shrink-0 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 bg-blue-600 text-white border-blue-500 shadow-md" : ""
+                    className={`h-8 w-8 sm:h-9 sm:w-9 border flex items-center justify-center flex-shrink-0 transition-all duration-200 mt-1 ${
+                      isOpen
+                        ? "border-terra bg-terra text-cream"
+                        : "border-cream/20 text-cream/60 group-hover:border-terra group-hover:text-terra"
                     }`}
                   >
-                    <ChevronDown className="h-4 w-4" />
+                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
 
-                {isOpen && (
-                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 pt-0 border-t border-white/[0.06]">
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed pt-4 font-normal">
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: EASE }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pl-8 sm:pl-12 pr-4 pb-7 pt-1">
+                        <p className="text-sm sm:text-base text-cream/60 font-light leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}
         </div>
 
-        {/* Direct Compliance Helpline Banner */}
-        <div className="mt-16 rounded-3xl border border-white/[0.08] bg-slate-900/60 p-7 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
-          <div className="flex items-center gap-4">
-            <div className="flex h-13 w-13 p-3.5 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 flex-shrink-0">
-              <MessageSquare className="h-6 w-6" />
+        {/* ── Direct Advisory CTA Strip ── */}
+        <motion.div
+          className="mt-14 max-w-4xl mx-auto border border-cream/10 p-6 sm:p-8 bg-cream/[0.02] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: EASE }}
+        >
+          <div className="space-y-1.5 max-w-lg">
+            <div className="flex items-center gap-2 text-terra">
+              <ShieldCheck className="w-4 h-4 text-terra flex-shrink-0" />
+              <span className="label text-[10px] text-terra tracking-wider">
+                Uncompromising Fiduciary Advisory
+              </span>
             </div>
-            <div>
-              <h4 className="text-base sm:text-lg font-bold text-white font-display">Have a specific case question regarding backlogs or study gaps?</h4>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">Connect with a certified international education advisor for a confidential dossier review.</p>
-            </div>
+            <h4 className="font-display text-xl sm:text-2xl font-normal text-cream tracking-tight">
+              Have a nuanced or high-stakes admissions inquiry?
+            </h4>
+            <p className="text-xs text-cream/50 font-light leading-relaxed">
+              Book a direct confidential discovery session to evaluate your transcripts and study timeline.
+            </p>
           </div>
 
           <a
-            href="https://wa.me/33755749029?text=Hello%20GlobalEdu,%20I%20would%20like%20to%20request%20a%20statutory%20visa%20and%20profile%20evaluation."
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-6 py-4 text-xs font-bold text-white transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] whitespace-nowrap active:scale-[0.98]"
+            href="#booking"
+            className="flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-6 py-3 label text-xs transition-colors btn-tactile btn-tactile-dark whitespace-nowrap"
           >
-            <span>Consult on WhatsApp</span>
-            <ArrowRight className="h-4 w-4" />
+            Schedule 1-on-1 Call
+            <ArrowRight className="w-3.5 h-3.5" />
           </a>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );

@@ -18,6 +18,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { saveMentorshipBooking } from "@/lib/firebase";
+import { getStoredUTMParams } from "@/lib/utm";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -34,6 +35,7 @@ export default function BookingSection() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ fullName?: string; whatsapp?: string }>({});
   const [showFullForm, setShowFullForm] = useState(false);
 
   const countries = [
@@ -77,12 +79,27 @@ export default function BookingSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
-    if (!formData.fullName.trim() || !formData.whatsapp.trim()) {
-      setErrorMessage("Please provide your name and WhatsApp number.");
+    
+    // Field-level validation
+    const errors: { fullName?: string; whatsapp?: string } = {};
+    if (!formData.fullName.trim()) {
+      errors.fullName = "Please enter your full name.";
+    }
+    if (!formData.whatsapp.trim()) {
+      errors.whatsapp = "Please enter your WhatsApp contact number.";
+    } else if (formData.whatsapp.replace(/\D/g, "").length < 7) {
+      errors.whatsapp = "Please enter a valid phone/WhatsApp number.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
+    setFieldErrors({});
+
     setLoading(true);
     try {
+      const utm = getStoredUTMParams();
       await saveMentorshipBooking({
         fullName: formData.fullName,
         whatsapp: formData.whatsapp,
@@ -91,6 +108,7 @@ export default function BookingSection() {
         targetCountry: formData.targetCountry,
         targetIntake: formData.targetIntake,
         helpNeeded: formData.helpNeeded,
+        ...(utm ? { utm } : {}),
       });
       triggerConfetti();
       setSubmitted(true);
@@ -135,13 +153,20 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                 <Check className="h-6 w-6 text-terra" />
               </div>
               <div>
+                <span className="label text-[9px] text-terra border border-terra/30 bg-terra/[0.06] px-2.5 py-1 inline-block mb-2">
+                  Admissions Dossier Queued
+                </span>
                 <h3 className="font-display text-2xl font-normal text-cream tracking-tight">
-                  Strategy Session Requested
+                  Strategy Session Confirmed
                 </h3>
-                <p className="text-cream/50 text-xs mt-1.5 leading-relaxed font-light">
-                  Thank you, <strong className="text-cream/80">{formData.fullName}</strong>. A senior mentor will connect on WhatsApp at{" "}
-                  <strong className="text-cream">{formData.whatsapp}</strong>.
+                <p className="text-cream/70 text-xs mt-2 leading-relaxed font-light">
+                  Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. A dedicated senior mentor will evaluate your background and connect on WhatsApp at{" "}
+                  <strong className="text-terra font-medium">{formData.whatsapp}</strong>.
                 </p>
+                <div className="mt-3 p-3 bg-cream/[0.03] border border-cream/8 text-[11px] text-cream/70 font-light flex items-center justify-center gap-2">
+                  <Clock className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                  <span>Guaranteed mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
+                </div>
               </div>
 
               <div className="space-y-2 pt-2">
@@ -149,7 +174,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                   href={getWhatsAppDirectUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] py-3 label text-xs transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] py-3 label text-xs transition-colors btn-tactile btn-tactile-dark"
                 >
                   <MessageCircle className="h-4 w-4" />
                   Ping on WhatsApp Directly
@@ -175,7 +200,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
             </div>
           ) : (
             /* Compact Above-The-Fold Form */
-            <form onSubmit={handleSubmit} className="space-y-3.5">
+            <form noValidate onSubmit={handleSubmit} className="space-y-3.5">
               {/* Header */}
               <div className="border-b border-cream/10 pb-3">
                 <div className="label text-terra text-[10px] mb-1">Direct Consultation Booking</div>
@@ -187,25 +212,28 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                 </p>
               </div>
 
-              {errorMessage && (
-                <div className="border border-red-500/30 bg-red-500/[0.06] p-3 flex items-center gap-2 text-xs text-red-300">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                  {errorMessage}
-                </div>
-              )}
-
               {/* Key Form Fields */}
               <div className="space-y-2.5">
                 <div>
                   <label className="label text-cream/40 text-[9px] block mb-1">Full Name *</label>
                   <input
                     type="text"
-                    required
                     placeholder="e.g. Aryan Mehra"
                     value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className="input-dark py-2 text-sm min-h-[44px]"
+                    onChange={(e) => {
+                      setFormData({ ...formData, fullName: e.target.value });
+                      if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
+                    }}
+                    className={`input-dark py-2 text-sm min-h-[44px] ${
+                      fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
+                    }`}
                   />
+                  {fieldErrors.fullName && (
+                    <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
+                      <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                      <span>{fieldErrors.fullName}</span>
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -213,12 +241,22 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     <label className="label text-cream/40 text-[9px] block mb-1">WhatsApp Number *</label>
                     <input
                       type="tel"
-                      required
                       placeholder="+33 7 55 74 90 29"
                       value={formData.whatsapp}
-                      onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                      className="input-dark py-2 text-sm min-h-[44px]"
+                      onChange={(e) => {
+                        setFormData({ ...formData, whatsapp: e.target.value });
+                        if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
+                      }}
+                      className={`input-dark py-2 text-sm min-h-[44px] ${
+                        fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
+                      }`}
                     />
+                    {fieldErrors.whatsapp && (
+                      <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
+                        <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                        <span>{fieldErrors.whatsapp}</span>
+                      </p>
+                    )}
                   </div>
                   <div className="relative">
                     <label className="label text-cream/40 text-[9px] block mb-1">Target Country</label>
@@ -438,33 +476,49 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
               transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
             >
               {submitted ? (
-                <div className="border border-cream/10 p-12 text-center space-y-6">
+                <div className="border border-cream/10 p-10 lg:p-12 text-center space-y-6">
                   <div className="h-14 w-14 mx-auto border border-terra/50 bg-terra/10 flex items-center justify-center">
                     <Check className="h-7 w-7 text-terra" />
                   </div>
                   <div>
-                    <h3 className="font-display text-2xl font-normal text-cream tracking-tight">
-                      Strategy Session Requested
+                    <span className="label text-[10px] text-terra border border-terra/30 bg-terra/[0.06] px-3 py-1 inline-block mb-3">
+                      Admissions Dossier Queued
+                    </span>
+                    <h3 className="font-display text-3xl font-normal text-cream tracking-tight">
+                      Strategy Session Confirmed
                     </h3>
-                    <p className="text-cream/50 text-sm mt-2 max-w-md mx-auto leading-relaxed font-light">
-                      Thank you, <strong className="text-cream/80 font-medium">{formData.fullName}</strong>. Your profile audit has been queued. A senior mentor will connect with you on WhatsApp at{" "}
-                      <strong className="text-cream font-medium">{formData.whatsapp}</strong> shortly.
+                    <p className="text-cream/60 text-sm mt-3 max-w-md mx-auto leading-relaxed font-light">
+                      Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. Your profile audit has been registered. A senior mentor will evaluate your background and connect on WhatsApp at{" "}
+                      <strong className="text-terra font-medium">{formData.whatsapp}</strong>.
+                    </p>
+                    <div className="mt-4 inline-flex items-center gap-2 border border-cream/10 bg-cream/[0.02] px-4 py-2 text-xs text-cream/70 font-light">
+                      <Clock className="w-4 h-4 text-terra flex-shrink-0" />
+                      <span>Direct Advisory Guarantee: Personal mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
+                    </div>
+                  </div>
+
+                  <div className="border border-cream/10 p-5 max-w-md mx-auto text-left text-xs space-y-2.5 text-cream/40 bg-cream/[0.01]">
+                    <div className="label text-terra/70 mb-3">Session Overview</div>
+                    <p className="flex justify-between border-b border-cream/8 pb-2">
+                      <span>Target Country:</span>
+                      <strong className="text-cream/80">{formData.targetCountry}</strong>
+                    </p>
+                    <p className="flex justify-between border-b border-cream/8 pb-2">
+                      <span>Target Intake:</span>
+                      <strong className="text-cream/80">{formData.targetIntake}</strong>
+                    </p>
+                    <p className="flex justify-between">
+                      <span>Advisory Scope:</span>
+                      <strong className="text-cream/80">{formData.helpNeeded}</strong>
                     </p>
                   </div>
 
-                  <div className="border border-cream/10 p-5 max-w-sm mx-auto text-left text-xs space-y-2 text-cream/40">
-                    <div className="label text-terra/70 mb-3">Session Overview</div>
-                    <p>Target Country: <strong className="text-cream/70">{formData.targetCountry}</strong></p>
-                    <p>Target Intake: <strong className="text-cream/70">{formData.targetIntake}</strong></p>
-                    <p>Focus Area: <strong className="text-cream/70">{formData.helpNeeded}</strong></p>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-4">
+                  <div className="flex items-center justify-center gap-4 pt-2">
                     <a
                       href={getWhatsAppDirectUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 bg-terra hover:bg-terra-dark text-cream px-6 py-3 label transition-colors min-h-[48px]"
+                      className="inline-flex items-center gap-2 bg-terra hover:bg-terra-dark text-cream px-6 py-3 label transition-colors min-h-[48px] btn-tactile btn-tactile-dark"
                     >
                       <MessageCircle className="h-4 w-4" />
                       Ping on WhatsApp Directly
@@ -486,7 +540,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
+                <form noValidate onSubmit={handleSubmit} className="space-y-8">
                   <div className="border-b border-cream/10 pb-5">
                     <div className="label text-terra mb-1">1-on-1 Consultation</div>
                     <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">
@@ -494,36 +548,49 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     </h3>
                   </div>
 
-                  {errorMessage && (
-                    <div className="border border-red-500/30 bg-red-500/[0.06] p-4 flex items-center gap-3 text-xs text-red-300">
-                      <AlertCircle className="h-4 w-4 flex-shrink-0" />
-                      {errorMessage}
-                    </div>
-                  )}
-
                   {/* Name + WhatsApp */}
                   <div className="grid grid-cols-2 gap-8">
                     <div>
                       <LabelEl icon={User}>Full Name *</LabelEl>
                       <input
                         type="text"
-                        required
                         placeholder="e.g. Aryan Mehra"
                         value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        className="input-dark"
+                        onChange={(e) => {
+                          setFormData({ ...formData, fullName: e.target.value });
+                          if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
+                        }}
+                        className={`input-dark ${
+                          fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
+                        }`}
                       />
+                      {fieldErrors.fullName && (
+                        <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
+                          <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                          <span>{fieldErrors.fullName}</span>
+                        </p>
+                      )}
                     </div>
                     <div>
                       <LabelEl icon={Phone}>WhatsApp Number *</LabelEl>
                       <input
                         type="tel"
-                        required
                         placeholder="+33 7 55 74 90 29"
                         value={formData.whatsapp}
-                        onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                        className="input-dark"
+                        onChange={(e) => {
+                          setFormData({ ...formData, whatsapp: e.target.value });
+                          if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
+                        }}
+                        className={`input-dark ${
+                          fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
+                        }`}
                       />
+                      {fieldErrors.whatsapp && (
+                        <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
+                          <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                          <span>{fieldErrors.whatsapp}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 

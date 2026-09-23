@@ -324,6 +324,17 @@ export default function Navbar() {
                     </span>
                     <ArrowRight className="w-3.5 h-3.5 text-cream/30 group-hover:text-terra group-hover:translate-x-0.5 transition-all" />
                   </Link>
+
+                  <Link
+                    href={href("#faq")}
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between min-h-[48px] py-3 px-3 border-b border-cream/8 text-cream/80 hover:text-cream hover:bg-cream/[0.02] transition-all group"
+                  >
+                    <span className="font-display text-lg font-normal tracking-wide">
+                      Admissions FAQ
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-cream/30 group-hover:text-terra group-hover:translate-x-0.5 transition-all" />
+                  </Link>
                 </nav>
               </div>
 

@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import StudyDestinations from "@/components/home/StudyDestinations";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import ProcessRoadmap from "@/components/home/ProcessRoadmap";
+import FAQ from "@/components/home/FAQ";
 import BookingSection from "@/components/home/BookingSection";
 import StudentOutcomes from "@/components/home/StudentOutcomes";
 import Footer from "@/components/layout/Footer";
@@ -28,10 +29,13 @@ export default function Home() {
       {/* 6. The 4-Stage Mentorship Journey */}
       <ProcessRoadmap />
 
-      {/* 7. Verified Student Outcomes */}
+      {/* 7. Frequently Addressed Questions */}
+      <FAQ />
+
+      {/* 8. Verified Student Outcomes */}
       <StudentOutcomes />
 
-      {/* 8. Minimalist Footer */}
+      {/* 9. Minimalist Footer */}
       <Footer />
     </main>
   );

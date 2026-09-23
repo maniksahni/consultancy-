@@ -78,6 +78,7 @@ export async function saveMentorshipBooking(data: {
   targetIntake: string;
   helpNeeded: string;
   preferredSlot?: string;
+  utm?: Record<string, any>;
 }) {
   try {
     const docRef = await addDoc(collection(db, "mentorship_bookings"), {
