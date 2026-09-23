@@ -257,7 +257,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                     <label className="label text-cream/40 text-[9px] block mb-1">WhatsApp Number *</label>
                     <input
                       type="tel"
-                      placeholder="+33 7 55 74 90 29"
+                      placeholder="e.g. +91 98765 43210"
                       value={formData.whatsapp}
                       onChange={(e) => {
                         setFormData({ ...formData, whatsapp: e.target.value });
@@ -591,7 +591,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                       <LabelEl icon={Phone}>WhatsApp Number *</LabelEl>
                       <input
                         type="tel"
-                        placeholder="+33 7 55 74 90 29"
+                        placeholder="e.g. +91 98765 43210"
                         value={formData.whatsapp}
                         onChange={(e) => {
                           setFormData({ ...formData, whatsapp: e.target.value });
