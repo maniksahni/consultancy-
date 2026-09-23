@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, ShieldCheck, ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { X, Check, ShieldCheck } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -35,10 +35,16 @@ const comparisonItems = [
 ];
 
 export default function ComparisonSection() {
-  const [activeFactorIndex, setActiveFactorIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<"pathways" | "agency">("pathways");
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const currentItem = comparisonItems[activeFactorIndex];
+  const handleMobileScroll = () => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const cardWidth = container.firstElementChild?.clientWidth || 300;
+    const index = Math.round(container.scrollLeft / (cardWidth + 14));
+    setActiveMobileIndex(Math.min(Math.max(index, 0), comparisonItems.length - 1));
+  };
 
   return (
     <section
@@ -49,7 +55,7 @@ export default function ComparisonSection() {
 
         {/* ── Section header ── */}
         <motion.div
-          className="border-t border-cream/10 pt-10 mb-10 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          className="border-t border-cream/10 pt-10 mb-8 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-8%" }}
@@ -70,145 +76,69 @@ export default function ComparisonSection() {
           </p>
         </motion.div>
 
-        {/* ── MOBILE INTERACTIVE TOGGLE CARD (hidden on desktop) ── */}
-        <div className="lg:hidden space-y-4">
-          {/* Factor Stepper */}
-          <div className="flex items-center justify-between border-b border-cream/10 pb-3">
-            <div className="label text-[11px] text-cream/45">
-              Criterion <span className="text-terra font-semibold">{activeFactorIndex + 1}</span> of {comparisonItems.length}
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveFactorIndex((prev) =>
-                    prev > 0 ? prev - 1 : comparisonItems.length - 1
-                  )
-                }
-                className="p-2 border border-cream/15 text-cream/70 hover:text-cream active:scale-95 transition-all"
-                aria-label="Previous Factor"
+        {/* ── MOBILE: Finger-Swipeable Horizontal Carousel (No Arrows, Peek Reveal) ── */}
+        <div className="lg:hidden">
+          <div
+            ref={carouselRef}
+            onScroll={handleMobileScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 px-6 pb-2 scrollbar-none"
+          >
+            {comparisonItems.map((item, i) => (
+              <div
+                key={i}
+                className="snap-start flex-none w-[86vw] max-w-[340px] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm"
               >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  setActiveFactorIndex((prev) =>
-                    prev < comparisonItems.length - 1 ? prev + 1 : 0
-                  )
-                }
-                className="p-2 border border-cream/15 text-cream/70 hover:text-cream active:scale-95 transition-all"
-                aria-label="Next Factor"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
+                <div>
+                  {/* Factor Header */}
+                  <div className="border-b border-cream/10 pb-3 mb-4 flex items-center justify-between">
+                    <span className="label text-[10px] text-cream/35">
+                      Criterion 0{i + 1} / 05
+                    </span>
+                    <span className="label text-[10px] text-terra">Compare</span>
+                  </div>
 
-          {/* Factor Heading */}
-          <div>
-            <h3 className="font-display text-2xl text-cream font-normal leading-tight">
-              {currentItem.factor}
-            </h3>
-          </div>
+                  <h3 className="font-display text-2xl text-cream font-normal leading-tight mb-4">
+                    {item.factor}
+                  </h3>
 
-          {/* Segmented Toggle Control */}
-          <div className="grid grid-cols-2 p-1 border border-cream/15 bg-cream/[0.03]">
-            <button
-              type="button"
-              onClick={() => setViewMode("agency")}
-              className={`py-3 px-3 label text-[10px] flex items-center justify-center gap-1.5 transition-all min-h-[44px] ${
-                viewMode === "agency"
-                  ? "bg-cream/10 text-cream/90 shadow-sm border border-cream/20"
-                  : "text-cream/40 hover:text-cream/70"
-              }`}
-            >
-              <X className="h-3.5 w-3.5 text-red-400" />
-              Mass Agency
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode("pathways")}
-              className={`py-3 px-3 label text-[10px] flex items-center justify-center gap-1.5 transition-all min-h-[44px] ${
-                viewMode === "pathways"
-                  ? "bg-terra text-cream shadow-sm"
-                  : "text-cream/40 hover:text-cream/70"
-              }`}
-            >
-              <Check className="h-3.5 w-3.5" />
-              Pathways Global
-            </button>
-          </div>
+                  {/* Mass Processing Agency Box */}
+                  <div className="border border-cream/10 bg-cream/[0.02] p-3.5 mb-3">
+                    <div className="flex items-center gap-1.5 label text-[9px] text-cream/40 mb-1.5">
+                      <X className="h-3 w-3 text-red-400" />
+                      <span>Mass Agency Factory</span>
+                    </div>
+                    <p className="text-xs text-cream/40 font-light line-through decoration-cream/25 leading-relaxed">
+                      {item.agency}
+                    </p>
+                  </div>
 
-          {/* Comparison Card Content with Flip Animation */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${activeFactorIndex}-${viewMode}`}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              className={`p-6 border min-h-[190px] flex flex-col justify-between ${
-                viewMode === "pathways"
-                  ? "border-terra/40 bg-terra/[0.05]"
-                  : "border-cream/15 bg-cream/[0.02]"
-              }`}
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  {viewMode === "pathways" ? (
-                    <>
-                      <div className="h-5 w-5 bg-terra/20 border border-terra flex items-center justify-center">
-                        <Check className="h-3 w-3 text-terra" />
-                      </div>
-                      <span className="label text-[10px] text-terra">Fiduciary 1-on-1 Mentorship</span>
-                    </>
-                  ) : (
-                    <>
-                      <div className="h-5 w-5 bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-                        <X className="h-3 w-3 text-red-400" />
-                      </div>
-                      <span className="label text-[10px] text-cream/40">Mass Processing Factory</span>
-                    </>
-                  )}
+                  {/* Pathways Global 1-on-1 Mentorship Box */}
+                  <div className="border border-terra/40 bg-terra/[0.06] p-3.5">
+                    <div className="flex items-center gap-1.5 label text-[9px] text-terra mb-1.5">
+                      <Check className="h-3 w-3 text-terra" />
+                      <span>Pathways Global Mentorship</span>
+                    </div>
+                    <p className="text-xs text-cream font-medium leading-relaxed">
+                      {item.pathways}
+                    </p>
+                  </div>
                 </div>
 
-                <p
-                  className={`text-base leading-relaxed ${
-                    viewMode === "pathways"
-                      ? "text-cream font-medium"
-                      : "text-cream/40 font-light line-through decoration-cream/25"
-                  }`}
-                >
-                  {viewMode === "pathways" ? currentItem.pathways : currentItem.agency}
-                </p>
+                <div className="pt-3 mt-3 border-t border-cream/8 flex items-center justify-between text-[10px] label text-cream/25">
+                  <span>Swipe to compare next criterion</span>
+                  <span className="text-terra">Swipe →</span>
+                </div>
               </div>
+            ))}
+          </div>
 
-              {/* Tap to flip trigger */}
-              <button
-                type="button"
-                onClick={() =>
-                  setViewMode((curr) => (curr === "pathways" ? "agency" : "pathways"))
-                }
-                className="text-left text-[11px] label text-cream/40 hover:text-terra pt-4 mt-3 border-t border-cream/8 flex items-center justify-between min-h-[44px]"
-              >
-                <span>
-                  Tap to view: {viewMode === "pathways" ? "Agency Alternative" : "Pathways Advantage"}
-                </span>
-                <span className="text-terra">⇄ Flip Card</span>
-              </button>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Factor Pagination Dots */}
-          <div className="flex items-center justify-center gap-2 pt-2">
+          {/* Dot pagination indicator */}
+          <div className="flex items-center justify-center gap-1.5 pt-4 pb-1">
             {comparisonItems.map((_, idx) => (
-              <button
+              <span
                 key={idx}
-                onClick={() => setActiveFactorIndex(idx)}
-                aria-label={`Go to criterion ${idx + 1}`}
-                className={`h-1.5 transition-all ${
-                  idx === activeFactorIndex ? "w-6 bg-terra" : "w-1.5 bg-cream/20"
+                className={`h-1.5 transition-all duration-200 ${
+                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-cream/20"
                 }`}
               />
             ))}
