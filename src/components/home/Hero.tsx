@@ -42,8 +42,8 @@ export default function Hero() {
       </div>
 
       {/* Main content grid */}
-      <div className="relative flex-1 flex flex-col justify-center px-6 lg:px-12 py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end max-w-7xl mx-auto w-full">
+      <div className="relative flex-1 flex flex-col justify-center px-6 lg:px-12 py-8 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end max-w-7xl mx-auto w-full">
 
           {/* Headline — 8 cols on desktop, full on mobile */}
           <motion.div
@@ -53,19 +53,45 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
           >
             <h1
-              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em]"
-              style={{ fontSize: "clamp(52px, 9vw, 128px)" }}
+              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
             >
               Elite 1-on-1<br />
               Study Abroad<br />
               Mentorship.<br />
               <em className="text-terra not-italic italic">Zero Compromises.</em>
             </h1>
+
+            {/* Mobile Stats: Horizontal scroll-snap strip (swipeable) */}
+            <div className="lg:hidden mt-8">
+              <div className="flex items-center justify-between text-[10px] label text-cream/35 mb-2.5">
+                <span>Verified Admissions Ledger</span>
+                <span className="text-terra">Swipe 4 Metrics →</span>
+              </div>
+              <div className="overflow-x-auto snap-x snap-mandatory flex gap-3 scrollbar-none pb-2 -mx-6 px-6">
+                {metrics.map((m, i) => (
+                  <div
+                    key={i}
+                    className="snap-start flex-none w-[70vw] max-w-[260px] border border-cream/15 bg-cream/[0.03] p-4 flex flex-col justify-between"
+                  >
+                    <div className="flex items-center justify-between border-b border-cream/10 pb-2">
+                      <span className="label text-[9px] text-cream/30">Metric 0{i + 1}</span>
+                      <span className="text-[9px] text-terra label">Audited</span>
+                    </div>
+                    <div className="font-display text-3xl sm:text-4xl text-terra font-normal leading-none mt-3.5">
+                      {m.value}
+                    </div>
+                    <div className="label text-cream/65 text-[10px] mt-2.5 tracking-wider leading-relaxed">
+                      {m.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
-          {/* Stats column — 4 cols on desktop */}
+          {/* Desktop Stats: 4 cols stacked ledger */}
           <motion.div
-            className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-0"
+            className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.35 }}
@@ -94,10 +120,10 @@ export default function Hero() {
             Bypass mass-processing agencies. Get personalized profile assessment, Ivy League &amp; Russell Group SOP
             curation, and foolproof consular visa preparation directly from a dedicated mentor.
           </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
             <a
               href="#booking"
-              className="inline-flex items-center gap-2.5 bg-terra hover:bg-terra-dark text-cream px-7 py-3.5 label transition-colors group"
+              className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-7 py-3.5 label transition-colors group text-center"
             >
               Book Strategy Session
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -106,9 +132,9 @@ export default function Hero() {
               href="https://wa.me/919876543210?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-cream/50 hover:text-cream/80 text-sm border-b border-cream/15 hover:border-cream/40 pb-0.5 transition-all"
+              className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[48px] border border-cream/15 hover:border-cream/40 px-5 py-3 transition-all text-center"
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-4 w-4 text-terra" />
               Direct WhatsApp Inquiry
             </a>
           </div>

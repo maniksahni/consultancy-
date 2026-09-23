@@ -141,7 +141,7 @@ export default function ProcessRoadmap() {
           </div>
           <a
             href="#booking"
-            className="flex-shrink-0 inline-flex items-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 px-7 py-3.5 label transition-colors group"
+            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 min-h-[48px] px-7 py-3.5 label transition-colors group text-center"
           >
             Start Your Diagnostic Audit
             <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

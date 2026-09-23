@@ -76,30 +76,38 @@
   /* ── LIGHT-BACKGROUND INPUTS ── */
   .input-light {
     width: 100%;
+    min-height: 48px;
     background: transparent;
     border: 0;
     border-bottom: 1px solid rgba(20, 18, 12, 0.18);
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #14120C;
     transition: border-color 0.2s;
+  }
+  @media (min-width: 640px) {
+    .input-light { font-size: 14px; }
   }
   .input-light::placeholder { color: #A09286; }
   .input-light:focus { outline: none; border-bottom-color: #C25B1A; }
 
   .select-light {
     width: 100%;
+    min-height: 48px;
     background: transparent;
     border: 0;
     border-bottom: 1px solid rgba(20, 18, 12, 0.18);
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #14120C;
     transition: border-color 0.2s;
     appearance: none;
     cursor: pointer;
+  }
+  @media (min-width: 640px) {
+    .select-light { font-size: 14px; }
   }
   .select-light:focus { outline: none; border-bottom-color: #C25B1A; }
   .select-light option { background: #F2EDE4; color: #14120C; }
@@ -107,33 +115,50 @@
   /* ── DARK-BACKGROUND INPUTS ── */
   .input-dark {
     width: 100%;
+    min-height: 48px;
     background: transparent;
     border: 0;
     border-bottom: 1px solid rgba(242, 237, 228, 0.18);
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #F2EDE4;
     transition: border-color 0.2s;
+  }
+  @media (min-width: 640px) {
+    .input-dark { font-size: 14px; }
   }
   .input-dark::placeholder { color: rgba(242, 237, 228, 0.35); }
   .input-dark:focus { outline: none; border-bottom-color: #C25B1A; }
 
   .select-dark {
     width: 100%;
+    min-height: 48px;
     background: transparent;
     border: 0;
     border-bottom: 1px solid rgba(242, 237, 228, 0.18);
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #F2EDE4;
     transition: border-color 0.2s;
     appearance: none;
     cursor: pointer;
   }
+  @media (min-width: 640px) {
+    .select-dark { font-size: 14px; }
+  }
   .select-dark:focus { outline: none; border-bottom-color: #C25B1A; }
   .select-dark option { background: #14120C; color: #F2EDE4; }
+
+  /* ── UTILITY: SCROLLBAR NONE ── */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* ============================================================

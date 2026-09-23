@@ -137,8 +137,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
           <div className="label text-cream/35 mb-4">Direct Consultation Booking</div>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <h2
-              className="font-display font-normal text-cream leading-[0.93] tracking-tight"
-              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
+              className="font-display font-normal text-cream leading-[0.93] tracking-tight text-[2.25rem] sm:text-4xl md:text-5xl lg:text-[3.6rem]"
             >
               Schedule Your<br />
               <em className="text-terra">1-on-1 Strategy Call</em>
@@ -213,9 +212,9 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                 href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-cream/15 hover:border-terra/50 text-cream/60 hover:text-terra px-4 py-2.5 label transition-colors"
+                className="inline-flex items-center justify-center gap-2 border border-cream/15 hover:border-terra/50 text-cream/70 hover:text-terra px-4 py-3 min-h-[48px] w-full sm:w-auto label text-[10px] transition-colors"
               >
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4 text-terra" />
                 Open Instant WhatsApp Chat
               </a>
             </div>
@@ -383,7 +382,7 @@ I would like to schedule a 1-on-1 strategy call with Pathways Global.
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream py-4 label transition-colors cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-4 label transition-colors cursor-pointer text-xs tracking-wider"
                   >
                     {loading ? (
                       <>

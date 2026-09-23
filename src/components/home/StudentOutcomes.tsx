@@ -101,9 +101,73 @@ export default function StudentOutcomes() {
           </p>
         </motion.div>
 
-        {/* ── Dossier case files ── */}
-        {/* Outer border acts as a ledger, inner grid dividers create cells */}
-        <div className="border border-ink/10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {/* ── MOBILE: Horizontal scroll-snap carousel of dossier cards ── */}
+        <div className="md:hidden">
+          <div className="flex items-center justify-between text-[10px] label text-stone mb-3">
+            <span>Dossier Case Files (6 Records)</span>
+            <span className="text-terra">Swipe Dossiers →</span>
+          </div>
+
+          <div className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 pb-4 scrollbar-none -mx-6 px-6">
+            {outcomes.map((item, i) => (
+              <div
+                key={i}
+                className="snap-center flex-none w-[82vw] max-w-[315px] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between shadow-sm"
+              >
+                {/* Record header */}
+                <div className="border-b border-ink/10 pb-3 mb-4 flex items-center justify-between gap-2">
+                  <div>
+                    <div className="label text-stone text-[10px]">
+                      Case File {String(i + 1).padStart(3, "0")} / 006
+                    </div>
+                    <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">
+                      {item.ref}
+                    </div>
+                  </div>
+                  <CountryFlag country={item.country} size="md" />
+                </div>
+
+                {/* Candidate identity */}
+                <div className="mb-3">
+                  <div className="font-display text-2xl font-normal text-ink leading-tight">
+                    Candidate {item.initials}
+                  </div>
+                  <div className="label text-stone text-[10px] mt-1">
+                    {item.country} Study Route · {item.intake}
+                  </div>
+                </div>
+
+                {/* University + program */}
+                <div className="mb-3">
+                  <h3 className="font-display text-xl font-normal text-ink leading-snug">
+                    {item.university}
+                  </h3>
+                  <p className="text-stone text-xs font-light mt-0.5">{item.program}</p>
+                </div>
+
+                {/* Profile metrics */}
+                <div className="border-t border-b border-ink/8 py-2.5 mb-3 bg-cream/50 px-2.5">
+                  <div className="label text-stone text-[9px] mb-1">Audited Profile</div>
+                  <p className="text-xs text-ink/80 font-light leading-relaxed">{item.stats}</p>
+                </div>
+
+                {/* Outcome stamp */}
+                <div className="border border-terra/30 bg-terra/[0.06] p-3">
+                  <div className="label text-terra text-[9px] mb-1">Verified Outcome</div>
+                  <p className="text-xs text-ink font-medium leading-snug">{item.outcome}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-stone font-light px-1 pt-1">
+            <span>Scroll sideways to view all admissions</span>
+            <span className="text-terra label text-[10px]">6 of 6 Verified</span>
+          </div>
+        </div>
+
+        {/* ── DESKTOP: Dossier case files ledger grid (hidden on mobile) ── */}
+        <div className="hidden md:grid border border-ink/10 grid-cols-2 lg:grid-cols-3">
           {outcomes.map((item, i) => (
             <motion.div
               key={i}

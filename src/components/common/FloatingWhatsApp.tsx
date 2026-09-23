@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
 
 const WHATSAPP_URL =
@@ -8,10 +8,27 @@ const WHATSAPP_URL =
 
 export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Appear after the hero section is scrolled past (approx 380px)
+      setIsVisible(window.scrollY > 380);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="fixed bottom-5 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 max-w-[calc(100vw-2rem)]">
-
+    <div
+      className={`fixed bottom-5 right-4 sm:right-6 z-50 flex flex-col items-end gap-3 max-w-[calc(100vw-2rem)] transition-all duration-300 ${
+        isVisible
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-6 pointer-events-none"
+      }`}
+    >
       {/* ─── Expanded card ─── */}
       {expanded && (
         <div className="animate-slide-up-fade w-[calc(100vw-2rem)] max-w-xs sm:w-80 border border-ink/15 bg-cream-50 shadow-2xl overflow-hidden">
@@ -82,7 +99,7 @@ export default function FloatingWhatsApp() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between gap-2 w-full bg-terra hover:bg-terra-dark text-cream py-2.5 px-4 label text-[10px] transition-colors group"
+              className="flex items-center justify-between gap-2 w-full bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors group"
             >
               <div className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
@@ -94,7 +111,7 @@ export default function FloatingWhatsApp() {
             {/* Phone */}
             <a
               href="tel:+919876543210"
-              className="flex items-center justify-center gap-2 w-full border border-ink/10 hover:border-ink/20 text-stone py-2 label text-[10px] transition-colors"
+              className="flex items-center justify-center gap-2 w-full border border-ink/10 hover:border-ink/20 text-stone min-h-[44px] py-2 label text-[10px] transition-colors"
             >
               <Phone className="h-3.5 w-3.5 text-terra" />
               Call Advisory: +91 98765 43210
@@ -103,11 +120,28 @@ export default function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* ─── Trigger button ─── */}
-      <div className="relative flex items-center">
-        {/* Tooltip (desktop only) */}
+      {/* ─── Mobile: Minimal Pill Trigger ─── */}
+      <div className="sm:hidden flex items-center">
+        <button
+          onClick={() => setExpanded((prev) => !prev)}
+          aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
+          className="inline-flex items-center gap-2 bg-[#14120C] text-cream border border-terra/60 px-4 py-2.5 shadow-2xl active:scale-95 transition-all min-h-[44px]"
+        >
+          <span className="relative flex h-2 w-2 flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
+          </span>
+          <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
+          <span className="label text-[10px] text-cream tracking-wider">
+            {expanded ? "Close" : "WhatsApp 1-on-1"}
+          </span>
+        </button>
+      </div>
+
+      {/* ─── Desktop: Square Trigger Button with Tooltip ─── */}
+      <div className="hidden sm:flex relative items-center">
         {!expanded && (
-          <div className="hidden sm:block absolute right-full mr-3 animate-slide-up-fade pointer-events-none">
+          <div className="absolute right-full mr-3 animate-slide-up-fade pointer-events-none">
             <div className="flex items-center gap-2 border border-ink/12 bg-cream px-3.5 py-2 shadow-lg whitespace-nowrap">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />

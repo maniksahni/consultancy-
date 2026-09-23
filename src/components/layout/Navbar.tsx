@@ -94,10 +94,10 @@ export default function Navbar() {
         </div>
 
         {/* Mobile controls */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2.5 md:hidden">
           <a
             href={bookingHref}
-            className={`label border px-3 py-2 text-[10px] transition-colors ${
+            className={`label border px-3.5 min-h-[44px] flex items-center justify-center text-[10px] transition-colors ${
               isLightNav
                 ? "border-ink/20 text-ink"
                 : "border-cream/25 text-cream"
@@ -107,12 +107,12 @@ export default function Navbar() {
           </a>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`p-2 transition-colors ${
+            className={`min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 transition-colors ${
               isLightNav ? "text-ink" : "text-cream"
             }`}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block py-3 border-b border-ink/6 text-sm text-stone hover:text-ink transition-colors"
+              className="flex items-center min-h-[48px] py-3 border-b border-ink/6 text-sm text-stone hover:text-ink transition-colors"
             >
               {link.name}
             </Link>
@@ -134,7 +134,7 @@ export default function Navbar() {
             <a
               href={bookingHref}
               onClick={() => setIsOpen(false)}
-              className="block w-full text-center bg-ink text-cream-50 py-3.5 label hover:bg-ink-soft transition-colors"
+              className="flex items-center justify-center w-full text-center bg-ink text-cream-50 min-h-[48px] py-3.5 label hover:bg-ink-soft transition-colors"
             >
               Schedule 1-on-1 Call
             </a>
