@@ -11,7 +11,6 @@ import {
   ShieldCheck,
   Linkedin,
   Instagram,
-  Youtube,
   Copy,
   Check,
 } from "lucide-react";
@@ -181,9 +180,16 @@ export default function Footer() {
             {/* Social */}
             <div className="flex items-center gap-2 pt-2">
               {[
-                { href: "https://linkedin.com", label: "LinkedIn", Icon: Linkedin },
-                { href: "https://instagram.com", label: "Instagram", Icon: Instagram },
-                { href: "https://youtube.com", label: "YouTube", Icon: Youtube },
+                {
+                  href: "https://www.linkedin.com/in/harshita-kohli-imtbs/",
+                  label: "LinkedIn",
+                  Icon: Linkedin,
+                },
+                {
+                  href: "https://www.instagram.com/helloharshita98/",
+                  label: "Instagram",
+                  Icon: Instagram,
+                },
               ].map(({ href, label, Icon }) => (
                 <a
                   key={label}

@@ -233,21 +233,8 @@ export default function FloatingWhatsApp() {
         </button>
       </div>
 
-      {/* ─── Desktop: Square Trigger Button with Tooltip ─── */}
+      {/* ─── Desktop: Square Trigger Button ─── */}
       <div className="hidden sm:flex relative items-center pointer-events-auto">
-        {!expanded && (
-          <div className="absolute right-full mr-3 animate-slide-up-fade pointer-events-none">
-            <div className="flex items-center gap-2 border border-ink/12 bg-cream px-3.5 py-2 shadow-lg whitespace-nowrap">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
-              </span>
-              <span className="font-display text-xs text-ink">Direct WhatsApp Advisory</span>
-              <span className="label text-[9px] text-terra">Online</span>
-            </div>
-          </div>
-        )}
-
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
