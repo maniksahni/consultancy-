@@ -103,25 +103,25 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Mobile Stats: Horizontal scroll-snap strip (swipeable with Count-Up) */}
+            {/* Mobile Stats: 2x2 Grid (All 4 Audited Metrics Instantly Visible) */}
             <div className="lg:hidden mt-8">
               <div className="text-[10px] label text-cream/35 mb-3 tracking-widest">
                 Verified Admissions Ledger
               </div>
-              <div className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 scrollbar-none pb-3 -mx-6 px-6 carousel-snap">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
                 {metrics.map((m, i) => (
                   <div
                     key={i}
-                    className="snap-start flex-none w-[72vw] max-w-[270px] rounded-xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-5 flex flex-col justify-between carousel-snap-item shadow-[0_8px_24px_-4px_rgba(0,0,0,0.35)] card-hover-dark"
+                    className="rounded-xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-3.5 sm:p-4 flex flex-col justify-between shadow-[0_6px_20px_-4px_rgba(0,0,0,0.35)] backdrop-blur-sm card-hover-dark"
                   >
-                    <div className="flex items-center justify-between border-b border-cream/[0.08] pb-2.5">
-                      <span className="label text-[9px] text-cream/35">Metric 0{i + 1}</span>
-                      <span className="text-[9px] text-terra label tracking-widest">Audited</span>
+                    <div className="flex items-center justify-between border-b border-cream/[0.08] pb-2">
+                      <span className="label text-[8px] sm:text-[9px] text-cream/35">Metric 0{i + 1}</span>
+                      <span className="text-[8px] sm:text-[9px] text-terra label tracking-widest">Audited</span>
                     </div>
-                    <div className="font-display text-3xl sm:text-4xl text-terra font-normal leading-none mt-3.5">
+                    <div className="font-display text-2xl sm:text-3xl text-terra font-normal leading-none mt-2.5">
                       <StatCounter value={m.value} duration={1.6} />
                     </div>
-                    <div className="label text-cream/65 text-[10px] mt-3 tracking-wider leading-relaxed">
+                    <div className="label text-cream/65 text-[9px] sm:text-[10px] mt-2 tracking-wider leading-snug">
                       {m.label}
                     </div>
                   </div>
