@@ -89,17 +89,24 @@ export default function FAQ() {
         </motion.div>
 
         {/* ── Accordion List ── */}
-        <div className="border-t border-cream/10 max-w-4xl mx-auto divide-y divide-cream/10">
+        <div className="max-w-4xl mx-auto space-y-3.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             const itemNumber = String(idx + 1).padStart(2, "0");
 
             return (
-              <div key={idx} className="transition-colors group">
+              <div
+                key={idx}
+                className={`rounded-xl border transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? "bg-cream/[0.045] border-cream/20 shadow-lg shadow-black/30"
+                    : "bg-cream/[0.02] border-cream/[0.07] hover:border-cream/15 hover:bg-cream/[0.035]"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => toggleItem(idx)}
-                  className="w-full py-6 sm:py-7 flex items-start justify-between gap-6 text-left focus:outline-none"
+                  className="w-full p-5 sm:p-6 flex items-start justify-between gap-6 text-left focus:outline-none"
                   aria-expanded={isOpen}
                 >
                   <div className="flex items-start gap-4 sm:gap-6 flex-1 min-w-0">
@@ -121,13 +128,13 @@ export default function FAQ() {
                   </div>
 
                   <div
-                    className={`h-8 w-8 sm:h-9 sm:w-9 border flex items-center justify-center flex-shrink-0 transition-all duration-200 mt-1 ${
+                    className={`h-8 w-8 sm:h-9 sm:w-9 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 mt-0.5 ${
                       isOpen
-                        ? "border-terra bg-terra text-cream"
-                        : "border-cream/20 text-cream/60 group-hover:border-terra group-hover:text-terra"
+                        ? "border-terra bg-terra text-cream shadow-md shadow-terra/30"
+                        : "border-cream/20 text-cream/60 group-hover:border-terra group-hover:text-terra bg-cream/[0.02]"
                     }`}
                   >
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                   </div>
                 </button>
 
@@ -141,8 +148,8 @@ export default function FAQ() {
                       transition={{ duration: 0.35, ease: EASE }}
                       className="overflow-hidden"
                     >
-                      <div className="pl-8 sm:pl-12 pr-4 pb-7 pt-1">
-                        <p className="text-sm sm:text-base text-cream/60 font-light leading-relaxed">
+                      <div className="px-5 sm:px-6 pb-6 pt-1 sm:pl-16">
+                        <p className="text-sm sm:text-base text-cream/65 font-light leading-relaxed border-t border-cream/[0.06] pt-4">
                           {faq.answer}
                         </p>
                       </div>
@@ -156,13 +163,16 @@ export default function FAQ() {
 
         {/* ── Direct Advisory CTA Strip ── */}
         <motion.div
-          className="mt-14 max-w-4xl mx-auto border border-cream/10 p-6 sm:p-8 bg-cream/[0.02] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+          className="mt-14 max-w-4xl mx-auto rounded-2xl border border-cream/[0.1] p-6 sm:p-8 surface-elevated-dark relative overflow-hidden shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: EASE }}
         >
-          <div className="space-y-1.5 max-w-lg">
+          {/* Subtle accent sheen */}
+          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-terra/40 to-transparent pointer-events-none" />
+
+          <div className="space-y-1.5 max-w-lg relative z-10">
             <div className="flex items-center gap-2 text-terra">
               <ShieldCheck className="w-4 h-4 text-terra flex-shrink-0" />
               <span className="label text-[10px] text-terra tracking-wider">
@@ -179,7 +189,7 @@ export default function FAQ() {
 
           <a
             href="#booking"
-            className="flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-6 py-3 label text-xs transition-colors btn-tactile btn-tactile-dark whitespace-nowrap"
+            className="flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-6 py-3 label text-xs rounded-lg transition-all btn-tactile btn-tactile-dark btn-primary-glow whitespace-nowrap relative z-10"
           >
             Schedule 1-on-1 Call
             <ArrowRight className="w-3.5 h-3.5" />

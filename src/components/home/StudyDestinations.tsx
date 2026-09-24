@@ -249,10 +249,10 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className={`snap-center flex-none w-[86vw] p-6 border flex flex-col justify-between carousel-snap-item relative ${
+                  className={`snap-center flex-none w-[86vw] p-6 rounded-2xl border flex flex-col justify-between carousel-snap-item relative ${
                     isDark
-                      ? "bg-[#14120C] text-cream border-cream/10 card-hover-dark"
-                      : "bg-cream-50 text-ink border-ink/10 card-hover"
+                      ? "bg-gradient-to-b from-[#1C1914] to-[#12100A] text-cream border-cream/[0.08] shadow-[0_14px_36px_-8px_rgba(0,0,0,0.45)] card-hover-dark"
+                      : "bg-gradient-to-b from-white to-[#F8F5EE] text-ink border-ink/[0.07] shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover"
                   }`}
                 >
                   {/* Passport Header */}
@@ -272,8 +272,8 @@ export default function StudyDestinations() {
                         </div>
                       </div>
                       <div
-                        className={`border px-2 py-1 text-center font-display text-xs tracking-wider select-none flex-shrink-0 ${
-                          isDark ? "border-cream/20 text-cream/40" : "border-ink/20 text-ink/40"
+                        className={`rounded-full px-2.5 py-0.5 text-center font-display text-xs tracking-wider select-none flex-shrink-0 ${
+                          isDark ? "border border-cream/15 text-cream/45 bg-cream/[0.03]" : "border border-ink/15 text-ink/45 bg-ink/[0.02]"
                         }`}
                       >
                         ENTRY #{code}
@@ -281,46 +281,46 @@ export default function StudyDestinations() {
                     </div>
 
                     {/* Strategic tag */}
-                    <div className="mt-3">
-                      <span className="inline-block border border-terra/30 bg-terra/10 text-terra px-2.5 py-1 text-[10px] label">
+                    <div className="mt-3.5">
+                      <span className="inline-block rounded-full border border-terra/25 bg-terra/[0.08] text-terra px-3 py-1 text-[10px] label font-medium">
                         {hub.tag}
                       </span>
                     </div>
 
-                    {/* Key Stats: Tight 2-column mini-grid */}
+                    {/* Key Stats: Inset 2-column mini-grid */}
                     <div className="grid grid-cols-2 gap-2 my-4">
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 rounded-lg border ${
+                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Post-Study Work</div>
+                        <div className="label text-[9px] opacity-50 mb-1">Post-Study Work</div>
                         <div className="text-xs font-medium leading-snug">{hub.psw}</div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 rounded-lg border ${
+                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Average Tuition</div>
+                        <div className="label text-[9px] opacity-50 mb-1">Average Tuition</div>
                         <div className="text-xs font-medium leading-snug text-terra">
                           {hub.avgTuition}
                         </div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 rounded-lg border ${
+                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Proof of Funds</div>
+                        <div className="label text-[9px] opacity-50 mb-1">Proof of Funds</div>
                         <div className="text-xs font-medium leading-snug">{hub.proofOfFunds}</div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 rounded-lg border ${
+                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Visa Category</div>
+                        <div className="label text-[9px] opacity-50 mb-1">Visa Category</div>
                         <div className="text-xs font-medium leading-snug">{hub.stream}</div>
                       </div>
                     </div>
@@ -342,7 +342,7 @@ export default function StudyDestinations() {
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-primary-glow"
+                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] rounded-lg transition-colors btn-primary-glow"
                     >
                       Discuss {hub.country} Strategy
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -350,10 +350,10 @@ export default function StudyDestinations() {
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className={`w-full flex items-center justify-center gap-1.5 border min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-tactile ${
+                        className={`w-full flex items-center justify-center gap-1.5 border min-h-[44px] py-2.5 px-4 label text-[10px] rounded-lg transition-colors btn-tactile ${
                           isDark
-                            ? "border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream"
-                            : "border-ink/20 text-ink/70 hover:border-ink hover:text-ink"
+                            ? "border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream bg-cream/[0.02]"
+                            : "border-ink/20 text-ink/70 hover:border-ink hover:text-ink bg-white/50"
                         }`}
                       >
                         Full Country Guide →
@@ -388,8 +388,8 @@ export default function StudyDestinations() {
           </div>
         </div>
 
-        {/* ── DESKTOP: Wide Editorial Strips (hidden on mobile) ── */}
-        <div className="hidden lg:block">
+        {/* ── DESKTOP: Wide Editorial Cards (hidden on mobile) ── */}
+        <div className="hidden lg:block space-y-6">
           {hubs.map((hub, i) => {
             const slug = slugMap[hub.country];
             const code = countryCodes[hub.country];
@@ -397,7 +397,7 @@ export default function StudyDestinations() {
             return (
               <motion.div
                 key={hub.country}
-                className="border-t border-ink/10 py-10 grid grid-cols-12 gap-10 group"
+                className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-white/90 via-cream-50/80 to-cream-50/60 border border-ink/[0.06] hover:border-ink/15 shadow-[0_4px_24px_-4px_rgba(20,18,12,0.04)] hover:shadow-[0_16px_44px_-8px_rgba(20,18,12,0.09)] transition-all duration-300 grid grid-cols-12 gap-10 group relative overflow-hidden"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-8%" }}
@@ -430,7 +430,7 @@ export default function StudyDestinations() {
                     <div className="label text-stone mt-1.5">{hub.stream}</div>
                   </div>
 
-                  <div className="inline-flex items-center border border-terra/25 bg-terra/[0.06] text-terra px-3 py-1 label">
+                  <div className="inline-flex items-center rounded-full border border-terra/25 bg-terra/[0.07] text-terra px-3.5 py-1 label font-medium">
                     {hub.tag}
                   </div>
 
@@ -453,15 +453,17 @@ export default function StudyDestinations() {
 
                 {/* Metrics ledger + CTAs */}
                 <div className="col-span-5 space-y-5">
-                  <div className="space-y-0">
+                  <div className="rounded-xl p-4 bg-cream/45 border border-ink/[0.05] space-y-0">
                     {[
                       { label: "Post-Study Work", value: hub.psw },
                       { label: "Average Tuition", value: hub.avgTuition },
                       { label: "Proof of Funds", value: hub.proofOfFunds },
-                    ].map(({ label, value }) => (
+                    ].map(({ label, value }, idx) => (
                       <div
                         key={label}
-                        className="border-t border-ink/8 pt-3 pb-3 grid grid-cols-2 gap-4 items-start"
+                        className={`pt-2.5 pb-2.5 grid grid-cols-2 gap-4 items-start ${
+                          idx !== 0 ? "border-t border-ink/[0.06]" : ""
+                        }`}
                       >
                         <span className="label text-stone">{label}</span>
                         <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>
@@ -469,12 +471,12 @@ export default function StudyDestinations() {
                     ))}
                   </div>
 
-                  <div className="pt-2 flex flex-wrap items-center gap-5">
+                  <div className="pt-1 flex flex-wrap items-center gap-5">
                     <a
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2 btn-tactile"
+                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2 btn-tactile font-medium"
                     >
                       Discuss {hub.country} Strategy
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -492,9 +494,6 @@ export default function StudyDestinations() {
               </motion.div>
             );
           })}
-
-          {/* Close with bottom rule */}
-          <div className="border-t border-ink/10" />
         </div>
       </div>
     </section>

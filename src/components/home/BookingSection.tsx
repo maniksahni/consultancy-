@@ -262,10 +262,10 @@ export default function BookingSection() {
             </div>
           ) : (
             /* Compact Above-The-Fold Form */
-            <form noValidate onSubmit={handleSubmit} className="space-y-3.5">
+            <form noValidate onSubmit={handleSubmit} className="space-y-4 rounded-2xl p-6 bg-gradient-to-b from-cream/[0.05] via-cream/[0.025] to-cream/[0.015] border border-cream/[0.08] shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5)]">
               {/* Header */}
-              <div className="border-b border-cream/10 pb-3">
-                <div className="label text-terra text-[10px] mb-1">Direct Consultation Booking</div>
+              <div className="border-b border-cream/[0.08] pb-3">
+                <div className="label text-terra text-[10px] mb-1 font-medium">Direct Consultation Booking</div>
                 <h2 className="font-display font-normal text-cream text-[1.85rem] sm:text-3xl leading-[0.95] tracking-tight">
                   Schedule Your 1-on-1 Strategy Call
                 </h2>
@@ -424,7 +424,7 @@ export default function BookingSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-3.5 label text-xs tracking-wider transition-colors cursor-pointer btn-primary-glow active:scale-[0.97]"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-3.5 label text-xs tracking-wider rounded-lg transition-all cursor-pointer btn-primary-glow"
                   >
                     {loading ? (
                       <>
@@ -438,7 +438,7 @@ export default function BookingSection() {
                       </>
                     )}
                   </button>
-                  <div className="flex items-center justify-between text-[10px] text-cream/30 mt-2 font-light">
+                  <div className="flex items-center justify-between text-[10px] text-cream/35 mt-2.5 font-light">
                     <span>No cost. No obligation.</span>
                     <span>Direct 1-on-1 mentor review</span>
                   </div>
@@ -482,8 +482,8 @@ export default function BookingSection() {
               viewport={{ once: true, margin: "-5%" }}
               transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
             >
-              <div className="border-t border-cream/10 pt-6 space-y-6">
-                <h3 className="font-display text-xl font-normal text-cream tracking-tight">
+              <div className="border-t border-cream/[0.08] pt-6 space-y-4">
+                <h3 className="font-display text-xl font-normal text-cream tracking-tight mb-2">
                   What to Expect During Your Session
                 </h3>
                 {[
@@ -500,39 +500,39 @@ export default function BookingSection() {
                     desc: "You receive a concrete timeline for test deadlines, SOP iterations, and university submission cut-offs.",
                   },
                 ].map((item, i) => (
-                  <div key={i} className="grid grid-cols-[20px_1fr] gap-3 items-start">
-                    <div className="h-5 w-5 border border-terra/40 bg-terra/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div key={i} className="rounded-xl p-4 bg-cream/[0.025] border border-cream/[0.05] hover:bg-cream/[0.04] transition-colors grid grid-cols-[20px_1fr] gap-3.5 items-start">
+                    <div className="h-5 w-5 rounded border border-terra/40 bg-terra/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="h-3 w-3 text-terra" />
                     </div>
                     <div>
-                      <div className="label text-cream/60 mb-1.5">{item.title}</div>
-                      <p className="text-cream/35 text-xs leading-relaxed font-light">{item.desc}</p>
+                      <div className="label text-cream/70 text-[10px] mb-1">{item.title}</div>
+                      <p className="text-cream/40 text-xs leading-relaxed font-light">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-cream/10 pt-6 space-y-3">
-                <div className="flex items-center gap-2 text-xs text-cream/40">
+              <div className="border-t border-cream/[0.08] pt-6 space-y-3">
+                <div className="flex items-center gap-2 text-xs text-cream/45">
                   <ShieldCheck className="h-4 w-4 text-terra flex-shrink-0" />
                   <span>100% Confidential · Zero Spam · No Call Center Handoffs</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-cream/30">
-                  <Clock className="h-4 w-4 text-cream/20 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-xs text-cream/35">
+                  <Clock className="h-4 w-4 text-cream/25 flex-shrink-0" />
                   <span>Direct reply within 4 business hours</span>
                 </div>
               </div>
 
-              <div className="border border-cream/10 p-5">
-                <p className="font-display text-base text-cream/80 font-normal mb-0.5">
+              <div className="rounded-2xl p-6 bg-gradient-to-br from-terra/[0.09] via-terra/[0.03] to-cream/[0.015] border border-terra/20 shadow-[0_4px_24px_rgba(194,91,26,0.06)]">
+                <p className="font-display text-base text-cream/90 font-normal mb-1">
                   Have an urgent visa deadline?
                 </p>
-                <p className="text-cream/35 text-xs mb-4 font-light">Message directly on WhatsApp for immediate priority review</p>
+                <p className="text-cream/40 text-xs mb-4 font-light">Message directly on WhatsApp for immediate priority review</p>
                 <a
                   href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-cream/15 hover:border-terra/50 text-cream/70 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-cream/[0.15] hover:border-terra/50 bg-cream/[0.03] hover:bg-cream/[0.07] text-cream/80 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-all btn-tactile shadow-sm"
                 >
                   <MessageCircle className="h-4 w-4 text-terra" />
                   Open Instant WhatsApp Chat
@@ -549,12 +549,12 @@ export default function BookingSection() {
               transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
             >
               {submitted ? (
-                <div className="border border-cream/10 p-10 lg:p-12 text-center space-y-6">
-                  <div className="h-14 w-14 mx-auto border border-terra/50 bg-terra/10 flex items-center justify-center">
+                <div className="rounded-2xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.05] to-cream/[0.02] p-10 lg:p-12 text-center space-y-6 shadow-[0_24px_64px_-16px_rgba(0,0,0,0.5)]">
+                  <div className="h-14 w-14 mx-auto rounded-full border border-terra/50 bg-terra/10 flex items-center justify-center">
                     <Check className="h-7 w-7 text-terra" />
                   </div>
                   <div>
-                    <span className="label text-[10px] text-terra border border-terra/30 bg-terra/[0.06] px-3 py-1 inline-block mb-3">
+                    <span className="label text-[10px] text-terra border border-terra/30 bg-terra/[0.06] rounded-full px-3.5 py-1 inline-block mb-3">
                       Admissions Dossier Queued
                     </span>
                     <h3 className="font-display text-3xl font-normal text-cream tracking-tight">
@@ -564,19 +564,19 @@ export default function BookingSection() {
                       Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. Your profile audit has been registered. A senior mentor will evaluate your background and connect on WhatsApp at{" "}
                       <strong className="text-terra font-medium">{formData.whatsapp}</strong>.
                     </p>
-                    <div className="mt-4 inline-flex items-center gap-2 border border-cream/10 bg-cream/[0.02] px-4 py-2 text-xs text-cream/70 font-light">
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cream/10 bg-cream/[0.02] px-4 py-2.5 text-xs text-cream/70 font-light">
                       <Clock className="w-4 h-4 text-terra flex-shrink-0" />
                       <span>Direct Advisory Guarantee: Personal mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
                     </div>
                   </div>
 
-                  <div className="border border-cream/10 p-5 max-w-md mx-auto text-left text-xs space-y-2.5 text-cream/40 bg-cream/[0.01]">
+                  <div className="rounded-xl border border-cream/[0.08] p-5 max-w-md mx-auto text-left text-xs space-y-2.5 text-cream/40 bg-cream/[0.015]">
                     <div className="label text-terra/70 mb-3">Session Overview</div>
-                    <p className="flex justify-between border-b border-cream/8 pb-2">
+                    <p className="flex justify-between border-b border-cream/[0.06] pb-2">
                       <span>Target Country:</span>
                       <strong className="text-cream/80">{formData.targetCountry}</strong>
                     </p>
-                    <p className="flex justify-between border-b border-cream/8 pb-2">
+                    <p className="flex justify-between border-b border-cream/[0.06] pb-2">
                       <span>Target Intake:</span>
                       <strong className="text-cream/80">{formData.targetIntake}</strong>
                     </p>
@@ -616,13 +616,14 @@ export default function BookingSection() {
                   </div>
                 </div>
               ) : (
-                <form noValidate onSubmit={handleSubmit} className="space-y-8">
-                  <div className="border-b border-cream/10 pb-5">
-                    <div className="label text-terra mb-1">1-on-1 Consultation</div>
-                    <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">
-                      Request Your Advisory Session
-                    </h3>
-                  </div>
+                <div className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-cream/[0.05] via-cream/[0.025] to-cream/[0.015] border border-cream/[0.08] shadow-[0_24px_64px_-16px_rgba(0,0,0,0.5)] backdrop-blur-sm relative">
+                  <form noValidate onSubmit={handleSubmit} className="space-y-7">
+                    <div className="border-b border-cream/[0.08] pb-5">
+                      <div className="label text-terra mb-1">1-on-1 Consultation</div>
+                      <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">
+                        Request Your Advisory Session
+                      </h3>
+                    </div>
 
                   {/* Name + WhatsApp */}
                   <div className="grid grid-cols-2 gap-8">
@@ -740,7 +741,7 @@ export default function BookingSection() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-primary-glow active:scale-[0.97]"
+                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label rounded-lg transition-all cursor-pointer text-xs tracking-wider btn-primary-glow"
                     >
                       {loading ? (
                         <>
@@ -754,13 +755,14 @@ export default function BookingSection() {
                         </>
                       )}
                     </button>
-                    <p className="text-center text-cream/20 text-[11px] mt-3 font-light">
+                    <p className="text-center text-cream/25 text-[11px] mt-3 font-light">
                       Zero spam guarantee · Direct 1-on-1 advisor review
                     </p>
                   </div>
                 </form>
-              )}
-            </motion.div>
+              </div>
+            )}
+          </motion.div>
           </div>
         </div>
 

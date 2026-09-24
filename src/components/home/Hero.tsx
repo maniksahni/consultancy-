@@ -65,49 +65,49 @@ export default function Hero() {
           {/* Headline — 8 cols on desktop, full on mobile */}
           <div className="lg:col-span-8">
             <h1
-              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
+              className="font-display font-normal text-cream leading-[0.93] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.25rem] sm:text-6xl md:text-7xl lg:text-[6.8rem] xl:text-[7.4rem]"
             >
               Elite 1-on-1<br />
               Study Abroad<br />
               Mentorship.<br />
-              <em className="text-terra not-italic italic">Zero Compromises.</em>
+              <em className="text-terra not-italic italic font-normal tracking-tight">Zero Compromises.</em>
             </h1>
 
-            {/* Urgency / capacity signal */}
+            {/* Urgency / capacity signal — soft glass pill */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
-              className="mt-5 inline-flex items-center gap-2 border border-terra/30 bg-terra/[0.07] px-3 py-1.5"
+              className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-terra/25 bg-gradient-to-r from-terra/[0.12] via-terra/[0.06] to-transparent backdrop-blur-md px-4 py-1.5 shadow-[0_2px_14px_rgba(194,91,26,0.12)]"
             >
-              <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+              <span className="relative flex h-2 w-2 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
               </span>
-              <span className="label text-[9px] text-terra/90">
+              <span className="label text-[9px] text-terra/90 tracking-wider">
                 Now Accepting Fall 2026 &amp; Spring 2027 Applications — Limited Mentor Capacity
               </span>
             </motion.div>
 
             {/* Mobile Stats: Horizontal scroll-snap strip (swipeable with Count-Up) */}
             <div className="lg:hidden mt-8">
-              <div className="text-[10px] label text-cream/35 mb-2.5">
+              <div className="text-[10px] label text-cream/35 mb-3 tracking-widest">
                 Verified Admissions Ledger
               </div>
-              <div className="overflow-x-auto snap-x snap-mandatory flex gap-3 scrollbar-none pb-2 -mx-6 px-6 carousel-snap">
+              <div className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 scrollbar-none pb-3 -mx-6 px-6 carousel-snap">
                 {metrics.map((m, i) => (
                   <div
                     key={i}
-                    className="snap-start flex-none w-[70vw] max-w-[260px] border border-cream/15 bg-cream/[0.04] p-4 flex flex-col justify-between carousel-snap-item shadow-sm card-hover-dark"
+                    className="snap-start flex-none w-[72vw] max-w-[270px] rounded-xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-5 flex flex-col justify-between carousel-snap-item shadow-[0_8px_24px_-4px_rgba(0,0,0,0.35)] card-hover-dark"
                   >
-                    <div className="flex items-center justify-between border-b border-cream/10 pb-2">
-                      <span className="label text-[9px] text-cream/30">Metric 0{i + 1}</span>
-                      <span className="text-[9px] text-terra label">Audited</span>
+                    <div className="flex items-center justify-between border-b border-cream/[0.08] pb-2.5">
+                      <span className="label text-[9px] text-cream/35">Metric 0{i + 1}</span>
+                      <span className="text-[9px] text-terra label tracking-widest">Audited</span>
                     </div>
                     <div className="font-display text-3xl sm:text-4xl text-terra font-normal leading-none mt-3.5">
                       <StatCounter value={m.value} duration={1.6} />
                     </div>
-                    <div className="label text-cream/65 text-[10px] mt-2.5 tracking-wider leading-relaxed">
+                    <div className="label text-cream/65 text-[10px] mt-3 tracking-wider leading-relaxed">
                       {m.label}
                     </div>
                   </div>
@@ -117,19 +117,28 @@ export default function Hero() {
           </div>
 
           {/* Desktop Stats: 4 cols stacked ledger with staggered cascade & count-up */}
-          <div className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-0">
+          <div className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-3.5">
+            <div className="label text-cream/40 text-[10px] tracking-widest pl-1 mb-0.5">
+              Verified Admissions Ledger
+            </div>
             {metrics.map((m, i) => (
               <motion.div
                 key={i}
-                className="border-t border-cream/10 pt-4 pb-4 lg:pb-5"
+                className="rounded-xl p-5 bg-gradient-to-b from-cream/[0.045] to-cream/[0.015] border border-cream/[0.08] backdrop-blur-sm shadow-[0_4px_24px_-2px_rgba(0,0,0,0.3)] hover:border-cream/[0.16] hover:bg-cream/[0.05] hover:-translate-y-0.5 transition-all duration-300 group"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, ease: EASE, delay: 0.35 + i * 0.08 }}
               >
+                <div className="flex items-center justify-between border-b border-cream/[0.07] pb-2 mb-3">
+                  <span className="label text-[9px] text-cream/35">Metric 0{i + 1}</span>
+                  <span className="text-[9px] text-terra label tracking-widest">Audited</span>
+                </div>
                 <div className="font-display text-3xl lg:text-[2.6rem] text-terra font-normal leading-none">
                   <StatCounter value={m.value} duration={1.8} />
                 </div>
-                <div className="label text-cream/35 mt-2">{m.label}</div>
+                <div className="label text-cream/60 text-[10px] mt-2.5 tracking-wider leading-relaxed">
+                  {m.label}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -174,12 +183,12 @@ export default function Hero() {
             <div className="flex flex-col items-stretch sm:items-start gap-1">
               <a
                 href="#booking"
-                className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow"
+                className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label rounded-lg transition-colors group text-center btn-primary-glow"
               >
                 Book Strategy Session
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
               </a>
-              <span className="text-cream/25 text-[10px] font-sans font-light text-center sm:text-left px-1 leading-relaxed">
+              <span className="text-cream/35 text-[10px] font-sans font-light text-center sm:text-left px-1 leading-relaxed">
                 No cost. No obligation. Direct mentor review.
               </span>
             </div>
@@ -190,14 +199,14 @@ export default function Hero() {
                 href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[44px] border border-cream/15 hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
+                className="inline-flex items-center justify-center gap-2 text-cream/70 hover:text-cream text-sm min-h-[44px] rounded-lg border border-cream/[0.12] bg-cream/[0.03] hover:bg-cream/[0.07] hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none shadow-sm"
               >
                 <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
                 <span>Chat Live</span>
               </a>
               <a
                 href="#destinations"
-                className="inline-flex items-center justify-center gap-1.5 text-cream/35 hover:text-cream/60 text-sm min-h-[44px] px-3 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
+                className="inline-flex items-center justify-center gap-1.5 text-cream/40 hover:text-cream/70 text-sm min-h-[44px] rounded-lg px-3 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
               >
                 <ArrowDown className="h-3.5 w-3.5" />
                 <span>See how it works</span>

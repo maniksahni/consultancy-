@@ -117,8 +117,8 @@ export default function ProcessRoadmap() {
 
               {/* Deliverable — formal bordered block */}
               <div className="lg:col-span-5 lg:pl-8">
-                <div className="border border-ink/12 p-5 bg-cream card-hover shadow-sm">
-                  <div className="label text-stone mb-2.5">Stage Deliverable</div>
+                <div className="rounded-2xl p-6 bg-gradient-to-b from-white/90 to-cream-50/70 border border-ink/[0.07] card-hover shadow-[0_4px_20px_-4px_rgba(20,18,12,0.04)]">
+                  <div className="label text-terra text-[10px] mb-2 font-medium">Stage Deliverable</div>
                   <p className="text-ink text-sm font-medium leading-relaxed">
                     {step.milestone}
                   </p>
@@ -133,23 +133,23 @@ export default function ProcessRoadmap() {
 
         {/* ── Bottom CTA callout ── */}
         <motion.div
-          className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+          className="mt-12 rounded-2xl p-8 lg:p-10 bg-gradient-to-r from-white/80 via-cream-50 to-white/70 border border-ink/[0.06] shadow-[0_4px_24px_-4px_rgba(20,18,12,0.04)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-5%" }}
           transition={{ duration: 0.5, ease: EASE }}
         >
           <div>
-            <h4 className="font-display text-xl font-normal text-ink tracking-tight">
+            <h4 className="font-display text-2xl font-normal text-ink tracking-tight">
               Ready to begin Stage 01 with an experienced mentor?
             </h4>
-            <p className="text-stone text-sm mt-1 font-light">
+            <p className="text-stone text-sm mt-1.5 font-light">
               Schedule your 30-minute discovery call to evaluate your profile and target intake.
             </p>
           </div>
           <a
             href="#booking"
-            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow active:scale-[0.97]"
+            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label rounded-lg transition-all group text-center btn-primary-glow"
           >
             Start Your Diagnostic Audit
             <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

@@ -131,10 +131,10 @@ export default function StudentOutcomes() {
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between carousel-snap-item relative card-hover"
+                className="snap-center flex-none w-[86vw] rounded-2xl border border-ink/[0.07] bg-gradient-to-b from-white to-cream-50 p-6 flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover"
               >
                 {/* Record header */}
-                <div className="border-b border-ink/10 pb-3 mb-4 flex items-center justify-between gap-2">
+                <div className="border-b border-ink/[0.07] pb-3 mb-4 flex items-center justify-between gap-2">
                   <div>
                     <div className="label text-stone text-[10px]">
                       Case File {String(i + 1).padStart(3, "0")} / 006
@@ -165,14 +165,14 @@ export default function StudentOutcomes() {
                 </div>
 
                 {/* Profile metrics */}
-                <div className="border-t border-b border-ink/8 py-2.5 mb-3 bg-cream/50 px-2.5">
+                <div className="rounded-xl border border-ink/[0.05] py-2.5 px-3 mb-3.5 bg-cream/60">
                   <div className="label text-stone text-[9px] mb-1">Audited Profile</div>
                   <p className="text-xs text-ink/80 font-light leading-relaxed">{item.stats}</p>
                 </div>
 
                 {/* Outcome stamp */}
-                <div className="border border-terra/40 bg-terra/[0.08] p-3.5">
-                  <div className="label text-terra text-[9px] mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
+                <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] p-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)]">
+                  <div className="label text-terra text-[9px] mb-1 flex items-center gap-1.5 font-medium"><span className="text-terra">✦</span> Verified Outcome</div>
                   <p className="text-xs text-ink font-semibold leading-snug">{item.outcome}</p>
                 </div>
               </div>
@@ -204,25 +204,18 @@ export default function StudentOutcomes() {
         </div>
 
         {/* ── DESKTOP: Dossier case files ledger grid (hidden on mobile and tablet) ── */}
-        <div className="hidden lg:grid border border-ink/10 grid-cols-3">
+        <div className="hidden lg:grid grid-cols-3 gap-6">
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 card-hover
-                ${i % 3 === 2 ? "lg:border-r-0" : ""}
-                ${i % 2 === 1 ? "md:border-r-0 lg:border-r" : ""}
-                ${i % 3 === 2 && i % 2 === 1 ? "md:border-r-0" : ""}
-                ${i >= outcomes.length - (outcomes.length % 3 || 3) ? "lg:border-b-0" : ""}
-                ${i >= outcomes.length - 2 ? "md:border-b-0" : ""}
-                ${i === outcomes.length - 1 ? "border-b-0" : ""}
-              `}
+              className="rounded-2xl p-7 flex flex-col justify-between bg-gradient-to-b from-white/95 to-cream-50/80 border border-ink/[0.07] shadow-[0_6px_24px_-4px_rgba(20,18,12,0.05)] hover:shadow-[0_16px_40px_-8px_rgba(20,18,12,0.1)] card-hover transition-all duration-300"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}
               transition={{ duration: 0.55, ease: EASE, delay: (i % 3) * 0.09 }}
             >
               {/* Record header */}
-              <div className="border-b border-ink/8 pb-4 mb-5 flex items-center justify-between gap-2">
+              <div className="border-b border-ink/[0.06] pb-4 mb-5 flex items-center justify-between gap-2">
                 <div>
                   <div className="label text-stone">Record {String(i + 1).padStart(3, "0")}</div>
                   <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">{item.ref}</div>
@@ -247,14 +240,14 @@ export default function StudentOutcomes() {
               </div>
 
               {/* Profile metrics */}
-              <div className="border-t border-ink/8 border-b border-b-ink/8 py-3 mb-4">
-                <div className="label text-stone mb-1.5">Candidate Profile Metrics</div>
+              <div className="rounded-xl border border-ink/[0.05] p-3 mb-4 bg-cream/50">
+                <div className="label text-stone text-[9px] mb-1">Candidate Profile Metrics</div>
                 <p className="text-xs text-ink/70 font-light leading-relaxed">{item.stats}</p>
               </div>
 
               {/* Outcome stamp */}
-              <div className="border border-terra/40 bg-terra/[0.07] px-4 py-3.5">
-                <div className="label text-terra mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
+              <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] px-4 py-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)]">
+                <div className="label text-terra mb-1.5 flex items-center gap-1.5 font-medium"><span className="text-terra">✦</span> Verified Outcome</div>
                 <p className="text-sm text-ink font-semibold leading-snug">{item.outcome}</p>
               </div>
             </motion.div>

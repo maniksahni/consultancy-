@@ -91,47 +91,48 @@ export default function ComparisonSection() {
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-cream/15 bg-cream/[0.03] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative"
+                className="snap-center flex-none w-[86vw] rounded-2xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative shadow-[0_14px_36px_-8px_rgba(0,0,0,0.45)]"
               >
                 <div>
                   {/* Factor Header */}
-                  <div className="border-b border-cream/10 pb-3 mb-4 flex items-center justify-between">
-                    <span className="label text-[10px] text-cream/35">
+                  <div className="border-b border-cream/[0.08] pb-3 mb-4 flex items-center justify-between">
+                    <span className="label text-[10px] text-cream/40">
                       Criterion 0{i + 1} / 05
                     </span>
-                    <span className="label text-[10px] text-terra">Compare</span>
+                    <span className="label text-[9px] text-terra tracking-widest">
+                      Audit Factor
+                    </span>
                   </div>
 
-                  <h3 className="font-display text-2xl text-cream font-normal leading-tight mb-4">
+                  <h3 className="font-display text-xl text-cream font-normal leading-snug mb-4">
                     {item.factor}
                   </h3>
 
                   {/* Mass Processing Agency Box */}
-                  <div className="border border-cream/10 bg-cream/[0.02] p-3.5 mb-3">
-                    <div className="flex items-center gap-1.5 label text-[9px] text-cream/40 mb-1.5">
-                      <X className="h-3 w-3 text-red-400" />
+                  <div className="rounded-xl border border-cream/[0.06] bg-cream/[0.02] p-4 mb-3">
+                    <div className="flex items-center gap-2 label text-[9px] text-cream/40 mb-2">
+                      <div className="h-4 w-4 rounded border border-cream/20 flex items-center justify-center flex-shrink-0">
+                        <X className="h-2.5 w-2.5 text-cream/40" />
+                      </div>
                       <span>Mass Agency Factory</span>
                     </div>
-                    <p className="text-xs text-cream/40 font-light line-through decoration-cream/25 leading-relaxed">
+                    <p className="text-xs text-cream/40 font-light line-through decoration-cream/25 leading-relaxed pl-6">
                       {item.agency}
                     </p>
                   </div>
 
                   {/* Pathways Global 1-on-1 Mentorship Box */}
-                  <div className="border border-terra/40 bg-terra/[0.06] p-3.5">
-                    <div className="flex items-center gap-1.5 label text-[9px] text-terra mb-1.5">
-                      <Check className="h-3 w-3 text-terra" />
-                      <span>Pathways Global Mentorship</span>
+                  <div className="rounded-xl border border-terra/25 bg-gradient-to-b from-terra/[0.09] to-cream/[0.03] p-4 shadow-[0_4px_16px_-2px_rgba(194,91,26,0.12)]">
+                    <div className="flex items-center gap-2 label text-[9px] text-terra mb-2 font-medium">
+                      <div className="h-4 w-4 rounded border border-terra/50 bg-terra/20 flex items-center justify-center flex-shrink-0">
+                        <Check className="h-2.5 w-2.5 text-terra" />
+                      </div>
+                      <span>Pathways 1-on-1 Mentorship</span>
                     </div>
-                    <p className="text-xs text-cream font-medium leading-relaxed">
+                    <p className="text-xs text-cream/95 font-medium leading-relaxed pl-6">
                       {item.pathways}
                     </p>
                   </div>
-                </div>
-
-                <div className="pt-3 mt-3 border-t border-cream/8 flex items-center justify-between text-[10px] label text-cream/25">
-                  <span>Swipe to compare next criterion</span>
-                  <span className="text-terra">Swipe →</span>
                 </div>
               </div>
             ))}
@@ -160,58 +161,82 @@ export default function ComparisonSection() {
           </div>
         </div>
 
-        {/* ── DESKTOP SPLIT PANEL (hidden on mobile) ── */}
+        {/* ── DESKTOP DUAL SHOWCASE (Elevated Boutique Cards, No Spreadsheet Look) ── */}
         <motion.div
-          className="hidden lg:block border border-cream/10"
+          className="hidden lg:grid lg:grid-cols-2 gap-8 items-stretch"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-5%" }}
           transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
         >
-          {/* Column headers */}
-          <div className="grid grid-cols-[1fr_1px_1fr] border-b border-cream/10">
-            {/* Left header */}
-            <div className="flex items-center gap-2.5 px-6 py-5 bg-cream/[0.02]">
-              <div className="h-5 w-5 border border-cream/20 flex items-center justify-center flex-shrink-0">
-                <X className="h-3 w-3 text-cream/30" />
+          {/* Left: Mass Agencies (Sunken, Understated Card) */}
+          <div className="rounded-2xl p-8 bg-cream/[0.02] border border-cream/[0.06] backdrop-blur-sm flex flex-col justify-between">
+            <div>
+              {/* Header */}
+              <div className="flex items-center gap-3 pb-6 border-b border-cream/[0.06]">
+                <div className="h-8 w-8 rounded-lg border border-cream/15 bg-cream/[0.03] flex items-center justify-center flex-shrink-0">
+                  <X className="h-4 w-4 text-cream/40" />
+                </div>
+                <div>
+                  <span className="label text-cream/40 text-[10px] tracking-wider block">Industry Standard</span>
+                  <span className="font-display text-xl text-cream/65">Mass-Processing Agencies</span>
+                </div>
               </div>
-              <span className="label text-cream/30">Mass Processing Agencies</span>
-            </div>
-            {/* Divider */}
-            <div className="bg-cream/10" />
-            {/* Right header */}
-            <div className="flex items-center gap-2.5 px-6 py-5">
-              <div className="h-5 w-5 border border-terra/50 bg-terra/10 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3 w-3 text-terra" />
+
+              {/* Items */}
+              <div className="space-y-6 pt-6">
+                {comparisonItems.map((item, i) => (
+                  <div key={i} className="pb-6 border-b border-cream/[0.05] last:border-b-0 last:pb-0">
+                    <div className="label text-cream/30 text-[9px] mb-2 tracking-wider">
+                      Criterion 0{i + 1} · {item.factor}
+                    </div>
+                    <p className="text-sm text-cream/35 leading-relaxed font-light line-through decoration-cream/20">
+                      {item.agency}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <span className="label text-terra">Pathways Global 1-on-1 Mentorship</span>
             </div>
           </div>
 
-          {/* Rows */}
-          {comparisonItems.map((item, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-[1fr_1px_1fr] border-b border-cream/8 last:border-b-0 hover:bg-cream/[0.015] transition-colors"
-            >
-              {/* Left: Agency */}
-              <div className="px-6 py-6 bg-cream/[0.015]">
-                <div className="label text-cream/20 mb-3">{item.factor}</div>
-                <p className="text-sm text-cream/30 leading-relaxed font-light line-through decoration-cream/15">
-                  {item.agency}
-                </p>
+          {/* Right: Pathways Global (Elevated Hero Card with Top Glow) */}
+          <div className="rounded-2xl p-8 bg-gradient-to-b from-cream/[0.075] via-cream/[0.035] to-cream/[0.015] border border-cream/[0.12] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.55)] relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
+            {/* Top Amber Sheen */}
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-terra/50 to-transparent pointer-events-none" />
+
+            <div>
+              {/* Header */}
+              <div className="flex items-center justify-between pb-6 border-b border-cream/[0.08]">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-lg border border-terra/40 bg-terra/15 flex items-center justify-center flex-shrink-0 shadow-[0_2px_12px_rgba(194,91,26,0.25)]">
+                    <Check className="h-4 w-4 text-terra" />
+                  </div>
+                  <div>
+                    <span className="label text-terra text-[10px] tracking-wider block">Boutique Fiduciary Model</span>
+                    <span className="font-display text-xl text-cream">Pathways Global Mentorship</span>
+                  </div>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-terra/30 bg-terra/10 px-3 py-1 text-terra label text-[9px]">
+                  <ShieldCheck className="h-3 w-3" />
+                  100% Unbiased
+                </div>
               </div>
-              {/* Vertical divider */}
-              <div className="bg-cream/10" />
-              {/* Right: Pathways */}
-              <div className="px-6 py-6">
-                <div className="label text-cream/30 mb-3 opacity-0">{item.factor}</div>
-                <p className="text-sm text-cream/85 leading-relaxed font-medium">
-                  {item.pathways}
-                </p>
+
+              {/* Items */}
+              <div className="space-y-6 pt-6">
+                {comparisonItems.map((item, i) => (
+                  <div key={i} className="pb-6 border-b border-cream/[0.07] last:border-b-0 last:pb-0 group">
+                    <div className="label text-terra/80 text-[9px] mb-2 tracking-wider">
+                      Criterion 0{i + 1} · {item.factor}
+                    </div>
+                    <p className="text-sm text-cream/90 leading-relaxed font-normal">
+                      {item.pathways}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </motion.div>
 
         {/* ── Footer note ── */}
