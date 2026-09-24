@@ -206,7 +206,7 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-cream py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-cream py-20 lg:py-28 overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
@@ -234,7 +234,7 @@ export default function StudyDestinations() {
             onScroll={handleMobileScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-3 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pb-4 scrollbar-none carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
@@ -465,7 +465,7 @@ export default function StudyDestinations() {
                           idx !== 0 ? "border-t border-ink/[0.06]" : ""
                         }`}
                       >
-                        <span className="label text-stone">{label}</span>
+                        <span className="label text-stone text-[9px] block mb-2">{label}</span>
                         <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>
                       </div>
                     ))}

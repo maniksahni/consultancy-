@@ -87,13 +87,13 @@ export default function StudentOutcomes() {
   return (
     <section
       id="outcomes"
-      className="bg-cream py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-cream py-20 lg:py-28 overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
         {/* ── Section header ── */}
         <motion.div
-          className="border-t border-ink/12 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          className="border-t border-ink/[0.12] pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-8%" }}

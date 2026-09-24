@@ -45,7 +45,7 @@ export default function ProcessRoadmap() {
   return (
     <section
       id="process"
-      className="bg-cream-50 py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-cream-50 py-20 lg:py-28 overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 

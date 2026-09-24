@@ -51,20 +51,20 @@ export default function ComparisonSection() {
   return (
     <section
       id="comparison"
-      className="bg-[#14120C] grain-ink py-16 lg:py-24 overflow-hidden w-full relative"
+      className="bg-[#14120C] grain-ink py-20 lg:py-28 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── Section header ── */}
         <motion.div
-          className="border-t border-cream/10 pt-10 mb-8 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          className="border-t border-cream/[0.12] pt-10 mb-10 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-8%" }}
           transition={{ duration: 0.6, ease: EASE }}
         >
           <div>
-            <div className="label text-cream/35 mb-4">The Mentorship Advantage</div>
+            <div className="label text-cream/55 mb-4">The Mentorship Advantage</div>
             <h2
               className="font-display font-normal text-cream leading-[0.93] tracking-tight"
               style={{ fontSize: "clamp(32px, 5vw, 60px)" }}
@@ -73,7 +73,7 @@ export default function ComparisonSection() {
               <em className="text-terra">1-on-1 Mentorship</em>
             </h2>
           </div>
-          <p className="text-cream/40 text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
+          <p className="text-cream/65 text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
             The study-abroad industry is dominated by mass-processing factories that treat students as recruitment volumes. Here is how Pathways Global differs fundamentally.
           </p>
         </motion.div>

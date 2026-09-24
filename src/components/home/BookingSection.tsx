@@ -190,7 +190,7 @@ export default function BookingSection() {
   };
 
   const LabelEl = ({ icon: Icon, children }: { icon: any; children: React.ReactNode }) => (
-    <label className="flex items-center gap-2 text-cream/40 label mb-2">
+    <label className="flex items-center gap-2 text-cream/60 label mb-2.5">
       <Icon className="h-3.5 w-3.5 text-terra flex-shrink-0" />
       {children}
     </label>
@@ -277,7 +277,7 @@ export default function BookingSection() {
               {/* Key Form Fields */}
               <div className="space-y-2.5">
                 <div>
-                  <label className="label text-cream/40 text-[9px] block mb-1">Full Name *</label>
+                  <label className="label text-cream/60 text-[9px] block mb-1.5">Full Name *</label>
                   <input
                     type="text"
                     placeholder="e.g. Aryan Mehra"
@@ -286,7 +286,7 @@ export default function BookingSection() {
                       setFormData({ ...formData, fullName: e.target.value });
                       if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
                     }}
-                    className={`input-dark py-2 text-sm min-h-[44px] ${
+                    className={`input-dark py-3 text-base min-h-[48px] ${
                       fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
                     }`}
                   />
@@ -300,7 +300,7 @@ export default function BookingSection() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="label text-cream/40 text-[9px] block mb-1">WhatsApp Number *</label>
+                    <label className="label text-cream/60 text-[9px] block mb-1.5">WhatsApp Number *</label>
                     <input
                       type="tel"
                       inputMode="numeric"
@@ -320,7 +320,7 @@ export default function BookingSection() {
                         setFormData({ ...formData, whatsapp: digits });
                         if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
                       }}
-                      className={`input-dark py-2 text-sm min-h-[44px] ${
+                      className={`input-dark py-3 text-base min-h-[48px] ${
                         fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
                       }`}
                     />
@@ -332,11 +332,11 @@ export default function BookingSection() {
                     )}
                   </div>
                   <div className="relative">
-                    <label className="label text-cream/40 text-[9px] block mb-1">Target Country</label>
+                    <label className="label text-cream/60 text-[9px] block mb-1.5">Target Country</label>
                     <select
                       value={formData.targetCountry}
                       onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="select-dark py-2 text-sm min-h-[44px]"
+                      className="select-dark py-3 text-base min-h-[48px]"
                     >
                       {countries.map((c) => (
                         <option key={c.value} value={c.value}>{c.label}</option>
@@ -452,13 +452,13 @@ export default function BookingSection() {
         <div className="hidden lg:block">
           {/* Header */}
           <motion.div
-            className="border-t border-cream/10 pt-10 mb-12 lg:mb-16"
+            className="border-t border-cream/[0.12] pt-10 mb-12 lg:mb-16"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-8%" }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <div className="label text-cream/35 mb-4">Direct Consultation Booking</div>
+            <div className="label text-cream/55 mb-4">Direct Consultation Booking</div>
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
               <h2
                 className="font-display font-normal text-cream leading-[0.93] tracking-tight text-[3.6rem]"
@@ -466,7 +466,7 @@ export default function BookingSection() {
                 Schedule Your<br />
                 <em className="text-terra">1-on-1 Strategy Call</em>
               </h2>
-              <p className="text-cream/40 text-sm leading-relaxed max-w-sm font-light">
+              <p className="text-cream/65 text-sm leading-relaxed max-w-sm font-light">
                 Provide your current academic details. Every submission is personally reviewed by a senior mentor before we contact you directly on WhatsApp.
               </p>
             </div>
@@ -626,7 +626,7 @@ export default function BookingSection() {
                     </div>
 
                   {/* Name + WhatsApp */}
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
                     <div>
                       <LabelEl icon={User}>Full Name *</LabelEl>
                       <input
@@ -680,7 +680,7 @@ export default function BookingSection() {
                   </div>
 
                   {/* Country + Intake */}
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
                     <div className="relative">
                       <LabelEl icon={Globe2}>Target Destination</LabelEl>
                       <select

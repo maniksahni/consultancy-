@@ -235,7 +235,7 @@ export default function SuccessStories() {
           {filteredCases.map((file) => (
             <div
               key={file.id}
-              className="group relative flex flex-col justify-between rounded-3xl border border-white/[0.08] bg-slate-900/60 p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-emerald-500/40 hover:bg-slate-900/80 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)] hover:-translate-y-1.5"
+              className="group relative flex flex-col justify-between rounded-md border border-white/[0.14] bg-gradient-to-br from-slate-800/65 to-slate-950/70 p-8 shadow-[0_16px_38px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-all duration-300 hover:border-emerald-500/40 hover:bg-slate-900/80 hover:shadow-[0_0_40px_rgba(16,185,129,0.15)] hover:-translate-y-1.5"
             >
               {/* Subtle top glow */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-emerald-500/40 transition-colors" />
@@ -275,7 +275,7 @@ export default function SuccessStories() {
                 </div>
 
                 {/* Undergrad Profile Dossier */}
-                <div className="rounded-2xl bg-slate-950/60 border border-white/[0.06] p-4 space-y-2.5">
+                <div className="rounded-md bg-gradient-to-br from-slate-950/70 to-slate-900/55 border border-white/[0.12] p-5 space-y-3 leading-relaxed">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5 font-mono">
                     <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
                     Applicant Academic Profile

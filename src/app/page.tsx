@@ -1,8 +1,18 @@
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import BookingSection from "@/components/home/BookingSection";
 import Footer from "@/components/layout/Footer";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    url: "/",
+  },
+};
 
 const StudyDestinations = dynamic(() => import("@/components/home/StudyDestinations"));
 const ComparisonSection = dynamic(() => import("@/components/home/ComparisonSection"));

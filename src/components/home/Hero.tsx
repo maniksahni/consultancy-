@@ -32,18 +32,17 @@ export default function Hero() {
     <section
       className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
     >
-      {/* Subtle parchment grid texture with restrained parallax */}
+      {/* Soft tonal glow keeps the ink surface atmospheric without a hard grid */}
       <motion.div
-        className="absolute inset-0 opacity-[0.032] pointer-events-none"
+        className="absolute inset-0 opacity-70 pointer-events-none"
         style={{
           y: bgY,
-          backgroundImage: `linear-gradient(#F2EDE4 1px, transparent 1px), linear-gradient(90deg, #F2EDE4 1px, transparent 1px)`,
-          backgroundSize: "72px 72px",
+          backgroundImage: "radial-gradient(ellipse at 18% 18%, rgba(194,91,26,.12), transparent 44%), radial-gradient(ellipse at 84% 64%, rgba(242,237,228,.045), transparent 38%)",
         }}
       />
 
       {/* Status bar */}
-      <div className="relative pt-28 lg:pt-32 px-6 lg:px-12 z-10">
+      <div className="relative pt-28 lg:pt-32 px-6 lg:px-12 z-10 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -175,7 +174,7 @@ export default function Hero() {
         transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          <p className="text-cream/45 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
+          <p className="text-cream/65 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
             Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
