@@ -91,7 +91,7 @@ export default function ComparisonSection() {
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-cream/15 bg-cream/[0.03] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative"
+                className="snap-center flex-none w-[86vw] rounded-md border border-cream/[0.18] bg-gradient-to-br from-cream/[0.05] to-cream/[0.025] p-6 flex flex-col justify-between shadow-[0_14px_34px_rgba(0,0,0,0.2)] card-hover-dark carousel-snap-item relative"
               >
                 <div>
                   {/* Factor Header */}
@@ -107,7 +107,7 @@ export default function ComparisonSection() {
                   </h3>
 
                   {/* Mass Processing Agency Box */}
-                  <div className="border border-cream/10 bg-cream/[0.02] p-3.5 mb-3">
+                  <div className="rounded border border-cream/[0.14] bg-cream/[0.035] p-4 mb-3.5">
                     <div className="flex items-center gap-1.5 label text-[9px] text-cream/40 mb-1.5">
                       <X className="h-3 w-3 text-red-400" />
                       <span>Mass Agency Factory</span>
@@ -118,7 +118,7 @@ export default function ComparisonSection() {
                   </div>
 
                   {/* Pathways Global 1-on-1 Mentorship Box */}
-                  <div className="border border-terra/40 bg-terra/[0.06] p-3.5">
+                  <div className="rounded border border-terra/35 bg-gradient-to-br from-terra/[0.10] to-terra/[0.04] p-4">
                     <div className="flex items-center gap-1.5 label text-[9px] text-terra mb-1.5">
                       <Check className="h-3 w-3 text-terra" />
                       <span>Pathways Global Mentorship</span>

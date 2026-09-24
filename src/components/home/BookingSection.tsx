@@ -262,7 +262,7 @@ export default function BookingSection() {
             </div>
           ) : (
             /* Compact Above-The-Fold Form */
-            <form noValidate onSubmit={handleSubmit} className="space-y-3.5">
+            <form noValidate onSubmit={handleSubmit} className="rounded-md border border-cream/[0.12] bg-gradient-to-br from-cream/[0.035] to-cream/[0.012] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.22)] space-y-3.5">
               {/* Header */}
               <div className="border-b border-cream/10 pb-3">
                 <div className="label text-terra text-[10px] mb-1">Direct Consultation Booking</div>
@@ -616,7 +616,7 @@ export default function BookingSection() {
                   </div>
                 </div>
               ) : (
-                <form noValidate onSubmit={handleSubmit} className="space-y-8">
+                <form noValidate onSubmit={handleSubmit} className="rounded-md border border-cream/[0.12] bg-gradient-to-br from-cream/[0.035] to-cream/[0.012] p-8 shadow-[0_18px_42px_rgba(0,0,0,0.24)] space-y-8">
                   <div className="border-b border-cream/10 pb-5">
                     <div className="label text-terra mb-1">1-on-1 Consultation</div>
                     <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">

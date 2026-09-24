@@ -98,7 +98,7 @@ export default function Hero() {
                 {metrics.map((m, i) => (
                   <div
                     key={i}
-                    className="snap-start flex-none w-[70vw] max-w-[260px] border border-cream/15 bg-cream/[0.04] p-4 flex flex-col justify-between carousel-snap-item shadow-sm card-hover-dark"
+                    className="snap-start flex-none w-[70vw] max-w-[260px] rounded-md border border-cream/[0.18] bg-gradient-to-br from-cream/[0.07] to-cream/[0.035] p-5 flex flex-col justify-between carousel-snap-item shadow-[0_12px_30px_rgba(0,0,0,0.22)] card-hover-dark"
                   >
                     <div className="flex items-center justify-between border-b border-cream/10 pb-2">
                       <span className="label text-[9px] text-cream/30">Metric 0{i + 1}</span>

@@ -249,7 +249,7 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className={`snap-center flex-none w-[86vw] p-6 border flex flex-col justify-between carousel-snap-item relative ${
+                  className={`snap-center flex-none w-[86vw] p-6 border rounded-md flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_30px_rgba(20,18,12,0.08)] ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10 card-hover-dark"
                       : "bg-cream-50 text-ink border-ink/10 card-hover"
@@ -288,18 +288,18 @@ export default function StudyDestinations() {
                     </div>
 
                     {/* Key Stats: Tight 2-column mini-grid */}
-                    <div className="grid grid-cols-2 gap-2 my-4">
+                    <div className="grid grid-cols-2 gap-3 my-5">
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
+                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
                         }`}
                       >
                         <div className="label text-[9px] opacity-50 mb-0.5">Post-Study Work</div>
                         <div className="text-xs font-medium leading-snug">{hub.psw}</div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
+                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
                         }`}
                       >
                         <div className="label text-[9px] opacity-50 mb-0.5">Average Tuition</div>
@@ -308,16 +308,16 @@ export default function StudyDestinations() {
                         </div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
+                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
                         }`}
                       >
                         <div className="label text-[9px] opacity-50 mb-0.5">Proof of Funds</div>
                         <div className="text-xs font-medium leading-snug">{hub.proofOfFunds}</div>
                       </div>
                       <div
-                        className={`p-2.5 border ${
-                          isDark ? "border-cream/10 bg-cream/[0.03]" : "border-ink/10 bg-cream"
+                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
+                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
                         }`}
                       >
                         <div className="label text-[9px] opacity-50 mb-0.5">Visa Category</div>
@@ -453,17 +453,18 @@ export default function StudyDestinations() {
 
                 {/* Metrics ledger + CTAs */}
                 <div className="col-span-5 space-y-5">
-                  <div className="space-y-0">
+                  <div className="grid grid-cols-2 gap-3">
                     {[
                       { label: "Post-Study Work", value: hub.psw },
                       { label: "Average Tuition", value: hub.avgTuition },
                       { label: "Proof of Funds", value: hub.proofOfFunds },
+                      { label: "Visa Category", value: hub.stream },
                     ].map(({ label, value }) => (
                       <div
                         key={label}
-                        className="border-t border-ink/8 pt-3 pb-3 grid grid-cols-2 gap-4 items-start"
+                        className="rounded border border-ink/[0.12] bg-gradient-to-br from-cream-50/80 to-cream/60 p-4 shadow-[0_5px_16px_rgba(20,18,12,0.035)]"
                       >
-                        <span className="label text-stone">{label}</span>
+                        <span className="label text-stone text-[9px] block mb-2">{label}</span>
                         <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>
                       </div>
                     ))}
