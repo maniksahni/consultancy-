@@ -99,9 +99,8 @@ export default function Hero() {
 
             {/* Mobile Stats: Horizontal scroll-snap strip (swipeable with Count-Up) */}
             <div className="lg:hidden mt-8">
-              <div className="flex items-center justify-between text-[10px] label text-cream/35 mb-2.5">
-                <span>Verified Admissions Ledger</span>
-                <span className="text-terra">Swipe 4 Metrics →</span>
+              <div className="text-[10px] label text-cream/35 mb-2.5">
+                Verified Admissions Ledger
               </div>
               <div className="overflow-x-auto snap-x snap-mandatory flex gap-3 scrollbar-none pb-2 -mx-6 px-6 carousel-snap">
                 {metrics.map((m, i) => (

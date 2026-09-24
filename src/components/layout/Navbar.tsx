@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Phone, MessageCircle } from "lucide-react";
-import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,13 +13,6 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("");
   const pathname = usePathname();
   const isHome = pathname === "/";
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 28,
-    restDelta: 0.001,
-  });
 
   // 1. Scroll listener for sticky header styling & dark/light background adaptation
   useEffect(() => {
@@ -114,14 +107,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Viewport Top Scroll Progress Bar (Terracotta) ── */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-terra origin-left z-[80] pointer-events-none scroll-progress-bar"
-        style={{ scaleX, boxShadow: "0 0 8px 1px rgba(194,91,26,0.4)" }}
-        aria-hidden="true"
-      />
-
-
       {/* ── Sticky Top Nav Bar ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${

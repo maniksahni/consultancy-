@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
@@ -113,13 +113,93 @@ export default function StudyDestinations() {
     },
   ];
 
+  // Loop support: Clone the first 2 hubs at the end for seamless forward circular wrapping
+  const displayHubs = [...hubs, hubs[0], hubs[1]];
+
+  const isResettingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+
+  const resetLoopPosition = useCallback(() => {
+    if (!carouselRef.current || isResettingRef.current) return;
+    const container = carouselRef.current;
+    const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+    if (!card) return;
+    const cardStep = card.clientWidth + 14;
+    const rawIndex = Math.round(container.scrollLeft / cardStep);
+
+    if (rawIndex >= hubs.length) {
+      isResettingRef.current = true;
+      const targetIndex = rawIndex % hubs.length;
+      const targetScrollLeft = targetIndex * cardStep;
+
+      // Temporarily remove carousel-snap class to avoid animation or snap friction during instant teleport
+      container.classList.remove("carousel-snap");
+      container.style.scrollBehavior = "auto";
+      container.scrollLeft = targetScrollLeft;
+
+      requestAnimationFrame(() => {
+        container.classList.add("carousel-snap");
+        container.style.scrollBehavior = "";
+        isResettingRef.current = false;
+      });
+    }
+  }, [hubs.length]);
+
   const handleMobileScroll = () => {
-    if (!carouselRef.current) return;
+    if (!carouselRef.current || isResettingRef.current) return;
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
-    const index = Math.round(container.scrollLeft / (cardWidth + 14));
-    setActiveMobileIndex(Math.min(Math.max(index, 0), hubs.length - 1));
+    const cardStep = cardWidth + 14;
+    const rawIndex = Math.round(container.scrollLeft / cardStep);
+    setActiveMobileIndex(rawIndex % hubs.length);
+
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+    scrollTimeoutRef.current = setTimeout(() => {
+      resetLoopPosition();
+    }, 120);
+  };
+
+  useEffect(() => {
+    const container = carouselRef.current;
+    if (!container) return;
+
+    const handleScrollEnd = () => {
+      resetLoopPosition();
+    };
+
+    container.addEventListener("scrollend", handleScrollEnd);
+    return () => {
+      container.removeEventListener("scrollend", handleScrollEnd);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, [resetLoopPosition]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || !carouselRef.current) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchEndX - touchStartXRef.current;
+    touchStartXRef.current = null;
+
+    const container = carouselRef.current;
+    const card = container.querySelector('.carousel-snap-item') as HTMLElement;
+    const cardStep = (card?.clientWidth || window.innerWidth * 0.86) + 14;
+    const rawIndex = Math.round(container.scrollLeft / cardStep);
+
+    // If at card 0 (UK) and user swipes right (backwards), smoothly loop to last card (Ireland)
+    if (rawIndex === 0 && deltaX > 40) {
+      container.scrollTo({
+        left: (hubs.length - 1) * cardStep,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -151,19 +231,23 @@ export default function StudyDestinations() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-3 scrollbar-none carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
 
-            {hubs.map((hub, i) => {
+            {displayHubs.map((hub, i) => {
               const slug = slugMap[hub.country];
               const code = countryCodes[hub.country];
               const isDark = i % 2 === 0;
+              const isClone = i >= hubs.length;
 
               return (
                 <div
-                  key={hub.country}
+                  key={`${hub.country}-${i}`}
+                  aria-hidden={isClone ? true : undefined}
                   className={`snap-center flex-none w-[86vw] p-6 border flex flex-col justify-between carousel-snap-item relative ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10 card-hover-dark"

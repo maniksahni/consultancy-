@@ -325,12 +325,6 @@
   to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* ── SCROLL PROGRESS BAR ── */
-.scroll-progress-bar {
-  transform-origin: left;
-  will-change: transform;
-}
-
 /* ============================================================
    SCROLLBAR — terracotta accent
 ============================================================ */
