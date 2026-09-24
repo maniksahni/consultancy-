@@ -201,6 +201,13 @@ export default function BookingSection() {
       id="booking"
       className="bg-[#14120C] grain-ink py-8 sm:py-12 lg:py-24 overflow-hidden w-full relative border-t border-cream/10"
     >
+      {/* Subtle radial ambient warmth behind the booking ledger */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-45 z-0"
+        style={{
+          backgroundImage: "radial-gradient(ellipse at 80% 30%, rgba(194,91,26,0.12), transparent 55%), radial-gradient(ellipse at 15% 70%, rgba(242,237,228,0.03), transparent 45%)"
+        }}
+      />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── MOBILE: Self-contained, fits above the fold on first scroll ── */}

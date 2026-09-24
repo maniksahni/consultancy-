@@ -249,39 +249,57 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className={`snap-center flex-none w-[86vw] p-6 rounded-2xl border flex flex-col justify-between carousel-snap-item relative ${
+                  className={`snap-center flex-none w-[86vw] p-5 rounded-2xl border flex flex-col justify-between carousel-snap-item relative group ${
                     isDark
                       ? "bg-gradient-to-b from-[#1C1914] to-[#12100A] text-cream border-cream/[0.08] shadow-[0_14px_36px_-8px_rgba(0,0,0,0.45)] card-hover-dark"
                       : "bg-gradient-to-b from-white to-[#F8F5EE] text-ink border-ink/[0.07] shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover"
                   }`}
                 >
-                  {/* Passport Header */}
+                  {/* Passport Header with Landmark Photography */}
                   <div>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3 flex-1 min-w-0">
-                        <div className="relative flex-shrink-0 mt-0.5 flex items-center justify-center">
-                          <CountryFlag country={hub.country} size="lg" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="font-display font-normal text-2xl leading-tight">
-                            {hub.country}
-                          </h3>
-                          <div className="label text-[10px] opacity-60 mt-0.5">
-                            {hub.stream}
-                          </div>
-                        </div>
+                    {/* Landmark photo banner */}
+                    <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-current/10">
+                      <img
+                        src={`/images/destinations/${slug}.webp`}
+                        alt={`${hub.country} landmark`}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      {/* Editorial duotone/ink gradient overlay */}
+                      <div
+                        className={`absolute inset-0 ${
+                          isDark
+                            ? "bg-gradient-to-t from-[#14120C] via-[#14120C]/35 to-transparent"
+                            : "bg-gradient-to-t from-[#F8F5EE] via-[#F8F5EE]/25 to-transparent"
+                        }`}
+                      />
+                      <div className="absolute top-2.5 left-2.5">
+                        <CountryFlag country={hub.country} size="md" />
                       </div>
                       <div
-                        className={`rounded-full px-2.5 py-0.5 text-center font-display text-xs tracking-wider select-none flex-shrink-0 ${
-                          isDark ? "border border-cream/15 text-cream/45 bg-cream/[0.03]" : "border border-ink/15 text-ink/45 bg-ink/[0.02]"
+                        className={`absolute top-2.5 right-2.5 rounded-full px-2.5 py-0.5 text-center font-display text-xs tracking-wider select-none backdrop-blur-md ${
+                          isDark
+                            ? "bg-[#14120C]/80 border border-cream/20 text-cream/70"
+                            : "bg-white/85 border border-ink/15 text-ink/75"
                         }`}
                       >
                         ENTRY #{code}
                       </div>
                     </div>
 
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-display font-normal text-2xl leading-tight">
+                          {hub.country}
+                        </h3>
+                        <div className="label text-[10px] opacity-60 mt-0.5">
+                          {hub.stream}
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Strategic tag */}
-                    <div className="mt-3.5">
+                    <div className="mt-2.5">
                       <span className="inline-block rounded-full border border-terra/25 bg-terra/[0.08] text-terra px-3 py-1 text-[10px] label font-medium">
                         {hub.tag}
                       </span>
@@ -403,23 +421,31 @@ export default function StudyDestinations() {
                 viewport={{ once: true, margin: "-8%" }}
                 transition={{ duration: 0.55, ease: EASE, delay: i * 0.04 }}
               >
-                {/* Large country code — decorative typography */}
-                <div className="col-span-2 flex items-start gap-3">
-                  <div>
-                    <div
-                      className="font-display font-light text-ink/10 leading-none tracking-tighter select-none"
-                      style={{ fontSize: "clamp(56px, 5.5vw, 80px)" }}
-                    >
-                      {code}
-                    </div>
-                    <div className="mt-2 relative inline-flex items-center justify-center">
+                {/* Landmark Photo Thumbnail & Credentials */}
+                <div className="col-span-3 flex flex-col justify-between">
+                  <div className="relative w-full h-48 rounded-xl overflow-hidden border border-ink/[0.08] shadow-sm group-hover:shadow-md transition-all duration-500">
+                    <img
+                      src={`/images/destinations/${slug}.webp`}
+                      alt={`${hub.country} landmark`}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Warm editorial duotone overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+                    <div className="absolute top-2.5 left-2.5">
                       <CountryFlag country={hub.country} size="md" />
+                    </div>
+                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-cream">
+                      <span className="font-display font-light text-2xl tracking-tight opacity-95">{code}</span>
+                      <span className="label text-[8px] text-cream/80 tracking-widest bg-ink/60 px-2 py-0.5 rounded-full border border-cream/20 backdrop-blur-sm">
+                        ENTRY #{code}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Country name + tag + advantages (staggered list) */}
-                <div className="col-span-5 space-y-4">
+                <div className="col-span-4 space-y-4">
                   <div>
                     <h3
                       className="font-display font-normal text-ink tracking-tight leading-none"

@@ -32,12 +32,27 @@ export default function Hero() {
     <section
       className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
     >
-      {/* Soft tonal glow keeps the ink surface atmospheric without a hard grid */}
+      {/* Full-bleed evocative travel/study abroad background photography */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <img
+          src="/images/hero-plane.webp"
+          alt="International travel and study abroad departures"
+          className="w-full h-full object-cover object-[center_35%] opacity-70 transform scale-105"
+          loading="eager"
+          decoding="async"
+        />
+        {/* Deep ink directional gradient overlays matching site palette: ~75-85% at bottom fading lighter at top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#14120C] via-[#14120C]/75 to-[#14120C]/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#14120C]/90 via-[#14120C]/65 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(194,91,26,0.18),transparent_70%)]" />
+      </div>
+
+      {/* Subtle parallax ambient tonal glow */}
       <motion.div
-        className="absolute inset-0 opacity-70 pointer-events-none"
+        className="absolute inset-0 opacity-60 pointer-events-none z-[1]"
         style={{
           y: bgY,
-          backgroundImage: "radial-gradient(ellipse at 18% 18%, rgba(194,91,26,.12), transparent 44%), radial-gradient(ellipse at 84% 64%, rgba(242,237,228,.045), transparent 38%)",
+          backgroundImage: "radial-gradient(ellipse at 18% 18%, rgba(194,91,26,.14), transparent 48%), radial-gradient(ellipse at 84% 64%, rgba(242,237,228,.04), transparent 42%)",
         }}
       />
 

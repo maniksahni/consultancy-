@@ -131,48 +131,62 @@ export default function StudentOutcomes() {
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] rounded-2xl border border-ink/[0.07] bg-gradient-to-b from-white to-cream-50 p-6 flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover"
+                className="snap-center flex-none w-[86vw] rounded-2xl border border-ink/[0.09] bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] p-6 flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover overflow-hidden"
               >
-                {/* Record header */}
-                <div className="border-b border-ink/[0.07] pb-3 mb-4 flex items-center justify-between gap-2">
-                  <div>
-                    <div className="label text-stone text-[10px]">
-                      Case File {String(i + 1).padStart(3, "0")} / 006
+                {/* Subtle consular watermark seal */}
+                <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full border border-terra/10 opacity-30 pointer-events-none flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-full border border-dashed border-terra/20" />
+                </div>
+
+                <div>
+                  {/* Record header */}
+                  <div className="border-b border-ink/[0.08] pb-3 mb-4 flex items-center justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="label text-stone text-[10px]">
+                          Case File {String(i + 1).padStart(3, "0")} / 006
+                        </span>
+                        <span className="text-[8px] font-mono text-terra border border-terra/30 bg-terra/[0.04] px-1.5 py-0.2 rounded uppercase tracking-wider">
+                          VERIFIED
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">
+                        {item.ref}
+                      </div>
                     </div>
-                    <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">
-                      {item.ref}
+                    <CountryFlag country={item.country} size="md" />
+                  </div>
+
+                  {/* Candidate identity */}
+                  <div className="mb-3">
+                    <div className="font-display text-2xl font-normal text-ink leading-tight">
+                      Candidate {item.initials}
+                    </div>
+                    <div className="label text-stone text-[10px] mt-1">
+                      {item.country} Study Route · {item.intake}
                     </div>
                   </div>
-                  <CountryFlag country={item.country} size="md" />
-                </div>
 
-                {/* Candidate identity */}
-                <div className="mb-3">
-                  <div className="font-display text-2xl font-normal text-ink leading-tight">
-                    Candidate {item.initials}
+                  {/* University + program */}
+                  <div className="mb-3">
+                    <h3 className="font-display text-xl font-normal text-ink leading-snug">
+                      {item.university}
+                    </h3>
+                    <p className="text-stone text-xs font-light mt-0.5">{item.program}</p>
                   </div>
-                  <div className="label text-stone text-[10px] mt-1">
-                    {item.country} Study Route · {item.intake}
+
+                  {/* Profile metrics */}
+                  <div className="rounded-xl border border-ink/[0.06] py-2.5 px-3 mb-3.5 bg-white/60 backdrop-blur-sm">
+                    <div className="label text-stone text-[9px] mb-1">Audited Profile</div>
+                    <p className="text-xs text-ink/80 font-light leading-relaxed">{item.stats}</p>
                   </div>
-                </div>
-
-                {/* University + program */}
-                <div className="mb-3">
-                  <h3 className="font-display text-xl font-normal text-ink leading-snug">
-                    {item.university}
-                  </h3>
-                  <p className="text-stone text-xs font-light mt-0.5">{item.program}</p>
-                </div>
-
-                {/* Profile metrics */}
-                <div className="rounded-xl border border-ink/[0.05] py-2.5 px-3 mb-3.5 bg-cream/60">
-                  <div className="label text-stone text-[9px] mb-1">Audited Profile</div>
-                  <p className="text-xs text-ink/80 font-light leading-relaxed">{item.stats}</p>
                 </div>
 
                 {/* Outcome stamp */}
-                <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] p-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)]">
-                  <div className="label text-terra text-[9px] mb-1 flex items-center gap-1.5 font-medium"><span className="text-terra">✦</span> Verified Outcome</div>
+                <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] p-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)] relative z-10">
+                  <div className="label text-terra text-[9px] mb-1 flex items-center gap-1.5 font-medium">
+                    <span className="text-terra">✦</span> Verified Outcome
+                  </div>
                   <p className="text-xs text-ink font-semibold leading-snug">{item.outcome}</p>
                 </div>
               </div>
@@ -208,46 +222,60 @@ export default function StudentOutcomes() {
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className="rounded-2xl p-7 flex flex-col justify-between bg-gradient-to-b from-white/95 to-cream-50/80 border border-ink/[0.07] shadow-[0_6px_24px_-4px_rgba(20,18,12,0.05)] hover:shadow-[0_16px_40px_-8px_rgba(20,18,12,0.1)] card-hover transition-all duration-300"
+              className="rounded-2xl p-7 flex flex-col justify-between bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] border border-ink/[0.09] shadow-[0_8px_28px_-6px_rgba(20,18,12,0.06)] hover:shadow-[0_20px_48px_-10px_rgba(20,18,12,0.12)] card-hover transition-all duration-300 relative overflow-hidden group"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}
               transition={{ duration: 0.55, ease: EASE, delay: (i % 3) * 0.09 }}
             >
-              {/* Record header */}
-              <div className="border-b border-ink/[0.06] pb-4 mb-5 flex items-center justify-between gap-2">
-                <div>
-                  <div className="label text-stone">Record {String(i + 1).padStart(3, "0")}</div>
-                  <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">{item.ref}</div>
+              {/* Subtle consular watermark seal */}
+              <div className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full border border-terra/10 opacity-20 pointer-events-none flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                <div className="w-28 h-28 rounded-full border border-dashed border-terra/20" />
+              </div>
+
+              <div>
+                {/* Record header with Case File classification */}
+                <div className="border-b border-ink/[0.08] pb-4 mb-5 flex items-center justify-between gap-2">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="label text-[9px] text-stone">Record {String(i + 1).padStart(3, "0")}</span>
+                      <span className="text-[8px] font-mono text-terra border border-terra/30 bg-terra/[0.04] px-1.5 py-0.2 rounded uppercase tracking-wider">
+                        VERIFIED DOSSIER
+                      </span>
+                    </div>
+                    <div className="text-[10px] text-stone/60 font-sans font-light mt-0.5">{item.ref}</div>
+                  </div>
+                  <CountryFlag country={item.country} size="md" />
                 </div>
-                <CountryFlag country={item.country} size="md" />
-              </div>
 
-              {/* Candidate identity */}
-              <div className="mb-4">
-                <div className="font-display text-2xl font-normal text-ink leading-none tracking-tight">
-                  Candidate {item.initials}
+                {/* Candidate identity */}
+                <div className="mb-4">
+                  <div className="font-display text-2xl font-normal text-ink leading-none tracking-tight">
+                    Candidate {item.initials}
+                  </div>
+                  <div className="label text-stone mt-1.5">{item.country} Study Route · {item.intake}</div>
                 </div>
-                <div className="label text-stone mt-1.5">{item.country} Study Route · {item.intake}</div>
-              </div>
 
-              {/* University + program */}
-              <div className="mb-4">
-                <h3 className="font-display text-xl font-normal text-ink leading-snug tracking-tight">
-                  {item.university}
-                </h3>
-                <p className="text-stone text-xs font-light mt-1">{item.program}</p>
-              </div>
+                {/* University + program */}
+                <div className="mb-4">
+                  <h3 className="font-display text-xl font-normal text-ink leading-snug tracking-tight">
+                    {item.university}
+                  </h3>
+                  <p className="text-stone text-xs font-light mt-1">{item.program}</p>
+                </div>
 
-              {/* Profile metrics */}
-              <div className="rounded-xl border border-ink/[0.05] p-3 mb-4 bg-cream/50">
-                <div className="label text-stone text-[9px] mb-1">Candidate Profile Metrics</div>
-                <p className="text-xs text-ink/70 font-light leading-relaxed">{item.stats}</p>
+                {/* Profile metrics */}
+                <div className="rounded-xl border border-ink/[0.06] p-3 mb-4 bg-white/60 backdrop-blur-sm">
+                  <div className="label text-stone text-[9px] mb-1">Candidate Profile Metrics</div>
+                  <p className="text-xs text-ink/75 font-light leading-relaxed">{item.stats}</p>
+                </div>
               </div>
 
               {/* Outcome stamp */}
-              <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] px-4 py-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)]">
-                <div className="label text-terra mb-1.5 flex items-center gap-1.5 font-medium"><span className="text-terra">✦</span> Verified Outcome</div>
+              <div className="rounded-xl border border-terra/25 bg-gradient-to-br from-terra/[0.08] to-terra/[0.02] px-4 py-3.5 shadow-[0_2px_12px_rgba(194,91,26,0.06)] relative z-10">
+                <div className="label text-terra mb-1.5 flex items-center gap-1.5 font-medium">
+                  <span className="text-terra">✦</span> Verified Case Outcome
+                </div>
                 <p className="text-sm text-ink font-semibold leading-snug">{item.outcome}</p>
               </div>
             </motion.div>

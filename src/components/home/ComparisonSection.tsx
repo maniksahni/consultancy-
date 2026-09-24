@@ -53,6 +53,13 @@ export default function ComparisonSection() {
       id="comparison"
       className="bg-[#14120C] grain-ink py-20 lg:py-28 overflow-hidden w-full relative"
     >
+      {/* Subtle radial ambient warmth behind the fiduciary comparison card */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40 z-0"
+        style={{
+          backgroundImage: "radial-gradient(ellipse at 75% 50%, rgba(194,91,26,0.1), transparent 60%), radial-gradient(ellipse at 25% 80%, rgba(242,237,228,0.03), transparent 50%)"
+        }}
+      />
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── Section header ── */}
