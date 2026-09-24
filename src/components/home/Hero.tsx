@@ -73,7 +73,7 @@ export default function Hero() {
       </div>
 
       {/* Main content grid */}
-      <div className="relative flex-1 flex flex-col justify-center px-6 lg:px-12 py-8 lg:py-16 z-10">
+      <div className="relative flex-1 flex flex-col justify-center px-6 lg:px-12 py-5 sm:py-8 lg:py-16 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end max-w-7xl mx-auto w-full">
 
           {/* Headline — 8 cols on desktop, full on mobile */}
@@ -92,7 +92,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
-              className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-terra/25 bg-gradient-to-r from-terra/[0.12] via-terra/[0.06] to-transparent backdrop-blur-md px-4 py-1.5 shadow-[0_2px_14px_rgba(194,91,26,0.12)]"
+              className="mt-3.5 sm:mt-5 inline-flex items-center gap-2 rounded-full border border-terra/25 bg-gradient-to-r from-terra/[0.12] via-terra/[0.06] to-transparent backdrop-blur-md px-3.5 py-1 sm:px-4 sm:py-1.5 shadow-[0_2px_14px_rgba(194,91,26,0.12)]"
             >
               <span className="relative flex h-2 w-2 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-60" />
@@ -104,8 +104,8 @@ export default function Hero() {
             </motion.div>
 
             {/* Mobile Stats: 2x2 Grid (All 4 Audited Metrics Instantly Visible) */}
-            <div className="lg:hidden mt-8">
-              <div className="text-[10px] label text-cream/35 mb-3 tracking-widest">
+            <div className="lg:hidden mt-4 sm:mt-6">
+              <div className="text-[10px] label text-cream/35 mb-2 tracking-widest">
                 Verified Admissions Ledger
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
