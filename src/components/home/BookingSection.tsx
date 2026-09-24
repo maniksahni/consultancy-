@@ -424,7 +424,7 @@ export default function BookingSection() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[48px] py-3.5 label text-xs tracking-wider transition-colors cursor-pointer btn-tactile btn-tactile-dark active:scale-[0.98]"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-3.5 label text-xs tracking-wider transition-colors cursor-pointer btn-primary-glow active:scale-[0.97]"
                   >
                     {loading ? (
                       <>
@@ -439,8 +439,8 @@ export default function BookingSection() {
                     )}
                   </button>
                   <div className="flex items-center justify-between text-[10px] text-cream/30 mt-2 font-light">
-                    <span>Zero spam guarantee</span>
-                    <span>1-on-1 Mentor Review</span>
+                    <span>No cost. No obligation.</span>
+                    <span>Direct 1-on-1 mentor review</span>
                   </div>
                 </div>
               </div>
@@ -740,7 +740,7 @@ export default function BookingSection() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-tactile btn-tactile-dark active:scale-[0.98]"
+                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-primary-glow active:scale-[0.97]"
                     >
                       {loading ? (
                         <>

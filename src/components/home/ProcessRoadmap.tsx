@@ -117,7 +117,7 @@ export default function ProcessRoadmap() {
 
               {/* Deliverable — formal bordered block */}
               <div className="lg:col-span-5 lg:pl-8">
-                <div className="border border-ink/12 p-5 bg-cream">
+                <div className="border border-ink/12 p-5 bg-cream card-hover shadow-sm">
                   <div className="label text-stone mb-2.5">Stage Deliverable</div>
                   <p className="text-ink text-sm font-medium leading-relaxed">
                     {step.milestone}
@@ -149,7 +149,7 @@ export default function ProcessRoadmap() {
           </div>
           <a
             href="#booking"
-            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 min-h-[48px] px-7 py-3.5 label transition-colors group text-center btn-tactile active:scale-[0.98]"
+            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-ink hover:bg-ink-soft text-cream-50 min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow active:scale-[0.97]"
           >
             Start Your Diagnostic Audit
             <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

@@ -116,10 +116,11 @@ export default function Navbar() {
     <>
       {/* ── Viewport Top Scroll Progress Bar (Terracotta) ── */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-terra origin-left z-[80] pointer-events-none"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-[3px] bg-terra origin-left z-[80] pointer-events-none scroll-progress-bar"
+        style={{ scaleX, boxShadow: "0 0 8px 1px rgba(194,91,26,0.4)" }}
         aria-hidden="true"
       />
+
 
       {/* ── Sticky Top Nav Bar ── */}
       <header

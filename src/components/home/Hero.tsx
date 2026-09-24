@@ -2,10 +2,20 @@
 
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, ArrowDown, MessageCircle, ShieldCheck } from "lucide-react";
 import StatCounter from "@/components/common/StatCounter";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+// University mentions from outcomes data — text-based credibility strip
+const UNIVERSITY_MENTIONS = [
+  "Columbia University",
+  "TU Munich",
+  "Univ. of Manchester",
+  "Univ. of Toronto",
+  "Trinity College Dublin",
+  "UNSW Sydney",
+];
 
 export default function Hero() {
   const { scrollY } = useScroll();
@@ -71,6 +81,22 @@ export default function Hero() {
               <em className="text-terra not-italic italic">Zero Compromises.</em>
             </h1>
 
+            {/* Urgency / capacity signal */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
+              className="mt-5 inline-flex items-center gap-2 border border-terra/30 bg-terra/[0.07] px-3 py-1.5"
+            >
+              <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
+              </span>
+              <span className="label text-[9px] text-terra/90">
+                Now Accepting Fall 2026 &amp; Spring 2027 Applications — Limited Mentor Capacity
+              </span>
+            </motion.div>
+
             {/* Mobile Stats: Horizontal scroll-snap strip (swipeable with Count-Up) */}
             <div className="lg:hidden mt-8">
               <div className="flex items-center justify-between text-[10px] label text-cream/35 mb-2.5">
@@ -81,7 +107,7 @@ export default function Hero() {
                 {metrics.map((m, i) => (
                   <div
                     key={i}
-                    className="snap-start flex-none w-[70vw] max-w-[260px] border border-cream/15 bg-cream/[0.03] p-4 flex flex-col justify-between carousel-snap-item shadow-sm"
+                    className="snap-start flex-none w-[70vw] max-w-[260px] border border-cream/15 bg-cream/[0.04] p-4 flex flex-col justify-between carousel-snap-item shadow-sm card-hover-dark"
                   >
                     <div className="flex items-center justify-between border-b border-cream/10 pb-2">
                       <span className="label text-[9px] text-cream/30">Metric 0{i + 1}</span>
@@ -119,6 +145,28 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* University trust strip */}
+      <motion.div
+        className="relative border-t border-cream/[0.07] px-6 lg:px-12 py-4 max-w-full z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}
+      >
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+          <span className="label text-cream/25 text-[9px] whitespace-nowrap flex-shrink-0">As trusted by students heading to</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+            {UNIVERSITY_MENTIONS.map((uni) => (
+              <span
+                key={uni}
+                className="font-display text-cream/30 text-sm tracking-tight hover:text-cream/50 transition-colors cursor-default select-none"
+              >
+                {uni}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
       {/* Bottom strip: body copy + CTAs with tactile press */}
       <motion.div
         className="relative border-t border-cream/10 px-6 lg:px-12 py-7 lg:py-8 max-w-full z-10"
@@ -130,25 +178,60 @@ export default function Hero() {
           <p className="text-cream/45 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
             Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
           </p>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
-            <a
-              href="#booking"
-              className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-7 py-3.5 label transition-colors group text-center btn-tactile btn-tactile-dark"
-            >
-              Book Strategy Session
-              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </a>
-            <a
-              href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[48px] border border-cream/15 hover:border-cream/40 px-5 py-3 transition-all text-center btn-tactile"
-            >
-              <MessageCircle className="h-4 w-4 text-terra" />
-              Direct WhatsApp Inquiry
-            </a>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+            {/* Primary CTA — dominant, with glow */}
+            <div className="flex flex-col items-stretch sm:items-start gap-1">
+              <a
+                href="#booking"
+                className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow"
+              >
+                Book Strategy Session
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <span className="text-cream/25 text-[10px] font-sans font-light text-center sm:text-left px-1 leading-relaxed">
+                No cost. No obligation. Direct mentor review.
+              </span>
+            </div>
+
+            {/* Secondary CTAs */}
+            <div className="flex flex-row sm:flex-col gap-2.5">
+              <a
+                href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[44px] border border-cream/15 hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
+              >
+                <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
+                <span>Chat Live</span>
+              </a>
+              <a
+                href="#destinations"
+                className="inline-flex items-center justify-center gap-1.5 text-cream/35 hover:text-cream/60 text-sm min-h-[44px] px-3 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
+              >
+                <ArrowDown className="h-3.5 w-3.5" />
+                <span>See how it works</span>
+              </a>
+            </div>
           </div>
         </div>
+
+        {/* Differentiator badges row */}
+        <motion.div
+          className="max-w-7xl mx-auto mt-5 flex flex-wrap items-center gap-2.5"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.85 }}
+        >
+          <div className="trust-badge">
+            <ShieldCheck className="w-3 h-3 flex-shrink-0" />
+            99.2% Visa Approval Rate
+          </div>
+          <div className="trust-badge">
+            <ShieldCheck className="w-3 h-3 flex-shrink-0" />
+            Zero Institutional Kickbacks
+          </div>
+          <span className="text-cream/20 text-[10px] font-light font-sans">Verified against official visa stamps</span>
+        </motion.div>
       </motion.div>
     </motion.section>
   );

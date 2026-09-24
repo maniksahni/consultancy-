@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { X, Check, ShieldCheck } from "lucide-react";
+import { X, Check, ShieldCheck, ArrowRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -90,7 +90,7 @@ export default function ComparisonSection() {
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-cream/15 bg-cream/[0.02] p-5 flex flex-col justify-between shadow-sm carousel-snap-item relative"
+                className="snap-center flex-none w-[86vw] border border-cream/15 bg-cream/[0.03] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative"
               >
                 <div>
                   {/* Factor Header */}
@@ -221,9 +221,10 @@ export default function ComparisonSection() {
           </div>
           <a
             href="#booking"
-            className="text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors btn-tactile max-w-[calc(100%-60px)]"
+            className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-all group btn-tactile max-w-[calc(100%-60px)]"
           >
-            Schedule Your Free Discovery Call →
+            Schedule Your Free Discovery Call
+            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
 

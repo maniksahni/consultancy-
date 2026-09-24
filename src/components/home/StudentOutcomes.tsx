@@ -131,7 +131,7 @@ export default function StudentOutcomes() {
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between shadow-sm carousel-snap-item relative"
+                className="snap-center flex-none w-[86vw] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between carousel-snap-item relative card-hover"
               >
                 {/* Record header */}
                 <div className="border-b border-ink/10 pb-3 mb-4 flex items-center justify-between gap-2">
@@ -171,9 +171,9 @@ export default function StudentOutcomes() {
                 </div>
 
                 {/* Outcome stamp */}
-                <div className="border border-terra/30 bg-terra/[0.06] p-3">
-                  <div className="label text-terra text-[9px] mb-1">Verified Outcome</div>
-                  <p className="text-xs text-ink font-medium leading-snug">{item.outcome}</p>
+                <div className="border border-terra/40 bg-terra/[0.08] p-3.5">
+                  <div className="label text-terra text-[9px] mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
+                  <p className="text-xs text-ink font-semibold leading-snug">{item.outcome}</p>
                 </div>
               </div>
             ))}
@@ -213,7 +213,7 @@ export default function StudentOutcomes() {
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 transition-all duration-300 hover:bg-cream-50/70 hover:shadow-sm
+              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 card-hover
                 ${i % 3 === 2 ? "lg:border-r-0" : ""}
                 ${i % 2 === 1 ? "md:border-r-0 lg:border-r" : ""}
                 ${i % 3 === 2 && i % 2 === 1 ? "md:border-r-0" : ""}
@@ -221,10 +221,10 @@ export default function StudentOutcomes() {
                 ${i >= outcomes.length - 2 ? "md:border-b-0" : ""}
                 ${i === outcomes.length - 1 ? "border-b-0" : ""}
               `}
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 0.5, ease: EASE, delay: (i % 3) * 0.06 }}
+              transition={{ duration: 0.55, ease: EASE, delay: (i % 3) * 0.09 }}
             >
               {/* Record header */}
               <div className="border-b border-ink/8 pb-4 mb-5 flex items-center justify-between gap-2">
@@ -258,9 +258,9 @@ export default function StudentOutcomes() {
               </div>
 
               {/* Outcome stamp */}
-              <div className="border border-terra/25 bg-terra/[0.04] px-4 py-3">
-                <div className="label text-terra mb-1.5">Verified Outcome</div>
-                <p className="text-sm text-ink font-medium leading-snug">{item.outcome}</p>
+              <div className="border border-terra/40 bg-terra/[0.07] px-4 py-3.5">
+                <div className="label text-terra mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
+                <p className="text-sm text-ink font-semibold leading-snug">{item.outcome}</p>
               </div>
             </motion.div>
           ))}

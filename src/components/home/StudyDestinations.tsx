@@ -164,10 +164,10 @@ export default function StudyDestinations() {
               return (
                 <div
                   key={hub.country}
-                  className={`snap-center flex-none w-[86vw] p-6 border transition-colors flex flex-col justify-between shadow-sm carousel-snap-item relative ${
+                  className={`snap-center flex-none w-[86vw] p-6 border flex flex-col justify-between carousel-snap-item relative ${
                     isDark
-                      ? "bg-[#14120C] text-cream border-cream/10"
-                      : "bg-cream-50 text-ink border-ink/10"
+                      ? "bg-[#14120C] text-cream border-cream/10 card-hover-dark"
+                      : "bg-cream-50 text-ink border-ink/10 card-hover"
                   }`}
                 >
                   {/* Passport Header */}
@@ -257,7 +257,7 @@ export default function StudyDestinations() {
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-tactile btn-tactile-dark"
+                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors btn-primary-glow"
                     >
                       Discuss {hub.country} Strategy
                       <ArrowUpRight className="h-3.5 w-3.5" />
