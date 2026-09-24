@@ -61,7 +61,7 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="bg-[#14120C] grain-ink text-cream py-16 lg:py-24 overflow-hidden w-full relative border-t border-cream/10"
+      className="bg-[#14120C] grain-ink text-cream py-20 lg:py-28 overflow-hidden w-full relative border-t border-cream/[0.10]"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 

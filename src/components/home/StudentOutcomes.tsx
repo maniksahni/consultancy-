@@ -87,13 +87,13 @@ export default function StudentOutcomes() {
   return (
     <section
       id="outcomes"
-      className="bg-cream py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-cream py-20 lg:py-28 overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
         {/* ── Section header ── */}
         <motion.div
-          className="border-t border-ink/12 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
+          className="border-t border-ink/[0.12] pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-8%" }}
@@ -131,7 +131,7 @@ export default function StudentOutcomes() {
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] border border-ink/15 bg-cream-50 p-6 flex flex-col justify-between carousel-snap-item relative card-hover"
+            className="snap-center flex-none w-[86vw] rounded-lg border border-ink/[0.10] bg-gradient-to-br from-cream-50 to-cream/85 p-6 sm:p-7 flex flex-col justify-between carousel-snap-item relative shadow-[0_14px_34px_rgba(20,18,12,0.075)] card-hover"
               >
                 {/* Record header */}
                 <div className="border-b border-ink/10 pb-3 mb-4 flex items-center justify-between gap-2">
@@ -165,13 +165,13 @@ export default function StudentOutcomes() {
                 </div>
 
                 {/* Profile metrics */}
-                <div className="border-t border-b border-ink/8 py-2.5 mb-3 bg-cream/50 px-2.5">
+                <div className="rounded-md border-y border-ink/[0.07] py-3 mb-4 bg-cream/55 px-3.5">
                   <div className="label text-stone text-[9px] mb-1">Audited Profile</div>
                   <p className="text-xs text-ink/80 font-light leading-relaxed">{item.stats}</p>
                 </div>
 
                 {/* Outcome stamp */}
-                <div className="border border-terra/40 bg-terra/[0.08] p-3.5">
+                <div className="rounded-md border border-terra/[0.25] bg-gradient-to-br from-terra/[0.09] to-terra/[0.045] p-4">
                   <div className="label text-terra text-[9px] mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
                   <p className="text-xs text-ink font-semibold leading-snug">{item.outcome}</p>
                 </div>
@@ -204,18 +204,11 @@ export default function StudentOutcomes() {
         </div>
 
         {/* ── DESKTOP: Dossier case files ledger grid (hidden on mobile and tablet) ── */}
-        <div className="hidden lg:grid border border-ink/10 grid-cols-3">
+        <div className="hidden lg:grid grid-cols-3 gap-4">
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className={`p-7 flex flex-col justify-between border-b border-r border-ink/8 card-hover
-                ${i % 3 === 2 ? "lg:border-r-0" : ""}
-                ${i % 2 === 1 ? "md:border-r-0 lg:border-r" : ""}
-                ${i % 3 === 2 && i % 2 === 1 ? "md:border-r-0" : ""}
-                ${i >= outcomes.length - (outcomes.length % 3 || 3) ? "lg:border-b-0" : ""}
-                ${i >= outcomes.length - 2 ? "md:border-b-0" : ""}
-                ${i === outcomes.length - 1 ? "border-b-0" : ""}
-              `}
+              className="rounded-md border border-ink/[0.09] bg-gradient-to-br from-cream-50/90 to-cream/75 p-7 lg:p-8 flex flex-col justify-between shadow-[0_10px_28px_rgba(20,18,12,0.045)] card-hover"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}
@@ -247,13 +240,13 @@ export default function StudentOutcomes() {
               </div>
 
               {/* Profile metrics */}
-              <div className="border-t border-ink/8 border-b border-b-ink/8 py-3 mb-4">
+              <div className="rounded-md border-y border-ink/[0.07] bg-ink/[0.018] px-3.5 py-3.5 mb-4">
                 <div className="label text-stone mb-1.5">Candidate Profile Metrics</div>
                 <p className="text-xs text-ink/70 font-light leading-relaxed">{item.stats}</p>
               </div>
 
               {/* Outcome stamp */}
-              <div className="border border-terra/40 bg-terra/[0.07] px-4 py-3.5">
+              <div className="rounded-md border border-terra/[0.22] bg-gradient-to-br from-terra/[0.09] to-terra/[0.04] px-4 py-4">
                 <div className="label text-terra mb-1.5 flex items-center gap-1.5"><span className="text-terra">✦</span> Verified Outcome</div>
                 <p className="text-sm text-ink font-semibold leading-snug">{item.outcome}</p>
               </div>

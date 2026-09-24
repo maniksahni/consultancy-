@@ -32,18 +32,17 @@ export default function Hero() {
     <section
       className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
     >
-      {/* Subtle parchment grid texture with restrained parallax */}
+      {/* Soft tonal glow keeps the ink surface atmospheric without a hard grid */}
       <motion.div
-        className="absolute inset-0 opacity-[0.032] pointer-events-none"
+        className="absolute inset-0 opacity-70 pointer-events-none"
         style={{
           y: bgY,
-          backgroundImage: `linear-gradient(#F2EDE4 1px, transparent 1px), linear-gradient(90deg, #F2EDE4 1px, transparent 1px)`,
-          backgroundSize: "72px 72px",
+          backgroundImage: "radial-gradient(ellipse at 18% 18%, rgba(194,91,26,.12), transparent 44%), radial-gradient(ellipse at 84% 64%, rgba(242,237,228,.045), transparent 38%)",
         }}
       />
 
       {/* Status bar */}
-      <div className="relative pt-28 lg:pt-32 px-6 lg:px-12 z-10">
+      <div className="relative pt-28 lg:pt-32 px-6 lg:px-12 z-10 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +64,7 @@ export default function Hero() {
           {/* Headline — 8 cols on desktop, full on mobile */}
           <div className="lg:col-span-8">
             <h1
-              className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
+              className="font-display font-normal text-cream leading-[0.94] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[clamp(4.5rem,6.6vw,6.75rem)]"
             >
               Elite 1-on-1<br />
               Study Abroad<br />
@@ -78,7 +77,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
-              className="mt-5 inline-flex items-center gap-2 border border-terra/30 bg-terra/[0.07] px-3 py-1.5"
+              className="mt-6 inline-flex items-center gap-2 rounded-md border border-terra/[0.24] bg-terra/[0.07] px-3.5 py-2"
             >
               <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-60" />
@@ -117,19 +116,19 @@ export default function Hero() {
           </div>
 
           {/* Desktop Stats: 4 cols stacked ledger with staggered cascade & count-up */}
-          <div className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-0">
+          <div className="hidden lg:grid lg:col-span-4 grid-cols-2 gap-3 self-center">
             {metrics.map((m, i) => (
               <motion.div
                 key={i}
-                className="border-t border-cream/10 pt-4 pb-4 lg:pb-5"
+                className="rounded-md border border-cream/[0.10] bg-gradient-to-br from-cream/[0.045] to-cream/[0.018] p-4 lg:p-5 shadow-[0_10px_26px_rgba(0,0,0,0.13)]"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, ease: EASE, delay: 0.35 + i * 0.08 }}
               >
-                <div className="font-display text-3xl lg:text-[2.6rem] text-terra font-normal leading-none">
+                <div className="font-display text-3xl lg:text-[2.4rem] text-terra font-normal leading-none">
                   <StatCounter value={m.value} duration={1.8} />
                 </div>
-                <div className="label text-cream/35 mt-2">{m.label}</div>
+                <div className="label text-cream/65 text-[9px] leading-relaxed mt-2">{m.label}</div>
               </motion.div>
             ))}
           </div>
@@ -166,7 +165,7 @@ export default function Hero() {
         transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          <p className="text-cream/45 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
+          <p className="text-cream/65 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
             Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
@@ -174,7 +173,7 @@ export default function Hero() {
             <div className="flex flex-col items-stretch sm:items-start gap-1">
               <a
                 href="#booking"
-                className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow"
+                className="inline-flex items-center justify-center gap-2.5 rounded-md bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label transition-colors group text-center btn-primary-glow shadow-[0_8px_24px_rgba(194,91,26,0.18)]"
               >
                 Book Strategy Session
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -190,7 +189,7 @@ export default function Hero() {
                 href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 text-cream/60 hover:text-cream text-sm min-h-[44px] border border-cream/15 hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
+                className="inline-flex items-center justify-center gap-2 rounded-md text-cream/70 hover:text-cream text-sm min-h-[44px] border border-cream/[0.14] bg-cream/[0.025] hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
               >
                 <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
                 <span>Chat Live</span>

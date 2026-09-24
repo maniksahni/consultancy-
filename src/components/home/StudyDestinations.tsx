@@ -206,7 +206,7 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-cream py-16 lg:py-24 overflow-hidden w-full"
+      className="bg-cream py-20 lg:py-28 overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
@@ -234,7 +234,7 @@ export default function StudyDestinations() {
             onScroll={handleMobileScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-3 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pb-4 scrollbar-none carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
@@ -249,7 +249,7 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className={`snap-center flex-none w-[86vw] p-6 border rounded-md flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_30px_rgba(20,18,12,0.08)] ${
+                  className={`snap-center flex-none w-[86vw] p-6 sm:p-7 border rounded-lg flex flex-col justify-between carousel-snap-item relative shadow-[0_16px_36px_rgba(20,18,12,0.10)] ${
                     isDark
                       ? "bg-[#14120C] text-cream border-cream/10 card-hover-dark"
                       : "bg-cream-50 text-ink border-ink/10 card-hover"
@@ -288,40 +288,40 @@ export default function StudyDestinations() {
                     </div>
 
                     {/* Key Stats: Tight 2-column mini-grid */}
-                    <div className="grid grid-cols-2 gap-3 my-5">
+                    <div className="grid grid-cols-2 gap-3.5 my-6">
                       <div
-                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
-                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
+                        className={`p-3.5 sm:p-4 border rounded-md bg-gradient-to-br leading-relaxed shadow-[0_6px_16px_rgba(20,18,12,0.035)] ${
+                          isDark ? "border-cream/[0.12] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.10] from-cream-50/90 to-cream/70"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Post-Study Work</div>
-                        <div className="text-xs font-medium leading-snug">{hub.psw}</div>
+                        <div className={`label text-[9px] tracking-[0.16em] mb-1 ${isDark ? "text-cream/65" : "text-stone"}`}>Post-Study Work</div>
+                        <div className="text-xs font-medium leading-relaxed">{hub.psw}</div>
                       </div>
                       <div
-                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
-                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
+                        className={`p-3.5 sm:p-4 border rounded-md bg-gradient-to-br leading-relaxed shadow-[0_6px_16px_rgba(20,18,12,0.035)] ${
+                          isDark ? "border-cream/[0.12] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.10] from-cream-50/90 to-cream/70"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Average Tuition</div>
-                        <div className="text-xs font-medium leading-snug text-terra">
+                        <div className={`label text-[9px] tracking-[0.16em] mb-1 ${isDark ? "text-cream/65" : "text-stone"}`}>Average Tuition</div>
+                        <div className="text-xs font-medium leading-relaxed text-terra">
                           {hub.avgTuition}
                         </div>
                       </div>
                       <div
-                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
-                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
+                        className={`p-3.5 sm:p-4 border rounded-md bg-gradient-to-br leading-relaxed shadow-[0_6px_16px_rgba(20,18,12,0.035)] ${
+                          isDark ? "border-cream/[0.12] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.10] from-cream-50/90 to-cream/70"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Proof of Funds</div>
-                        <div className="text-xs font-medium leading-snug">{hub.proofOfFunds}</div>
+                        <div className={`label text-[9px] tracking-[0.16em] mb-1 ${isDark ? "text-cream/65" : "text-stone"}`}>Proof of Funds</div>
+                        <div className="text-xs font-medium leading-relaxed">{hub.proofOfFunds}</div>
                       </div>
                       <div
-                        className={`p-3 border rounded bg-gradient-to-br leading-relaxed ${
-                          isDark ? "border-cream/[0.16] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.14] from-cream-50 to-cream"
+                        className={`p-3.5 sm:p-4 border rounded-md bg-gradient-to-br leading-relaxed shadow-[0_6px_16px_rgba(20,18,12,0.035)] ${
+                          isDark ? "border-cream/[0.12] from-cream/[0.055] to-cream/[0.025]" : "border-ink/[0.10] from-cream-50/90 to-cream/70"
                         }`}
                       >
-                        <div className="label text-[9px] opacity-50 mb-0.5">Visa Category</div>
-                        <div className="text-xs font-medium leading-snug">{hub.stream}</div>
+                        <div className={`label text-[9px] tracking-[0.16em] mb-1 ${isDark ? "text-cream/65" : "text-stone"}`}>Visa Category</div>
+                        <div className="text-xs font-medium leading-relaxed">{hub.stream}</div>
                       </div>
                     </div>
 
@@ -397,7 +397,7 @@ export default function StudyDestinations() {
             return (
               <motion.div
                 key={hub.country}
-                className="border-t border-ink/10 py-10 grid grid-cols-12 gap-10 group"
+                className="border-t border-ink/[0.10] py-12 lg:py-14 grid grid-cols-12 gap-10 group"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-8%" }}
@@ -453,7 +453,7 @@ export default function StudyDestinations() {
 
                 {/* Metrics ledger + CTAs */}
                 <div className="col-span-5 space-y-5">
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-4">
                     {[
                       { label: "Post-Study Work", value: hub.psw },
                       { label: "Average Tuition", value: hub.avgTuition },
@@ -462,7 +462,7 @@ export default function StudyDestinations() {
                     ].map(({ label, value }) => (
                       <div
                         key={label}
-                        className="rounded border border-ink/[0.12] bg-gradient-to-br from-cream-50/80 to-cream/60 p-4 shadow-[0_5px_16px_rgba(20,18,12,0.035)]"
+                        className="rounded-md border border-ink/[0.10] bg-gradient-to-br from-cream-50/90 to-cream/65 p-5 shadow-[0_8px_20px_rgba(20,18,12,0.045)]"
                       >
                         <span className="label text-stone text-[9px] block mb-2">{label}</span>
                         <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>

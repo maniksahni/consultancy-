@@ -190,7 +190,7 @@ export default function BookingSection() {
   };
 
   const LabelEl = ({ icon: Icon, children }: { icon: any; children: React.ReactNode }) => (
-    <label className="flex items-center gap-2 text-cream/40 label mb-2">
+    <label className="flex items-center gap-2 text-cream/60 label mb-2.5">
       <Icon className="h-3.5 w-3.5 text-terra flex-shrink-0" />
       {children}
     </label>
@@ -262,7 +262,7 @@ export default function BookingSection() {
             </div>
           ) : (
             /* Compact Above-The-Fold Form */
-            <form noValidate onSubmit={handleSubmit} className="rounded-md border border-cream/[0.12] bg-gradient-to-br from-cream/[0.035] to-cream/[0.012] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.22)] space-y-3.5">
+            <form noValidate onSubmit={handleSubmit} className="rounded-lg border border-cream/[0.10] bg-gradient-to-br from-cream/[0.05] to-cream/[0.018] p-6 shadow-[0_20px_46px_rgba(0,0,0,0.26)] space-y-4">
               {/* Header */}
               <div className="border-b border-cream/10 pb-3">
                 <div className="label text-terra text-[10px] mb-1">Direct Consultation Booking</div>
@@ -277,7 +277,7 @@ export default function BookingSection() {
               {/* Key Form Fields */}
               <div className="space-y-2.5">
                 <div>
-                  <label className="label text-cream/40 text-[9px] block mb-1">Full Name *</label>
+                  <label className="label text-cream/60 text-[9px] block mb-1.5">Full Name *</label>
                   <input
                     type="text"
                     placeholder="e.g. Aryan Mehra"
@@ -286,7 +286,7 @@ export default function BookingSection() {
                       setFormData({ ...formData, fullName: e.target.value });
                       if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
                     }}
-                    className={`input-dark py-2 text-sm min-h-[44px] ${
+                    className={`input-dark py-3 text-base min-h-[48px] ${
                       fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
                     }`}
                   />
@@ -300,7 +300,7 @@ export default function BookingSection() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="label text-cream/40 text-[9px] block mb-1">WhatsApp Number *</label>
+                    <label className="label text-cream/60 text-[9px] block mb-1.5">WhatsApp Number *</label>
                     <input
                       type="tel"
                       inputMode="numeric"
@@ -320,7 +320,7 @@ export default function BookingSection() {
                         setFormData({ ...formData, whatsapp: digits });
                         if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
                       }}
-                      className={`input-dark py-2 text-sm min-h-[44px] ${
+                      className={`input-dark py-3 text-base min-h-[48px] ${
                         fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
                       }`}
                     />
@@ -332,11 +332,11 @@ export default function BookingSection() {
                     )}
                   </div>
                   <div className="relative">
-                    <label className="label text-cream/40 text-[9px] block mb-1">Target Country</label>
+                    <label className="label text-cream/60 text-[9px] block mb-1.5">Target Country</label>
                     <select
                       value={formData.targetCountry}
                       onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="select-dark py-2 text-sm min-h-[44px]"
+                      className="select-dark py-3 text-base min-h-[48px]"
                     >
                       {countries.map((c) => (
                         <option key={c.value} value={c.value}>{c.label}</option>
@@ -452,13 +452,13 @@ export default function BookingSection() {
         <div className="hidden lg:block">
           {/* Header */}
           <motion.div
-            className="border-t border-cream/10 pt-10 mb-12 lg:mb-16"
+            className="border-t border-cream/[0.12] pt-10 mb-12 lg:mb-16"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-8%" }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <div className="label text-cream/35 mb-4">Direct Consultation Booking</div>
+            <div className="label text-cream/55 mb-4">Direct Consultation Booking</div>
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
               <h2
                 className="font-display font-normal text-cream leading-[0.93] tracking-tight text-[3.6rem]"
@@ -466,7 +466,7 @@ export default function BookingSection() {
                 Schedule Your<br />
                 <em className="text-terra">1-on-1 Strategy Call</em>
               </h2>
-              <p className="text-cream/40 text-sm leading-relaxed max-w-sm font-light">
+              <p className="text-cream/65 text-sm leading-relaxed max-w-sm font-light">
                 Provide your current academic details. Every submission is personally reviewed by a senior mentor before we contact you directly on WhatsApp.
               </p>
             </div>
@@ -501,7 +501,7 @@ export default function BookingSection() {
                   },
                 ].map((item, i) => (
                   <div key={i} className="grid grid-cols-[20px_1fr] gap-3 items-start">
-                    <div className="h-5 w-5 border border-terra/40 bg-terra/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="h-5 w-5 rounded-sm border border-terra/40 bg-terra/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="h-3 w-3 text-terra" />
                     </div>
                     <div>
@@ -523,7 +523,7 @@ export default function BookingSection() {
                 </div>
               </div>
 
-              <div className="border border-cream/10 p-5">
+              <div className="rounded-md border border-cream/[0.10] bg-cream/[0.025] p-6 shadow-[0_10px_26px_rgba(0,0,0,0.12)]">
                 <p className="font-display text-base text-cream/80 font-normal mb-0.5">
                   Have an urgent visa deadline?
                 </p>
@@ -532,7 +532,7 @@ export default function BookingSection() {
                   href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 border border-cream/15 hover:border-terra/50 text-cream/70 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-colors"
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-cream/15 bg-cream/[0.025] hover:border-terra/50 text-cream/70 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-colors btn-tactile"
                 >
                   <MessageCircle className="h-4 w-4 text-terra" />
                   Open Instant WhatsApp Chat
@@ -616,8 +616,8 @@ export default function BookingSection() {
                   </div>
                 </div>
               ) : (
-                <form noValidate onSubmit={handleSubmit} className="rounded-md border border-cream/[0.12] bg-gradient-to-br from-cream/[0.035] to-cream/[0.012] p-8 shadow-[0_18px_42px_rgba(0,0,0,0.24)] space-y-8">
-                  <div className="border-b border-cream/10 pb-5">
+                <form noValidate onSubmit={handleSubmit} className="rounded-lg border border-cream/[0.10] bg-gradient-to-br from-cream/[0.05] to-cream/[0.018] p-8 lg:p-10 shadow-[0_22px_54px_rgba(0,0,0,0.26)] space-y-8">
+                    <div className="border-b border-cream/[0.10] pb-5">
                     <div className="label text-terra mb-1">1-on-1 Consultation</div>
                     <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">
                       Request Your Advisory Session
@@ -625,7 +625,7 @@ export default function BookingSection() {
                   </div>
 
                   {/* Name + WhatsApp */}
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
                     <div>
                       <LabelEl icon={User}>Full Name *</LabelEl>
                       <input
@@ -679,7 +679,7 @@ export default function BookingSection() {
                   </div>
 
                   {/* Country + Intake */}
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
                     <div className="relative">
                       <LabelEl icon={Globe2}>Target Destination</LabelEl>
                       <select
@@ -740,7 +740,7 @@ export default function BookingSection() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-primary-glow active:scale-[0.97]"
+                      className="w-full inline-flex items-center justify-center gap-3 rounded-md bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label transition-colors cursor-pointer text-xs tracking-wider btn-primary-glow active:scale-[0.97] shadow-[0_8px_24px_rgba(194,91,26,0.17)]"
                     >
                       {loading ? (
                         <>

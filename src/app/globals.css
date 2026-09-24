@@ -163,8 +163,8 @@
     min-height: 48px;
     background: rgba(250, 247, 242, 0.48);
     border: 1px solid rgba(20, 18, 12, 0.16);
-    border-radius: 5px;
-    padding: 12px 14px;
+    border-radius: 6px;
+    padding: 13px 15px;
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #14120C;
@@ -185,8 +185,8 @@
     min-height: 48px;
     background: rgba(250, 247, 242, 0.48);
     border: 1px solid rgba(20, 18, 12, 0.16);
-    border-radius: 5px;
-    padding: 12px 14px;
+    border-radius: 6px;
+    padding: 13px 15px;
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #14120C;
@@ -210,8 +210,8 @@
     min-height: 48px;
     background: linear-gradient(135deg, rgba(242, 237, 228, 0.045), rgba(242, 237, 228, 0.02));
     border: 1px solid rgba(242, 237, 228, 0.18);
-    border-radius: 5px;
-    padding: 12px 14px;
+    border-radius: 6px;
+    padding: 13px 15px;
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #F2EDE4;
@@ -232,8 +232,8 @@
     min-height: 48px;
     background: linear-gradient(135deg, rgba(242, 237, 228, 0.045), rgba(242, 237, 228, 0.02));
     border: 1px solid rgba(242, 237, 228, 0.18);
-    border-radius: 5px;
-    padding: 12px 14px;
+    border-radius: 6px;
+    padding: 13px 15px;
     font-size: 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     color: #F2EDE4;
@@ -286,6 +286,7 @@
     border: 1px solid rgba(194, 91, 26, 0.35);
     background: rgba(194, 91, 26, 0.06);
     padding: 4px 10px;
+    border-radius: 4px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     font-weight: 500;
