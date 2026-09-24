@@ -58,7 +58,7 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 
 export default function Footer() {
   return (
-    <footer className="bg-[#14120C] grain-ink text-cream/40 pt-16 pb-10 overflow-hidden w-full border-t border-cream/8 relative">
+    <footer id="footer" className="bg-[#14120C] grain-ink text-cream/40 pt-16 pb-10 overflow-hidden w-full border-t border-cream/8 relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
 
         {/* ── Main grid ── */}

@@ -54,22 +54,31 @@ export default function FloatingWhatsApp() {
     };
   }, []);
 
-  // 2. IntersectionObserver to suppress entirely on/near the Booking section
+  // 2. IntersectionObserver to suppress entirely on/near the Booking and Footer sections
   useEffect(() => {
-    const bookingEl = document.getElementById("booking");
-    if (!bookingEl) return;
+    const suppressIds = ["booking", "footer"];
+    const elements = suppressIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
 
+    if (elements.length === 0) return;
+
+    const suppressMap = new Map<Element, boolean>();
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsBookingInView(entry.isIntersecting);
+      (entries) => {
+        entries.forEach((entry) => {
+          suppressMap.set(entry.target, entry.isIntersecting);
+        });
+        const anySuppressed = Array.from(suppressMap.values()).some(Boolean);
+        setIsBookingInView(anySuppressed);
       },
       {
-        rootMargin: "80px 0px 80px 0px",
-        threshold: 0,
+        rootMargin: "40px 0px 40px 0px",
+        threshold: 0.05,
       }
     );
 
-    observer.observe(bookingEl);
+    elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
