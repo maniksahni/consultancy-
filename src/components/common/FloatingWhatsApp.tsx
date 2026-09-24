@@ -13,26 +13,45 @@ export default function FloatingWhatsApp() {
   const [isBookingInView, setIsBookingInView] = useState(false);
   const [isNearCarousel, setIsNearCarousel] = useState(false);
 
-  // 1. Scroll listener for hero threshold & scroll-direction
+  // 1. Scroll listener for hero threshold & scroll-direction (rAF-throttled)
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let rafId: number | null = null;
+    let currentVisible = false;
+    let currentScrollingUp = false;
 
-    const handleScroll = () => {
+    const updateScrollState = () => {
       const currentScrollY = window.scrollY;
+      const nextVisible = currentScrollY > 380;
+      if (nextVisible !== currentVisible) {
+        currentVisible = nextVisible;
+        setIsVisible(nextVisible);
+      }
 
-      // Appear after the hero section is scrolled past (approx 380px)
-      setIsVisible(currentScrollY > 380);
-
-      // Determine scroll direction with threshold
       if (Math.abs(currentScrollY - lastScrollY) > 6) {
-        setIsScrollingUp(currentScrollY < lastScrollY);
+        const nextScrollingUp = currentScrollY < lastScrollY;
+        if (nextScrollingUp !== currentScrollingUp) {
+          currentScrollingUp = nextScrollingUp;
+          setIsScrollingUp(nextScrollingUp);
+        }
         lastScrollY = currentScrollY;
       }
     };
 
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateScrollState();
+      });
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    updateScrollState();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   // 2. IntersectionObserver to suppress entirely on/near the Booking section

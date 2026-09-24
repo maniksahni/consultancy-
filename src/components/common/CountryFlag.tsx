@@ -8,7 +8,7 @@ interface CountryFlagProps {
   size?: "sm" | "md" | "lg";
 }
 
-export default function CountryFlag({ country, className = "", size = "md" }: CountryFlagProps) {
+const CountryFlag = React.memo(function CountryFlag({ country, className = "", size = "md" }: CountryFlagProps) {
   const norm = country.toLowerCase().trim();
   const rawId = useId();
   // Safe unique ID for SVG clipPaths to prevent multi-instance ID collisions
@@ -195,4 +195,6 @@ export default function CountryFlag({ country, className = "", size = "md" }: Co
       {renderSvg()}
     </div>
   );
-}
+});
+
+export default CountryFlag;

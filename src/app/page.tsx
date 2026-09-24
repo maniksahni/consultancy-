@@ -1,12 +1,14 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
-import StudyDestinations from "@/components/home/StudyDestinations";
-import ComparisonSection from "@/components/home/ComparisonSection";
-import ProcessRoadmap from "@/components/home/ProcessRoadmap";
-import FAQ from "@/components/home/FAQ";
 import BookingSection from "@/components/home/BookingSection";
-import StudentOutcomes from "@/components/home/StudentOutcomes";
 import Footer from "@/components/layout/Footer";
+
+const StudyDestinations = dynamic(() => import("@/components/home/StudyDestinations"));
+const ComparisonSection = dynamic(() => import("@/components/home/ComparisonSection"));
+const ProcessRoadmap = dynamic(() => import("@/components/home/ProcessRoadmap"));
+const FAQ = dynamic(() => import("@/components/home/FAQ"));
+const StudentOutcomes = dynamic(() => import("@/components/home/StudentOutcomes"));
 
 export default function Home() {
   return (

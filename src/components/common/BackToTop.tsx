@@ -8,19 +8,32 @@ export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let rafId: number | null = null;
+    let lastVisible = false;
+
+    const checkVisibility = () => {
+      const threshold = Math.max(window.innerHeight * 1.2, 600);
+      const nextVisible = window.scrollY > threshold;
+      if (nextVisible !== lastVisible) {
+        lastVisible = nextVisible;
+        setIsVisible(nextVisible);
+      }
+    };
+
     const handleScroll = () => {
-      // Only appear after scrolling well past the hero (≥ 1.2× viewport height, min 600px)
-      // This prevents any overlap with the hero heading text
-      const threshold =
-        typeof window !== "undefined"
-          ? Math.max(window.innerHeight * 1.2, 600)
-          : 600;
-      setIsVisible(window.scrollY > threshold);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        checkVisibility();
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    checkVisibility();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToTop = () => {

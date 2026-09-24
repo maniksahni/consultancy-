@@ -80,7 +80,8 @@ export default function StudentOutcomes() {
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
     const index = Math.round(container.scrollLeft / (cardWidth + 14));
-    setActiveMobileIndex(Math.min(Math.max(index, 0), outcomes.length - 1));
+    const nextIndex = Math.min(Math.max(index, 0), outcomes.length - 1);
+    setActiveMobileIndex((prev) => (prev !== nextIndex ? nextIndex : prev));
   };
 
   return (

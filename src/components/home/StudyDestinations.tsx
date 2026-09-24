@@ -153,7 +153,8 @@ export default function StudyDestinations() {
     const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
     const cardStep = cardWidth + 14;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
-    setActiveMobileIndex(rawIndex % hubs.length);
+    const newIndex = rawIndex % hubs.length;
+    setActiveMobileIndex((prev) => (prev !== newIndex ? newIndex : prev));
 
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);

@@ -14,9 +14,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
-  // 1. Scroll listener for sticky header styling & dark/light background adaptation
+  // 1. Scroll listener for sticky header styling & dark/light background adaptation (rAF-throttled)
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId: number | null = null;
+
+    const updateNavState = () => {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 20);
 
@@ -44,9 +46,20 @@ export default function Navbar() {
       }
     };
 
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        updateNavState();
+      });
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    updateNavState();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [isHome]);
 
   // 2. Active section wayfinding on homepage

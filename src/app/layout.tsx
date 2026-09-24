@@ -1,10 +1,35 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
-import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
-import BackToTop from "@/components/common/BackToTop";
 import SkipToContent from "@/components/common/SkipToContent";
-import CookieBanner from "@/components/common/CookieBanner";
 import UTMTracker from "@/components/common/UTMTracker";
+
+const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
+const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
+const CookieBanner = dynamic(() => import("@/components/common/CookieBanner"), { ssr: false });
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#14120C",
+};
 
 export const metadata: Metadata = {
   title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
@@ -33,16 +58,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full">
+      <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
         <UTMTracker />
         <SkipToContent />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">

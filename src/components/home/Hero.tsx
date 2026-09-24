@@ -29,10 +29,7 @@ export default function Hero() {
   ];
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.65, ease: EASE }}
+    <section
       className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
     >
       {/* Subtle parchment grid texture with restrained parallax */}
@@ -66,12 +63,7 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end max-w-7xl mx-auto w-full">
 
           {/* Headline — 8 cols on desktop, full on mobile */}
-          <motion.div
-            className="lg:col-span-8"
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: EASE, delay: 0.15 }}
-          >
+          <div className="lg:col-span-8">
             <h1
               className="font-display font-normal text-cream leading-[0.88] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.15rem] sm:text-6xl md:text-7xl lg:text-[7.2rem]"
             >
@@ -122,7 +114,7 @@ export default function Hero() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Desktop Stats: 4 cols stacked ledger with staggered cascade & count-up */}
           <div className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-0">
@@ -232,6 +224,6 @@ export default function Hero() {
           <span className="text-cream/20 text-[10px] font-light font-sans">Verified against official visa stamps</span>
         </motion.div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }

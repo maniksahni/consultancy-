@@ -44,7 +44,8 @@ export default function ComparisonSection() {
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
     const index = Math.round(container.scrollLeft / (cardWidth + 14));
-    setActiveMobileIndex(Math.min(Math.max(index, 0), comparisonItems.length - 1));
+    const nextIndex = Math.min(Math.max(index, 0), comparisonItems.length - 1);
+    setActiveMobileIndex((prev) => (prev !== nextIndex ? nextIndex : prev));
   };
 
   return (

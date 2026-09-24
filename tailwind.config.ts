@@ -53,9 +53,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["Cormorant Garamond", "Georgia", "Cambria", "serif"],
-        serif: ["Cormorant Garamond", "Georgia", "Cambria", "serif"],
-        sans: ["Plus Jakarta Sans", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        display: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "Cambria", "serif"],
+        serif: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "Cambria", "serif"],
+        sans: ["var(--font-jakarta)", "Plus Jakarta Sans", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       keyframes: {
         "slide-up-fade": {
