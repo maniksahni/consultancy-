@@ -61,12 +61,12 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="bg-[#14120C] text-cream py-28 sm:py-36 lg:py-48 overflow-hidden w-full relative"
+      className="bg-[#14120C] text-cream py-14 sm:py-18 lg:py-24 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section Header: Radical negative space, monumental typography ── */}
-        <div className="border-t border-cream/10 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+        {/* ── Section Header: Calibrated negative space, monumental typography ── */}
+        <div className="border-t border-cream/10 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
@@ -95,7 +95,7 @@ export default function FAQ() {
                 <button
                   type="button"
                   onClick={() => toggleItem(idx)}
-                  className="w-full py-8 sm:py-10 flex items-start justify-between gap-6 text-left focus:outline-none group"
+                  className="w-full py-5 sm:py-6 flex items-start justify-between gap-6 text-left focus:outline-none group"
                   aria-expanded={isOpen}
                 >
                   <div className="flex items-start gap-6 sm:gap-10 flex-1 min-w-0">
@@ -145,7 +145,7 @@ export default function FAQ() {
         </div>
 
         {/* ── Direct Advisory CTA Strip: Flat, High-Contrast ── */}
-        <div className="mt-16 sm:mt-24 border border-cream/10 p-8 sm:p-12 lg:p-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none bg-cream/[0.02]">
+        <div className="mt-8 sm:mt-12 border border-cream/10 p-6 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none bg-cream/[0.02]">
           <div className="max-w-xl">
             <div className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-2">
               Uncompromising Fiduciary Advisory

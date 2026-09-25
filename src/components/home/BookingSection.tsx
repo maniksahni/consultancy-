@@ -172,12 +172,12 @@ export default function BookingSection() {
   return (
     <section
       id="booking"
-      className="bg-[#14120C] text-cream py-28 sm:py-36 lg:py-48 overflow-hidden w-full relative"
+      className="bg-[#14120C] text-cream py-14 sm:py-18 lg:py-24 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section Header: Radical negative space, monumental typography ── */}
-        <div className="border-t border-cream/10 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+        {/* ── Section Header: Calibrated negative space, monumental typography ── */}
+        <div className="border-t border-cream/10 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
@@ -427,9 +427,9 @@ export default function BookingSection() {
         </div>
 
         {/* ── DESKTOP DUAL COLUMN (Flat, 0px radius, 1px hairlines) ── */}
-        <div className="hidden lg:grid grid-cols-12 gap-16 items-start">
+        <div className="hidden lg:grid grid-cols-12 gap-12 xl:gap-16 items-start">
           {/* Left Column: What to Expect & Instant Direct Chat */}
-          <div className="col-span-5 space-y-12">
+          <div className="col-span-5 space-y-8">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-2">
                 Session Structure

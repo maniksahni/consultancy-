@@ -54,11 +54,11 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-24 sm:pt-32 lg:pt-40 pb-16 overflow-hidden w-full border-t border-cream/10 relative">
+    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-14 sm:pt-18 lg:pt-24 pb-12 overflow-hidden w-full border-t border-cream/10 relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
 
         {/* ── Dominant Visual Move: Massive Minimalist Bold Statement ── */}
-        <div className="border-b border-cream/10 pb-16 sm:pb-24 lg:pb-32 mb-16 sm:mb-24">
+        <div className="border-b border-cream/10 pb-8 sm:pb-12 lg:pb-16 mb-8 sm:mb-12">
           <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
             Boutique Fiduciary Standard
           </div>
@@ -70,7 +70,7 @@ export default function Footer() {
         </div>
 
         {/* ── Main Editorial Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 sm:gap-16 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 sm:gap-16 mb-12 sm:mb-16">
 
           {/* Brand & Advisory Line — 5 cols */}
           <div className="lg:col-span-5 space-y-6">
@@ -216,7 +216,7 @@ export default function Footer() {
         </div>
 
         {/* ── Anti-Commission Ethics Disclaimer: Stark 1px Hairline Block ── */}
-        <div className="border border-cream/10 p-6 sm:p-8 text-xs leading-relaxed font-light text-cream/50 mb-12 rounded-none">
+        <div className="border border-cream/10 p-6 sm:p-8 text-xs leading-relaxed font-light text-cream/50 mb-8 sm:mb-10 rounded-none">
           <strong className="text-cream font-medium uppercase tracking-wider block mb-1">
             Anti-Commission Ethics Standard
           </strong>

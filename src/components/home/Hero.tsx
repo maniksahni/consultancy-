@@ -24,13 +24,13 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen bg-[#14120C] text-cream flex flex-col justify-between overflow-hidden">
-      {/* Top Status & Radical Spacing */}
-      <div className="pt-32 sm:pt-36 lg:pt-44 px-6 lg:px-16 max-w-7xl w-full mx-auto">
+      {/* Top Status & Calibrated Spacing */}
+      <div className="pt-24 sm:pt-28 lg:pt-32 px-6 lg:px-16 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9 }}
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cream/10 pb-6"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cream/10 pb-4 sm:pb-5"
         >
           <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono">
             Admissions Open · 2026 / 2027 Intakes
@@ -41,8 +41,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Main Dominant Headline with Radical Negative Space */}
-      <div className="flex-1 flex flex-col justify-center px-6 lg:px-16 py-16 sm:py-24 lg:py-32 max-w-7xl w-full mx-auto">
+      {/* Main Dominant Headline with Calibrated Spacing */}
+      <div className="flex-1 flex flex-col justify-center px-6 lg:px-16 py-8 sm:py-12 lg:py-16 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -62,7 +62,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2 }}
-          className="mt-16 sm:mt-24 lg:mt-32 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end border-t border-cream/10 pt-10 sm:pt-14"
+          className="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end border-t border-cream/10 pt-6 sm:pt-8"
         >
           <div className="lg:col-span-7">
             <p className="text-cream/70 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-xl">
@@ -106,7 +106,7 @@ export default function Hero() {
             {metrics.map((m, i) => (
               <div
                 key={i}
-                className={`py-8 sm:py-10 ${i % 2 === 0 ? "pr-4 sm:pr-8" : "pl-4 sm:pl-8 lg:pl-8"} ${i > 0 ? "lg:pl-8" : ""} ${i < 3 ? "lg:pr-8" : ""}`}
+                className={`py-6 sm:py-8 ${i % 2 === 0 ? "pr-4 sm:pr-8" : "pl-4 sm:pl-8 lg:pl-8"} ${i > 0 ? "lg:pl-8" : ""} ${i < 3 ? "lg:pr-8" : ""}`}
               >
                 <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-cream/35 mb-3">
                   <span>Metric 0{i + 1}</span>

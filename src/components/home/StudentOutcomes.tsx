@@ -84,12 +84,12 @@ export default function StudentOutcomes() {
   return (
     <section
       id="outcomes"
-      className="bg-[#F2EDE4] py-28 sm:py-36 lg:py-48 overflow-hidden w-full text-ink"
+      className="bg-[#F2EDE4] py-14 sm:py-18 lg:py-24 overflow-hidden w-full text-ink"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section header: Radical negative space, monumental typography ── */}
-        <div className="border-t border-ink/15 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+        {/* ── Section header: Calibrated negative space, monumental typography ── */}
+        <div className="border-t border-ink/15 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
@@ -265,7 +265,7 @@ export default function StudentOutcomes() {
         </div>
 
         {/* ── Footnote: 1px hairline rule ── */}
-        <div className="mt-16 pt-8 border-t border-ink/15 text-center text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
+        <div className="mt-8 sm:mt-10 pt-6 border-t border-ink/15 text-center text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
           All outcomes verified against institutional offer letters and official consular visa stamps.
         </div>
 

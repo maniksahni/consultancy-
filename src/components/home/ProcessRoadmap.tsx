@@ -39,12 +39,12 @@ export default function ProcessRoadmap() {
   return (
     <section
       id="process"
-      className="bg-[#F2EDE4] py-28 sm:py-36 lg:py-48 overflow-hidden w-full text-ink"
+      className="bg-[#F2EDE4] py-14 sm:py-18 lg:py-24 overflow-hidden w-full text-ink"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section header: Radical negative space, monumental typography ── */}
-        <div className="border-t border-ink/15 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+        {/* ── Section header: Calibrated negative space, monumental typography ── */}
+        <div className="border-t border-ink/15 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
@@ -67,7 +67,7 @@ export default function ProcessRoadmap() {
           {steps.map((step, i) => (
             <motion.div
               key={step.number}
-              className="border-b border-ink/15 py-12 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+              className="border-b border-ink/15 py-6 sm:py-8 lg:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-8%" }}
@@ -109,7 +109,7 @@ export default function ProcessRoadmap() {
         </div>
 
         {/* ── Bottom Callout: Stark, Flat, High-Contrast ── */}
-        <div className="mt-16 sm:mt-24 border border-ink/15 bg-white p-8 sm:p-12 lg:p-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none">
+        <div className="mt-8 sm:mt-12 border border-ink/15 bg-white p-6 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none">
           <div className="max-w-xl">
             <h4 className="font-display text-2xl sm:text-3xl font-normal text-ink leading-tight">
               Ready to begin Stage 01 with an experienced mentor?
