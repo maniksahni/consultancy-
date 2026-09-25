@@ -18,7 +18,26 @@ export default function HeroWebGL() {
 
     let disposed = false;
     let teardown = () => {};
-    const idle = window.setTimeout(async () => {
+
+    // Lazy load after critical first paint / LCP is completely finished
+    const schedule = (cb: () => void) => {
+      const win = window as any;
+      if (typeof win.requestIdleCallback === "function") {
+        return win.requestIdleCallback(cb, { timeout: 3000 });
+      }
+      return setTimeout(cb, 1800);
+    };
+
+    const cancelSchedule = (id: number) => {
+      const win = window as any;
+      if (typeof win.cancelIdleCallback === "function") {
+        win.cancelIdleCallback(id);
+      } else {
+        clearTimeout(id);
+      }
+    };
+
+    const idleId = schedule(async () => {
       try {
         const THREE = await import("three");
         if (disposed || !host.current || window.innerWidth < 1024) return;
@@ -26,21 +45,28 @@ export default function HeroWebGL() {
         const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
         camera.position.z = 3;
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: "low-power" });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        // Cap pixel ratio to 1.0 to eliminate mobile / low-end GPU strain
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.0));
         renderer.setClearColor(0x14120c, 0);
         node.appendChild(renderer.domElement);
+
+        let targetPointerX = 0;
+        let targetPointerY = 0;
+        let targetScroll = 0;
+
         const uniforms = {
           uTime: { value: 0 },
           uPointer: { value: new THREE.Vector2(0, 0) },
           uScroll: { value: 0 },
         };
         const material = new THREE.ShaderMaterial({
-          transparent: true, depthWrite: false, uniforms,
+          transparent: true,
+          depthWrite: false,
+          uniforms,
           vertexShader: `
             varying vec2 vUv;
             uniform float uTime;
             uniform vec2 uPointer;
-            // Compact 2D gradient noise. Its low amplitude keeps the mesh calm.
             vec2 hash(vec2 p) { p = vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))); return -1.0+2.0*fract(sin(p)*43758.5453); }
             float noise(vec2 p) { vec2 i=floor(p),f=fract(p); vec2 u=f*f*(3.0-2.0*f); return mix(mix(dot(hash(i),f),dot(hash(i+vec2(1,0)),f-vec2(1,0)),u.x),mix(dot(hash(i+vec2(0,1)),f-vec2(0,1)),dot(hash(i+vec2(1,1)),f-vec2(1,1)),u.x),u.y); }
             void main() {
@@ -69,45 +95,72 @@ export default function HeroWebGL() {
               gl_FragColor=vec4(color,clamp(ribbon*0.35*edge*(1.0-uScroll*0.35),0.0,0.30));
             }`,
         });
-        const geometry = new THREE.PlaneGeometry(5.8, 3.8, 64, 40);
+
+        // 32x20 segments provides identical visual fidelity with 75% fewer vertex calculations
+        const geometry = new THREE.PlaneGeometry(5.8, 3.8, 32, 20);
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
+
         const resize = () => {
-          const { width, height } = node.getBoundingClientRect();
+          const width = node.clientWidth;
+          const height = node.clientHeight;
           renderer.setSize(width, height, false);
           camera.aspect = width / Math.max(height, 1);
           camera.updateProjectionMatrix();
         };
+
         const pointer = (event: PointerEvent) => {
-          uniforms.uPointer.value.set(event.clientX / window.innerWidth, event.clientY / window.innerHeight);
+          targetPointerX = event.clientX / window.innerWidth;
+          targetPointerY = event.clientY / window.innerHeight;
         };
-        const scroll = () => { uniforms.uScroll.value = Math.min(window.scrollY / Math.max(node.clientHeight, 1), 1); };
+
+        const scroll = () => {
+          targetScroll = Math.min(window.scrollY / Math.max(node.clientHeight, 1), 1);
+        };
+
         const observer = new ResizeObserver(resize);
         observer.observe(node);
         window.addEventListener("pointermove", pointer, { passive: true });
         window.addEventListener("scroll", scroll, { passive: true });
         resize();
+
         let frame = 0;
         const animate = () => {
           uniforms.uTime.value = performance.now() / 1000;
+          uniforms.uPointer.value.x += (targetPointerX - uniforms.uPointer.value.x) * 0.08;
+          uniforms.uPointer.value.y += (targetPointerY - uniforms.uPointer.value.y) * 0.08;
+          uniforms.uScroll.value = targetScroll;
           renderer.render(scene, camera);
           frame = requestAnimationFrame(animate);
         };
         animate();
-        const onViewportChange = () => { if (window.innerWidth < 1024) teardown(); };
+
+        const onViewportChange = () => {
+          if (window.innerWidth < 1024) teardown();
+        };
         window.addEventListener("resize", onViewportChange);
+
         teardown = () => {
           cancelAnimationFrame(frame);
           window.removeEventListener("resize", onViewportChange);
           observer.disconnect();
           window.removeEventListener("pointermove", pointer);
           window.removeEventListener("scroll", scroll);
-          geometry.dispose(); material.dispose(); renderer.dispose();
+          geometry.dispose();
+          material.dispose();
+          renderer.dispose();
           renderer.domElement.remove();
         };
-      } catch { /* Static gradient remains visible if WebGL fails. */ }
-    }, 650);
-    return () => { disposed = true; clearTimeout(idle); teardown(); };
+      } catch {
+        /* Static gradient fallback remains visible */
+      }
+    });
+
+    return () => {
+      disposed = true;
+      cancelSchedule(idleId);
+      teardown();
+    };
   }, []);
 
   return <div ref={host} aria-hidden="true" className="hero-webgl pointer-events-none absolute inset-0" />;

@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useRef } from "react";
+import dynamic from "next/dynamic";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Compass, ShieldCheck } from "lucide-react";
-import HeroWebGL from "@/components/hero/HeroWebGL";
-import MorphBlob from "@/components/experience/MorphBlob";
+
+const HeroWebGL = dynamic(() => import("@/components/hero/HeroWebGL"), { ssr: false });
+const MorphBlob = dynamic(() => import("@/components/experience/MorphBlob"), { ssr: false });
 
 export default function HeroExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   // Desktop subtle mouse parallax (max 6-8px, disabled on touch/mobile)
   const mouseX = useMotionValue(0);
@@ -20,9 +23,18 @@ export default function HeroExperience() {
   const moveXReverse = useTransform(springX, [-0.5, 0.5], [6, -6]);
   const moveYReverse = useTransform(springY, [-0.5, 0.5], [5, -5]);
 
+  const handleMouseEnter = () => {
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      rectRef.current = containerRef.current?.getBoundingClientRect() || null;
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (typeof window !== "undefined" && window.innerWidth < 1024) return;
-    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rectRef.current) {
+      rectRef.current = containerRef.current?.getBoundingClientRect() || null;
+    }
+    const rect = rectRef.current;
     if (!rect) return;
     const xPct = (e.clientX - rect.left) / rect.width - 0.5;
     const yPct = (e.clientY - rect.top) / rect.height - 0.5;
@@ -31,6 +43,7 @@ export default function HeroExperience() {
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
   };
@@ -52,6 +65,7 @@ export default function HeroExperience() {
   return (
     <section
       ref={containerRef}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
@@ -113,60 +127,29 @@ export default function HeroExperience() {
                 </span>
               </motion.div>
 
-              {/* Animated Cinematic Headline: 40-46px on mobile, responsive clamp */}
+              {/* Headline: 40-46px on mobile, responsive clamp */}
               <div className="overflow-hidden">
-                <motion.h1
-                  className="font-display font-normal text-cream leading-[0.93] tracking-[-0.03em] text-[clamp(2.5rem,8.5vw,2.875rem)] sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.75rem] break-words"
-                >
-                  <motion.span
-                    custom={0}
-                    initial="hidden"
-                    animate="visible"
-                    variants={lineVariants}
-                    className="block"
-                  >
+                <h1 className="font-display font-normal text-cream leading-[0.93] tracking-[-0.03em] text-[clamp(2.5rem,8.5vw,2.875rem)] sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.75rem] break-words">
+                  <span className="block">
                     STUDY ABROAD,
-                  </motion.span>
-                  <motion.span
-                    custom={1}
-                    initial="hidden"
-                    animate="visible"
-                    variants={lineVariants}
-                    className="block text-cream/90"
-                  >
+                  </span>
+                  <span className="block text-cream/90">
                     WITHOUT THE
-                  </motion.span>
-                  <motion.span
-                    custom={2}
-                    initial="hidden"
-                    animate="visible"
-                    variants={lineVariants}
-                    className="block"
-                  >
+                  </span>
+                  <span className="block">
                     AGENCY NOISE.
-                  </motion.span>
+                  </span>
                   {/* Glowing Italic Accent */}
-                  <motion.span
-                    custom={3}
-                    initial="hidden"
-                    animate="visible"
-                    variants={lineVariants}
-                    className="block text-terra italic pr-2 drop-shadow-[0_0_25px_rgba(194,91,26,0.35)]"
-                  >
+                  <span className="block text-terra italic pr-2 drop-shadow-[0_0_25px_rgba(194,91,26,0.35)]">
                     Built Around You.
-                  </motion.span>
-                </motion.h1>
+                  </span>
+                </h1>
               </div>
 
               {/* Supporting Copy */}
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                className="text-cream/70 text-[15px] sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mt-5 sm:mt-7"
-              >
+              <p className="text-cream/70 text-[15px] sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mt-5 sm:mt-7">
                 Independent, one-to-one guidance for ambitious students navigating university selection, applications, and visa preparation across leading global destinations.
-              </motion.p>
+              </p>
             </div>
 
             {/* CTAs with Glow and Kinetic Hover */}
@@ -228,12 +211,18 @@ export default function HeroExperience() {
               {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
               <div className="relative border border-cream/20 bg-[#14120C] p-2.5 sm:p-4 shadow-2xl overflow-hidden">
                 <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream/5 border border-cream/10">
-                  <img
-                    src="/images/mentor-hero.jpg"
-                    alt="Senior Admissions Mentor in consultation session"
-                    className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.98]"
-                    loading="eager"
-                  />
+                  <picture>
+                    <source srcSet="/images/mentor-hero.webp" type="image/webp" />
+                    <img
+                      src="/images/mentor-hero.jpg"
+                      alt="Senior Admissions Mentor in consultation session"
+                      width={560}
+                      height={700}
+                      className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.98]"
+                      fetchPriority="high"
+                      loading="eager"
+                    />
+                  </picture>
                   {/* Subtle Cinematic Vignette */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/80 via-transparent to-black/20 pointer-events-none" />
 
@@ -256,8 +245,10 @@ export default function HeroExperience() {
                   <img
                     src="/images/hero-plane.webp"
                     alt="International global departure"
+                    width={208}
+                    height={130}
                     className="w-full h-full object-cover grayscale contrast-125"
-                    loading="eager"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-terra/10 mix-blend-overlay" />
                 </div>

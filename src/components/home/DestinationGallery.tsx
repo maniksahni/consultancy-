@@ -183,8 +183,11 @@ export default function DestinationGallery() {
                     <img
                       src={dest.image}
                       alt={`${dest.country} landmark`}
+                      width={480}
+                      height={640}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] brightness-[0.8] contrast-[1.05]"
                       loading="lazy"
+                      decoding="async"
                     />
 
                     {/* Dark Gradient Overlay */}

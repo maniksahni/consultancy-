@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import "./globals.css";
 import SkipToContent from "@/components/common/SkipToContent";
 import UTMTracker from "@/components/common/UTMTracker";
-import ScrollExperience from "@/components/experience/ScrollExperience";
-import CustomCursor from "@/components/experience/CustomCursor";
-import RouteCurtain from "@/components/experience/RouteCurtain";
 
+const ScrollExperience = dynamic(() => import("@/components/experience/ScrollExperience"), { ssr: false });
+const CustomCursor = dynamic(() => import("@/components/experience/CustomCursor"), { ssr: false });
+const RouteCurtain = dynamic(() => import("@/components/experience/RouteCurtain"), { ssr: false });
 const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
 const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
 const CookieBanner = dynamic(() => import("@/components/common/CookieBanner"), { ssr: false });

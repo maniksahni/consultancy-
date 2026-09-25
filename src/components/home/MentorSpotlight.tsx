@@ -45,12 +45,17 @@ export default function MentorSpotlight() {
               className="relative mx-auto max-w-[320px] min-[390px]:max-w-[340px] sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-2.5 sm:p-4 shadow-2xl"
             >
               <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream border border-ink/10">
-                <img
-                  src="/images/mentor-spotlight.jpg"
-                  alt="Senior Admissions Mentor in consultation session"
-                  className="w-full h-full object-cover object-top contrast-[1.03] brightness-[0.98]"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcSet="/images/mentor-spotlight.webp" type="image/webp" />
+                  <img
+                    src="/images/mentor-spotlight.jpg"
+                    alt="Senior Admissions Mentor in consultation session"
+                    width={560}
+                    height={700}
+                    className="w-full h-full object-cover object-top contrast-[1.03] brightness-[0.98]"
+                    loading="lazy"
+                  />
+                </picture>
                 {/* Subtle Cinematic Vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 

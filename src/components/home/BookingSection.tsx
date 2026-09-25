@@ -9,9 +9,11 @@ import {
   AlertCircle,
   ArrowRight,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
-import MicroAnimation from "@/components/experience/MicroAnimation";
+
+const MicroAnimation = dynamic(() => import("@/components/experience/MicroAnimation"), { ssr: false });
 
 export default function BookingSection() {
   const [formData, setFormData] = useState({

@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, ShieldCheck, Clock } from "lucide-react";
+import dynamic from "next/dynamic";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
-import MicroAnimation from "@/components/experience/MicroAnimation";
+
+const MicroAnimation = dynamic(() => import("@/components/experience/MicroAnimation"), { ssr: false });
 
 export default function FinalCTA() {
   const [showForm, setShowForm] = useState(false);
