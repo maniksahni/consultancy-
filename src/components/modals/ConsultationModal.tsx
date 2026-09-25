@@ -137,6 +137,7 @@ export default function ConsultationModal({ isOpen, onClose, defaultCountry = "U
                       <option value="Australia">🇦🇺 Australia (Go8 / Subclass 500)</option>
                       <option value="Germany">🇩🇪 Germany (Tuition-Free / APS)</option>
                       <option value="Ireland">🇮🇪 Ireland (Tech Hub / Stamp 1G)</option>
+                      <option value="Other / Undecided">🌍 Other / Undecided</option>
                     </select>
                   </div>
                 </div>

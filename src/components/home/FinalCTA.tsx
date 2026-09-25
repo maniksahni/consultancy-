@@ -29,9 +29,12 @@ export default function FinalCTA() {
     setError(null);
     setSubmitting(true);
 
+    const msg = `Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`;
+    const whatsappUrl = `https://wa.me/33755749029?text=${encodeURIComponent(msg)}`;
+
     try {
       const utm = getStoredUTMParams();
-      await saveMentorshipBooking({
+      const firestoreSave = saveMentorshipBooking({
         fullName: formData.fullName,
         whatsapp: formData.whatsapp,
         targetCountry: formData.targetCountry,
@@ -40,16 +43,29 @@ export default function FinalCTA() {
         helpNeeded: "Direct 1-on-1 Strategy Session",
         utm: utm ?? undefined,
       });
+      const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
+      await Promise.race([firestoreSave, timeout]);
       setSubmitted(true);
 
-      // Auto redirect to WhatsApp with prepared advisory message
-      const msg = `Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`;
-      setTimeout(() => {
-        window.open(`https://wa.me/33755749029?text=${encodeURIComponent(msg)}`, "_blank");
-      }, 1200);
+      // Immediately redirect/open WhatsApp deep link
+      if (typeof window !== "undefined") {
+        try {
+          window.location.href = whatsappUrl;
+        } catch {
+          window.open(whatsappUrl, "_blank");
+        }
+      }
     } catch (err) {
       console.error(err);
-      setError("Could not complete booking right now. Please tap WhatsApp Advisory below.");
+      // Still show success UI and trigger WhatsApp so student is connected directly
+      setSubmitted(true);
+      if (typeof window !== "undefined") {
+        try {
+          window.location.href = whatsappUrl;
+        } catch {
+          window.open(whatsappUrl, "_blank");
+        }
+      }
     } finally {
       setSubmitting(false);
     }
@@ -192,6 +208,7 @@ export default function FinalCTA() {
                       <option value="Germany">Germany</option>
                       <option value="Australia">Australia</option>
                       <option value="Ireland">Ireland</option>
+                      <option value="Other / Undecided">Other / Undecided</option>
                     </select>
                   </div>
 
@@ -245,7 +262,7 @@ export default function FinalCTA() {
               </p>
               <div className="mt-4 pt-4 border-t border-cream/10">
                 <a
-                  href={`https://wa.me/33755749029?text=Hi%20Pathways%20Global!%20I%20just%20submitted%20my%20strategy%20session%20for%20${formData.targetCountry}.`}
+                  href={`https://wa.me/33755749029?text=${encodeURIComponent(`Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-terra hover:underline"

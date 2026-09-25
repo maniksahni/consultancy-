@@ -166,6 +166,13 @@ export default function BookingSection() {
       setLoading(false);
       triggerConfetti();
       setSubmitted(true);
+      if (typeof window !== "undefined") {
+        try {
+          window.location.href = waUrl;
+        } catch {
+          window.open(waUrl, "_blank", "noopener,noreferrer");
+        }
+      }
     }
   };
 
