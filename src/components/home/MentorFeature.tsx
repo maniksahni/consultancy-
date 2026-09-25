@@ -32,7 +32,7 @@ export default function MentorFeature() {
             <div className="relative border border-ink/15 bg-white p-3 sm:p-4 shadow-sm">
               <div className="relative aspect-[4/5] overflow-hidden bg-cream border border-ink/10">
                 <img
-                  src="/images/mentor.jpg"
+                  src="/images/mentor-spotlight.jpg"
                   alt="Senior Admissions Mentor consulting with candidate"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"

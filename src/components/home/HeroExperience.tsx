@@ -220,17 +220,17 @@ export default function HeroExperience() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto max-w-md lg:max-w-none"
+              className="relative mx-auto max-w-[320px] min-[390px]:max-w-[340px] sm:max-w-md lg:max-w-none"
             >
               {/* Backlight Glow Behind Visual */}
               <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10" />
 
               {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
-              <div className="relative border border-cream/20 bg-[#14120C] p-3 sm:p-4 shadow-2xl overflow-hidden">
-                <div className="relative aspect-[4/5] overflow-hidden bg-cream/5 border border-cream/10">
+              <div className="relative border border-cream/20 bg-[#14120C] p-2.5 sm:p-4 shadow-2xl overflow-hidden">
+                <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream/5 border border-cream/10">
                   <img
-                    src="/images/mentor.jpg"
-                    alt="Senior Admissions Mentor in session"
+                    src="/images/mentor-hero.jpg"
+                    alt="Senior Admissions Mentor in consultation session"
                     className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.98]"
                     loading="eager"
                   />
@@ -238,7 +238,7 @@ export default function HeroExperience() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/80 via-transparent to-black/20 pointer-events-none" />
 
                   {/* Overlaid Bottom Title */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
+                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
                     <span className="px-2 py-0.5 bg-[#0B0A08]/90 border border-cream/20">
                       Single Dedicated Mentor
                     </span>
@@ -267,10 +267,10 @@ export default function HeroExperience() {
                 </div>
               </motion.div>
 
-              {/* Floating Verified Badge */}
-              <div className="absolute -top-4 -right-4 sm:-right-6 bg-[#0B0A08]/95 border border-terra/40 px-3.5 py-2 shadow-xl backdrop-blur-md flex items-center gap-2">
+              {/* Floating Verified Badge: inside on mobile, floating on desktop */}
+              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-top-4 lg:-right-5 bg-[#0B0A08]/95 border border-terra/40 px-3 py-1.5 sm:px-3.5 sm:py-2 shadow-xl backdrop-blur-md flex items-center gap-1.5 sm:gap-2 z-20">
                 <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
-                <span className="font-mono text-[9px] uppercase tracking-widest text-cream">
+                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-cream">
                   100% Unbiased Advisory
                 </span>
               </div>

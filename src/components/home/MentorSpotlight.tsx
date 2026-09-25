@@ -42,11 +42,11 @@ export default function MentorSpotlight() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-              className="relative border border-ink/15 bg-white p-3 sm:p-4 shadow-2xl"
+              className="relative mx-auto max-w-[320px] min-[390px]:max-w-[340px] sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-2.5 sm:p-4 shadow-2xl"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-cream border border-ink/10">
+              <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream border border-ink/10">
                 <img
-                  src="/images/mentor.jpg"
+                  src="/images/mentor-spotlight.jpg"
                   alt="Senior Admissions Mentor in consultation session"
                   className="w-full h-full object-cover object-top contrast-[1.03] brightness-[0.98]"
                   loading="lazy"
@@ -55,7 +55,7 @@ export default function MentorSpotlight() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
                 {/* Overlaid Micro-Caption */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white font-mono text-[9px] uppercase tracking-wider">
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 flex items-center justify-between text-white font-mono text-[8px] sm:text-[9px] uppercase tracking-wider">
                   <span className="px-2 py-0.5 bg-black/75 backdrop-blur-sm border border-white/20">
                     Fiduciary Practice
                   </span>
@@ -63,8 +63,8 @@ export default function MentorSpotlight() {
                 </div>
               </div>
 
-              {/* Floating Top Badge */}
-              <div className="absolute -top-3.5 -right-3.5 sm:-right-4 bg-ink text-cream border border-terra/50 px-3.5 py-1.5 shadow-xl font-mono text-[9px] uppercase tracking-widest flex items-center gap-2">
+              {/* Floating Top Badge: inside on mobile, floating on desktop */}
+              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-right-4 bg-ink text-cream border border-terra/50 px-3 py-1.5 shadow-xl font-mono text-[8px] sm:text-[9px] uppercase tracking-widest flex items-center gap-1.5 sm:gap-2 z-20">
                 <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
                 <span>DIRECT 1-ON-1 ADVISORY</span>
               </div>
