@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowRight, ChevronLeft, ChevronRight, FileCheck2 } from "lucide-react";
 
 interface CaseItem {
@@ -100,15 +101,21 @@ const CASES: CaseItem[] = [
   },
 ];
 
+// Duplicate slides so Embla loop: true always has abundant buffer cards,
+// completely eliminating any blank void or gaps during fast drags or wide screens.
+const SLIDES = [...CASES, ...CASES];
+
 export default function OutcomeCases() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      skipSnaps: false,
+    },
+    [WheelGesturesPlugin()]
+  );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -117,7 +124,6 @@ export default function OutcomeCases() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     return () => {
@@ -134,12 +140,34 @@ export default function OutcomeCases() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
+  const scrollToDot = useCallback(
+    (targetDotIndex: number) => {
+      if (!emblaApi) return;
+      const current = emblaApi.selectedScrollSnap();
+      const currentDot = ((current % CASES.length) + CASES.length) % CASES.length;
+      let diff = targetDotIndex - currentDot;
+      if (diff > CASES.length / 2) diff -= CASES.length;
+      if (diff < -CASES.length / 2) diff += CASES.length;
+      emblaApi.scrollTo(current + diff);
     },
     [emblaApi]
   );
+
+  // Keyboard navigation support when focused
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollNext();
+      }
+    },
+    [scrollPrev, scrollNext]
+  );
+
+  const activeDot = ((selectedIndex % CASES.length) + CASES.length) % CASES.length;
 
   return (
     <section
@@ -202,13 +230,18 @@ export default function OutcomeCases() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40"
             ref={emblaRef}
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Verified Admissions Outcome Case Files"
+            onKeyDown={onKeyDown}
           >
             <div className="flex -ml-4 sm:-ml-5 lg:-ml-6 touch-pan-y">
-              {CASES.map((item) => (
+              {SLIDES.map((item, idx) => (
                 <div
-                  key={item.ref}
+                  key={`${item.ref}-${idx}`}
                   className="flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-[0_0_31.5%] pl-4 sm:pl-5 lg:pl-6 min-w-0"
                 >
                   <div className="border border-cream/15 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-300 rounded-none hover:border-terra/40 hover:shadow-[0_0_30px_rgba(194,91,26,0.15)]">
@@ -275,16 +308,16 @@ export default function OutcomeCases() {
             </div>
           </div>
 
-          {/* ── Tappable Pagination Dots Indicator ── */}
+          {/* ── Tappable Pagination Dots Indicator (1-to-1 with unique cases) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8">
             {CASES.map((item, idx) => (
               <button
                 key={item.ref}
                 type="button"
-                onClick={() => scrollTo(idx)}
+                onClick={() => scrollToDot(idx)}
                 aria-label={`Jump to ${item.caseNo}: ${item.university}`}
                 className={`transition-all duration-300 rounded-full h-1.5 ${
-                  idx === selectedIndex
+                  idx === activeDot
                     ? "w-7 bg-terra"
                     : "w-1.5 bg-cream/20 hover:bg-cream/40"
                 }`}

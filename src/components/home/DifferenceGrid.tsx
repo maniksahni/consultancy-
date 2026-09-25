@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, UserCheck, Sparkles, FileCheck } from "lucide-react";
 import ComparisonSpotlight from "@/components/experience/ComparisonSpotlight";
 
@@ -37,15 +38,21 @@ const PANELS = [
   },
 ];
 
+// Duplicate slides 3 times (12 items) so Embla loop: true has abundant buffer on both sides,
+// completely eliminating any blank void or gaps during fast drags or wide screens.
+const SLIDES = [...PANELS, ...PANELS, ...PANELS];
+
 export default function DifferenceGrid() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      skipSnaps: false,
+    },
+    [WheelGesturesPlugin()]
+  );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -54,7 +61,6 @@ export default function DifferenceGrid() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     return () => {
@@ -71,12 +77,34 @@ export default function DifferenceGrid() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
+  const scrollToDot = useCallback(
+    (targetDotIndex: number) => {
+      if (!emblaApi) return;
+      const current = emblaApi.selectedScrollSnap();
+      const currentDot = ((current % PANELS.length) + PANELS.length) % PANELS.length;
+      let diff = targetDotIndex - currentDot;
+      if (diff > PANELS.length / 2) diff -= PANELS.length;
+      if (diff < -PANELS.length / 2) diff += PANELS.length;
+      emblaApi.scrollTo(current + diff);
     },
     [emblaApi]
   );
+
+  // Keyboard navigation support when focused
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollNext();
+      }
+    },
+    [scrollPrev, scrollNext]
+  );
+
+  const activeDot = ((selectedIndex % PANELS.length) + PANELS.length) % PANELS.length;
 
   return (
     <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
@@ -135,16 +163,21 @@ export default function DifferenceGrid() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden mt-10 sm:mt-12">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40"
             ref={emblaRef}
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="The Advisory Difference Criterion Cards"
+            onKeyDown={onKeyDown}
           >
             <div className="flex -ml-4 sm:-ml-5 lg:-ml-6 touch-pan-y">
-              {PANELS.map((panel) => {
+              {SLIDES.map((panel, idx) => {
                 const Icon = panel.icon;
 
                 return (
                   <div
-                    key={panel.num}
+                    key={`${panel.num}-${idx}`}
                     className="flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-[0_0_31.5%] pl-4 sm:pl-5 lg:pl-6 min-w-0"
                   >
                     <div
@@ -189,16 +222,16 @@ export default function DifferenceGrid() {
             </div>
           </div>
 
-          {/* ── Tappable Pagination Dots Indicator ── */}
+          {/* ── Tappable Pagination Dots Indicator (Maps 1-to-1 to 4 unique items) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8">
             {PANELS.map((panel, idx) => (
               <button
                 key={panel.num}
                 type="button"
-                onClick={() => scrollTo(idx)}
+                onClick={() => scrollToDot(idx)}
                 aria-label={`Jump to difference item ${panel.num}`}
                 className={`transition-all duration-300 rounded-full h-1.5 ${
-                  idx === selectedIndex
+                  idx === activeDot
                     ? "w-7 bg-terra"
                     : "w-1.5 bg-ink/20 hover:bg-ink/40"
                 }`}

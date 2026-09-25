@@ -13,6 +13,7 @@
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
+    "embla-carousel-wheel-gestures": "^8.1.0",
     "firebase": "^12.18.0",
     "flubber": "^0.4.2",
     "framer-motion": "^11.5.4",

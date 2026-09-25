@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface DestinationItem {
@@ -79,15 +80,21 @@ const DESTINATIONS: DestinationItem[] = [
   },
 ];
 
+// Duplicate slides so Embla loop: true always has ample buffer cards,
+// completely preventing empty void or blank regions when dragged fast or flicked.
+const SLIDES = [...DESTINATIONS, ...DESTINATIONS];
+
 export default function DestinationGallery() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "start",
+      skipSnaps: false,
+    },
+    [WheelGesturesPlugin()]
+  );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -96,7 +103,6 @@ export default function DestinationGallery() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     return () => {
@@ -113,12 +119,34 @@ export default function DestinationGallery() {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi) emblaApi.scrollTo(index);
+  const scrollToDot = useCallback(
+    (targetDotIndex: number) => {
+      if (!emblaApi) return;
+      const current = emblaApi.selectedScrollSnap();
+      const currentDot = ((current % DESTINATIONS.length) + DESTINATIONS.length) % DESTINATIONS.length;
+      let diff = targetDotIndex - currentDot;
+      if (diff > DESTINATIONS.length / 2) diff -= DESTINATIONS.length;
+      if (diff < -DESTINATIONS.length / 2) diff += DESTINATIONS.length;
+      emblaApi.scrollTo(current + diff);
     },
     [emblaApi]
   );
+
+  // Keyboard navigation support when focused
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        scrollPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        scrollNext();
+      }
+    },
+    [scrollPrev, scrollNext]
+  );
+
+  const activeDot = ((selectedIndex % DESTINATIONS.length) + DESTINATIONS.length) % DESTINATIONS.length;
 
   return (
     <section
@@ -169,13 +197,18 @@ export default function DestinationGallery() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none"
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40"
             ref={emblaRef}
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Targeted Country Expertise Carousel"
+            onKeyDown={onKeyDown}
           >
             <div className="flex -ml-4 sm:-ml-5 lg:-ml-6 touch-pan-y">
-              {DESTINATIONS.map((dest) => (
+              {SLIDES.map((dest, idx) => (
                 <div
-                  key={dest.slug}
+                  key={`${dest.slug}-${idx}`}
                   className="flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-[0_0_31.5%] pl-4 sm:pl-5 lg:pl-6 min-w-0"
                 >
                   <div className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none">
@@ -250,16 +283,16 @@ export default function DestinationGallery() {
             </div>
           </div>
 
-          {/* ── Tappable Pagination Dots Indicator ── */}
+          {/* ── Tappable Pagination Dots Indicator (1-to-1 with unique destinations) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8">
             {DESTINATIONS.map((dest, idx) => (
               <button
                 key={dest.slug}
                 type="button"
-                onClick={() => scrollTo(idx)}
+                onClick={() => scrollToDot(idx)}
                 aria-label={`Jump to ${dest.country}`}
                 className={`transition-all duration-300 rounded-full h-1.5 ${
-                  idx === selectedIndex
+                  idx === activeDot
                     ? "w-7 bg-terra"
                     : "w-1.5 bg-ink/20 hover:bg-ink/40"
                 }`}
