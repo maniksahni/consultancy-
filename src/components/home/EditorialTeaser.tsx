@@ -9,26 +9,26 @@ export default function EditorialTeaser({
   highlights: readonly { heading: string; detail?: string; number?: string }[];
 }) {
   return (
-    <section id={id} className={`py-space-7 ${dark ? "bg-[#14120C] text-cream" : "bg-[#F2EDE4] text-ink"}`}>
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
-        <div className={`border-t pt-space-4 sm:pt-space-5 grid lg:grid-cols-12 gap-10 ${dark ? "border-cream/15" : "border-ink/15"}`}>
+    <section id={id} className={`py-space-5 sm:py-space-6 lg:py-space-7 ${dark ? "bg-[#14120C] text-cream" : "bg-[#F2EDE4] text-ink"}`}>
+      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
+        <div className={`border-t pt-space-3 sm:pt-space-4 lg:pt-space-5 grid lg:grid-cols-12 gap-8 lg:gap-10 ${dark ? "border-cream/15" : "border-ink/15"}`}>
           <div className="lg:col-span-7">
-            <p className={`text-[10px] uppercase tracking-[0.25em] font-mono mb-6 ${dark ? "text-cream/45" : "text-ink/45"}`}>{eyebrow}</p>
+            <p className={`text-[10px] uppercase tracking-[0.25em] font-mono mb-4 sm:mb-6 ${dark ? "text-cream/45" : "text-ink/45"}`}>{eyebrow}</p>
             <h2 className="font-display text-[clamp(2.15rem,8.5vw,3rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight break-words">
               {title}<br /><em className="text-terra inline-block pr-1">{accent}</em>
             </h2>
-            <p className={`text-base font-light leading-relaxed max-w-xl mt-8 ${dark ? "text-cream/65" : "text-ink/65"}`}>{intro}</p>
-            <Link href={href} className={`inline-flex items-center gap-3 border-b text-[11px] uppercase tracking-[0.2em] mt-10 pb-2 ${dark ? "border-cream/50 text-cream hover:border-cream" : "border-ink/50 text-ink hover:border-ink"}`}>
+            <p className={`text-base font-light leading-relaxed max-w-xl mt-6 sm:mt-8 ${dark ? "text-cream/65" : "text-ink/65"}`}>{intro}</p>
+            <Link href={href} className={`inline-flex items-center gap-3 border-b text-[11px] uppercase tracking-[0.2em] mt-6 sm:mt-10 pb-2 ${dark ? "border-cream/50 text-cream hover:border-cream" : "border-ink/50 text-ink hover:border-ink"}`}>
               {linkLabel} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className={`lg:col-span-5 border-t ${dark ? "border-cream/15" : "border-ink/15"}`}>
             {highlights.map((item, i) => (
-              <div key={item.heading} className={`border-b py-6 flex gap-5 sm:gap-6 ${dark ? "border-cream/15" : "border-ink/15"}`}>
-                <span className={`font-display text-3xl flex-shrink-0 ${dark ? "text-cream/25" : "text-ink/25"}`}>{item.number ?? `0${i + 1}`}</span>
+              <div key={item.heading} className={`border-b py-5 sm:py-6 flex gap-4 sm:gap-6 ${dark ? "border-cream/15" : "border-ink/15"}`}>
+                <span className={`font-display text-2xl sm:text-3xl flex-shrink-0 ${dark ? "text-cream/25" : "text-ink/25"}`}>{item.number ?? `0${i + 1}`}</span>
                 <div className="min-w-0">
-                  <h3 className="font-display text-2xl leading-snug break-words">{item.heading}</h3>
-                  {item.detail && <p className={`text-sm mt-2 leading-relaxed break-words ${dark ? "text-cream/60" : "text-ink/60"}`}>{item.detail}</p>}
+                  <h3 className="font-display text-xl sm:text-2xl leading-snug break-words">{item.heading}</h3>
+                  {item.detail && <p className={`text-sm mt-1.5 sm:mt-2 leading-relaxed break-words ${dark ? "text-cream/60" : "text-ink/60"}`}>{item.detail}</p>}
                 </div>
               </div>
             ))}

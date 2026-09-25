@@ -25,7 +25,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen bg-[#14120C] text-cream flex flex-col justify-between overflow-hidden">
       {/* Top Status & Calibrated Spacing */}
-      <div className="pt-24 sm:pt-28 lg:pt-32 px-6 lg:px-16 max-w-7xl w-full mx-auto">
+      <div className="pt-24 sm:pt-28 lg:pt-32 px-4 min-[390px]:px-5 sm:px-6 lg:px-16 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -42,7 +42,7 @@ export default function Hero() {
       </div>
 
       {/* Main Dominant Headline with Calibrated Spacing */}
-      <div className="flex-1 flex flex-col justify-center px-6 lg:px-16 py-8 sm:py-12 lg:py-16 max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex flex-col justify-center px-4 min-[390px]:px-5 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -101,7 +101,7 @@ export default function Hero() {
 
       {/* Admissions Ledger: Flat, 1px Hairline Grid, Radical Restraint */}
       <div className="border-t border-b border-cream/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+        <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
           <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-x-0 lg:divide-x divide-cream/10">
             {metrics.map((m, i) => (
               <div
@@ -125,7 +125,7 @@ export default function Hero() {
       </div>
 
       {/* University Trust Strip: 1px Hairline Rule */}
-      <div className="px-6 lg:px-16 py-4 sm:py-5 max-w-7xl w-full mx-auto">
+      <div className="px-4 min-[390px]:px-5 sm:px-6 lg:px-16 py-4 sm:py-5 max-w-7xl w-full mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <span className="text-[10px] uppercase tracking-[0.25em] text-cream/30 whitespace-nowrap">
             Admissions Secured At

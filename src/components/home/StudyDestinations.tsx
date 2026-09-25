@@ -124,7 +124,8 @@ export default function StudyDestinations() {
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     if (!card) return;
-    const cardStep = card.clientWidth + 16;
+    const cardWidth = card.getBoundingClientRect().width || container.clientWidth;
+    const cardStep = cardWidth + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
 
     if (rawIndex >= hubs.length) {
@@ -148,7 +149,7 @@ export default function StudyDestinations() {
     if (!carouselRef.current || isResettingRef.current) return;
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
-    const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
+    const cardWidth = card?.getBoundingClientRect().width ?? container.clientWidth;
     const cardStep = cardWidth + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
     const newIndex = rawIndex % hubs.length;
@@ -193,7 +194,8 @@ export default function StudyDestinations() {
 
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
-    const cardStep = (card?.clientWidth || window.innerWidth * 0.86) + 16;
+    const cardWidth = card?.getBoundingClientRect().width ?? container.clientWidth;
+    const cardStep = cardWidth + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
 
     if (rawIndex === 0 && deltaX > 50 && Math.abs(deltaX) > Math.abs(deltaY) * 1.35) {
@@ -207,12 +209,12 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-[#F2EDE4] py-space-7 overflow-hidden w-full text-ink"
+      className="bg-[#F2EDE4] py-space-5 sm:py-space-6 lg:py-space-7 overflow-hidden w-full text-ink"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-16">
+      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Section header: Calibrated negative space, monumental typography ── */}
-        <div className="border-t border-ink/15 pt-space-4 sm:pt-space-5 mb-space-5 lg:mb-space-6">
+        <div className="border-t border-ink/15 pt-space-3 sm:pt-space-4 lg:pt-space-5 mb-space-4 sm:mb-space-5 lg:mb-space-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
@@ -248,7 +250,7 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className="snap-center flex-none w-full min-w-0 p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
+                  className="snap-start flex-none w-full min-w-full max-w-full p-5 sm:p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
                 >
                   <div>
                     {/* Landmark photo banner: sharp edges, no soft styling */}
@@ -341,8 +343,9 @@ export default function StudyDestinations() {
                   if (!carouselRef.current) return;
                   const container = carouselRef.current;
                   const card = container.querySelector('.carousel-snap-item') as HTMLElement;
-                  const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
-                  container.scrollTo({ left: idx * (cardWidth + 16), behavior: "smooth" });
+                  const cardWidth = card?.getBoundingClientRect().width ?? container.clientWidth;
+                  const gap = 16;
+                  container.scrollTo({ left: idx * (cardWidth + gap), behavior: "smooth" });
                 }}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-1 transition-all duration-300 ${

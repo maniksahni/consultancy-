@@ -54,8 +54,8 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-space-7 pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
-      <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
+    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
+      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
 
         {/* ── Dominant Visual Move: Massive Minimalist Bold Statement ── */}
         <div className="border-b border-cream/10 pb-6 sm:pb-8 lg:pb-10 mb-6 sm:mb-8">

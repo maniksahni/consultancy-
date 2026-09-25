@@ -319,16 +319,16 @@
     scrollbar-width: none;
   }
 
-  /* ── SMOOTH TOUCH CAROUSEL SCROLL-SNAP (CENTERED ACTIVE CARD) ── */
+  /* ── SMOOTH TOUCH CAROUSEL SCROLL-SNAP (FULL-WIDTH CARD) ── */
   .carousel-snap {
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory !important;
     scroll-behavior: smooth;
-    scroll-padding-inline: calc((100vw - 86vw) / 2) !important;
+    scroll-padding-inline: 0 !important;
     overscroll-behavior-x: contain;
   }
   .carousel-snap-item {
-    scroll-snap-align: center !important;
+    scroll-snap-align: start !important;
     scroll-snap-stop: always !important;
   }
 

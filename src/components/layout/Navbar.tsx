@@ -130,7 +130,7 @@ export default function Navbar() {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 sm:py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-12 py-4 sm:py-5 flex items-center justify-between">
 
           {/* Logo — editorial wordmark */}
           <Link href="/" className="flex items-center gap-px group">
