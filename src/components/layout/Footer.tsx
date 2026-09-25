@@ -54,11 +54,11 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-14 sm:pt-18 lg:pt-24 pb-12 overflow-hidden w-full border-t border-cream/10 relative">
+    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-8 sm:pt-10 lg:pt-12 pb-10 sm:pb-12 overflow-hidden w-full border-t border-cream/10 relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
 
         {/* ── Dominant Visual Move: Massive Minimalist Bold Statement ── */}
-        <div className="border-b border-cream/10 pb-8 sm:pb-12 lg:pb-16 mb-8 sm:mb-12">
+        <div className="border-b border-cream/10 pb-6 sm:pb-8 lg:pb-10 mb-6 sm:mb-8">
           <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
             Boutique Fiduciary Standard
           </div>

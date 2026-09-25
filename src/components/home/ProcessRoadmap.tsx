@@ -39,12 +39,12 @@ export default function ProcessRoadmap() {
   return (
     <section
       id="process"
-      className="bg-[#F2EDE4] py-14 sm:py-18 lg:py-24 overflow-hidden w-full text-ink"
+      className="bg-[#F2EDE4] pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 lg:pb-12 overflow-hidden w-full text-ink"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
         {/* ── Section header: Calibrated negative space, monumental typography ── */}
-        <div className="border-t border-ink/15 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
+        <div className="border-t border-ink/15 pt-4 sm:pt-5 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
@@ -109,7 +109,7 @@ export default function ProcessRoadmap() {
         </div>
 
         {/* ── Bottom Callout: Stark, Flat, High-Contrast ── */}
-        <div className="mt-8 sm:mt-12 border border-ink/15 bg-white p-6 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none">
+        <div className="mt-6 sm:mt-8 border border-ink/15 bg-white p-6 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none">
           <div className="max-w-xl">
             <h4 className="font-display text-2xl sm:text-3xl font-normal text-ink leading-tight">
               Ready to begin Stage 01 with an experienced mentor?

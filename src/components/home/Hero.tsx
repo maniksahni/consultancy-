@@ -125,7 +125,7 @@ export default function Hero() {
       </div>
 
       {/* University Trust Strip: 1px Hairline Rule */}
-      <div className="px-6 lg:px-16 py-6 max-w-7xl w-full mx-auto">
+      <div className="px-6 lg:px-16 py-4 sm:py-5 max-w-7xl w-full mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <span className="text-[10px] uppercase tracking-[0.25em] text-cream/30 whitespace-nowrap">
             Admissions Secured At

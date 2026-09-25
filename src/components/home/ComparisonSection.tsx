@@ -49,12 +49,12 @@ export default function ComparisonSection() {
   return (
     <section
       id="comparison"
-      className="bg-[#14120C] text-cream py-14 sm:py-18 lg:py-24 overflow-hidden w-full relative"
+      className="bg-[#14120C] text-cream pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 lg:pb-12 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
         {/* ── Section header: Calibrated negative space, monumental typography ── */}
-        <div className="border-t border-cream/10 pt-8 sm:pt-10 mb-8 sm:mb-12 lg:mb-16">
+        <div className="border-t border-cream/10 pt-4 sm:pt-5 mb-8 sm:mb-12 lg:mb-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
@@ -207,7 +207,7 @@ export default function ComparisonSection() {
         </div>
 
         {/* ── Footer note: 1px hairline rule ── */}
-        <div className="mt-8 sm:mt-10 pt-6 border-t border-cream/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div className="mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-cream/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="text-[10px] uppercase tracking-[0.25em] text-cream/35 font-mono">
             Zero Institutional Kickbacks · 100% Student-Aligned Interests
           </div>
