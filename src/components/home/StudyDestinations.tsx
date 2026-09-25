@@ -233,7 +233,7 @@ export default function StudyDestinations() {
         </div>
 
         {/* ── MOBILE: Finger-Swipeable Horizontal Carousel (Protected logic preserved) ── */}
-        <div className="lg:hidden pb-6">
+        <div className="lg:hidden" style={{ paddingBottom: "calc(2rem + env(safe-area-inset-bottom, 0px))" }}>
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
@@ -250,11 +250,11 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className="snap-start flex-none w-full min-w-full max-w-full p-5 sm:p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
+                  className="snap-start flex-none w-full min-w-full max-w-full p-4 sm:p-6 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
                 >
                   <div>
                     {/* Landmark photo banner: sharp edges, no soft styling */}
-                    <div className="relative w-full h-44 rounded-none overflow-hidden mb-6 border border-ink/10">
+                    <div className="relative w-full h-36 min-[390px]:h-40 sm:h-44 rounded-none overflow-hidden mb-4 sm:mb-6 border border-ink/10">
                       <img
                         src={`/images/destinations/${slug}.webp`}
                         alt={`${hub.country} landmark`}
@@ -270,36 +270,36 @@ export default function StudyDestinations() {
                       <div className="text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
                         {hub.stream}
                       </div>
-                      <h3 className="font-display font-normal text-3xl text-ink leading-tight mt-1">
+                      <h3 className="font-display font-normal text-[2rem] sm:text-3xl text-ink leading-tight mt-0.5 sm:mt-1">
                         {hub.country}
                       </h3>
                     </div>
 
                     {/* Essential Tag: clean 1px hairline */}
-                    <div className="mt-3">
+                    <div className="mt-2.5 sm:mt-3">
                       <span className="inline-block border border-ink/20 text-ink/80 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] font-mono">
                         {hub.tag}
                       </span>
                     </div>
 
                     {/* Key Data Ledger: flat 1px hairlines */}
-                    <div className="border-t border-b border-ink/10 divide-y divide-ink/10 my-6">
-                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                    <div className="border-t border-b border-ink/10 divide-y divide-ink/10 my-4 sm:my-6">
+                      <div className="py-2 sm:py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-2.5 sm:gap-3">
                         <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Post-Study Work</span>
                         <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.psw}</span>
                       </div>
-                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                      <div className="py-2 sm:py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-2.5 sm:gap-3">
                         <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Average Tuition</span>
                         <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.avgTuition}</span>
                       </div>
-                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                      <div className="py-2 sm:py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-2.5 sm:gap-3">
                         <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Proof of Funds</span>
                         <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.proofOfFunds}</span>
                       </div>
                     </div>
 
                     {/* Advantages: plain text with hairline dashes */}
-                    <ul className="space-y-2 mb-6 text-xs text-ink/75 font-light leading-relaxed">
+                    <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6 text-xs text-ink/75 font-light leading-relaxed">
                       {hub.advantages.map((adv, j) => (
                         <li key={j} className="flex items-start gap-2.5">
                           <span className="text-ink/40 mt-0.5">–</span>
@@ -310,12 +310,12 @@ export default function StudyDestinations() {
                   </div>
 
                   {/* Actions: stark, high-contrast, rounded-none */}
-                  <div className="pt-4 border-t border-ink/10 flex flex-col gap-2.5">
+                  <div className="pt-3.5 sm:pt-4 border-t border-ink/10 flex flex-col gap-2">
                     <a
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-ink text-cream hover:bg-ink/90 min-h-[46px] px-4 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-ink text-cream hover:bg-ink/90 min-h-[44px] py-2 px-4 rounded-none text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] font-medium transition-colors text-center"
                     >
                       <span>Discuss {hub.country} Strategy</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
@@ -323,7 +323,7 @@ export default function StudyDestinations() {
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className="w-full flex items-center justify-center gap-1.5 border border-ink/20 text-ink/80 hover:border-ink hover:text-ink min-h-[44px] px-4 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
+                        className="w-full flex items-center justify-center gap-1.5 border border-ink/20 text-ink/80 hover:border-ink hover:text-ink min-h-[42px] sm:min-h-[44px] py-2 px-4 rounded-none text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] font-medium transition-colors text-center"
                       >
                         Full Country Guide →
                       </Link>
@@ -335,7 +335,7 @@ export default function StudyDestinations() {
           </div>
 
           {/* Mobile Pagination indicator */}
-          <div className="flex items-center justify-center gap-2 pt-6 pb-2">
+          <div className="flex items-center justify-center gap-2 pt-4 sm:pt-6 pb-2">
             {hubs.map((_, idx) => (
               <button
                 key={idx}

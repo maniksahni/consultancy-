@@ -32,23 +32,23 @@ export default function Hero() {
           transition={{ duration: 0.9 }}
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cream/10 pb-4 sm:pb-5"
         >
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono">
+          <span className="text-[9px] sm:text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.25em] text-cream/40 font-mono">
             Admissions Open · 2026 / 2027 Intakes
           </span>
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-cream/40 font-mono">
+          <span className="text-[9px] sm:text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.2em] text-cream/40 font-mono">
             Limited Mentor Capacity · Fall 2026 &amp; Spring 2027
           </span>
         </motion.div>
       </div>
 
       {/* Main Dominant Headline with Calibrated Spacing */}
-      <div className="flex-1 flex flex-col justify-center px-4 min-[390px]:px-5 sm:px-6 lg:px-16 py-8 sm:py-12 lg:py-16 max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex flex-col justify-center px-4 min-[390px]:px-5 sm:px-6 lg:px-16 py-6 sm:py-12 lg:py-16 max-w-7xl w-full mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.0 }}
         >
-          <h1 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[clamp(2.35rem,10.5vw,3.25rem)] min-[390px]:text-[3.85rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9.25rem] break-words">
+          <h1 className="font-display font-normal text-cream leading-[0.92] sm:leading-[0.88] tracking-[-0.035em] text-[clamp(2.4rem,10.5vw,3rem)] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9.25rem] break-words">
             Elite 1-on-1<br />
             Study Abroad<br />
             Mentorship.<br />
@@ -62,13 +62,13 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2 }}
-          className="mt-8 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end border-t border-cream/10 pt-6 sm:pt-8"
+          className="mt-6 sm:mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-end border-t border-cream/10 pt-5 sm:pt-8"
         >
           <div className="lg:col-span-7">
-            <p className="text-cream/70 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-xl">
+            <p className="text-cream/70 text-[15px] sm:text-lg lg:text-xl font-light leading-[1.65] sm:leading-relaxed max-w-xl">
               Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
             </p>
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[10px] uppercase tracking-[0.2em] text-cream/35">
+            <div className="mt-3.5 sm:mt-4 flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2 text-[9px] sm:text-[10px] uppercase tracking-[0.16em] sm:tracking-[0.2em] text-cream/35">
               <span>99.2% Visa Approval Rate</span>
               <span>·</span>
               <span>Zero Institutional Kickbacks</span>
@@ -77,10 +77,10 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center lg:items-start xl:items-center gap-4">
+          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center lg:items-start xl:items-center gap-3 sm:gap-4">
             <a
               href="#booking"
-              className="bg-cream text-ink hover:bg-cream/90 px-8 py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium text-center transition-colors inline-flex items-center justify-center gap-3"
+              className="bg-cream text-ink hover:bg-cream/90 min-h-[48px] px-6 sm:px-8 py-3.5 sm:py-4 rounded-none text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.22em] font-medium text-center transition-colors inline-flex items-center justify-center gap-3"
             >
               <span>Book Strategy Session</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -90,7 +90,7 @@ export default function Hero() {
               href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-cream/20 hover:border-cream/50 text-cream px-6 py-4 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-colors inline-flex items-center justify-center gap-2.5"
+              className="border border-cream/20 hover:border-cream/50 text-cream min-h-[48px] px-5 sm:px-6 py-3.5 sm:py-4 rounded-none text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.2em] font-medium text-center transition-colors inline-flex items-center justify-center gap-2.5"
             >
               <MessageCircle className="h-3.5 w-3.5 text-cream/70" />
               <span>Chat Live</span>

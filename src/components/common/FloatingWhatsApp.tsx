@@ -114,12 +114,7 @@ export default function FloatingWhatsApp() {
 
   return (
     <div
-      style={{
-        position: "fixed",
-        bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
-        right: "max(16px, env(safe-area-inset-right, 16px))",
-      }}
-      className={`z-50 flex flex-col items-end gap-3 pointer-events-none transition-all duration-300 ${
+      className={`fixed z-50 flex flex-col items-end gap-3 pointer-events-none transition-all duration-300 right-[max(10px,env(safe-area-inset-right,10px))] bottom-[max(12px,env(safe-area-inset-bottom,12px))] sm:right-[max(16px,env(safe-area-inset-right,16px))] sm:bottom-[max(16px,env(safe-area-inset-bottom,16px))] ${
         shouldRender
           ? showMobile
             ? "opacity-100 translate-y-0"
@@ -218,26 +213,23 @@ export default function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* ─── Mobile Trigger: Adaptive Pill / Compact Icon Bubble ─── */}
+      {/* ─── Mobile Trigger: Always Compact 38-40px Circular Button ─── */}
       <div className="sm:hidden flex items-center pointer-events-auto">
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className={`inline-flex items-center justify-center bg-[#14120C] text-cream border border-terra/60 shadow-2xl btn-tactile active:scale-[0.98] transition-all duration-300 min-h-[44px] ${
-            isNearCarousel && !expanded
-              ? "h-11 w-11 rounded-full p-0"
-              : "px-3.5 py-2.5 rounded-full gap-2"
-          }`}
+          className="h-10 w-10 min-h-0 min-w-0 rounded-full p-0 relative inline-flex items-center justify-center bg-[#14120C] text-cream border border-terra/60 shadow-2xl active:scale-[0.96] transition-transform duration-200"
         >
-          <span className="relative flex h-2 w-2 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
-          </span>
-          <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
-          {(!isNearCarousel || expanded) && (
-            <span className="label text-[10px] text-cream tracking-wider whitespace-nowrap">
-              {expanded ? "Close" : "WhatsApp 1-on-1"}
-            </span>
+          {expanded ? (
+            <X className="h-4 w-4 text-cream" />
+          ) : (
+            <>
+              <span className="absolute top-1.5 right-1.5 flex h-1.5 w-1.5 pointer-events-none">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
+              </span>
+              <MessageCircle className="h-3.5 w-3.5 text-terra" />
+            </>
           )}
         </button>
       </div>
