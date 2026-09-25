@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Minus, ArrowRight, ShieldCheck } from "lucide-react";
+import { Plus, Minus, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -61,80 +61,63 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="bg-[#14120C] grain-ink text-cream py-20 lg:py-28 overflow-hidden w-full relative border-t border-cream/[0.10]"
+      className="bg-[#14120C] text-cream py-28 sm:py-36 lg:py-48 overflow-hidden w-full relative"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section Header ── */}
-        <motion.div
-          className="border-t border-cream/10 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-8%" }}
-          transition={{ duration: 0.6, ease: EASE }}
-        >
-          <div>
-            <div className="label text-terra mb-4">Admissions &amp; Advisory Clarity</div>
-            <h2
-              className="font-display font-normal text-cream leading-[0.93] tracking-tight"
-              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
-            >
-              Frequently Addressed<br />
-              <em className="text-cream/50 not-italic italic">Inquiries &amp; Protocols.</em>
-            </h2>
+        {/* ── Section Header: Radical negative space, monumental typography ── */}
+        <div className="border-t border-cream/10 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div>
+              <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
+                Admissions &amp; Advisory Clarity
+              </div>
+              <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+                Frequently Addressed<br />
+                {/* Exactly ONE terracotta accent in this entire section */}
+                <span className="text-terra italic">Inquiries &amp; Protocols.</span>
+              </h2>
+            </div>
+            <p className="text-cream/65 text-base sm:text-lg font-light leading-relaxed max-w-md">
+              Direct, no-fluff answers regarding our fiduciary mentorship model, transparent fee structure, and consular preparation standards.
+            </p>
           </div>
-          <p className="text-cream/45 text-sm lg:text-base font-light max-w-md leading-relaxed">
-            Direct, no-fluff answers regarding our fiduciary mentorship model, transparent fee structure, and consular preparation standards.
-          </p>
-        </motion.div>
+        </div>
 
-        {/* ── Accordion List ── */}
-        <div className="max-w-4xl mx-auto space-y-3.5">
+        {/* ── Accordion List: Monolithic 1px Hairlines, Rounded-none, No Shadows ── */}
+        <div className="border-t border-cream/10 divide-y divide-cream/10">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             const itemNumber = String(idx + 1).padStart(2, "0");
 
             return (
-              <div
-                key={idx}
-                className={`rounded-xl border transition-all duration-300 overflow-hidden ${
-                  isOpen
-                    ? "bg-cream/[0.045] border-cream/20 shadow-lg shadow-black/30"
-                    : "bg-cream/[0.02] border-cream/[0.07] hover:border-cream/15 hover:bg-cream/[0.035]"
-                }`}
-              >
+              <div key={idx} className="transition-colors">
                 <button
                   type="button"
                   onClick={() => toggleItem(idx)}
-                  className="w-full p-5 sm:p-6 flex items-start justify-between gap-6 text-left focus:outline-none"
+                  className="w-full py-8 sm:py-10 flex items-start justify-between gap-6 text-left focus:outline-none group"
                   aria-expanded={isOpen}
                 >
-                  <div className="flex items-start gap-4 sm:gap-6 flex-1 min-w-0">
-                    <span className="label text-terra text-xs pt-1 flex-shrink-0 font-mono">
+                  <div className="flex items-start gap-6 sm:gap-10 flex-1 min-w-0">
+                    <span className="text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono pt-1.5 flex-shrink-0">
                       {itemNumber}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <span className="label text-[10px] text-cream/35 tracking-wider block mb-1">
+                      <span className="text-[10px] uppercase tracking-[0.25em] text-cream/35 font-mono block mb-2">
                         {faq.category}
                       </span>
-                      <h3
-                        className={`font-display text-lg sm:text-2xl font-normal tracking-tight transition-colors leading-snug ${
-                          isOpen ? "text-cream" : "text-cream/80 group-hover:text-cream"
-                        }`}
-                      >
+                      <h3 className="font-display text-2xl sm:text-3xl font-normal text-cream leading-snug">
                         {faq.question}
                       </h3>
                     </div>
                   </div>
 
-                  <div
-                    className={`h-8 w-8 sm:h-9 sm:w-9 rounded-full border flex items-center justify-center flex-shrink-0 transition-all duration-300 mt-0.5 ${
-                      isOpen
-                        ? "border-terra bg-terra text-cream shadow-md shadow-terra/30"
-                        : "border-cream/20 text-cream/60 group-hover:border-terra group-hover:text-terra bg-cream/[0.02]"
-                    }`}
-                  >
-                    {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                  <div className="pt-2 text-cream/40 group-hover:text-cream transition-colors flex-shrink-0">
+                    {isOpen ? (
+                      <Minus className="w-5 h-5 text-cream" />
+                    ) : (
+                      <Plus className="w-5 h-5" />
+                    )}
                   </div>
                 </button>
 
@@ -148,8 +131,8 @@ export default function FAQ() {
                       transition={{ duration: 0.35, ease: EASE }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 sm:px-6 pb-6 pt-1 sm:pl-16">
-                        <p className="text-sm sm:text-base text-cream/65 font-light leading-relaxed border-t border-cream/[0.06] pt-4">
+                      <div className="pb-10 pt-2 pl-0 sm:pl-16 lg:pl-20 max-w-4xl">
+                        <p className="text-sm sm:text-base text-cream/70 font-light leading-relaxed">
                           {faq.answer}
                         </p>
                       </div>
@@ -161,40 +144,28 @@ export default function FAQ() {
           })}
         </div>
 
-        {/* ── Direct Advisory CTA Strip ── */}
-        <motion.div
-          className="mt-14 max-w-4xl mx-auto rounded-2xl border border-cream/[0.1] p-6 sm:p-8 surface-elevated-dark relative overflow-hidden shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE }}
-        >
-          {/* Subtle accent sheen */}
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-terra/40 to-transparent pointer-events-none" />
-
-          <div className="space-y-1.5 max-w-lg relative z-10">
-            <div className="flex items-center gap-2 text-terra">
-              <ShieldCheck className="w-4 h-4 text-terra flex-shrink-0" />
-              <span className="label text-[10px] text-terra tracking-wider">
-                Uncompromising Fiduciary Advisory
-              </span>
+        {/* ── Direct Advisory CTA Strip: Flat, High-Contrast ── */}
+        <div className="mt-16 sm:mt-24 border border-cream/10 p-8 sm:p-12 lg:p-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none bg-cream/[0.02]">
+          <div className="max-w-xl">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-2">
+              Uncompromising Fiduciary Advisory
             </div>
-            <h4 className="font-display text-xl sm:text-2xl font-normal text-cream tracking-tight">
+            <h4 className="font-display text-2xl sm:text-3xl font-normal text-cream leading-tight">
               Have a nuanced or high-stakes admissions inquiry?
             </h4>
-            <p className="text-xs text-cream/50 font-light leading-relaxed">
+            <p className="text-cream/65 text-sm sm:text-base mt-2 font-light">
               Book a direct confidential discovery session to evaluate your transcripts and study timeline.
             </p>
           </div>
 
           <a
             href="#booking"
-            className="flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[48px] px-6 py-3 label text-xs rounded-lg transition-all btn-tactile btn-tactile-dark btn-primary-glow whitespace-nowrap relative z-10"
+            className="flex-shrink-0 w-full sm:w-auto bg-cream text-ink hover:bg-cream/90 px-8 py-5 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium text-center transition-colors inline-flex items-center justify-center gap-3 whitespace-nowrap"
           >
-            Schedule 1-on-1 Call
+            <span>Schedule 1-on-1 Call</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </a>
-        </motion.div>
+        </div>
 
       </div>
     </section>

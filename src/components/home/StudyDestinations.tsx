@@ -6,8 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import CountryFlag from "@/components/common/CountryFlag";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 const slugMap: Record<string, string> = {
   "United Kingdom": "uk",
   "United States": "usa",
@@ -113,7 +111,7 @@ export default function StudyDestinations() {
     },
   ];
 
-  // Loop support: Clone the first 2 hubs at the end for seamless forward circular wrapping
+  // Loop support: Clone the first 2 hubs at the end for seamless forward circular wrapping (PROTECTED)
   const displayHubs = [...hubs, hubs[0], hubs[1]];
 
   const isResettingRef = useRef(false);
@@ -126,7 +124,7 @@ export default function StudyDestinations() {
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     if (!card) return;
-    const cardStep = card.clientWidth + 14;
+    const cardStep = card.clientWidth + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
 
     if (rawIndex >= hubs.length) {
@@ -134,7 +132,6 @@ export default function StudyDestinations() {
       const targetIndex = rawIndex % hubs.length;
       const targetScrollLeft = targetIndex * cardStep;
 
-      // Temporarily remove carousel-snap class to avoid animation or snap friction during instant teleport
       container.classList.remove("carousel-snap");
       container.style.scrollBehavior = "auto";
       container.scrollLeft = targetScrollLeft;
@@ -152,7 +149,7 @@ export default function StudyDestinations() {
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
     const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
-    const cardStep = cardWidth + 14;
+    const cardStep = cardWidth + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
     const newIndex = rawIndex % hubs.length;
     setActiveMobileIndex((prev) => (prev !== newIndex ? newIndex : prev));
@@ -196,13 +193,10 @@ export default function StudyDestinations() {
 
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
-    const cardStep = (card?.clientWidth || window.innerWidth * 0.86) + 14;
+    const cardStep = (card?.clientWidth || window.innerWidth * 0.86) + 16;
     const rawIndex = Math.round(container.scrollLeft / cardStep);
 
-    // If at card 0 (UK) and user swipes right (backwards), smoothly loop to last card (Ireland)
-    // Only treat a clear horizontal gesture as a loop request; vertical page
-    // scrolling and small edge taps must not advance the carousel.
-    if (rawIndex === 0 && deltaX > 60 && Math.abs(deltaX) > Math.abs(deltaY) * 1.35) {
+    if (rawIndex === 0 && deltaX > 50 && Math.abs(deltaX) > Math.abs(deltaY) * 1.35) {
       container.scrollTo({
         left: (hubs.length - 1) * cardStep,
         behavior: "smooth",
@@ -213,173 +207,123 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-cream py-20 lg:py-28 overflow-hidden w-full"
+      className="bg-[#F2EDE4] py-28 sm:py-36 lg:py-48 overflow-hidden w-full text-ink"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section header ── */}
-        <div className="border-t border-ink/12 pt-10 mb-8 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div>
-            <div className="label text-stone mb-4">Curated Global Study Hubs</div>
-            <h2
-              className="font-display font-normal text-ink leading-[0.93] tracking-tight"
-              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
-            >
-              Targeted Country Expertise.<br />
-              <em>Clear Admissions Data.</em>
-            </h2>
+        {/* ── Section header: Radical negative space, monumental typography ── */}
+        <div className="border-t border-ink/15 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div>
+              <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
+                Curated Global Study Hubs
+              </div>
+              <h2 className="font-display font-normal text-ink leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+                Targeted Country Expertise.<br />
+                {/* Exactly ONE terracotta accent in this entire section */}
+                <span className="text-terra italic">Clear Admissions Data.</span>
+              </h2>
+            </div>
+            <p className="text-ink/65 text-base sm:text-lg font-light leading-relaxed max-w-md">
+              Every country enforces distinct financial proofs, post-study work regulations, and visa thresholds. We guide you through verified consular data without guesswork.
+            </p>
           </div>
-          <p className="text-stone text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
-            Every country enforces distinct financial proofs, post-study work regulations, and visa thresholds. We guide you through the verified data without guesswork.
-          </p>
         </div>
 
-        {/* ── MOBILE: Finger-Swipeable Horizontal Carousel (No Arrow Buttons, Peek Reveal) ── */}
+        {/* ── MOBILE: Finger-Swipeable Horizontal Carousel (Protected logic preserved) ── */}
         <div className="lg:hidden pb-6">
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pt-5 pb-4 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pb-4 scrollbar-none carousel-snap"
           >
-            {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            {/* Leading spacer for true centering */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
 
             {displayHubs.map((hub, i) => {
               const slug = slugMap[hub.country];
-              const code = countryCodes[hub.country];
-              const isDark = i % 2 === 0;
               const isClone = i >= hubs.length;
 
               return (
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className={`snap-center flex-none w-[86vw] p-5 rounded-2xl border flex flex-col justify-between carousel-snap-item relative group ${
-                    isDark
-                      ? "bg-gradient-to-b from-[#1C1914] to-[#12100A] text-cream border-cream/[0.14] shadow-[0_5px_14px_-4px_rgba(0,0,0,0.36),0_20px_42px_-9px_rgba(0,0,0,0.58)] card-hover-dark"
-                      : "bg-gradient-to-b from-white to-[#F8F5EE] text-ink border-ink/[0.12] shadow-[0_5px_14px_-4px_rgba(20,18,12,0.06),0_18px_38px_-9px_rgba(20,18,12,0.14)] card-hover"
-                  }`}
+                  className="snap-center flex-none w-[86vw] p-6 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
                 >
-                  {/* Passport Header with Landmark Photography */}
                   <div>
-                    {/* Landmark photo banner */}
-                    <div className="relative w-full h-36 rounded-xl overflow-hidden mb-4 border border-current/10">
+                    {/* Landmark photo banner: sharp edges, no soft styling */}
+                    <div className="relative w-full h-44 rounded-none overflow-hidden mb-6 border border-ink/10">
                       <img
                         src={`/images/destinations/${slug}.webp`}
                         alt={`${hub.country} landmark`}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover"
                         loading="lazy"
                       />
-                      {/* Editorial duotone/ink gradient overlay */}
-                      <div
-                        className={`absolute inset-0 ${
-                          isDark
-                            ? "bg-gradient-to-t from-[#14120C] via-[#14120C]/35 to-transparent"
-                            : "bg-gradient-to-t from-[#F8F5EE] via-[#F8F5EE]/25 to-transparent"
-                        }`}
-                      />
-                      <div className="absolute top-2.5 left-2.5">
+                      <div className="absolute top-3 left-3">
                         <CountryFlag country={hub.country} size="md" />
                       </div>
-                      <div
-                        className={`absolute top-2.5 right-2.5 rounded-full px-2.5 py-0.5 text-center font-display text-xs tracking-wider select-none backdrop-blur-md ${
-                          isDark
-                            ? "bg-[#14120C]/80 border border-cream/20 text-cream/70"
-                            : "bg-white/85 border border-ink/15 text-ink/75"
-                        }`}
-                      >
-                        ENTRY #{code}
-                      </div>
                     </div>
 
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-display font-normal text-2xl leading-tight">
-                          {hub.country}
-                        </h3>
-                        <div className="label text-[10px] opacity-60 mt-0.5">
-                          {hub.stream}
-                        </div>
+                    <div>
+                      <div className="text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
+                        {hub.stream}
                       </div>
+                      <h3 className="font-display font-normal text-3xl text-ink leading-tight mt-1">
+                        {hub.country}
+                      </h3>
                     </div>
 
-                    {/* Strategic tag */}
-                    <div className="mt-2.5">
-                      <span className="inline-block rounded-full border border-terra/25 bg-terra/[0.08] text-terra px-3 py-1 text-[10px] label font-medium">
+                    {/* Essential Tag: clean 1px hairline */}
+                    <div className="mt-3">
+                      <span className="inline-block border border-ink/20 text-ink/80 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] font-mono">
                         {hub.tag}
                       </span>
                     </div>
 
-                    {/* Key Stats: Inset 2-column mini-grid */}
-                    <div className="grid grid-cols-2 gap-2 my-4">
-                      <div
-                        className={`p-3 rounded-lg border ${
-                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
-                        }`}
-                      >
-                        <div className="label text-[9px] opacity-50 mb-1">Post-Study Work</div>
-                        <div className="text-xs font-medium leading-snug">{hub.psw}</div>
+                    {/* Key Data Ledger: flat 1px hairlines */}
+                    <div className="border-t border-b border-ink/10 divide-y divide-ink/10 my-6">
+                      <div className="py-2.5 flex items-center justify-between gap-2">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Post-Study Work</span>
+                        <span className="text-xs font-medium text-ink text-right">{hub.psw}</span>
                       </div>
-                      <div
-                        className={`p-3 rounded-lg border ${
-                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
-                        }`}
-                      >
-                        <div className="label text-[9px] opacity-50 mb-1">Average Tuition</div>
-                        <div className="text-xs font-medium leading-snug text-terra">
-                          {hub.avgTuition}
-                        </div>
+                      <div className="py-2.5 flex items-center justify-between gap-2">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Average Tuition</span>
+                        <span className="text-xs font-medium text-ink text-right">{hub.avgTuition}</span>
                       </div>
-                      <div
-                        className={`p-3 rounded-lg border ${
-                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
-                        }`}
-                      >
-                        <div className="label text-[9px] opacity-50 mb-1">Proof of Funds</div>
-                        <div className="text-xs font-medium leading-snug">{hub.proofOfFunds}</div>
-                      </div>
-                      <div
-                        className={`p-3 rounded-lg border ${
-                          isDark ? "border-cream/[0.07] bg-cream/[0.03]" : "border-ink/[0.06] bg-cream/50"
-                        }`}
-                      >
-                        <div className="label text-[9px] opacity-50 mb-1">Visa Category</div>
-                        <div className="text-xs font-medium leading-snug">{hub.stream}</div>
+                      <div className="py-2.5 flex items-center justify-between gap-2">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Proof of Funds</span>
+                        <span className="text-xs font-medium text-ink text-right">{hub.proofOfFunds}</span>
                       </div>
                     </div>
 
-                    {/* Strategic Advantages */}
-                    <ul className="space-y-1.5 mb-5 text-xs font-light leading-relaxed">
+                    {/* Advantages: plain text with hairline dashes */}
+                    <ul className="space-y-2 mb-6 text-xs text-ink/75 font-light leading-relaxed">
                       {hub.advantages.map((adv, j) => (
-                        <li key={j} className="flex items-start gap-2">
-                          <span className="text-terra font-bold">–</span>
-                          <span className="opacity-80">{adv}</span>
+                        <li key={j} className="flex items-start gap-2.5">
+                          <span className="text-ink/40 mt-0.5">–</span>
+                          <span>{adv}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* Actions with tactile buttons */}
-                  <div className="space-y-2 pt-2 border-t border-current/10">
+                  {/* Actions: stark, high-contrast, rounded-none */}
+                  <div className="pt-4 border-t border-ink/10 flex flex-col gap-2.5">
                     <a
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] rounded-lg transition-colors btn-primary-glow"
+                      className="w-full flex items-center justify-center gap-2 bg-ink text-cream hover:bg-ink/90 min-h-[46px] px-4 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
                     >
-                      Discuss {hub.country} Strategy
+                      <span>Discuss {hub.country} Strategy</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </a>
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className={`w-full flex items-center justify-center gap-1.5 border min-h-[44px] py-2.5 px-4 label text-[10px] rounded-lg transition-colors btn-tactile ${
-                          isDark
-                            ? "border-cream/20 text-cream/70 hover:border-cream/50 hover:text-cream bg-cream/[0.02]"
-                            : "border-ink/20 text-ink/70 hover:border-ink hover:text-ink bg-white/50"
-                        }`}
+                        className="w-full flex items-center justify-center gap-1.5 border border-ink/20 text-ink/80 hover:border-ink hover:text-ink min-h-[44px] px-4 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
                       >
                         Full Country Guide →
                       </Link>
@@ -388,12 +332,12 @@ export default function StudyDestinations() {
                 </div>
               );
             })}
-            {/* Trailing spacer for true centering of last card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
+            {/* Trailing spacer */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
           </div>
 
-          {/* Dot pagination indicator with width-expand animation */}
-          <div className="flex items-center justify-center gap-1.5 pt-4 pb-2">
+          {/* Mobile Pagination indicator */}
+          <div className="flex items-center justify-center gap-2 pt-6 pb-2">
             {hubs.map((_, idx) => (
               <button
                 key={idx}
@@ -402,19 +346,19 @@ export default function StudyDestinations() {
                   const container = carouselRef.current;
                   const card = container.querySelector('.carousel-snap-item') as HTMLElement;
                   const cardWidth = card?.clientWidth || (window.innerWidth * 0.86);
-                  container.scrollTo({ left: idx * (cardWidth + 14), behavior: "smooth" });
+                  container.scrollTo({ left: idx * (cardWidth + 16), behavior: "smooth" });
                 }}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
-                  idx === activeMobileIndex ? "w-6 bg-terra" : "w-1.5 bg-ink/20 hover:bg-ink/40"
+                className={`h-1 transition-all duration-300 ${
+                  idx === activeMobileIndex ? "w-8 bg-ink" : "w-2 bg-ink/20 hover:bg-ink/40"
                 }`}
               />
             ))}
           </div>
         </div>
 
-        {/* ── DESKTOP: Wide Editorial Cards (hidden on mobile) ── */}
-        <div className="hidden lg:block space-y-6">
+        {/* ── DESKTOP: Wide Editorial Blocks (Flat, 0px radius, 1px hairlines) ── */}
+        <div className="hidden lg:block space-y-12">
           {hubs.map((hub, i) => {
             const slug = slugMap[hub.country];
             const code = countryCodes[hub.country];
@@ -422,102 +366,89 @@ export default function StudyDestinations() {
             return (
               <motion.div
                 key={hub.country}
-                className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-white/90 via-cream-50/80 to-cream-50/60 border border-ink/[0.12] hover:border-ink/15 shadow-[0_5px_14px_-4px_rgba(20,18,12,0.05),0_18px_40px_-9px_rgba(20,18,12,0.13)] hover:shadow-[0_16px_44px_-8px_rgba(20,18,12,0.16)] transition-all duration-300 grid grid-cols-12 gap-10 group relative overflow-hidden"
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="rounded-none p-10 bg-white border border-ink/15 grid grid-cols-12 gap-10 items-start"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-8%" }}
-                transition={{ duration: 0.55, ease: EASE, delay: i * 0.04 }}
+                transition={{ duration: 0.8, delay: i * 0.05 }}
               >
-                {/* Landmark Photo Thumbnail & Credentials */}
-                <div className="col-span-3 flex flex-col justify-between">
-                  <div className="relative w-full h-48 rounded-xl overflow-hidden border border-ink/[0.08] shadow-sm group-hover:shadow-md transition-all duration-500">
+                {/* Photo Thumbnail */}
+                <div className="col-span-3">
+                  <div className="relative w-full h-52 rounded-none overflow-hidden border border-ink/10">
                     <img
                       src={`/images/destinations/${slug}.webp`}
                       alt={`${hub.country} landmark`}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    {/* Warm editorial duotone overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-                    <div className="absolute top-2.5 left-2.5">
+                    <div className="absolute top-3 left-3">
                       <CountryFlag country={hub.country} size="md" />
                     </div>
-                    <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-cream">
-                      <span className="font-display font-light text-2xl tracking-tight opacity-95">{code}</span>
-                      <span className="label text-[8px] text-cream/80 tracking-widest bg-ink/60 px-2 py-0.5 rounded-full border border-cream/20 backdrop-blur-sm">
-                        ENTRY #{code}
-                      </span>
+                    <div className="absolute bottom-3 left-3 text-cream font-display font-light text-xl tracking-tight bg-ink/80 px-2.5 py-0.5">
+                      {code}
                     </div>
                   </div>
                 </div>
 
-                {/* Country name + tag + advantages (staggered list) */}
+                {/* Country Name + Visa Stream + Tag + Advantages */}
                 <div className="col-span-4 space-y-4">
                   <div>
-                    <h3
-                      className="font-display font-normal text-ink tracking-tight leading-none"
-                      style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
-                    >
+                    <div className="text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
+                      {hub.stream}
+                    </div>
+                    <h3 className="font-display font-normal text-3xl lg:text-4xl text-ink leading-tight mt-1">
                       {hub.country}
                     </h3>
-                    <div className="label text-stone mt-1.5">{hub.stream}</div>
                   </div>
 
-                  <div className="inline-flex items-center rounded-full border border-terra/25 bg-terra/[0.07] text-terra px-3.5 py-1 label font-medium">
-                    {hub.tag}
+                  <div>
+                    <span className="inline-block border border-ink/20 text-ink/80 px-2.5 py-1 text-[9px] uppercase tracking-[0.2em] font-mono">
+                      {hub.tag}
+                    </span>
                   </div>
 
-                  <ul className="space-y-3 pt-1">
+                  <ul className="space-y-3 pt-2 text-sm text-ink/70 font-light leading-relaxed">
                     {hub.advantages.map((adv, j) => (
-                      <motion.li
-                        key={j}
-                        initial={{ opacity: 0, x: -6 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.1 + j * 0.07, ease: EASE }}
-                        className="flex items-start gap-3 text-sm text-stone font-light leading-relaxed"
-                      >
-                        <span className="text-terra mt-[3px] flex-shrink-0 text-base leading-none">–</span>
+                      <li key={j} className="flex items-start gap-3">
+                        <span className="text-ink/40 mt-1">–</span>
                         <span>{adv}</span>
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Metrics ledger + CTAs */}
-                <div className="col-span-5 space-y-5">
-                  <div className="rounded-xl p-4 bg-cream/45 border border-ink/[0.05] space-y-0">
+                {/* Metrics Ledger + CTAs */}
+                <div className="col-span-5 flex flex-col justify-between h-full space-y-6">
+                  <div className="border-t border-b border-ink/10 divide-y divide-ink/10">
                     {[
                       { label: "Post-Study Work", value: hub.psw },
                       { label: "Average Tuition", value: hub.avgTuition },
                       { label: "Proof of Funds", value: hub.proofOfFunds },
-                    ].map(({ label, value }, idx) => (
+                    ].map(({ label, value }) => (
                       <div
                         key={label}
-                        className={`pt-2.5 pb-2.5 grid grid-cols-2 gap-4 items-start ${
-                          idx !== 0 ? "border-t border-ink/[0.06]" : ""
-                        }`}
+                        className="py-3 grid grid-cols-2 gap-4 items-baseline"
                       >
-                        <span className="label text-stone text-[9px] block mb-2">{label}</span>
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">{label}</span>
                         <span className="text-sm text-ink font-medium leading-relaxed">{value}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="pt-1 flex flex-wrap items-center gap-5">
+                  <div className="flex flex-wrap items-center gap-6 pt-2">
                     <a
                       href={`https://wa.me/33755749029?text=${encodeURIComponent(hub.whatsappMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-terra text-sm border-b border-terra/35 hover:border-terra pb-0.5 transition-colors group-hover:gap-2 btn-tactile font-medium"
+                      className="inline-flex items-center gap-2 bg-ink text-cream hover:bg-ink/90 px-6 py-3.5 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
                     >
-                      Discuss {hub.country} Strategy
+                      <span>Discuss {hub.country} Strategy</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </a>
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
-                        className="text-sm text-stone border-b border-stone/25 hover:border-stone/70 hover:text-ink pb-0.5 transition-colors btn-tactile"
+                        className="text-[10px] uppercase tracking-[0.2em] font-medium text-ink/60 hover:text-ink border-b border-ink/20 hover:border-ink pb-1 transition-colors"
                       >
                         Full Country Guide →
                       </Link>

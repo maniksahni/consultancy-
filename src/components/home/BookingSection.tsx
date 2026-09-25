@@ -4,23 +4,14 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import {
-  Calendar,
   Clock,
   MessageCircle,
   Check,
-  ShieldCheck,
   AlertCircle,
-  HelpCircle,
-  User,
-  Phone,
-  GraduationCap,
-  Globe2,
   ArrowRight,
 } from "lucide-react";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function BookingSection() {
   const [formData, setFormData] = useState({
@@ -34,7 +25,6 @@ export default function BookingSection() {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ fullName?: string; whatsapp?: string }>({});
   const [showFullForm, setShowFullForm] = useState(false);
 
@@ -76,7 +66,6 @@ export default function BookingSection() {
     }
   };
 
-  // Helper to sanitize free-text inputs against HTML injection, script tags, and control characters
   const sanitizeInput = (str: string | undefined | null, maxLength = 100): string => {
     if (!str) return "";
     return str
@@ -101,7 +90,6 @@ export default function BookingSection() {
     const qual = sanitizeInput(overrides?.qualification ?? formData.qualification, 250) || "Not specified";
     const help = overrides?.helpNeeded ?? formData.helpNeeded;
 
-    // Build plain-text message with clean line breaks
     const messageLines = [
       `Hi! My name is ${name}.`,
       "I would like to schedule a 1-on-1 strategy call with Pathways Global.",
@@ -112,21 +100,17 @@ export default function BookingSection() {
       `• Assistance Needed: ${help}`,
     ];
 
-    // Safely encode the entire message payload for the URL query parameter
     return `https://wa.me/33755749029?text=${encodeURIComponent(messageLines.join("\n"))}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setHasError(false);
 
-    // Sanitize values
     const sanitizedFullName = sanitizeInput(formData.fullName, 100);
     const sanitizedWhatsapp = formData.whatsapp.replace(/\D/g, "").slice(0, 10);
     const sanitizedQualification = sanitizeInput(formData.qualification, 250);
     const sanitizedEmail = formData.email ? sanitizeInput(formData.email, 100) : "";
 
-    // Field-level validation (synchronous — must run before any async work)
     const errors: { fullName?: string; whatsapp?: string } = {};
     if (!sanitizedFullName) {
       errors.fullName = "Please enter your full name.";
@@ -141,7 +125,6 @@ export default function BookingSection() {
     }
     setFieldErrors({});
 
-    // ── CRITICAL: Open WhatsApp SYNCHRONOUSLY within the user click gesture ──
     const waUrl = getWhatsAppDirectUrl({
       fullName: sanitizedFullName,
       whatsapp: sanitizedWhatsapp,
@@ -154,7 +137,6 @@ export default function BookingSection() {
 
     setLoading(true);
 
-    // Run Firestore save + minimum 1.5s loading feel in parallel, capped at 5s total
     const minDelay = new Promise<void>((resolve) => setTimeout(resolve, 1500));
     const firestoreSave = (async () => {
       const utm = getStoredUTMParams();
@@ -174,13 +156,11 @@ export default function BookingSection() {
     );
 
     try {
-      // Wait for both the minimum delay AND the Firestore save (or timeout, whichever is first)
       await Promise.race([
         Promise.all([minDelay, firestoreSave]),
         timeout,
       ]);
     } catch {
-      // Firestore failure or timeout — ensure minimum delay still passes before showing success
       await minDelay;
     } finally {
       setLoading(false);
@@ -189,61 +169,64 @@ export default function BookingSection() {
     }
   };
 
-  const LabelEl = ({ icon: Icon, children }: { icon: any; children: React.ReactNode }) => (
-    <label className="flex items-center gap-2 text-cream/60 label mb-2.5">
-      <Icon className="h-3.5 w-3.5 text-terra flex-shrink-0" />
-      {children}
-    </label>
-  );
-
   return (
     <section
       id="booking"
-      className="bg-[#14120C] grain-ink py-8 sm:py-12 lg:py-24 overflow-hidden w-full relative border-t border-cream/10"
+      className="bg-[#14120C] text-cream py-28 sm:py-36 lg:py-48 overflow-hidden w-full relative"
     >
-      {/* Subtle radial ambient warmth behind the booking ledger */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-45 z-0"
-        style={{
-          backgroundImage: "radial-gradient(ellipse at 80% 30%, rgba(194,91,26,0.12), transparent 55%), radial-gradient(ellipse at 15% 70%, rgba(242,237,228,0.03), transparent 45%)"
-        }}
-      />
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── MOBILE: Self-contained, fits above the fold on first scroll ── */}
+        {/* ── Section Header: Radical negative space, monumental typography ── */}
+        <div className="border-t border-cream/10 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div>
+              <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
+                Direct Consultation Booking
+              </div>
+              <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+                Schedule Your<br />
+                {/* Exactly ONE terracotta accent in this entire section */}
+                <span className="text-terra italic">1-on-1 Strategy Call.</span>
+              </h2>
+            </div>
+            <p className="text-cream/65 text-base sm:text-lg font-light leading-relaxed max-w-md">
+              Provide your current academic details. Every submission is personally reviewed by a senior mentor before we contact you directly on WhatsApp.
+            </p>
+          </div>
+        </div>
+
+        {/* ── MOBILE FORM (Flat, Sharp, 0px radius, 1px hairlines) ── */}
         <div className="lg:hidden">
           {submitted ? (
-            /* Success view */
-            <div className="border border-cream/10 p-6 text-center space-y-4">
-              <div className="h-12 w-12 mx-auto border border-terra/50 bg-terra/10 flex items-center justify-center">
-                <Check className="h-6 w-6 text-terra" />
+            <div className="border border-cream/15 p-8 text-center space-y-6 rounded-none bg-cream/[0.02]">
+              <div className="h-12 w-12 mx-auto border border-cream/30 flex items-center justify-center">
+                <Check className="h-6 w-6 text-cream" />
               </div>
               <div>
-                <span className="label text-[9px] text-terra border border-terra/30 bg-terra/[0.06] px-2.5 py-1 inline-block mb-2">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-2">
                   Admissions Dossier Queued
                 </span>
                 <h3 className="font-display text-2xl font-normal text-cream tracking-tight">
                   Strategy Session Confirmed
                 </h3>
-                <p className="text-cream/70 text-xs mt-2 leading-relaxed font-light">
+                <p className="text-cream/70 text-sm mt-3 leading-relaxed font-light">
                   Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. A dedicated senior mentor will evaluate your background and connect on WhatsApp at{" "}
-                  <strong className="text-terra font-medium">{formData.whatsapp}</strong>.
+                  <strong className="text-cream font-medium">+91 {formData.whatsapp}</strong>.
                 </p>
-                <div className="mt-3 p-3 bg-cream/[0.03] border border-cream/8 text-[11px] text-cream/70 font-light flex items-center justify-center gap-2">
-                  <Clock className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                <div className="mt-4 p-4 border border-cream/10 text-xs text-cream/70 font-light flex items-center justify-center gap-2">
+                  <Clock className="w-3.5 h-3.5 text-cream/40 flex-shrink-0" />
                   <span>Guaranteed mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
                 </div>
               </div>
 
-              <div className="space-y-3 pt-2">
-                {/* Fallback link — shown if the auto-open was blocked by the browser/OS */}
-                <p className="text-center text-cream/40 text-[11px] font-light leading-relaxed">
+              <div className="space-y-3 pt-4 border-t border-cream/10">
+                <p className="text-center text-cream/40 text-xs font-light">
                   WhatsApp should open automatically.{" "}
                   <a
                     href={getWhatsAppDirectUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-terra hover:text-terra-dark underline underline-offset-2 transition-colors"
+                    className="text-cream underline underline-offset-4"
                   >
                     Tap here if it didn&apos;t open.
                   </a>
@@ -261,30 +244,28 @@ export default function BookingSection() {
                       helpNeeded: "End-to-End Mentorship (Shortlisting + SOP + Visa)",
                     });
                   }}
-                  className="w-full text-cream/30 hover:text-cream/60 text-xs py-1.5 transition-colors"
+                  className="w-full text-cream/40 hover:text-cream text-xs py-2 uppercase tracking-widest font-mono"
                 >
                   Submit Another Profile
                 </button>
               </div>
             </div>
           ) : (
-            /* Compact Above-The-Fold Form */
-            <form noValidate onSubmit={handleSubmit} className="space-y-4 rounded-2xl p-6 bg-gradient-to-b from-cream/[0.05] via-cream/[0.025] to-cream/[0.015] border border-cream/[0.08] shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5)]">
-              {/* Header */}
-              <div className="border-b border-cream/[0.08] pb-3">
-                <div className="label text-terra text-[10px] mb-1 font-medium">Direct Consultation Booking</div>
-                <h2 className="font-display font-normal text-cream text-[1.85rem] sm:text-3xl leading-[0.95] tracking-tight">
-                  Schedule Your 1-on-1 Strategy Call
-                </h2>
-                <p className="text-cream/45 text-xs font-light mt-1.5 leading-relaxed">
-                  Personal profile review · Direct WhatsApp confirmation within 4 hours
-                </p>
+            <form noValidate onSubmit={handleSubmit} className="border border-cream/15 p-6 sm:p-8 space-y-6 rounded-none bg-cream/[0.02]">
+              <div className="border-b border-cream/10 pb-4">
+                <div className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-1">
+                  1-on-1 Direct Advisory
+                </div>
+                <h3 className="font-display text-2xl font-normal text-cream">
+                  Request Strategy Session
+                </h3>
               </div>
 
-              {/* Key Form Fields */}
-              <div className="space-y-2.5">
+              <div className="space-y-4">
                 <div>
-                  <label className="label text-cream/60 text-[9px] block mb-1.5">Full Name *</label>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                    Full Name *
+                  </label>
                   <input
                     type="text"
                     placeholder="e.g. Aryan Mehra"
@@ -293,85 +274,75 @@ export default function BookingSection() {
                       setFormData({ ...formData, fullName: e.target.value });
                       if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
                     }}
-                    className={`input-dark py-3 text-base min-h-[48px] ${
-                      fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
+                    className={`w-full bg-cream/[0.03] border border-cream/15 px-4 py-3.5 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none ${
+                      fieldErrors.fullName ? "border-cream/60" : ""
                     }`}
                   />
                   {fieldErrors.fullName && (
-                    <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
-                      <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
+                    <p className="text-cream/80 text-xs font-mono mt-1.5 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 text-cream/60 flex-shrink-0" />
                       <span>{fieldErrors.fullName}</span>
                     </p>
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label className="label text-cream/60 text-[9px] block mb-1.5">WhatsApp Number *</label>
-                    <input
-                      type="tel"
-                      inputMode="numeric"
-                      placeholder="e.g. 9876543210"
-                      maxLength={10}
-                      value={formData.whatsapp}
-                      onKeyDown={(e) => {
-                        // Allow: backspace, delete, tab, escape, enter, arrow keys
-                        const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
-                        if (allowed.includes(e.key)) return;
-                        // Block anything that isn't a digit 0–9
-                        if (!/^[0-9]$/.test(e.key)) e.preventDefault();
-                      }}
-                      onChange={(e) => {
-                        // Strip any non-digit characters that could arrive via paste
-                        const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
-                        setFormData({ ...formData, whatsapp: digits });
-                        if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
-                      }}
-                      className={`input-dark py-3 text-base min-h-[48px] ${
-                        fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
-                      }`}
-                    />
-                    {fieldErrors.whatsapp && (
-                      <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
-                        <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
-                        <span>{fieldErrors.whatsapp}</span>
-                      </p>
-                    )}
-                  </div>
-                  <div className="relative">
-                    <label className="label text-cream/60 text-[9px] block mb-1.5">Target Country</label>
-                    <select
-                      value={formData.targetCountry}
-                      onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="select-dark py-3 text-base min-h-[48px]"
-                    >
-                      {countries.map((c) => (
-                        <option key={c.value} value={c.value}>{c.label}</option>
-                      ))}
-                    </select>
-                    <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                  </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                    WhatsApp Number *
+                  </label>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="e.g. 9876543210"
+                    maxLength={10}
+                    value={formData.whatsapp}
+                    onKeyDown={(e) => {
+                      const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+                      if (allowed.includes(e.key)) return;
+                      if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+                    }}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      setFormData({ ...formData, whatsapp: digits });
+                      if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
+                    }}
+                    className={`w-full bg-cream/[0.03] border border-cream/15 px-4 py-3.5 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none ${
+                      fieldErrors.whatsapp ? "border-cream/60" : ""
+                    }`}
+                  />
+                  {fieldErrors.whatsapp && (
+                    <p className="text-cream/80 text-xs font-mono mt-1.5 flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 text-cream/60 flex-shrink-0" />
+                      <span>{fieldErrors.whatsapp}</span>
+                    </p>
+                  )}
                 </div>
 
-                {/* Progressive Disclosure Toggle with Rotating Icon */}
-                <div className="pt-0.5">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                    Target Destination
+                  </label>
+                  <select
+                    value={formData.targetCountry}
+                    onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
+                    className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                  >
+                    {countries.map((c) => (
+                      <option key={c.value} value={c.value}>{c.label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="pt-2">
                   <button
                     type="button"
                     onClick={() => setShowFullForm((prev) => !prev)}
-                    className="text-left text-xs label text-terra hover:text-terra-dark py-1 flex items-center gap-1.5 transition-colors cursor-pointer group"
+                    className="text-left text-[10px] uppercase tracking-[0.2em] text-cream/60 hover:text-cream flex items-center gap-2 font-mono"
                   >
-                    <span
-                      className={`inline-flex items-center justify-center h-4 w-4 text-sm font-light transition-transform duration-300 ease-out flex-shrink-0 ${
-                        showFullForm ? "rotate-45 text-terra" : "rotate-0 text-terra"
-                      }`}
-                    >
-                      +
-                    </span>
-                    <span>{showFullForm ? "Hide optional details" : "Add intake & academic details (optional)"}</span>
+                    <span>{showFullForm ? "– Hide optional details" : "+ Add intake & academic details"}</span>
                   </button>
                 </div>
 
-                {/* Collapsible Secondary Fields with Smooth Height Transition */}
                 <AnimatePresence initial={false}>
                   {showFullForm && (
                     <motion.div
@@ -379,397 +350,376 @@ export default function BookingSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                      className="overflow-hidden"
+                      transition={{ duration: 0.35 }}
+                      className="overflow-hidden space-y-4 pt-4 border-t border-cream/10"
                     >
-                      <div className="space-y-2.5 pt-2 pb-1 border-t border-cream/10">
-                        <div className="relative">
-                          <label className="label text-cream/40 text-[9px] block mb-1">Target Intake</label>
-                          <select
-                            value={formData.targetIntake}
-                            onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                            className="select-dark py-2 text-sm min-h-[44px]"
-                          >
-                            {intakes.map((itk) => (
-                              <option key={itk} value={itk}>{itk}</option>
-                            ))}
-                          </select>
-                          <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                        </div>
+                      <div>
+                        <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                          Target Intake
+                        </label>
+                        <select
+                          value={formData.targetIntake}
+                          onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
+                          className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                        >
+                          {intakes.map((itk) => (
+                            <option key={itk} value={itk}>{itk}</option>
+                          ))}
+                        </select>
+                      </div>
 
-                        <div>
-                          <label className="label text-cream/40 text-[9px] block mb-1">Current Academic Background</label>
-                          <input
-                            type="text"
-                            placeholder="e.g. B.Tech CS (7.6 CGPA)"
-                            value={formData.qualification}
-                            onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
-                            className="input-dark py-2 text-sm min-h-[44px]"
-                          />
-                        </div>
+                      <div>
+                        <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                          Academic Background
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. B.Tech CS (7.6 CGPA)"
+                          value={formData.qualification}
+                          onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                          className="w-full bg-cream/[0.03] border border-cream/15 px-4 py-3.5 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                        />
+                      </div>
 
-                        <div className="relative">
-                          <label className="label text-cream/40 text-[9px] block mb-1">Assistance Needed</label>
-                          <select
-                            value={formData.helpNeeded}
-                            onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
-                            className="select-dark py-2 text-sm min-h-[44px]"
-                          >
-                            {helpOptions.map((opt) => (
-                              <option key={opt} value={opt}>{opt}</option>
-                            ))}
-                          </select>
-                          <div className="absolute right-0 bottom-2.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                        </div>
+                      <div>
+                        <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                          Assistance Needed
+                        </label>
+                        <select
+                          value={formData.helpNeeded}
+                          onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
+                          className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                        >
+                          {helpOptions.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                {/* Primary CTA Button — directly above fold with satisfying tactile press */}
-                <div className="pt-2">
+                <div className="pt-4 border-t border-cream/10">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[52px] py-3.5 label text-xs tracking-wider rounded-lg transition-all cursor-pointer btn-primary-glow"
+                    className="w-full bg-cream text-ink hover:bg-cream/90 disabled:opacity-50 py-5 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium transition-colors inline-flex items-center justify-center gap-3 cursor-pointer"
                   >
                     {loading ? (
                       <>
-                        <div className="h-4 w-4 border-2 border-cream border-t-transparent rounded-full animate-spin" />
+                        <div className="h-4 w-4 border-2 border-ink border-t-transparent rounded-full animate-spin" />
                         Routing to Senior Mentor…
                       </>
                     ) : (
                       <>
-                        Confirm Advisory Session
-                        <ArrowRight className="h-4 w-4" />
+                        <span>Confirm Advisory Session</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
                       </>
                     )}
                   </button>
-                  <div className="flex items-center justify-between text-[10px] text-cream/35 mt-2.5 font-light">
-                    <span>No cost. No obligation.</span>
-                    <span>Direct 1-on-1 mentor review</span>
-                  </div>
+                  <p className="text-center text-[10px] uppercase tracking-[0.2em] text-cream/30 font-mono mt-3">
+                    No cost · Direct mentor review
+                  </p>
                 </div>
               </div>
             </form>
           )}
         </div>
 
-        {/* ── DESKTOP: Full Multi-Column Layout (hidden on mobile) ── */}
-        <div className="hidden lg:block">
-          {/* Header */}
-          <motion.div
-            className="border-t border-cream/[0.12] pt-10 mb-12 lg:mb-16"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-8%" }}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
-            <div className="label text-cream/55 mb-4">Direct Consultation Booking</div>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-              <h2
-                className="font-display font-normal text-cream leading-[0.93] tracking-tight text-[3.6rem]"
-              >
-                Schedule Your<br />
-                <em className="text-terra">1-on-1 Strategy Call</em>
-              </h2>
-              <p className="text-cream/65 text-sm leading-relaxed max-w-sm font-light">
-                Provide your current academic details. Every submission is personally reviewed by a senior mentor before we contact you directly on WhatsApp.
-              </p>
+        {/* ── DESKTOP DUAL COLUMN (Flat, 0px radius, 1px hairlines) ── */}
+        <div className="hidden lg:grid grid-cols-12 gap-16 items-start">
+          {/* Left Column: What to Expect & Instant Direct Chat */}
+          <div className="col-span-5 space-y-12">
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-2">
+                Session Structure
+              </span>
+              <h3 className="font-display text-3xl font-normal text-cream leading-tight">
+                What to Expect During Your Strategy Call
+              </h3>
             </div>
-          </motion.div>
 
-          {/* Two-column grid */}
-          <div className="grid grid-cols-12 gap-16 items-start">
-            {/* Left: Session info */}
-            <motion.div
-              className="col-span-4 space-y-8"
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-            >
-              <div className="border-t border-cream/[0.08] pt-6 space-y-4">
-                <h3 className="font-display text-xl font-normal text-cream tracking-tight mb-2">
-                  What to Expect During Your Session
-                </h3>
-                {[
-                  {
-                    title: "Unbiased Profile Audit",
-                    desc: "Rigorous evaluation of GPA, backlogs, education gaps, and GRE/IELTS readiness. Zero false promises.",
-                  },
-                  {
-                    title: "Country & Budget Matching",
-                    desc: "Aligning your realistic liquid funds with tuition costs, post-study work rules, and career visa rights.",
-                  },
-                  {
-                    title: "Immediate Action Plan",
-                    desc: "You receive a concrete timeline for test deadlines, SOP iterations, and university submission cut-offs.",
-                  },
-                ].map((item, i) => (
-                  <div key={i} className="rounded-xl p-4 bg-cream/[0.025] border border-cream/[0.05] hover:bg-cream/[0.04] transition-colors grid grid-cols-[20px_1fr] gap-3.5 items-start">
-                    <div className="h-5 w-5 rounded border border-terra/40 bg-terra/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-3 w-3 text-terra" />
-                    </div>
-                    <div>
-                      <div className="label text-cream/70 text-[10px] mb-1">{item.title}</div>
-                      <p className="text-cream/40 text-xs leading-relaxed font-light">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-cream/[0.08] pt-6 space-y-3">
-                <div className="flex items-center gap-2 text-xs text-cream/45">
-                  <ShieldCheck className="h-4 w-4 text-terra flex-shrink-0" />
-                  <span>100% Confidential · Zero Spam · No Call Center Handoffs</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs text-cream/35">
-                  <Clock className="h-4 w-4 text-cream/25 flex-shrink-0" />
-                  <span>Direct reply within 4 business hours</span>
-                </div>
-              </div>
-
-              <div className="rounded-2xl p-6 bg-gradient-to-br from-terra/[0.09] via-terra/[0.03] to-cream/[0.015] border border-terra/20 shadow-[0_4px_24px_rgba(194,91,26,0.06)]">
-                <p className="font-display text-base text-cream/90 font-normal mb-1">
-                  Have an urgent visa deadline?
-                </p>
-                <p className="text-cream/40 text-xs mb-4 font-light">Message directly on WhatsApp for immediate priority review</p>
-                <a
-                  href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-cream/[0.15] hover:border-terra/50 bg-cream/[0.03] hover:bg-cream/[0.07] text-cream/80 hover:text-terra px-4 py-3 min-h-[48px] label text-[10px] transition-all btn-tactile shadow-sm"
-                >
-                  <MessageCircle className="h-4 w-4 text-terra" />
-                  Open Instant WhatsApp Chat
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Right: Full Desktop Form */}
-            <motion.div
-              className="col-span-8"
-              initial={{ opacity: 0, x: 16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
-            >
-              {submitted ? (
-                <div className="rounded-2xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.05] to-cream/[0.02] p-10 lg:p-12 text-center space-y-6 shadow-[0_24px_64px_-16px_rgba(0,0,0,0.5)]">
-                  <div className="h-14 w-14 mx-auto rounded-full border border-terra/50 bg-terra/10 flex items-center justify-center">
-                    <Check className="h-7 w-7 text-terra" />
-                  </div>
+            <div className="border-t border-cream/10 divide-y divide-cream/10">
+              {[
+                {
+                  number: "01",
+                  title: "Unbiased Profile Audit",
+                  desc: "Rigorous evaluation of GPA, backlogs, education gaps, and GRE/IELTS readiness. Zero false promises.",
+                },
+                {
+                  number: "02",
+                  title: "Country & Budget Matching",
+                  desc: "Aligning your realistic liquid funds with tuition costs, post-study work rules, and career visa rights.",
+                },
+                {
+                  number: "03",
+                  title: "Immediate Action Plan",
+                  desc: "You receive a concrete timeline for test deadlines, SOP iterations, and university submission cut-offs.",
+                },
+              ].map((item) => (
+                <div key={item.number} className="py-6 flex items-start gap-6">
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-cream/40 font-mono pt-1">
+                    {item.number}
+                  </span>
                   <div>
-                    <span className="label text-[10px] text-terra border border-terra/30 bg-terra/[0.06] rounded-full px-3.5 py-1 inline-block mb-3">
-                      Admissions Dossier Queued
-                    </span>
-                    <h3 className="font-display text-3xl font-normal text-cream tracking-tight">
-                      Strategy Session Confirmed
-                    </h3>
-                    <p className="text-cream/60 text-sm mt-3 max-w-md mx-auto leading-relaxed font-light">
-                      Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. Your profile audit has been registered. A senior mentor will evaluate your background and connect on WhatsApp at{" "}
-                      <strong className="text-terra font-medium">{formData.whatsapp}</strong>.
-                    </p>
-                    <div className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cream/10 bg-cream/[0.02] px-4 py-2.5 text-xs text-cream/70 font-light">
-                      <Clock className="w-4 h-4 text-terra flex-shrink-0" />
-                      <span>Direct Advisory Guarantee: Personal mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl border border-cream/[0.08] p-5 max-w-md mx-auto text-left text-xs space-y-2.5 text-cream/40 bg-cream/[0.015]">
-                    <div className="label text-terra/70 mb-3">Session Overview</div>
-                    <p className="flex justify-between border-b border-cream/[0.06] pb-2">
-                      <span>Target Country:</span>
-                      <strong className="text-cream/80">{formData.targetCountry}</strong>
-                    </p>
-                    <p className="flex justify-between border-b border-cream/[0.06] pb-2">
-                      <span>Target Intake:</span>
-                      <strong className="text-cream/80">{formData.targetIntake}</strong>
-                    </p>
-                    <p className="flex justify-between">
-                      <span>Advisory Scope:</span>
-                      <strong className="text-cream/80">{formData.helpNeeded}</strong>
+                    <h4 className="font-display text-xl text-cream font-normal mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-sm text-cream/60 font-light leading-relaxed">
+                      {item.desc}
                     </p>
                   </div>
+                </div>
+              ))}
+            </div>
 
-                  <div className="flex flex-col items-center gap-3 pt-2">
-                    {/* Fallback link — shown if the auto-open was blocked by the browser/OS */}
-                    <p className="text-cream/40 text-xs font-light">
-                      WhatsApp should have opened automatically.{" "}
-                      <a
-                        href={getWhatsAppDirectUrl()}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-terra hover:text-terra-dark underline underline-offset-2 transition-colors"
-                      >
-                        Click here if it didn&apos;t.
-                      </a>
-                    </p>
-                    <button
-                      onClick={() => {
-                        setSubmitted(false);
-                        setFormData({
-                          fullName: "", whatsapp: "", email: "", qualification: "",
-                          targetCountry: "UK",
-                          targetIntake: "Fall 2026 (Aug / Sep)",
-                          helpNeeded: "End-to-End Mentorship (Shortlisting + SOP + Visa)",
-                        });
-                      }}
-                      className="text-cream/25 hover:text-cream/50 text-xs border-b border-cream/15 pb-0.5 transition-colors"
+            {/* Urgent Priority Review Box */}
+            <div className="border border-cream/15 p-8 bg-cream/[0.02]">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-2">
+                Urgent Intake Deadline?
+              </div>
+              <p className="text-sm text-cream/70 font-light mb-6">
+                Message directly on WhatsApp for immediate priority review by an active senior mentor.
+              </p>
+              <a
+                href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20urgent%20query%20regarding%20my%20study%20abroad%20application."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-3 border border-cream/20 hover:border-cream/50 text-cream px-6 py-4 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium transition-colors"
+              >
+                <MessageCircle className="h-4 w-4 text-cream/70" />
+                <span>Open Instant WhatsApp Chat</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Full Form */}
+          <div className="col-span-7">
+            {submitted ? (
+              <div className="border border-cream/15 p-12 lg:p-16 text-center space-y-8 bg-cream/[0.02] rounded-none">
+                <div className="h-16 w-16 mx-auto border border-cream/30 flex items-center justify-center">
+                  <Check className="h-8 w-8 text-cream" />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-3">
+                    Admissions Dossier Queued
+                  </span>
+                  <h3 className="font-display text-3xl lg:text-4xl font-normal text-cream tracking-tight">
+                    Strategy Session Confirmed
+                  </h3>
+                  <p className="text-cream/70 text-base mt-4 max-w-md mx-auto leading-relaxed font-light">
+                    Thank you, <strong className="text-cream font-medium">{formData.fullName}</strong>. Your profile audit has been registered. A senior mentor will evaluate your background and connect on WhatsApp at{" "}
+                    <strong className="text-cream font-medium">+91 {formData.whatsapp}</strong>.
+                  </p>
+                  <div className="mt-6 inline-flex items-center gap-2 border border-cream/10 px-5 py-3 text-xs text-cream/70 font-light">
+                    <Clock className="w-4 h-4 text-cream/40 flex-shrink-0" />
+                    <span>Direct Advisory Guarantee: Personal mentor reply within <strong className="text-cream font-medium">4 hours</strong> (Mon–Sat).</span>
+                  </div>
+                </div>
+
+                <div className="border border-cream/10 p-6 max-w-md mx-auto text-left text-xs space-y-3 text-cream/50">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-cream/70 font-mono mb-2">Session Overview</div>
+                  <div className="flex justify-between border-b border-cream/10 pb-2">
+                    <span>Target Country:</span>
+                    <strong className="text-cream">{formData.targetCountry}</strong>
+                  </div>
+                  <div className="flex justify-between border-b border-cream/10 pb-2">
+                    <span>Target Intake:</span>
+                    <strong className="text-cream">{formData.targetIntake}</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Advisory Scope:</span>
+                    <strong className="text-cream">{formData.helpNeeded}</strong>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-3 pt-4 border-t border-cream/10">
+                  <p className="text-cream/40 text-xs font-light">
+                    WhatsApp should have opened automatically.{" "}
+                    <a
+                      href={getWhatsAppDirectUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cream underline underline-offset-4"
                     >
-                      Submit Another Profile
-                    </button>
-                  </div>
+                      Click here if it didn&apos;t.
+                    </a>
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({
+                        fullName: "", whatsapp: "", email: "", qualification: "",
+                        targetCountry: "UK",
+                        targetIntake: "Fall 2026 (Aug / Sep)",
+                        helpNeeded: "End-to-End Mentorship (Shortlisting + SOP + Visa)",
+                      });
+                    }}
+                    className="text-cream/30 hover:text-cream text-xs uppercase tracking-widest font-mono pt-2"
+                  >
+                    Submit Another Profile
+                  </button>
                 </div>
-              ) : (
-                <div className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-cream/[0.05] via-cream/[0.025] to-cream/[0.015] border border-cream/[0.08] shadow-[0_24px_64px_-16px_rgba(0,0,0,0.5)] backdrop-blur-sm relative">
-                  <form noValidate onSubmit={handleSubmit} className="space-y-7">
-                    <div className="border-b border-cream/[0.08] pb-5">
-                      <div className="label text-terra mb-1">1-on-1 Consultation</div>
-                      <h3 className="font-display text-2xl font-normal text-cream tracking-tight mt-1">
-                        Request Your Advisory Session
-                      </h3>
-                    </div>
+              </div>
+            ) : (
+              <form noValidate onSubmit={handleSubmit} className="border border-cream/15 p-10 lg:p-12 space-y-8 bg-cream/[0.02] rounded-none">
+                <div className="border-b border-cream/10 pb-6">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-2">
+                    Direct Advisory Form
+                  </span>
+                  <h3 className="font-display text-2xl lg:text-3xl font-normal text-cream">
+                    Request Your Advisory Session
+                  </h3>
+                </div>
 
-                  {/* Name + WhatsApp */}
-                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
-                    <div>
-                      <LabelEl icon={User}>Full Name *</LabelEl>
-                      <input
-                        type="text"
-                        placeholder="e.g. Aryan Mehra"
-                        value={formData.fullName}
-                        onChange={(e) => {
-                          setFormData({ ...formData, fullName: e.target.value });
-                          if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
-                        }}
-                        className={`input-dark ${
-                          fieldErrors.fullName ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
-                        }`}
-                      />
-                      {fieldErrors.fullName && (
-                        <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
-                          <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
-                          <span>{fieldErrors.fullName}</span>
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <LabelEl icon={Phone}>WhatsApp Number *</LabelEl>
-                      <input
-                        type="tel"
-                        inputMode="numeric"
-                        placeholder="e.g. 9876543210"
-                        maxLength={10}
-                        value={formData.whatsapp}
-                        onKeyDown={(e) => {
-                          const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
-                          if (allowed.includes(e.key)) return;
-                          if (!/^[0-9]$/.test(e.key)) e.preventDefault();
-                        }}
-                        onChange={(e) => {
-                          const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
-                          setFormData({ ...formData, whatsapp: digits });
-                          if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
-                        }}
-                        className={`input-dark ${
-                          fieldErrors.whatsapp ? "border-terra/70 focus:border-terra bg-terra/[0.02]" : ""
-                        }`}
-                      />
-                      {fieldErrors.whatsapp && (
-                        <p className="text-terra text-[11px] font-sans font-light mt-1.5 flex items-center gap-1.5 animate-slide-up-fade">
-                          <AlertCircle className="w-3.5 h-3.5 text-terra flex-shrink-0" />
-                          <span>{fieldErrors.whatsapp}</span>
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Country + Intake */}
-                  <div className="grid grid-cols-2 gap-8 lg:gap-10">
-                    <div className="relative">
-                      <LabelEl icon={Globe2}>Target Destination</LabelEl>
-                      <select
-                        value={formData.targetCountry}
-                        onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                        className="select-dark"
-                      >
-                        {countries.map((c) => (
-                          <option key={c.value} value={c.value}>{c.label}</option>
-                        ))}
-                      </select>
-                      <div className="absolute right-0 bottom-3.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                    </div>
-                    <div className="relative">
-                      <LabelEl icon={Calendar}>Target Intake</LabelEl>
-                      <select
-                        value={formData.targetIntake}
-                        onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                        className="select-dark"
-                      >
-                        {intakes.map((itk) => (
-                          <option key={itk} value={itk}>{itk}</option>
-                        ))}
-                      </select>
-                      <div className="absolute right-0 bottom-3.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
-                    </div>
-                  </div>
-
-                  {/* Academic background */}
+                {/* Name + WhatsApp */}
+                <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <LabelEl icon={GraduationCap}>Current Academic Background & Score</LabelEl>
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                      Full Name *
+                    </label>
                     <input
                       type="text"
-                      placeholder="e.g. B.Tech Computer Science (7.6 CGPA / 72%)"
-                      value={formData.qualification}
-                      onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
-                      className="input-dark"
+                      placeholder="e.g. Aryan Mehra"
+                      value={formData.fullName}
+                      onChange={(e) => {
+                        setFormData({ ...formData, fullName: e.target.value });
+                        if (fieldErrors.fullName) setFieldErrors({ ...fieldErrors, fullName: undefined });
+                      }}
+                      className={`w-full bg-cream/[0.03] border border-cream/15 px-4 py-4 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none ${
+                        fieldErrors.fullName ? "border-cream/60" : ""
+                      }`}
                     />
+                    {fieldErrors.fullName && (
+                      <p className="text-cream/80 text-xs font-mono mt-1.5 flex items-center gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 text-cream/60 flex-shrink-0" />
+                        <span>{fieldErrors.fullName}</span>
+                      </p>
+                    )}
                   </div>
 
-                  {/* Help needed */}
-                  <div className="relative">
-                    <LabelEl icon={HelpCircle}>How can we best assist you?</LabelEl>
+                  <div>
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                      WhatsApp Number *
+                    </label>
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      placeholder="e.g. 9876543210"
+                      maxLength={10}
+                      value={formData.whatsapp}
+                      onKeyDown={(e) => {
+                        const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+                        if (allowed.includes(e.key)) return;
+                        if (!/^[0-9]$/.test(e.key)) e.preventDefault();
+                      }}
+                      onChange={(e) => {
+                        const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                        setFormData({ ...formData, whatsapp: digits });
+                        if (fieldErrors.whatsapp) setFieldErrors({ ...fieldErrors, whatsapp: undefined });
+                      }}
+                      className={`w-full bg-cream/[0.03] border border-cream/15 px-4 py-4 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none ${
+                        fieldErrors.whatsapp ? "border-cream/60" : ""
+                      }`}
+                    />
+                    {fieldErrors.whatsapp && (
+                      <p className="text-cream/80 text-xs font-mono mt-1.5 flex items-center gap-1.5">
+                        <AlertCircle className="w-3.5 h-3.5 text-cream/60 flex-shrink-0" />
+                        <span>{fieldErrors.whatsapp}</span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Country + Intake */}
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                      Target Destination
+                    </label>
                     <select
-                      value={formData.helpNeeded}
-                      onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
-                      className="select-dark"
+                      value={formData.targetCountry}
+                      onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
+                      className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                     >
-                      {helpOptions.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
+                      {countries.map((c) => (
+                        <option key={c.value} value={c.value}>{c.label}</option>
                       ))}
                     </select>
-                    <div className="absolute right-0 bottom-3.5 pointer-events-none text-cream/30 text-[10px]">▾</div>
                   </div>
 
-                  {/* Submit */}
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="w-full inline-flex items-center justify-center gap-3 bg-terra hover:bg-terra-dark disabled:opacity-50 text-cream min-h-[56px] py-4 label rounded-lg transition-all cursor-pointer text-xs tracking-wider btn-primary-glow"
+                  <div>
+                    <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                      Target Intake
+                    </label>
+                    <select
+                      value={formData.targetIntake}
+                      onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
+                      className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                     >
-                      {loading ? (
-                        <>
-                          <div className="h-4 w-4 border-2 border-cream border-t-transparent rounded-full animate-spin" />
-                          Routing to Senior Mentor…
-                        </>
-                      ) : (
-                        <>
-                          Confirm Advisory Session
-                          <ArrowRight className="h-4 w-4" />
-                        </>
-                      )}
-                    </button>
-                    <p className="text-center text-cream/25 text-[11px] mt-3 font-light">
-                      Zero spam guarantee · Direct 1-on-1 advisor review
-                    </p>
+                      {intakes.map((itk) => (
+                        <option key={itk} value={itk}>{itk}</option>
+                      ))}
+                    </select>
                   </div>
-                </form>
-              </div>
+                </div>
+
+                {/* Academic Background */}
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                    Current Academic Background &amp; Score
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. B.Tech Computer Science (7.6 CGPA / 72%)"
+                    value={formData.qualification}
+                    onChange={(e) => setFormData({ ...formData, qualification: e.target.value })}
+                    className="w-full bg-cream/[0.03] border border-cream/15 px-4 py-4 text-cream placeholder-cream/20 text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                  />
+                </div>
+
+                {/* Assistance Needed */}
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-cream/50 font-mono block mb-2">
+                    How can we best assist you?
+                  </label>
+                  <select
+                    value={formData.helpNeeded}
+                    onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
+                    className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                  >
+                    {helpOptions.map((opt) => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-4 border-t border-cream/10">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-cream text-ink hover:bg-cream/90 disabled:opacity-50 min-h-[58px] py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium transition-colors inline-flex items-center justify-center gap-3 cursor-pointer"
+                  >
+                    {loading ? (
+                      <>
+                        <div className="h-4 w-4 border-2 border-ink border-t-transparent rounded-full animate-spin" />
+                        Routing to Senior Mentor…
+                      </>
+                    ) : (
+                      <>
+                        <span>Confirm Advisory Session</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </>
+                    )}
+                  </button>
+                  <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-cream/35 font-mono mt-4">
+                    <span>100% Confidential · Zero Spam</span>
+                    <span>Direct 1-on-1 Mentor Review</span>
+                  </div>
+                </div>
+              </form>
             )}
-          </motion.div>
           </div>
         </div>
 

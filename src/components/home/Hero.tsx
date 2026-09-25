@@ -1,13 +1,10 @@
 "use client";
 
 import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ArrowDown, MessageCircle, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import StatCounter from "@/components/common/StatCounter";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-// University mentions from outcomes data — text-based credibility strip
 const UNIVERSITY_MENTIONS = [
   "Columbia University",
   "TU Munich",
@@ -18,9 +15,6 @@ const UNIVERSITY_MENTIONS = [
 ];
 
 export default function Hero() {
-  const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 800], [0, 36]);
-
   const metrics = [
     { value: "99.2%", label: "Visa Approval Record" },
     { value: "500+", label: "Students Mentored 1-on-1" },
@@ -29,224 +23,125 @@ export default function Hero() {
   ];
 
   return (
-    <section
-      className="relative min-h-screen bg-[#14120C] grain-ink flex flex-col overflow-hidden"
-    >
-      {/* Full-bleed evocative travel/study abroad background photography */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
-        <img
-          src="/images/hero-plane.webp"
-          alt="International travel and study abroad departures"
-          className="w-full h-full object-cover object-[center_35%] opacity-70 transform scale-105"
-          loading="eager"
-          decoding="async"
-        />
-        {/* Deep ink directional gradient overlays matching site palette: ~75-85% at bottom fading lighter at top */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#14120C] via-[#14120C]/75 to-[#14120C]/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#14120C]/90 via-[#14120C]/65 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(194,91,26,0.18),transparent_70%)]" />
-      </div>
-
-      {/* Subtle parallax ambient tonal glow */}
-      <motion.div
-        className="absolute inset-0 opacity-60 pointer-events-none z-[1]"
-        style={{
-          y: bgY,
-          backgroundImage: "radial-gradient(ellipse at 18% 18%, rgba(194,91,26,.14), transparent 48%), radial-gradient(ellipse at 84% 64%, rgba(242,237,228,.04), transparent 42%)",
-        }}
-      />
-
-      {/* Status bar */}
-      <div className="relative pt-28 lg:pt-32 px-6 lg:px-12 z-10 max-w-7xl w-full mx-auto">
+    <section className="relative min-h-screen bg-[#14120C] text-cream flex flex-col justify-between overflow-hidden">
+      {/* Top Status & Radical Spacing */}
+      <div className="pt-32 sm:pt-36 lg:pt-44 px-6 lg:px-16 max-w-7xl w-full mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="inline-flex items-center gap-2.5"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9 }}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cream/10 pb-6"
         >
-          <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono">
+            Admissions Open · 2026 / 2027 Intakes
           </span>
-          <span className="label text-cream/40">Admissions Open · 2026 / 2027 Intakes</span>
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-cream/40 font-mono">
+            Limited Mentor Capacity · Fall 2026 &amp; Spring 2027
+          </span>
         </motion.div>
       </div>
 
-      {/* Main content grid */}
-      <div className="relative flex-1 flex flex-col justify-center px-6 lg:px-12 py-5 sm:py-8 lg:py-16 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end max-w-7xl mx-auto w-full">
+      {/* Main Dominant Headline with Radical Negative Space */}
+      <div className="flex-1 flex flex-col justify-center px-6 lg:px-16 py-16 sm:py-24 lg:py-32 max-w-7xl w-full mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.0 }}
+        >
+          <h1 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[3.25rem] min-[390px]:text-[3.85rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9.25rem]">
+            Elite 1-on-1<br />
+            Study Abroad<br />
+            Mentorship.<br />
+            {/* The single terracotta accent in the entire section */}
+            <span className="text-terra italic">Zero Compromises.</span>
+          </h1>
+        </motion.div>
 
-          {/* Headline — 8 cols on desktop, full on mobile */}
-          <div className="lg:col-span-8">
-            <h1
-              className="font-display font-normal text-cream leading-[0.93] tracking-[-0.025em] text-[2.75rem] min-[390px]:text-[3.25rem] sm:text-6xl md:text-7xl lg:text-[6.8rem] xl:text-[7.4rem]"
-            >
-              Elite 1-on-1<br />
-              Study Abroad<br />
-              Mentorship.<br />
-              <em className="text-terra not-italic italic font-normal tracking-tight">Zero Compromises.</em>
-            </h1>
-
-            {/* Urgency / capacity signal — soft glass pill */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE, delay: 0.55 }}
-              className="mt-3.5 sm:mt-5 inline-flex items-center gap-2 rounded-full border border-terra/25 bg-gradient-to-r from-terra/[0.12] via-terra/[0.06] to-transparent backdrop-blur-md px-3.5 py-1 sm:px-4 sm:py-1.5 shadow-[0_2px_14px_rgba(194,91,26,0.12)]"
-            >
-              <span className="relative flex h-2 w-2 flex-shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
-              </span>
-              <span className="label text-[9px] text-terra/90 tracking-wider">
-                Now Accepting Fall 2026 &amp; Spring 2027 Applications — Limited Mentor Capacity
-              </span>
-            </motion.div>
-
-            {/* Mobile Stats: 2x2 Grid (All 4 Audited Metrics Instantly Visible) */}
-            <div className="lg:hidden mt-4 sm:mt-6">
-              <div className="text-[10px] label text-cream/35 mb-2 tracking-widest">
-                Verified Admissions Ledger
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
-                {metrics.map((m, i) => (
-                  <div
-                    key={i}
-                    className="rounded-xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-3.5 sm:p-4 flex flex-col justify-between shadow-[0_6px_20px_-4px_rgba(0,0,0,0.35)] backdrop-blur-sm card-hover-dark"
-                  >
-                    <div className="flex items-center justify-between border-b border-cream/[0.08] pb-2">
-                      <span className="label text-[8px] sm:text-[9px] text-cream/35">Metric 0{i + 1}</span>
-                      <span className="text-[8px] sm:text-[9px] text-terra label tracking-widest">Audited</span>
-                    </div>
-                    <div className="font-display text-2xl sm:text-3xl text-terra font-normal leading-none mt-2.5">
-                      <StatCounter value={m.value} duration={1.6} />
-                    </div>
-                    <div className="label text-cream/65 text-[9px] sm:text-[10px] mt-2 tracking-wider leading-snug">
-                      {m.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Narrative & High-Contrast CTAs */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
+          className="mt-16 sm:mt-24 lg:mt-32 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end border-t border-cream/10 pt-10 sm:pt-14"
+        >
+          <div className="lg:col-span-7">
+            <p className="text-cream/70 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-xl">
+              Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[10px] uppercase tracking-[0.2em] text-cream/35">
+              <span>99.2% Visa Approval Rate</span>
+              <span>·</span>
+              <span>Zero Institutional Kickbacks</span>
+              <span>·</span>
+              <span>Official Visa Stamped</span>
             </div>
           </div>
 
-          {/* Desktop Stats: 4 cols stacked ledger with staggered cascade & count-up */}
-          <div className="hidden lg:grid lg:col-span-4 lg:grid-cols-1 gap-3.5">
-            <div className="label text-cream/40 text-[10px] tracking-widest pl-1 mb-0.5">
-              Verified Admissions Ledger
-            </div>
+          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center lg:items-start xl:items-center gap-4">
+            <a
+              href="#booking"
+              className="bg-cream text-ink hover:bg-cream/90 px-8 py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium text-center transition-colors inline-flex items-center justify-center gap-3"
+            >
+              <span>Book Strategy Session</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+
+            <a
+              href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-cream/20 hover:border-cream/50 text-cream px-6 py-4 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-colors inline-flex items-center justify-center gap-2.5"
+            >
+              <MessageCircle className="h-3.5 w-3.5 text-cream/70" />
+              <span>Chat Live</span>
+            </a>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Admissions Ledger: Flat, 1px Hairline Grid, Radical Restraint */}
+      <div className="border-t border-b border-cream/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 divide-x-0 lg:divide-x divide-cream/10">
             {metrics.map((m, i) => (
-              <motion.div
+              <div
                 key={i}
-                className="rounded-xl p-5 bg-gradient-to-b from-cream/[0.045] to-cream/[0.015] border border-cream/[0.08] backdrop-blur-sm shadow-[0_4px_24px_-2px_rgba(0,0,0,0.3)] hover:border-cream/[0.16] hover:bg-cream/[0.05] hover:-translate-y-0.5 transition-all duration-300 group"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.65, ease: EASE, delay: 0.35 + i * 0.08 }}
+                className={`py-8 sm:py-10 ${i % 2 === 0 ? "pr-4 sm:pr-8" : "pl-4 sm:pl-8 lg:pl-8"} ${i > 0 ? "lg:pl-8" : ""} ${i < 3 ? "lg:pr-8" : ""}`}
               >
-                <div className="flex items-center justify-between border-b border-cream/[0.07] pb-2 mb-3">
-                  <span className="label text-[9px] text-cream/35">Metric 0{i + 1}</span>
-                  <span className="text-[9px] text-terra label tracking-widest">Audited</span>
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-cream/35 mb-3">
+                  <span>Metric 0{i + 1}</span>
+                  <span>Audited</span>
                 </div>
-                <div className="font-display text-3xl lg:text-[2.6rem] text-terra font-normal leading-none">
-                  <StatCounter value={m.value} duration={1.8} />
+                <div className="font-display text-3xl sm:text-4xl lg:text-5xl text-cream font-normal leading-none tracking-tight">
+                  <StatCounter value={m.value} duration={1.6} />
                 </div>
-                <div className="label text-cream/60 text-[10px] mt-2.5 tracking-wider leading-relaxed">
+                <div className="text-[10px] uppercase tracking-[0.18em] text-cream/60 mt-3 leading-snug">
                   {m.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* University trust strip */}
-      <motion.div
-        className="relative border-t border-cream/[0.07] px-6 lg:px-12 py-4 max-w-full z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, ease: EASE, delay: 0.75 }}
-      >
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
-          <span className="label text-cream/25 text-[9px] whitespace-nowrap flex-shrink-0">As trusted by students heading to</span>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+      {/* University Trust Strip: 1px Hairline Rule */}
+      <div className="px-6 lg:px-16 py-6 max-w-7xl w-full mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-cream/30 whitespace-nowrap">
+            Admissions Secured At
+          </span>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {UNIVERSITY_MENTIONS.map((uni) => (
               <span
                 key={uni}
-                className="font-display text-cream/30 text-sm tracking-tight hover:text-cream/50 transition-colors cursor-default select-none"
+                className="font-display text-cream/40 text-sm sm:text-base tracking-tight cursor-default select-none"
               >
                 {uni}
               </span>
             ))}
           </div>
         </div>
-      </motion.div>
-
-      {/* Bottom strip: body copy + CTAs with tactile press */}
-      <motion.div
-        className="relative border-t border-cream/10 px-6 lg:px-12 py-7 lg:py-8 max-w-full z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.65, ease: EASE, delay: 0.6 }}
-      >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          <p className="text-cream/65 text-sm lg:text-base leading-relaxed font-sans font-light max-w-lg">
-            Personalized profile assessment, Ivy League &amp; Russell Group SOP curation, and foolproof consular visa prep — directly from a dedicated mentor.
-          </p>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-            {/* Primary CTA — dominant, with glow */}
-            <div className="flex flex-col items-stretch sm:items-start gap-1">
-              <a
-                href="#booking"
-                className="inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label rounded-lg transition-colors group text-center btn-primary-glow"
-              >
-                Book Strategy Session
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </a>
-              <span className="text-cream/35 text-[10px] font-sans font-light text-center sm:text-left px-1 leading-relaxed">
-                No cost. No obligation. Direct mentor review.
-              </span>
-            </div>
-
-            {/* Secondary CTAs */}
-            <div className="flex flex-row sm:flex-col gap-2.5">
-              <a
-                href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 text-cream/70 hover:text-cream text-sm min-h-[44px] rounded-lg border border-cream/[0.12] bg-cream/[0.03] hover:bg-cream/[0.07] hover:border-terra/40 px-4 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none shadow-sm"
-              >
-                <MessageCircle className="h-4 w-4 text-terra flex-shrink-0" />
-                <span>Chat Live</span>
-              </a>
-              <a
-                href="#destinations"
-                className="inline-flex items-center justify-center gap-1.5 text-cream/40 hover:text-cream/70 text-sm min-h-[44px] rounded-lg px-3 py-2.5 transition-all text-center btn-tactile flex-1 sm:flex-none"
-              >
-                <ArrowDown className="h-3.5 w-3.5" />
-                <span>See how it works</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Differentiator badges row */}
-        <motion.div
-          className="max-w-7xl mx-auto mt-5 flex flex-wrap items-center gap-2.5"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.85 }}
-        >
-          <div className="trust-badge">
-            <ShieldCheck className="w-3 h-3 flex-shrink-0" />
-            99.2% Visa Approval Rate
-          </div>
-          <div className="trust-badge">
-            <ShieldCheck className="w-3 h-3 flex-shrink-0" />
-            Zero Institutional Kickbacks
-          </div>
-          <span className="text-cream/20 text-[10px] font-light font-sans">Verified against official visa stamps</span>
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }

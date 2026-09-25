@@ -4,11 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 const steps = [
   {
-    numeral: "I",
     number: "01",
     title: "Profile Audit & Goal Alignment",
     subtitle: "Deep Dive into GPA, Budget & Career ROI",
@@ -16,7 +13,6 @@ const steps = [
     milestone: "Diagnostic Dossier & Financial Roadmap",
   },
   {
-    numeral: "II",
     number: "02",
     title: "Strategic Shortlisting",
     subtitle: "Safe, Target & Ambitious University Matrix",
@@ -24,7 +20,6 @@ const steps = [
     milestone: "Personalized University Shortlist Matrix",
   },
   {
-    numeral: "III",
     number: "03",
     title: "Application & Essay Mastery",
     subtitle: "Compelling Narrative with 0% AI Detection",
@@ -32,7 +27,6 @@ const steps = [
     milestone: "Polished SOPs & Finalised Application Portals",
   },
   {
-    numeral: "IV",
     number: "04",
     title: "Embassy Visa Preparation",
     subtitle: "Document Scrutiny & Consular Mock Simulations",
@@ -45,116 +39,93 @@ export default function ProcessRoadmap() {
   return (
     <section
       id="process"
-      className="bg-cream-50 py-20 lg:py-28 overflow-hidden w-full"
+      className="bg-[#F2EDE4] py-28 sm:py-36 lg:py-48 overflow-hidden w-full text-ink"
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
-        {/* ── Section header ── */}
-        <motion.div
-          className="border-t border-ink/12 pt-10 mb-12 lg:mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-6"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-8%" }}
-          transition={{ duration: 0.6, ease: EASE }}
-        >
-          <div>
-            <div className="label text-stone mb-4">The 4-Stage Mentorship Journey</div>
-            <h2
-              className="font-display font-normal text-ink leading-[0.93] tracking-tight"
-              style={{ fontSize: "clamp(34px, 5vw, 60px)" }}
-            >
-              A Transparent, Precision-Engineered<br />
-              <em>Admissions Roadmap</em>
-            </h2>
+        {/* ── Section header: Radical negative space, monumental typography ── */}
+        <div className="border-t border-ink/15 pt-12 sm:pt-16 mb-16 sm:mb-24 lg:mb-32">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div>
+              <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
+                The 4-Stage Mentorship Journey
+              </div>
+              <h2 className="font-display font-normal text-ink leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+                A Transparent, Precision-Engineered<br />
+                {/* Exactly ONE terracotta accent in this entire section */}
+                <span className="text-terra italic">Admissions Roadmap.</span>
+              </h2>
+            </div>
+            <p className="text-ink/65 text-base sm:text-lg font-light leading-relaxed max-w-md">
+              From your very first diagnostic call to passport stamping, every single stage is personally managed and audited by your dedicated mentor.
+            </p>
           </div>
-          <p className="text-stone text-sm leading-relaxed max-w-full sm:max-w-sm font-light">
-            From your very first diagnostic call to passport stamping, every single stage is personally managed and audited by your dedicated mentor.
-          </p>
-        </motion.div>
+        </div>
 
-        {/* ── 4 stage entries ── */}
-        <div>
+        {/* ── 4 stage entries: Monolithic 1px hairline rows, massive stage numbers ── */}
+        <div className="border-t border-ink/15">
           {steps.map((step, i) => (
             <motion.div
               key={step.number}
-              className="border-t border-ink/10 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              className="border-b border-ink/15 py-12 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-8%" }}
-              transition={{ duration: 0.55, ease: EASE, delay: i * 0.05 }}
+              transition={{ duration: 0.8, delay: i * 0.05 }}
             >
-              {/* Large Roman numeral — decorative, desktop only */}
-              <div className="hidden lg:flex lg:col-span-1 items-start gap-3 flex-shrink-0">
-                <div>
-                  <div
-                    className="font-display font-light text-ink/10 leading-none tracking-tighter select-none block"
-                    style={{ fontSize: "clamp(64px, 6vw, 96px)" }}
-                  >
-                    {step.numeral}
-                  </div>
+              {/* Massive Stage Number */}
+              <div className="lg:col-span-2">
+                <div className="font-display font-light text-ink/20 text-6xl sm:text-7xl lg:text-8xl leading-none select-none">
+                  {step.number}
                 </div>
               </div>
 
               {/* Stage content */}
-              <div className="lg:col-span-6 space-y-3">
-                {/* Mobile: inline compact numeral + subtitle */}
-                <div className="flex items-center gap-3">
-                  <span className="lg:hidden font-display font-light text-ink/20 text-4xl leading-none select-none flex-shrink-0">
-                    {step.numeral}
-                  </span>
-                  <div className="label text-terra">{step.subtitle}</div>
+              <div className="lg:col-span-6 space-y-4">
+                <div className="text-[10px] uppercase tracking-[0.25em] text-ink/40 font-mono">
+                  {step.subtitle}
                 </div>
-                <h3
-                  className="font-display font-normal text-ink leading-tight tracking-tight"
-                  style={{ fontSize: "clamp(22px, 2.4vw, 30px)" }}
-                >
+                <h3 className="font-display font-normal text-3xl sm:text-4xl text-ink leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-stone text-sm leading-relaxed font-light max-w-lg">
+                <p className="text-ink/70 text-sm sm:text-base leading-relaxed font-light max-w-lg">
                   {step.desc}
                 </p>
               </div>
 
-              {/* Deliverable — formal bordered block */}
-              <div className="lg:col-span-5 lg:pl-8">
-                <div className="rounded-2xl p-6 bg-gradient-to-b from-white/90 to-cream-50/70 border border-ink/[0.07] card-hover shadow-[0_4px_20px_-4px_rgba(20,18,12,0.04)]">
-                  <div className="label text-terra text-[10px] mb-2 font-medium">Stage Deliverable</div>
-                  <p className="text-ink text-sm font-medium leading-relaxed">
+              {/* Deliverable: Flat 1px Hairline Block */}
+              <div className="lg:col-span-4">
+                <div className="border border-ink/15 bg-white p-6 rounded-none">
+                  <div className="text-[9px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-2">
+                    Stage Deliverable
+                  </div>
+                  <p className="text-ink text-sm sm:text-base font-medium leading-snug">
                     {step.milestone}
                   </p>
                 </div>
               </div>
             </motion.div>
           ))}
-
-          {/* Close rule */}
-          <div className="border-t border-ink/10" />
         </div>
 
-        {/* ── Bottom CTA callout ── */}
-        <motion.div
-          className="mt-12 rounded-2xl p-8 lg:p-10 bg-gradient-to-r from-white/80 via-cream-50 to-white/70 border border-ink/[0.06] shadow-[0_4px_24px_-4px_rgba(20,18,12,0.04)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-5%" }}
-          transition={{ duration: 0.5, ease: EASE }}
-        >
-          <div>
-            <h4 className="font-display text-2xl font-normal text-ink tracking-tight">
+        {/* ── Bottom Callout: Stark, Flat, High-Contrast ── */}
+        <div className="mt-16 sm:mt-24 border border-ink/15 bg-white p-8 sm:p-12 lg:p-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 rounded-none">
+          <div className="max-w-xl">
+            <h4 className="font-display text-2xl sm:text-3xl font-normal text-ink leading-tight">
               Ready to begin Stage 01 with an experienced mentor?
             </h4>
-            <p className="text-stone text-sm mt-1.5 font-light">
+            <p className="text-ink/65 text-sm sm:text-base mt-2 font-light">
               Schedule your 30-minute discovery call to evaluate your profile and target intake.
             </p>
           </div>
           <a
             href="#booking"
-            className="flex-shrink-0 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-8 py-4 label rounded-lg transition-all group text-center btn-primary-glow"
+            className="flex-shrink-0 w-full sm:w-auto bg-ink text-cream hover:bg-ink/90 px-8 py-5 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium text-center transition-colors inline-flex items-center justify-center gap-3"
           >
-            Start Your Diagnostic Audit
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            <span>Start Your Diagnostic Audit</span>
+            <ArrowRight className="h-3.5 w-3.5" />
           </a>
-        </motion.div>
+        </div>
 
       </div>
     </section>
