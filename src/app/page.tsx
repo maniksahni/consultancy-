@@ -1,51 +1,69 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
-import Hero from "@/components/home/Hero";
-import BookingSection from "@/components/home/BookingSection";
-import StudyDestinations from "@/components/home/StudyDestinations";
-import ComparisonSection from "@/components/home/ComparisonSection";
-import ProcessRoadmap from "@/components/home/ProcessRoadmap";
-import FAQ from "@/components/home/FAQ";
-import StudentOutcomes from "@/components/home/StudentOutcomes";
+import HeroExperience from "@/components/home/HeroExperience";
+import TrustLedger from "@/components/home/TrustLedger";
+import DifferenceGrid from "@/components/home/DifferenceGrid";
+import DestinationGallery from "@/components/home/DestinationGallery";
+import ScrollJourney from "@/components/home/ScrollJourney";
+import MentorSpotlight from "@/components/home/MentorSpotlight";
+import OutcomeCases from "@/components/home/OutcomeCases";
+import AnimatedFAQ from "@/components/home/AnimatedFAQ";
+import FinalCTA from "@/components/home/FinalCTA";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
+  title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
+  description:
+    "Independent, one-to-one admissions advisory for premier universities in UK, USA, Canada, Germany, Australia, and Ireland. 100% fiduciary guidance with zero agency recruiter kickbacks.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     url: "/",
+    title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
+    description:
+      "Boutique admissions advisory with zero recruiter kickbacks. Direct 1-on-1 mentorship from profile strategy to consular visa clearance.",
   },
 };
 
 export default function Home() {
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen bg-cream text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none">
-      {/* 1. Header / Navbar */}
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen bg-[#0B0A08] text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none"
+    >
+      {/* 1. Header / Dynamic Navbar */}
       <Navbar />
 
-      {/* 2. Hero Section */}
-      <Hero />
+      {/* 2. Section 1 — Hero: Cinematic Full-Screen Experience (Dark: #0B0A08) */}
+      <HeroExperience />
 
-      {/* 3. Direct Consultation Booking (First Scroll) */}
-      <BookingSection />
+      {/* 3. Section 2 — Trust Ledger: Glowing Counter Strip (Warm White: #FAF7F2) */}
+      <TrustLedger />
 
-      {/* 4. Curated Global Study Hubs */}
-      <StudyDestinations />
+      {/* 4. Section 3 — Why Pathways: Asymmetric Glowing Cards (Cream: #F2EDE4) */}
+      <DifferenceGrid />
 
-      {/* 5. Why Choose Dedicated 1-on-1 Mentorship */}
-      <ComparisonSection />
+      {/* 5. Section 4 — Destination Gallery: Premium Motion Grid (Warm White: #FAF7F2) */}
+      <DestinationGallery />
 
-      {/* 6. The 4-Stage Mentorship Journey */}
-      <ProcessRoadmap />
+      {/* 6. Section 5 — Scroll Story Process: Glowing Center Timeline (Dark: #0B0A08) */}
+      <ScrollJourney />
 
-      {/* 7. Frequently Addressed Questions */}
-      <FAQ />
+      {/* 7. Section 6 — Mentor Feature: Image + Glow Frame (Warm White: #FAF7F2) */}
+      <MentorSpotlight />
 
-      {/* 8. Verified Student Outcomes */}
-      <StudentOutcomes />
+      {/* 8. Section 7 — Outcome Case Files: Motion Panels (Dark: #0B0A08) */}
+      <OutcomeCases />
 
-      {/* 9. Minimalist Footer */}
+      {/* 9. Section 8 — FAQ: Motion Accordion (Warm White: #FAF7F2) */}
+      <AnimatedFAQ />
+
+      {/* 10. Section 9 — Final CTA: Cinematic Radial Glow & Booking (Dark: #0B0A08) */}
+      <FinalCTA />
+
+      {/* 11. Architectural Footer (Dark: #14120C) */}
       <Footer />
     </main>
   );

@@ -57,16 +57,13 @@ export default function Footer() {
     <footer id="footer" className="bg-[#14120C] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
 
-        {/* ── Dominant Visual Move: Massive Minimalist Bold Statement ── */}
-        <div className="border-b border-cream/10 pb-6 sm:pb-8 lg:pb-10 mb-6 sm:mb-8">
-          <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
-            Boutique Fiduciary Standard
-          </div>
-          <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[clamp(2rem,9vw,2.75rem)] min-[390px]:text-[3.25rem] sm:text-6xl lg:text-7xl xl:text-8xl break-words">
-            Independent 1-on-1 Mentorship.<br />
-            {/* The single terracotta accent in the entire footer section */}
-            <span className="text-terra italic inline-block pr-1">Zero Institutional Kickbacks.</span>
-          </h2>
+        {/* ── Calm Architectural Header: Fiduciary Standard Bar ── */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 sm:pb-8 mb-8 sm:mb-12 border-b border-cream/10 gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-cream/40">
+          <span className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-terra" />
+            <span>Boutique Fiduciary Standard</span>
+          </span>
+          <span>Zero Recruiter Commissions · 100% Unbiased Advisory</span>
         </div>
 
         {/* ── Main Editorial Grid ── */}

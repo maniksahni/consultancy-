@@ -24,8 +24,8 @@ export default function Navbar() {
 
       // Check section currently under the header (at header midline y=40)
       if (isHome) {
-        // Sections that have parchment/light background
-        const lightSectionIds = ["destinations", "comparison", "outcomes"];
+        // Sections that have cream/light background
+        const lightSectionIds = ["comparison", "destinations", "mentorship", "faq"];
         const headerMidY = 40;
 
         let isOverLight = false;

@@ -15,7 +15,7 @@ export default function StatCounter({
   className = "",
 }: StatCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   const [display, setDisplay] = useState<string>("");
 
   // Parse prefix, number, decimals, and suffix
