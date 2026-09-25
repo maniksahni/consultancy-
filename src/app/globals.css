@@ -130,12 +130,6 @@
                 background-color 0.28s ease;
     will-change: transform, box-shadow;
   }
-  .card-hover:hover {
-    transform: translateY(-3px) scale(1.004);
-    box-shadow: 0 16px 40px -8px rgba(20, 18, 12, 0.1), 0 2px 8px 0 rgba(20, 18, 12, 0.04);
-    border-color: rgba(20, 18, 12, 0.18) !important;
-  }
-
   .card-hover-dark {
     transition: box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
                 border-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
@@ -143,10 +137,23 @@
                 background-color 0.28s ease;
     will-change: transform, box-shadow;
   }
+  @media (hover: hover) and (pointer: fine) {
+  .card-hover:hover {
+    transform: translateY(-3px) scale(1.004);
+    box-shadow: 0 16px 40px -8px rgba(20, 18, 12, 0.1), 0 2px 8px 0 rgba(20, 18, 12, 0.04);
+    border-color: rgba(20, 18, 12, 0.18) !important;
+  }
   .card-hover-dark:hover {
     transform: translateY(-3px) scale(1.004);
     box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(242, 237, 228, 0.12);
     border-color: rgba(242, 237, 228, 0.22) !important;
+  }
+  }
+  @media (max-width: 767px) {
+    .card-hover:hover,
+    .card-hover-dark:hover {
+      transform: none !important;
+    }
   }
 
   /* ── LAYERED LUXURY SURFACES ── */

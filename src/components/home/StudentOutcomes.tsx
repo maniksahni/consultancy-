@@ -123,7 +123,7 @@ export default function StudentOutcomes() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 pb-3 scrollbar-none -mx-6 carousel-snap"
+            className="overflow-x-auto snap-x snap-mandatory flex gap-3.5 pt-5 pb-3 scrollbar-none -mx-6 carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
@@ -131,7 +131,7 @@ export default function StudentOutcomes() {
             {outcomes.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] rounded-2xl border border-ink/[0.09] bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] p-6 flex flex-col justify-between carousel-snap-item relative shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover overflow-hidden"
+                className="snap-center flex-none w-[86vw] rounded-2xl border border-ink/[0.12] bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] p-6 flex flex-col justify-between carousel-snap-item relative shadow-[0_5px_14px_-4px_rgba(20,18,12,0.07),0_18px_40px_-9px_rgba(20,18,12,0.15)] card-hover overflow-hidden"
               >
                 {/* Subtle consular watermark seal */}
                 <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full border border-terra/10 opacity-30 pointer-events-none flex items-center justify-center">
@@ -222,7 +222,7 @@ export default function StudentOutcomes() {
           {outcomes.map((item, i) => (
             <motion.div
               key={i}
-              className="rounded-2xl p-7 flex flex-col justify-between bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] border border-ink/[0.09] shadow-[0_8px_28px_-6px_rgba(20,18,12,0.06)] hover:shadow-[0_20px_48px_-10px_rgba(20,18,12,0.12)] card-hover transition-all duration-300 relative overflow-hidden group"
+              className="rounded-2xl p-7 flex flex-col justify-between bg-gradient-to-b from-[#FCFAF6] via-[#FAF6EE] to-[#F3EDE2] border border-ink/[0.12] shadow-[0_5px_14px_-4px_rgba(20,18,12,0.06),0_16px_38px_-8px_rgba(20,18,12,0.12)] hover:shadow-[0_20px_48px_-10px_rgba(20,18,12,0.16)] card-hover transition-all duration-300 relative overflow-hidden group"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-5%" }}

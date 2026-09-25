@@ -90,7 +90,7 @@ export default function ComparisonSection() {
           <div
             ref={carouselRef}
             onScroll={handleMobileScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pb-2 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 -mx-6 pt-5 pb-2 scrollbar-none carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
@@ -98,7 +98,7 @@ export default function ComparisonSection() {
             {comparisonItems.map((item, i) => (
               <div
                 key={i}
-                className="snap-center flex-none w-[86vw] rounded-2xl border border-cream/[0.08] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative shadow-[0_14px_36px_-8px_rgba(0,0,0,0.45)]"
+                className="snap-center flex-none w-[86vw] rounded-2xl border border-cream/[0.14] bg-gradient-to-b from-cream/[0.06] to-cream/[0.02] p-5 flex flex-col justify-between card-hover-dark carousel-snap-item relative shadow-[0_5px_14px_-4px_rgba(0,0,0,0.36),0_20px_42px_-9px_rgba(0,0,0,0.58)]"
               >
                 <div>
                   {/* Factor Header */}
@@ -177,7 +177,7 @@ export default function ComparisonSection() {
           transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
         >
           {/* Left: Mass Agencies (Sunken, Understated Card) */}
-          <div className="rounded-2xl p-8 bg-cream/[0.02] border border-cream/[0.06] backdrop-blur-sm flex flex-col justify-between">
+          <div className="rounded-2xl p-8 bg-cream/[0.02] border border-cream/[0.10] shadow-[0_5px_14px_-4px_rgba(0,0,0,0.3),0_20px_42px_-10px_rgba(0,0,0,0.56)] backdrop-blur-sm flex flex-col justify-between">
             <div>
               {/* Header */}
               <div className="flex items-center gap-3 pb-6 border-b border-cream/[0.06]">
@@ -207,7 +207,7 @@ export default function ComparisonSection() {
           </div>
 
           {/* Right: Pathways Global (Elevated Hero Card with Top Glow) */}
-          <div className="rounded-2xl p-8 bg-gradient-to-b from-cream/[0.075] via-cream/[0.035] to-cream/[0.015] border border-cream/[0.12] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.55)] relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
+          <div className="rounded-2xl p-8 bg-gradient-to-b from-cream/[0.075] via-cream/[0.035] to-cream/[0.015] border border-cream/[0.16] shadow-[0_5px_14px_-4px_rgba(0,0,0,0.32),0_24px_54px_-12px_rgba(0,0,0,0.62)] relative overflow-hidden backdrop-blur-md flex flex-col justify-between">
             {/* Top Amber Sheen */}
             <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-terra/50 to-transparent pointer-events-none" />
 

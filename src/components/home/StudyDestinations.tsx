@@ -119,6 +119,7 @@ export default function StudyDestinations() {
   const isResettingRef = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
 
   const resetLoopPosition = useCallback(() => {
     if (!carouselRef.current || isResettingRef.current) return;
@@ -181,13 +182,17 @@ export default function StudyDestinations() {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartXRef.current === null || !carouselRef.current) return;
+    if (touchStartXRef.current === null || touchStartYRef.current === null || !carouselRef.current) return;
     const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
     const deltaX = touchEndX - touchStartXRef.current;
+    const deltaY = touchEndY - touchStartYRef.current;
     touchStartXRef.current = null;
+    touchStartYRef.current = null;
 
     const container = carouselRef.current;
     const card = container.querySelector('.carousel-snap-item') as HTMLElement;
@@ -195,7 +200,9 @@ export default function StudyDestinations() {
     const rawIndex = Math.round(container.scrollLeft / cardStep);
 
     // If at card 0 (UK) and user swipes right (backwards), smoothly loop to last card (Ireland)
-    if (rawIndex === 0 && deltaX > 40) {
+    // Only treat a clear horizontal gesture as a loop request; vertical page
+    // scrolling and small edge taps must not advance the carousel.
+    if (rawIndex === 0 && deltaX > 60 && Math.abs(deltaX) > Math.abs(deltaY) * 1.35) {
       container.scrollTo({
         left: (hubs.length - 1) * cardStep,
         behavior: "smooth",
@@ -234,7 +241,7 @@ export default function StudyDestinations() {
             onScroll={handleMobileScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pb-4 scrollbar-none carousel-snap"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pt-5 pb-4 scrollbar-none carousel-snap"
           >
             {/* Leading spacer for true centering of first card: (100vw - 86vw)/2 - gap = 7vw - 14px */}
             <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
@@ -251,8 +258,8 @@ export default function StudyDestinations() {
                   aria-hidden={isClone ? true : undefined}
                   className={`snap-center flex-none w-[86vw] p-5 rounded-2xl border flex flex-col justify-between carousel-snap-item relative group ${
                     isDark
-                      ? "bg-gradient-to-b from-[#1C1914] to-[#12100A] text-cream border-cream/[0.08] shadow-[0_14px_36px_-8px_rgba(0,0,0,0.45)] card-hover-dark"
-                      : "bg-gradient-to-b from-white to-[#F8F5EE] text-ink border-ink/[0.07] shadow-[0_12px_32px_-8px_rgba(20,18,12,0.08)] card-hover"
+                      ? "bg-gradient-to-b from-[#1C1914] to-[#12100A] text-cream border-cream/[0.14] shadow-[0_5px_14px_-4px_rgba(0,0,0,0.36),0_20px_42px_-9px_rgba(0,0,0,0.58)] card-hover-dark"
+                      : "bg-gradient-to-b from-white to-[#F8F5EE] text-ink border-ink/[0.12] shadow-[0_5px_14px_-4px_rgba(20,18,12,0.06),0_18px_38px_-9px_rgba(20,18,12,0.14)] card-hover"
                   }`}
                 >
                   {/* Passport Header with Landmark Photography */}
@@ -415,7 +422,7 @@ export default function StudyDestinations() {
             return (
               <motion.div
                 key={hub.country}
-                className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-white/90 via-cream-50/80 to-cream-50/60 border border-ink/[0.06] hover:border-ink/15 shadow-[0_4px_24px_-4px_rgba(20,18,12,0.04)] hover:shadow-[0_16px_44px_-8px_rgba(20,18,12,0.09)] transition-all duration-300 grid grid-cols-12 gap-10 group relative overflow-hidden"
+                className="rounded-2xl p-8 lg:p-10 bg-gradient-to-b from-white/90 via-cream-50/80 to-cream-50/60 border border-ink/[0.12] hover:border-ink/15 shadow-[0_5px_14px_-4px_rgba(20,18,12,0.05),0_18px_40px_-9px_rgba(20,18,12,0.13)] hover:shadow-[0_16px_44px_-8px_rgba(20,18,12,0.16)] transition-all duration-300 grid grid-cols-12 gap-10 group relative overflow-hidden"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-8%" }}
