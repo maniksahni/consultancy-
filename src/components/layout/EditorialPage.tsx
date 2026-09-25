@@ -28,21 +28,21 @@ export default function EditorialPage({
               <ArrowLeft className="h-4 w-4" /> Back to Home
             </Link>
             <div className="border-t border-cream/15 pt-8 grid lg:grid-cols-12 gap-8 lg:gap-16 items-end">
-              <div className="lg:col-span-8">
+              <div className="lg:col-span-8 min-w-0">
                 <p className="text-[10px] uppercase tracking-[0.25em] text-cream/45 font-mono mb-6">{eyebrow}</p>
-                <h1 className="font-display text-[3.25rem] sm:text-7xl lg:text-8xl leading-[0.9] tracking-tight">
-                  {title}<br /><em className="text-terra">{accent}</em>
+                <h1 className="font-display text-[clamp(2.15rem,9vw,3.25rem)] sm:text-7xl lg:text-8xl leading-[0.92] tracking-tight break-words">
+                  {title}<br /><em className="text-terra inline-block pr-1.5">{accent}</em>
                 </h1>
               </div>
-              <p className="lg:col-span-4 text-base text-cream/65 font-light leading-relaxed max-w-md">{intro}</p>
+              <p className="lg:col-span-4 text-base text-cream/65 font-light leading-relaxed max-w-md break-words">{intro}</p>
             </div>
           </div>
         </header>
         <div className="max-w-7xl w-full mx-auto px-6 lg:px-12 py-20 lg:py-28">
           {children}
           <div className="border-t border-ink/15 mt-20 pt-10 flex flex-col sm:flex-row gap-6 sm:items-center sm:justify-between">
-            <p className="font-display text-3xl text-ink">Discuss your own path with a mentor.</p>
-            <Link href="/#booking" className="inline-flex items-center justify-center gap-2 bg-ink text-cream px-6 py-4 text-[11px] uppercase tracking-[0.2em]">
+            <p className="font-display text-2xl sm:text-3xl text-ink leading-tight break-words">Discuss your own path with a mentor.</p>
+            <Link href="/#booking" className="inline-flex items-center justify-center gap-2 bg-ink text-cream px-6 py-4 text-[11px] uppercase tracking-[0.2em] shrink-0 text-center">
               Schedule a conversation <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

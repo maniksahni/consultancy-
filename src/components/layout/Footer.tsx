@@ -62,10 +62,10 @@ export default function Footer() {
           <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
             Boutique Fiduciary Standard
           </div>
-          <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[2.75rem] min-[390px]:text-[3.25rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+          <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[clamp(2rem,9vw,2.75rem)] min-[390px]:text-[3.25rem] sm:text-6xl lg:text-7xl xl:text-8xl break-words">
             Independent 1-on-1 Mentorship.<br />
             {/* The single terracotta accent in the entire footer section */}
-            <span className="text-terra italic">Zero Institutional Kickbacks.</span>
+            <span className="text-terra italic inline-block pr-1">Zero Institutional Kickbacks.</span>
           </h2>
         </div>
 
@@ -89,15 +89,15 @@ export default function Footer() {
             </p>
 
             <div className="pt-2">
-              <div className="inline-flex items-center gap-3 border border-cream/15 px-4 py-3 text-cream/80 text-[10px] uppercase tracking-[0.2em] font-mono">
+              <div className="inline-flex max-w-full flex-wrap items-center gap-3 border border-cream/15 px-3.5 py-3 text-cream/80 text-[10px] uppercase tracking-[0.2em] font-mono">
                 <a
                   href="https://wa.me/33755749029?text=Hi!%20I%20have%20an%20inquiry%20regarding%20study%20abroad%20admissions."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-cream flex items-center gap-2"
+                  className="hover:text-cream flex items-center gap-2 min-w-0 break-words"
                 >
-                  <MessageCircle className="h-4 w-4 text-cream/60" />
-                  <span>WhatsApp: +33 7 55 74 90 29</span>
+                  <MessageCircle className="h-4 w-4 text-cream/60 flex-shrink-0" />
+                  <span className="min-w-0 break-words">WhatsApp: +33 7 55 74 90 29</span>
                 </a>
                 <CopyButton textToCopy="+33 7 55 74 90 29" label="WhatsApp number" />
               </div>
@@ -164,24 +164,24 @@ export default function Footer() {
               Direct Advisory
             </h4>
             <div className="space-y-3.5 text-xs font-light text-cream/60">
-              <div className="flex items-center justify-between border-b border-cream/10 pb-2">
+              <div className="flex items-center justify-between border-b border-cream/10 pb-2 gap-2">
                 <a
                   href="mailto:admissions@pathwaysglobal.org"
-                  className="flex items-center gap-2 hover:text-cream transition-colors"
+                  className="flex items-center gap-2 hover:text-cream transition-colors min-w-0"
                 >
                   <Mail className="h-3.5 w-3.5 text-cream/40 flex-shrink-0" />
-                  admissions@pathwaysglobal.org
+                  <span className="truncate">admissions@pathwaysglobal.org</span>
                 </a>
                 <CopyButton textToCopy="admissions@pathwaysglobal.org" label="email address" />
               </div>
 
-              <div className="flex items-center justify-between border-b border-cream/10 pb-2">
+              <div className="flex items-center justify-between border-b border-cream/10 pb-2 gap-2">
                 <a
                   href="tel:+33755749029"
-                  className="flex items-center gap-2 hover:text-cream transition-colors"
+                  className="flex items-center gap-2 hover:text-cream transition-colors min-w-0"
                 >
                   <Phone className="h-3.5 w-3.5 text-cream/40 flex-shrink-0" />
-                  +33 7 55 74 90 29
+                  <span className="truncate">+33 7 55 74 90 29</span>
                 </a>
                 <CopyButton textToCopy="+33 7 55 74 90 29" label="phone number" />
               </div>

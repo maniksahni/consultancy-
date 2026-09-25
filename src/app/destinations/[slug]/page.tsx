@@ -80,11 +80,11 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                 </div>
 
                 <h1
-                  className="font-display font-normal text-cream leading-[0.9] tracking-tight"
-                  style={{ fontSize: "clamp(44px, 7vw, 96px)" }}
+                  className="font-display font-normal text-cream leading-[0.92] tracking-tight break-words"
+                  style={{ fontSize: "clamp(32px, 8.5vw, 96px)" }}
                 >
                   Study in{" "}
-                  <em className="text-terra">{destination.name}</em>
+                  <em className="text-terra inline-block pr-1.5">{destination.name}</em>
                 </h1>
 
                 <p className="text-base text-cream/60 font-light leading-relaxed max-w-lg">

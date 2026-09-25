@@ -49,12 +49,12 @@ export default function ScholarshipsPage() {
                   <span className="label text-cream/35 text-[10px]">₹25 Cr+ Merit &amp; Need-Based Funding Indexed</span>
                 </div>
                 <h1
-                  className="font-display font-normal text-cream leading-[0.9] tracking-tight"
-                  style={{ fontSize: "clamp(40px, 7vw, 88px)" }}
+                  className="font-display font-normal text-cream leading-[0.92] tracking-tight break-words"
+                  style={{ fontSize: "clamp(32px, 8.5vw, 88px)" }}
                 >
                   Global Scholarship<br />
                   Directory{" "}
-                  <em className="text-terra">(2026/27)</em>
+                  <em className="text-terra inline-block pr-1.5">(2026/27)</em>
                 </h1>
                 <p className="text-sm text-cream/50 font-light leading-relaxed max-w-xl">
                   Explore full-ride government awards (Chevening, Fulbright, DAAD) and university-specific merit fellowships with our expert application support.

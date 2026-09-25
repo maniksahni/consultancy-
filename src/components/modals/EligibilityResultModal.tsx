@@ -104,25 +104,25 @@ export default function EligibilityResultModal({
               {result.matchedUniversities.map((uni, idx) => (
                 <div 
                   key={idx}
-                  className="p-3.5 bg-slate-950 border border-slate-800 hover:border-emerald-500/40 rounded-xl flex items-center justify-between transition-colors"
+                  className="p-3.5 bg-slate-950 border border-slate-800 hover:border-emerald-500/40 rounded-xl flex flex-wrap items-center justify-between gap-3 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs flex-shrink-0 ${
                       uni.matchType === 'Ambitious' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
                       uni.matchType === 'Target' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
                       'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                     }`}>
                       {uni.matchType[0]}
                     </div>
-                    <div>
-                      <div className="text-sm font-semibold text-white">{uni.name}</div>
-                      <div className="text-xs text-slate-400">
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-white truncate">{uni.name}</div>
+                      <div className="text-xs text-slate-400 break-words">
                         {uni.country} • Avg Tuition: <span className="text-slate-200">{uni.avgTuition}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <span className={`inline-block px-2.5 py-0.5 text-[11px] font-semibold rounded-full ${
                       uni.matchType === 'Ambitious' ? 'bg-amber-500/10 text-amber-400' :
                       uni.matchType === 'Target' ? 'bg-emerald-500/10 text-emerald-400' :

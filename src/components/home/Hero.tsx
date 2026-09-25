@@ -48,12 +48,12 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.0 }}
         >
-          <h1 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[3.25rem] min-[390px]:text-[3.85rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9.25rem]">
+          <h1 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[clamp(2.35rem,10.5vw,3.25rem)] min-[390px]:text-[3.85rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] xl:text-[9.25rem] break-words">
             Elite 1-on-1<br />
             Study Abroad<br />
             Mentorship.<br />
             {/* The single terracotta accent in the entire section */}
-            <span className="text-terra italic">Zero Compromises.</span>
+            <span className="text-terra italic inline-block pr-1">Zero Compromises.</span>
           </h1>
         </motion.div>
 

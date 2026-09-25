@@ -183,10 +183,10 @@ export default function BookingSection() {
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
                 Direct Consultation Booking
               </div>
-              <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+              <h2 className="font-display font-normal text-cream leading-[0.88] tracking-[-0.035em] text-[clamp(2.15rem,9.5vw,3rem)] sm:text-6xl lg:text-7xl xl:text-8xl break-words">
                 Schedule Your<br />
                 {/* Exactly ONE terracotta accent in this entire section */}
-                <span className="text-terra italic">1-on-1 Strategy Call.</span>
+                <span className="text-terra italic inline-block pr-1">1-on-1 Strategy Call.</span>
               </h2>
             </div>
             <p className="text-cream/65 text-base sm:text-lg font-light leading-relaxed max-w-md">

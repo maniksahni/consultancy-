@@ -240,16 +240,16 @@ export default function CostEstimator() {
 
             {/* Part Time Offset */}
             <div className="rounded-2xl bg-emerald-950/40 border border-emerald-500/25 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner">
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 min-w-0">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
-                  <Briefcase className="h-4 w-4" />
+                  <Briefcase className="h-4 w-4 flex-shrink-0" />
                   <span>Part-Time Work Potential (20 hrs/week)</span>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-300 break-words">
                   Earn up to <strong className="text-white">{current.currencySymbol}{degreeCost.partTimePotential.toLocaleString()}</strong> / year to recover living costs.
                 </p>
               </div>
-              <div className="text-xs sm:text-sm font-bold text-emerald-400 sm:text-right whitespace-nowrap">
+              <div className="text-xs sm:text-sm font-bold text-emerald-400 sm:text-right sm:whitespace-nowrap break-words flex-shrink-0">
                 Net Out-of-Pocket: ~₹{netInr}L
               </div>
             </div>

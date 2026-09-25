@@ -156,7 +156,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav — label style, uppercase with active wayfinding */}
-          <nav className="hidden md:flex items-center gap-9 lg:gap-10">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10">
             {navLinks.map((link) => {
               const isActive = isHome && activeSection === link.id;
 
@@ -164,7 +164,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`label transition-all relative py-1 flex items-center gap-1.5 ${
+                  className={`label transition-all relative py-1 flex items-center gap-1.5 text-[10px] lg:text-[11px] ${
                     isActive
                       ? "text-terra font-semibold"
                       : isLightNav
@@ -181,7 +181,7 @@ export default function Navbar() {
             })}
             <Link
               href="/scholarships"
-              className={`label transition-all relative py-1 ${
+              className={`label transition-all relative py-1 text-[10px] lg:text-[11px] ${
                 isLightNav ? "text-stone hover:text-terra" : "text-cream/60 hover:text-terra"
               }`}
             >
@@ -190,10 +190,10 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop CTA — square, editorial, tactile press */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
             <a
               href={bookingHref}
-              className={`label border px-5 py-2.5 btn-tactile ${
+              className={`label border px-3.5 py-2 lg:px-5 lg:py-2.5 text-[10px] lg:text-[11px] btn-tactile whitespace-nowrap ${
                 isLightNav
                   ? "border-ink/20 hover:border-terra hover:text-terra text-ink"
                   : "border-cream/25 hover:border-terra hover:text-terra text-cream"

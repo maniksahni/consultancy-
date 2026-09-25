@@ -159,35 +159,35 @@ export default function ServicesSection({ onOpenConsultation }: { onOpenConsulta
             return (
               <div
                 key={srv.id}
-                className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-slate-900/60 p-7 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/80 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:-translate-y-1.5 flex flex-col justify-between"
+                className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-slate-900/60 p-5 sm:p-7 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl transition-all duration-300 hover:border-blue-500/40 hover:bg-slate-900/80 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:-translate-y-1.5 flex flex-col justify-between"
               >
                 {/* Subtle top card glow */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-blue-500/40 transition-colors" />
 
                 <div className="space-y-5">
                   {/* Top Icon & Badge */}
-                  <div className="flex items-center justify-between">
-                    <div className="w-13 h-13 p-3.5 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all shadow-inner">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="w-12 h-12 p-3 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:border-blue-500/30 transition-all shadow-inner flex-shrink-0">
                       <Icon className="w-6 h-6" />
                     </div>
 
                     {srv.badge && (
-                      <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                      <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 break-words">
                         {srv.badge}
                       </span>
                     )}
                   </div>
 
-                  <div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-blue-300 transition-colors">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-bold text-white group-hover:text-blue-300 transition-colors break-words">
                       {srv.title}
                     </h3>
-                    <div className="text-xs font-semibold text-emerald-400 mt-1">
+                    <div className="text-xs font-semibold text-emerald-400 mt-1 break-words">
                       {srv.tagline}
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal break-words">
                     {srv.description}
                   </p>
 
@@ -196,21 +196,21 @@ export default function ServicesSection({ onOpenConsultation }: { onOpenConsulta
                     {srv.features.map((feat, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs text-slate-300">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                        <span className="leading-snug">{feat}</span>
+                        <span className="leading-snug break-words min-w-0">{feat}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Bottom CTA & Metrics */}
-                <div className="pt-6 mt-6 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-400 font-mono">
+                <div className="pt-6 mt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2.5 min-w-0">
+                  <span className="text-[11px] font-semibold text-slate-400 font-mono min-w-0 break-words">
                     {srv.metrics}
                   </span>
 
                   <button
                     onClick={handleOpenModal}
-                    className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1.5 group-hover:translate-x-1 duration-200"
+                    className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1.5 group-hover:translate-x-1 duration-200 flex-shrink-0 cursor-pointer"
                   >
                     <span>Get Started</span>
                     <ArrowRight className="w-3.5 h-3.5" />

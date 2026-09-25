@@ -218,10 +218,10 @@ export default function StudyDestinations() {
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
                 Curated Global Study Hubs
               </div>
-              <h2 className="font-display font-normal text-ink leading-[0.88] tracking-[-0.035em] text-[3rem] sm:text-6xl lg:text-7xl xl:text-8xl">
+              <h2 className="font-display font-normal text-ink leading-[0.88] tracking-[-0.035em] text-[clamp(2.15rem,9.5vw,3rem)] sm:text-6xl lg:text-7xl xl:text-8xl break-words">
                 Targeted Country Expertise.<br />
                 {/* Exactly ONE terracotta accent in this entire section */}
-                <span className="text-terra italic">Clear Admissions Data.</span>
+                <span className="text-terra italic inline-block pr-1">Clear Admissions Data.</span>
               </h2>
             </div>
             <p className="text-ink/65 text-base sm:text-lg font-light leading-relaxed max-w-md">
