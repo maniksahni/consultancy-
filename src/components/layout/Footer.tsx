@@ -112,9 +112,10 @@ export default function Footer() {
             <ul className="space-y-3 text-xs font-light">
               {[
                 { label: "Study Hubs", href: "/#destinations" },
-                { label: "Mentorship Model", href: "/#comparison" },
-                { label: "Admissions Roadmap", href: "/#process" },
-                { label: "Verified Outcomes", href: "/#outcomes" },
+                { label: "Mentorship Model", href: "/mentorship-model" },
+                { label: "Admissions Roadmap", href: "/admissions-process" },
+                { label: "Verified Outcomes", href: "/outcomes" },
+                { label: "Admissions FAQ", href: "/faq" },
                 { label: "Scholarships Directory", href: "/scholarships" },
                 { label: "Schedule Call →", href: "/#booking", accent: true },
               ].map((item) => (

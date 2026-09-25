@@ -113,9 +113,9 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Study Hubs", id: "destinations", href: href("#destinations") },
-    { name: "Mentorship", id: "comparison", href: href("#comparison") },
-    { name: "Roadmap", id: "process", href: href("#process") },
-    { name: "Outcomes", id: "outcomes", href: href("#outcomes") },
+    { name: "Mentorship", id: "comparison", href: "/mentorship-model" },
+    { name: "Roadmap", id: "process", href: "/admissions-process" },
+    { name: "Outcomes", id: "outcomes", href: "/outcomes" },
   ];
 
   return (
@@ -325,7 +325,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href={href("#faq")}
+                    href="/faq"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between min-h-[48px] py-3 px-3 border-b border-cream/8 text-cream/80 hover:text-cream hover:bg-cream/[0.02] transition-all group"
                   >
