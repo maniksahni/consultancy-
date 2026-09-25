@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        "space-1": "8px",
+        "space-2": "16px",
+        "space-3": "24px",
+        "space-4": "32px",
+        "space-5": "48px",
+        "space-6": "64px",
+        "space-7": "96px",
+      },
       colors: {
         cream: {
           DEFAULT: "#F2EDE4",

@@ -207,12 +207,12 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-[#F2EDE4] pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 lg:pb-12 overflow-hidden w-full text-ink"
+      className="bg-[#F2EDE4] py-space-7 overflow-hidden w-full text-ink"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
         {/* ── Section header: Calibrated negative space, monumental typography ── */}
-        <div className="border-t border-ink/15 pt-4 sm:pt-5 mb-8 sm:mb-12 lg:mb-16">
+        <div className="border-t border-ink/15 pt-space-4 sm:pt-space-5 mb-space-5 lg:mb-space-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-ink/40 font-mono mb-6">
@@ -250,7 +250,7 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className="snap-center flex-none w-[86vw] p-6 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
+                  className="snap-center flex-none w-[86vw] p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
                 >
                   <div>
                     {/* Landmark photo banner: sharp edges, no soft styling */}
@@ -358,7 +358,7 @@ export default function StudyDestinations() {
         </div>
 
         {/* ── DESKTOP: Wide Editorial Blocks (Flat, 0px radius, 1px hairlines) ── */}
-        <div className="hidden lg:block space-y-8">
+        <div className="hidden lg:block space-y-space-4">
           {hubs.map((hub, i) => {
             const slug = slugMap[hub.country];
             const code = countryCodes[hub.country];

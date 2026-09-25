@@ -172,12 +172,12 @@ export default function BookingSection() {
   return (
     <section
       id="booking"
-      className="bg-[#14120C] text-cream pt-6 sm:pt-8 lg:pt-10 pb-8 sm:pb-10 lg:pb-12 overflow-hidden w-full relative"
+      className="bg-[#14120C] text-cream py-space-7 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
 
         {/* ── Section Header: Calibrated negative space, monumental typography ── */}
-        <div className="border-t border-cream/10 pt-4 sm:pt-5 mb-8 sm:mb-12 lg:mb-16">
+        <div className="border-t border-cream/10 pt-space-4 sm:pt-space-5 mb-space-5 lg:mb-space-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <div>
               <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-cream/40 font-mono mb-6">
