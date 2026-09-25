@@ -64,7 +64,6 @@
 html.lenis-active { scroll-behavior: auto; }
 .hero-gradient { background-image: radial-gradient(ellipse 75% 55% at 73% 46%, rgba(102, 62, 38, .24), transparent 72%), linear-gradient(140deg, #14120C 25%, #201a13 80%, #14120C); }
 .hero-webgl canvas { display: block; width: 100%; height: 100%; }
-.scroll-progress { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: 2px; background: #C25B1A; transform: scaleX(0); transform-origin: left center; pointer-events: none; }
 .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 100; pointer-events: none; opacity: 0; border-radius: 50%; transform: translate(-50%, -50%); transition: opacity .25s ease, width .5s cubic-bezier(.22,1,.36,1), height .5s cubic-bezier(.22,1,.36,1), background-color .5s ease; }
 .cursor-dot { width: 5px; height: 5px; background: #C25B1A; margin: -2.5px 0 0 -2.5px; }
 .cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(194,91,26,.65); margin: -16px 0 0 -16px; color: #14120C; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; display: grid; place-items: center; }
@@ -80,7 +79,6 @@ html.lenis-active { scroll-behavior: auto; }
 .tilt-card { transform-style: preserve-3d; transition: box-shadow .6s cubic-bezier(.22,1,.36,1); }
 .tilt-card:hover { box-shadow: 0 24px 56px -28px rgba(20,18,12,.3); }
 .faq-summary::-webkit-details-marker { display: none; }
-@media (max-width: 1023px), (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }
 @media (max-width: 1023px) { .hero-webgl { display: none; } }
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-dot, .cursor-ring, .comparison-spotlight { display: none !important; }
@@ -419,14 +417,6 @@ html.lenis-active { scroll-behavior: auto; }
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
-
-/* ============================================================
-   SCROLLBAR — terracotta accent
-============================================================ */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #F2EDE4; }
-::-webkit-scrollbar-thumb { background: #C25B1A; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: #9E4812; }
 
 /* ============================================================
    CINEMATIC GLOW & HIGH-MOTION DESIGN SYSTEM

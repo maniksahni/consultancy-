@@ -64,12 +64,6 @@ export default function ScrollExperience() {
         ));
       });
 
-      const progress = document.querySelector<HTMLElement>("[data-scroll-progress]");
-      if (progress) animations.push(gsap.fromTo(progress, { scaleX: 0 }, {
-        scaleX: 1, ease: "none",
-        scrollTrigger: { trigger: document.documentElement, start: "top top", end: "bottom bottom", scrub: 0.2 },
-      }));
-
       // On the full admissions page the large stage numeral stays in view while its stage scrolls.
       document.querySelectorAll<HTMLElement>("[data-stage-number]").forEach((number) => {
         const stage = number.closest<HTMLElement>("[data-stage]");
@@ -95,5 +89,5 @@ export default function ScrollExperience() {
     return () => { disposed = true; window.clearTimeout(timer); cleanup(); };
   }, [pathname]);
 
-  return <div aria-hidden="true" data-scroll-progress className="scroll-progress" />;
+  return null;
 }
