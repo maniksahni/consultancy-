@@ -6,12 +6,12 @@ import confetti from "canvas-confetti";
 import {
   Clock,
   MessageCircle,
-  Check,
   AlertCircle,
   ArrowRight,
 } from "lucide-react";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
+import MicroAnimation from "@/components/experience/MicroAnimation";
 
 export default function BookingSection() {
   const [formData, setFormData] = useState({
@@ -200,7 +200,7 @@ export default function BookingSection() {
           {submitted ? (
             <div className="border border-cream/15 p-8 text-center space-y-6 rounded-none bg-cream/[0.02]">
               <div className="h-12 w-12 mx-auto border border-cream/30 flex items-center justify-center">
-                <Check className="h-6 w-6 text-cream" />
+                <MicroAnimation kind="success" className="h-9 w-9 text-cream" />
               </div>
               <div>
                 <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-2">
@@ -407,7 +407,7 @@ export default function BookingSection() {
                   >
                     {loading ? (
                       <>
-                        <div className="h-4 w-4 border-2 border-ink border-t-transparent rounded-full animate-spin" />
+                        <MicroAnimation kind="loading" className="h-5 w-5 text-ink" />
                         Routing to Senior Mentor…
                       </>
                     ) : (
@@ -498,7 +498,7 @@ export default function BookingSection() {
             {submitted ? (
               <div className="border border-cream/15 p-12 lg:p-16 text-center space-y-8 bg-cream/[0.02] rounded-none">
                 <div className="h-16 w-16 mx-auto border border-cream/30 flex items-center justify-center">
-                  <Check className="h-8 w-8 text-cream" />
+                  <MicroAnimation kind="success" className="h-12 w-12 text-cream" />
                 </div>
                 <div>
                   <span className="text-[10px] uppercase tracking-[0.25em] text-cream/40 font-mono block mb-3">
@@ -703,7 +703,7 @@ export default function BookingSection() {
                   >
                     {loading ? (
                       <>
-                        <div className="h-4 w-4 border-2 border-ink border-t-transparent rounded-full animate-spin" />
+                        <MicroAnimation kind="loading" className="h-5 w-5 text-ink" />
                         Routing to Senior Mentor…
                       </>
                     ) : (

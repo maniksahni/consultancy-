@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import EditorialPage from "@/components/layout/EditorialPage";
 import { studentOutcomes } from "@/data/editorial";
+import TiltCard from "@/components/experience/TiltCard";
 
 export const metadata: Metadata = { title: "Student Outcomes | Pathways Global", description: "Existing student case files, recorded with initials only." };
 
@@ -10,7 +11,8 @@ export default function OutcomesPage() {
       intro="Initials-only case files with the recorded profile and outcome details. Individual results do not predict future decisions.">
       <div className="grid lg:grid-cols-2 gap-8">
         {studentOutcomes.map((item, i) => (
-          <article key={item.ref} className="border border-ink/15 bg-white p-6 sm:p-8">
+          <TiltCard key={item.ref} className="border border-ink/15 bg-white p-6 sm:p-8">
+          <article>
             <div className="border-b border-ink/15 pb-5 mb-8 flex items-start justify-between gap-4">
               <p className="text-[10px] uppercase tracking-widest text-stone">Case file {String(i + 1).padStart(3, "0")} · {item.ref}</p>
               <p className="text-[10px] uppercase tracking-widest text-stone text-right">{item.country} · {item.intake}</p>
@@ -28,6 +30,7 @@ export default function OutcomesPage() {
               <p className="text-sm font-medium">{item.outcome}</p>
             </div>
           </article>
+          </TiltCard>
         ))}
       </div>
     </EditorialPage>

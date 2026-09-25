@@ -16,7 +16,7 @@ export default function StatCounter({
 }: StatCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "0px" });
-  const [display, setDisplay] = useState<string>("");
+  const [display, setDisplay] = useState<string>(value);
 
   // Parse prefix, number, decimals, and suffix
   const parseValue = (raw: string) => {
@@ -34,17 +34,21 @@ export default function StatCounter({
   useEffect(() => {
     // Check reduced motion preference
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplay(parsed.num.toFixed(parsed.decimals));
+      setDisplay(value);
       return;
     }
 
-    if (!isInView) {
-      setDisplay(parsed.decimals > 0 ? "0.0" : "0");
-      return;
-    }
+    if (!isInView) return;
 
     let startTime: number | null = null;
     let animationFrameId: number;
+    const finish = () => {
+      cancelAnimationFrame(animationFrameId);
+      setDisplay(parsed.num.toFixed(parsed.decimals));
+    };
+    const onVisibility = () => { if (document.hidden) finish(); };
+    document.addEventListener("visibilitychange", onVisibility);
+    const fallback = window.setTimeout(finish, duration * 1000 + 300);
 
     const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
 
@@ -59,18 +63,22 @@ export default function StatCounter({
       if (progress < 1) {
         animationFrameId = requestAnimationFrame(step);
       } else {
-        setDisplay(parsed.num.toFixed(parsed.decimals));
+        finish();
       }
     };
 
     animationFrameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isInView, parsed.num, parsed.decimals, duration]);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(fallback);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [isInView, parsed.num, parsed.decimals, duration, value]);
 
   return (
     <span ref={ref} className={className}>
       {parsed.prefix}
-      {display || (parsed.decimals > 0 ? "0.0" : "0")}
+      {display === value ? parsed.num.toFixed(parsed.decimals) : display}
       {parsed.suffix}
     </span>
   );

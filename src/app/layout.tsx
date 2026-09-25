@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import "./globals.css";
 import SkipToContent from "@/components/common/SkipToContent";
 import UTMTracker from "@/components/common/UTMTracker";
+import ScrollExperience from "@/components/experience/ScrollExperience";
+import CustomCursor from "@/components/experience/CustomCursor";
+import RouteCurtain from "@/components/experience/RouteCurtain";
 
 const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
 const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
@@ -59,7 +62,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -67,6 +70,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
         <UTMTracker />
         <SkipToContent />
+        <ScrollExperience />
+        <CustomCursor />
+        <RouteCurtain />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">
           {children}
         </div>

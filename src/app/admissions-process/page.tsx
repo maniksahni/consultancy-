@@ -10,8 +10,8 @@ export default function AdmissionsProcessPage() {
       intro="What happens at each stage, what your mentor reviews, and what you can prepare. Timing depends on your destination, deadlines, and document readiness.">
       <div className="border-t border-ink/15">
         {admissionsStages.map((stage) => (
-          <article key={stage.number} className="border-b border-ink/15 py-12 lg:py-16 grid lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-2 font-display text-7xl lg:text-8xl leading-none text-ink/20">{stage.number}</div>
+          <article data-stage key={stage.number} className="border-b border-ink/15 py-12 lg:py-16 grid lg:grid-cols-12 gap-8 lg:gap-12">
+            <div data-stage-number className="lg:col-span-2 font-display text-7xl lg:text-8xl leading-none text-ink/20 self-start">{stage.number}</div>
             <div className="lg:col-span-4">
               <p className="text-[10px] uppercase tracking-widest text-stone mb-4">{stage.subtitle}</p>
               <h2 className="font-display text-3xl lg:text-4xl leading-tight">{stage.title}</h2>
