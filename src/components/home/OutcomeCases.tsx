@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, FileCheck2 } from "lucide-react";
+import TiltCard from "@/components/experience/TiltCard";
 
 const CASES = [
   {
@@ -61,7 +62,7 @@ export default function OutcomeCases() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
               Documented Admissions Ledger
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Admissions Outcomes,<br />
               <span className="text-terra italic inline-block pr-1">In Context.</span>
             </h2>
@@ -84,8 +85,8 @@ export default function OutcomeCases() {
         {/* ── 3 Motion Case Panels ── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {CASES.map((item, idx) => (
+            <TiltCard key={item.ref}>
             <motion.div
-              key={item.ref}
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
@@ -159,6 +160,7 @@ export default function OutcomeCases() {
                 </div>
               </div>
             </motion.div>
+            </TiltCard>
           ))}
         </div>
 

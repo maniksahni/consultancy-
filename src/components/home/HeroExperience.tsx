@@ -3,6 +3,8 @@
 import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Compass, ShieldCheck } from "lucide-react";
+import HeroWebGL from "@/components/hero/HeroWebGL";
+import MorphBlob from "@/components/experience/MorphBlob";
 
 export default function HeroExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,6 +56,13 @@ export default function HeroExperience() {
       onMouseLeave={handleMouseLeave}
       className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
     >
+      <div data-hero-parallax className="pointer-events-none absolute inset-0"><HeroWebGL /></div>
+      <svg aria-hidden="true" className="absolute h-0 w-0 pointer-events-none" focusable="false">
+        <filter id="hero-liquid-distortion">
+          <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="4" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
       {/* ── Cinematic Slow-Drifting Warm Radial Glow ── */}
       <motion.div
         animate={{
@@ -167,13 +176,16 @@ export default function HeroExperience() {
               transition={{ duration: 0.7, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
               className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
             >
+              <div className="relative flex w-full sm:w-auto">
+              <MorphBlob />
               <a
                 href="#booking"
-                className="glow-button bg-terra hover:bg-terra-dark text-cream min-h-[50px] px-8 py-3.5 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_30px_rgba(194,91,26,0.3)]"
+                className="liquid-cta glow-button bg-terra hover:bg-terra-dark text-cream min-h-[50px] px-8 py-3.5 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_30px_rgba(194,91,26,0.3)]"
               >
                 <span>Book a Strategy Session</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
+              </div>
 
               <a
                 href="#destinations"

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import TiltCard from "@/components/experience/TiltCard";
 
 interface DestinationItem {
   country: string;
@@ -93,7 +94,7 @@ export default function DestinationGallery() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-3">
               Curated Global Study Hubs
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Targeted Country Expertise.<br />
               <span className="text-terra italic inline-block pr-1">Clear Admissions Data.</span>
             </h2>
@@ -109,8 +110,8 @@ export default function DestinationGallery() {
           {/* Row 1: UK & USA Large Vertical Tiles */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {PRIMARY_DESTINATIONS.map((dest, idx) => (
+              <TiltCard key={dest.country}>
               <motion.div
-                key={dest.country}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
@@ -177,14 +178,15 @@ export default function DestinationGallery() {
                   </div>
                 </div>
               </motion.div>
+              </TiltCard>
             ))}
           </div>
 
           {/* Row 2: Four Supporting Destination Tiles */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {SECONDARY_DESTINATIONS.map((dest, idx) => (
+              <TiltCard key={dest.country}>
               <motion.div
-                key={dest.country}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -231,6 +233,7 @@ export default function DestinationGallery() {
                   </div>
                 </div>
               </motion.div>
+              </TiltCard>
             ))}
           </div>
 

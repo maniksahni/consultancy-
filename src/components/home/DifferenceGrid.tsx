@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, UserCheck, Sparkles, FileCheck } from "lucide-react";
+import ComparisonSpotlight from "@/components/experience/ComparisonSpotlight";
 
 const PANELS = [
   {
@@ -43,7 +44,8 @@ const PANELS = [
 export default function DifferenceGrid() {
   return (
     <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
+      <ComparisonSpotlight />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Section Header ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15">
@@ -51,7 +53,7 @@ export default function DifferenceGrid() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
               The Advisory Difference
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Not Another<br />
               Admissions Agency.<br />
               <span className="text-terra italic inline-block pr-1">A Private Advisory Model.</span>

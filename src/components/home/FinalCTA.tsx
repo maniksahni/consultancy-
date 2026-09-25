@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle, CheckCircle, ShieldCheck, Clock } from "lucide-react";
+import { ArrowRight, MessageCircle, ShieldCheck, Clock } from "lucide-react";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
+import MicroAnimation from "@/components/experience/MicroAnimation";
 
 export default function FinalCTA() {
   const [showForm, setShowForm] = useState(false);
@@ -97,7 +98,7 @@ export default function FinalCTA() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-4">
               Direct Senior Advisory
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight">
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight">
               YOUR APPLICATION<br />
               SHOULDN&apos;T FEEL GENERIC.<br />
               <span className="text-terra italic inline-block pr-1 drop-shadow-[0_0_30px_rgba(194,91,26,0.35)]">
@@ -220,6 +221,7 @@ export default function FinalCTA() {
                     disabled={submitting}
                     className="w-full bg-cream text-ink hover:bg-cream/90 min-h-[48px] py-3 text-[11px] uppercase tracking-[0.2em] font-medium transition-colors flex items-center justify-center gap-2"
                   >
+                    {submitting && <MicroAnimation kind="loading" className="h-5 w-5 text-ink" />}
                     <span>{submitting ? "Confirming Slot..." : "Confirm Strategy Session"}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
@@ -232,7 +234,7 @@ export default function FinalCTA() {
           {submitted && (
             <div className="mt-8 max-w-lg border border-terra/40 bg-white/[0.04] p-6 sm:p-8 animate-fade-in">
               <div className="flex items-center gap-2 text-terra font-mono text-xs uppercase tracking-wider mb-2">
-                <CheckCircle className="h-4 w-4" />
+                <MicroAnimation kind="success" className="h-5 w-5 text-terra" />
                 <span>Strategy Session Booked</span>
               </div>
               <h3 className="font-display text-2xl text-cream font-normal">

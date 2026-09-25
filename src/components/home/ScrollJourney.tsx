@@ -66,7 +66,7 @@ export default function ScrollJourney() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
               The 4-Stage Mentorship Journey
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               From Profile Review<br />
               to Visa Preparation.<br />
               <span className="text-terra italic inline-block pr-1">One Clear Process.</span>
