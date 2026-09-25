@@ -115,7 +115,7 @@ export default function BackToTop() {
             bottom: "max(22px, env(safe-area-inset-bottom, 22px))",
             left: "max(20px, env(safe-area-inset-left, 20px))",
           }}
-          className="z-[60] pointer-events-none"
+          className="z-[60] pointer-events-none hidden md:block"
         >
           <button
             onClick={scrollToTop}

@@ -237,10 +237,8 @@ export default function StudyDestinations() {
             onScroll={handleMobileScroll}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-6 pb-4 scrollbar-none carousel-snap"
+            className="flex w-full min-w-0 overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-none carousel-snap"
           >
-            {/* Leading spacer for true centering */}
-            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
 
             {displayHubs.map((hub, i) => {
               const slug = slugMap[hub.country];
@@ -250,7 +248,7 @@ export default function StudyDestinations() {
                 <div
                   key={`${hub.country}-${i}`}
                   aria-hidden={isClone ? true : undefined}
-                  className="snap-center flex-none w-[86vw] p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
+                  className="snap-center flex-none w-full min-w-0 p-space-4 rounded-none border border-ink/15 bg-white text-ink flex flex-col justify-between carousel-snap-item relative"
                 >
                   <div>
                     {/* Landmark photo banner: sharp edges, no soft styling */}
@@ -284,17 +282,17 @@ export default function StudyDestinations() {
 
                     {/* Key Data Ledger: flat 1px hairlines */}
                     <div className="border-t border-b border-ink/10 divide-y divide-ink/10 my-6">
-                      <div className="py-2.5 flex items-center justify-between gap-2">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Post-Study Work</span>
-                        <span className="text-xs font-medium text-ink text-right">{hub.psw}</span>
+                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                        <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Post-Study Work</span>
+                        <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.psw}</span>
                       </div>
-                      <div className="py-2.5 flex items-center justify-between gap-2">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Average Tuition</span>
-                        <span className="text-xs font-medium text-ink text-right">{hub.avgTuition}</span>
+                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                        <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Average Tuition</span>
+                        <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.avgTuition}</span>
                       </div>
-                      <div className="py-2.5 flex items-center justify-between gap-2">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Proof of Funds</span>
-                        <span className="text-xs font-medium text-ink text-right">{hub.proofOfFunds}</span>
+                      <div className="py-2.5 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                        <span className="min-w-0 text-[9px] uppercase tracking-[0.2em] text-ink/40 font-mono">Proof of Funds</span>
+                        <span className="min-w-0 text-xs font-medium text-ink text-right break-words">{hub.proofOfFunds}</span>
                       </div>
                     </div>
 
@@ -332,8 +330,6 @@ export default function StudyDestinations() {
                 </div>
               );
             })}
-            {/* Trailing spacer */}
-            <div aria-hidden="true" className="flex-none w-[calc(7vw-14px)] pointer-events-none" />
           </div>
 
           {/* Mobile Pagination indicator */}

@@ -127,9 +127,9 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                     { label: "Visa Processing:", value: destination.processingTime },
                     { label: "Min. Language Req:", value: destination.minIelts },
                   ].map(({ label, value, accent }) => (
-                    <div key={label} className="border-t border-cream/8 pt-3 flex justify-between items-start gap-3">
-                      <span className="text-cream/30 font-light flex-shrink-0">{label}</span>
-                      <span className={`font-medium text-right ${accent ? "text-terra" : "text-cream/70"}`}>
+                    <div key={label} className="border-t border-cream/8 pt-3 grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-3">
+                      <span className="min-w-0 text-cream/30 font-light">{label}</span>
+                      <span className={`min-w-0 break-words font-medium text-right ${accent ? "text-terra" : "text-cream/70"}`}>
                         {value}
                       </span>
                     </div>

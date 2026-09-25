@@ -70,7 +70,7 @@ export default function Footer() {
         </div>
 
         {/* ── Main Editorial Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 sm:gap-16 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-12 lg:gap-16 mb-12 sm:mb-16">
 
           {/* Brand & Advisory Line — 5 cols */}
           <div className="lg:col-span-5 space-y-6">
