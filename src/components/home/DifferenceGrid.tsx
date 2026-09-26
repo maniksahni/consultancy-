@@ -48,6 +48,7 @@ export default function DifferenceGrid() {
       loop: true,
       align: "start",
       skipSnaps: false,
+      breakpoints: { "(min-width: 1024px)": { active: false } },
     },
     [WheelGesturesPlugin()]
   );
@@ -138,7 +139,7 @@ export default function DifferenceGrid() {
               </Link>
 
               {/* Desktop Navigation Arrows */}
-              <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+              <div className="hidden sm:flex lg:hidden items-center gap-2 flex-shrink-0">
                 <button
                   type="button"
                   onClick={scrollPrev}
@@ -161,9 +162,9 @@ export default function DifferenceGrid() {
         </div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-hidden mt-10 sm:mt-12">
+        <div className="w-full overflow-hidden mt-10 sm:mt-12 lg:overflow-visible">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40"
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
             ref={emblaRef}
             tabIndex={0}
             role="region"
@@ -171,14 +172,14 @@ export default function DifferenceGrid() {
             aria-label="The Advisory Difference Criterion Cards"
             onKeyDown={onKeyDown}
           >
-            <div className="flex -ml-4 sm:-ml-5 lg:-ml-6 touch-pan-y">
+            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-4 lg:gap-6 touch-pan-y lg:touch-auto">
               {SLIDES.map((panel, idx) => {
                 const Icon = panel.icon;
 
                 return (
                   <div
                     key={`${panel.num}-${idx}`}
-                    className="flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-[0_0_31.5%] pl-4 sm:pl-5 lg:pl-6 min-w-0"
+                    className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
                       className="bg-[#FAF7F2] border border-ink/15 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-300 h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-1 hover:shadow-[0_0_0_1px_rgba(194,91,26,0.25),0_20px_70px_rgba(194,91,26,0.10)]"
@@ -223,7 +224,7 @@ export default function DifferenceGrid() {
           </div>
 
           {/* ── Tappable Pagination Dots Indicator (Maps 1-to-1 to 4 unique items) ── */}
-          <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8">
+          <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
             {PANELS.map((panel, idx) => (
               <button
                 key={panel.num}

@@ -111,6 +111,7 @@ export default function OutcomeCases() {
       loop: true,
       align: "start",
       skipSnaps: false,
+      breakpoints: { "(min-width: 1024px)": { active: false } },
     },
     [WheelGesturesPlugin()]
   );
@@ -206,7 +207,7 @@ export default function OutcomeCases() {
             </div>
 
             {/* Desktop Navigation Arrows */}
-            <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+            <div className="hidden sm:flex lg:hidden items-center gap-2 flex-shrink-0">
               <button
                 type="button"
                 onClick={scrollPrev}
@@ -228,9 +229,9 @@ export default function OutcomeCases() {
         </div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-hidden">
+        <div className="w-full overflow-hidden lg:overflow-visible">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40"
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
             ref={emblaRef}
             tabIndex={0}
             role="region"
@@ -238,11 +239,11 @@ export default function OutcomeCases() {
             aria-label="Verified Admissions Outcome Case Files"
             onKeyDown={onKeyDown}
           >
-            <div className="flex -ml-4 sm:-ml-5 lg:-ml-6 touch-pan-y">
+            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto">
               {SLIDES.map((item, idx) => (
                 <div
                   key={`${item.ref}-${idx}`}
-                  className="flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-[0_0_31.5%] pl-4 sm:pl-5 lg:pl-6 min-w-0"
+                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
                   <div className="border border-cream/15 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-300 rounded-none hover:border-terra/40 hover:shadow-[0_0_30px_rgba(194,91,26,0.15)]">
                     <div>
@@ -309,7 +310,7 @@ export default function OutcomeCases() {
           </div>
 
           {/* ── Tappable Pagination Dots Indicator (1-to-1 with unique cases) ── */}
-          <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8">
+          <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
             {CASES.map((item, idx) => (
               <button
                 key={item.ref}
