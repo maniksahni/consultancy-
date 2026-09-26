@@ -68,7 +68,7 @@ export default function HeroExperience() {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
+      className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-5 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
     >
       <div data-hero-parallax className="pointer-events-none absolute inset-0"><HeroWebGL /></div>
       <svg aria-hidden="true" className="absolute h-0 w-0 pointer-events-none" focusable="false">
@@ -106,7 +106,7 @@ export default function HeroExperience() {
       />
 
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-10 lg:gap-14 items-center">
 
           {/* ── LEFT: Cinematic Editorial Headline & Narrative (7 cols) ── */}
           <div className="lg:col-span-7 flex flex-col justify-between">
@@ -196,21 +196,21 @@ export default function HeroExperience() {
           </div>
 
           {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols) ── */}
-          <div className="lg:col-span-5 relative mt-6 lg:mt-0">
+          <div className="lg:col-span-5 relative">
             {/* Parallax Container on Desktop */}
             <motion.div
               style={{ x: moveX, y: moveY }}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto max-w-[320px] min-[390px]:max-w-[340px] sm:max-w-md lg:max-w-none"
+              className="relative mx-auto w-full sm:max-w-md lg:max-w-none"
             >
               {/* Backlight Glow Behind Visual */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10 hidden sm:block" />
 
               {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
-              <div className="relative border border-cream/20 bg-[#14120C] p-2.5 sm:p-4 shadow-2xl overflow-hidden">
-                <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream/5 border border-cream/10">
+              <div className="relative border border-cream/20 bg-[#14120C] p-1 sm:p-4 shadow-2xl overflow-hidden">
+                <div className="relative h-[220px] w-full overflow-hidden bg-cream/5 border border-cream/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                   <picture>
                     <source srcSet="/images/mentor-hero.webp" type="image/webp" />
                     <img
@@ -218,7 +218,7 @@ export default function HeroExperience() {
                       alt="Senior Admissions Mentor in consultation session"
                       width={560}
                       height={700}
-                      className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.98]"
+                      className="absolute inset-0 h-full w-full object-cover object-top contrast-[1.05] brightness-[0.98]"
                       fetchPriority="high"
                       loading="eager"
                     />

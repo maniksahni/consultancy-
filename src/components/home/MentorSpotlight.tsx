@@ -22,18 +22,18 @@ const PRINCIPLES = [
 
 export default function MentorSpotlight() {
   return (
-    <section id="mentorship" className="bg-[#FAF7F2] text-ink py-20 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
+    <section id="mentorship" className="bg-[#FAF7F2] text-ink py-12 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
 
           {/* LEFT: Dramatic Image with Warm Glow Behind & Floating Badge (5 cols) */}
           <div className="lg:col-span-5 relative">
             
             {/* Warm Glow Lighting Behind Image */}
             <div
-              className="absolute -inset-4 sm:-inset-6 bg-gradient-to-tr from-terra/30 via-terra/10 to-transparent blur-3xl -z-10 rounded-full"
+              className="absolute -inset-2 sm:-inset-6 bg-gradient-to-tr from-terra/30 via-terra/10 to-transparent blur-3xl -z-10 rounded-full hidden sm:block"
             />
 
             {/* Architectural Frame */}
@@ -42,9 +42,9 @@ export default function MentorSpotlight() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto max-w-[320px] min-[390px]:max-w-[340px] sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-2.5 sm:p-4 shadow-2xl"
+              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl"
             >
-              <div className="relative aspect-[4/5] max-h-[360px] min-[390px]:max-h-[390px] sm:max-h-[460px] lg:max-h-none overflow-hidden bg-cream border border-ink/10">
+              <div className="relative h-[220px] w-full overflow-hidden bg-cream border border-ink/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                 <picture>
                   <source srcSet="/images/mentor-spotlight.webp" type="image/webp" />
                   <img
@@ -52,7 +52,7 @@ export default function MentorSpotlight() {
                     alt="Senior Admissions Mentor in consultation session"
                     width={560}
                     height={700}
-                    className="w-full h-full object-cover object-top contrast-[1.03] brightness-[0.98]"
+                    className="absolute inset-0 h-full w-full object-cover object-top contrast-[1.03] brightness-[0.98]"
                     loading="lazy"
                   />
                 </picture>
