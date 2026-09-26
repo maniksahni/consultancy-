@@ -243,9 +243,9 @@ export default function OutcomeCases() {
               {SLIDES.map((item, idx) => (
                 <div
                   key={`${item.ref}-${idx}`}
-                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 ${idx >= CASES.length ? "lg:hidden" : ""}`}
+                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
-                  <div className="border border-cream/15 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-300 rounded-none hover:border-terra/40 hover:shadow-[0_0_30px_rgba(194,91,26,0.15)]">
+                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-300 rounded-none hover:border-terra/40 hover:shadow-[0_0_30px_rgba(194,91,26,0.15)]">
                     <div>
                       {/* Dossier Header */}
                       <div className="flex items-center justify-between pb-3.5 border-b border-cream/10 mb-4 font-mono text-[9px] uppercase tracking-wider text-cream/40">

@@ -210,9 +210,12 @@ export default function DestinationGallery() {
               {SLIDES.map((dest, idx) => (
                 <div
                   key={`${dest.slug}-${idx}`}
-                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
+                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
                 >
                   <div className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none">
+                    {/* Crisp 4-sided border overlay ensuring no image overlap */}
+                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 group-hover:border-terra/50 transition-colors" />
+
                     {/* Background Image with Smooth Scale */}
                     <img
                       src={dest.image}

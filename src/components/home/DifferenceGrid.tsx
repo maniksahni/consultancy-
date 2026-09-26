@@ -179,10 +179,10 @@ export default function DifferenceGrid() {
                 return (
                   <div
                     key={`${panel.num}-${idx}`}
-                    className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 ${idx >= PANELS.length ? "lg:hidden" : ""}`}
+                    className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
-                      className="bg-[#FAF7F2] border border-ink/15 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-300 h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-1 hover:shadow-[0_0_0_1px_rgba(194,91,26,0.25),0_20px_70px_rgba(194,91,26,0.10)]"
+                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-300 h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-1 hover:border-terra/40 hover:shadow-[0_0_0_1px_rgba(194,91,26,0.25),0_20px_70px_rgba(194,91,26,0.10)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
