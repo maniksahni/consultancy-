@@ -69,7 +69,7 @@ export default function MentorSpotlight() {
               </div>
 
               {/* Floating Top Badge: inside on mobile, floating on desktop */}
-              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-right-4 bg-ink text-cream border border-terra/50 px-3 py-1.5 shadow-xl font-mono text-[8px] sm:text-[9px] uppercase tracking-widest flex items-center gap-1.5 sm:gap-2 z-20">
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-5 lg:right-5 z-20 whitespace-nowrap bg-ink text-cream border border-terra/50 px-3 py-1.5 shadow-xl font-mono text-[8px] sm:text-[9px] uppercase tracking-widest flex items-center gap-1.5 sm:gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
                 <span>DIRECT 1-ON-1 ADVISORY</span>
               </div>

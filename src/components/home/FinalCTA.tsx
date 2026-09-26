@@ -11,6 +11,7 @@ const MicroAnimation = dynamic(() => import("@/components/experience/MicroAnimat
 
 export default function FinalCTA() {
   const [showForm, setShowForm] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     whatsapp: "",
@@ -22,7 +23,7 @@ export default function FinalCTA() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName.trim() || formData.whatsapp.length < 10) {
       setError("Please provide your full name and valid 10-digit WhatsApp number.");
@@ -34,43 +35,44 @@ export default function FinalCTA() {
     const msg = `Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`;
     const whatsappUrl = `https://wa.me/33755749029?text=${encodeURIComponent(msg)}`;
 
-    try {
-      const utm = getStoredUTMParams();
-      const firestoreSave = saveMentorshipBooking({
-        fullName: formData.fullName,
-        whatsapp: formData.whatsapp,
-        targetCountry: formData.targetCountry,
-        targetIntake: formData.targetIntake,
-        qualification: formData.qualification,
-        helpNeeded: "Direct 1-on-1 Strategy Session",
-        utm: utm ?? undefined,
-      });
-      const timeout = new Promise((resolve) => setTimeout(resolve, 2500));
-      await Promise.race([firestoreSave, timeout]);
-      setSubmitted(true);
+    const honeypotFilled = Boolean(honeypot.trim());
+    let shouldLogBooking = !honeypotFilled;
 
-      // Immediately redirect/open WhatsApp deep link
-      if (typeof window !== "undefined") {
-        try {
-          window.location.href = whatsappUrl;
-        } catch {
-          window.open(whatsappUrl, "_blank");
+    if (shouldLogBooking && typeof window !== "undefined") {
+      try {
+        const now = Date.now();
+        const lastSubmittedAt = Number(window.localStorage.getItem("lastBookingSubmitAt"));
+
+        if (Number.isFinite(lastSubmittedAt) && now - lastSubmittedAt < 60_000) {
+          shouldLogBooking = false;
+        } else {
+          window.localStorage.setItem("lastBookingSubmitAt", String(now));
         }
+      } catch {
+        // If browser storage is unavailable, keep the booking log best-effort.
       }
-    } catch (err) {
-      console.error(err);
-      // Still show success UI and trigger WhatsApp so student is connected directly
-      setSubmitted(true);
-      if (typeof window !== "undefined") {
-        try {
-          window.location.href = whatsappUrl;
-        } catch {
-          window.open(whatsappUrl, "_blank");
-        }
-      }
-    } finally {
-      setSubmitting(false);
     }
+
+    if (shouldLogBooking) {
+      try {
+        const utm = getStoredUTMParams();
+        void saveMentorshipBooking({
+          fullName: formData.fullName,
+          whatsapp: formData.whatsapp,
+          targetCountry: formData.targetCountry,
+          targetIntake: formData.targetIntake,
+          qualification: formData.qualification,
+          helpNeeded: "Direct 1-on-1 Strategy Session",
+          utm: utm ?? undefined,
+        }).catch((err) => console.error("Error saving mentorship booking:", err));
+      } catch (err) {
+        console.error("Error starting mentorship booking save:", err);
+      }
+    }
+
+    setSubmitted(true);
+    setSubmitting(false);
+    window.location.href = whatsappUrl;
   };
 
   return (
@@ -166,6 +168,21 @@ export default function FinalCTA() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4 font-sans">
+                <div
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}
+                >
+                  <label htmlFor="booking-website">Leave this field empty</label>
+                  <input
+                    id="booking-website"
+                    name="companyWebsite"
+                    type="text"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div>
                   <label className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
                     Your Full Name *
