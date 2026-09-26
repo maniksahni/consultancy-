@@ -28,8 +28,8 @@ export default function MentorSpotlight() {
         {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
 
-          {/* LEFT: Dramatic Image with Warm Glow Behind & Floating Badge (5 cols) */}
-          <div className="lg:col-span-5 relative">
+          {/* LEFT: Dramatic Image with Warm Glow Behind & Floating Badge (5 cols, hidden on mobile) */}
+          <div className="hidden sm:block lg:col-span-5 relative">
             
             {/* Warm Glow Lighting Behind Image */}
             <div
