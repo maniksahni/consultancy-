@@ -100,13 +100,8 @@ export default function HeroExperience() {
           {/* ── LEFT: Cinematic Editorial Headline & Narrative (7 cols) ── */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              {/* Eyebrow Pill: Soft fade / tracking settle */}
-              <motion.div
-                variants={eyebrowVariants}
-                initial="hidden"
-                animate="visible"
-                className="inline-flex items-center gap-2.5 px-3 py-1 bg-white/[0.04] border border-cream/15 rounded-none mb-5 sm:mb-6 backdrop-blur-sm"
-              >
+              {/* Eyebrow Pill: Rendered immediately for instant paint */}
+              <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-white/[0.04] border border-cream/15 rounded-none mb-5 sm:mb-6 backdrop-blur-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
@@ -114,81 +109,39 @@ export default function HeroExperience() {
                 <span className="text-[10px] sm:text-[11px] uppercase text-cream/75 font-mono">
                   Private Global Admissions Mentorship
                 </span>
-              </motion.div>
+              </div>
 
-              {/* Headline: Independent masked line reveal with stagger */}
+              {/* Headline: Rendered directly in HTML for instant FCP/LCP with zero hydration delay */}
               <h1 className="font-display font-normal text-cream leading-[0.93] tracking-[-0.03em] text-[clamp(2.5rem,8.5vw,2.875rem)] sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.75rem] break-words">
                 {/* Line 1: STUDY ABROAD, */}
-                <span className="block overflow-hidden py-0.5">
-                  <motion.span
-                    variants={maskedLineVariants}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.12}
-                    className="block"
-                  >
-                    STUDY ABROAD,
-                  </motion.span>
+                <span className="block py-0.5">
+                  STUDY ABROAD,
                 </span>
 
                 {/* Line 2: WITHOUT THE */}
-                <span className="block overflow-hidden py-0.5">
-                  <motion.span
-                    variants={maskedLineVariants}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.22}
-                    className="block text-cream/90"
-                  >
-                    WITHOUT THE
-                  </motion.span>
+                <span className="block py-0.5 text-cream/90">
+                  WITHOUT THE
                 </span>
 
                 {/* Line 3: AGENCY NOISE. */}
-                <span className="block overflow-hidden py-0.5">
-                  <motion.span
-                    variants={maskedLineVariants}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.32}
-                    className="block"
-                  >
-                    AGENCY NOISE.
-                  </motion.span>
+                <span className="block py-0.5">
+                  AGENCY NOISE.
                 </span>
 
-                {/* Accent: Built Around You. — Bloom & Settle Glow */}
-                <span className="block overflow-hidden py-1">
-                  <motion.span
-                    variants={terracottaBloomVariants}
-                    initial="hidden"
-                    animate="visible"
-                    custom={0.46}
-                    className="block text-terra italic pr-2"
-                  >
-                    Built Around You.
-                  </motion.span>
+                {/* Accent: Built Around You. — Instant high-priority LCP paint */}
+                <span className="block py-1 text-terra italic pr-2 drop-shadow-[0_0_25px_rgba(194,91,26,0.35)]">
+                  Built Around You.
                 </span>
               </h1>
 
               {/* Supporting Copy */}
-              <motion.p
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.58, ease: EASE_LUXURY }}
-                className="text-cream/70 text-[15px] sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mt-5 sm:mt-7"
-              >
+              <p className="text-cream/70 text-[15px] sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mt-5 sm:mt-7">
                 Independent, one-to-one guidance for ambitious students navigating university selection, applications, and visa preparation across leading global destinations.
-              </motion.p>
+              </p>
             </div>
 
             {/* CTAs with Glow and Kinetic Hover */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.68, ease: EASE_LUXURY }}
-              className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
-            >
+            <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <a
                 href="#booking"
                 className="liquid-cta glow-button bg-terra hover:bg-terra-dark text-cream min-h-[48px] sm:min-h-[50px] px-8 py-3.5 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_24px_rgba(194,91,26,0.25)] hover:shadow-[0_0_32px_rgba(194,91,26,0.38)]"
@@ -204,7 +157,7 @@ export default function HeroExperience() {
                 <Compass className="h-4 w-4 text-cream/60" />
                 <span>Explore Study Destinations</span>
               </a>
-            </motion.div>
+            </div>
 
             {/* Trust Micro-Row */}
             <motion.div
@@ -220,52 +173,6 @@ export default function HeroExperience() {
               <span>·</span>
               <span>Fall 2026 &amp; Spring 2027 Open</span>
             </motion.div>
-
-            {/* ── MOBILE-ONLY CINEMATIC VISUAL (Pure CSS + Framer Motion, Zero WebGL) ── */}
-            <motion.div
-              initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
-              animate={{ clipPath: "inset(0% 0 0 0)", opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.9, ease: EASE_LUXURY }}
-              className="sm:hidden mt-8 relative"
-            >
-              <div className="relative border border-cream/20 bg-[#14120C] p-2.5 shadow-2xl">
-                {/* Editorial Micro Header */}
-                <div className="flex items-center justify-between pb-2 mb-2 border-b border-cream/10 font-mono text-[9px] uppercase tracking-widest text-cream/70">
-                  <span className="flex items-center gap-1.5 text-cream">
-                    <span className="h-1.5 w-1.5 rounded-full bg-terra" />
-                    <span>PRIVATE ADVISORY / 01</span>
-                  </span>
-                  <span className="text-terra font-medium">1-ON-1 FIDUCIARY</span>
-                </div>
-
-                {/* Main Aspect 4/3 Visual */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden border border-cream/10 bg-black/40">
-                  <picture>
-                    <source srcSet="/images/mentor-hero.webp" type="image/webp" />
-                    <img
-                      src="/images/mentor-hero.jpg"
-                      alt="Senior Admissions Mentor consultation"
-                      width={480}
-                      height={360}
-                      className="w-full h-full object-cover object-top contrast-[1.05] brightness-[0.98]"
-                      loading="eager"
-                    />
-                  </picture>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/90 via-transparent to-black/20 pointer-events-none" />
-
-                  {/* Corner Terracotta Border Accent */}
-                  <div className="absolute top-0 right-0 w-10 h-[2px] bg-terra" />
-                  <div className="absolute top-0 right-0 w-[2px] h-10 bg-terra" />
-
-                  {/* Overlapping Destination Detail Panel */}
-                  <div className="absolute bottom-2 left-2 right-2 bg-[#0B0A08]/90 border border-cream/15 backdrop-blur-sm px-2.5 py-1.5 flex items-center justify-between font-mono text-[9px] uppercase text-cream">
-                    <span className="text-cream/80">Direct Mentor Roster</span>
-                    <span className="text-terra">Capped Cohort 2026/27</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
           </div>
 
           {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols, hidden on mobile) ── */}

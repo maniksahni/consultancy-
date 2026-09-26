@@ -1,21 +1,6 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  User
-} from "firebase/auth";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  serverTimestamp, 
-  getDocs, 
-  query, 
-  orderBy 
-} from "firebase/firestore";
+// Lazy-initialized Firebase client — zero initial-bundle overhead.
+// Modules (firebase/app, firebase/firestore, firebase/auth) are loaded dynamically
+// strictly upon form submission or user interaction.
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDummyKeyReplaceWithYourOwnIfRestricted",
@@ -26,15 +11,22 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:662735113847:web:consultancyworld2web",
 };
 
-// Initialize Firebase App (prevent re-initialization in Next.js SSR / HMR)
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+let cachedApp: any = null;
+let cachedDb: any = null;
 
-// Initialize Firebase Authentication & Cloud Firestore
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+async function getFirebaseInstance() {
+  if (cachedDb && cachedApp) {
+    return { app: cachedApp, db: cachedDb };
+  }
+  const { initializeApp, getApps, getApp } = await import("firebase/app");
+  const { getFirestore } = await import("firebase/firestore");
+  cachedApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+  cachedDb = getFirestore(cachedApp);
+  return { app: cachedApp, db: cachedDb };
+}
 
 /**
- * Save an Eligibility Form lead to Firestore database
+ * Save an Eligibility Form lead to Firestore database (dynamically loaded)
  */
 export async function saveEligibilityLead(data: {
   fullName: string;
@@ -46,7 +38,6 @@ export async function saveEligibilityLead(data: {
   targetIntake?: string;
   englishTest?: string;
   englishScore?: string;
-  // Extended eligibility calculator fields
   backlogCount?: string;
   workExperience?: string;
   budgetPerYear?: string;
@@ -54,6 +45,8 @@ export async function saveEligibilityLead(data: {
   scholarshipScore?: number;
 }) {
   try {
+    const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    const { db } = await getFirebaseInstance();
     const docRef = await addDoc(collection(db, "leads"), {
       ...data,
       source: "website_eligibility_form",
@@ -67,7 +60,7 @@ export async function saveEligibilityLead(data: {
 }
 
 /**
- * Save a 1-on-1 Mentorship Booking to Firestore database
+ * Save a 1-on-1 Mentorship Booking to Firestore database (dynamically loaded)
  */
 export async function saveMentorshipBooking(data: {
   fullName: string;
@@ -81,6 +74,9 @@ export async function saveMentorshipBooking(data: {
   utm?: Record<string, any>;
 }) {
   try {
+    const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    const { db } = await getFirebaseInstance();
+
     // Defensive input sanitization & length bounding
     const payload: Record<string, any> = {
       fullName: (data.fullName || "").replace(/<[^>]*>/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim().slice(0, 100),
@@ -112,12 +108,14 @@ export async function saveMentorshipBooking(data: {
   }
 }
 
-
 /**
- * Firebase Authentication Helper: Email & Password Sign Up
+ * Firebase Authentication Helpers (loaded dynamically if required)
  */
 export async function registerWithEmail(email: string, pass: string) {
   try {
+    const { getAuth, createUserWithEmailAndPassword } = await import("firebase/auth");
+    const { app } = await getFirebaseInstance();
+    const auth = getAuth(app);
     const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
     return { user: userCredential.user, error: null };
   } catch (error: any) {
@@ -125,11 +123,11 @@ export async function registerWithEmail(email: string, pass: string) {
   }
 }
 
-/**
- * Firebase Authentication Helper: Email & Password Sign In
- */
 export async function loginWithEmail(email: string, pass: string) {
   try {
+    const { getAuth, signInWithEmailAndPassword } = await import("firebase/auth");
+    const { app } = await getFirebaseInstance();
+    const auth = getAuth(app);
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     return { user: userCredential.user, error: null };
   } catch (error: any) {
@@ -137,16 +135,14 @@ export async function loginWithEmail(email: string, pass: string) {
   }
 }
 
-/**
- * Firebase Authentication Helper: Sign Out
- */
 export async function logoutUser() {
   try {
+    const { getAuth, signOut } = await import("firebase/auth");
+    const { app } = await getFirebaseInstance();
+    const auth = getAuth(app);
     await signOut(auth);
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
 }
-
-export default app;

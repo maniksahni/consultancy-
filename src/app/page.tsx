@@ -3,14 +3,16 @@ import Navbar from "@/components/layout/Navbar";
 import HeroExperience from "@/components/home/HeroExperience";
 import TrustLedger from "@/components/home/TrustLedger";
 import DifferenceGrid from "@/components/home/DifferenceGrid";
-import DestinationGallery from "@/components/home/DestinationGallery";
 import CinematicStatement from "@/components/home/CinematicStatement";
 import ScrollJourney from "@/components/home/ScrollJourney";
 import MentorSpotlight from "@/components/home/MentorSpotlight";
-import OutcomeCases from "@/components/home/OutcomeCases";
-import AnimatedFAQ from "@/components/home/AnimatedFAQ";
-import FinalCTA from "@/components/home/FinalCTA";
 import Footer from "@/components/layout/Footer";
+import dynamic from "next/dynamic";
+
+const DestinationGallery = dynamic(() => import("@/components/home/DestinationGallery"));
+const OutcomeCases = dynamic(() => import("@/components/home/OutcomeCases"));
+const AnimatedFAQ = dynamic(() => import("@/components/home/AnimatedFAQ"));
+const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"));
 
 export const metadata: Metadata = {
   title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
