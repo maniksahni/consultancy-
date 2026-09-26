@@ -28,8 +28,8 @@ export default function MentorSpotlight() {
         {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
 
-          {/* LEFT: Dramatic Image with Vertical Mask Reveal & Delayed Warm Glow (5 cols, hidden on mobile) */}
-          <div className="hidden sm:block lg:col-span-5 relative">
+          {/* LEFT: Dramatic Image with Vertical Mask Reveal & Delayed Warm Glow (5 cols, hidden on mobile & tablet) */}
+          <div className="hidden lg:block lg:col-span-5 relative">
             
             {/* Warm Glow Lighting Behind Image: Appears AFTER the image reveal */}
             <motion.div
@@ -86,7 +86,7 @@ export default function MentorSpotlight() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 flex flex-col justify-between"
+            className="col-span-1 lg:col-span-7 flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center gap-2 mb-4">
