@@ -29,7 +29,7 @@ export default function MentorSpotlight() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
 
           {/* LEFT: Dramatic Image with Warm Glow Behind & Floating Badge (5 cols) */}
-          <div className="lg:col-span-5 relative">
+          <div className="hidden lg:block lg:col-span-5 relative">
             
             {/* Warm Glow Lighting Behind Image */}
             <div

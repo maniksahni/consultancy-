@@ -196,7 +196,7 @@ export default function HeroExperience() {
           </div>
 
           {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols) ── */}
-          <div className="lg:col-span-5 relative">
+          <div className="hidden lg:block lg:col-span-5 relative">
             {/* Parallax Container on Desktop */}
             <motion.div
               style={{ x: moveX, y: moveY }}
