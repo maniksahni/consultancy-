@@ -129,7 +129,7 @@ export default function FinalCTA() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   variants={maskedLineVariants}
-                  initial="hidden"
+                  initial={false}
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
                   custom={0.25}
@@ -143,7 +143,7 @@ export default function FinalCTA() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   variants={maskedLineVariants}
-                  initial="hidden"
+                  initial={false}
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
                   custom={0.42}
@@ -157,7 +157,7 @@ export default function FinalCTA() {
               <span className="block overflow-hidden py-1.5">
                 <motion.span
                   variants={terracottaBloomVariants}
-                  initial="hidden"
+                  initial={false}
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
                   custom={0.65}
@@ -169,7 +169,7 @@ export default function FinalCTA() {
             </h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.85, delay: 0.82, ease: EASE_LUXURY }}
@@ -182,7 +182,7 @@ export default function FinalCTA() {
           {/* Primary Action Buttons */}
           {!showForm && !submitted && (
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.85, delay: 0.98, ease: EASE_LUXURY }}
