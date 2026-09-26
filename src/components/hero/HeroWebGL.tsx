@@ -92,7 +92,7 @@ export default function HeroWebGL() {
               vec3 warm=vec3(0.76,0.36,0.10);
               vec3 cream=vec3(0.95,0.89,0.76);
               vec3 color=mix(ink,mix(warm,cream,clamp(n*0.7+0.27,0.0,1.0)),ribbon*0.55);
-              gl_FragColor=vec4(color,clamp(ribbon*0.35*edge*(1.0-uScroll*0.35),0.0,0.30));
+              gl_FragColor=vec4(color,clamp(ribbon*0.28*edge*(1.0-uScroll*0.35),0.0,0.20));
             }`,
         });
 
@@ -125,7 +125,12 @@ export default function HeroWebGL() {
         resize();
 
         let frame = 0;
+        let isVisible = true;
         const animate = () => {
+          if (!isVisible) {
+            frame = 0;
+            return;
+          }
           uniforms.uTime.value = performance.now() / 1000;
           uniforms.uPointer.value.x += (targetPointerX - uniforms.uPointer.value.x) * 0.08;
           uniforms.uPointer.value.y += (targetPointerY - uniforms.uPointer.value.y) * 0.08;
@@ -135,6 +140,18 @@ export default function HeroWebGL() {
         };
         animate();
 
+        // Halt WebGL GPU cycles completely when hero is outside viewport
+        const visibilityObserver = new IntersectionObserver(
+          ([entry]) => {
+            isVisible = entry.isIntersecting;
+            if (isVisible && frame === 0) {
+              animate();
+            }
+          },
+          { threshold: 0 }
+        );
+        visibilityObserver.observe(node);
+
         const onViewportChange = () => {
           if (window.innerWidth < 1024) teardown();
         };
@@ -142,7 +159,9 @@ export default function HeroWebGL() {
 
         teardown = () => {
           cancelAnimationFrame(frame);
+          frame = 0;
           window.removeEventListener("resize", onViewportChange);
+          visibilityObserver.disconnect();
           observer.disconnect();
           window.removeEventListener("pointermove", pointer);
           window.removeEventListener("scroll", scroll);

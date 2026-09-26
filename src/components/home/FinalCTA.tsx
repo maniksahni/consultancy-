@@ -3,11 +3,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, ShieldCheck, Clock } from "lucide-react";
-import dynamic from "next/dynamic";
 import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
-
-const MicroAnimation = dynamic(() => import("@/components/experience/MicroAnimation"), { ssr: false });
+import { EASE_LUXURY, maskedLineVariants, terracottaBloomVariants } from "@/lib/motion";
 
 export default function FinalCTA() {
   const [showForm, setShowForm] = useState(false);
@@ -112,25 +110,84 @@ export default function FinalCTA() {
 
         {/* ── Main Monumental Editorial Composition ── */}
         <div className="border-t border-cream/15 pt-8 sm:pt-10 mb-12 sm:mb-16">
+          {/* Sweeping Thin Terracotta Line Before Headline */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.95, ease: EASE_LUXURY }}
+            style={{ originX: 0 }}
+            className="h-[2px] w-full bg-gradient-to-r from-terra via-terra to-terra/20 mb-8 sm:mb-10 shadow-[0_0_12px_rgba(194,91,26,0.6)]"
+          />
+
           <div className="max-w-4xl">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-4">
-              Direct Senior Advisory
+              08 / ENGAGEMENT · Direct Senior Advisory
             </span>
-            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight">
-              YOUR APPLICATION<br />
-              SHOULDN&apos;T FEEL GENERIC.<br />
-              <span className="text-terra italic inline-block pr-1 drop-shadow-[0_0_30px_rgba(194,91,26,0.35)]">
-                Neither Should Your Advice.
+            <h2 className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight">
+              {/* Line 1: YOUR APPLICATION */}
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  variants={maskedLineVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  custom={0.25}
+                  className="block"
+                >
+                  YOUR APPLICATION
+                </motion.span>
+              </span>
+
+              {/* Line 2: SHOULDN'T FEEL GENERIC. */}
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  variants={maskedLineVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  custom={0.42}
+                  className="block"
+                >
+                  SHOULDN&apos;T FEEL GENERIC.
+                </motion.span>
+              </span>
+
+              {/* Accent: Neither Should Your Advice. — Appears last with blooming warm glow */}
+              <span className="block overflow-hidden py-1.5">
+                <motion.span
+                  variants={terracottaBloomVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  custom={0.65}
+                  className="block text-terra italic pr-1"
+                >
+                  Neither Should Your Advice.
+                </motion.span>
               </span>
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-cream/70 font-light leading-relaxed mt-6 sm:mt-8 max-w-2xl">
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.85, delay: 0.82, ease: EASE_LUXURY }}
+              className="text-base sm:text-lg lg:text-xl text-cream/70 font-light leading-relaxed mt-6 sm:mt-8 max-w-2xl"
+            >
               Direct, confidential strategy session with a Senior Mentor. Discuss university shortlists, visa requirements, and profile strengths before committing.
-            </p>
+            </motion.p>
           </div>
 
           {/* Primary Action Buttons */}
           {!showForm && !submitted && (
-            <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.85, delay: 0.98, ease: EASE_LUXURY }}
+              className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+            >
               <button
                 onClick={() => setShowForm(true)}
                 className="glow-button bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-9 py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_25px_rgba(194,91,26,0.25)] hover:shadow-[0_0_35px_rgba(194,91,26,0.4)]"
@@ -148,7 +205,7 @@ export default function FinalCTA() {
                 <MessageCircle className="h-4 w-4 text-terra" />
                 <span>WhatsApp Advisory</span>
               </a>
-            </div>
+            </motion.div>
           )}
 
           {/* ── Seamless In-Place Consultation Booking Form ── */}
@@ -240,7 +297,9 @@ export default function FinalCTA() {
                     disabled={submitting}
                     className="w-full bg-cream text-ink hover:bg-cream/90 min-h-[48px] py-3 text-[11px] uppercase tracking-[0.2em] font-medium transition-colors flex items-center justify-center gap-2"
                   >
-                    {submitting && <MicroAnimation kind="loading" className="h-5 w-5 text-ink" />}
+                    {submitting && (
+                      <span className="block w-4 h-4 border-2 border-ink border-t-transparent rounded-full animate-spin flex-shrink-0" />
+                    )}
                     <span>{submitting ? "Confirming Slot..." : "Confirm Strategy Session"}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
@@ -253,7 +312,7 @@ export default function FinalCTA() {
           {submitted && (
             <div className="mt-8 max-w-lg border border-terra/40 bg-white/[0.04] p-6 sm:p-8 animate-fade-in">
               <div className="flex items-center gap-2 text-terra font-mono text-xs uppercase tracking-wider mb-2">
-                <MicroAnimation kind="success" className="h-5 w-5 text-terra" />
+                <ShieldCheck className="h-4 w-4 text-terra" />
                 <span>Strategy Session Booked</span>
               </div>
               <h3 className="font-display text-2xl text-cream font-normal">

@@ -37,6 +37,13 @@ export default function CustomCursor() {
           ring.current.classList.add("visible");
 
           const move = (e: PointerEvent) => {
+            const target = e.target as Element | null;
+            const isInput = target?.closest("input, textarea, select, [contenteditable='true']");
+            if (isInput) {
+              dot.current?.classList.remove("visible");
+              ring.current?.classList.remove("visible");
+              return;
+            }
             dx(e.clientX);
             dy(e.clientY);
             rx(e.clientX);
@@ -47,14 +54,28 @@ export default function CustomCursor() {
 
           const over = (e: PointerEvent) => {
             const target = e.target as Element | null;
+            const isInput = target?.closest("input, textarea, select, [contenteditable='true']");
+            if (isInput) {
+              dot.current?.classList.remove("visible");
+              ring.current?.classList.remove("visible");
+              return;
+            }
+
+            const isDrag = target?.closest("[data-cursor-drag], [aria-roledescription='carousel']");
+            const isView = target?.closest("[data-cursor-view]");
             const interactive = target?.closest("a, button, [role='button'], .tilt-card");
-            ring.current?.classList.toggle("is-interactive", !!interactive);
+
+            const shouldExpand = !!interactive || !!isDrag || !!isView;
+            ring.current?.classList.toggle("is-interactive", shouldExpand);
+
             if (ring.current) {
-              ring.current.textContent = interactive?.matches(".tilt-card")
-                ? "View"
-                : interactive
-                ? "Click"
-                : "";
+              if (isDrag && !interactive) {
+                ring.current.textContent = "DRAG";
+              } else if (isView && !interactive) {
+                ring.current.textContent = "VIEW";
+              } else {
+                ring.current.textContent = "";
+              }
             }
           };
 

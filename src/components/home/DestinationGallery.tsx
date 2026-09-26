@@ -160,7 +160,7 @@ export default function DestinationGallery() {
         <div className="border-t border-ink/15 pt-5 sm:pt-6 mb-8 sm:mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div>
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-3">
-              Curated Global Study Hubs
+              02 / DESTINATIONS · Curated Global Study Hubs
             </span>
             <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Targeted Country Expertise.<br />
@@ -203,6 +203,7 @@ export default function DestinationGallery() {
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
+            data-cursor-drag
             aria-label="Targeted Country Expertise Carousel"
             onKeyDown={onKeyDown}
           >
@@ -212,29 +213,32 @@ export default function DestinationGallery() {
                   key={`${dest.slug}-${idx}`}
                   className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
                 >
-                  <div className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none">
+                  <div
+                    data-cursor-view
+                    className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none"
+                  >
                     {/* Crisp 4-sided border overlay ensuring no image overlap */}
-                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 group-hover:border-terra/50 transition-colors" />
+                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 group-hover:border-terra/50 transition-colors duration-[650ms]" />
 
-                    {/* Background Image with Smooth Scale */}
+                    {/* Background Image: Scale 1 -> 1.035 with unified luxury easing */}
                     <img
                       src={dest.image}
                       alt={`${dest.country} landmark`}
                       width={480}
                       height={640}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] brightness-[0.8] contrast-[1.05]"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035] brightness-[0.8] contrast-[1.05]"
                       loading="lazy"
                       decoding="async"
                     />
 
-                    {/* Dark Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-500 group-hover:opacity-95" />
+                    {/* Dark Gradient Overlay: Opacity slightly increases */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-95" />
 
-                    {/* Ambient Warm Corner Glow */}
-                    <div className="absolute -bottom-10 -right-10 w-44 h-44 bg-terra/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                    {/* Ambient Warm Corner Glow (Micro glow: 0.18-0.22) */}
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terra/18 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-[650ms] pointer-events-none" />
 
                     {/* Content Overlay */}
-                    <div className="relative z-10 transform transition-transform duration-400 group-hover:-translate-y-1">
+                    <div className="relative z-10 transform transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
                       {/* Top Flag / Stream Pill */}
                       <div className="flex items-center gap-2 mb-2.5">
                         <span className="text-base">{dest.flag}</span>
@@ -243,8 +247,8 @@ export default function DestinationGallery() {
                         </span>
                       </div>
 
-                      {/* Country Name */}
-                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-cream font-normal leading-tight">
+                      {/* Country Name: translateY(0 -> -3px) */}
+                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-cream font-normal leading-tight transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[3px]">
                         {dest.country}
                       </h3>
 
@@ -253,8 +257,8 @@ export default function DestinationGallery() {
                         {dest.tagline}
                       </p>
 
-                      {/* Fact Bar */}
-                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-3 border-t border-cream/15 font-mono text-[10px] text-cream/80">
+                      {/* Fact Bar: Metadata opacity .65 -> 1 */}
+                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-3 border-t border-cream/15 font-mono text-[10px] text-cream/80 opacity-65 group-hover:opacity-100 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
                         <div>
                           <span className="text-cream/40 uppercase tracking-wider block text-[8px]">
                             Post-Study Work
@@ -269,16 +273,16 @@ export default function DestinationGallery() {
                         </div>
                       </div>
 
-                      {/* Explore Link with Terracotta Expanding Hairline */}
+                      {/* Explore Link with Terracotta Expanding Hairline: width 24px (w-6) -> 100% */}
                       <div className="mt-4 pt-2">
                         <Link
                           href={`/destinations/${dest.slug}`}
-                          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-cream group-hover:text-terra transition-colors"
+                          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-cream group-hover:text-terra transition-colors duration-[650ms]"
                         >
                           <span>Explore {dest.country} Dossier</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
                         </Link>
-                        <div className="h-[1.5px] w-12 group-hover:w-full bg-terra/60 transition-all duration-400 mt-1" />
+                        <div className="h-[1.5px] w-6 group-hover:w-full bg-terra/70 transition-all duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] mt-1.5" />
                       </div>
                     </div>
                   </div>

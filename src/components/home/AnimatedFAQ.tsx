@@ -46,7 +46,7 @@ export default function AnimatedFAQ() {
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
-                Transparency &amp; Clarifications
+                07 / PROTOCOLS · Transparency &amp; Clarifications
               </span>
               <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
                 Questions Before<br />
@@ -81,16 +81,30 @@ export default function AnimatedFAQ() {
                     className="w-full text-left flex items-start justify-between gap-4 group focus:outline-none"
                   >
                     <div className="flex items-start gap-3 sm:gap-4 min-w-0">
-                      <span className="font-mono text-xs text-ink/35 mt-1 flex-shrink-0 group-hover:text-terra transition-colors">
+                      <span
+                        className={`font-mono text-xs mt-1 flex-shrink-0 transition-colors duration-300 ${
+                          isOpen ? "text-terra font-medium" : "text-ink/35 group-hover:text-terra"
+                        }`}
+                      >
                         {item.num}
                       </span>
-                      <h3 className="font-display text-xl sm:text-2xl text-ink font-normal leading-snug group-hover:text-terra transition-colors">
+                      <h3
+                        className={`font-display text-xl sm:text-2xl font-normal leading-snug transition-colors duration-300 ${
+                          isOpen ? "text-terra" : "text-ink group-hover:text-terra"
+                        }`}
+                      >
                         {item.question}
                       </h3>
                     </div>
 
                     {/* Rotating Plus Icon */}
-                    <span className="p-1 rounded-none border border-ink/15 text-ink/60 group-hover:border-terra group-hover:text-terra transition-colors flex-shrink-0 mt-1">
+                    <span
+                      className={`p-1 rounded-none border transition-colors flex-shrink-0 mt-1 ${
+                        isOpen
+                          ? "border-terra text-terra bg-terra/5"
+                          : "border-ink/15 text-ink/60 group-hover:border-terra group-hover:text-terra"
+                      }`}
+                    >
                       <motion.div
                         animate={{ rotate: isOpen ? 45 : 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
@@ -111,15 +125,18 @@ export default function AnimatedFAQ() {
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-3 pl-7 sm:pl-8 text-xs sm:text-sm text-ink/75 font-light leading-relaxed">
-                          <p>{item.answer}</p>
-                          <div className="mt-2.5">
-                            <Link
-                              href="/faq"
-                              className="font-mono text-[10px] uppercase tracking-wider text-terra hover:underline inline-flex items-center gap-1"
-                            >
-                              Explore in full FAQ archive →
-                            </Link>
+                        <div className="pt-4 pl-7 sm:pl-8 text-xs sm:text-sm text-ink/75 font-light leading-relaxed">
+                          {/* 2px Terracotta Vertical Accent Line Beside Active Answer */}
+                          <div className="border-l-2 border-terra pl-4 sm:pl-5 py-1">
+                            <p>{item.answer}</p>
+                            <div className="mt-3">
+                              <Link
+                                href="/faq"
+                                className="font-mono text-[10px] uppercase tracking-wider text-terra hover:underline inline-flex items-center gap-1"
+                              >
+                                Explore in full FAQ archive →
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       </motion.div>

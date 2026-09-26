@@ -116,7 +116,7 @@ export default function DifferenceGrid() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15">
           <div className="lg:col-span-7">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
-              The Advisory Difference
+              01 / ADVISORY · The Advisory Difference
             </span>
             <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Not Another<br />
@@ -169,6 +169,7 @@ export default function DifferenceGrid() {
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
+            data-cursor-drag
             aria-label="The Advisory Difference Criterion Cards"
             onKeyDown={onKeyDown}
           >
@@ -182,15 +183,15 @@ export default function DifferenceGrid() {
                     className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
-                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-300 h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-1 hover:border-terra/40 hover:shadow-[0_0_0_1px_rgba(194,91,26,0.25),0_20px_70px_rgba(194,91,26,0.10)]"
+                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-[3px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
                         <div className="flex items-center justify-between pb-5 border-b border-ink/10 mb-5">
-                          <span className="font-display text-4xl sm:text-5xl text-ink/30 group-hover:text-terra transition-colors">
+                          <span className="font-display text-4xl sm:text-5xl text-ink/30 group-hover:text-terra transition-colors duration-300">
                             {panel.num}
                           </span>
-                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra group-hover:text-terra transition-colors">
+                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra/60 group-hover:text-terra group-hover:-translate-y-0.5 transition-all duration-300">
                             <Icon className="h-4 w-4" />
                           </div>
                         </div>

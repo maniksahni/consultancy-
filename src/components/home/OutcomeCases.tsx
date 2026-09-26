@@ -184,7 +184,7 @@ export default function OutcomeCases() {
         <div className="border-t border-cream/15 pt-6 sm:pt-8 mb-10 sm:mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div>
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
-              Documented Admissions Ledger
+              06 / OUTCOMES · Documented Admissions Ledger
             </span>
             <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               Admissions Outcomes,<br />
@@ -236,6 +236,7 @@ export default function OutcomeCases() {
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
+            data-cursor-drag
             aria-label="Verified Admissions Outcome Case Files"
             onKeyDown={onKeyDown}
           >
@@ -245,11 +246,14 @@ export default function OutcomeCases() {
                   key={`${item.ref}-${idx}`}
                   className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
-                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-300 rounded-none hover:border-terra/40 hover:shadow-[0_0_30px_rgba(194,91,26,0.15)]">
+                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none hover:-translate-y-[3px] hover:border-terra/40 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)] overflow-hidden">
+                    {/* Top Border Terracotta Sweep */}
+                    <div className="absolute top-0 left-0 right-0 h-[2px] w-0 group-hover:w-full bg-terra transition-all duration-500 ease-out" />
+
                     <div>
                       {/* Dossier Header */}
                       <div className="flex items-center justify-between pb-3.5 border-b border-cream/10 mb-4 font-mono text-[9px] uppercase tracking-wider text-cream/40">
-                        <span className="flex items-center gap-1.5 text-terra font-medium">
+                        <span className="flex items-center gap-1.5 text-terra group-hover:text-terra-light font-medium transition-colors">
                           <FileCheck2 className="h-3.5 w-3.5 text-terra" />
                           <span>{item.caseNo}</span>
                         </span>
@@ -299,7 +303,7 @@ export default function OutcomeCases() {
                       <div className="text-[9px] uppercase tracking-[0.2em] font-mono text-cream/40 mb-1">
                         Recorded Outcome
                       </div>
-                      <div className="text-xs sm:text-sm font-mono text-terra font-medium leading-snug">
+                      <div className="text-xs sm:text-sm font-mono text-terra font-medium leading-snug group-hover:drop-shadow-[0_0_12px_rgba(194,91,26,0.35)] transition-all">
                         {item.outcome}
                       </div>
                     </div>

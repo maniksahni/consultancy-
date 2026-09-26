@@ -28,21 +28,25 @@ export default function MentorSpotlight() {
         {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
 
-          {/* LEFT: Dramatic Image with Warm Glow Behind & Floating Badge (5 cols, hidden on mobile) */}
+          {/* LEFT: Dramatic Image with Vertical Mask Reveal & Delayed Warm Glow (5 cols, hidden on mobile) */}
           <div className="hidden sm:block lg:col-span-5 relative">
             
-            {/* Warm Glow Lighting Behind Image */}
-            <div
-              className="absolute -inset-2 sm:-inset-6 bg-gradient-to-tr from-terra/30 via-terra/10 to-transparent blur-3xl -z-10 rounded-full hidden sm:block"
+            {/* Warm Glow Lighting Behind Image: Appears AFTER the image reveal */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute -inset-2 sm:-inset-6 bg-gradient-to-tr from-terra/28 via-terra/10 to-transparent blur-3xl -z-10 rounded-full hidden sm:block"
             />
 
-            {/* Architectural Frame */}
+            {/* Architectural Frame with Vertical Mask Reveal */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.94 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ clipPath: "inset(100% 0 0 0)", scale: 1.03, opacity: 0 }}
+              whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl"
+              transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl overflow-hidden"
             >
               <div className="relative h-[220px] w-full overflow-hidden bg-cream border border-ink/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                 <picture>
@@ -88,7 +92,7 @@ export default function MentorSpotlight() {
               <div className="flex items-center gap-2 mb-4">
                 <ShieldCheck className="h-4 w-4 text-terra" />
                 <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/50">
-                  The Mentorship Principle
+                  05 / MENTORSHIP · The Mentorship Principle
                 </span>
               </div>
 

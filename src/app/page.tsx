@@ -4,6 +4,7 @@ import HeroExperience from "@/components/home/HeroExperience";
 import TrustLedger from "@/components/home/TrustLedger";
 import DifferenceGrid from "@/components/home/DifferenceGrid";
 import DestinationGallery from "@/components/home/DestinationGallery";
+import CinematicStatement from "@/components/home/CinematicStatement";
 import ScrollJourney from "@/components/home/ScrollJourney";
 import MentorSpotlight from "@/components/home/MentorSpotlight";
 import OutcomeCases from "@/components/home/OutcomeCases";
@@ -47,6 +48,9 @@ export default function Home() {
 
       {/* 5. Section 4 — Destination Gallery: Premium Motion Grid (Warm White: #FAF7F2) */}
       <DestinationGallery />
+
+      {/* 5.5 Signature Scroll-Linked Intermission: Monumental Statement (Dark: #0B0A08) */}
+      <CinematicStatement />
 
       {/* 6. Section 5 — Scroll Story Process: Glowing Center Timeline (Dark: #0B0A08) */}
       <ScrollJourney />

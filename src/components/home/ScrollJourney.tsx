@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const STAGES = [
@@ -38,9 +38,23 @@ const STAGES = [
 
 export default function ScrollJourney() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStage, setActiveStage] = useState(0);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest < 0.28) {
+      setActiveStage(0);
+    } else if (latest < 0.54) {
+      setActiveStage(1);
+    } else if (latest < 0.78) {
+      setActiveStage(2);
+    } else {
+      setActiveStage(3);
+    }
   });
 
   const scaleY = useSpring(scrollYProgress, {
@@ -64,7 +78,7 @@ export default function ScrollJourney() {
         <div className="border-t border-cream/15 pt-6 sm:pt-8 mb-16 sm:mb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div>
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
-              The 4-Stage Mentorship Journey
+              04 / JOURNEY · The 4-Stage Mentorship Journey
             </span>
             <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
               From Profile Review<br />
@@ -103,6 +117,7 @@ export default function ScrollJourney() {
           <div className="space-y-12 sm:space-y-16 lg:space-y-24">
             {STAGES.map((stage, idx) => {
               const isEven = idx % 2 === 0;
+              const isActive = activeStage === idx;
 
               return (
                 <div
@@ -110,41 +125,58 @@ export default function ScrollJourney() {
                   className="relative flex flex-col lg:flex-row items-start lg:items-center"
                 >
                   {/* Glowing Node on Timeline */}
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                    className="absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#0B0A08] border-2 border-terra shadow-[0_0_16px_rgba(194,91,26,0.9)] z-20 flex items-center justify-center"
+                  <div
+                    className={`absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#0B0A08] border-2 transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-20 flex items-center justify-center ${
+                      isActive
+                        ? "border-terra shadow-[0_0_18px_rgba(194,91,26,0.95)] scale-110"
+                        : "border-cream/30 scale-95"
+                    }`}
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-cream" />
-                  </motion.div>
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full transition-colors duration-[450ms] ${
+                        isActive ? "bg-terra" : "bg-cream/40"
+                      }`}
+                    />
+                  </div>
 
                   {/* Stage Card Content: Alternating on Desktop, Left-padded on Mobile */}
-                  <motion.div
-                    initial={{ opacity: 0, x: isEven ? -24 : 24 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                    className={`pl-12 sm:pl-16 lg:pl-0 w-full lg:w-[45%] ${
+                  <div
+                    className={`pl-12 sm:pl-16 lg:pl-0 w-full lg:w-[45%] transition-opacity duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+                      isActive ? "opacity-100" : "opacity-35"
+                    } ${
                       isEven ? "lg:mr-auto lg:text-right" : "lg:ml-auto lg:text-left"
                     }`}
                   >
-                    <div className="bg-white/[0.02] border border-cream/15 p-6 sm:p-8 hover:border-terra/40 transition-colors backdrop-blur-sm relative group">
-                      
+                    <div
+                      className={`border p-6 sm:p-8 backdrop-blur-sm relative transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+                        isActive
+                          ? "bg-white/[0.04] border-terra/40 shadow-[0_0_30px_rgba(194,91,26,0.12)]"
+                          : "bg-white/[0.01] border-cream/10"
+                      }`}
+                    >
                       {/* Top Timing & Number */}
                       <div
                         className={`flex items-center gap-3 pb-3 border-b border-cream/10 mb-4 font-mono text-[9px] uppercase tracking-wider text-cream/50 ${
                           isEven ? "lg:justify-end" : "justify-start"
                         }`}
                       >
-                        <span className="text-terra font-medium">Stage {stage.num}</span>
+                        <span
+                          className={`transition-colors duration-[450ms] ${
+                            isActive ? "text-terra font-semibold" : "text-cream/50"
+                          }`}
+                        >
+                          Stage {stage.num}
+                        </span>
                         <span>·</span>
                         <span>{stage.tag}</span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-display text-2xl sm:text-3xl text-cream font-normal leading-snug">
+                      <h3
+                        className={`font-display text-2xl sm:text-3xl font-normal leading-snug transition-colors duration-[450ms] ${
+                          isActive ? "text-cream" : "text-cream/70"
+                        }`}
+                      >
                         {stage.title}
                       </h3>
 
@@ -154,7 +186,11 @@ export default function ScrollJourney() {
                           isEven ? "lg:justify-end" : "justify-start"
                         }`}
                       >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-terra flex-shrink-0" />
+                        <CheckCircle2
+                          className={`h-3.5 w-3.5 flex-shrink-0 transition-colors duration-[450ms] ${
+                            isActive ? "text-terra" : "text-cream/40"
+                          }`}
+                        />
                         <span>{stage.deliverable}</span>
                       </div>
 
@@ -163,13 +199,11 @@ export default function ScrollJourney() {
                         {stage.desc}
                       </p>
                     </div>
-                  </motion.div>
-
+                  </div>
                 </div>
               );
             })}
           </div>
-
         </div>
 
       </div>
