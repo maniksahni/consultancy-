@@ -238,8 +238,8 @@ export default function HeroExperience() {
                 </div>
               </motion.div>
 
-              {/* Floating Verified Badge: inside on mobile, floating on desktop */}
-              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-top-4 lg:-right-5 bg-[#0B0A08]/95 border border-terra/40 px-3 py-1.5 sm:px-3.5 sm:py-2 shadow-xl backdrop-blur-md flex items-center gap-1.5 sm:gap-2 z-20">
+              {/* Floating Verified Badge: fully inside the mentor image frame */}
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-5 lg:right-5 z-20 inline-flex w-max max-w-[calc(100%_-_1.5rem)] items-center gap-1.5 sm:gap-2 whitespace-nowrap border border-terra/40 bg-[#0B0A08]/95 px-3 py-1.5 shadow-xl backdrop-blur-md sm:px-3.5 sm:py-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
                 <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-cream">
                   100% Unbiased Advisory
