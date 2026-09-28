@@ -174,7 +174,7 @@ export default function HeroExperience() {
           </div>
 
           {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols) ── */}
-          <div className="block lg:col-span-5 relative mt-8 lg:mt-0">
+          <div className="hidden lg:block lg:col-span-5 relative">
             {/* Parallax Container on Desktop */}
             <motion.div
               style={{ x: moveX, y: moveY }}
@@ -203,8 +203,7 @@ export default function HeroExperience() {
                       width={560}
                       height={700}
                       className="absolute inset-0 h-full w-full object-cover object-top contrast-[1.05] brightness-[0.98]"
-                      fetchPriority="high"
-                      loading="eager"
+                      loading="lazy"
                     />
                   </picture>
                   {/* Subtle Cinematic Vignette */}

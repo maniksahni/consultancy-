@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('pathways_cookie_consent'))document.documentElement.dataset.cookieConsent='set'}catch(e){}" }} />
-        <link rel="preload" as="image" href="/images/mentor-hero-640.webp" imageSrcSet="/images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w" imageSizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw" media="(min-width: 640px)" />
+        <link rel="preload" as="image" href="/images/mentor-hero-640.webp" imageSrcSet="/images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w" imageSizes="(min-width: 1280px) 560px, (min-width: 1024px) 43vw" media="(min-width: 1024px)" />
       </head>
       <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
         <UTMTracker />
