@@ -46,7 +46,7 @@ export default function MentorSpotlight() {
               whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl overflow-hidden"
+              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl"
             >
               <div className="relative h-[220px] w-full overflow-hidden bg-cream border border-ink/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                 <picture>
@@ -71,12 +71,18 @@ export default function MentorSpotlight() {
                   <span className="text-terra-light font-medium drop-shadow">Senior Mentor</span>
                 </div>
               </div>
+            </motion.div>
 
-              {/* Floating Top Badge: inside on mobile, floating on desktop */}
-              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-right-4 bg-ink text-cream border border-terra/50 px-3 py-1.5 shadow-xl font-mono text-[8px] sm:text-[9px] uppercase tracking-widest flex items-center gap-1.5 sm:gap-2 z-20">
-                <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
-                <span>DIRECT 1-ON-1 ADVISORY</span>
-              </div>
+            {/* Floating Top Badge: positioned cleanly on the outer relative container, completely unclipped */}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute -top-3.5 -right-3 lg:-right-4 bg-ink text-cream border border-terra/50 px-3.5 py-1.5 shadow-xl font-mono text-[9px] uppercase tracking-widest flex items-center gap-2 z-20 pointer-events-none"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
+              <span>DIRECT 1-ON-1 ADVISORY</span>
             </motion.div>
           </div>
 
