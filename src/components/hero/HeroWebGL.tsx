@@ -25,7 +25,7 @@ export default function HeroWebGL() {
       if (typeof win.requestIdleCallback === "function") {
         return win.requestIdleCallback(cb, { timeout: 3000 });
       }
-      return setTimeout(cb, 1800);
+      return requestAnimationFrame(cb);
     };
 
     const cancelSchedule = (id: number) => {
@@ -33,7 +33,7 @@ export default function HeroWebGL() {
       if (typeof win.cancelIdleCallback === "function") {
         win.cancelIdleCallback(id);
       } else {
-        clearTimeout(id);
+        cancelAnimationFrame(id);
       }
     };
 

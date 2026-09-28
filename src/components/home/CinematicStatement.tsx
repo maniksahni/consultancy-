@@ -12,19 +12,11 @@ export default function CinematicStatement() {
   });
 
   // Small, disciplined scroll-linked transforms
-  const containerOpacity = useTransform(
-    scrollYProgress,
-    [0.1, 0.35, 0.65, 0.95],
-    [0.25, 1, 1, 0.3]
-  );
-
   const line1X = useTransform(scrollYProgress, [0.15, 0.45], [-36, 0]);
   const line2X = useTransform(scrollYProgress, [0.18, 0.48], [36, 0]);
   const line3Scale = useTransform(scrollYProgress, [0.22, 0.52], [0.96, 1]);
 
   const accentY = useTransform(scrollYProgress, [0.3, 0.58], [18, 0]);
-  const accentOpacity = useTransform(scrollYProgress, [0.3, 0.55], [0, 1]);
-
   // Subtle moving ambient radial glow
   const glowX = useTransform(scrollYProgress, [0.2, 0.8], ["-10%", "10%"]);
   const glowOpacity = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0.12, 0.28, 0.12]);
@@ -58,7 +50,7 @@ export default function CinematicStatement() {
         </div>
 
         {/* ── Main Monumental Typography ── */}
-        <motion.div style={{ opacity: containerOpacity }} className="select-none">
+        <div className="select-none">
           <div className="font-display font-normal text-[clamp(2.15rem,7.5vw,4.5rem)] sm:text-6xl lg:text-[4.75rem] leading-[0.95] tracking-[-0.03em] uppercase">
             
             {/* Line 1: Enters slightly from left */}
@@ -86,7 +78,7 @@ export default function CinematicStatement() {
           {/* Accent: The Strategy Changes Everything */}
           <div className="overflow-hidden pt-4 sm:pt-6">
             <motion.p
-              style={{ y: accentY, opacity: accentOpacity }}
+              style={{ y: accentY }}
               className="font-display italic text-terra text-2xl sm:text-3xl lg:text-4xl leading-tight drop-shadow-[0_0_24px_rgba(194,91,26,0.30)]"
             >
               The Strategy Changes Everything.
@@ -95,12 +87,11 @@ export default function CinematicStatement() {
 
           {/* Supporting Micro-Detail */}
           <motion.p
-            style={{ opacity: accentOpacity }}
             className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-cream/45 mt-6 sm:mt-8 max-w-md mx-auto"
           >
             Curated Admissions Mentorship · 100% Fiduciary Standard
           </motion.p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -161,9 +161,9 @@ export default function HeroExperience() {
 
             {/* Trust Micro-Row */}
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.85 }}
+              transition={{ duration: 0.8 }}
               className="mt-8 pt-6 border-t border-cream/10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-[0.18em] font-mono text-cream/40"
             >
               <span className="flex items-center gap-1.5 text-cream/60">
@@ -180,9 +180,9 @@ export default function HeroExperience() {
             {/* Parallax Container on Desktop */}
             <motion.div
               style={{ x: moveX, y: moveY }}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={false}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="relative mx-auto w-full sm:max-w-md lg:max-w-none"
             >
               {/* Backlight Glow Behind Visual */}
@@ -192,9 +192,15 @@ export default function HeroExperience() {
               <div className="relative border border-cream/20 bg-[#14120C] p-1 sm:p-4 shadow-2xl overflow-hidden">
                 <div className="relative h-[220px] w-full overflow-hidden bg-cream/5 border border-cream/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                   <picture>
-                    <source srcSet="/images/mentor-hero.webp" type="image/webp" />
+                    <source
+                      type="image/webp"
+                      srcSet="/images/mentor-hero-320.webp 320w, /images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w"
+                      sizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw"
+                    />
                     <img
-                      src="/images/mentor-hero.jpg"
+                      src="/images/mentor-hero-640.webp"
+                      srcSet="/images/mentor-hero-320.webp 320w, /images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w"
+                      sizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw"
                       alt="Senior Admissions Mentor in consultation session"
                       width={560}
                       height={700}

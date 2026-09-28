@@ -10,7 +10,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
 
 const MicroAnimation = dynamic(() => import("@/components/experience/MicroAnimation"), { ssr: false });
@@ -139,8 +138,8 @@ export default function BookingSection() {
 
     setLoading(true);
 
-    const minDelay = new Promise<void>((resolve) => setTimeout(resolve, 1500));
     const firestoreSave = (async () => {
+      const { saveMentorshipBooking } = await import("@/lib/firebase");
       const utm = getStoredUTMParams();
       await saveMentorshipBooking({
         fullName: sanitizedFullName,
@@ -159,11 +158,11 @@ export default function BookingSection() {
 
     try {
       await Promise.race([
-        Promise.all([minDelay, firestoreSave]),
+        firestoreSave,
         timeout,
       ]);
     } catch {
-      await minDelay;
+      // Submission can continue when the connection is slow; do not hold the form for a fixed delay.
     } finally {
       setLoading(false);
       triggerConfetti();

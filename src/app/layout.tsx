@@ -7,10 +7,9 @@ import UTMTracker from "@/components/common/UTMTracker";
 
 const ScrollExperience = dynamic(() => import("@/components/experience/ScrollExperience"), { ssr: false });
 const CustomCursor = dynamic(() => import("@/components/experience/CustomCursor"), { ssr: false });
-const RouteCurtain = dynamic(() => import("@/components/experience/RouteCurtain"), { ssr: false });
 const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
 const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
-const CookieBanner = dynamic(() => import("@/components/common/CookieBanner"), { ssr: false });
+import CookieBanner from "@/components/common/CookieBanner";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -18,6 +17,7 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
+  preload: false,
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -25,6 +25,7 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
   variable: "--font-jakarta",
   display: "swap",
+  preload: false,
 });
 
 export const viewport: Viewport = {
@@ -63,12 +64,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('pathways_cookie_consent'))document.documentElement.dataset.cookieConsent='set'}catch(e){}" }} />
+        <link rel="preload" as="image" href="/images/mentor-hero-640.webp" imageSrcSet="/images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w" imageSizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw" media="(min-width: 640px)" />
+      </head>
       <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
         <UTMTracker />
         <SkipToContent />
         <ScrollExperience />
         <CustomCursor />
-        <RouteCurtain />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">
           {children}
         </div>

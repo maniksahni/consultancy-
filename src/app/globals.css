@@ -349,17 +349,37 @@ html.lenis-active { scroll-behavior: auto; }
     scrollbar-width: none;
   }
 
-  /* ── SMOOTH TOUCH CAROUSEL SCROLL-SNAP (FULL-WIDTH CARD) ── */
+  /* Full-bleed carousel viewport: preserve page gutters for card alignment. */
   .carousel-snap {
+    --carousel-gutter: 16px;
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--carousel-gutter)) !important;
+    margin-inline: calc(-1 * var(--carousel-gutter));
+    padding-inline: var(--carousel-gutter);
+    padding-block: 8px;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory !important;
     scroll-behavior: smooth;
-    scroll-padding-inline: 0 !important;
+    scroll-padding-inline: var(--carousel-gutter) !important;
     overscroll-behavior-x: contain;
   }
   .carousel-snap-item {
+    width: min(85vw, 360px);
+    flex: 0 0 min(85vw, 360px);
+    box-sizing: border-box;
     scroll-snap-align: start !important;
     scroll-snap-stop: always !important;
+  }
+  @media (min-width: 390px) {
+    .carousel-snap { --carousel-gutter: 20px; }
+  }
+  @media (min-width: 640px) {
+    .carousel-snap { --carousel-gutter: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .carousel-snap {
+      width: 100% !important; margin-inline: 0; padding: 0; scroll-padding-inline: 0;
+    }
   }
 
   /* ── TOUCH ACTION: eliminate 300ms tap delay on mobile ── */
@@ -385,6 +405,51 @@ html.lenis-active { scroll-behavior: auto; }
 
   .carousel-slide {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* The carousel viewport itself bleeds to the screen edge while slide content
+     keeps the same inset as surrounding page content. */
+  .carousel-viewport {
+    --carousel-gutter: 16px;
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--carousel-gutter)) !important;
+    margin-inline: calc(-1 * var(--carousel-gutter));
+    padding-inline: var(--carousel-gutter);
+    padding-block: 8px;
+    scroll-padding-inline: var(--carousel-gutter) !important;
+    scroll-snap-type: x mandatory;
+  }
+  .carousel-track {
+    width: max-content;
+    min-width: 100%;
+    margin: 0 !important;
+    gap: 16px;
+    overflow: visible !important;
+    padding-block: 0 !important;
+  }
+  .carousel-slide {
+    box-sizing: border-box;
+    width: min(85vw, 360px);
+    flex: 0 0 min(85vw, 360px) !important;
+    padding-left: 0 !important;
+    scroll-snap-align: start;
+  }
+  @media (min-width: 390px) {
+    .carousel-viewport { --carousel-gutter: 20px; }
+  }
+  @media (min-width: 640px) {
+    .carousel-viewport { --carousel-gutter: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .carousel-viewport {
+      width: 100% !important;
+      margin-inline: 0;
+      padding: 0;
+      scroll-padding-inline: 0 !important;
+      scroll-snap-type: none;
+    }
+    .carousel-track { width: 100%; gap: 24px; }
+    .carousel-slide { width: auto; flex: none !important; scroll-snap-align: none; }
   }
 
   @media (hover: none), (pointer: coarse) {
@@ -415,8 +480,8 @@ html.lenis-active { scroll-behavior: auto; }
 
   /* ── SECTION ENTRANCE ANIMATION HELPER ── */
   .section-fade-in {
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -583,3 +648,31 @@ html.lenis-active { scroll-behavior: auto; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Keep destination content in one tree and rearrange it across breakpoints. */
+.destination-card { display: flex; flex-direction: column; }
+.destination-track { flex-direction: row; }
+.destination-copy, .destination-ledger { display: contents; }
+.destination-photo { order: 1; }
+.destination-identity { order: 2; }
+.destination-tag { order: 3; }
+.destination-metrics { order: 4; }
+.destination-advantages { order: 5; }
+.destination-actions { order: 6; }
+@media (min-width: 1024px) {
+  .carousel-snap-item { width: auto; flex: none; }
+  .destination-track { flex-direction: column; gap: 32px; }
+  .destination-track.carousel-snap { overflow: visible; scroll-snap-type: none !important; scroll-padding-inline: 0 !important; }
+  .destination-card.carousel-snap-item { width: 100%; max-width: none; min-width: 0; flex: none; padding: 40px; display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); column-gap: 40px; align-items: start; }
+  .destination-photo { grid-column: 1 / 4; height: 208px; margin: 0; }
+  .destination-copy { display: block; grid-column: 4 / 8; }
+  .destination-identity, .destination-tag, .destination-advantages { order: initial; }
+  .destination-advantages { margin: 16px 0 0; }
+  .destination-ledger { display: flex; grid-column: 8 / 13; justify-content: space-between; gap: 24px; height: 100%; }
+  .destination-metrics, .destination-actions { order: initial; }
+  .destination-actions { margin-top: 0; }
+  .destination-code { display: block; }
+  .destination-clone { display: none; }
+}
+@media (max-width: 1023px) { .destination-code { display: none; } }
+html[data-cookie-consent="set"] .cookie-consent-banner { display: none; }

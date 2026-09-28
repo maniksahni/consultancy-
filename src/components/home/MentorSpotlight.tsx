@@ -33,7 +33,7 @@ export default function MentorSpotlight() {
             
             {/* Warm Glow Lighting Behind Image: Appears AFTER the image reveal */}
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={false}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.85, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
@@ -42,7 +42,7 @@ export default function MentorSpotlight() {
 
             {/* Architectural Frame with Vertical Mask Reveal */}
             <motion.div
-              initial={{ clipPath: "inset(100% 0 0 0)", scale: 1.03, opacity: 0 }}
+              initial={false}
               whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
@@ -88,7 +88,7 @@ export default function MentorSpotlight() {
 
           {/* RIGHT: Typography & Principles (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 28 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}

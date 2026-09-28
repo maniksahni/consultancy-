@@ -306,7 +306,7 @@ export default function DifferenceGrid() {
         </div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-hidden mt-10 sm:mt-12 lg:overflow-visible">
+        <div className="w-full overflow-visible mt-10 sm:mt-12">
           <div
             className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
             ref={setViewportRef}
@@ -341,7 +341,7 @@ export default function DifferenceGrid() {
                   <div
                     key={`${panel.num}-${idx}`}
                     data-carousel-slide
-                    className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= PANELS.length ? "lg:hidden" : ""}`}
+                    className={`carousel-slide carousel-snap-item min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
                       className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[3px] [@media(hover:hover)_and_(pointer:fine)]:hover:border-terra/35 [@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"

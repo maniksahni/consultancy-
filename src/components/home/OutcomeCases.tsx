@@ -281,7 +281,7 @@ export default function OutcomeCases() {
         </div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-hidden lg:overflow-visible">
+        <div className="w-full overflow-visible">
           <div
             className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
             ref={setViewportRef}
@@ -313,7 +313,7 @@ export default function OutcomeCases() {
                 <div
                   key={`${item.ref}-${idx}`}
                   data-carousel-slide
-                  className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= CASES.length ? "lg:hidden" : ""}`}
+                  className={`carousel-slide carousel-snap-item min-w-0 h-full ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
                   <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[3px] [@media(hover:hover)_and_(pointer:fine)]:hover:border-terra/40 [@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)] overflow-hidden">
                     {/* Top Border Terracotta Sweep */}

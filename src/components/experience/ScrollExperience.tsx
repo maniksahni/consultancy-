@@ -56,7 +56,6 @@ export default function ScrollExperience() {
           animations.push(
             gsap.from(heading, {
               y: 28,
-              opacity: 0,
               duration: 0.9,
               ease: "power2.out",
               clearProps: "transform,opacity",
@@ -121,7 +120,7 @@ export default function ScrollExperience() {
       if (typeof win.requestIdleCallback === "function") {
         return win.requestIdleCallback(cb, { timeout: 2500 });
       }
-      return setTimeout(cb, 1200);
+      return requestAnimationFrame(() => requestAnimationFrame(cb));
     };
 
     const cancelSchedule = (id: number) => {
@@ -129,7 +128,7 @@ export default function ScrollExperience() {
       if (typeof win.cancelIdleCallback === "function") {
         win.cancelIdleCallback(id);
       } else {
-        clearTimeout(id);
+        cancelAnimationFrame(id);
       }
     };
 

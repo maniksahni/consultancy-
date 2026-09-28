@@ -2,23 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { Cookie, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const COOKIE_STORAGE_KEY = "pathways_cookie_consent";
 
 export default function CookieBanner() {
-  const [mounted, setMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
     try {
       const consent = localStorage.getItem(COOKIE_STORAGE_KEY);
-      if (!consent) {
-        // Show after a gentle 1.2s delay so it doesn't distract on initial load
-        const timer = setTimeout(() => setIsVisible(true), 1200);
-        return () => clearTimeout(timer);
-      }
+      if (consent) setIsVisible(false);
     } catch {
       // LocalStorage access restricted
     }
@@ -38,21 +31,15 @@ export default function CookieBanner() {
     setIsVisible(false);
   };
 
-  if (!mounted) return null;
+  if (!isVisible) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 24, scale: 0.96 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        <div
           style={{
             position: "fixed",
             bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
           }}
-          className="left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-[65]"
+          className="cookie-consent-banner left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-[65]"
           role="region"
           aria-label="Cookie consent banner"
         >
@@ -92,8 +79,6 @@ export default function CookieBanner() {
               </button>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
   );
 }

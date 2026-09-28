@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import useFloatingControlClearance from "@/components/common/useFloatingControlClearance";
 
 export default function BackToTop() {
+  const carouselBlocksControls = useFloatingControlClearance();
   const [mounted, setMounted] = useState(false);
   const [isPastThreshold, setIsPastThreshold] = useState(false);
   const [isInDangerZone, setIsInDangerZone] = useState(false);
@@ -98,7 +100,7 @@ export default function BackToTop() {
     });
   };
 
-  const shouldShow = isPastThreshold && !isInDangerZone;
+  const shouldShow = isPastThreshold && !isInDangerZone && !carouselBlocksControls;
 
   if (!mounted || typeof document === "undefined") return null;
 

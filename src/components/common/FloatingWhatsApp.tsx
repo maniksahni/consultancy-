@@ -2,16 +2,17 @@
 
 import React, { useState, useEffect } from "react";
 import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
+import useFloatingControlClearance from "@/components/common/useFloatingControlClearance";
 
 const WHATSAPP_URL =
   "https://wa.me/33755749029?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1.";
 
 export default function FloatingWhatsApp() {
+  const carouselBlocksControls = useFloatingControlClearance();
   const [expanded, setExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [isBookingInView, setIsBookingInView] = useState(false);
-  const [isNearCarousel, setIsNearCarousel] = useState(false);
 
   // 1. Scroll listener for hero threshold & scroll-direction (rAF-throttled)
   useEffect(() => {
@@ -82,32 +83,8 @@ export default function FloatingWhatsApp() {
     return () => observer.disconnect();
   }, []);
 
-  // 3. IntersectionObserver on carousels to shrink pill into a compact icon bubble
-  useEffect(() => {
-    const carouselIds = ["destinations", "comparison", "outcomes"];
-    const elements = carouselIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const anyIntersecting = entries.some((e) => e.isIntersecting);
-        setIsNearCarousel(anyIntersecting);
-      },
-      {
-        rootMargin: "-10% 0px -10% 0px",
-        threshold: 0.1,
-      }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   // Suppress entirely if not past hero, OR if booking section is in view
-  const shouldRender = isVisible && !isBookingInView;
+  const shouldRender = isVisible && !isBookingInView && !carouselBlocksControls;
 
   // On mobile: show if scrolling up OR expanded; hide on scroll down
   const showMobile = shouldRender && (isScrollingUp || expanded);

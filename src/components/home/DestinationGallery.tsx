@@ -248,7 +248,7 @@ export default function DestinationGallery() {
         </div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-hidden lg:overflow-visible">
+        <div className="w-full overflow-visible">
           <div
             className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
             ref={setViewportRef}
@@ -280,7 +280,7 @@ export default function DestinationGallery() {
                 <div
                   key={`${dest.slug}-${idx}`}
                   data-carousel-slide
-                  className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
+                  className={`carousel-slide carousel-snap-item min-w-0 h-full ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
                 >
                   <div
                     data-cursor-view
@@ -291,7 +291,9 @@ export default function DestinationGallery() {
 
                     {/* Background Image: Scale 1 -> 1.035 with unified luxury easing */}
                     <img
-                      src={dest.image}
+                      src={dest.image.replace(".webp", "-640.webp")}
+                      srcSet={dest.image.replace(".webp", "-320.webp") + " 320w, " + dest.image.replace(".webp", "-640.webp") + " 640w, " + dest.image.replace(".webp", "-760.webp") + " 760w"}
+                      sizes="(max-width: 389px) 85vw, (max-width: 639px) 85vw, (max-width: 1023px) 360px, 480px"
                       alt={`${dest.country} landmark`}
                       width={480}
                       height={640}
