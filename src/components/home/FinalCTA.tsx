@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, ShieldCheck, Clock } from "lucide-react";
 import { getStoredUTMParams } from "@/lib/utm";
-import { EASE_LUXURY, maskedLineVariants, terracottaBloomVariants } from "@/lib/motion";
+import { EASE_LUXURY } from "@/lib/motion";
 
 export default function FinalCTA() {
   const [showForm, setShowForm] = useState(false);
@@ -124,49 +124,27 @@ export default function FinalCTA() {
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-4">
               08 / ENGAGEMENT · Direct Senior Advisory
             </span>
-            <h2 className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight">
-              {/* Line 1: YOUR APPLICATION */}
-              <span className="block overflow-hidden py-1">
-                <motion.span
-                  variants={maskedLineVariants}
-                  initial={false}
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  custom={0.25}
-                  className="block"
-                >
-                  YOUR APPLICATION
-                </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, ease: EASE_LUXURY }}
+              className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight"
+            >
+              <span className="block py-1">
+                YOUR APPLICATION
               </span>
 
               {/* Line 2: SHOULDN'T FEEL GENERIC. */}
-              <span className="block overflow-hidden py-1">
-                <motion.span
-                  variants={maskedLineVariants}
-                  initial={false}
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  custom={0.42}
-                  className="block"
-                >
-                  SHOULDN&apos;T FEEL GENERIC.
-                </motion.span>
+              <span className="block py-1 text-cream/90">
+                SHOULDN&apos;T FEEL GENERIC.
               </span>
 
-              {/* Accent: Neither Should Your Advice. — Appears last with blooming warm glow */}
-              <span className="block overflow-hidden py-1.5">
-                <motion.span
-                  variants={terracottaBloomVariants}
-                  initial={false}
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  custom={0.65}
-                  className="block text-terra italic pr-1"
-                >
-                  Neither Should Your Advice.
-                </motion.span>
+              {/* Accent: Neither Should Your Advice. */}
+              <span className="block py-1.5 text-terra italic pr-1">
+                Neither Should Your Advice.
               </span>
-            </h2>
+            </motion.h2>
 
             <motion.p
               initial={false}

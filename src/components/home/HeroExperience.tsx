@@ -20,8 +20,6 @@ export default function HeroExperience() {
 
   const moveX = useTransform(springX, [-0.5, 0.5], [-8, 8]);
   const moveY = useTransform(springY, [-0.5, 0.5], [-6, 6]);
-  const moveXReverse = useTransform(springX, [-0.5, 0.5], [6, -6]);
-  const moveYReverse = useTransform(springY, [-0.5, 0.5], [5, -5]);
 
   const handleMouseEnter = () => {
     if (typeof window !== "undefined" && window.innerWidth >= 1024) {
@@ -175,8 +173,8 @@ export default function HeroExperience() {
             </motion.div>
           </div>
 
-          {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols, hidden on mobile) ── */}
-          <div className="hidden sm:block lg:col-span-5 relative">
+          {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols) ── */}
+          <div className="block lg:col-span-5 relative mt-8 lg:mt-0">
             {/* Parallax Container on Desktop */}
             <motion.div
               style={{ x: moveX, y: moveY }}
@@ -189,8 +187,8 @@ export default function HeroExperience() {
               <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10 hidden sm:block" />
 
               {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
-              <div className="relative border border-cream/20 bg-[#14120C] p-1 sm:p-4 shadow-2xl overflow-hidden">
-                <div className="relative h-[220px] w-full overflow-hidden bg-cream/5 border border-cream/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
+              <div className="relative border border-cream/20 bg-[#14120C] p-1.5 sm:p-4 shadow-2xl">
+                <div className="relative aspect-[4/5] max-h-[380px] sm:max-h-[460px] lg:max-h-none w-full overflow-hidden bg-cream/5 border border-cream/10">
                   <picture>
                     <source
                       type="image/webp"
@@ -213,7 +211,7 @@ export default function HeroExperience() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/80 via-transparent to-black/20 pointer-events-none" />
 
                   {/* Overlaid Bottom Title */}
-                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
                     <span className="px-2 py-0.5 bg-[#0B0A08]/90 border border-cream/20">
                       Single Dedicated Mentor
                     </span>
@@ -221,28 +219,6 @@ export default function HeroExperience() {
                   </div>
                 </div>
               </div>
-
-              {/* Secondary Overlapping Panel: Plane / International Flight (Depth Layer) */}
-              <motion.div
-                style={{ x: moveXReverse, y: moveYReverse }}
-                className="absolute -bottom-6 -left-6 sm:-left-8 w-44 sm:w-52 border border-cream/25 bg-[#14120C]/95 backdrop-blur-md p-2 shadow-2xl hidden sm:block"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden border border-cream/10">
-                  <img
-                    src="/images/hero-plane.webp"
-                    alt="International global departure"
-                    width={208}
-                    height={130}
-                    className="w-full h-full object-cover grayscale contrast-125"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-terra/10 mix-blend-overlay" />
-                </div>
-                <div className="pt-2 px-1 flex items-center justify-between font-mono text-[8px] uppercase tracking-wider text-cream/60">
-                  <span>Departure 2026/27</span>
-                  <span className="text-terra">6 Global Hubs</span>
-                </div>
-              </motion.div>
 
               {/* Floating Verified Badge: inside on mobile, floating on desktop */}
               <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-top-4 lg:-right-5 bg-[#0B0A08]/95 border border-terra/40 px-3 py-1.5 sm:px-3.5 sm:py-2 shadow-xl backdrop-blur-md flex items-center gap-1.5 sm:gap-2 z-20">

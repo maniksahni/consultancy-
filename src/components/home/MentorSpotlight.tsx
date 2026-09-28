@@ -138,7 +138,7 @@ export default function MentorSpotlight() {
             <div className="mt-8 pt-6 border-t border-ink/15">
               <Link
                 href="/mentorship-model"
-                className="glow-button inline-flex items-center gap-2.5 bg-ink text-cream hover:bg-ink/90 min-h-[48px] px-8 py-3.5 text-[11px] uppercase tracking-[0.2em] font-medium transition-all group"
+                className="glow-button inline-flex items-center gap-2.5 bg-ink text-cream hover:bg-ink/90 min-h-[48px] px-5 sm:px-8 py-3.5 text-[10px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.2em] font-medium transition-all group"
               >
                 <span>See How Mentorship Works</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
