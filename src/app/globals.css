@@ -420,7 +420,7 @@ html.lenis-active { scroll-behavior: auto; }
     scroll-snap-type: x mandatory;
   }
   .carousel-track {
-    width: max-content;
+    width: 100%;
     min-width: 100%;
     margin: 0 !important;
     gap: 16px;
