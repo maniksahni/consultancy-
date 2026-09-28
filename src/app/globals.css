@@ -365,6 +365,34 @@ html.lenis-active { scroll-behavior: auto; }
   /* ── TOUCH ACTION: eliminate 300ms tap delay on mobile ── */
   a, button, [role="button"], select, input, label {
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── CAROUSEL MOBILE TOUCH STABILIZATION ── */
+  .carousel-viewport {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: auto;
+  }
+
+  .carousel-track {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .carousel-slide {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    [data-cursor-view],
+    [data-carousel-slide],
+    [data-carousel-slide] * {
+      -webkit-tap-highlight-color: transparent;
+    }
   }
 
   /* ── TRUST BADGE / VERIFICATION SEAL ── */

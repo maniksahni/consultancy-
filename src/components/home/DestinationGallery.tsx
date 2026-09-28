@@ -95,6 +95,15 @@ export default function DestinationGallery() {
     [WheelGesturesPlugin()]
   );
 
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const setViewportRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      emblaRef(node);
+    },
+    [emblaRef]
+  );
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -111,6 +120,49 @@ export default function DestinationGallery() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  // Guarantee carousel track and viewport never silently scroll vertically or horizontally on touch/focus
+  useEffect(() => {
+    const viewport = containerRef.current;
+    if (!viewport) return;
+    const track = viewport.firstElementChild as HTMLElement | null;
+
+    const resetScroll = () => {
+      if (viewport.scrollTop !== 0) viewport.scrollTop = 0;
+      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
+      if (track) {
+        if (track.scrollTop !== 0) track.scrollTop = 0;
+        if (track.scrollLeft !== 0) track.scrollLeft = 0;
+      }
+    };
+
+    viewport.addEventListener("scroll", resetScroll, { passive: false });
+    if (track) {
+      track.addEventListener("scroll", resetScroll, { passive: false });
+    }
+
+    // Intercept scrollIntoView on carousel slides so browser focus/scroll algorithms don't mutate scrollLeft
+    const slides = viewport.querySelectorAll<HTMLElement>("[data-carousel-slide]");
+    const originalScrollIntoViews = new Map<HTMLElement, typeof HTMLElement.prototype.scrollIntoView>();
+
+    slides.forEach((slide) => {
+      originalScrollIntoViews.set(slide, slide.scrollIntoView);
+      slide.scrollIntoView = function () {
+        resetScroll();
+      };
+    });
+
+    return () => {
+      viewport.removeEventListener("scroll", resetScroll);
+      if (track) {
+        track.removeEventListener("scroll", resetScroll);
+      }
+      slides.forEach((slide) => {
+        const orig = originalScrollIntoViews.get(slide);
+        if (orig) slide.scrollIntoView = orig;
+      });
+    };
+  }, [emblaApi]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -198,27 +250,44 @@ export default function DestinationGallery() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden lg:overflow-visible">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
-            ref={emblaRef}
+            className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
+            ref={setViewportRef}
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
             data-cursor-drag
             aria-label="Targeted Country Expertise Carousel"
             onKeyDown={onKeyDown}
+            onScroll={(e) => {
+              if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+              if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+            }}
+            onFocusCapture={() => {
+              if (containerRef.current) {
+                containerRef.current.scrollTop = 0;
+                containerRef.current.scrollLeft = 0;
+              }
+            }}
           >
-            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto">
+            <div
+              className="carousel-track flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto scroll-px-4 sm:scroll-px-5 lg:scroll-px-0 scroll-py-2 pt-1.5 pb-2.5 -mt-1.5 -mb-2.5 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
+              onScroll={(e) => {
+                if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+                if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+              }}
+            >
               {SLIDES.map((dest, idx) => (
                 <div
                   key={`${dest.slug}-${idx}`}
-                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
+                  data-carousel-slide
+                  className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
                 >
                   <div
                     data-cursor-view
                     className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none"
                   >
                     {/* Crisp 4-sided border overlay ensuring no image overlap */}
-                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 group-hover:border-terra/50 transition-colors duration-[650ms]" />
+                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 [@media(hover:hover)_and_(pointer:fine)]:group-hover:border-terra/50 transition-colors duration-[650ms]" />
 
                     {/* Background Image: Scale 1 -> 1.035 with unified luxury easing */}
                     <img
@@ -226,16 +295,16 @@ export default function DestinationGallery() {
                       alt={`${dest.country} landmark`}
                       width={480}
                       height={640}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035] brightness-[0.8] contrast-[1.05]"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.035] brightness-[0.8] contrast-[1.05]"
                       loading="lazy"
                       decoding="async"
                     />
 
                     {/* Dark Gradient Overlay: Opacity slightly increases */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-95" />
 
                     {/* Ambient Warm Corner Glow (Micro glow: 0.18-0.22) */}
-                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terra/18 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-[650ms] pointer-events-none" />
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terra/18 rounded-full blur-2xl opacity-0 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 transition-opacity duration-[650ms] pointer-events-none" />
 
                     {/* Content Overlay */}
                     <div className="relative z-10 transform transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
@@ -248,7 +317,7 @@ export default function DestinationGallery() {
                       </div>
 
                       {/* Country Name: translateY(0 -> -3px) */}
-                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-cream font-normal leading-tight transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-[3px]">
+                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-cream font-normal leading-tight transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-[3px]">
                         {dest.country}
                       </h3>
 
@@ -258,7 +327,7 @@ export default function DestinationGallery() {
                       </p>
 
                       {/* Fact Bar: Metadata opacity .65 -> 1 */}
-                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-3 border-t border-cream/15 font-mono text-[10px] text-cream/80 opacity-65 group-hover:opacity-100 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
+                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-3 border-t border-cream/15 font-mono text-[10px] text-cream/80 opacity-65 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
                         <div>
                           <span className="text-cream/40 uppercase tracking-wider block text-[8px]">
                             Post-Study Work
@@ -277,12 +346,13 @@ export default function DestinationGallery() {
                       <div className="mt-4 pt-2">
                         <Link
                           href={`/destinations/${dest.slug}`}
-                          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-cream group-hover:text-terra transition-colors duration-[650ms]"
+                          onPointerDown={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-cream [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-terra transition-colors duration-[650ms]"
                         >
                           <span>Explore {dest.country} Dossier</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:-translate-y-1" />
+                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-1 [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-1" />
                         </Link>
-                        <div className="h-[1.5px] w-6 group-hover:w-full bg-terra/70 transition-all duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] mt-1.5" />
+                        <div className="h-[1.5px] w-6 [@media(hover:hover)_and_(pointer:fine)]:group-hover:w-full bg-terra/70 transition-all duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] mt-1.5" />
                       </div>
                     </div>
                   </div>

@@ -145,6 +145,15 @@ export default function DifferenceGrid() {
     [WheelGesturesPlugin()]
   );
 
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const setViewportRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      emblaRef(node);
+    },
+    [emblaRef]
+  );
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -161,6 +170,49 @@ export default function DifferenceGrid() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  // Guarantee carousel track and viewport never silently scroll vertically or horizontally on touch/focus
+  useEffect(() => {
+    const viewport = containerRef.current;
+    if (!viewport) return;
+    const track = viewport.firstElementChild as HTMLElement | null;
+
+    const resetScroll = () => {
+      if (viewport.scrollTop !== 0) viewport.scrollTop = 0;
+      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
+      if (track) {
+        if (track.scrollTop !== 0) track.scrollTop = 0;
+        if (track.scrollLeft !== 0) track.scrollLeft = 0;
+      }
+    };
+
+    viewport.addEventListener("scroll", resetScroll, { passive: false });
+    if (track) {
+      track.addEventListener("scroll", resetScroll, { passive: false });
+    }
+
+    // Intercept scrollIntoView on carousel slides so browser focus/scroll algorithms don't mutate scrollLeft
+    const slides = viewport.querySelectorAll<HTMLElement>("[data-carousel-slide]");
+    const originalScrollIntoViews = new Map<HTMLElement, typeof HTMLElement.prototype.scrollIntoView>();
+
+    slides.forEach((slide) => {
+      originalScrollIntoViews.set(slide, slide.scrollIntoView);
+      slide.scrollIntoView = function () {
+        resetScroll();
+      };
+    });
+
+    return () => {
+      viewport.removeEventListener("scroll", resetScroll);
+      if (track) {
+        track.removeEventListener("scroll", resetScroll);
+      }
+      slides.forEach((slide) => {
+        const orig = originalScrollIntoViews.get(slide);
+        if (orig) slide.scrollIntoView = orig;
+      });
+    };
+  }, [emblaRef]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -256,26 +308,43 @@ export default function DifferenceGrid() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden mt-10 sm:mt-12 lg:overflow-visible">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
-            ref={emblaRef}
+            className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
+            ref={setViewportRef}
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
             data-cursor-drag
             aria-label="The Advisory Difference Criterion Cards"
             onKeyDown={onKeyDown}
+            onScroll={(e) => {
+              if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+              if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+            }}
+            onFocusCapture={() => {
+              if (containerRef.current) {
+                containerRef.current.scrollTop = 0;
+                containerRef.current.scrollLeft = 0;
+              }
+            }}
           >
-            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-4 lg:gap-6 touch-pan-y lg:touch-auto">
+            <div
+              className="carousel-track flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-4 lg:gap-6 touch-pan-y lg:touch-auto scroll-px-4 sm:scroll-px-5 lg:scroll-px-0 scroll-py-2 pt-1.5 pb-2.5 -mt-1.5 -mb-2.5 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
+              onScroll={(e) => {
+                if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+                if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+              }}
+            >
               {SLIDES.map((panel, idx) => {
                 const Icon = panel.icon;
 
                 return (
                   <div
                     key={`${panel.num}-${idx}`}
-                    className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
+                    data-carousel-slide
+                    className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
-                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-[3px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
+                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[3px] [@media(hover:hover)_and_(pointer:fine)]:hover:border-terra/35 [@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
@@ -283,7 +352,7 @@ export default function DifferenceGrid() {
                           <span className="font-display text-4xl sm:text-5xl text-ink/30 group-hover:text-terra transition-colors duration-300">
                             {panel.num}
                           </span>
-                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra/60 group-hover:text-terra group-hover:-translate-y-0.5 transition-all duration-300">
+                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra/60 group-hover:text-terra [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-0.5 transition-all duration-300">
                             <Icon className="h-4 w-4" />
                           </div>
                         </div>
@@ -310,6 +379,7 @@ export default function DifferenceGrid() {
                         <button
                           type="button"
                           onClick={() => setSelectedStandard(panel)}
+                          onPointerDown={(e) => e.stopPropagation()}
                           aria-label={`How we verify standard ${panel.num}: ${panel.title}`}
                           className="group/btn text-terra hover:text-terra-dark inline-flex items-center gap-1.5 transition-colors cursor-pointer py-1.5 px-2 -mr-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-terra font-medium"
                         >

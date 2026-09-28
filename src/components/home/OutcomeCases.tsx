@@ -116,6 +116,15 @@ export default function OutcomeCases() {
     [WheelGesturesPlugin()]
   );
 
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const setViewportRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      emblaRef(node);
+    },
+    [emblaRef]
+  );
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -132,6 +141,49 @@ export default function OutcomeCases() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  // Guarantee carousel track and viewport never silently scroll vertically or horizontally on touch/focus
+  useEffect(() => {
+    const viewport = containerRef.current;
+    if (!viewport) return;
+    const track = viewport.firstElementChild as HTMLElement | null;
+
+    const resetScroll = () => {
+      if (viewport.scrollTop !== 0) viewport.scrollTop = 0;
+      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
+      if (track) {
+        if (track.scrollTop !== 0) track.scrollTop = 0;
+        if (track.scrollLeft !== 0) track.scrollLeft = 0;
+      }
+    };
+
+    viewport.addEventListener("scroll", resetScroll, { passive: false });
+    if (track) {
+      track.addEventListener("scroll", resetScroll, { passive: false });
+    }
+
+    // Intercept scrollIntoView on carousel slides so browser focus/scroll algorithms don't mutate scrollLeft
+    const slides = viewport.querySelectorAll<HTMLElement>("[data-carousel-slide]");
+    const originalScrollIntoViews = new Map<HTMLElement, typeof HTMLElement.prototype.scrollIntoView>();
+
+    slides.forEach((slide) => {
+      originalScrollIntoViews.set(slide, slide.scrollIntoView);
+      slide.scrollIntoView = function () {
+        resetScroll();
+      };
+    });
+
+    return () => {
+      viewport.removeEventListener("scroll", resetScroll);
+      if (track) {
+        track.removeEventListener("scroll", resetScroll);
+      }
+      slides.forEach((slide) => {
+        const orig = originalScrollIntoViews.get(slide);
+        if (orig) slide.scrollIntoView = orig;
+      });
+    };
+  }, [emblaRef]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -231,29 +283,46 @@ export default function OutcomeCases() {
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden lg:overflow-visible">
           <div
-            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
-            ref={emblaRef}
+            className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
+            ref={setViewportRef}
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
             data-cursor-drag
             aria-label="Verified Admissions Outcome Case Files"
             onKeyDown={onKeyDown}
+            onScroll={(e) => {
+              if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+              if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+            }}
+            onFocusCapture={() => {
+              if (containerRef.current) {
+                containerRef.current.scrollTop = 0;
+                containerRef.current.scrollLeft = 0;
+              }
+            }}
           >
-            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto">
+            <div
+              className="carousel-track flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto scroll-px-4 sm:scroll-px-5 lg:scroll-px-0 scroll-py-2 pt-1.5 pb-2.5 -mt-1.5 -mb-2.5 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
+              onScroll={(e) => {
+                if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
+                if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
+              }}
+            >
               {SLIDES.map((item, idx) => (
                 <div
                   key={`${item.ref}-${idx}`}
-                  className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= CASES.length ? "lg:hidden" : ""}`}
+                  data-carousel-slide
+                  className={`carousel-slide flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full scroll-mx-4 sm:scroll-mx-5 lg:scroll-mx-0 scroll-my-2 ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
-                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none hover:-translate-y-[3px] hover:border-terra/40 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)] overflow-hidden">
+                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between h-[430px] sm:h-[460px] relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[3px] [@media(hover:hover)_and_(pointer:fine)]:hover:border-terra/40 [@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)] overflow-hidden">
                     {/* Top Border Terracotta Sweep */}
-                    <div className="absolute top-0 left-0 right-0 h-[2px] w-0 group-hover:w-full bg-terra transition-all duration-500 ease-out" />
+                    <div className="absolute top-0 left-0 right-0 h-[2px] w-0 [@media(hover:hover)_and_(pointer:fine)]:group-hover:w-full bg-terra transition-all duration-500 ease-out" />
 
                     <div>
                       {/* Dossier Header */}
                       <div className="flex items-center justify-between pb-3.5 border-b border-cream/10 mb-4 font-mono text-[9px] uppercase tracking-wider text-cream/40">
-                        <span className="flex items-center gap-1.5 text-terra group-hover:text-terra-light font-medium transition-colors">
+                        <span className="flex items-center gap-1.5 text-terra [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-terra-light font-medium transition-colors">
                           <FileCheck2 className="h-3.5 w-3.5 text-terra" />
                           <span>{item.caseNo}</span>
                         </span>
@@ -303,7 +372,7 @@ export default function OutcomeCases() {
                       <div className="text-[9px] uppercase tracking-[0.2em] font-mono text-cream/40 mb-1">
                         Recorded Outcome
                       </div>
-                      <div className="text-xs sm:text-sm font-mono text-terra font-medium leading-snug group-hover:drop-shadow-[0_0_12px_rgba(194,91,26,0.35)] transition-all">
+                      <div className="text-xs sm:text-sm font-mono text-terra font-medium leading-snug [@media(hover:hover)_and_(pointer:fine)]:group-hover:drop-shadow-[0_0_12px_rgba(194,91,26,0.35)] transition-all">
                         {item.outcome}
                       </div>
                     </div>
