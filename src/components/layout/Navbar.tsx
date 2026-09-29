@@ -125,8 +125,8 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? isLightNav
-              ? "bg-cream-50/95 backdrop-blur-xl border-b border-ink/8 shadow-[0_2px_14px_rgba(20,18,12,0.06)]"
-              : "bg-[#14120C]/90 backdrop-blur-xl border-b border-cream/10 shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
+              ? "bg-cream-50 backdrop-blur-xl border-b border-ink/8 shadow-[0_2px_14px_rgba(20,18,12,0.06)]"
+              : "bg-[#14120C] backdrop-blur-xl border-b border-cream/10 shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
             : "bg-transparent border-b border-transparent"
         }`}
       >

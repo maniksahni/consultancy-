@@ -419,6 +419,18 @@ html.lenis-active { scroll-behavior: auto; }
     scroll-padding-inline: var(--carousel-gutter) !important;
     scroll-snap-type: x mandatory;
   }
+  :root { --sticky-header-height: 77px; }
+  @media (min-width: 640px) {
+    :root { --sticky-header-height: 79px; }
+  }
+  @media (min-width: 1024px) {
+    :root { --sticky-header-height: 79.5px; }
+  }
+  #comparison,
+  #destinations,
+  #outcomes {
+    scroll-margin-top: var(--sticky-header-height);
+  }
   .carousel-track {
     width: 100%;
     min-width: 100%;
@@ -444,7 +456,8 @@ html.lenis-active { scroll-behavior: auto; }
     .carousel-viewport {
       width: 100% !important;
       margin-inline: 0;
-      padding: 0;
+      padding-inline: 0;
+      padding-block: 8px;
       scroll-padding-inline: 0 !important;
       scroll-snap-type: none;
     }
