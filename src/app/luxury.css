@@ -507,3 +507,9 @@ a,button,input,select,summary { -webkit-tap-highlight-color:transparent; }
 
 /* Keep the cinematic hero uncluttered at every viewport size. */
 .cinema-controls { display:none !important; }
+
+@media(max-width:767px) {
+ .cinema-hero { min-height:max(800px,100svh); }
+ .cinema-content { margin:0 auto; padding:150px 25px 160px; }
+ .cinema-bottom { bottom:70px; }
+}
