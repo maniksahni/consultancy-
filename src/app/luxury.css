@@ -502,5 +502,8 @@ a,button,input,select,summary { -webkit-tap-highlight-color:transparent; }
 
 @media(max-width:767px) {
  .mentor-editorial-image { display:none; }
- .mentor-editorial-grid { grid-template-columns:1fr; }
+.mentor-editorial-grid { grid-template-columns:1fr; }
 }
+
+/* Keep the cinematic hero uncluttered at every viewport size. */
+.cinema-controls { display:none !important; }
