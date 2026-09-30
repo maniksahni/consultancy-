@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type TouchEvent } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 
@@ -80,7 +80,22 @@ const DESTINATIONS: DestinationItem[] = [
 
 export default function DestinationGallery() {
   const [selected, setSelected] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const destination = DESTINATIONS[selected];
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+    if (Math.abs(deltaX) < 44 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+    setSelected(index => (index + (deltaX < 0 ? 1 : DESTINATIONS.length - 1)) % DESTINATIONS.length);
+  };
 
   return (
     <section id="destinations" className="destination-atlas" aria-labelledby="atlas-title">
@@ -101,7 +116,7 @@ export default function DestinationGallery() {
           ))}
           <div className="destination-atlas-note"><span>YOUR AMBITION. YOUR DIRECTION.</span><p>One dedicated mentor to help you make sense of the possibilities.</p><a href="#booking">Talk through your options <ArrowRight size={15} /></a></div>
         </div>
-        <div id="destination-atlas-story" className="destination-atlas-story" aria-live="polite" aria-atomic="true">
+        <div id="destination-atlas-story" className="destination-atlas-story" role="group" aria-roledescription="slide" aria-label={`${destination.country} destination`} aria-live="polite" aria-atomic="true" tabIndex={0} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null; }} onKeyDown={event => { if (event.key === "ArrowRight") setSelected(index => (index + 1) % DESTINATIONS.length); if (event.key === "ArrowLeft") setSelected(index => (index + DESTINATIONS.length - 1) % DESTINATIONS.length); }}>
           <img key={destination.image} className="destination-atlas-photo" src={destination.image} alt={`${destination.country} cityscape`} loading="lazy" />
           <div className="destination-atlas-shade" aria-hidden="true" />
           <div className="destination-atlas-top"><span>THE COLLECTION / 0{selected + 1}</span><span>{destination.flag} {destination.country}</span></div>
@@ -111,6 +126,7 @@ export default function DestinationGallery() {
             <p>{destination.tagline}</p>
             <div className="destination-atlas-facts"><div><span>POST-STUDY WORK</span><strong>{destination.workRight}</strong></div><div><span>TUITION RANGE</span><strong>{destination.tuition}</strong></div></div>
             <Link href={`/destinations/${destination.slug}`}>Explore {destination.country}<ArrowUpRight size={20} /></Link>
+            <span className="destination-atlas-swipe-hint">SWIPE TO EXPLORE ALL SIX DESTINATIONS</span>
           </div>
         </div>
       </div>
