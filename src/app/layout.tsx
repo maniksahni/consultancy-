@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
+import "./luxury.css";
 import SkipToContent from "@/components/common/SkipToContent";
 import UTMTracker from "@/components/common/UTMTracker";
 
@@ -32,16 +33,16 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#14120C",
+  themeColor: "#152126",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://consultancyworld2.firebaseapp.com"),
-  title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
+  title: "Study with Harshita | Elite 1-on-1 Study Abroad Mentorship",
   description:
     "Bypass mass-processing agencies. Personalized profile assessment, Ivy League & Russell Group SOP curation, and foolproof consular visa preparation directly from a dedicated senior mentor. 99.2% visa grant record.",
   keywords: [
-    "Pathways Global",
+    "Study with Harshita",
     "Study abroad mentorship",
     "1-on-1 overseas education advisory",
     "Student visa consultancy",
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
     "Elite SOP editorial",
   ],
   openGraph: {
-    title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
+    title: "Study with Harshita | Elite 1-on-1 Study Abroad Mentorship",
     description:
       "Bypass mass-processing agencies. 100% unbiased advisory, Ivy League & Russell Group admissions strategy, and verified consular preparation.",
     type: "website",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import HeroExperience from "@/components/home/HeroExperience";
+import ExplorePath from "@/components/home/ExplorePath";
 import TrustLedger from "@/components/home/TrustLedger";
 import DifferenceGrid from "@/components/home/DifferenceGrid";
 import CinematicStatement from "@/components/home/CinematicStatement";
@@ -15,7 +16,7 @@ const AnimatedFAQ = dynamic(() => import("@/components/home/AnimatedFAQ"));
 const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"));
 
 export const metadata: Metadata = {
-  title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
+  title: "Study with Harshita | Private 1-on-1 Study Abroad Mentorship",
   description:
     "Independent, one-to-one admissions advisory for premier universities in UK, USA, Canada, Germany, Australia, and Ireland. 100% fiduciary guidance with zero agency recruiter kickbacks.",
   alternates: {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: "/",
-    title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
+    title: "Study with Harshita | Private 1-on-1 Study Abroad Mentorship",
     description:
       "Boutique admissions advisory with zero recruiter kickbacks. Direct 1-on-1 mentorship from profile strategy to consular visa clearance.",
   },
@@ -34,7 +35,7 @@ export default function Home() {
     <main
       id="main-content"
       tabIndex={-1}
-      className="min-h-screen bg-[#0B0A08] text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none"
+      className="colourful-site min-h-screen bg-[#0B0A08] text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none"
     >
       {/* 1. Header / Dynamic Navbar */}
       <Navbar />
@@ -43,9 +44,10 @@ export default function Home() {
       <HeroExperience />
 
       {/* 3. Section 2 — Trust Ledger: Glowing Counter Strip (Warm White: #FAF7F2) */}
+      <ExplorePath />
       <TrustLedger />
 
-      {/* 4. Section 3 — Why Pathways: Asymmetric Glowing Cards (Cream: #F2EDE4) */}
+      {/* 4. Section 3 — Why Study with Harshita: Asymmetric Glowing Cards (Cream: #F2EDE4) */}
       <DifferenceGrid />
 
       {/* 5. Section 4 — Destination Gallery: Premium Motion Grid (Warm White: #FAF7F2) */}

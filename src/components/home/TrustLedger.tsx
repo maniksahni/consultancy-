@@ -29,7 +29,7 @@ const TRUST_FACTS = [
 
 export default function TrustLedger() {
   return (
-    <section className="bg-[#FAF7F2] text-ink relative border-b border-ink/15 overflow-hidden">
+    <section className="colour-trust bg-[#FCFBFA] text-ink relative border-b border-ink/15 overflow-hidden">
       {/* ── Thin Warm Glow Line Traveling Across Top Border ONCE ── */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-ink/10 overflow-hidden">
         <motion.div
@@ -37,7 +37,7 @@ export default function TrustLedger() {
           whileInView={{ width: "100%" }}
           viewport={{ once: true }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full bg-gradient-to-r from-terra/20 via-terra to-terra/40 shadow-[0_0_8px_rgba(194,91,26,0.6)]"
+          className="h-full bg-gradient-to-r from-terra/20 via-terra to-terra/40 shadow-[0_0_8px_rgba(8,127,140,0.6)]"
         />
       </div>
 

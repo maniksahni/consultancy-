@@ -36,7 +36,7 @@ export default function AnimatedFAQ() {
   };
 
   return (
-    <section id="faq" className="bg-[#FAF7F2] text-ink py-20 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
+    <section id="faq" className="colour-faq bg-[#FCFBFA] text-ink py-20 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Two-Column Layout ── */}

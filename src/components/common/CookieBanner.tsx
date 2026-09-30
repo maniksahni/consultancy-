@@ -43,7 +43,7 @@ export default function CookieBanner() {
           role="region"
           aria-label="Cookie consent banner"
         >
-          <div className="bg-[#14120C] text-cream border border-cream/15 p-4 sm:p-5 shadow-2xl relative">
+          <div className="bg-[#362F2A] text-cream border border-cream/15 p-4 sm:p-5 shadow-2xl relative">
             <div className="flex items-start justify-between gap-3 mb-2.5">
               <div className="flex items-center gap-2 text-terra">
                 <Cookie className="w-4 h-4 text-terra flex-shrink-0" />

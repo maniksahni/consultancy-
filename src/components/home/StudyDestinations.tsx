@@ -209,7 +209,7 @@ export default function StudyDestinations() {
   return (
     <section
       id="destinations"
-      className="bg-[#F2EDE4] py-space-5 sm:py-space-6 lg:py-space-7 overflow-hidden w-full text-ink"
+      className="bg-[#F8F6F4] py-space-5 sm:py-space-6 lg:py-space-7 overflow-hidden w-full text-ink"
     >
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 

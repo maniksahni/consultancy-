@@ -430,7 +430,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "$15,000 Dean's Merit Grant",
     rating: 5,
     reviewDate: "2 weeks ago",
-    quote: "GlobalPathways changed the trajectory of my career. My GPA was 7.8, and other consultancies told me top US universities were out of reach. GlobalPathways helped me polish my SOP, highlight my research, and I got admitted to Northeastern with a $15k scholarship! The mock visa interview was identical to the actual consular interview.",
+    quote: "Study with Harshita changed the trajectory of my career. My GPA was 7.8, and other consultancies told me top US universities were out of reach. Study with Harshita helped me polish my SOP, highlight my research, and I got admitted to Northeastern with a $15k scholarship! The mock visa interview was identical to the actual consular interview.",
     verificationBadge: "Verified F-1 Visa Grant"
   },
   {
@@ -449,7 +449,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "£6,000 Global Excellence Award",
     rating: 5,
     reviewDate: "1 month ago",
-    quote: "The 1-year UK Master's process was seamless with GlobalPathways. They obtained an IELTS waiver for me based on my high school English, secured a £6,000 scholarship, and filed my CAS and visa in under a week. I'm now studying at Manchester and already have 3 interview calls for the Graduate Route.",
+    quote: "The 1-year UK Master's process was seamless with Study with Harshita. They obtained an IELTS waiver for me based on my high school English, secured a £6,000 scholarship, and filed my CAS and visa in under a week. I'm now studying at Manchester and already have 3 interview calls for the Graduate Route.",
     verificationBadge: "Verified UK CAS & Visa"
   },
   {
@@ -467,7 +467,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "100% Tuition-Free Public Tier-1",
     rating: 5,
     reviewDate: "3 weeks ago",
-    quote: "Germany's APS process and blocked account requirements were intimidating. GlobalPathways guided me step-by-step through APS verification, opened my Expatrio blocked account, and drafted a flawless letter of motivation. Studying at RWTH Aachen tuition-free feels like a dream come true.",
+    quote: "Germany's APS process and blocked account requirements were intimidating. Study with Harshita guided me step-by-step through APS verification, opened my Expatrio blocked account, and drafted a flawless letter of motivation. Studying at RWTH Aachen tuition-free feels like a dream come true.",
     verificationBadge: "Verified APS & German Visa"
   },
   {
@@ -485,7 +485,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "AUD $10,000 International Award",
     rating: 5,
     reviewDate: "5 days ago",
-    quote: "With the new Genuine Student rules in Australia, visa approvals have become very strict. GlobalPathways prepared an airtight GS statement that clearly demonstrated my career trajectory and ROI. Got my subclass 500 visa approved in only 8 days! Highly recommended for Australia aspirants.",
+    quote: "With the new Genuine Student rules in Australia, visa approvals have become very strict. Study with Harshita prepared an airtight GS statement that clearly demonstrated my career trajectory and ROI. Got my subclass 500 visa approved in only 8 days! Highly recommended for Australia aspirants.",
     verificationBadge: "Verified Subclass 500 Visa"
   },
   {
@@ -503,7 +503,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "CAD $8,000 Entrance Bursary",
     rating: 5,
     reviewDate: "2 months ago",
-    quote: "Waterloo is legendary for its co-op program, but getting the PAL and study permit approved in 2025/2026 needed careful handling. GlobalPathways made sure all provincial attestation letters and GIC deposits were synchronized. Couldn't have done it without them!",
+    quote: "Waterloo is legendary for its co-op program, but getting the PAL and study permit approved in 2025/2026 needed careful handling. Study with Harshita made sure all provincial attestation letters and GIC deposits were synchronized. Couldn't have done it without them!",
     verificationBadge: "Verified Study Permit"
   },
   {
@@ -521,7 +521,7 @@ export const TESTIMONIALS: Testimonial[] = [
     scholarshipAmount: "€5,000 Global Merit Award",
     rating: 5,
     reviewDate: "3 weeks ago",
-    quote: "Dublin is the Silicon Valley of Europe! GlobalPathways helped me secure admission at Trinity College Dublin and hooked me up with verified student housing within walking distance of campus. Their forex card also saved me thousands in exchange fees.",
+    quote: "Dublin is the Silicon Valley of Europe! Study with Harshita helped me secure admission at Trinity College Dublin and hooked me up with verified student housing within walking distance of campus. Their forex card also saved me thousands in exchange fees.",
     verificationBadge: "Verified Stamp 2 Visa"
   }
 ];

@@ -1,5 +1,7 @@
 "use client";
 
+import BrandWordmark from "./BrandWordmark";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -10,6 +12,7 @@ import {
   Instagram,
   Copy,
   Check,
+  ArrowUpRight,
 } from "lucide-react";
 
 function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }) {
@@ -54,8 +57,10 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-[#14120C] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
+    <footer id="footer" className="site-footer bg-[#362F2A] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
+
+        <div className="luxury-footer-invitation"><div><p className="luxury-eyebrow">THE WORLD IS WAITING</p><h2>Your story.<br /><em>Without borders.</em></h2></div><Link href="/#booking">Begin a conversation <ArrowUpRight size={25} /></Link></div>
 
         {/* ── Calm Architectural Header: Fiduciary Standard Bar ── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 sm:pb-8 mb-8 sm:mb-12 border-b border-cream/10 gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-cream/40">
@@ -72,13 +77,7 @@ export default function Footer() {
           {/* Brand & Advisory Line — 5 cols */}
           <div className="lg:col-span-5 space-y-6">
             <Link href="/" className="inline-flex items-baseline gap-1">
-              <span className="font-display text-3xl text-cream tracking-tight">
-                Pathways
-              </span>
-              <span className="font-display text-3xl text-cream/40 font-light">/</span>
-              <span className="text-xs uppercase tracking-[0.25em] text-cream/60 font-mono">
-                Global
-              </span>
+              <BrandWordmark />
             </Link>
 
             <p className="text-sm text-cream/50 leading-relaxed font-light max-w-sm">
@@ -218,12 +217,12 @@ export default function Footer() {
           <strong className="text-cream font-medium uppercase tracking-wider block mb-1">
             Anti-Commission Ethics Standard
           </strong>
-          Pathways Global accepts zero recruiter commissions from universities or loan brokers. All recommendations are 100% fiduciary, aligned with your career ROI. Final admission and visa decisions rest with consular authorities and academic boards.
+          Study with Harshita accepts zero recruiter commissions from universities or loan brokers. All recommendations are 100% fiduciary, aligned with your career ROI. Final admission and visa decisions rest with consular authorities and academic boards.
         </div>
 
         {/* ── Bottom Bar ── */}
         <div className="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-cream/30 font-mono">
-          <p>© {new Date().getFullYear()} Pathways Global Advisory. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Study with Harshita Advisory. All rights reserved.</p>
           <p>Independent 1-on-1 Overseas Education &amp; Visa Advisory.</p>
         </div>
 

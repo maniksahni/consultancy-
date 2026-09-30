@@ -1,5 +1,7 @@
 "use client";
 
+import BrandWordmark from "./BrandWordmark";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -122,11 +124,11 @@ export default function Navbar() {
     <>
       {/* ── Sticky Top Nav Bar ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`site-navigation fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? isLightNav
-              ? "bg-cream-50 backdrop-blur-xl border-b border-ink/8 shadow-[0_2px_14px_rgba(20,18,12,0.06)]"
-              : "bg-[#14120C] backdrop-blur-xl border-b border-cream/10 shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
+              ? "bg-cream-50/95 backdrop-blur-xl border-b border-ink/8 shadow-[0_2px_14px_rgba(16,58,80,0.06)]"
+              : "bg-[#362F2A]/90 backdrop-blur-xl border-b border-cream/10 shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
             : "bg-transparent border-b border-transparent"
         }`}
       >
@@ -134,25 +136,7 @@ export default function Navbar() {
 
           {/* Logo — editorial wordmark */}
           <Link href="/" className="flex items-center gap-px group">
-            <span
-              className={`font-serif text-xl sm:text-2xl font-normal tracking-[-0.02em] transition-colors ${
-                isLightNav
-                  ? "text-ink group-hover:text-ink-soft"
-                  : "text-cream group-hover:text-cream/80"
-              }`}
-            >
-              Pathways
-            </span>
-            <span className="font-serif text-xl sm:text-2xl text-terra mx-0.5 font-light">/</span>
-            <span
-              className={`font-sans text-xs sm:text-sm font-light tracking-wide mt-0.5 transition-colors ${
-                isLightNav
-                  ? "text-stone group-hover:text-ink"
-                  : "text-cream/50 group-hover:text-cream"
-              }`}
-            >
-              Global
-            </span>
+            <BrandWordmark />
           </Link>
 
           {/* Desktop nav — label style, uppercase with active wayfinding */}
@@ -254,7 +238,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="fixed top-0 right-0 bottom-0 w-full sm:w-96 max-w-[88vw] bg-[#14120C] text-cream z-[75] shadow-2xl flex flex-col justify-between border-l border-cream/10 p-6 sm:p-8 overflow-y-auto md:hidden"
+              className="site-mobile-menu fixed top-0 right-0 bottom-0 w-full sm:w-96 max-w-[88vw] bg-[#362F2A] text-cream z-[75] shadow-2xl flex flex-col justify-between border-l border-cream/10 p-6 sm:p-8 overflow-y-auto md:hidden"
               role="dialog"
               aria-modal="true"
               aria-label="Navigation Menu"
@@ -267,13 +251,7 @@ export default function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className="flex items-center gap-px"
                   >
-                    <span className="font-serif text-2xl font-normal text-cream">
-                      Pathways
-                    </span>
-                    <span className="font-serif text-2xl text-terra mx-0.5 font-light">/</span>
-                    <span className="font-sans text-xs font-light text-cream/50 tracking-wide mt-1">
-                      Global
-                    </span>
+                    <BrandWordmark />
                   </Link>
                   <button
                     onClick={() => setIsOpen(false)}

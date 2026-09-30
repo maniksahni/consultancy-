@@ -3,11 +3,11 @@ import EditorialPage from "@/components/layout/EditorialPage";
 import { studentOutcomes } from "@/data/editorial";
 import TiltCard from "@/components/experience/TiltCard";
 
-export const metadata: Metadata = { title: "Student Outcomes | Pathways Global", description: "Existing student case files, recorded with initials only." };
+export const metadata: Metadata = { title: "Student Outcomes | Study with Harshita", description: "Existing student case files, recorded with initials only." };
 
 export default function OutcomesPage() {
   return (
-    <EditorialPage eyebrow="Documented Admissions Records" title="Student" accent="Outcomes."
+    <EditorialPage image="/images/destinations/usa.webp" chapter="04" eyebrow="Documented Admissions Records" title="Student" accent="Outcomes."
       intro="Initials-only case files with the recorded profile and outcome details. Individual results do not predict future decisions.">
       <div className="grid lg:grid-cols-2 gap-8">
         {studentOutcomes.map((item, i) => (
