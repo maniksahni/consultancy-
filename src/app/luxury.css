@@ -539,6 +539,7 @@ a,button,input,select,summary { -webkit-tap-highlight-color:transparent; }
 }
 
 .journey-visual { touch-action:pan-y; }
+.journey-visual > img,.destination-atlas-photo,.destination-atlas-copy { animation:none; }
 .journey-chapter-track { gap:8px; }
 .journey-chapter-track button { flex:1; min-height:22px; padding:10px 0; background:linear-gradient(transparent 10px,#f8f1de35 10px,#f8f1de35 12px,transparent 12px); touch-action:manipulation; }
 .journey-chapter-track button.active { background:linear-gradient(transparent 10px,#dfc49a 10px,#dfc49a 12px,transparent 12px); }

@@ -2,6 +2,7 @@
 
 import { useRef, useState, type TouchEvent } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Plus, Minus, Check } from "lucide-react";
 
 const chapters = [
@@ -14,6 +15,7 @@ const chapters = [
 export default function ScrollJourney() {
   const [active, setActive] = useState(0);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const reduceMotion = useReducedMotion();
   const chapter = chapters[active];
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
     const touch = event.touches[0];
@@ -31,10 +33,12 @@ export default function ScrollJourney() {
   };
   return (
     <section id="process" className="journey-collection" aria-labelledby="journey-title">
-      <div className="journey-heading"><div><p className="luxury-eyebrow">04 / THE JOURNEY, CONSIDERED</p><h2 id="journey-title">A clear path.<br /><em>A bigger future.</em></h2></div><p>Every ambition begins somewhere.<br />We make each next step feel possible.</p></div>
+      <div className="journey-heading"><div><p className="luxury-eyebrow">03 / THE JOURNEY, CONSIDERED</p><h2 id="journey-title">A clear path.<br /><em>A bigger future.</em></h2></div><p>Every ambition begins somewhere.<br />We make each next step feel possible.</p></div>
       <div className="journey-composition">
         <div className="journey-visual" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null; }} role="group" aria-roledescription="slide" aria-label={`${chapter.tag}: ${chapter.title}`}>
-          <img key={chapter.image} src={chapter.image} alt="" loading="lazy" />
+          <AnimatePresence initial={false}>
+            <motion.img key={chapter.image} src={chapter.image} alt="" loading="lazy" initial={reduceMotion ? false : { opacity: 0, scale: 1.07 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: reduceMotion ? 1 : 1.03 }} transition={{ duration: reduceMotion ? 0 : 0.85, ease: [0.22, 1, 0.36, 1] }} />
+          </AnimatePresence>
           <div className="journey-visual-shade" />
           <div className="journey-visual-top"><span>YOUR JOURNEY / STUDY WITH HARSHITA</span><span>0{active + 1} — 04</span></div>
           <div className="journey-visual-bottom"><span>{chapter.caption}</span><p>From possibility<br /><em>to a personal plan.</em></p><div className="journey-chapter-track" aria-label="Journey chapter progress">{chapters.map((item,index) => <button key={item.tag} type="button" className={index === active ? "active" : ""} aria-label={`Show chapter ${index + 1}: ${item.title}`} aria-current={index === active ? "step" : undefined} onClick={() => setActive(index)} />)}</div><span className="journey-swipe-hint">SWIPE TO EXPLORE THE JOURNEY</span></div>

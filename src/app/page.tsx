@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import HeroExperience from "@/components/home/HeroExperience";
-import ExplorePath from "@/components/home/ExplorePath";
 import TrustLedger from "@/components/home/TrustLedger";
 import DifferenceGrid from "@/components/home/DifferenceGrid";
-import CinematicStatement from "@/components/home/CinematicStatement";
 import ScrollJourney from "@/components/home/ScrollJourney";
 import MentorSpotlight from "@/components/home/MentorSpotlight";
 import Footer from "@/components/layout/Footer";
@@ -40,38 +38,18 @@ export default function Home() {
       {/* 1. Header / Dynamic Navbar */}
       <Navbar />
 
-      {/* 2. Section 1 — Hero: Cinematic Full-Screen Experience (Dark: #0B0A08) */}
+      {/* Intro */}
       <HeroExperience />
 
-      {/* 3. Section 2 — Trust Ledger: Glowing Counter Strip (Warm White: #FAF7F2) */}
-      <ExplorePath />
+      {/* Essential proof and guidance */}
       <TrustLedger />
-
-      {/* 4. Section 3 — Why Study with Harshita: Asymmetric Glowing Cards (Cream: #F2EDE4) */}
       <DifferenceGrid />
-
-      {/* 5. Section 4 — Destination Gallery: Premium Motion Grid (Warm White: #FAF7F2) */}
       <DestinationGallery />
-
-      {/* 5.5 Signature Scroll-Linked Intermission: Monumental Statement (Dark: #0B0A08) */}
-      <CinematicStatement />
-
-      {/* 6. Section 5 — Scroll Story Process: Glowing Center Timeline (Dark: #0B0A08) */}
       <ScrollJourney />
-
-      {/* 7. Section 6 — Mentor Feature: Image + Glow Frame (Warm White: #FAF7F2) */}
       <MentorSpotlight />
-
-      {/* 8. Section 7 — Outcome Case Files: Motion Panels (Dark: #0B0A08) */}
       <OutcomeCases />
-
-      {/* 9. Section 8 — FAQ: Motion Accordion (Warm White: #FAF7F2) */}
       <AnimatedFAQ />
-
-      {/* 10. Section 9 — Final CTA: Cinematic Radial Glow & Booking (Dark: #0B0A08) */}
       <FinalCTA />
-
-      {/* 11. Architectural Footer (Dark: #14120C) */}
       <Footer />
     </main>
   );
