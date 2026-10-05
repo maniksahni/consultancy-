@@ -44,7 +44,7 @@ export default function HeroExperience() {
       if (!event.currentTarget.contains(event.relatedTarget as Node | null)) interactionPause.current.focus = false;
     }}
   >
-    <div className="cinema-scenes" aria-hidden="true">{scenes.map((item, index) => <div key={item.slug} className={`cinema-scene ${index === active ? "is-active" : ""}`}><img src={item.image} alt="" width={1920} height={1080} fetchPriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} /></div>)}</div>
+    <div className="cinema-scenes" data-hero-parallax aria-hidden="true">{scenes.map((item, index) => <div key={item.slug} className={`cinema-scene ${index === active ? "is-active" : ""}`}><img src={item.image} alt="" width={1920} height={1080} fetchPriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} /></div>)}</div>
     <div className="cinema-shade" aria-hidden="true" />
     <div className="cinema-frame" aria-hidden="true" />
     <motion.div className="cinema-content" variants={stagger} initial={reduceMotion ? false : "hidden"} animate="visible">
@@ -53,8 +53,8 @@ export default function HeroExperience() {
       <motion.h1 id="hero-title" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>The world awaits.<br /><em>Make it yours.</em></motion.h1>
       <motion.p className="cinema-description" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>Extraordinary places. A deeply personal path.<br />One dedicated mentor to help you find where you belong.</motion.p>
       <motion.div className="cinema-actions" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>
-        <motion.a className="cinema-primary" href="#booking" whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.3, ease }}>Begin your next chapter <ArrowUpRight size={18} /></motion.a>
-        <motion.a className="cinema-secondary" href="#destinations" whileHover={reduceMotion ? undefined : { x: 5 }} transition={{ duration: 0.3, ease }}>Discover the destinations <ArrowUpRight size={17} /></motion.a>
+        <motion.a className="cinema-primary" data-magnetic href="#booking" whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.3, ease }}>Begin your next chapter <ArrowUpRight size={18} /></motion.a>
+        <motion.a className="cinema-secondary" data-magnetic href="#destinations" whileHover={reduceMotion ? undefined : { x: 5 }} transition={{ duration: 0.3, ease }}>Discover the destinations <ArrowUpRight size={17} /></motion.a>
       </motion.div>
     </motion.div>
     <motion.div className="cinema-bottom" initial={reduceMotion ? false : { opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.2, ease }}>
