@@ -10,6 +10,7 @@ import UTMTracker from "@/components/common/UTMTracker";
 const ScrollExperience = dynamic(() => import("@/components/experience/ScrollExperience"), { ssr: false });
 const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
 const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
+const GlobalMotionLayer = dynamic(() => import("@/components/experience/GlobalMotionLayer"), { ssr: false });
 import CookieBanner from "@/components/common/CookieBanner";
 
 const editorialDisplay = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600"], style: ["normal", "italic"], variable: "--font-redesign-display", display: "swap" });
@@ -77,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <UTMTracker />
         <SkipToContent />
         <ScrollExperience />
+        <GlobalMotionLayer />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">
           {children}
         </div>
