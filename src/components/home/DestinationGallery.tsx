@@ -100,28 +100,28 @@ export default function DestinationGallery() {
   };
 
   return (
-    <section id="destinations" className="destination-atlas" aria-labelledby="atlas-title">
-      <div className="destination-atlas-heading">
+    <section id="destinations" className="destination-atlas redesign-destinations" aria-labelledby="atlas-title">
+      <motion.div className="destination-atlas-heading" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
         <p className="luxury-eyebrow">02 / THE DESTINATION COLLECTION</p>
         <h2 id="atlas-title">A world of possibilities.<br /><em>Find your place.</em></h2>
         <p>Six destinations. Countless ways forward. Choose a country and picture your next chapter.</p>
-      </div>
+      </motion.div>
       <div className="destination-atlas-layout">
         <div className="destination-atlas-list" role="group" aria-label="Choose a study destination">
           <p className="destination-atlas-instruction">WHERE WILL YOUR STORY BEGIN?</p>
           {DESTINATIONS.map((item, index) => (
-            <button key={item.slug} type="button" aria-pressed={selected === index} aria-controls="destination-atlas-story" onClick={() => setSelected(index)} className={selected === index ? "is-selected" : ""}>
+            <motion.button whileHover={reduceMotion ? undefined : { x: 3 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.2 }} key={item.slug} type="button" aria-pressed={selected === index} aria-controls="destination-atlas-story" onClick={() => setSelected(index)} className={selected === index ? "is-selected" : ""}>
               <span className="destination-atlas-number">0{index + 1}</span>
               <span>{item.country}</span>
               <ArrowUpRight size={18} aria-hidden="true" />
-            </button>
+            </motion.button>
           ))}
           <div className="destination-atlas-note"><span>YOUR AMBITION. YOUR DIRECTION.</span><p>One dedicated mentor to help you make sense of the possibilities.</p><a href="#booking">Talk through your options <ArrowRight size={15} /></a></div>
         </div>
         <div id="destination-atlas-story" className="destination-atlas-story" role="group" aria-roledescription="slide" aria-label={`${destination.country} destination`} aria-live="polite" aria-atomic="true" tabIndex={0} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null; }} onKeyDown={event => { if (event.key === "ArrowRight") setSelected(index => (index + 1) % DESTINATIONS.length); if (event.key === "ArrowLeft") setSelected(index => (index + DESTINATIONS.length - 1) % DESTINATIONS.length); }}>
-          <AnimatePresence initial={false}>
+          <div className="redesign-destination-image"><AnimatePresence initial={false}>
             <motion.img key={destination.image} className="destination-atlas-photo" src={destination.image} alt={`${destination.country} cityscape`} loading="lazy" initial={reduceMotion ? false : { opacity: 0, scale: 1.075 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: reduceMotion ? 1 : 1.035 }} transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }} />
-          </AnimatePresence>
+          </AnimatePresence></div>
           <div className="destination-atlas-shade" aria-hidden="true" />
           <div className="destination-atlas-top"><span>THE COLLECTION / 0{selected + 1}</span><span>{destination.flag} {destination.country}</span></div>
           <motion.div className="destination-atlas-copy" key={destination.slug} initial={reduceMotion ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}>

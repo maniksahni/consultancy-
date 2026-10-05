@@ -43,12 +43,12 @@ export default function Home() {
 
       {/* Essential proof and guidance */}
       <TrustLedger />
-      <DifferenceGrid />
       <DestinationGallery />
+      <DifferenceGrid />
       <ScrollJourney />
       <MentorSpotlight />
-      <OutcomeCases />
       <AnimatedFAQ />
+      <OutcomeCases />
       <FinalCTA />
       <Footer />
     </main>

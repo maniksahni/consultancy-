@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import BrandWordmark from "./BrandWordmark";
 
 import React, { useState } from "react";
@@ -56,11 +57,12 @@ function CopyButton({ textToCopy, label }: { textToCopy: string; label: string }
 }
 
 export default function Footer() {
+  const reduceMotion = useReducedMotion();
   return (
-    <footer id="footer" className="site-footer bg-[#362F2A] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
+    <footer id="footer" className="redesign-footer site-footer bg-[#362F2A] text-cream/60 pt-space-5 pb-space-5 sm:pt-space-6 sm:pb-space-6 lg:pt-space-7 lg:pb-space-6 overflow-hidden w-full border-t border-cream/10 relative">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
 
-        <div className="luxury-footer-invitation"><div><p className="luxury-eyebrow">THE WORLD IS WAITING</p><h2>Your story.<br /><em>Without borders.</em></h2></div><Link href="/#booking">Begin a conversation <ArrowUpRight size={25} /></Link></div>
+        <motion.div initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="luxury-footer-invitation"><div><p className="luxury-eyebrow">THE WORLD IS WAITING</p><h2>Your story.<br /><em>Without borders.</em></h2></div><Link href="/#booking">Begin a conversation <ArrowUpRight size={25} /></Link></motion.div>
 
         {/* ── Calm Architectural Header: Fiduciary Standard Bar ── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 sm:pb-8 mb-8 sm:mb-12 border-b border-cream/10 gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-cream/40">
@@ -72,7 +74,7 @@ export default function Footer() {
         </div>
 
         {/* ── Main Editorial Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-12 lg:gap-16 mb-12 sm:mb-16">
+        <div className="redesign-footer-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-12 lg:gap-16 mb-12 sm:mb-16">
 
           {/* Brand & Advisory Line — 5 cols */}
           <div className="lg:col-span-5 space-y-6">
@@ -213,7 +215,7 @@ export default function Footer() {
         </div>
 
         {/* ── Anti-Commission Ethics Disclaimer: Stark 1px Hairline Block ── */}
-        <div className="border border-cream/10 p-6 sm:p-8 text-xs leading-relaxed font-light text-cream/50 mb-8 sm:mb-10 rounded-none">
+        <div className="redesign-footer-ethics border border-cream/10 p-6 sm:p-8 text-xs leading-relaxed font-light text-cream/50 mb-8 sm:mb-10 rounded-none">
           <strong className="text-cream font-medium uppercase tracking-wider block mb-1">
             Anti-Commission Ethics Standard
           </strong>
@@ -221,7 +223,7 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom Bar ── */}
-        <div className="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-cream/30 font-mono">
+        <div className="redesign-footer-bottom border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] uppercase tracking-[0.2em] text-cream/30 font-mono">
           <p>© {new Date().getFullYear()} Study with Harshita Advisory. All rights reserved.</p>
           <p>Independent 1-on-1 Overseas Education &amp; Visa Advisory.</p>
         </div>

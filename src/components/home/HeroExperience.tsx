@@ -29,13 +29,13 @@ export default function HeroExperience() {
   }, [paused, reduceMotion]);
   const scene = scenes[active];
   const reveal = {
-    hidden: { opacity: 0, y: 24, filter: "blur(7px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
   };
-  const stagger = { hidden: {}, visible: { transition: { delayChildren: 0.16, staggerChildren: 0.13 } } };
+  const stagger = { hidden: {}, visible: { transition: { delayChildren: 0.08, staggerChildren: 0.04 } } };
 
   return <section
-    className="cinema-hero"
+    className="cinema-hero redesign-hero"
     aria-labelledby="hero-title"
     onPointerEnter={() => { interactionPause.current.pointer = true; }}
     onPointerLeave={() => { interactionPause.current.pointer = false; }}
@@ -48,16 +48,16 @@ export default function HeroExperience() {
     <div className="cinema-shade" aria-hidden="true" />
     <div className="cinema-frame" aria-hidden="true" />
     <motion.div className="cinema-content" variants={stagger} initial={reduceMotion ? false : "hidden"} animate="visible">
-      <motion.div className="cinema-eyebrow" variants={reveal} transition={{ duration: 0.8, ease }}><span /> PRIVATE STUDY ABROAD MENTORSHIP</motion.div>
-      <motion.p className="cinema-prelude" variants={reveal} transition={{ duration: 0.8, ease }}>Some journeys change everything.</motion.p>
-      <motion.h1 id="hero-title" variants={reveal} transition={{ duration: 1, ease }}>The world awaits.<br /><em>Make it yours.</em></motion.h1>
-      <motion.p className="cinema-description" variants={reveal} transition={{ duration: 0.8, ease }}>Extraordinary places. A deeply personal path.<br />One dedicated mentor to help you find where you belong.</motion.p>
-      <motion.div className="cinema-actions" variants={reveal} transition={{ duration: 0.8, ease }}>
-        <motion.a className="cinema-primary" href="#booking" whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ type: "spring", stiffness: 260, damping: 18 }}>Begin your next chapter <ArrowUpRight size={18} /></motion.a>
-        <motion.a className="cinema-secondary" href="#destinations" whileHover={reduceMotion ? undefined : { x: 5 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}>Discover the destinations <ArrowUpRight size={17} /></motion.a>
+      <motion.div className="cinema-eyebrow" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}><span /> PRIVATE STUDY ABROAD MENTORSHIP</motion.div>
+      <motion.p className="cinema-prelude" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>Some journeys change everything.</motion.p>
+      <motion.h1 id="hero-title" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>The world awaits.<br /><em>Make it yours.</em></motion.h1>
+      <motion.p className="cinema-description" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>Extraordinary places. A deeply personal path.<br />One dedicated mentor to help you find where you belong.</motion.p>
+      <motion.div className="cinema-actions" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>
+        <motion.a className="cinema-primary" href="#booking" whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.3, ease }}>Begin your next chapter <ArrowUpRight size={18} /></motion.a>
+        <motion.a className="cinema-secondary" href="#destinations" whileHover={reduceMotion ? undefined : { x: 5 }} transition={{ duration: 0.3, ease }}>Discover the destinations <ArrowUpRight size={17} /></motion.a>
       </motion.div>
     </motion.div>
-    <motion.div className="cinema-bottom" initial={reduceMotion ? false : { opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: reduceMotion ? 0 : 0.85, ease }}>
+    <motion.div className="cinema-bottom" initial={reduceMotion ? false : { opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.2, ease }}>
       <a href="#destinations" className="cinema-scroll"><span><ArrowDown size={17} /></span><div>SCROLL TO DISCOVER<small>A world of possibilities below</small></div></a>
       <div className="cinema-location"><span>IN FOCUS / {String(active + 1).padStart(2, "0")}</span><Link href={`/destinations/${scene.slug}`}>{scene.country}<ArrowUpRight size={16} /></Link><small>{scene.coordinates}</small></div>
       <div className="cinema-controls"><div className="cinema-dots" aria-label="Choose destination photo">{scenes.map((item, index) => <button key={item.slug} onClick={() => { setActive(index); setPaused(true); }} aria-label={`Show ${item.country}`} aria-pressed={active === index} className={index === active ? "active" : ""}><span>{String(index + 1).padStart(2, "0")}</span><i /></button>)}</div><div className="cinema-control-buttons"><button onClick={() => { setActive((active + scenes.length - 1) % scenes.length); setPaused(true); }} aria-label="Previous destination"><ArrowLeft size={16} /></button><button onClick={() => { setActive((active + 1) % scenes.length); setPaused(true); }} aria-label="Next destination"><ArrowRight size={16} /></button><button onClick={() => setPaused(value => !value)} aria-label={paused ? "Resume destination slideshow" : "Pause destination slideshow"}>{paused ? "Play" : "Pause"}</button></div></div>

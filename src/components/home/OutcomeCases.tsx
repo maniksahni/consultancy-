@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowRight, ChevronLeft, ChevronRight, FileCheck2 } from "lucide-react";
@@ -179,10 +180,12 @@ export default function OutcomeCases() {
 
   const activeDot = ((selectedIndex % CASES.length) + CASES.length) % CASES.length;
 
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id="outcomes"
-      className="colour-outcomes bg-[#2D2722] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden w-full"
+      className="redesign-outcomes colour-outcomes bg-[#2D2722] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden w-full"
     >
       {/* Subtle Warm Amber Glow Behind Section */}
       <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-terra/5 rounded-full blur-[140px] pointer-events-none" />
@@ -190,7 +193,7 @@ export default function OutcomeCases() {
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
 
         {/* ── Section Header ── */}
-        <div className="border-t border-cream/15 pt-6 sm:pt-8 mb-10 sm:mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <motion.div className="redesign-outcomes-heading border-t border-cream/15 pt-6 sm:pt-8 mb-10 sm:mb-14 flex flex-col lg:flex-row lg:items-end justify-between gap-6" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
           <div>
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
               06 / OUTCOMES · Documented Admissions Ledger
@@ -235,7 +238,7 @@ export default function OutcomeCases() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden lg:overflow-visible">
@@ -255,7 +258,7 @@ export default function OutcomeCases() {
                   key={`${item.ref}-${idx}`}
                   className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= CASES.length ? "lg:hidden" : ""}`}
                 >
-                  <div className="border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between min-h-[460px] h-full relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none hover:-translate-y-[3px] hover:border-terra/40 hover:shadow-[0_4px_24px_rgba(8,127,140,0.08)] overflow-hidden">
+                  <motion.div initial={reduceMotion ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} whileHover={reduceMotion ? undefined : { opacity: 0.94 }} transition={{ duration: 0.5, delay: (idx % 3) * 0.04, ease: [0.22, 1, 0.36, 1] }} className="redesign-outcome-card border border-cream/20 bg-white/[0.02] p-6 sm:p-7 flex flex-col justify-between min-h-[460px] h-full relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] rounded-none hover:border-terra/40 hover:shadow-[0_4px_24px_rgba(8,127,140,0.08)] overflow-hidden">
                     {/* Top Border Terracotta Sweep */}
                     <div className="absolute top-0 left-0 right-0 h-[2px] w-0 group-hover:w-full bg-terra transition-all duration-500 ease-out" />
 
@@ -289,7 +292,7 @@ export default function OutcomeCases() {
                       <h3 className="font-display text-2xl text-cream font-normal leading-snug">
                         {item.university}
                       </h3>
-                      <div className="text-xs text-cream/80 font-mono mt-1 line-clamp-1">
+                      <div className="text-xs text-cream/80 font-mono mt-1">
                         {item.program}
                       </div>
 
@@ -303,7 +306,7 @@ export default function OutcomeCases() {
                         <span className="text-cream/40 block text-[8px] uppercase tracking-wider mb-0.5">
                           Profile Metrics:
                         </span>
-                        <span className="line-clamp-1">{item.profile}</span>
+                        <span className="redesign-profile">{item.profile}</span>
                       </div>
 
                       {/* Narrative Detail */}
@@ -321,7 +324,7 @@ export default function OutcomeCases() {
                         {item.outcome}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
@@ -330,7 +333,7 @@ export default function OutcomeCases() {
           {/* ── Tappable Pagination Dots Indicator (1-to-1 with unique cases) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
             {CASES.map((item, idx) => (
-              <button
+              <motion.button animate={{ opacity: idx === activeDot ? 1 : 0.65 }} transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 key={item.ref}
                 type="button"
                 onClick={() => scrollToDot(idx)}

@@ -5,7 +5,7 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, UserCheck, Sparkles, FileCheck, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ComparisonSpotlight from "@/components/experience/ComparisonSpotlight";
 
 interface VerificationDetails {
@@ -199,13 +199,15 @@ export default function DifferenceGrid() {
 
   const activeDot = ((selectedIndex % PANELS.length) + PANELS.length) % PANELS.length;
 
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section id="comparison" className="colour-difference bg-[#F8F6F4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
+    <section id="comparison" className="redesign-comparison colour-difference bg-[#F8F6F4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
       <ComparisonSpotlight />
       <div className="relative z-10 max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Section Header ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15">
+        <motion.div className="redesign-section-heading grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
           <div className="lg:col-span-7">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
               01 / ADVISORY · The Advisory Difference
@@ -250,7 +252,7 @@ export default function DifferenceGrid() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
         <div className="w-full overflow-hidden mt-10 sm:mt-12 lg:overflow-visible">
@@ -273,8 +275,9 @@ export default function DifferenceGrid() {
                     key={`${panel.num}-${idx}`}
                     className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
-                    <div
-                      className="bg-[#FCFBFA] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-[3px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(8,127,140,0.08)]"
+                    <motion.div
+                      initial={reduceMotion ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} whileHover={reduceMotion ? undefined : { opacity: 0.94 }} transition={{ duration: 0.45, delay: (idx % PANELS.length) * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                      className="redesign-difference-card bg-[#FCFBFA] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(8,127,140,0.08)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
@@ -316,7 +319,7 @@ export default function DifferenceGrid() {
                           <span className="transition-transform group-hover/btn:translate-x-1">→</span>
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 );
               })}
@@ -326,7 +329,7 @@ export default function DifferenceGrid() {
           {/* ── Tappable Pagination Dots Indicator (Maps 1-to-1 to 4 unique items) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
             {PANELS.map((panel, idx) => (
-              <button
+              <motion.button animate={{ opacity: idx === activeDot ? 1 : 0.65 }} transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 key={panel.num}
                 type="button"
                 onClick={() => scrollToDot(idx)}
@@ -354,10 +357,10 @@ export default function DifferenceGrid() {
           >
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: reduceMotion ? 0 : 0.3 }}
               onClick={() => setSelectedStandard(null)}
               className="fixed inset-0 bg-[#2D2722]/70 backdrop-blur-sm cursor-pointer"
               aria-hidden="true"
@@ -365,10 +368,10 @@ export default function DifferenceGrid() {
 
             {/* Side Sheet / Bottom Drawer Panel */}
             <motion.div
-              initial={isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
+              initial={reduceMotion ? false : isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
               animate={{ x: 0, y: 0 }}
-              exit={isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              exit={reduceMotion ? { opacity: 0 } : isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10 w-full max-w-lg bg-[#FCFBFA] text-[#362F2A] border-t md:border-t-0 md:border-l border-ink/20 shadow-2xl flex flex-col h-[85vh] md:h-full overflow-hidden"
             >
               {/* Top Bar with Editorial Monospace Index & Close Target */}
