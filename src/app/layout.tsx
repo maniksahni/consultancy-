@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import "./globals.css";
 import "./luxury.css";
 import "./redesign.css";
+import "./home2026.css";
 import SkipToContent from "@/components/common/SkipToContent";
 import UTMTracker from "@/components/common/UTMTracker";
 
