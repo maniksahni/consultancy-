@@ -338,3 +338,100 @@ body{background:var(--h26-paper);color:var(--h26-ink)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
+
+
+/* Booking close: deliberately monumental, not a generic form block */
+.redesign-booking{
+  background:#17130f!important;
+  padding-top:8rem!important;
+  padding-bottom:8rem!important;
+}
+.redesign-booking .luxury-booking-photo{opacity:.22!important;filter:saturate(.55)!important}
+.redesign-booking .booking-title{
+  font-family:var(--font-cormorant)!important;
+  font-size:clamp(3.6rem,7.4vw,8.2rem)!important;
+  line-height:.82!important;
+  letter-spacing:-.05em!important;
+  font-weight:400!important;
+  max-width:11ch!important;
+}
+.redesign-booking .booking-title span{color:#a9c0b9!important;font-style:italic!important}
+.redesign-booking .redesign-booking-main{border-color:rgba(245,239,230,.16)!important}
+.redesign-booking .redesign-booking-form{
+  max-width:46rem!important;
+  background:rgba(255,255,255,.035)!important;
+  border-color:rgba(245,239,230,.16)!important;
+  backdrop-filter:blur(12px);
+}
+.redesign-booking input,.redesign-booking select{background:#231d18!important;border-color:rgba(245,239,230,.18)!important}
+.redesign-booking .glow-button{background:#0f6f72!important;box-shadow:none!important}
+
+/* Editorial subpages: larger rhythm and less card-grid appearance */
+.colourful-editorial,.destination-page,.scholarships-page{background:var(--h26-paper)!important}
+.luxury-editorial-content{padding-top:7rem!important;padding-bottom:8rem!important}
+.luxury-editorial-content>div>article{
+  padding-top:4.5rem!important;
+  padding-bottom:4.5rem!important;
+}
+.luxury-editorial-content article h2{
+  font-family:var(--font-cormorant)!important;
+  font-size:clamp(2.5rem,4vw,4.7rem)!important;
+  line-height:.9!important;
+  letter-spacing:-.035em!important;
+  font-weight:400!important;
+}
+.luxury-editorial-content article .bg-white,
+.luxury-editorial-content article [class*="bg-white"]{
+  background:rgba(255,255,255,.26)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.45)!important;
+}
+.destination-page .luxury-country-facts{
+  background:rgba(31,25,21,.44)!important;
+  backdrop-filter:blur(18px)!important;
+  border-color:rgba(245,239,230,.18)!important;
+}
+.destination-explore-bar{
+  position:sticky!important;
+  top:5.8rem!important;
+  z-index:20!important;
+  background:rgba(239,232,220,.88)!important;
+  backdrop-filter:blur(16px)!important;
+  border-color:var(--h26-line)!important;
+}
+.luxury-destination-content>section{
+  border-top:1px solid var(--h26-line);
+  padding-top:3.5rem;
+}
+.luxury-destination-content .grid.bg-ink\/10,
+.scholarship-card-grid{gap:1rem!important;background:transparent!important}
+.luxury-destination-content .grid.bg-ink\/10>div,
+.scholarship-card-grid>div{
+  background:rgba(255,255,255,.28)!important;
+  border:1px solid rgba(21,18,15,.1)!important;
+  transition:transform .45s var(--h26-ease),background .45s var(--h26-ease)!important;
+}
+.luxury-destination-content .grid.bg-ink\/10>div:hover,
+.scholarship-card-grid>div:hover{
+  transform:translateY(-5px);
+  background:rgba(255,255,255,.52)!important;
+}
+.scholarship-filters{
+  border:0!important;
+  border-top:1px solid var(--h26-line)!important;
+  border-bottom:1px solid var(--h26-line)!important;
+  background:transparent!important;
+  padding:1.5rem 0!important;
+}
+.luxury-section-heading h2{
+  font-family:var(--font-cormorant)!important;
+  font-size:clamp(3rem,6vw,6.5rem)!important;
+  line-height:.84!important;
+  letter-spacing:-.045em!important;
+  font-weight:400!important;
+}
+.luxury-section-heading h2 em{color:var(--h26-teal)!important}
+
+@media(max-width:767px){
+  .redesign-booking{padding-top:6rem!important;padding-bottom:6rem!important}
+  .destination-explore-bar{top:4.7rem!important;overflow-x:auto!important}
+}
