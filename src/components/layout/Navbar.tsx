@@ -1,358 +1,72 @@
 "use client";
 
-import BrandWordmark from "./BrandWordmark";
-
-import React, { useState, useEffect } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Menu, MessageCircle, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Phone, MessageCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import BrandWordmark from "./BrandWordmark";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [isLightNav, setIsLightNav] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+const links=[
+  {label:"Destinations",href:"/#destinations",no:"01"},
+  {label:"Mentorship",href:"/mentorship-model",no:"02"},
+  {label:"Roadmap",href:"/admissions-process",no:"03"},
+  {label:"Outcomes",href:"/outcomes",no:"04"},
+  {label:"Funding",href:"/scholarships",no:"05"},
+];
 
-  // 1. Scroll listener for sticky header styling & dark/light background adaptation (rAF-throttled)
-  useEffect(() => {
-    let rafId: number | null = null;
+export default function Navbar(){
+  const [open,setOpen]=useState(false);
+  const [scrolled,setScrolled]=useState(false);
+  const pathname=usePathname();
+  const reduce=useReducedMotion();
 
-    const updateNavState = () => {
-      const scrollY = window.scrollY;
-      setScrolled(scrollY > 20);
+  useEffect(()=>{
+    const onScroll=()=>setScrolled(window.scrollY>18);
+    onScroll();
+    window.addEventListener("scroll",onScroll,{passive:true});
+    return()=>window.removeEventListener("scroll",onScroll);
+  },[]);
 
-      // Check section currently under the header (at header midline y=40)
-      if (isHome) {
-        // Sections that have cream/light background
-        const lightSectionIds = ["comparison", "destinations", "mentorship", "faq"];
-        const headerMidY = 40;
+  useEffect(()=>{
+    document.body.style.overflow=open?"hidden":"";
+    return()=>{document.body.style.overflow=""};
+  },[open]);
 
-        let isOverLight = false;
-        for (const id of lightSectionIds) {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= headerMidY && rect.bottom >= headerMidY) {
-              isOverLight = true;
-              break;
-            }
-          }
-        }
-        setIsLightNav(isOverLight);
-      } else {
-        // Sub-pages: top header is dark, content is light
-        setIsLightNav(scrollY > 280);
-      }
-    };
+  useEffect(()=>{
+    const onKey=(e:KeyboardEvent)=>{if(e.key==="Escape")setOpen(false)};
+    window.addEventListener("keydown",onKey);
+    return()=>window.removeEventListener("keydown",onKey);
+  },[]);
 
-    const handleScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        updateNavState();
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    updateNavState();
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
-  }, [isHome]);
-
-  // 2. Active section wayfinding on homepage
-  useEffect(() => {
-    if (!isHome) return;
-    const sectionIds = ["booking", "destinations", "comparison", "process", "outcomes"];
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-25% 0px -55% 0px" }
-    );
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [isHome]);
-
-  // 3. Lock body scroll and handle Escape key when mobile drawer is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
-
-  const href = (hash: string) => (isHome ? hash : `/${hash}`);
-  const bookingHref = isHome ? "#booking" : "/#booking";
-
-  const navLinks = [
-    { name: "Study Hubs", id: "destinations", href: href("#destinations") },
-    { name: "Mentorship", id: "comparison", href: "/mentorship-model" },
-    { name: "Roadmap", id: "process", href: "/admissions-process" },
-    { name: "Outcomes", id: "outcomes", href: "/outcomes" },
-  ];
-
-  return (
-    <>
-      {/* ── Sticky Top Nav Bar ── */}
-      <header
-        className={`site-navigation fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? isLightNav
-              ? "bg-cream-50/95 backdrop-blur-xl border-b border-ink/8 shadow-[0_2px_14px_rgba(16,58,80,0.06)]"
-              : "bg-[#362F2A]/90 backdrop-blur-xl border-b border-cream/10 shadow-[0_4px_24px_rgba(0,0,0,0.35)]"
-            : "bg-transparent border-b border-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-12 py-4 sm:py-5 flex items-center justify-between">
-
-          {/* Logo — editorial wordmark */}
-          <Link href="/" className="flex items-center gap-px group">
-            <BrandWordmark />
-          </Link>
-
-          {/* Desktop nav — label style, uppercase with active wayfinding */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10">
-            {navLinks.map((link) => {
-              const isActive = isHome && activeSection === link.id;
-
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`label transition-all relative py-1 flex items-center gap-1.5 text-[10px] lg:text-[11px] ${
-                    isActive
-                      ? "text-terra font-semibold"
-                      : isLightNav
-                      ? "text-stone hover:text-terra"
-                      : "text-cream/60 hover:text-terra"
-                  }`}
-                >
-                  {isActive && (
-                    <span className="h-1 w-1 rounded-full bg-terra inline-block" />
-                  )}
-                  {link.name}
-                </Link>
-              );
-            })}
-            <Link
-              href="/scholarships"
-              className={`label transition-all relative py-1 text-[10px] lg:text-[11px] ${
-                isLightNav ? "text-stone hover:text-terra" : "text-cream/60 hover:text-terra"
-              }`}
-            >
-              Scholarships
-            </Link>
-          </nav>
-
-          {/* Desktop CTA — square, editorial, tactile press */}
-          <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-            <a
-              href={bookingHref}
-              className={`label border px-3.5 py-2 lg:px-5 lg:py-2.5 text-[10px] lg:text-[11px] btn-tactile whitespace-nowrap ${
-                isLightNav
-                  ? "border-ink/20 hover:border-terra hover:text-terra text-ink"
-                  : "border-cream/25 hover:border-terra hover:text-terra text-cream"
-              }`}
-            >
-              Schedule Call
-            </a>
-          </div>
-
-          {/* Mobile controls */}
-          <div className="flex items-center gap-2.5 md:hidden">
-            <a
-              href="tel:+33755749029"
-              className={`label border px-3.5 min-h-[44px] flex items-center justify-center text-[10px] btn-tactile ${
-                isLightNav
-                  ? "border-ink/20 text-ink hover:border-terra hover:text-terra"
-                  : "border-cream/25 text-cream hover:border-terra hover:text-terra"
-              }`}
-            >
-              Call
-            </a>
-            <button
-              onClick={() => setIsOpen(true)}
-              className={`min-h-[44px] min-w-[44px] flex items-center justify-center p-2.5 transition-colors border ${
-                isLightNav
-                  ? "border-ink/15 text-ink hover:border-terra hover:text-terra"
-                  : "border-cream/20 text-cream hover:border-terra hover:text-terra"
-              }`}
-              aria-label="Open mobile menu"
-              aria-expanded={isOpen}
-            >
-              <Menu size={20} />
-            </button>
-          </div>
+  return <>
+    <header className={`site-navigation h26-nav ${scrolled?"is-scrolled":""}`}>
+      <div className="h26-nav-inner">
+        <Link href="/" className="h26-nav-brand" aria-label="Study with Harshita home"><BrandWordmark/></Link>
+        <nav className="h26-nav-links" aria-label="Primary navigation">
+          {links.map(item=><Link key={item.label} href={item.href} className={pathname===item.href?"is-active":""}><sup>{item.no}</sup><span>{item.label}</span></Link>)}
+        </nav>
+        <div className="h26-nav-actions">
+          <Link href="/#booking" className="h26-nav-cta">Strategy call <ArrowRight size={14}/></Link>
+          <button onClick={()=>setOpen(true)} className="h26-menu-button" aria-label="Open menu" aria-expanded={open}><Menu size={19}/><span>Menu</span></button>
         </div>
-      </header>
+      </div>
+    </header>
 
-      {/* ── Full Mobile Menu Overlay / Slide-in Drawer ── */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-ink/80 backdrop-blur-sm z-[70] md:hidden"
-              aria-hidden="true"
-            />
-
-            {/* Slide-in Drawer */}
-            <motion.aside
-              key="drawer"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="site-mobile-menu fixed top-0 right-0 bottom-0 w-full sm:w-96 max-w-[88vw] bg-[#362F2A] text-cream z-[75] shadow-2xl flex flex-col justify-between border-l border-cream/10 p-6 sm:p-8 overflow-y-auto md:hidden"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation Menu"
-            >
-              {/* Drawer Top Header */}
-              <div>
-                <div className="flex items-center justify-between border-b border-cream/10 pb-5 mb-6">
-                  <Link
-                    href="/"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-px"
-                  >
-                    <BrandWordmark />
-                  </Link>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 text-cream/60 hover:text-cream border border-cream/15 hover:border-terra/60 transition-colors btn-tactile"
-                    aria-label="Close menu"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-
-                {/* Section Navigation Links */}
-                <nav className="space-y-1">
-                  {navLinks.map((link) => {
-                    const isActive = isHome && activeSection === link.id;
-
-                    return (
-                      <Link
-                        key={link.name}
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center justify-between min-h-[48px] py-3 px-3 border-b border-cream/8 transition-all group ${
-                          isActive
-                            ? "text-terra font-semibold bg-cream/[0.03]"
-                            : "text-cream/80 hover:text-cream hover:bg-cream/[0.02]"
-                        }`}
-                      >
-                        <span className="font-display text-lg font-normal tracking-wide">
-                          {link.name}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          {isActive && (
-                            <span className="label text-[9px] text-terra">Current</span>
-                          )}
-                          <ArrowRight className="w-3.5 h-3.5 text-cream/30 group-hover:text-terra group-hover:translate-x-0.5 transition-all" />
-                        </div>
-                      </Link>
-                    );
-                  })}
-
-                  <Link
-                    href="/scholarships"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between min-h-[48px] py-3 px-3 border-b border-cream/8 text-cream/80 hover:text-cream hover:bg-cream/[0.02] transition-all group"
-                  >
-                    <span className="font-display text-lg font-normal tracking-wide">
-                      Scholarships Directory
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-cream/30 group-hover:text-terra group-hover:translate-x-0.5 transition-all" />
-                  </Link>
-
-                  <Link
-                    href="/faq"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between min-h-[48px] py-3 px-3 border-b border-cream/8 text-cream/80 hover:text-cream hover:bg-cream/[0.02] transition-all group"
-                  >
-                    <span className="font-display text-lg font-normal tracking-wide">
-                      Admissions FAQ
-                    </span>
-                    <ArrowRight className="w-3.5 h-3.5 text-cream/30 group-hover:text-terra group-hover:translate-x-0.5 transition-all" />
-                  </Link>
-                </nav>
-              </div>
-
-              {/* Drawer Bottom Actions */}
-              <div className="pt-8 border-t border-cream/10 space-y-3">
-                <a
-                  href={bookingHref}
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full text-center bg-terra hover:bg-terra-dark text-cream min-h-[48px] py-3 px-4 label text-xs tracking-wider transition-colors btn-tactile btn-tactile-dark"
-                >
-                  Schedule 1-on-1 Call
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-
-                <div className="grid grid-cols-2 gap-2 pt-1">
-                  <a
-                    href="tel:+33755749029"
-                    className="flex items-center justify-center gap-1.5 border border-cream/15 hover:border-cream/30 text-cream/80 hover:text-cream min-h-[44px] py-2 px-2 label text-[10px] transition-colors btn-tactile"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-terra" />
-                    Call Advisor
-                  </a>
-                  <a
-                    href="https://wa.me/33755749029?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 border border-cream/15 hover:border-terra/40 text-cream/80 hover:text-terra min-h-[44px] py-2 px-2 label text-[10px] transition-colors btn-tactile"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-terra" />
-                    WhatsApp
-                  </a>
-                </div>
-
-                <p className="text-[10px] text-cream/30 text-center font-light pt-2">
-                  Independent Admissions &amp; Consular Visa Advisory
-                </p>
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-    </>
-  );
+    <AnimatePresence>
+      {open&&<motion.div className="h26-menu" initial={reduce?false:{clipPath:"inset(0 0 100% 0)"}} animate={{clipPath:"inset(0 0 0% 0)"}} exit={{clipPath:"inset(0 0 100% 0)"}} transition={{duration:reduce?0:.7,ease:[.22,1,.36,1]}}>
+        <div className="h26-menu-head"><Link href="/" onClick={()=>setOpen(false)}><BrandWordmark/></Link><button onClick={()=>setOpen(false)} aria-label="Close menu"><X size={20}/><span>Close</span></button></div>
+        <div className="h26-menu-body">
+          <p>EXPLORE THE ADVISORY</p>
+          <nav>{links.map((item,index)=><motion.div key={item.label} initial={reduce?false:{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.55,delay:index*.04}}><Link href={item.href} onClick={()=>setOpen(false)}><small>{item.no}</small><span>{item.label}</span><ArrowRight size={18}/></Link></motion.div>)}
+            <Link href="/faq" onClick={()=>setOpen(false)}><small>06</small><span>Questions</span><ArrowRight size={18}/></Link>
+          </nav>
+        </div>
+        <div className="h26-menu-foot">
+          <div><span>DIRECT ADVISORY</span><a href="https://wa.me/33755749029" target="_blank" rel="noreferrer"><MessageCircle size={14}/> WhatsApp +33 7 55 74 90 29</a></div>
+          <Link href="/#booking" onClick={()=>setOpen(false)}>Begin a conversation <ArrowRight size={16}/></Link>
+        </div>
+      </motion.div>}
+    </AnimatePresence>
+  </>;
 }
