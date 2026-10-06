@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - codex/full-redesign-2026
+      - codex/clean-premium-redesign-v2
 
 jobs:
   build:
