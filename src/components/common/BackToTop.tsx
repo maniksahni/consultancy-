@@ -122,7 +122,7 @@ export default function BackToTop() {
           <button
             onClick={scrollToTop}
             aria-label="Back to top of page"
-            className="pointer-events-auto group inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-2.5 rounded-full bg-[#362F2A] text-cream border border-cream/25 shadow-2xl hover:border-terra text-xs btn-tactile focus:outline-none focus:ring-2 focus:ring-terra/60 active:scale-[0.96] transition-all"
+            className="pointer-events-auto group inline-flex items-center justify-center gap-1.5 min-h-[44px] px-3.5 py-2.5 rounded-full bg-[#14120C] text-cream border border-cream/25 shadow-2xl hover:border-terra text-xs btn-tactile focus:outline-none focus:ring-2 focus:ring-terra/60 active:scale-[0.96] transition-all"
           >
             <ArrowUp className="w-3.5 h-3.5 text-terra group-hover:-translate-y-0.5 transition-transform duration-200 flex-shrink-0" />
             <span className="label text-[9px] text-cream/90 group-hover:text-terra tracking-widest uppercase font-medium transition-colors">

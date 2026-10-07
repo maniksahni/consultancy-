@@ -1,22 +1,155 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import React from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
-const principles = [
-  { title: "A familiar voice.", description: "Work with the same mentor who knows your background, understands your ambitions, and remembers the details." },
-  { title: "Advice built around you.", description: "Explore courses and universities through your academic profile, budget, and long-term direction." },
-  { title: "Independent by design.", description: "Zero university recruiter commissions. Your interests guide the recommendations." },
+const PRINCIPLES = [
+  {
+    title: "ONE POINT OF CONTACT",
+    desc: "Direct communication with the same senior mentor who analyzes your academic transcripts and crafts your narrative.",
+  },
+  {
+    title: "PROFILE-FIRST ADVICE",
+    desc: "Uncompromising university recommendations based strictly on your GPA, post-study work ambitions, and financial ROI.",
+  },
+  {
+    title: "NO INSTITUTIONAL KICKBACKS",
+    desc: "We accept zero agent recruitment commissions, preserving 100% fiduciary objectivity in your university selection.",
+  },
 ];
 
 export default function MentorSpotlight() {
-  const reduceMotion = useReducedMotion();
-  return <section id="mentorship" className="mentor-editorial redesign-mentor" aria-labelledby="mentor-title">
-    <div className="mentor-editorial-top"><span>05 / THE HUMAN DIFFERENCE</span><span>PERSONAL, FROM THE VERY BEGINNING</span></div>
-    <div className="mentor-editorial-grid">
-      <motion.div className="mentor-editorial-image" initial={reduceMotion ? false : { opacity: 0, x: -28 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reduceMotion ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}><div className="mentor-photo-frame"><img src="/images/mentor-spotlight.webp" alt="Senior admissions mentor in a consultation session" loading="lazy" width={560} height={700} /><div className="mentor-photo-caption"><span>ONE-TO-ONE MENTORSHIP</span><p>A conversation.<br /><em>A connection. A way forward.</em></p></div></div><p className="mentor-photo-footnote"><span>01 : 01</span> Individual attention. Shared ambition.</p></motion.div>
-      <motion.div className="mentor-editorial-copy" initial={reduceMotion ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: reduceMotion ? 0 : 0.75, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}><p className="luxury-eyebrow">YOUR STORY DESERVES TO BE HEARD</p><h2 id="mentor-title">A big decision.<br /><em>A personal connection.</em></h2><p className="mentor-editorial-intro">Behind every application is a person, a family, and a future. Get thoughtful guidance from someone who takes the time to understand yours.</p><div className="mentor-principles">{principles.map((item,index) => <motion.div key={item.title} initial={reduceMotion ? false : { opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : index * 0.04, ease: [0.22, 1, 0.36, 1] }}><span>0{index+1}</span><div><h3>{item.title}</h3><p>{item.description}</p></div></motion.div>)}</div><Link href="/mentorship-model">Meet your mentorship experience <ArrowUpRight size={20} /></Link></motion.div>
-    </div>
-  </section>;
+  return (
+    <section id="mentorship" className="bg-[#FAF7F2] text-ink py-12 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
+
+        {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
+
+          {/* LEFT: Dramatic Image with Vertical Mask Reveal & Delayed Warm Glow (5 cols, hidden on mobile & tablet) */}
+          <div className="hidden lg:block lg:col-span-5 relative">
+            
+            {/* Warm Glow Lighting Behind Image: Appears AFTER the image reveal */}
+            <motion.div
+              initial={false}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute -inset-2 sm:-inset-6 bg-gradient-to-tr from-terra/28 via-terra/10 to-transparent blur-3xl -z-10 rounded-full hidden sm:block"
+            />
+
+            {/* Architectural Frame with Vertical Mask Reveal */}
+            <motion.div
+              initial={false}
+              whileInView={{ clipPath: "inset(0% 0 0 0)", scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+              className="relative mx-auto w-full sm:max-w-md lg:max-w-none border border-ink/15 bg-white p-1 sm:p-4 shadow-2xl"
+            >
+              <div className="relative h-[220px] w-full overflow-hidden bg-cream border border-ink/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
+                <picture>
+                  <source srcSet="/images/mentor-spotlight.webp" type="image/webp" />
+                  <img
+                    src="/images/mentor-spotlight.jpg"
+                    alt="Senior Admissions Mentor in consultation session"
+                    width={560}
+                    height={700}
+                    className="absolute inset-0 h-full w-full object-cover object-top contrast-[1.03] brightness-[0.98]"
+                    loading="lazy"
+                  />
+                </picture>
+                {/* Subtle Cinematic Vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
+                {/* Overlaid Micro-Caption */}
+                <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 flex items-center justify-between text-white font-mono text-[8px] sm:text-[9px] uppercase tracking-wider">
+                  <span className="px-2 py-0.5 bg-black/75 backdrop-blur-sm border border-white/20">
+                    Fiduciary Practice
+                  </span>
+                  <span className="text-terra-light font-medium drop-shadow">Senior Mentor</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating Top Badge: positioned cleanly on the outer relative container, completely unclipped */}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute -top-3.5 -right-3 lg:-right-4 bg-ink text-cream border border-terra/50 px-3.5 py-1.5 shadow-xl font-mono text-[9px] uppercase tracking-widest flex items-center gap-2 z-20 pointer-events-none"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
+              <span>DIRECT 1-ON-1 ADVISORY</span>
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Typography & Principles (7 cols) */}
+          <motion.div
+            initial={false}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="col-span-1 lg:col-span-7 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <ShieldCheck className="h-4 w-4 text-terra" />
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/50">
+                  05 / MENTORSHIP · The Mentorship Principle
+                </span>
+              </div>
+
+              {/* High-Impact Headline */}
+              <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.92] tracking-tight">
+                ONE STUDENT.<br />
+                ONE STRATEGY.<br />
+                ONE MENTOR.<br />
+                <span className="text-terra italic inline-block pr-1">No Rotating Counsellors.</span>
+              </h2>
+
+              <p className="text-sm sm:text-base lg:text-lg text-ink/75 font-light leading-relaxed mt-5 sm:mt-6">
+                When you apply to premier global universities, your future cannot be treated like a call-center ticket. We deliberately cap our student roster each cycle to ensure every statement of purpose, university shortlist, and consular mock session is personally evaluated by your dedicated mentor.
+              </p>
+            </div>
+
+            {/* Three Principles with Hairline Borders */}
+            <div className="mt-8 pt-6 border-t border-ink/15 space-y-4">
+              {PRINCIPLES.map((item, idx) => (
+                <div key={item.title} className="flex items-start gap-3 sm:gap-4">
+                  <span className="font-mono text-xs text-terra font-medium mt-0.5 flex-shrink-0">
+                    0{idx + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-mono text-xs sm:text-sm uppercase tracking-wider text-ink font-semibold">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-ink/65 font-light leading-relaxed mt-1">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <div className="mt-8 pt-6 border-t border-ink/15">
+              <Link
+                href="/mentorship-model"
+                className="glow-button inline-flex items-center gap-2.5 bg-ink text-cream hover:bg-ink/90 min-h-[48px] px-5 sm:px-8 py-3.5 text-[10px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.2em] font-medium transition-all group"
+              >
+                <span>See How Mentorship Works</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+
+          </motion.div>
+
+        </div>
+
+      </div>
+    </section>
+  );
 }

@@ -17,15 +17,15 @@ const tickerLoop = [...realConsularAlerts, ...realConsularAlerts];
 
 export default function IntakeTicker() {
   return (
-    <div className="sticky top-[64px] z-40 bg-[#0C0A09]/90 backdrop-blur-xl border-b border-white/[0.08] py-2.5 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+    <div className="sticky top-[64px] z-40 bg-[#030712]/90 backdrop-blur-xl border-b border-white/[0.08] py-2.5 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
       {/* Left gradient fade */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0C0A09] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#030712] to-transparent z-10 pointer-events-none" />
       {/* Right gradient fade */}
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0C0A09] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#030712] to-transparent z-10 pointer-events-none" />
 
       <div className="flex items-center">
         {/* Sticky Label */}
-        <div className="flex-shrink-0 flex items-center gap-2 pl-4 pr-5 border-r border-white/[0.08] mr-3 z-20 bg-[#0C0A09]">
+        <div className="flex-shrink-0 flex items-center gap-2 pl-4 pr-5 border-r border-white/[0.08] mr-3 z-20 bg-[#030712]">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />

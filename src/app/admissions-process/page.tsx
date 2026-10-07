@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import EditorialPage from "@/components/layout/EditorialPage";
 import { admissionsStages } from "@/data/editorial";
 
-export const metadata: Metadata = { title: "Admissions Process | Study with Harshita", description: "The stages of profile review, shortlisting, applications, and visa preparation." };
+export const metadata: Metadata = { title: "Admissions Process | Pathways Global", description: "The stages of profile review, shortlisting, applications, and visa preparation." };
 
 export default function AdmissionsProcessPage() {
   return (
-    <EditorialPage image="/images/destinations/germany.webp" chapter="03" eyebrow="The Admissions Journey" title="A Clearer" accent="Process."
+    <EditorialPage eyebrow="The Admissions Journey" title="A Clearer" accent="Process."
       intro="What happens at each stage, what your mentor reviews, and what you can prepare. Timing depends on your destination, deadlines, and document readiness.">
       <div className="border-t border-ink/15">
         {admissionsStages.map((stage) => (

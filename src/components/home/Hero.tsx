@@ -29,7 +29,7 @@ const ADVISORY_PILLARS = [
 
 export default function Hero() {
   return (
-    <section className="relative bg-[#362F2A] text-cream pt-24 sm:pt-28 lg:pt-36 pb-12 sm:pb-16 lg:pb-24 border-b border-cream/10 overflow-hidden">
+    <section className="relative bg-[#14120C] text-cream pt-24 sm:pt-28 lg:pt-36 pb-12 sm:pb-16 lg:pb-24 border-b border-cream/10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Asymmetric Two-Column Editorial Composition ── */}

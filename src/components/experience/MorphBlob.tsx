@@ -74,7 +74,7 @@ export default function MorphBlob() {
       aria-hidden="true"
       className="hidden lg:block absolute -inset-8 w-[calc(100%+4rem)] h-[calc(100%+4rem)] pointer-events-none opacity-35 blur-sm"
     >
-      <path ref={path} d={A} fill="#544940" />
+      <path ref={path} d={A} fill="#C25B1A" />
     </svg>
   );
 }

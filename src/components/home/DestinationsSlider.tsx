@@ -252,7 +252,7 @@ export default function DestinationsSlider() {
   return (
     <section 
       id="destinations" 
-      className="py-24 sm:py-32 bg-[#0C0A09] relative overflow-hidden border-b border-white/[0.08] select-none"
+      className="py-24 sm:py-32 bg-[#030712] relative overflow-hidden border-b border-white/[0.08] select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
         if (!isDragging) setIsPaused(false);
@@ -346,7 +346,7 @@ export default function DestinationsSlider() {
                       alt={`${dest.name} campus and skyline`}
                       className="w-full h-full object-cover filter brightness-[0.75] group-hover:scale-105 transition-transform duration-700" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#151311] via-[#151311]/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-[#0a0f1c]/40 to-transparent" />
                     
                     {/* Top overlay badges */}
                     <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 flex-wrap">

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import EditorialPage from "@/components/layout/EditorialPage";
 import { comparisonCriteria } from "@/data/editorial";
 
-export const metadata: Metadata = { title: "Mentorship Model | Study with Harshita", description: "How direct mentorship changes university shortlisting, applications, visa preparation, and communication." };
+export const metadata: Metadata = { title: "Mentorship Model | Pathways Global", description: "How direct mentorship changes university shortlisting, applications, visa preparation, and communication." };
 
 export default function MentorshipModelPage() {
   return (
-    <EditorialPage image="/images/destinations/uk.webp" chapter="02" eyebrow="The Mentorship Advantage" title="Mass Processing." accent="Personal Mentorship."
+    <EditorialPage eyebrow="The Mentorship Advantage" title="Mass Processing." accent="Personal Mentorship."
       intro="See how the mentorship approach affects the decisions and work a student encounters throughout an application.">
       <div className="border-t border-ink/15">
         {comparisonCriteria.map((item, i) => (
@@ -22,7 +22,7 @@ export default function MentorshipModelPage() {
                 <p className="text-sm text-stone leading-relaxed">{item.agency}</p>
               </div>
               <div className="border-t border-ink/40 pt-4">
-                <p className="text-[10px] uppercase tracking-widest text-ink mb-3">Study with Harshita mentorship</p>
+                <p className="text-[10px] uppercase tracking-widest text-ink mb-3">Pathways mentorship</p>
                 <p className="text-sm text-ink leading-relaxed">{item.pathways}</p>
               </div>
             </div>

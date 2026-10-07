@@ -1,4 +1,4 @@
-# Study with Harshita Study Abroad & Student Visa Consultancy Web Application
+# GlobalPathways™ Study Abroad & Student Visa Consultancy Web Application
 
 A modern, high-converting, responsive study-abroad and student visa consultancy web application built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Lucide React**, **Framer Motion**, and **React Hook Form + Zod**.
 

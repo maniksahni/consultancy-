@@ -97,7 +97,7 @@ export default function CostEstimator() {
   const livingPct = 100 - tuitionPct;
 
   return (
-    <section id="cost-estimator" className="py-24 sm:py-32 bg-[#0C0A09] border-b border-white/[0.08] text-white relative overflow-hidden">
+    <section id="cost-estimator" className="py-24 sm:py-32 bg-[#030712] border-b border-white/[0.08] text-white relative overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/3 left-1/4 h-96 w-96 rounded-full bg-blue-600/10 blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 h-96 w-96 rounded-full bg-emerald-600/10 blur-[140px] pointer-events-none" />

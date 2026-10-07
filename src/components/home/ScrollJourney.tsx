@@ -1,60 +1,212 @@
 "use client";
 
-import { useRef, useState, type TouchEvent } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Plus, Minus, Check } from "lucide-react";
+import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-const chapters = [
-  { title: "Start with your story.", tag: "01 / DISCOVERY", timing: "Weeks 1–2", image: "/images/destinations/uk.webp", caption: "A NEW PERSPECTIVE / LONDON", description: "Your ambitions, academic background, and budget shape the plan. Together, we identify what matters to you and where your profile can take you.", details: ["Academic profile review", "Goals and budget discussion", "A personal application roadmap"], outcome: "Your profile strategy" },
-  { title: "Find where you belong.", tag: "02 / DIRECTION", timing: "Weeks 3–4", image: "/images/destinations/usa.webp", caption: "A WORLD OF POSSIBILITY / UNITED STATES", description: "Explore a considered mix of ambitious, target, and safer options. Your shortlist brings academic fit, cost, and career direction into one clear picture.", details: ["Course and university comparison", "Budget and location fit", "A balanced university shortlist"], outcome: "Your university shortlist" },
-  { title: "Make your application count.", tag: "03 / APPLICATION", timing: "Weeks 5–8", image: "/images/destinations/germany.webp", caption: "YOUR NEXT CHAPTER / GERMANY", description: "Turn your experience into a thoughtful application. Work with your mentor on your statement, CV, references, and the details that make your story your own.", details: ["Personal statement feedback", "CV and reference preparation", "Application deadline planning"], outcome: "Your application portfolio" },
-  { title: "Prepare for the next chapter.", tag: "04 / DEPARTURE", timing: "Pre-departure", image: "/images/destinations/australia.webp", caption: "NEW HORIZONS / SYDNEY", description: "Prepare your documents, practise your interview, and understand the steps ahead. Your mentor helps you approach the transition with clarity and confidence.", details: ["Visa document preparation", "One-to-one mock interviews", "Pre-departure guidance"], outcome: "Your departure checklist" },
+const STAGES = [
+  {
+    num: "01",
+    tag: "Weeks 1–2",
+    title: "Profile Strategy & Goal Alignment",
+    deliverable: "Diagnostic Dossier & Financial Roadmap",
+    desc: "Rigorous audit of your transcripts, backlog context, test percentiles, and financial constraints to define realistic ambitious and target thresholds.",
+  },
+  {
+    num: "02",
+    tag: "Weeks 3–4",
+    title: "Fiduciary University Shortlisting",
+    deliverable: "Targeted 3-Tier Application Matrix",
+    desc: "100% unbiased shortlist matching your academic profile and post-graduation salary potential, completely free of recruiter partner commissions.",
+  },
+  {
+    num: "03",
+    tag: "Weeks 5–8",
+    title: "Bespoke Application & SOP Crafting",
+    deliverable: "Polished Statements & Editorial Dossiers",
+    desc: "Line-by-line narrative crafting for statements of purpose, resume structuring, and letters of recommendation with zero AI templates or automated drafts.",
+  },
+  {
+    num: "04",
+    tag: "Pre-Departure",
+    title: "Consular Visa Mock Grilling",
+    deliverable: "Certified Embassy Ready Dossier",
+    desc: "Intensive 1-on-1 consular interview simulations, liquid funds verification, and genuine intent justification to ensure first-attempt visa stamping.",
+  },
 ];
 
 export default function ScrollJourney() {
-  const [active, setActive] = useState(0);
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
-  const reduceMotion = useReducedMotion();
-  const chapter = chapters[active];
-  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    const touch = event.touches[0];
-    touchStart.current = { x: touch.clientX, y: touch.clientY };
-  };
-  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    const start = touchStart.current;
-    touchStart.current = null;
-    if (!start) return;
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - start.x;
-    const deltaY = touch.clientY - start.y;
-    if (Math.abs(deltaX) < 44 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
-    setActive(index => (index + (deltaX < 0 ? 1 : chapters.length - 1)) % chapters.length);
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStage, setActiveStage] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest < 0.28) {
+      setActiveStage(0);
+    } else if (latest < 0.54) {
+      setActiveStage(1);
+    } else if (latest < 0.78) {
+      setActiveStage(2);
+    } else {
+      setActiveStage(3);
+    }
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 70,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
   return (
-    <section id="process" className="journey-collection redesign-roadmap" aria-labelledby="journey-title">
-      <motion.div className="journey-heading" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}><div><p className="luxury-eyebrow">03 / THE JOURNEY, CONSIDERED</p><h2 id="journey-title">A clear path.<br /><em>A bigger future.</em></h2></div><p>Every ambition begins somewhere.<br />We make each next step feel possible.</p></motion.div>
-      <div className="journey-composition">
-        <div className="journey-visual" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null; }} role="group" aria-roledescription="slide" aria-label={`${chapter.tag}: ${chapter.title}`}>
-          <div className="redesign-journey-image"><AnimatePresence initial={false}>
-            <motion.img key={chapter.image} src={chapter.image} alt="" loading="lazy" initial={reduceMotion ? false : { opacity: 0, scale: 1.07 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: reduceMotion ? 1 : 1.03 }} transition={{ duration: reduceMotion ? 0 : 0.85, ease: [0.22, 1, 0.36, 1] }} />
-          </AnimatePresence></div>
-          <div className="journey-visual-shade" />
-          <div className="journey-visual-top"><span>YOUR JOURNEY / STUDY WITH HARSHITA</span><span>0{active + 1} — 04</span></div>
-          <div className="journey-visual-bottom"><span>{chapter.caption}</span><p>From possibility<br /><em>to a personal plan.</em></p><div className="journey-chapter-track" aria-label="Journey chapter progress">{chapters.map((item,index) => <button key={item.tag} type="button" className={index === active ? "active" : ""} aria-label={`Show chapter ${index + 1}: ${item.title}`} aria-current={index === active ? "step" : undefined} onClick={() => setActive(index)} />)}</div><span className="journey-swipe-hint">SWIPE TO EXPLORE THE JOURNEY</span></div>
+    <section
+      id="process"
+      ref={containerRef}
+      className="bg-[#0B0A08] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden"
+    >
+      {/* Background Soft Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-terra/5 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
+
+        {/* ── Section Header ── */}
+        <div className="border-t border-cream/15 pt-6 sm:pt-8 mb-16 sm:mb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div>
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-3">
+              04 / JOURNEY · The 4-Stage Mentorship Journey
+            </span>
+            <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
+              From Profile Review<br />
+              to Visa Preparation.<br />
+              <span className="text-terra italic inline-block pr-1">One Clear Process.</span>
+            </h2>
+          </div>
+
+          <div className="lg:max-w-md">
+            <p className="text-sm sm:text-base text-cream/65 font-light leading-relaxed mb-4">
+              A structured, transparent roadmap eliminating last-minute panic, generic drafts, and procedural delays.
+            </p>
+            <Link
+              href="/admissions-process"
+              className="inline-flex items-center gap-2 border-b border-cream/40 text-[11px] uppercase tracking-[0.2em] font-medium pb-1 text-cream hover:text-terra hover:border-terra transition-colors group"
+            >
+              <span>Explore Full Admissions Roadmap</span>
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
-        <div className="journey-chapters">
-          <p className="journey-instruction">EXPLORE YOUR FOUR CHAPTERS</p>
-          {chapters.map((item,index) => <div className={`journey-chapter ${active === index ? "is-open" : ""}`} key={item.tag}>
-            <motion.button whileHover={reduceMotion ? undefined : { x: 3 }} whileTap={reduceMotion ? undefined : { scale: 0.99 }} transition={{ duration: 0.2 }} type="button" id={`chapter-button-${index}`} aria-expanded={active === index} aria-controls={`chapter-panel-${index}`} onClick={() => setActive(index)}><span><small>{item.tag}</small><strong>{item.title}</strong></span>{active === index ? <Minus size={18} /> : <Plus size={18} />}</motion.button>
-            <div id={`chapter-panel-${index}`} role="region" aria-labelledby={`chapter-button-${index}`} hidden={active !== index}>
-              <motion.div key={`${index}-${active}`} className="journey-chapter-detail" initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}><span className="journey-timing">{item.timing}</span><p>{item.description}</p><ul>{item.details.map(detail => <li key={detail}><Check size={13} aria-hidden="true" />{detail}</li>)}</ul><div className="journey-takeaway"><span>WHAT YOU LEAVE WITH</span><strong>{item.outcome}</strong></div></motion.div>
-            </div>
-          </div>)}
-          <Link href="/admissions-process" className="journey-roadmap">Explore the full admissions roadmap <ArrowUpRight size={18} /></Link>
+
+        {/* ── Cinematic Timeline with Center Vertical Glowing Line ── */}
+        <div className="relative">
+
+          {/* Background Guide Line (Desktop: centered; Mobile: left-aligned) */}
+          <div className="absolute top-0 bottom-0 left-4 sm:left-6 lg:left-1/2 lg:-translate-x-1/2 w-[2px] bg-cream/10" />
+
+          {/* Glowing Animated Progress Line */}
+          <motion.div
+            style={{ scaleY, originY: 0 }}
+            className="absolute top-0 bottom-0 left-4 sm:left-6 lg:left-1/2 lg:-translate-x-1/2 w-[2px] bg-gradient-to-b from-terra via-terra to-terra/40 shadow-[0_0_12px_rgba(194,91,26,0.8)] z-10"
+          />
+
+          {/* 4 Stages */}
+          <div className="space-y-12 sm:space-y-16 lg:space-y-24">
+            {STAGES.map((stage, idx) => {
+              const isEven = idx % 2 === 0;
+              const isActive = activeStage === idx;
+
+              return (
+                <div
+                  key={stage.num}
+                  className="relative flex flex-col lg:flex-row items-start lg:items-center"
+                >
+                  {/* Glowing Node on Timeline */}
+                  <div
+                    className={`absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#0B0A08] border-2 transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-20 flex items-center justify-center ${
+                      isActive
+                        ? "border-terra shadow-[0_0_18px_rgba(194,91,26,0.95)] scale-110"
+                        : "border-cream/30 scale-95"
+                    }`}
+                  >
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full transition-colors duration-[450ms] ${
+                        isActive ? "bg-terra" : "bg-cream/40"
+                      }`}
+                    />
+                  </div>
+
+                  {/* Stage Card Content: Alternating on Desktop, Left-padded on Mobile */}
+                  <div
+                    className={`pl-12 sm:pl-16 lg:pl-0 w-full lg:w-[45%] transition-opacity duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+                      isActive ? "opacity-100" : "opacity-35"
+                    } ${
+                      isEven ? "lg:mr-auto lg:text-right" : "lg:ml-auto lg:text-left"
+                    }`}
+                  >
+                    <div
+                      className={`border p-6 sm:p-8 backdrop-blur-sm relative transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+                        isActive
+                          ? "bg-white/[0.04] border-terra/40 shadow-[0_0_30px_rgba(194,91,26,0.12)]"
+                          : "bg-white/[0.01] border-cream/10"
+                      }`}
+                    >
+                      {/* Top Timing & Number */}
+                      <div
+                        className={`flex items-center gap-3 pb-3 border-b border-cream/10 mb-4 font-mono text-[9px] uppercase tracking-wider text-cream/50 ${
+                          isEven ? "lg:justify-end" : "justify-start"
+                        }`}
+                      >
+                        <span
+                          className={`transition-colors duration-[450ms] ${
+                            isActive ? "text-terra font-semibold" : "text-cream/50"
+                          }`}
+                        >
+                          Stage {stage.num}
+                        </span>
+                        <span>·</span>
+                        <span>{stage.tag}</span>
+                      </div>
+
+                      {/* Title */}
+                      <h3
+                        className={`font-display text-2xl sm:text-3xl font-normal leading-snug transition-colors duration-[450ms] ${
+                          isActive ? "text-cream" : "text-cream/70"
+                        }`}
+                      >
+                        {stage.title}
+                      </h3>
+
+                      {/* Deliverable Badge */}
+                      <div
+                        className={`inline-flex items-center gap-1.5 mt-2 font-mono text-[10px] text-cream/70 ${
+                          isEven ? "lg:justify-end" : "justify-start"
+                        }`}
+                      >
+                        <CheckCircle2
+                          className={`h-3.5 w-3.5 flex-shrink-0 transition-colors duration-[450ms] ${
+                            isActive ? "text-terra" : "text-cream/40"
+                          }`}
+                        />
+                        <span>{stage.deliverable}</span>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-xs sm:text-sm text-cream/65 font-light leading-relaxed mt-3">
+                        {stage.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
+
       </div>
-      <div className="journey-bottom-note"><span>ONE MENTOR. EVERY CHAPTER.</span><p>Timelines vary with your profile, deadlines, and destination.</p></div>
     </section>
   );
 }

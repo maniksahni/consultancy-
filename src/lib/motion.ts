@@ -8,9 +8,9 @@ export const MOTION_DURATIONS = {
 } as const;
 
 export const GLOW_PRESETS = {
-  micro: "rgba(8,127,140, 0.20)",
-  section: "rgba(8,127,140, 0.25)",
-  focus: "rgba(8,127,140, 0.38)",
+  micro: "rgba(194, 91, 26, 0.20)",
+  section: "rgba(194, 91, 26, 0.25)",
+  focus: "rgba(194, 91, 26, 0.38)",
 } as const;
 
 /**
@@ -79,15 +79,15 @@ export const terracottaBloomVariants = {
   hidden: {
     opacity: 0,
     y: "110%",
-    textShadow: "0 0 0px rgba(8,127,140,0)",
+    textShadow: "0 0 0px rgba(194,91,26,0)",
   },
   visible: (customDelay: number = 0) => ({
     opacity: 1,
     y: "0%",
     textShadow: [
-      "0 0 0px rgba(8,127,140,0)",
-      "0 0 35px rgba(8,127,140,0.55)",
-      "0 0 16px rgba(8,127,140,0.22)",
+      "0 0 0px rgba(194,91,26,0)",
+      "0 0 35px rgba(194,91,26,0.55)",
+      "0 0 16px rgba(194,91,26,0.22)",
     ],
     transition: {
       y: { duration: 1.0, delay: customDelay, ease: EASE_LUXURY },

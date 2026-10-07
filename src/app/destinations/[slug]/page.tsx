@@ -49,16 +49,13 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
   }
 
   return (
-    <div className="destination-page min-h-screen flex flex-col bg-cream text-ink">
+    <div className="min-h-screen flex flex-col bg-cream text-ink">
       <Navbar />
 
-      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
 
         {/* ── Country header — dark ── */}
-        <section className="inner-page-hero luxury-destination-hero">
-          <img className="luxury-page-photo" data-hero-parallax src={`/images/destinations/${destination.slug}.webp`} alt="" fetchPriority="high" />
-          <div className="luxury-page-shade" />
-          <div className="luxury-page-frame" aria-hidden="true" />
+        <section className="bg-[#14120C] py-14 lg:py-20">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
             {/* Breadcrumb */}
@@ -82,7 +79,6 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
                   </div>
                 </div>
 
-                <p className="luxury-eyebrow">THE DESTINATION COLLECTION / {String(DESTINATIONS.indexOf(destination) + 1).padStart(2, "0")}</p>
                 <h1
                   className="font-display font-normal text-cream leading-[0.92] tracking-tight break-words"
                   style={{ fontSize: "clamp(32px, 8.5vw, 96px)" }}
@@ -119,7 +115,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
               </div>
 
               {/* Right: Key metrics */}
-              <div className="luxury-country-facts lg:col-span-5 border border-cream/10 p-6 space-y-4">
+              <div className="lg:col-span-5 border border-cream/10 p-6 space-y-4">
                 <div className="label text-cream/30 border-b border-cream/10 pb-3">
                   Country Key Metrics (2026)
                 </div>
@@ -155,14 +151,8 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
           </div>
         </section>
 
-        <nav className="destination-explore-bar" aria-label="Explore this destination">
-          <span>Your journey, at a glance</span>
-          <a href="#universities">01 <strong>Find your university</strong> <span aria-hidden="true">↓</span></a>
-          <a href="#visa-career">02 <strong>Plan your next steps</strong> <span aria-hidden="true">↓</span></a>
-        </nav>
-
         {/* ── Content — light ── */}
-        <div className="luxury-destination-content max-w-7xl mx-auto px-6 lg:px-12 py-14 sm:py-20 space-y-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14 sm:py-20 space-y-16">
 
           {/* Universities */}
           <section id="universities">
@@ -227,7 +217,7 @@ export default function DestinationDetailPage({ params }: { params: { slug: stri
           </section>
 
           {/* Visa + Work rights */}
-          <section id="visa-career" className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             {/* Visa requirements */}
             <div className="border border-ink/10 p-7 space-y-5">

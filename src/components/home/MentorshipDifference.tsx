@@ -10,7 +10,7 @@ const COMPARISON_ROWS = [
     massLabel: "Mass Processing",
     massText: "Assigned counsellors change",
     massDetail: "Passed between rotating telecallers and sales reps at each stage.",
-    pathwaysLabel: "Study with Harshita",
+    pathwaysLabel: "Pathways Global",
     pathwaysText: "One mentor throughout your journey",
     pathwaysDetail: "Single dedicated Senior Mentor from initial diagnostic audit to consular visa approval.",
   },
@@ -19,7 +19,7 @@ const COMPARISON_ROWS = [
     massLabel: "Mass Processing",
     massText: "Partner universities prioritised",
     massDetail: "Programs selected to satisfy institutional recruitment commissions.",
-    pathwaysLabel: "Study with Harshita",
+    pathwaysLabel: "Pathways Global",
     pathwaysText: "Profile-first university selection",
     pathwaysDetail: "100% unbiased recommendations determined strictly by your academic ROI, budget, and goals.",
   },
@@ -28,7 +28,7 @@ const COMPARISON_ROWS = [
     massLabel: "Mass Processing",
     massText: "Template applications",
     massDetail: "Generic recycled statements and AI drafts flagged by screening software.",
-    pathwaysLabel: "Study with Harshita",
+    pathwaysLabel: "Pathways Global",
     pathwaysText: "Individual application strategy",
     pathwaysDetail: "Bespoke, line-by-line narrative crafting highlighting your unique life trajectory.",
   },
@@ -36,7 +36,7 @@ const COMPARISON_ROWS = [
 
 export default function MentorshipDifference() {
   return (
-    <section id="comparison" className="bg-[#F8F6F4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
+    <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Top Editorial Split Layout ── */}
@@ -97,7 +97,7 @@ export default function MentorshipDifference() {
                 </p>
               </div>
 
-              {/* Study with Harshita (5 cols) */}
+              {/* Pathways Global (5 cols) */}
               <div className="lg:col-span-5 bg-white p-4 sm:p-5 border border-ink/20 shadow-sm relative">
                 <div className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.2em] font-mono text-terra font-medium mb-2">
                   <Check className="h-3 w-3 text-terra" />
