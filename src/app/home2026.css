@@ -11,6 +11,12 @@
   --c-navy:#0d1b2a;
   --c-navy-2:#13243a;
   --c-ease:cubic-bezier(.22,1,.36,1);
+  --rd-ink:#111827;
+  --rd-paper:#fbfaf7;
+  --rd-muted:#475467;
+  --rd-gold:#0f6b5d;
+  --rd-bright:#8bd0c1;
+  --rd-line:#dce3e8;
 }
 
 html{scroll-behavior:smooth}
@@ -43,6 +49,17 @@ body{background:var(--c-paper);color:var(--c-ink)}
 .h26-nav-actions{justify-self:end;display:flex;gap:.65rem;align-items:center}
 .h26-nav-cta{display:inline-flex;align-items:center;gap:.55rem;padding:.82rem 1rem!important;background:var(--c-ink)!important;color:white!important;border:0!important;font:600 .61rem var(--font-jakarta)!important;letter-spacing:.08em;text-transform:uppercase;transition:background .25s ease,transform .25s var(--c-ease)}
 .h26-nav-cta:hover{background:var(--c-green)!important;transform:translateY(-1px)}
+/* Override legacy navigation colors on the clean, light header. */
+.site-navigation.h26-nav .h26-nav-brand,
+.site-navigation.h26-nav .h26-nav-brand span,
+.site-navigation.h26-nav .h26-menu-button{color:var(--c-ink)!important}
+.site-navigation.h26-nav .h26-nav-links a,
+.site-navigation.h26-nav .h26-nav-links a span{color:#475467!important}
+.site-navigation.h26-nav .h26-nav-links a:hover,
+.site-navigation.h26-nav .h26-nav-links a:hover span,
+.site-navigation.h26-nav .h26-nav-links a.is-active,
+.site-navigation.h26-nav .h26-nav-links a.is-active span{color:var(--c-green)!important}
+.site-navigation.h26-nav .h26-nav-cta{background:var(--c-ink)!important;color:white!important;border:0!important}
 .h26-menu-button{display:none;border:1px solid var(--c-line);background:white;color:var(--c-ink);padding:.76rem .85rem;align-items:center;gap:.45rem;font:600 .58rem var(--font-jakarta);letter-spacing:.08em;text-transform:uppercase}
 
 /* ---------- Hero ---------- */
@@ -612,4 +629,48 @@ body{background:var(--c-paper);color:var(--c-ink)}
   .h26-mentor-copy h2,
   .h26-faq-intro h2,
   .h26-pre-cta h2{font-size:clamp(2.3rem,10.8vw,3.4rem)}
+}
+
+/* Final clarity pass: legible copy, coherent controls, and unobscured anchors. */
+.h26-hero h1,.h26-section-head h2,.h26-principles-title h2,
+.h26-journey-sticky h2,.h26-mentor-copy h2,.h26-faq-intro h2,
+.h26-pre-cta h2,.h26-footer-top h2{line-height:1.02;text-wrap:balance}
+main section[id],main h2{scroll-margin-top:7rem}
+/* Clip accidental page overflow without creating a nested scroll container. */
+main#main-content.min-h-screen{overflow-x:clip}
+html,body.overflow-x-hidden{overflow-x:clip}
+body>div.overflow-x-hidden{overflow-x:clip}
+.h26-proof-line{flex-wrap:wrap;overflow:visible}
+.h26-primary,.h26-text-link,.h26-pre-cta>a,.h26-footer-col>a,
+.h26-footer-top>a,.h26-menu-head button{min-height:44px}
+.h26-footer-ethics p,.h26-footer-bottom{color:#b8c4d1}
+.h26-menu-foot a{min-height:44px}
+.redesign-booking .glow-button{color:white!important}
+.redesign-booking-trust,.redesign-booking-trust span{color:#c4d2df!important}
+.redesign-booking .redesign-booking-form{background:white!important;color:var(--c-ink)!important}
+.redesign-booking .redesign-booking-form input,
+.redesign-booking .redesign-booking-form select{background:var(--c-paper)!important;color:var(--c-ink)!important;border:1px solid #cbd5df!important;scroll-margin-top:7rem}
+.redesign-booking .redesign-booking-form input::placeholder{color:#667085!important;opacity:1}
+.redesign-booking-form label,.redesign-booking-form>div:first-child,
+.redesign-booking-form>div:first-child span,.redesign-booking-form button[type="button"]{color:#475467!important}
+html{scroll-padding-top:6rem}
+.faq-guide svg,.faq-guide>span{color:var(--c-green)!important}
+.faq-guide{border-top-color:var(--c-green)!important}
+button[aria-label="Chat with Senior Mentor on WhatsApp"],
+button[aria-label="Close WhatsApp chat"]{background:var(--c-green)!important;color:white!important;border-color:var(--c-green)!important;min-width:44px;min-height:44px}
+button[aria-label="Chat with Senior Mentor on WhatsApp"] svg,
+button[aria-label="Close WhatsApp chat"] svg{color:white!important}
+.cookie-consent-banner>div{background:var(--c-white);color:var(--c-ink);border:1px solid var(--c-line);box-shadow:0 12px 40px #0d1b2a1a}
+.cookie-consent-banner p{color:#475467;font-size:14px;line-height:1.6}
+.cookie-consent-banner .text-terra{color:var(--c-green)}
+.cookie-consent-banner span,.cookie-consent-banner button{color:var(--c-ink)}
+.cookie-consent-banner button{border-color:var(--c-line)}
+.cookie-consent-banner>div>div:last-child>button:first-child{background:var(--c-green);color:white;box-shadow:none}
+:is(.h26-nav,.h26-menu,.h26-faq,.h26-footer,.cookie-consent-banner) :is(a,button,summary):focus-visible{outline:3px solid #42b99a;outline-offset:4px}
+@media(max-width:1023px){
+ .h26-hero-intro,.h26-section-head>p,.h26-principle>p,
+ .h26-journey-sticky>p,.h26-step>div:not(.h26-step-index),
+ .h26-mentor-copy>p,.h26-mentor-notes p,.h26-destination-copy>span,
+ .h26-faq-list details>p,.h26-footer-brand>p{font-size:1rem;line-height:1.6}
+ .h26-hero{min-height:100dvh}
 }

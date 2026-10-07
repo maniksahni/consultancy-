@@ -22,10 +22,10 @@ const config: Config = {
       },
       colors: {
         cream: {
-          DEFAULT: "#F5F1E9",
-          50: "#FCFAF5",
-          100: "#F5F1E9",
-          200: "#EAE3D6",
+          DEFAULT: "#FBFAF7",
+          50: "#FFFFFF",
+          100: "#FBFAF7",
+          200: "#EDF1F3",
         },
         ink: {
           DEFAULT: "#152126",
@@ -33,9 +33,9 @@ const config: Config = {
           muted: "#465453",
         },
         terra: {
-          DEFAULT: "#927348",
-          light: "#B69768",
-          dark: "#735932",
+          DEFAULT: "#0F6B5D",
+          light: "#8BD0C1",
+          dark: "#0B554A",
         },
         stone: {
           DEFAULT: "#6E746D",
