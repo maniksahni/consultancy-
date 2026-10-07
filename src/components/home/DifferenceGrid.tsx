@@ -5,7 +5,7 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, UserCheck, Sparkles, FileCheck, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ComparisonSpotlight from "@/components/experience/ComparisonSpotlight";
 
 interface VerificationDetails {
@@ -145,15 +145,6 @@ export default function DifferenceGrid() {
     [WheelGesturesPlugin()]
   );
 
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const setViewportRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      containerRef.current = node;
-      emblaRef(node);
-    },
-    [emblaRef]
-  );
-
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSelect = useCallback(() => {
@@ -170,49 +161,6 @@ export default function DifferenceGrid() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
-
-  // Guarantee carousel track and viewport never silently scroll vertically or horizontally on touch/focus
-  useEffect(() => {
-    const viewport = containerRef.current;
-    if (!viewport) return;
-    const track = viewport.firstElementChild as HTMLElement | null;
-
-    const resetScroll = () => {
-      if (viewport.scrollTop !== 0) viewport.scrollTop = 0;
-      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
-      if (track) {
-        if (track.scrollTop !== 0) track.scrollTop = 0;
-        if (track.scrollLeft !== 0) track.scrollLeft = 0;
-      }
-    };
-
-    viewport.addEventListener("scroll", resetScroll, { passive: false });
-    if (track) {
-      track.addEventListener("scroll", resetScroll, { passive: false });
-    }
-
-    // Intercept scrollIntoView on carousel slides so browser focus/scroll algorithms don't mutate scrollLeft
-    const slides = viewport.querySelectorAll<HTMLElement>("[data-carousel-slide]");
-    const originalScrollIntoViews = new Map<HTMLElement, typeof HTMLElement.prototype.scrollIntoView>();
-
-    slides.forEach((slide) => {
-      originalScrollIntoViews.set(slide, slide.scrollIntoView);
-      slide.scrollIntoView = function () {
-        resetScroll();
-      };
-    });
-
-    return () => {
-      viewport.removeEventListener("scroll", resetScroll);
-      if (track) {
-        track.removeEventListener("scroll", resetScroll);
-      }
-      slides.forEach((slide) => {
-        const orig = originalScrollIntoViews.get(slide);
-        if (orig) slide.scrollIntoView = orig;
-      });
-    };
-  }, [emblaRef]);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -251,34 +199,35 @@ export default function DifferenceGrid() {
 
   const activeDot = ((selectedIndex % PANELS.length) + PANELS.length) % PANELS.length;
 
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
+    <section id="comparison" className="redesign-comparison colour-difference bg-[#F8F6F4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
       <ComparisonSpotlight />
       <div className="relative z-10 max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Section Header ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15">
+        <motion.div className="redesign-section-heading grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-end pb-12 sm:pb-16 border-b border-ink/15" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
           <div className="lg:col-span-7">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
               01 / ADVISORY · The Advisory Difference
             </span>
             <h2 data-reveal-heading className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
-              Not Another<br />
-              Admissions Agency.<br />
-              <span className="text-terra italic inline-block pr-1">A Private Advisory Model.</span>
+              Your ambitions.<br />
+              <span className="text-terra italic inline-block pr-1">Our personal attention.</span>
             </h2>
           </div>
 
           <div className="lg:col-span-5 flex flex-col justify-between">
             <p className="text-base sm:text-lg text-ink/75 font-light leading-relaxed">
-              Traditional consultancies operate on mass sales and recruiter commissions, passing candidates between telecallers. We operate on a boutique fiduciary standard.
+              One mentor who knows your story. Independent recommendations, thoughtful feedback, and practical guidance from your first shortlist to your next chapter.
             </p>
             <div className="mt-5 flex items-center justify-between gap-4">
               <Link
                 href="/mentorship-model"
                 className="inline-flex items-center gap-2 border-b border-ink/40 text-[11px] uppercase tracking-[0.2em] font-medium pb-1 text-ink hover:text-terra hover:border-terra transition-colors group"
               >
-                <span>Read Full Mentorship Doctrine</span>
+                <span>Discover our approach</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
 
@@ -303,48 +252,32 @@ export default function DifferenceGrid() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-visible mt-10 sm:mt-12">
+        <div className="w-full overflow-hidden mt-10 sm:mt-12 lg:overflow-visible">
           <div
-            className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
-            ref={setViewportRef}
+            className="overflow-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
+            ref={emblaRef}
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
             data-cursor-drag
             aria-label="The Advisory Difference Criterion Cards"
             onKeyDown={onKeyDown}
-            onScroll={(e) => {
-              if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
-              if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
-            }}
-            onFocusCapture={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollTop = 0;
-                containerRef.current.scrollLeft = 0;
-              }
-            }}
           >
-            <div
-              className="carousel-track flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-4 lg:gap-6 touch-pan-y lg:touch-auto scroll-px-4 sm:scroll-px-5 lg:scroll-px-0 scroll-py-2 pt-1.5 pb-2.5 -mt-1.5 -mb-2.5 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
-              onScroll={(e) => {
-                if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
-                if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
-              }}
-            >
+            <div className="flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-4 lg:gap-6 touch-pan-y lg:touch-auto">
               {SLIDES.map((panel, idx) => {
                 const Icon = panel.icon;
 
                 return (
                   <div
                     key={`${panel.num}-${idx}`}
-                    data-carousel-slide
-                    className={`carousel-slide carousel-snap-item min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
+                    className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
-                    <div
-                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[3px] [@media(hover:hover)_and_(pointer:fine)]:hover:border-terra/35 [@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
+                    <motion.div
+                      initial={reduceMotion ? false : { opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15 }} whileHover={reduceMotion ? undefined : { opacity: 0.94 }} transition={{ duration: 0.45, delay: (idx % PANELS.length) * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                      className="redesign-difference-card bg-[#FCFBFA] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(8,127,140,0.08)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
@@ -352,7 +285,7 @@ export default function DifferenceGrid() {
                           <span className="font-display text-4xl sm:text-5xl text-ink/30 group-hover:text-terra transition-colors duration-300">
                             {panel.num}
                           </span>
-                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra/60 group-hover:text-terra [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-0.5 transition-all duration-300">
+                          <div className="h-9 w-9 rounded-none border border-ink/15 bg-white flex items-center justify-center text-ink/60 group-hover:border-terra/60 group-hover:text-terra group-hover:-translate-y-0.5 transition-all duration-300">
                             <Icon className="h-4 w-4" />
                           </div>
                         </div>
@@ -379,7 +312,6 @@ export default function DifferenceGrid() {
                         <button
                           type="button"
                           onClick={() => setSelectedStandard(panel)}
-                          onPointerDown={(e) => e.stopPropagation()}
                           aria-label={`How we verify standard ${panel.num}: ${panel.title}`}
                           className="group/btn text-terra hover:text-terra-dark inline-flex items-center gap-1.5 transition-colors cursor-pointer py-1.5 px-2 -mr-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-terra font-medium"
                         >
@@ -387,7 +319,7 @@ export default function DifferenceGrid() {
                           <span className="transition-transform group-hover/btn:translate-x-1">→</span>
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                 );
               })}
@@ -397,7 +329,7 @@ export default function DifferenceGrid() {
           {/* ── Tappable Pagination Dots Indicator (Maps 1-to-1 to 4 unique items) ── */}
           <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
             {PANELS.map((panel, idx) => (
-              <button
+              <motion.button animate={{ opacity: idx === activeDot ? 1 : 0.65 }} transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 key={panel.num}
                 type="button"
                 onClick={() => scrollToDot(idx)}
@@ -425,25 +357,25 @@ export default function DifferenceGrid() {
           >
             {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: reduceMotion ? 0 : 0.3 }}
               onClick={() => setSelectedStandard(null)}
-              className="fixed inset-0 bg-[#0B0A08]/70 backdrop-blur-sm cursor-pointer"
+              className="fixed inset-0 bg-[#2D2722]/70 backdrop-blur-sm cursor-pointer"
               aria-hidden="true"
             />
 
             {/* Side Sheet / Bottom Drawer Panel */}
             <motion.div
-              initial={isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
+              initial={reduceMotion ? false : isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
               animate={{ x: 0, y: 0 }}
-              exit={isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 w-full max-w-lg bg-[#FAF7F2] text-[#14120C] border-t md:border-t-0 md:border-l border-ink/20 shadow-2xl flex flex-col h-[85vh] md:h-full overflow-hidden"
+              exit={reduceMotion ? { opacity: 0 } : isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-10 w-full max-w-lg bg-[#FCFBFA] text-[#362F2A] border-t md:border-t-0 md:border-l border-ink/20 shadow-2xl flex flex-col h-[85vh] md:h-full overflow-hidden"
             >
               {/* Top Bar with Editorial Monospace Index & Close Target */}
-              <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-ink/15 bg-[#FAF7F2] flex-shrink-0">
+              <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-ink/15 bg-[#FCFBFA] flex-shrink-0">
                 <div className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-terra" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/60">
@@ -516,7 +448,7 @@ export default function DifferenceGrid() {
               </div>
 
               {/* Fixed Bottom Action Strip */}
-              <div className="p-6 sm:p-8 pt-4 border-t border-ink/15 bg-[#FAF7F2] flex-shrink-0">
+              <div className="p-6 sm:p-8 pt-4 border-t border-ink/15 bg-[#FCFBFA] flex-shrink-0">
                 <button
                   type="button"
                   onClick={() => setSelectedStandard(null)}

@@ -21,7 +21,7 @@ const PRINCIPLES = [
 
 export default function MentorFeature() {
   return (
-    <section id="mentorship" className="bg-[#FAF7F2] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
+    <section id="mentorship" className="bg-[#FCFBFA] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Asymmetric Layout: Mentor Image + Narrative ── */}

@@ -109,7 +109,7 @@ export default function FloatingWhatsApp() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <p className="font-display text-sm text-ink truncate">Pathways Global</p>
+                <p className="font-display text-sm text-ink truncate">Study with Harshita</p>
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
@@ -134,7 +134,7 @@ export default function FloatingWhatsApp() {
               </div>
               <div className="flex-1 border border-ink/10 bg-cream px-3.5 py-3">
                 <p className="text-xs text-ink leading-relaxed">
-                  Welcome to <strong className="font-semibold">Pathways Global</strong>.
+                  Welcome to <strong className="font-semibold">Study with Harshita</strong>.
                 </p>
                 <p className="text-xs text-stone mt-1.5 leading-relaxed font-light">
                   Have an urgent question regarding{" "}
@@ -195,7 +195,7 @@ export default function FloatingWhatsApp() {
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="h-10 w-10 min-h-0 min-w-0 rounded-full p-0 relative inline-flex items-center justify-center bg-[#14120C] text-cream border border-terra/60 shadow-2xl active:scale-[0.96] transition-transform duration-200"
+          className="h-10 w-10 min-h-0 min-w-0 rounded-full p-0 relative inline-flex items-center justify-center bg-[#362F2A] text-cream border border-terra/60 shadow-2xl active:scale-[0.96] transition-transform duration-200"
         >
           {expanded ? (
             <X className="h-4 w-4 text-cream" />

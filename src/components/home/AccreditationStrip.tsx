@@ -44,7 +44,7 @@ const badges = [
 
 export default function AccreditationStrip() {
   return (
-    <div className="bg-[#030712] border-b border-white/[0.08] py-4 px-4 relative z-30">
+    <div className="bg-[#0C0A09] border-b border-white/[0.08] py-4 px-4 relative z-30">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Label */}

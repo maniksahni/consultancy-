@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Plus } from "lucide-react";
 
 const FAQ_ITEMS = [
@@ -29,6 +29,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function AnimatedFAQ() {
+  const reduceMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(0); // First item open by default
 
   const toggle = (idx: number) => {
@@ -36,14 +37,14 @@ export default function AnimatedFAQ() {
   };
 
   return (
-    <section id="faq" className="bg-[#FAF7F2] text-ink py-20 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
+    <section id="faq" className="redesign-faq colour-faq bg-[#FCFBFA] text-ink py-20 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Two-Column Layout ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
           {/* LEFT: Heading, Narrative & CTA (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+          <motion.div className="redesign-faq-intro lg:col-span-5 flex flex-col justify-between" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }}>
             <div>
               <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-4">
                 07 / PROTOCOLS · Transparency &amp; Clarifications
@@ -66,7 +67,7 @@ export default function AnimatedFAQ() {
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* RIGHT: Motion Accordion (7 cols) */}
           <div className="lg:col-span-7 divide-y divide-ink/15 border-t lg:border-t-0 border-b border-ink/15">
@@ -74,10 +75,12 @@ export default function AnimatedFAQ() {
               const isOpen = openIndex === idx;
 
               return (
-                <div key={item.num} className="py-5 sm:py-6 transition-colors">
+                <motion.div key={item.num} className={`redesign-faq-item ${isOpen ? "is-open" : ""}`} initial={reduceMotion ? false : { opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.45, delay: idx * 0.04 }}>
                   <button
                     onClick={() => toggle(idx)}
                     aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${idx}`}
+                    id={`faq-question-${idx}`}
                     className="w-full text-left flex items-start justify-between gap-4 group focus:outline-none"
                   >
                     <div className="flex items-start gap-3 sm:gap-4 min-w-0">
@@ -107,22 +110,23 @@ export default function AnimatedFAQ() {
                     >
                       <motion.div
                         animate={{ rotate: isOpen ? 45 : 0 }}
-                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeInOut" }}
                       >
                         <Plus className="h-4 w-4" />
                       </motion.div>
                     </span>
                   </button>
 
-                  {/* AnimatePresence Smooth Height Transition */}
+                  {/* Answer reveal with transform and opacity only */}
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
                         key="content"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        id={`faq-answer-${idx}`} role="region" aria-labelledby={`faq-question-${idx}`}
+                        initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
                         <div className="pt-4 pl-7 sm:pl-8 text-xs sm:text-sm text-ink/75 font-light leading-relaxed">
@@ -142,7 +146,7 @@ export default function AnimatedFAQ() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>

@@ -92,7 +92,7 @@ export default function Team() {
   };
 
   return (
-    <section id="team" className="py-20 sm:py-28 bg-slate-50 dark:bg-[#030712] border-b border-slate-200 dark:border-slate-800/80 text-slate-800 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section id="team" className="py-20 sm:py-28 bg-slate-50 dark:bg-[#0C0A09] border-b border-slate-200 dark:border-slate-800/80 text-slate-800 dark:text-white relative overflow-hidden transition-colors duration-300">
       {/* Background glow */}
       <div className="absolute top-1/2 right-[-5%] h-[400px] w-[400px] rounded-full bg-blue-500/5 dark:bg-blue-600/10 blur-[130px] pointer-events-none" />
 

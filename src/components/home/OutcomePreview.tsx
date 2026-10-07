@@ -45,7 +45,7 @@ const SELECTED_CASES = [
 
 export default function OutcomePreview() {
   return (
-    <section id="outcomes" className="bg-[#14120C] text-cream py-16 sm:py-20 lg:py-28 border-b border-cream/10">
+    <section id="outcomes" className="bg-[#362F2A] text-cream py-16 sm:py-20 lg:py-28 border-b border-cream/10">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Section Header ── */}

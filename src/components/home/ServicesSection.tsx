@@ -132,7 +132,7 @@ export default function ServicesSection({ onOpenConsultation }: { onOpenConsulta
   };
 
   return (
-    <section id="services" className="py-24 sm:py-32 bg-[#030712] relative overflow-hidden border-b border-white/[0.08]">
+    <section id="services" className="py-24 sm:py-32 bg-[#0C0A09] relative overflow-hidden border-b border-white/[0.08]">
       {/* Background ambient radial lighting */}
       <div className="absolute top-1/3 left-[-10%] h-[550px] w-[550px] rounded-full bg-emerald-500/10 blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-[-10%] h-[550px] w-[550px] rounded-full bg-blue-600/10 blur-[150px] pointer-events-none" />

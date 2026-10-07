@@ -92,7 +92,7 @@ export default function PartnersMarquee() {
   const row2Items = [...row2Universities, ...row2Universities];
 
   return (
-    <section className="py-16 bg-[#030712] border-y border-white/[0.08] overflow-hidden relative">
+    <section className="py-16 bg-[#0C0A09] border-y border-white/[0.08] overflow-hidden relative">
       {/* Background radial accent */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-36 bg-blue-600/10 blur-[100px] pointer-events-none" />
 
@@ -114,8 +114,8 @@ export default function PartnersMarquee() {
 
       {/* ROW 1 — left to right */}
       <div className="relative w-full overflow-hidden mb-3.5">
-        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#030712] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#030712] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#0C0A09] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#0C0A09] to-transparent z-10 pointer-events-none" />
         <div className="animate-marquee py-1.5">
           {row1Items.map((uni, idx) => (
             <UniCard key={`r1-${idx}`} uni={uni} />
@@ -125,8 +125,8 @@ export default function PartnersMarquee() {
 
       {/* ROW 2 — right to left (reverse) */}
       <div className="relative w-full overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#030712] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#030712] to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#0C0A09] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#0C0A09] to-transparent z-10 pointer-events-none" />
         <div className="animate-marquee-reverse py-1.5">
           {row2Items.map((uni, idx) => (
             <UniCard key={`r2-${idx}`} uni={uni} />

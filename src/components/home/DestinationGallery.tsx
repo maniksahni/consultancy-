@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useRef, useState, type TouchEvent } from "react";
 import Link from "next/link";
-import useEmblaCarousel from "embla-carousel-react";
-import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 
 interface DestinationItem {
   country: string;
@@ -80,308 +79,62 @@ const DESTINATIONS: DestinationItem[] = [
   },
 ];
 
-// Duplicate slides so Embla loop: true always has ample buffer cards,
-// completely preventing empty void or blank regions when dragged fast or flicked.
-const SLIDES = [...DESTINATIONS, ...DESTINATIONS];
-
 export default function DestinationGallery() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: true,
-      align: "start",
-      skipSnaps: false,
-      breakpoints: { "(min-width: 1024px)": { active: false } },
-    },
-    [WheelGesturesPlugin()]
-  );
-
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const setViewportRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      containerRef.current = node;
-      emblaRef(node);
-    },
-    [emblaRef]
-  );
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  // Guarantee carousel track and viewport never silently scroll vertically or horizontally on touch/focus
-  useEffect(() => {
-    const viewport = containerRef.current;
-    if (!viewport) return;
-    const track = viewport.firstElementChild as HTMLElement | null;
-
-    const resetScroll = () => {
-      if (viewport.scrollTop !== 0) viewport.scrollTop = 0;
-      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
-      if (track) {
-        if (track.scrollTop !== 0) track.scrollTop = 0;
-        if (track.scrollLeft !== 0) track.scrollLeft = 0;
-      }
-    };
-
-    viewport.addEventListener("scroll", resetScroll, { passive: false });
-    if (track) {
-      track.addEventListener("scroll", resetScroll, { passive: false });
-    }
-
-    // Intercept scrollIntoView on carousel slides so browser focus/scroll algorithms don't mutate scrollLeft
-    const slides = viewport.querySelectorAll<HTMLElement>("[data-carousel-slide]");
-    const originalScrollIntoViews = new Map<HTMLElement, typeof HTMLElement.prototype.scrollIntoView>();
-
-    slides.forEach((slide) => {
-      originalScrollIntoViews.set(slide, slide.scrollIntoView);
-      slide.scrollIntoView = function () {
-        resetScroll();
-      };
-    });
-
-    return () => {
-      viewport.removeEventListener("scroll", resetScroll);
-      if (track) {
-        track.removeEventListener("scroll", resetScroll);
-      }
-      slides.forEach((slide) => {
-        const orig = originalScrollIntoViews.get(slide);
-        if (orig) slide.scrollIntoView = orig;
-      });
-    };
-  }, [emblaApi]);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollToDot = useCallback(
-    (targetDotIndex: number) => {
-      if (!emblaApi) return;
-      const current = emblaApi.selectedScrollSnap();
-      const currentDot = ((current % DESTINATIONS.length) + DESTINATIONS.length) % DESTINATIONS.length;
-      let diff = targetDotIndex - currentDot;
-      if (diff > DESTINATIONS.length / 2) diff -= DESTINATIONS.length;
-      if (diff < -DESTINATIONS.length / 2) diff += DESTINATIONS.length;
-      emblaApi.scrollTo(current + diff);
-    },
-    [emblaApi]
-  );
-
-  // Keyboard navigation support when focused
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        scrollPrev();
-      } else if (e.key === "ArrowRight") {
-        e.preventDefault();
-        scrollNext();
-      }
-    },
-    [scrollPrev, scrollNext]
-  );
-
-  const activeDot = ((selectedIndex % DESTINATIONS.length) + DESTINATIONS.length) % DESTINATIONS.length;
+  const [selected, setSelected] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const reduceMotion = useReducedMotion();
+  const destination = DESTINATIONS[selected];
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+    if (Math.abs(deltaX) < 44 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+    setSelected(index => (index + (deltaX < 0 ? 1 : DESTINATIONS.length - 1)) % DESTINATIONS.length);
+  };
 
   return (
-    <section
-      id="destinations"
-      className="bg-[#FAF7F2] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full"
-    >
-      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
-
-        {/* ── Section Header ── */}
-        <div className="border-t border-ink/15 pt-5 sm:pt-6 mb-8 sm:mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div>
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-ink/45 block mb-3">
-              02 / DESTINATIONS · Curated Global Study Hubs
-            </span>
-            <h2 className="font-display font-normal text-[clamp(2.15rem,8vw,3.25rem)] sm:text-5xl lg:text-6xl leading-[0.94] tracking-tight">
-              Targeted Country Expertise.<br />
-              <span className="text-terra italic inline-block pr-1">Clear Admissions Data.</span>
-            </h2>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between lg:justify-end gap-5 lg:max-w-md">
-            <p className="text-sm sm:text-base text-ink/65 font-light leading-relaxed">
-              Every country enforces distinct post-study work rules, living proofs, and visa thresholds. We guide you through verified consular regulations without guesswork.
-            </p>
-
-            {/* Desktop Navigation Arrows */}
-            <div className="hidden sm:flex lg:hidden items-center gap-2 flex-shrink-0">
-              <button
-                type="button"
-                onClick={scrollPrev}
-                aria-label="Previous destination"
-                className="h-10 w-10 border border-ink/20 hover:border-ink hover:bg-ink hover:text-cream text-ink flex items-center justify-center transition-colors rounded-none"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={scrollNext}
-                aria-label="Next destination"
-                className="h-10 w-10 border border-ink/20 hover:border-ink hover:bg-ink hover:text-cream text-ink flex items-center justify-center transition-colors rounded-none"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
+    <section id="destinations" className="destination-atlas redesign-destinations" aria-labelledby="atlas-title">
+      <motion.div className="destination-atlas-heading" initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+        <p className="luxury-eyebrow">02 / THE DESTINATION COLLECTION</p>
+        <h2 id="atlas-title">A world of possibilities.<br /><em>Find your place.</em></h2>
+        <p>Six destinations. Countless ways forward. Choose a country and picture your next chapter.</p>
+      </motion.div>
+      <div className="destination-atlas-layout">
+        <div className="destination-atlas-list" role="group" aria-label="Choose a study destination">
+          <p className="destination-atlas-instruction">WHERE WILL YOUR STORY BEGIN?</p>
+          {DESTINATIONS.map((item, index) => (
+            <motion.button whileHover={reduceMotion ? undefined : { x: 3 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.2 }} key={item.slug} type="button" aria-pressed={selected === index} aria-controls="destination-atlas-story" onClick={() => setSelected(index)} className={selected === index ? "is-selected" : ""}>
+              <span className="destination-atlas-number">0{index + 1}</span>
+              <span>{item.country}</span>
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </motion.button>
+          ))}
+          <div className="destination-atlas-note"><span>YOUR AMBITION. YOUR DIRECTION.</span><p>One dedicated mentor to help you make sense of the possibilities.</p><a href="#booking">Talk through your options <ArrowRight size={15} /></a></div>
         </div>
-
-        {/* ── Touch-Swipeable Sliding Card Carousel (Infinite Loop) ── */}
-        <div className="w-full overflow-visible">
-          <div
-            className="carousel-viewport overflow-x-hidden overflow-y-hidden w-full cursor-grab active:cursor-grabbing select-none focus:outline-none focus-visible:ring-1 focus-visible:ring-terra/40 lg:overflow-visible lg:cursor-default lg:select-auto"
-            ref={setViewportRef}
-            tabIndex={0}
-            role="region"
-            aria-roledescription="carousel"
-            data-cursor-drag
-            aria-label="Targeted Country Expertise Carousel"
-            onKeyDown={onKeyDown}
-            onScroll={(e) => {
-              if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
-              if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
-            }}
-            onFocusCapture={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollTop = 0;
-                containerRef.current.scrollLeft = 0;
-              }
-            }}
-          >
-            <div
-              className="carousel-track flex -ml-4 sm:-ml-5 lg:ml-0 lg:grid lg:grid-cols-3 lg:gap-6 touch-pan-y lg:touch-auto scroll-px-4 sm:scroll-px-5 lg:scroll-px-0 scroll-py-2 pt-1.5 pb-2.5 -mt-1.5 -mb-2.5 lg:pt-0 lg:pb-0 lg:mt-0 lg:mb-0"
-              onScroll={(e) => {
-                if (e.currentTarget.scrollTop !== 0) e.currentTarget.scrollTop = 0;
-                if (e.currentTarget.scrollLeft !== 0) e.currentTarget.scrollLeft = 0;
-              }}
-            >
-              {SLIDES.map((dest, idx) => (
-                <div
-                  key={`${dest.slug}-${idx}`}
-                  data-carousel-slide
-                  className={`carousel-slide carousel-snap-item min-w-0 h-full ${idx >= DESTINATIONS.length ? "lg:hidden" : ""}`}
-                >
-                  <div
-                    data-cursor-view
-                    className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none"
-                  >
-                    {/* Crisp 4-sided border overlay ensuring no image overlap */}
-                    <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 [@media(hover:hover)_and_(pointer:fine)]:group-hover:border-terra/50 transition-colors duration-[650ms]" />
-
-                    {/* Background Image: Scale 1 -> 1.035 with unified luxury easing */}
-                    <img
-                      src={dest.image.replace(".webp", "-640.webp")}
-                      srcSet={dest.image.replace(".webp", "-320.webp") + " 320w, " + dest.image.replace(".webp", "-640.webp") + " 640w, " + dest.image.replace(".webp", "-760.webp") + " 760w"}
-                      sizes="(max-width: 389px) 85vw, (max-width: 639px) 85vw, (max-width: 1023px) 360px, 480px"
-                      alt={`${dest.country} landmark`}
-                      width={480}
-                      height={640}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:scale-[1.035] brightness-[0.8] contrast-[1.05]"
-                      loading="lazy"
-                      decoding="async"
-                    />
-
-                    {/* Dark Gradient Overlay: Opacity slightly increases */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-95" />
-
-                    {/* Ambient Warm Corner Glow (Micro glow: 0.18-0.22) */}
-                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terra/18 rounded-full blur-2xl opacity-0 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 transition-opacity duration-[650ms] pointer-events-none" />
-
-                    {/* Content Overlay */}
-                    <div className="relative z-10 transform transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
-                      {/* Top Flag / Stream Pill */}
-                      <div className="flex items-center gap-2 mb-2.5">
-                        <span className="text-base">{dest.flag}</span>
-                        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-terra bg-black/60 px-2.5 py-0.5 border border-terra/30">
-                          {dest.stream}
-                        </span>
-                      </div>
-
-                      {/* Country Name: translateY(0 -> -3px) */}
-                      <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl text-cream font-normal leading-tight transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-[3px]">
-                        {dest.country}
-                      </h3>
-
-                      {/* Tagline */}
-                      <p className="text-xs sm:text-sm text-cream/70 font-light mt-2 line-clamp-2 leading-relaxed">
-                        {dest.tagline}
-                      </p>
-
-                      {/* Fact Bar: Metadata opacity .65 -> 1 */}
-                      <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-3 border-t border-cream/15 font-mono text-[10px] text-cream/80 opacity-65 [@media(hover:hover)_and_(pointer:fine)]:group-hover:opacity-100 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]">
-                        <div>
-                          <span className="text-cream/40 uppercase tracking-wider block text-[8px]">
-                            Post-Study Work
-                          </span>
-                          <span className="font-medium text-cream">{dest.workRight}</span>
-                        </div>
-                        <div className="border-l border-cream/15 pl-3 sm:pl-4">
-                          <span className="text-cream/40 uppercase tracking-wider block text-[8px]">
-                            Tuition Range
-                          </span>
-                          <span className="font-medium text-cream">{dest.tuition}</span>
-                        </div>
-                      </div>
-
-                      {/* Explore Link with Terracotta Expanding Hairline: width 24px (w-6) -> 100% */}
-                      <div className="mt-4 pt-2">
-                        <Link
-                          href={`/destinations/${dest.slug}`}
-                          onPointerDown={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-mono text-cream [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-terra transition-colors duration-[650ms]"
-                        >
-                          <span>Explore {dest.country} Dossier</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-1 [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-y-1" />
-                        </Link>
-                        <div className="h-[1.5px] w-6 [@media(hover:hover)_and_(pointer:fine)]:group-hover:w-full bg-terra/70 transition-all duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] mt-1.5" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Tappable Pagination Dots Indicator (1-to-1 with unique destinations) ── */}
-          <div className="flex items-center justify-center gap-2 mt-7 sm:mt-8 lg:hidden">
-            {DESTINATIONS.map((dest, idx) => (
-              <button
-                key={dest.slug}
-                type="button"
-                onClick={() => scrollToDot(idx)}
-                aria-label={`Jump to ${dest.country}`}
-                className={`transition-all duration-300 rounded-full h-1.5 ${
-                  idx === activeDot
-                    ? "w-7 bg-terra"
-                    : "w-1.5 bg-ink/20 hover:bg-ink/40"
-                }`}
-              />
-            ))}
-          </div>
+        <div id="destination-atlas-story" className="destination-atlas-story" role="group" aria-roledescription="slide" aria-label={`${destination.country} destination`} aria-live="polite" aria-atomic="true" tabIndex={0} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchCancel={() => { touchStart.current = null; }} onKeyDown={event => { if (event.key === "ArrowRight") setSelected(index => (index + 1) % DESTINATIONS.length); if (event.key === "ArrowLeft") setSelected(index => (index + DESTINATIONS.length - 1) % DESTINATIONS.length); }}>
+          <div className="redesign-destination-image"><AnimatePresence initial={false}>
+            <motion.img key={destination.image} className="destination-atlas-photo" src={destination.image} alt={`${destination.country} cityscape`} loading="lazy" initial={reduceMotion ? false : { opacity: 0, scale: 1.075 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: reduceMotion ? 1 : 1.035 }} transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }} />
+          </AnimatePresence></div>
+          <div className="destination-atlas-shade" aria-hidden="true" />
+          <div className="destination-atlas-top"><span>THE COLLECTION / 0{selected + 1}</span><span>{destination.flag} {destination.country}</span></div>
+          <motion.div className="destination-atlas-copy" key={destination.slug} initial={reduceMotion ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.65, delay: reduceMotion ? 0 : 0.12, ease: [0.22, 1, 0.36, 1] }}>
+            <p className="destination-atlas-kicker">{destination.stream}</p>
+            <h3>{destination.country}</h3>
+            <p>{destination.tagline}</p>
+            <div className="destination-atlas-facts"><div><span>POST-STUDY WORK</span><strong>{destination.workRight}</strong></div><div><span>TUITION RANGE</span><strong>{destination.tuition}</strong></div></div>
+            <Link href={`/destinations/${destination.slug}`}>Explore {destination.country}<ArrowUpRight size={20} /></Link>
+            <span className="destination-atlas-swipe-hint">SWIPE TO EXPLORE ALL SIX DESTINATIONS</span>
+          </motion.div>
         </div>
-
       </div>
+      <div className="destination-atlas-foot"><span>EXPLORE WITH CURIOSITY. CHOOSE WITH CONFIDENCE.</span><span>01—06 / A WORLD WITHIN REACH</span></div>
     </section>
   );
 }

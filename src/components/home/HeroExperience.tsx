@@ -1,236 +1,66 @@
 "use client";
 
-import React, { useRef } from "react";
-import dynamic from "next/dynamic";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, Compass, ShieldCheck } from "lucide-react";
-import { EASE_LUXURY, maskedLineVariants, eyebrowVariants, terracottaBloomVariants } from "@/lib/motion";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react";
 
-const HeroWebGL = dynamic(() => import("@/components/hero/HeroWebGL"), { ssr: false });
+const scenes = [
+  { country: "United Kingdom", city: "London", slug: "uk", image: "/images/destinations/uk.webp", coordinates: "51.5072° N / 0.1276° W" },
+  { country: "United States", city: "A world of ambition", slug: "usa", image: "/images/destinations/usa.webp", coordinates: "37.0902° N / 95.7129° W" },
+  { country: "Germany", city: "New perspectives", slug: "germany", image: "/images/destinations/germany.webp", coordinates: "51.1657° N / 10.4515° E" },
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function HeroExperience() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const rectRef = useRef<DOMRect | null>(null);
-
-  // Desktop subtle mouse parallax (max 6-8px, disabled on touch/mobile)
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 45, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 45, damping: 20 });
-
-  const moveX = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-  const moveY = useTransform(springY, [-0.5, 0.5], [-6, 6]);
-
-  const handleMouseEnter = () => {
-    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
-      rectRef.current = containerRef.current?.getBoundingClientRect() || null;
-    }
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const interactionPause = useRef({ pointer: false, focus: false });
+  const reduceMotion = useReducedMotion();
+  useEffect(() => {
+    if (paused || reduceMotion) return;
+    const timer = window.setInterval(() => {
+      if (!document.hidden && !interactionPause.current.pointer && !interactionPause.current.focus) {
+        setActive(index => (index + 1) % scenes.length);
+      }
+    }, 8500);
+    return () => window.clearInterval(timer);
+  }, [paused, reduceMotion]);
+  const scene = scenes[active];
+  const reveal = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
   };
+  const stagger = { hidden: {}, visible: { transition: { delayChildren: 0.08, staggerChildren: 0.04 } } };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
-    if (!rectRef.current) {
-      rectRef.current = containerRef.current?.getBoundingClientRect() || null;
-    }
-    const rect = rectRef.current;
-    if (!rect) return;
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    rectRef.current = null;
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  return (
-    <section
-      ref={containerRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
-    >
-      {/* Layer 2: WebGL ribbon */}
-      <div data-hero-parallax className="pointer-events-none absolute inset-0"><HeroWebGL /></div>
-
-      <svg aria-hidden="true" className="absolute h-0 w-0 pointer-events-none" focusable="false">
-        <filter id="hero-liquid-distortion">
-          <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="4" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="11" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-
-      {/* Layer 3: Cinematic Slow-Drifting Warm Radial Glow */}
-      <motion.div
-        animate={{
-          x: [0, 18, -12, 0],
-          y: [0, -14, 10, 0],
-          opacity: [0.75, 0.95, 0.8, 0.75],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute -top-24 right-0 lg:right-10 w-[350px] sm:w-[550px] lg:w-[750px] h-[350px] sm:h-[550px] lg:h-[750px] rounded-full blur-[90px] lg:blur-[130px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(194,91,26,0.22) 0%, rgba(227,107,32,0.12) 40%, transparent 70%)",
-        }}
-      />
-
-      {/* Secondary Soft Cream Ambient Glow */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 w-[400px] h-[300px] rounded-full blur-[100px] opacity-30"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(242,237,228,0.08) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-10 lg:gap-14 items-center">
-
-          {/* ── LEFT: Cinematic Editorial Headline & Narrative (7 cols) ── */}
-          <div className="lg:col-span-7 flex flex-col justify-between">
-            <div>
-              {/* Eyebrow Pill: Rendered immediately for instant paint */}
-              <div className="inline-flex items-center gap-2.5 px-3 py-1 bg-white/[0.04] border border-cream/15 rounded-none mb-5 sm:mb-6 backdrop-blur-sm">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-terra" />
-                </span>
-                <span className="text-[10px] sm:text-[11px] uppercase text-cream/75 font-mono">
-                  Private Global Admissions Mentorship
-                </span>
-              </div>
-
-              {/* Headline: Rendered directly in HTML for instant FCP/LCP with zero hydration delay */}
-              <h1 className="font-display font-normal text-cream leading-[0.93] tracking-[-0.03em] text-[clamp(2.5rem,8.5vw,2.875rem)] sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.75rem] break-words">
-                {/* Line 1: STUDY ABROAD, */}
-                <span className="block py-0.5">
-                  STUDY ABROAD,
-                </span>
-
-                {/* Line 2: WITHOUT THE */}
-                <span className="block py-0.5 text-cream/90">
-                  WITHOUT THE
-                </span>
-
-                {/* Line 3: AGENCY NOISE. */}
-                <span className="block py-0.5">
-                  AGENCY NOISE.
-                </span>
-
-                {/* Accent: Built Around You. — Instant high-priority LCP paint */}
-                <span className="block py-1 text-terra italic pr-2 drop-shadow-[0_0_25px_rgba(194,91,26,0.35)]">
-                  Built Around You.
-                </span>
-              </h1>
-
-              {/* Supporting Copy */}
-              <p className="text-cream/70 text-[15px] sm:text-base lg:text-lg font-light leading-relaxed max-w-xl mt-5 sm:mt-7">
-                Independent, one-to-one guidance for ambitious students navigating university selection, applications, and visa preparation across leading global destinations.
-              </p>
-            </div>
-
-            {/* CTAs with Glow and Kinetic Hover */}
-            <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <a
-                href="#booking"
-                className="liquid-cta glow-button bg-terra hover:bg-terra-dark text-cream min-h-[48px] sm:min-h-[50px] px-8 py-3.5 rounded-none text-[11px] uppercase tracking-[0.2em] font-medium text-center transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_24px_rgba(194,91,26,0.25)] hover:shadow-[0_0_32px_rgba(194,91,26,0.38)]"
-              >
-                <span>Book a Strategy Session</span>
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-
-              <a
-                href="#destinations"
-                className="border border-cream/25 hover:border-cream text-cream hover:bg-white/[0.04] min-h-[48px] sm:min-h-[50px] px-7 py-3.5 rounded-none text-[11px] uppercase tracking-[0.18em] font-medium text-center transition-all inline-flex items-center justify-center gap-2.5 backdrop-blur-sm"
-              >
-                <Compass className="h-4 w-4 text-cream/60" />
-                <span>Explore Study Destinations</span>
-              </a>
-            </div>
-
-            {/* Trust Micro-Row */}
-            <motion.div
-              initial={false}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="mt-8 pt-6 border-t border-cream/10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[10px] uppercase tracking-[0.18em] font-mono text-cream/40"
-            >
-              <span className="flex items-center gap-1.5 text-cream/60">
-                <ShieldCheck className="h-3.5 w-3.5 text-terra" />
-                Zero Recruiter Commissions
-              </span>
-              <span>·</span>
-              <span>Fall 2026 &amp; Spring 2027 Open</span>
-            </motion.div>
-          </div>
-
-          {/* ── RIGHT: Cinematic Layered Visual Composition (5 cols) ── */}
-          <div className="hidden lg:block lg:col-span-5 relative">
-            {/* Parallax Container on Desktop */}
-            <motion.div
-              style={{ x: moveX, y: moveY }}
-              initial={false}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto w-full sm:max-w-md lg:max-w-none"
-            >
-              {/* Backlight Glow Behind Visual */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10 hidden sm:block" />
-
-              {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
-              <div className="relative border border-cream/20 bg-[#14120C] p-1.5 sm:p-4 shadow-2xl">
-                <div className="relative aspect-[4/5] max-h-[380px] sm:max-h-[460px] lg:max-h-none w-full overflow-hidden bg-cream/5 border border-cream/10">
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcSet="/images/mentor-hero-320.webp 320w, /images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w"
-                      sizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw"
-                    />
-                    <img
-                      src="/images/mentor-hero-640.webp"
-                      srcSet="/images/mentor-hero-320.webp 320w, /images/mentor-hero-480.webp 480w, /images/mentor-hero-640.webp 640w"
-                      sizes="(min-width: 1280px) 560px, (min-width: 640px) 43vw"
-                      alt="Senior Admissions Mentor in consultation session"
-                      width={560}
-                      height={700}
-                      className="absolute inset-0 h-full w-full object-cover object-top contrast-[1.05] brightness-[0.98]"
-                      loading="lazy"
-                    />
-                  </picture>
-                  {/* Subtle Cinematic Vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/80 via-transparent to-black/20 pointer-events-none" />
-
-                  {/* Overlaid Bottom Title */}
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
-                    <span className="px-2 py-0.5 bg-[#0B0A08]/90 border border-cream/20">
-                      Single Dedicated Mentor
-                    </span>
-                    <span className="text-terra font-medium">Boutique Fiduciary</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Verified Badge: inside on mobile, floating on desktop */}
-              <div className="absolute top-2.5 right-2.5 sm:-top-3.5 sm:-right-3 lg:-top-4 lg:-right-5 bg-[#0B0A08]/95 border border-terra/40 px-3 py-1.5 sm:px-3.5 sm:py-2 shadow-xl backdrop-blur-md flex items-center gap-1.5 sm:gap-2 z-20">
-                <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
-                <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-cream">
-                  100% Unbiased Advisory
-                </span>
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
+  return <section
+    className="cinema-hero redesign-hero"
+    aria-labelledby="hero-title"
+    onPointerEnter={() => { interactionPause.current.pointer = true; }}
+    onPointerLeave={() => { interactionPause.current.pointer = false; }}
+    onFocusCapture={() => { interactionPause.current.focus = true; }}
+    onBlurCapture={event => {
+      if (!event.currentTarget.contains(event.relatedTarget as Node | null)) interactionPause.current.focus = false;
+    }}
+  >
+    <div className="cinema-scenes" aria-hidden="true">{scenes.map((item, index) => <div key={item.slug} className={`cinema-scene ${index === active ? "is-active" : ""}`}><img src={item.image} alt="" width={1920} height={1080} fetchPriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} /></div>)}</div>
+    <div className="cinema-shade" aria-hidden="true" />
+    <div className="cinema-frame" aria-hidden="true" />
+    <motion.div className="cinema-content" variants={stagger} initial={reduceMotion ? false : "hidden"} animate="visible">
+      <motion.div className="cinema-eyebrow" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}><span /> PRIVATE STUDY ABROAD MENTORSHIP</motion.div>
+      <motion.p className="cinema-prelude" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>Some journeys change everything.</motion.p>
+      <motion.h1 id="hero-title" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>The world awaits.<br /><em>Make it yours.</em></motion.h1>
+      <motion.p className="cinema-description" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>Extraordinary places. A deeply personal path.<br />One dedicated mentor to help you find where you belong.</motion.p>
+      <motion.div className="cinema-actions" variants={reveal} transition={{ duration: reduceMotion ? 0 : 0.6, ease }}>
+        <motion.a className="cinema-primary" href="#booking" whileHover={reduceMotion ? undefined : { y: -4, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.3, ease }}>Begin your next chapter <ArrowUpRight size={18} /></motion.a>
+        <motion.a className="cinema-secondary" href="#destinations" whileHover={reduceMotion ? undefined : { x: 5 }} transition={{ duration: 0.3, ease }}>Discover the destinations <ArrowUpRight size={17} /></motion.a>
+      </motion.div>
+    </motion.div>
+    <motion.div className="cinema-bottom" initial={reduceMotion ? false : { opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.2, ease }}>
+      <a href="#destinations" className="cinema-scroll"><span><ArrowDown size={17} /></span><div>SCROLL TO DISCOVER<small>A world of possibilities below</small></div></a>
+      <div className="cinema-location"><span>IN FOCUS / {String(active + 1).padStart(2, "0")}</span><Link href={`/destinations/${scene.slug}`}>{scene.country}<ArrowUpRight size={16} /></Link><small>{scene.coordinates}</small></div>
+      <div className="cinema-controls"><div className="cinema-dots" aria-label="Choose destination photo">{scenes.map((item, index) => <button key={item.slug} onClick={() => { setActive(index); setPaused(true); }} aria-label={`Show ${item.country}`} aria-pressed={active === index} className={index === active ? "active" : ""}><span>{String(index + 1).padStart(2, "0")}</span><i /></button>)}</div><div className="cinema-control-buttons"><button onClick={() => { setActive((active + scenes.length - 1) % scenes.length); setPaused(true); }} aria-label="Previous destination"><ArrowLeft size={16} /></button><button onClick={() => { setActive((active + 1) % scenes.length); setPaused(true); }} aria-label="Next destination"><ArrowRight size={16} /></button><button onClick={() => setPaused(value => !value)} aria-label={paused ? "Resume destination slideshow" : "Pause destination slideshow"}>{paused ? "Play" : "Pause"}</button></div></div>
+    </motion.div>
+  </section>;
 }

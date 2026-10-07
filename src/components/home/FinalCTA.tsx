@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, MessageCircle, ShieldCheck, Clock } from "lucide-react";
+import { saveMentorshipBooking } from "@/lib/firebase";
 import { getStoredUTMParams } from "@/lib/utm";
 import { EASE_LUXURY } from "@/lib/motion";
 
@@ -28,12 +29,11 @@ export default function FinalCTA() {
     setError(null);
     setSubmitting(true);
 
-    const msg = `Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`;
+    const msg = `Hi Study with Harshita! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`;
     const whatsappUrl = `https://wa.me/33755749029?text=${encodeURIComponent(msg)}`;
 
     try {
       const utm = getStoredUTMParams();
-      const { saveMentorshipBooking } = await import("@/lib/firebase");
       const firestoreSave = saveMentorshipBooking({
         fullName: formData.fullName,
         whatsapp: formData.whatsapp,
@@ -71,11 +71,14 @@ export default function FinalCTA() {
     }
   };
 
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section id="booking" className="bg-[#0B0A08] text-cream py-20 sm:py-28 lg:py-36 relative overflow-hidden">
+    <section id="booking" className="redesign-booking colour-booking bg-[#2D2722] text-cream py-20 sm:py-28 lg:py-36 relative overflow-hidden">
+      <div className="luxury-booking-photo" aria-hidden="true"><img src="/images/destinations/ireland.webp" alt="" loading="lazy" /><span>YOUR NEXT CHAPTER / STARTS HERE</span></div>
       {/* ── Large Warm Radial Glow Behind Headline ── */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           scale: [1, 1.15, 1],
           opacity: [0.35, 0.55, 0.35],
           x: [0, 20, 0],
@@ -88,13 +91,13 @@ export default function FinalCTA() {
         className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 w-[550px] sm:w-[750px] lg:w-[950px] h-[400px] sm:h-[550px] rounded-full blur-[110px] lg:blur-[140px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(194,91,26,0.28) 0%, rgba(227,107,32,0.14) 45%, transparent 70%)",
+            "radial-gradient(circle, rgba(8,127,140,0.28) 0%, rgba(32,168,179,0.14) 45%, transparent 70%)",
         }}
       />
 
       {/* ── Subtle Animated Light Beam / Gradient Movement ── */}
       <motion.div
-        animate={{
+        animate={reduceMotion ? undefined : {
           x: ["-30%", "130%"],
           opacity: [0.1, 0.3, 0.1],
         }}
@@ -103,54 +106,37 @@ export default function FinalCTA() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="pointer-events-none absolute top-0 -left-1/4 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-terra to-transparent shadow-[0_0_15px_rgba(194,91,26,0.9)]"
+        className="pointer-events-none absolute top-0 -left-1/4 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-terra to-transparent shadow-[0_0_15px_rgba(8,127,140,0.9)]"
       />
 
-      <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
+      <div className="redesign-booking-content max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16 relative z-10">
 
         {/* ── Main Monumental Editorial Composition ── */}
-        <div className="border-t border-cream/15 pt-8 sm:pt-10 mb-12 sm:mb-16">
+        <div className="redesign-booking-main border-t border-cream/15 pt-8 sm:pt-10 mb-12 sm:mb-16">
           {/* Sweeping Thin Terracotta Line Before Headline */}
           <motion.div
-            initial={{ scaleX: 0 }}
+            initial={reduceMotion ? false : { scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.95, ease: EASE_LUXURY }}
             style={{ originX: 0 }}
-            className="h-[2px] w-full bg-gradient-to-r from-terra via-terra to-terra/20 mb-8 sm:mb-10 shadow-[0_0_12px_rgba(194,91,26,0.6)]"
+            className="h-[2px] w-full bg-gradient-to-r from-terra via-terra to-terra/20 mb-8 sm:mb-10 shadow-[0_0_12px_rgba(8,127,140,0.6)]"
           />
 
-          <div className="max-w-4xl">
+          <div className="redesign-booking-intro max-w-4xl">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-mono text-cream/45 block mb-4">
               08 / ENGAGEMENT · Direct Senior Advisory
             </span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.85, ease: EASE_LUXURY }}
-              className="font-display font-normal text-[clamp(2.35rem,8.5vw,4.5rem)] sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight"
-            >
-              <span className="block py-1">
-                YOUR APPLICATION
-              </span>
-
-              {/* Line 2: SHOULDN'T FEEL GENERIC. */}
-              <span className="block py-1 text-cream/90">
-                SHOULDN&apos;T FEEL GENERIC.
-              </span>
-
-              {/* Accent: Neither Should Your Advice. */}
-              <span className="block py-1.5 text-terra italic pr-1">
-                Neither Should Your Advice.
-              </span>
+            <motion.h2 initial={reduceMotion ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, ease: EASE_LUXURY }} className="booking-title">
+              Your next chapter<br />starts with a conversation.
+              <span>Let’s make a plan.</span>
             </motion.h2>
 
             <motion.p
-              initial={false}
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.85, ease: EASE_LUXURY }}
+              transition={{ duration: reduceMotion ? 0 : 0.6, delay: 0.04, ease: EASE_LUXURY }}
               className="text-base sm:text-lg lg:text-xl text-cream/70 font-light leading-relaxed mt-6 sm:mt-8 max-w-2xl"
             >
               Direct, confidential strategy session with a Senior Mentor. Discuss university shortlists, visa requirements, and profile strengths before committing.
@@ -160,19 +146,19 @@ export default function FinalCTA() {
           {/* Primary Action Buttons */}
           {!showForm && !submitted && (
             <motion.div
-              initial={false}
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.85, ease: EASE_LUXURY }}
+              transition={{ duration: reduceMotion ? 0 : 0.6, delay: 0.08, ease: EASE_LUXURY }}
               className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
             >
-              <button
+              <motion.button whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.2 }}
                 onClick={() => setShowForm(true)}
-                className="glow-button bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-9 py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_25px_rgba(194,91,26,0.25)] hover:shadow-[0_0_35px_rgba(194,91,26,0.4)]"
+                className="glow-button bg-terra hover:bg-terra-dark text-cream min-h-[52px] px-9 py-4 rounded-none text-[11px] uppercase tracking-[0.22em] font-medium transition-all inline-flex items-center justify-center gap-3 group shadow-[0_0_25px_rgba(8,127,140,0.25)] hover:shadow-[0_0_35px_rgba(8,127,140,0.4)]"
               >
                 <span>Book Strategy Session</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </motion.button>
 
               <a
                 href="https://wa.me/33755749029?text=Hi!%20I%20would%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1."
@@ -188,56 +174,58 @@ export default function FinalCTA() {
 
           {/* ── Seamless In-Place Consultation Booking Form ── */}
           {showForm && !submitted && (
-            <div className="mt-10 max-w-xl border border-cream/20 bg-white/[0.03] p-6 sm:p-8 animate-fade-in">
+            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.35, ease: EASE_LUXURY }} className="redesign-booking-form mt-10 max-w-xl border border-cream/20 bg-white/[0.03] p-6 sm:p-8">
               <div className="flex items-center justify-between pb-4 border-b border-cream/10 mb-6 font-mono text-[10px] uppercase tracking-wider text-cream/50">
                 <span>Direct Mentor Booking</span>
-                <button
+                <motion.button whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.2 }}
                   type="button"
                   onClick={() => setShowForm(false)}
                   className="text-cream/40 hover:text-cream underline"
                 >
                   Cancel
-                </button>
+                </motion.button>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4 font-sans">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
+                  <label htmlFor="booking-name" className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
                     Your Full Name *
                   </label>
                   <input
+                    id="booking-name" autoComplete="name"
                     type="text"
                     required
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Manik Sahni"
-                    className="w-full bg-[#14120C] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
+                    className="w-full bg-[#362F2A] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
+                  <label htmlFor="booking-phone" className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
                     WhatsApp Number (with country code) *
                   </label>
                   <input
+                    id="booking-phone" autoComplete="tel"
                     type="tel"
                     required
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                     placeholder="e.g. +91 9876543210"
-                    className="w-full bg-[#14120C] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
+                    className="w-full bg-[#362F2A] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
+                    <label htmlFor="booking-country" className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
                       Target Destination
                     </label>
-                    <select
+                    <select id="booking-country"
                       value={formData.targetCountry}
                       onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
+                      className="w-full bg-[#362F2A] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
                     >
                       <option value="United Kingdom">United Kingdom</option>
                       <option value="United States">United States</option>
@@ -250,13 +238,13 @@ export default function FinalCTA() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
+                    <label htmlFor="booking-intake" className="block text-[10px] uppercase tracking-wider font-mono text-cream/60 mb-1.5">
                       Target Intake
                     </label>
-                    <select
+                    <select id="booking-intake"
                       value={formData.targetIntake}
                       onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
+                      className="w-full bg-[#362F2A] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
                     >
                       <option value="Fall 2026">Fall 2026</option>
                       <option value="Spring 2027">Spring 2027</option>
@@ -270,7 +258,7 @@ export default function FinalCTA() {
                 )}
 
                 <div className="pt-2">
-                  <button
+                  <motion.button whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }} transition={{ duration: 0.2 }}
                     type="submit"
                     disabled={submitting}
                     className="w-full bg-cream text-ink hover:bg-cream/90 min-h-[48px] py-3 text-[11px] uppercase tracking-[0.2em] font-medium transition-colors flex items-center justify-center gap-2"
@@ -280,15 +268,15 @@ export default function FinalCTA() {
                     )}
                     <span>{submitting ? "Confirming Slot..." : "Confirm Strategy Session"}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
-                  </button>
+                  </motion.button>
                 </div>
               </form>
-            </div>
+            </motion.div>
           )}
 
           {/* Submission Success State */}
           {submitted && (
-            <div className="mt-8 max-w-lg border border-terra/40 bg-white/[0.04] p-6 sm:p-8 animate-fade-in">
+            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.35 }} className="redesign-booking-success mt-8 max-w-lg border border-terra/40 bg-white/[0.04] p-6 sm:p-8">
               <div className="flex items-center gap-2 text-terra font-mono text-xs uppercase tracking-wider mb-2">
                 <ShieldCheck className="h-4 w-4 text-terra" />
                 <span>Strategy Session Booked</span>
@@ -301,7 +289,7 @@ export default function FinalCTA() {
               </p>
               <div className="mt-4 pt-4 border-t border-cream/10">
                 <a
-                  href={`https://wa.me/33755749029?text=${encodeURIComponent(`Hi Pathways Global! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`)}`}
+                  href={`https://wa.me/33755749029?text=${encodeURIComponent(`Hi Study with Harshita! I just booked a 1-on-1 strategy session for ${formData.targetCountry} (${formData.targetIntake}). My name is ${formData.fullName}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-terra hover:underline"
@@ -310,11 +298,11 @@ export default function FinalCTA() {
                   <span>Open WhatsApp Directly →</span>
                 </a>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Fiduciary Notice Strip */}
-          <div className="mt-14 pt-8 border-t border-cream/10 grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-[10px] text-cream/45 uppercase tracking-[0.18em]">
+          <div className="redesign-booking-trust mt-14 pt-8 border-t border-cream/10 grid grid-cols-1 sm:grid-cols-3 gap-6 font-mono text-[10px] text-cream/45 uppercase tracking-[0.18em]">
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-3.5 w-3.5 text-terra" />
               <span>Direct 1-on-1 Confidentiality</span>

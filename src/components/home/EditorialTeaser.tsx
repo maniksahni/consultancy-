@@ -9,7 +9,7 @@ export default function EditorialTeaser({
   highlights: readonly { heading: string; detail?: string; number?: string }[];
 }) {
   return (
-    <section id={id} className={`py-space-5 sm:py-space-6 lg:py-space-7 ${dark ? "bg-[#14120C] text-cream" : "bg-[#F2EDE4] text-ink"}`}>
+    <section id={id} className={`py-space-5 sm:py-space-6 lg:py-space-7 ${dark ? "bg-[#362F2A] text-cream" : "bg-[#F8F6F4] text-ink"}`}>
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
         <div className={`border-t pt-space-3 sm:pt-space-4 lg:pt-space-5 grid lg:grid-cols-12 gap-8 lg:gap-10 ${dark ? "border-cream/15" : "border-ink/15"}`}>
           <div className="lg:col-span-7">
