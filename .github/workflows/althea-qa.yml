@@ -17,6 +17,8 @@ jobs:
           node-version: "20"
           cache: npm
       - run: npm ci
+      - run: node --check scripts/extract-france-sources.mjs
+      - run: node --check scripts/serve-export.mjs
       - run: npx tsc --noEmit
       - run: npm run build
       - run: npx playwright install --with-deps chromium
