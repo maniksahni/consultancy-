@@ -1,9 +1,11 @@
 import { chromium } from "playwright";
+import { mkdir } from "node:fs/promises";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:3000";
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440];
 const routes = ["/", "/france", "/france/universities"];
 const failures = [];
+await mkdir("artifacts/qa", { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
  for (const width of widths) {
@@ -39,6 +41,11 @@ try {
      if (!(await mobileNav.isVisible())) failures.push(`Mobile menu not visible at ${width}px`);
      await page.keyboard.press("Escape");
      if (await mobileNav.isVisible()) failures.push(`Mobile menu did not close on Escape at ${width}px`);
+    }
+    if (width === 390 || width === 1440) {
+     await page.evaluate(async () => { await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {}))); });
+     const label = route === "/" ? "home" : route.slice(1).replaceAll("/", "-");
+     await page.screenshot({ path: `artifacts/qa/${label}-${width}.png`, fullPage: true });
     }
     console.log(`PASS ${route} @ ${width}px`);
    } catch (error) { failures.push(`${route} at ${width}px: ${error.message}`); }
