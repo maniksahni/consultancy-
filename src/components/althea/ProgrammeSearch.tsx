@@ -1,8 +1,10 @@
 "use client";
-import {useMemo,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import {Search,ArrowUpRight,GraduationCap} from "lucide-react";
 import {franceProgrammes} from "@/data/franceProgrammes";
 export default function ProgrammeSearch(){
+ const [hydrated,setHydrated]=useState(false);
+ useEffect(()=>setHydrated(true),[]);
  const [q,setQ]=useState("");const [level,setLevel]=useState("All");const [city,setCity]=useState("All");const [field,setField]=useState("All");
  const results=useMemo(()=>franceProgrammes.filter(p=>{
   const haystack=[p.title,p.institution,p.city,p.field,p.note].join(" ").toLowerCase();
@@ -12,7 +14,7 @@ export default function ProgrammeSearch(){
  const fields=["All",...Array.from(new Set(franceProgrammes.map(p=>p.field)))];
  const cities=["All",...Array.from(new Set(franceProgrammes.map(p=>p.city)))];
  function clear(){setQ("");setLevel("All");setCity("All");setField("All");}
- return <div className="mx-auto max-w-[1328px] px-5 pb-24 sm:px-9 lg:px-14">
+ return <div data-hydrated={hydrated} className="mx-auto max-w-[1328px] px-5 pb-24 sm:px-9 lg:px-14">
   <div className="border border-[#173969]/15 bg-[#F2EDE4] p-5 sm:p-8">
    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
     <label><span className="mb-2 block text-[11px] font-semibold uppercase tracking-[.15em] text-[#566981]">Keyword</span><span className="relative block"><Search className="absolute left-3 top-4 text-[#9F865D]" size={17}/><input className={input+" pl-10"} type="search" value={q} onChange={e=>setQ(e.target.value)} placeholder="AI, Business, Physics..."/></span></label>
