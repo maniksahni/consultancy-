@@ -29,6 +29,7 @@ try {
     const links = await page.locator('a[href=""], a:not([href])').count();
     if (links) failures.push(`${route} at ${width}px: ${links} links missing destinations`);
     if (route === "/france/universities") {
+     await page.locator('[data-hydrated="true"]').waitFor({ timeout: 15000 });
      const cards = page.locator("article");
      if (await cards.count() < 5) failures.push(`University directory at ${width}px: fewer than 5 entries`);
      await page.getByRole("searchbox").fill("Sorbonne");
@@ -36,6 +37,7 @@ try {
      await page.getByRole("searchbox").fill("");
     }
     if (route === "/france/programmes") {
+     await page.locator('[data-hydrated="true"]').waitFor({ timeout: 15000 });
      const cards = page.locator("article");
      if (await cards.count() < 7) failures.push(`Programme directory at ${width}px: fewer than 7 examples`);
      await page.getByRole("searchbox").fill("Physics");
