@@ -34,12 +34,12 @@ export default function LiveFrenchRegistry(){
    const first=await batch(0);const collected=first.rows;const cap=Math.min(first.total,MAX);
    // Keep requests bounded and sequentially paced for the public API.
    for(let offset=100;offset<cap;offset+=100){const next=await batch(offset);collected.push(...next.rows);}
-   const unique=[...new Map(collected.map(r=>[r.id,r])).values()];
+   const unique=Array.from(new Map<string,Row>(collected.map((r:Row)=>[r.id,r] as [string,Row])).values());
    setRecords(unique);setPage(0);setState("ready");
    if(first.total>MAX)setMessage("Only the first "+MAX+" records were loaded. Visit the official dataset for the complete index.");
   }catch(e){setState("error");setMessage(e instanceof Error?e.message:"Unable to load official records right now.");}
  }
- const regions=useMemo(()=>["All",...new Set(records.map(r=>r.region).filter(Boolean))].sort(),[records]);
+ const regions=useMemo(()=>["All",...Array.from(new Set<string>(records.map(r=>r.region).filter(Boolean)))].sort(),[records]);
  const filtered=useMemo(()=>records.filter(r=>{
   const haystack=[r.name,r.city,r.region,r.type,r.sector].join(" ").toLocaleLowerCase();
   return haystack.includes(q.trim().toLocaleLowerCase())&&(region==="All"||r.region===region);
