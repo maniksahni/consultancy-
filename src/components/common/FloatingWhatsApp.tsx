@@ -5,7 +5,7 @@ import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
 import useFloatingControlClearance from "@/components/common/useFloatingControlClearance";
 
 const WHATSAPP_URL =
-  "https://wa.me/33755749029?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1.";
+  "https://wa.me/33755749029?text=Bonjour%20Alth%C3%A9a%2C%20I%20would%20like%20to%20discuss%20studying%20in%20France.";
 
 export default function FloatingWhatsApp() {
   const carouselBlocksControls = useFloatingControlClearance();
@@ -57,7 +57,7 @@ export default function FloatingWhatsApp() {
 
   // 2. IntersectionObserver to suppress entirely on/near the Booking and Footer sections
   useEffect(() => {
-    const suppressIds = ["booking", "footer"];
+    const suppressIds = ["booking", "consultation", "footer"];
     const elements = suppressIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
@@ -105,17 +105,17 @@ export default function FloatingWhatsApp() {
           {/* Card header */}
           <div className="bg-cream-200 border-b border-ink/10 px-4 py-3.5 flex items-center gap-3">
             <div className="h-9 w-9 border border-ink/15 flex-shrink-0 bg-cream flex items-center justify-center">
-              <span className="font-serif text-sm font-medium text-ink tracking-wide">PG</span>
+              <span className="font-serif text-sm font-medium text-ink tracking-wide">AC</span>
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <p className="font-display text-sm text-ink truncate">Pathways Global</p>
+                <p className="font-display text-sm text-ink truncate">Althéa Consulting</p>
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terra opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-terra" />
                 </span>
               </div>
-              <p className="label text-[9px] text-stone mt-0.5">Senior Advisor Online · Direct Replies</p>
+              <p className="label text-[9px] text-stone mt-0.5">France study enquiries · WhatsApp</p>
             </div>
             <button
               onClick={() => setExpanded(false)}
@@ -134,7 +134,7 @@ export default function FloatingWhatsApp() {
               </div>
               <div className="flex-1 border border-ink/10 bg-cream px-3.5 py-3">
                 <p className="text-xs text-ink leading-relaxed">
-                  Welcome to <strong className="font-semibold">Pathways Global</strong>.
+                  Welcome to <strong className="font-semibold">Althéa Consulting</strong>.
                 </p>
                 <p className="text-xs text-stone mt-1.5 leading-relaxed font-light">
                   Have an urgent question regarding{" "}
