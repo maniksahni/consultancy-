@@ -3,13 +3,8 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
 import SkipToContent from "@/components/common/SkipToContent";
-import UTMTracker from "@/components/common/UTMTracker";
 
-const ScrollExperience = dynamic(() => import("@/components/experience/ScrollExperience"), { ssr: false });
-const CustomCursor = dynamic(() => import("@/components/experience/CustomCursor"), { ssr: false });
 const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
-const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
-import CookieBanner from "@/components/common/CookieBanner";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -47,20 +42,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('pathways_cookie_consent'))document.documentElement.dataset.cookieConsent='set'}catch(e){}" }} />
-      </head>
-      <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
-        <UTMTracker />
+      <body className="bg-[#FCFAF6] text-[#173969] overflow-x-hidden w-full max-w-full font-sans">
         <SkipToContent />
-        <ScrollExperience />
-        <CustomCursor />
         <div className="flex flex-col w-full max-w-full overflow-x-hidden">
           {children}
         </div>
-        <BackToTop />
         <FloatingWhatsApp />
-        <CookieBanner />
       </body>
     </html>
   );
