@@ -1,38 +1,9 @@
-import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import { studentOutcomes } from "@/data/editorial";
-import TiltCard from "@/components/experience/TiltCard";
-
-export const metadata: Metadata = { title: "Student Outcomes | Pathways Global", description: "Existing student case files, recorded with initials only." };
-
-export default function OutcomesPage() {
-  return (
-    <EditorialPage eyebrow="Documented Admissions Records" title="Student" accent="Outcomes."
-      intro="Initials-only case files with the recorded profile and outcome details. Individual results do not predict future decisions.">
-      <div className="grid lg:grid-cols-2 gap-8">
-        {studentOutcomes.map((item, i) => (
-          <TiltCard key={item.ref} className="border border-ink/15 bg-white p-6 sm:p-8">
-          <article>
-            <div className="border-b border-ink/15 pb-5 mb-8 flex items-start justify-between gap-4">
-              <p className="text-[10px] uppercase tracking-widest text-stone">Case file {String(i + 1).padStart(3, "0")} · {item.ref}</p>
-              <p className="text-[10px] uppercase tracking-widest text-stone text-right">{item.country} · {item.intake}</p>
-            </div>
-            <h2 className="font-display text-4xl">Candidate {item.initials}</h2>
-            <p className="font-display text-2xl mt-5">{item.university}</p>
-            <p className="text-sm text-stone mt-1">{item.program}</p>
-            <p className="text-sm text-ink/75 leading-relaxed mt-8">{item.narrative}</p>
-            <div className="border-t border-b border-ink/15 py-4 mt-8">
-              <p className="text-[10px] uppercase tracking-widest text-stone mb-2">Recorded profile</p>
-              <p className="text-sm">{item.stats}</p>
-            </div>
-            <div className="bg-cream border border-ink/15 p-5 mt-6">
-              <p className="text-[10px] uppercase tracking-widest text-stone mb-2">Recorded outcome</p>
-              <p className="text-sm font-medium">{item.outcome}</p>
-            </div>
-          </article>
-          </TiltCard>
-        ))}
-      </div>
-    </EditorialPage>
-  );
-}
+import type {Metadata} from "next";
+import AltheaInfoPage from "@/components/althea/AltheaInfoPage";
+export const metadata:Metadata={title:"Our Standards | Althéa Consulting",description:"Transparent admissions guidance without unverified success claims or promised visa results."};
+const rows=[
+{title:"Real experiences only",description:"We publish student outcomes only when documentation and consent have been verified. We do not use fictitious success stories to imply a guaranteed outcome.",href:"/#consultation",label:"Ask us about our approach"},
+{title:"Official information, clearly linked",description:"Our guides send students back to universities, Campus France and French government information for current requirements, dates and fees.",href:"/france/resources",label:"Explore official sources"},
+{title:"Considered university shortlists",description:"Every profile is different. Courses should be compared against language, academic requirements, living costs and the applicant's own goals.",href:"/france/universities",label:"Research institutions"},
+{title:"Transparent expectations",description:"Admission and visa decisions are made by institutions and relevant government authorities. No consultancy can guarantee a decision.",href:"/france/visas",label:"Understand visa guidance"}];
+export default function Outcomes(){return <AltheaInfoPage eyebrow="Nos engagements / Trust" title="Credibility above" accent="empty promises." intro="Until permission-backed client case studies are available, our standards and official-source-first approach are more useful than invented statistics." rows={rows}/>;}

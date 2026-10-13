@@ -1,0 +1,21 @@
+name: France official-source research
+on:
+  workflow_dispatch:
+jobs:
+  extract-reviewed-source-metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Fetch official source metadata for editorial review
+        run: node scripts/extract-france-sources.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: france-official-source-research
+          path: reports/france-source-research.json
+          retention-days: 14

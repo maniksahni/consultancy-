@@ -1,14 +1,1 @@
-import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import FAQAccordion from "@/components/experience/FAQAccordion";
-
-export const metadata: Metadata = { title: "FAQ | Pathways Global", description: "Answers about mentorship scope, pricing, prior refusals, outcomes, and timing." };
-
-export default function FAQPage() {
-  return (
-    <EditorialPage eyebrow="Admissions & Advisory Clarity" title="Questions &" accent="Answers."
-      intro="Practical answers about the mentorship service and the decisions that remain with universities and visa authorities.">
-      <FAQAccordion />
-    </EditorialPage>
-  );
-}
+import type {Metadata} from "next";import FranceGuidePage from "@/components/althea/FranceGuidePage";import {getGuide} from "@/data/franceGuides";export const metadata:Metadata={title:"France Admissions FAQ | Althéa Consulting",description:"Real answers to common France admissions and visa questions with official sources.",alternates:{canonical:"/france/faq"}};export default function FAQPage(){return <FranceGuidePage guide={getGuide("faq")!}/>;}

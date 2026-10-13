@@ -1,0 +1,53 @@
+name: Deploy Althéa to Firebase Hosting
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Verify responsive production export
+        run: |
+          node scripts/serve-export.mjs > /tmp/althea-qa-server.log 2>&1 &
+          for i in $(seq 1 45); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/check-althea-responsive.mjs
+      - name: Check hosting credentials
+        id: firebase
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2 || secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -n "$SERVICE_ACCOUNT" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Firebase deployment skipped: no Hosting service-account credential configured."
+          fi
+      - name: Deploy verified static export to Firebase Hosting
+        if: steps.firebase.outputs.available == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2 || secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: consultancyworld2
+          entryPoint: .
+      - name: Summary
+        if: always()
+        run: |
+          echo "Built Next static export; Firebase deployment requires configured service account." >> "$GITHUB_STEP_SUMMARY"
