@@ -60,7 +60,7 @@ export const franceSources = [
   { title: "Études en France — official application route", category: "Applications", href: "https://www.campusfrance.org/en/application-etudes-en-france-procedure?lang=en", description: "Learn which applicants use the platform and how their application route works." },
   { title: "Campus France India — application procedure", category: "India guidance", href: "https://www.inde.campusfrance.org/application-and-admission-procedure", description: "Country-specific application guidance for students in India." },
   { title: "Find a programme — Campus France", category: "Programmes", href: "https://www.campusfrance.org/en/finding-a-university-programme-France", description: "Official Bachelor's, Master's and English-taught programme catalogues." },
-  { title: "France-Visas — student visa", category: "Visa", href: "https://france-visas.gouv.fr/en/web/france-visas/student", description: "Official France visa information. Always verify requirements for your profile." },
+  { title: "France-Visas — student visa", category: "Visa", href: "https://www.france-visas.gouv.fr/en/web/france-visas/etudiant", description: "Official France visa information. Always verify requirements for your profile." },
   { title: "Campus Bourses — scholarship discovery", category: "Funding", href: "https://campusbourses.campusfrance.org/", description: "Browse scholarship opportunities and confirm eligibility with the provider." },
   { title: "Study in France — practical guide", category: "Living in France", href: "https://www.campusfrance.org/en", description: "Official information on accommodation, life in France and preparation." }
 ] as const;
