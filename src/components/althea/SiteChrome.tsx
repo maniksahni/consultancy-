@@ -11,7 +11,7 @@ const navItems = [
   { label: "Courses", href: "/france/programmes" },
   { label: "Universities", href: "/france/universities" },
   { label: "Campus France", href: "/france/campus-france" },
-  { label: "Our Approach", href: "/#approach" },
+  { label: "Resources", href: "/france/resources" },
 ];
 
 export function AltheaHeader() {
@@ -80,6 +80,10 @@ export function AltheaFooter() {
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/programmes">Courses</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/universities">Universities</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/campus-france">Campus France guide</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/resources">Student resources</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/scholarships">Scholarships</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/visas">Visa guidance</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/living">Accommodation</Link>
           </div>
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[.24em] text-[#D7BA87]">Connect</p>
