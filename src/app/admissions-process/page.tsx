@@ -1,41 +1,9 @@
-import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import { admissionsStages } from "@/data/editorial";
-
-export const metadata: Metadata = { title: "Admissions Process | Pathways Global", description: "The stages of profile review, shortlisting, applications, and visa preparation." };
-
-export default function AdmissionsProcessPage() {
-  return (
-    <EditorialPage eyebrow="The Admissions Journey" title="A Clearer" accent="Process."
-      intro="What happens at each stage, what your mentor reviews, and what you can prepare. Timing depends on your destination, deadlines, and document readiness.">
-      <div className="border-t border-ink/15">
-        {admissionsStages.map((stage) => (
-          <article data-stage key={stage.number} className="border-b border-ink/15 py-12 lg:py-16 grid lg:grid-cols-12 gap-8 lg:gap-12">
-            <div data-stage-number className="lg:col-span-2 font-display text-7xl lg:text-8xl leading-none text-ink/20 self-start">{stage.number}</div>
-            <div className="lg:col-span-4">
-              <p className="text-[10px] uppercase tracking-widest text-stone mb-4">{stage.subtitle}</p>
-              <h2 className="font-display text-3xl lg:text-4xl leading-tight">{stage.title}</h2>
-              <div className="border border-ink/15 bg-white p-5 mt-8">
-                <p className="text-[10px] uppercase tracking-widest text-stone mb-2">Stage deliverable</p>
-                <p className="text-sm">{stage.deliverable}</p>
-              </div>
-            </div>
-            <dl className="lg:col-span-6 grid sm:grid-cols-2 gap-x-8 gap-y-8">
-              {[
-                ["What happens", stage.happens],
-                ["Mentor's role", stage.mentor],
-                ["What to prepare", stage.student],
-                ["Timing", stage.timing],
-              ].map(([label, value]) => (
-                <div key={label} className="border-t border-ink/15 pt-4">
-                  <dt className="text-[10px] uppercase tracking-widest text-stone mb-2">{label}</dt>
-                  <dd className="text-sm text-ink/80 leading-relaxed">{value}</dd>
-                </div>
-              ))}
-            </dl>
-          </article>
-        ))}
-      </div>
-    </EditorialPage>
-  );
-}
+import type {Metadata} from "next";
+import AltheaInfoPage from "@/components/althea/AltheaInfoPage";
+export const metadata:Metadata={title:"Admissions Process in France | Althéa Consulting",description:"Understand French university shortlisting, Études en France, applications and visa preparation."};
+const rows=[
+{title:"01 · Discover your course",description:"Research subjects and levels using institutional admissions pages. Check the language of teaching, prerequisites, programme duration and current intake.",href:"/france/programmes",label:"Find courses"},
+{title:"02 · Identify the correct route",description:"For India and other relevant countries, Études en France often applies. DAP, non-DAP and school-specific procedures depend on your situation.",href:"/france/campus-france",label:"Campus France guide"},
+{title:"03 · Prepare documents and funding",description:"Prepare accurate educational credentials, motivation materials and finance plans according to your university's instructions. Scholarships require separate eligibility checks.",href:"/france/scholarships",label:"Explore funding"},
+{title:"04 · Confirm visa and arrival",description:"After receiving an offer, consult France-Visas for the current process, required documents and circumstances; start looking into housing before travelling.",href:"/france/visas",label:"Official visa resources"}];
+export default function Admissions(){return <AltheaInfoPage eyebrow="Le parcours / Application stages" title="A clearer" accent="admissions journey." intro="The process is easier to navigate when you understand what needs to happen and where the official instructions come from." rows={rows}/>;}
