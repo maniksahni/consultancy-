@@ -3,7 +3,7 @@ import { mkdir } from "node:fs/promises";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:3000";
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440];
-const routes = ["/", "/france", "/france/universities", "/france/programmes"];
+const routes = ["/", "/france", "/france/universities", "/france/programmes", "/france/campus-france", "/france/institutions", "/france/resources", "/france/scholarships", "/france/visas", "/france/living", "/france/costs", "/france/faq", "/scholarships", "/faq", "/outcomes", "/admissions-process", "/mentorship-model"];
 const failures = [];
 await mkdir("artifacts/qa", { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -41,6 +41,15 @@ try {
      await page.getByRole("searchbox").fill("Physics");
      try { await page.waitForFunction(() => document.querySelectorAll("article").length === 1, null, { timeout: 5000 }); } catch { failures.push(`Programme search at ${width}px did not filter to Physics`); }
      await page.getByRole("searchbox").fill("");
+    }
+    if (route === "/" && width === 390) {
+     const form = page.getByRole("button", { name: /Submit your enquiry/i });
+     if (!(await form.isVisible())) failures.push("Home at 390px: enquiry form missing");
+    }
+    if (route === "/france/institutions" && width === 390) {
+     await page.route("https://data.enseignementsup-recherche.gouv.fr/api/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ total_count: 2, results: [{etablissement_id_paysage:"a",uo_lib:"Université Demo A",com_nom:"Paris",reg_nom:"Île-de-France",type_d_etablissement:["Université"],url:"https://example.com",secteur_d_etablissement:"public"},{etablissement_id_paysage:"b",uo_lib:"Université Demo B",com_nom:"Lyon",reg_nom:"Auvergne",type_d_etablissement:["Université"],url:"https://example.com",secteur_d_etablissement:"public"}]}) }));
+     await page.getByRole("button", { name: /Load official institutions/i }).click();
+     try { await page.getByRole("heading", { name: "2 matching institutions" }).waitFor({ timeout: 6000 }); } catch { failures.push("Registry mock API integration failed at 390px"); }
     }
     if (route === "/" && width < 1024) {
      await page.getByRole("button", { name: "Open menu" }).click();
