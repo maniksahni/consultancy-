@@ -107,9 +107,9 @@ export default function OfficialMastersArchive(){
      </article>;
     })}</div>:<p className="mt-5 bg-white p-7 text-sm text-[#536681]">No matching archive records. Try another discipline or city.</p>}
     {total!=null&&total>pageSize&&<div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#173969]/15 pt-6">
-     <button disabled={!canPrev||status==="loading"} type="button" onClick={()=>void fetchPage(searched,page-1)} className="inline-flex min-h-12 items-center gap-2 border border-[#173969]/25 px-5 text-xs text-[#173969] disabled:opacity-40"><ChevronLeft size={17}/> Previous</button>
+     <button disabled={!canPrev} type="button" onClick={()=>void fetchPage(searched,page-1)} className="inline-flex min-h-12 items-center gap-2 border border-[#173969]/25 px-5 text-xs text-[#173969] disabled:opacity-40"><ChevronLeft size={17}/> Previous</button>
      <span className="text-xs text-[#64748A]">Page {page+1} of {Math.ceil(total/pageSize)}</span>
-     <button disabled={!canNext||status==="loading"} type="button" onClick={()=>void fetchPage(searched,page+1)} className="inline-flex min-h-12 items-center gap-2 bg-[#173969] px-5 text-xs text-white disabled:opacity-40">Next <ChevronRight size={17}/></button>
+     <button disabled={!canNext} type="button" onClick={()=>void fetchPage(searched,page+1)} className="inline-flex min-h-12 items-center gap-2 bg-[#173969] px-5 text-xs text-white disabled:opacity-40">Next <ChevronRight size={17}/></button>
     </div>}
    </div>}
    <div className="mt-7 flex items-start gap-3 text-xs leading-7 text-[#6B788D]"><Info size={19} className="mt-1 shrink-0 text-[#A58F6B]"/><p><strong>Not the live Campus France programme catalogue.</strong> The underlying Mon Master dataset documents 2024/2025 national application campaigns. Course names, international routes, current tuition and admission requirements must be checked separately with each institution. Source: French Ministry of Higher Education, Licence Ouverte/Open Licence. <a href={source} target="_blank" rel="noopener noreferrer" className="underline">Source & licence ↗</a></p></div>
