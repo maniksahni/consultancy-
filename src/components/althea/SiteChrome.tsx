@@ -79,6 +79,7 @@ export function AltheaFooter() {
             <Link className="block text-sm text-white/80 hover:text-white" href="/france">Study in France</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/programmes">Courses</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/universities">Universities</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/institutions">Official institution register</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/campus-france">Campus France guide</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/resources">Student resources</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/scholarships">Scholarships</Link>
