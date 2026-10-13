@@ -1,76 +1,50 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
-import HeroExperience from "@/components/home/HeroExperience";
-import TrustLedger from "@/components/home/TrustLedger";
-import DifferenceGrid from "@/components/home/DifferenceGrid";
-import CinematicStatement from "@/components/home/CinematicStatement";
-import ScrollJourney from "@/components/home/ScrollJourney";
-import MentorSpotlight from "@/components/home/MentorSpotlight";
-import Footer from "@/components/layout/Footer";
-import dynamic from "next/dynamic";
-
-const DestinationGallery = dynamic(() => import("@/components/home/DestinationGallery"));
-const OutcomeCases = dynamic(() => import("@/components/home/OutcomeCases"));
-const AnimatedFAQ = dynamic(() => import("@/components/home/AnimatedFAQ"));
-const FinalCTA = dynamic(() => import("@/components/home/FinalCTA"));
-
-export const metadata: Metadata = {
-  title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
-  description:
-    "Independent, one-to-one admissions advisory for premier universities in UK, USA, Canada, Germany, Australia, and Ireland. 100% fiduciary guidance with zero agency recruiter kickbacks.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    url: "/",
-    title: "Pathways Global | Private 1-on-1 Study Abroad Mentorship",
-    description:
-      "Boutique admissions advisory with zero recruiter kickbacks. Direct 1-on-1 mentorship from profile strategy to consular visa clearance.",
-  },
-};
-
-export default function Home() {
-  return (
-    <main
-      id="main-content"
-      tabIndex={-1}
-      className="min-h-screen bg-[#0B0A08] text-ink flex flex-col overflow-x-hidden max-w-full w-full focus:outline-none"
-    >
-      {/* 1. Header / Dynamic Navbar */}
-      <Navbar />
-
-      {/* 2. Section 1 — Hero: Cinematic Full-Screen Experience (Dark: #0B0A08) */}
-      <HeroExperience />
-
-      {/* 3. Section 2 — Trust Ledger: Glowing Counter Strip (Warm White: #FAF7F2) */}
-      <TrustLedger />
-
-      {/* 4. Section 3 — Why Pathways: Asymmetric Glowing Cards (Cream: #F2EDE4) */}
-      <DifferenceGrid />
-
-      {/* 5. Section 4 — Destination Gallery: Premium Motion Grid (Warm White: #FAF7F2) */}
-      <DestinationGallery />
-
-      {/* 5.5 Signature Scroll-Linked Intermission: Monumental Statement (Dark: #0B0A08) */}
-      <CinematicStatement />
-
-      {/* 6. Section 5 — Scroll Story Process: Glowing Center Timeline (Dark: #0B0A08) */}
-      <ScrollJourney />
-
-      {/* 7. Section 6 — Mentor Feature: Image + Glow Frame (Warm White: #FAF7F2) */}
-      <MentorSpotlight />
-
-      {/* 8. Section 7 — Outcome Case Files: Motion Panels (Dark: #0B0A08) */}
-      <OutcomeCases />
-
-      {/* 9. Section 8 — FAQ: Motion Accordion (Warm White: #FAF7F2) */}
-      <AnimatedFAQ />
-
-      {/* 10. Section 9 — Final CTA: Cinematic Radial Glow & Booking (Dark: #0B0A08) */}
-      <FinalCTA />
-
-      {/* 11. Architectural Footer (Dark: #14120C) */}
-      <Footer />
-    </main>
-  );
-}
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, BookOpen, Globe2, Landmark, Compass, CheckCircle2, ChevronRight, GraduationCap } from "lucide-react";
+import { AltheaHeader, AltheaFooter } from "@/components/althea/SiteChrome";
+export const metadata:Metadata={title:"Althéa Consulting | A French Future, Thoughtfully Guided",description:"Althéa Consulting helps students explore study opportunities in France with considered one-to-one guidance and official-source university research.",alternates:{canonical:"/"}};
+const services=[
+ {no:"01",title:"Academic discovery",subtitle:"Find your direction",body:"Research universities, disciplines, degree levels and language options that align with your future.",icon:GraduationCap},
+ {no:"02",title:"Application guidance",subtitle:"Make every step count",body:"Understand relevant application routes, document preparation and programme-specific requirements.",icon:BookOpen},
+ {no:"03",title:"A life in France",subtitle:"Arrive with confidence",body:"Plan ahead for visas, scholarship research, housing and the practical details of your next chapter.",icon:Compass}
+];
+const journey=[{number:"I",title:"Discover",text:"Explore your interests, academic profile and the French higher-education landscape."},{number:"II",title:"Define",text:"Build a thoughtful shortlist from official university information."},{number:"III",title:"Prepare",text:"Organise applications and required documents around programme instructions."},{number:"IV",title:"Begin",text:"Plan next steps towards admission, visa preparation and arrival."}];
+export default function Home(){return <main className="min-h-screen overflow-x-clip bg-[#FCFAF6] text-[#153260]">
+ <AltheaHeader/>
+ <section className="relative isolate overflow-hidden bg-[#142E61] text-[#FBF9F3]">
+  <div aria-hidden="true" className="pointer-events-none absolute -left-28 -top-32 h-[560px] w-[560px] rounded-full border border-white/10 shadow-[0_0_0_75px_rgba(255,255,255,.015),0_0_0_150px_rgba(255,255,255,.012)]"/>
+  <div className="relative mx-auto grid max-w-[1440px] gap-11 px-5 pb-14 pt-14 sm:px-9 sm:pb-20 sm:pt-20 lg:min-h-[730px] lg:grid-cols-12 lg:items-center lg:gap-14 lg:px-14">
+   <div className="relative z-10 lg:col-span-7">
+    <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[.28em] text-[#D8BB8E]"><span className="h-px w-8 bg-[#D8BB8E]"/>Bienvenu chez Althéa <span className="text-white/45">·</span> France admissions</div>
+    <h1 className="mt-8 max-w-[900px] font-display text-[clamp(3.5rem,10vw,8.8rem)] leading-[.87] tracking-[-.055em]">Your future,<br/><em className="font-normal text-[#E5C99D]">en France.</em></h1>
+    <p className="mt-8 max-w-xl text-[15px] leading-8 text-white/75 sm:text-lg sm:leading-9">Study abroad, beautifully considered. A personal, informed and inspiring path toward higher education in France.</p>
+    <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+     <a href="#consultation" className="inline-flex min-h-[52px] items-center justify-center gap-3 bg-[#E5C99D] px-7 py-4 text-[11px] font-bold uppercase tracking-[.14em] text-[#152F60] transition-colors hover:bg-white">Begin your journey <ArrowUpRight size={17}/></a>
+     <Link href="/france" className="inline-flex min-h-[52px] items-center justify-center gap-3 border border-white/35 px-7 py-4 text-[11px] font-bold uppercase tracking-[.14em] text-white transition-colors hover:bg-white/10">Discover France <ArrowRight size={17}/></Link>
+    </div>
+    <div className="mt-11 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/20 pt-6 text-[10px] font-semibold uppercase tracking-[.14em] text-white/65"><span className="inline-flex items-center gap-2"><CheckCircle2 size={14} className="text-[#E5C99D]"/> Source-led research</span><span>Personal guidance</span><span>France-focused</span></div>
+   </div>
+   <div className="relative min-w-0 lg:col-span-5">
+    <div className="absolute -left-4 -top-4 hidden h-full w-full border border-[#D3B785]/40 lg:block"/>
+    <div className="relative aspect-[5/4] overflow-hidden border border-white/15 bg-[#37517A] sm:aspect-[4/3] lg:aspect-[3/4]">
+     <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1100&q=85" alt="Parisian street looking towards the Eiffel Tower" width={1100} height={1350} className="h-full w-full object-cover" fetchPriority="high"/>
+     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#102953]/75 via-transparent to-[#122B5C]/10"/>
+     <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between gap-3 p-5 sm:p-8">
+      <div><p className="text-[10px] font-semibold uppercase tracking-[.3em] text-white/75">A little French magic</p><p className="mt-2 font-display text-4xl italic text-white sm:text-5xl">La vie, autrement.</p></div><span className="text-[10px] tracking-widest text-white/80">48°51′N</span>
+     </div>
+    </div>
+    <div className="absolute -bottom-4 -right-2 hidden bg-[#E7D2AC] px-5 py-3 font-display text-xl italic text-[#193C70] sm:block">Paris, France ↗</div>
+   </div>
+  </div>
+ </section>
+ <div className="border-b border-[#193B72]/10 bg-[#F1EBDF] px-5 py-6 sm:px-9 lg:px-14"><div className="mx-auto flex max-w-[1328px] flex-wrap items-center justify-between gap-x-6 gap-y-3 text-[10px] font-semibold uppercase tracking-[.18em] text-[#50637E]"><span>Élégance in every step</span><span>Official sources. Human advice.</span><span>Discover · Apply · Arrive</span></div></div>
+ <section id="approach" className="mx-auto max-w-[1328px] px-5 py-20 sm:px-9 lg:px-14 lg:py-28">
+  <div className="grid gap-8 lg:grid-cols-12 lg:gap-14"><div className="lg:col-span-5"><p className="text-xs uppercase tracking-[.26em] text-[#AC9068]">01 / Notre philosophie</p><h2 className="mt-6 font-display text-[clamp(3.3rem,6vw,6.1rem)] leading-[.94] tracking-[-.05em]">A different way<br/>to <em>begin.</em></h2></div><div className="lg:col-span-7 lg:pt-12"><p className="max-w-2xl font-display text-2xl leading-relaxed text-[#2A4266] sm:text-3xl">Not just a destination. A new language, a new perspective, and a future uniquely yours.</p><p className="mt-5 max-w-2xl text-sm leading-8 text-[#596980]">Althéa brings the calm, care and structure of boutique guidance to a big international decision. We believe beautiful planning starts with accurate information and a conversation about who you want to become.</p><Link href="/france" className="mt-7 inline-flex min-h-11 items-center gap-3 border-b border-[#173969] text-[11px] font-semibold uppercase tracking-[.14em]">Explore the France guide <ArrowUpRight size={17}/></Link></div></div>
+ </section>
+ <section className="bg-[#F1EDE5] px-5 py-20 sm:px-9 lg:px-14 lg:py-24"><div className="mx-auto max-w-[1328px]"><div className="flex flex-wrap items-end justify-between gap-5"><div><p className="text-xs uppercase tracking-[.26em] text-[#AC9068]">02 / L'accompagnement</p><h2 className="mt-4 font-display text-5xl tracking-tight sm:text-6xl">Guidance, <em>reimagined.</em></h2></div><p className="max-w-sm text-sm leading-7 text-[#627187]">Practical, considered support — not overwhelming promises.</p></div><div className="mt-12 grid gap-4 lg:grid-cols-3">{services.map(s=><article key={s.no} className="group flex min-w-0 flex-col border border-[#173969]/15 bg-[#FCFAF6] p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(13,38,79,.09)] sm:p-9"><div className="flex items-start justify-between text-[#AE956D]"><span className="text-[10px] font-semibold tracking-[.2em]">{s.no} / ALTHÉA</span><s.icon size={27} strokeWidth={1.4}/></div><p className="mt-14 text-[10px] font-semibold uppercase tracking-[.24em] text-[#9A8666]">{s.subtitle}</p><h3 className="mt-3 font-display text-3xl text-[#153260] sm:text-4xl">{s.title}</h3><p className="mt-5 flex-1 text-sm leading-8 text-[#596980]">{s.body}</p><div className="mt-9 border-t border-[#173969]/15 pt-5 text-right"><ChevronRight size={18} className="ml-auto text-[#193B72]"/></div></article>)}</div></div></section>
+ <section className="mx-auto grid max-w-[1328px] gap-12 px-5 py-20 sm:px-9 lg:grid-cols-12 lg:gap-20 lg:px-14 lg:py-28"><div className="lg:col-span-5"><p className="text-xs uppercase tracking-[.27em] text-[#AC9068]">03 / Le choix</p><h2 className="mt-5 font-display text-[clamp(3.4rem,6vw,6rem)] leading-[.93] tracking-[-.04em]">A world of <em>possibility.</em></h2><p className="mt-6 max-w-md text-sm leading-8 text-[#596980]">Explore English-taught options, universities and student-friendly cities. Each directory entry leads you to its original institutional source.</p><Link href="/france/universities" className="mt-8 inline-flex min-h-12 items-center gap-3 bg-[#173969] px-7 py-3 text-[11px] font-semibold uppercase tracking-[.14em] text-white hover:bg-[#285393]">Explore universities <ArrowUpRight size={17}/></Link></div><div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">{[{name:"Paris",small:"Where ideas meet art",dark:true},{name:"Bordeaux",small:"Culture & innovation",dark:false},{name:"Grenoble",small:"At the heart of the Alps",dark:false},{name:"Beyond",small:"Discover all of France",dark:true}].map(c=><Link href="/france/universities" key={c.name} className={"group flex min-h-[210px] flex-col justify-between border p-6 transition-transform duration-300 hover:-translate-y-1 sm:min-h-[235px] sm:p-8 "+(c.dark?"border-[#173969] bg-[#173969] text-white":"border-[#173969]/15 bg-[#F0EBE2] text-[#153260]")}><span className="flex justify-between gap-3 text-[10px] uppercase tracking-[.2em] opacity-65">France / City <ArrowUpRight size={17}/></span><div><h3 className="font-display text-4xl sm:text-5xl">{c.name}</h3><p className="mt-2 text-xs opacity-70">{c.small}</p></div></Link>)}</div></section>
+ <section className="bg-[#153363] px-5 py-20 text-white sm:px-9 lg:px-14 lg:py-28"><div className="mx-auto grid max-w-[1328px] gap-14 lg:grid-cols-12"><div className="lg:col-span-5"><p className="text-xs uppercase tracking-[.26em] text-[#E2C596]">04 / Votre parcours</p><h2 className="mt-5 font-display text-5xl leading-[1] sm:text-6xl">Every great story starts with <em>one step.</em></h2><p className="mt-5 max-w-md text-sm leading-8 text-white/65">A thoughtful journey from initial research to the next chapter of your life.</p></div><div className="lg:col-span-7">{journey.map(j=><div key={j.number} className="grid grid-cols-[52px_1fr] gap-5 border-b border-white/20 py-6 first:pt-0 sm:grid-cols-[76px_1fr]"><span className="font-display text-3xl italic text-[#E2C596]">{j.number}</span><div><h3 className="font-display text-3xl sm:text-4xl">{j.title}</h3><p className="mt-2 max-w-lg text-sm leading-7 text-white/65">{j.text}</p></div></div>)}</div></div></section>
+ <section className="mx-auto grid max-w-[1328px] gap-11 px-5 py-20 sm:px-9 lg:grid-cols-12 lg:items-center lg:gap-20 lg:px-14 lg:py-28"><div className="lg:col-span-7"><p className="text-xs uppercase tracking-[.26em] text-[#AC9068]">05 / Une source de confiance</p><h2 className="mt-5 font-display text-5xl leading-[1] tracking-tight sm:text-6xl">Rooted in <em>real information.</em></h2><p className="mt-7 max-w-2xl text-sm leading-8 text-[#596980]">Our France guide draws on the official Campus France application information and links to university-managed programme catalogues. Eligibility, fees, deadlines and pathways vary — so the official source always comes first.</p><div className="mt-8 flex flex-wrap gap-3"><Link href="/france#campus-france" className="inline-flex min-h-12 items-center gap-2 bg-[#173969] px-6 py-3 text-xs font-semibold text-white hover:bg-[#31558C]">Campus France resources <ArrowUpRight size={17}/></Link><a href="https://www.inde.campusfrance.org/application-and-admission-procedure" className="inline-flex min-h-12 items-center gap-2 border border-[#173969]/25 px-6 py-3 text-xs font-semibold text-[#173969] hover:bg-[#F2EDE4]" target="_blank" rel="noopener noreferrer">Official India process <ArrowUpRight size={17}/></a></div></div><div className="border border-[#173969]/15 bg-[#F0EBE3] p-8 sm:p-12 lg:col-span-5"><Globe2 size={30} strokeWidth={1.3} className="text-[#AC9068]"/><p className="mt-9 font-display text-4xl leading-tight text-[#153260]">Know your options.<br/><em>Own your journey.</em></p><p className="mt-5 text-sm leading-8 text-[#596980]">Helpful links, clear next steps, and space to discover your own path.</p></div></section>
+ <section id="consultation" className="scroll-mt-20 bg-[#EEE7DB] px-5 py-20 sm:px-9 lg:px-14 lg:py-24"><div className="mx-auto flex max-w-[1328px] flex-col items-start justify-between gap-8 lg:flex-row lg:items-end"><div><p className="text-xs font-semibold uppercase tracking-[.28em] text-[#A88D60]">Votre avenir / Your future</p><h2 className="mt-5 max-w-4xl font-display text-[clamp(3.5rem,8vw,7.3rem)] leading-[.9] tracking-[-.05em] text-[#153260]">Let's make it <em>remarkable.</em></h2><p className="mt-6 max-w-xl text-sm leading-8 text-[#596980]">Start with a conversation about your academic background and what you want from your future in France.</p></div><a href="https://wa.me/33755749029?text=Bonjour%20Alth%C3%A9a%2C%20I%27d%20like%20to%20discuss%20studying%20in%20France." target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[54px] shrink-0 items-center justify-center gap-3 bg-[#173969] px-8 py-4 text-[11px] font-bold uppercase tracking-[.15em] text-white transition-colors hover:bg-[#31558C]">Start a conversation <ArrowUpRight size={19}/></a></div></section>
+ <AltheaFooter/>
+ </main>}
