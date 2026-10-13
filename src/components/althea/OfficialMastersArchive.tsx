@@ -6,8 +6,8 @@ import {ArrowUpRight,BookOpen,Database,Search,ChevronLeft,ChevronRight,Info,Rota
 type RecordValue=string|number|boolean|null|Record<string,unknown>|unknown[];
 type SourceRecord=Record<string,RecordValue>;
 type Result={total_count:number;results:SourceRecord[]};
-const api="https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-mon_master/records";
-const source="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-mon_master/";
+const base="https://data.enseignementsup-recherche.gouv.fr";
+
 const pageSize=24;
 
 function clean(value:RecordValue|undefined):string{
@@ -34,7 +34,11 @@ function city(r:SourceRecord):string{
 }
 function findYear(r:SourceRecord){return choose(r,["annee","annee_universitaire","session","campagne","annee_de_campagne"],/annee|session|campagne/i);}
 const inputClass="min-h-12 w-full border border-[#173969]/20 bg-white px-4 text-sm text-[#173969] outline-none focus-visible:ring-2 focus-visible:ring-[#AE9166]";
-export default function OfficialMastersArchive(){
+export default function OfficialMastersArchive({kind="masters"}:{kind?:"masters"|"undergraduate"}){
+ const undergraduate=kind==="undergraduate";
+ const dataset=undergraduate?"fr-esr-cartographie_formations_parcoursup":"fr-esr-mon_master";
+ const api=base+"/api/explore/v2.1/catalog/datasets/"+dataset+"/records";
+ const source=base+"/explore/dataset/"+dataset+"/";
  const [query,setQuery]=useState("");
  const [searched,setSearched]=useState("");
  const [page,setPage]=useState(0);
@@ -66,8 +70,8 @@ export default function OfficialMastersArchive(){
     <div className="relative grid gap-8 lg:grid-cols-12 lg:items-end">
      <div className="lg:col-span-7">
       <p className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.22em] text-[#987F5A]"><Database size={15}/> Données publiques · Public dataset</p>
-      <h2 id="master-archive-title" className="mt-5 max-w-xl font-display text-[clamp(2.5rem,5vw,4.6rem)] leading-[.95] tracking-[-.035em]">Explore real <em>Master's programme records.</em></h2>
-      <p className="mt-5 max-w-2xl text-sm leading-8 text-[#536681]">Search an open government archive of programmes included in the <strong>Mon Master 2024–2025 campaigns</strong>. These are historical records, not current intakes or an international-admissions eligibility checker.</p>
+      <h2 id="master-archive-title" className="mt-5 max-w-xl font-display text-[clamp(2.5rem,5vw,4.6rem)] leading-[.95] tracking-[-.035em]">Explore real <em>{undergraduate?"undergraduate":"Master’s"} programme records.</em></h2>
+      <p className="mt-5 max-w-2xl text-sm leading-8 text-[#536681]">Search French government open records of <strong>{undergraduate?"Parcoursup undergraduate programmes (2020–2026)":"Mon Master applications (2024–2025)"}</strong>. These records are not an international-admissions eligibility checker or proof an intake is open.</p>
      </div>
      <div className="lg:col-span-5">
       <form onSubmit={event=>{event.preventDefault();void fetchPage(query,0);}} className="flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -112,6 +116,6 @@ export default function OfficialMastersArchive(){
      <button disabled={!canNext} type="button" onClick={()=>void fetchPage(searched,page+1)} className="inline-flex min-h-12 items-center gap-2 bg-[#173969] px-5 text-xs text-white disabled:opacity-40">Next <ChevronRight size={17}/></button>
     </div>}
    </div>}
-   <div className="mt-7 flex items-start gap-3 text-xs leading-7 text-[#6B788D]"><Info size={19} className="mt-1 shrink-0 text-[#A58F6B]"/><p><strong>Not the live Campus France programme catalogue.</strong> The underlying Mon Master dataset documents 2024/2025 national application campaigns. Course names, international routes, current tuition and admission requirements must be checked separately with each institution. Source: French Ministry of Higher Education, Licence Ouverte/Open Licence. <a href={source} target="_blank" rel="noopener noreferrer" className="underline">Source & licence ↗</a></p></div>
+   <div className="mt-7 flex items-start gap-3 text-xs leading-7 text-[#6B788D]"><Info size={19} className="mt-1 shrink-0 text-[#A58F6B]"/><p><strong>Not the live Campus France programme catalogue.</strong> This {undergraduate?"Parcoursup":"Mon Master"} source documents national programme information. Course names, international routes, current tuition and admission requirements must be checked separately with each institution. Source: French Ministry of Higher Education, Licence Ouverte/Open Licence. <a href={source} target="_blank" rel="noopener noreferrer" className="underline">Source & licence ↗</a></p></div>
   </section>;
 }
