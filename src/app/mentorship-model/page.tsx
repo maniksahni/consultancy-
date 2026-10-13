@@ -1,34 +1,9 @@
-import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import { comparisonCriteria } from "@/data/editorial";
-
-export const metadata: Metadata = { title: "Mentorship Model | Pathways Global", description: "How direct mentorship changes university shortlisting, applications, visa preparation, and communication." };
-
-export default function MentorshipModelPage() {
-  return (
-    <EditorialPage eyebrow="The Mentorship Advantage" title="Mass Processing." accent="Personal Mentorship."
-      intro="See how the mentorship approach affects the decisions and work a student encounters throughout an application.">
-      <div className="border-t border-ink/15">
-        {comparisonCriteria.map((item, i) => (
-          <article key={item.factor} className="border-b border-ink/15 py-12 lg:py-16 grid lg:grid-cols-12 gap-8 lg:gap-12">
-            <div className="lg:col-span-1 font-display text-5xl text-ink/25">{String(i + 1).padStart(2, "0")}</div>
-            <div className="lg:col-span-4">
-              <h2 className="font-display text-3xl lg:text-4xl leading-tight">{item.factor}</h2>
-              <p className="mt-4 text-sm text-stone leading-relaxed">{item.detail}</p>
-            </div>
-            <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
-              <div className="border-t border-ink/15 pt-4">
-                <p className="text-[10px] uppercase tracking-widest text-stone mb-3">Mass processing</p>
-                <p className="text-sm text-stone leading-relaxed">{item.agency}</p>
-              </div>
-              <div className="border-t border-ink/40 pt-4">
-                <p className="text-[10px] uppercase tracking-widest text-ink mb-3">Pathways mentorship</p>
-                <p className="text-sm text-ink leading-relaxed">{item.pathways}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </EditorialPage>
-  );
-}
+import type {Metadata} from "next";
+import AltheaInfoPage from "@/components/althea/AltheaInfoPage";
+export const metadata:Metadata={title:"Our Approach | Althéa Consulting",description:"Personal study-in-France guidance with official university sources and clear admissions support."};
+const rows=[
+{title:"Understand your profile",description:"We start with your academic record, goals, budget and practical constraints. No university can promise an admission outcome before evaluating your application.",href:"/#consultation",label:"Request a conversation"},
+{title:"Research French programmes",description:"Study levels, disciplines, language of teaching and institution rules determine your options. Begin with our curated university directory and follow official links.",href:"/france/universities",label:"Explore universities"},
+{title:"Build an application plan",description:"Check the relevant Campus France, DAP or institution-specific application route before preparing documents, translations and personal statements.",href:"/france/campus-france",label:"Application pathways"},
+{title:"Prepare for student life",description:"Understand scholarships, housing, fees and the official student-visa process without promised outcomes or hidden assumptions.",href:"/france/resources",label:"France resource library"}];
+export default function Approach(){return <AltheaInfoPage eyebrow="Notre approche / Boutique advisory" title="A more personal" accent="way forward." intro="Thoughtful guidance starts with trustworthy information and a clear picture of your goals. Our process puts the student first." rows={rows}/>;}
