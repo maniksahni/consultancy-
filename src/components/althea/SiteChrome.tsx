@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Menu, X, Instagram, Linkedin } from "lucide-react";
+import AltheaEiffelMark from "@/components/althea/AltheaEiffelMark";
 
 const navItems = [
   { label: "The Maison", href: "/" },
@@ -32,9 +33,11 @@ export function AltheaHeader() {
   return (
     <header className="relative z-50 w-full border-b border-[#152D57]/10 bg-[#FBF9F3] text-[#142D57]">
       <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-9 lg:h-[90px] lg:px-14">
-        <Link href="/" aria-label="Althéa Consulting home" className="relative z-[60] min-w-0 shrink-0 leading-none">
-          <span className="block font-display text-[29px] tracking-[-.055em] sm:text-[33px]">Althéa<span className="ml-1.5 font-normal italic text-[#AD8B57]">.</span></span>
-          <span className="mt-1.5 block text-[9px] font-semibold uppercase tracking-[.34em] sm:text-[10px]">Consulting · France</span>
+        <Link href="/" aria-label="Althéa Consulting home" className="relative z-[60] flex min-w-0 shrink-0 items-center gap-2 leading-none sm:gap-3">
+          <span className="hidden h-12 w-9 items-center justify-center bg-[#163E9D] sm:flex"><AltheaEiffelMark className="h-10 w-7"/></span>
+          <span><span className="block font-display text-[29px] tracking-[-.055em] sm:text-[33px]">Althéa<span className="ml-1.5 font-normal italic text-[#C3A36C]">.</span></span>
+          <span className="mt-1.5 block text-[9px] font-semibold uppercase tracking-[.31em] sm:text-[10px]">Consulting · France</span></span>
+          <span aria-hidden className="ml-0.5 hidden flex-col gap-0.5 sm:flex"><span className="h-1 w-1 bg-[#173C9F]"/><span className="h-1 w-1 bg-[#F2F0E9]"/><span className="h-1 w-1 bg-[#D65251]"/></span>
         </Link>
         <nav aria-label="Primary navigation" className="hidden items-center gap-5 xl:gap-7 xl:flex">
           {navItems.map(({ label, href }) => (
