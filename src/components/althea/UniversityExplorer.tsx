@@ -1,9 +1,11 @@
 "use client";
-import {useMemo,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import {Search,MapPin,ArrowUpRight} from "lucide-react";
 import {institutions} from "@/data/franceDirectory";
 
 export default function UniversityExplorer(){
+ const [hydrated,setHydrated]=useState(false);
+ useEffect(()=>setHydrated(true),[]);
  const [q,setQ]=useState(""); const [city,setCity]=useState("All"); const [field,setField]=useState("All");
  const cities=["All",...Array.from(new Set(institutions.map(u=>u.city)))];
  const fields=["All",...Array.from(new Set(institutions.flatMap(u=>u.focus)))].sort();
@@ -13,7 +15,7 @@ export default function UniversityExplorer(){
  ),[q,city,field]);
  const clear=()=>{setQ("");setCity("All");setField("All");};
  const inputClass="min-h-12 w-full border border-[#193763]/20 bg-white px-4 text-sm text-[#16315A] outline-none focus-visible:ring-2 focus-visible:ring-[#B69C71]";
- return <section aria-label="University explorer" className="mx-auto max-w-[1328px] px-5 pb-24 sm:px-9 lg:px-14">
+ return <section data-hydrated={hydrated} aria-label="University explorer" className="mx-auto max-w-[1328px] px-5 pb-24 sm:px-9 lg:px-14">
   <div className="border border-[#193763]/15 bg-[#F8F5EF] p-5 sm:p-8">
    <div className="mb-5 flex flex-wrap items-center justify-between gap-4"><h2 className="font-display text-3xl text-[#15325E] sm:text-4xl">Find your direction.</h2><button onClick={clear} className="min-h-11 text-xs font-semibold uppercase tracking-widest text-[#315586] hover:underline" type="button">Clear all filters</button></div>
    <div className="grid gap-4 md:grid-cols-3">
