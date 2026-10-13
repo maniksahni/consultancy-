@@ -8,6 +8,7 @@ import { ArrowRight, ArrowUpRight, Menu, X, Instagram, Linkedin } from "lucide-r
 const navItems = [
   { label: "The Maison", href: "/" },
   { label: "Study in France", href: "/france" },
+  { label: "Courses", href: "/france/programmes" },
   { label: "Universities", href: "/france/universities" },
   { label: "Campus France", href: "/france/campus-france" },
   { label: "Our Approach", href: "/#approach" },
@@ -35,7 +36,7 @@ export function AltheaHeader() {
           <span className="block font-display text-[29px] tracking-[-.055em] sm:text-[33px]">Althéa<span className="ml-1.5 font-normal italic text-[#AD8B57]">.</span></span>
           <span className="mt-1.5 block text-[9px] font-semibold uppercase tracking-[.34em] sm:text-[10px]">Consulting · France</span>
         </Link>
-        <nav aria-label="Primary navigation" className="hidden items-center gap-5 xl:gap-7 lg:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-5 xl:gap-7 xl:flex">
           {navItems.map(({ label, href }) => (
             <Link key={href} href={href} className="text-[11px] font-medium uppercase tracking-[.13em] transition-colors hover:text-[#AE8A54] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B68E50]">{label}</Link>
           ))}
@@ -44,13 +45,13 @@ export function AltheaHeader() {
           <Link href="/#consultation" className="hidden min-h-11 items-center gap-2 bg-[#18356B] px-5 py-3 text-[10px] font-semibold uppercase tracking-[.17em] text-white transition-colors hover:bg-[#244A89] sm:inline-flex">
             Book a consultation <ArrowUpRight size={15} aria-hidden />
           </Link>
-          <button type="button" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="althea-mobile-navigation" className="relative z-[60] flex h-11 w-11 items-center justify-center border border-[#142D57]/20 lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#18356B]">
+          <button type="button" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="althea-mobile-navigation" className="relative z-[60] flex h-11 w-11 items-center justify-center border border-[#142D57]/20 xl:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#18356B]">
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
       {open && (
-        <nav id="althea-mobile-navigation" aria-label="Mobile navigation" className="absolute left-0 top-full z-50 max-h-[calc(100dvh-76px)] w-full overflow-auto border-t border-[#142D57]/10 bg-[#FBF9F3] px-5 pb-8 pt-5 shadow-2xl sm:px-9 lg:hidden">
+        <nav id="althea-mobile-navigation" aria-label="Mobile navigation" className="absolute left-0 top-full z-50 max-h-[calc(100dvh-76px)] w-full overflow-auto border-t border-[#142D57]/10 bg-[#FBF9F3] px-5 pb-8 pt-5 shadow-2xl sm:px-9 xl:hidden">
           {navItems.map(({ label, href }, index) => (
             <Link key={href} onClick={() => setOpen(false)} href={href} className="flex min-h-14 items-center justify-between border-b border-[#142D57]/10 py-3 font-display text-[clamp(1.5rem,6vw,2.15rem)] text-[#142D57]">
               <span>{label}</span><span className="flex items-center gap-4 text-[10px] font-sans text-[#7C7770]"><span>0{index + 1}</span><ArrowRight size={18}/></span>
@@ -76,6 +77,7 @@ export function AltheaFooter() {
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[.24em] text-[#D7BA87]">Explore</p>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france">Study in France</Link>
+            <Link className="block text-sm text-white/80 hover:text-white" href="/france/programmes">Courses</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/universities">Universities</Link>
             <Link className="block text-sm text-white/80 hover:text-white" href="/france/campus-france">Campus France guide</Link>
           </div>
