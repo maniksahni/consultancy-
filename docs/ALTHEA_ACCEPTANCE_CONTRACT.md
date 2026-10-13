@@ -48,9 +48,10 @@ Version: 2026-10-14. This document tracks the screenshots and explicit user inst
 - [x] Parisian editorial homepage, mobile-first navigation, purposeful content.
 - [x] Dedicated Study in France hub with official resource links.
 - [x] Curated 5-university source-linked finder with city/discipline filters.
+- [x] Seven official-source programme examples plus keyword/city/degree/discipline search (not full catalogue).
 - [x] Campus France guide, interactive high-level application route finder.
 - [x] Small allowlisted official-site metadata/schema candidate extractor for editorial review.
-- [x] CI configuration for 9 widths x 3 routes plus basic interaction checks.
+- [x] CI configuration for 9 widths x 4 routes, interaction checks, and mobile/desktop screenshot artifacts.
 - [ ] Full Campus France/open-data permitted programme ingestion & verified catalogue publishing.
 - [ ] Comprehensive university and programme pages with tuition/intake/eligibility records.
 - [ ] Scholarships, housing, visa, and student-facing account features beyond source links.
