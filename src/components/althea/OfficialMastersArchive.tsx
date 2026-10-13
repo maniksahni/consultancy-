@@ -24,15 +24,15 @@ function choose(r:SourceRecord,names:string[],regex?:RegExp):string{
 }
 function formatKey(key:string){return key.replaceAll("_"," ").replace(/\b\w/g,c=>c.toUpperCase());}
 function recordTitle(r:SourceRecord):string{
- return choose(r,["libelle_formation","nom_formation","mention","mention_master","libelle_mention","intitule_formation","lib_form","formation","libelle","form_lib"],/^(?!.*(code|taux|nb_|nombre|part|proportion)).*(mention|parcours|formation|intitule).*/i)||"Master programme record";
+ return choose(r,["lib_comp_voe_ins","lib_for_voe_ins","detail_forma","parcours","libelle_formation","nom_formation","mention","mention_master","libelle_mention","intitule_formation","lib_form","formation","libelle","form_lib"],/^(?!.*(code|taux|nb_|nombre|part|proportion)).*(mention|parcours|formation|intitule).*/i)||"Master programme record";
 }
 function institution(r:SourceRecord):string{
- return choose(r,["etablissement","libelle_etablissement","etablissement_lib","nom_etablissement","etab_lib","uo_lib","etab","lib_etab"],/^(?!.*(code|uai|id_|statut)).*(etablissement|universite|etab_lib).*/i)||"Institution name: inspect record";
+ return choose(r,["g_ea_lib_vx","etablissement","libelle_etablissement","etablissement_lib","nom_etablissement","etab_lib","uo_lib","etab","lib_etab"],/^(?!.*(code|uai|id_|statut)).*(etablissement|universite|etab_lib).*/i)||"Institution name: inspect record";
 }
 function city(r:SourceRecord):string{
- return choose(r,["ville","commune","com_nom","lib_commune","nom_commune"],/^(?!.*(code|insee)).*(commune|ville).*/i);
+ return choose(r,["ville_etab","lieux","ville","commune","com_nom","lib_commune","nom_commune"],/^(?!.*(code|insee)).*(commune|ville).*/i);
 }
-function findYear(r:SourceRecord){return choose(r,["annee","annee_universitaire","session","campagne","annee_de_campagne"],/annee|session|campagne/i);}
+function findYear(r:SourceRecord){return choose(r,["session","annee","annee_universitaire","campagne","annee_de_campagne"],/annee|session|campagne/i);}
 const inputClass="min-h-12 w-full border border-[#173969]/20 bg-white px-4 text-sm text-[#173969] outline-none focus-visible:ring-2 focus-visible:ring-[#AE9166]";
 export default function OfficialMastersArchive({kind="masters"}:{kind?:"masters"|"undergraduate"}){
  const undergraduate=kind==="undergraduate";
