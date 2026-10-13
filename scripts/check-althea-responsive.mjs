@@ -55,6 +55,13 @@ try {
      await page.getByRole("button",{name:"Browse records"}).click();
      try { await page.getByRole("heading",{name:"Computer Science Master"}).waitFor({timeout:6000}); }
      catch { failures.push("Official Master archive mock integration failed at 390px"); }
+     await page.route("https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-cartographie_formations_parcoursup/records*", async route => {
+      await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({total_count:1,results:[{lib_for_voe_ins:"BUT - Information communication",g_ea_lib_vx:"IUT de Paris",ville_etab:"Paris",session:"2026"}]})});
+     });
+     await page.getByRole("tab",{name:/Bachelor.s-level programme data/}).click();
+     await page.getByRole("button",{name:"Browse records"}).click();
+     try { await page.getByRole("heading",{name:"BUT - Information communication"}).waitFor({timeout:6000}); }
+     catch { failures.push("Official Parcoursup undergraduate archive mock integration failed at 390px"); }
     }
     if (route === "/france/institutions" && width === 390) {
      await page.route("https://data.enseignementsup-recherche.gouv.fr/api/**", route => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ total_count: 2, results: [{etablissement_id_paysage:"a",uo_lib:"Université Demo A",com_nom:"Paris",reg_nom:"Île-de-France",type_d_etablissement:["Université"],url:"https://example.com",secteur_d_etablissement:"public"},{etablissement_id_paysage:"b",uo_lib:"Université Demo B",com_nom:"Lyon",reg_nom:"Auvergne",type_d_etablissement:["Université"],url:"https://example.com",secteur_d_etablissement:"public"}]}) }));
