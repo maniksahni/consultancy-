@@ -3,7 +3,7 @@ import { mkdir } from "node:fs/promises";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:3000";
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440];
-const routes = ["/", "/france", "/france/universities"];
+const routes = ["/", "/france", "/france/universities", "/france/programmes"];
 const failures = [];
 await mkdir("artifacts/qa", { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -33,6 +33,13 @@ try {
      if (await cards.count() < 5) failures.push(`University directory at ${width}px: fewer than 5 entries`);
      await page.getByRole("searchbox").fill("Sorbonne");
      if (await cards.count() !== 1) failures.push(`University search at ${width}px did not filter to Sorbonne`);
+     await page.getByRole("searchbox").fill("");
+    }
+    if (route === "/france/programmes") {
+     const cards = page.locator("article");
+     if (await cards.count() < 7) failures.push(`Programme directory at ${width}px: fewer than 7 examples`);
+     await page.getByRole("searchbox").fill("Physics");
+     if (await cards.count() !== 1) failures.push(`Programme search at ${width}px did not filter to Physics`);
      await page.getByRole("searchbox").fill("");
     }
     if (route === "/" && width < 1024) {
