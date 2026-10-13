@@ -32,14 +32,14 @@ try {
      const cards = page.locator("article");
      if (await cards.count() < 5) failures.push(`University directory at ${width}px: fewer than 5 entries`);
      await page.getByRole("searchbox").fill("Sorbonne");
-     if (await cards.count() !== 1) failures.push(`University search at ${width}px did not filter to Sorbonne`);
+     try { await page.waitForFunction(() => document.querySelectorAll("article").length === 1, null, { timeout: 5000 }); } catch { failures.push(`University search at ${width}px did not filter to Sorbonne`); }
      await page.getByRole("searchbox").fill("");
     }
     if (route === "/france/programmes") {
      const cards = page.locator("article");
      if (await cards.count() < 7) failures.push(`Programme directory at ${width}px: fewer than 7 examples`);
      await page.getByRole("searchbox").fill("Physics");
-     if (await cards.count() !== 1) failures.push(`Programme search at ${width}px did not filter to Physics`);
+     try { await page.waitForFunction(() => document.querySelectorAll("article").length === 1, null, { timeout: 5000 }); } catch { failures.push(`Programme search at ${width}px did not filter to Physics`); }
      await page.getByRole("searchbox").fill("");
     }
     if (route === "/" && width < 1024) {
