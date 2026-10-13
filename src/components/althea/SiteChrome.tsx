@@ -65,7 +65,7 @@ export function AltheaHeader() {
 
 export function AltheaFooter() {
   return (
-    <footer className="bg-[#102B58] px-5 py-14 text-[#F9F6F0] sm:px-9 lg:px-14 lg:py-20">
+    <footer id="footer" className="bg-[#102B58] px-5 py-14 text-[#F9F6F0] sm:px-9 lg:px-14 lg:py-20">
       <div className="mx-auto grid max-w-[1328px] grid-cols-1 gap-12 border-b border-white/20 pb-12 md:grid-cols-12">
         <div className="md:col-span-6">
           <div className="font-display text-5xl tracking-tight sm:text-6xl">Althéa<span className="text-[#D7BA87]">.</span></div>
