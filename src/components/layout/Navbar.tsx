@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 const links = [
   ["Home", "/"],
-  ["Discovery", "/#destinations", "Directory", "/universities"],
+  ["Discovery", "/#destinations", "Directory", "/#destinations"],
   ["Settle in France", "/settle-in-france"],
   ["Study in France", "/study-in-france"],
   ["Career Support", "/career-support"],
