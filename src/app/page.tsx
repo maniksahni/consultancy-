@@ -4,26 +4,24 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight, Compass, GraduationCap, MapPin, MoveUpRight, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Reveal from "@/components/althea/Reveal";
 import FAQ from "@/components/althea/FAQ";
 import Booking from "@/components/althea/Booking";
 
 export const metadata = pageMetadata("/", {
-  title: "A considered beginning in France",
+  title: "Your France story, thoughtfully guided",
   description: "Independent, personal guidance for studying, settling and building a career in France. Meet Paris-based adviser Harshita Kohli and find a thoughtful next step.",
 });
 
 const pathways = [
-  { number: "01", name: "Study in France", note: "Programmes · applications · preparation", text: "Find your bearings in the French education system, compare programmes and build an application plan around your own goals.", href: "/study-in-france", image: "/images/editorial/sainte-genevieve.webp", alt: "The reading room of the Bibliothèque Sainte-Geneviève in Paris", icon: GraduationCap },
-  { number: "02", name: "Settle in France", note: "Arrival · everyday life · confidence", text: "Make the transition feel more manageable, with thoughtful orientation for the practical questions that come with a new home.", href: "/settle-in-france", image: "/images/editorial/france-bordeaux.webp", alt: "The historic Place de la Bourse in Bordeaux beside the Garonne", icon: MapPin },
-  { number: "03", name: "Build your career", note: "Positioning · applications · practice", text: "Shape a considered next move with practical support for your CV, professional profile, interviews and job search.", href: "/career-support", image: "/images/editorial/notre-dame.webp", alt: "The west façade of Notre-Dame de Paris", icon: Compass },
+  { number: "01", name: "Study in France", note: "For the next step in your education", text: "Make sense of programmes, applications and preparation with guidance shaped around your own goals.", href: "/study-in-france", image: "/images/editorial/sainte-genevieve.webp", alt: "The reading room of the Bibliothèque Sainte-Geneviève in Paris", icon: GraduationCap, mark: "LEARN" },
+  { number: "02", name: "Settle in France", note: "For finding your feet in a new place", text: "Think through arrival, practical questions and the everyday details that help a new home feel more familiar.", href: "/settle-in-france", image: "/images/editorial/france-bordeaux.webp", alt: "The historic Place de la Bourse in Bordeaux beside the Garonne", icon: MapPin, mark: "ARRIVE" },
+  { number: "03", name: "Build your career", note: "For the work you want to do next", text: "Bring focus to your CV, professional profile, interviews and the next steps in your job search.", href: "/career-support", image: "/images/editorial/notre-dame.webp", alt: "The west façade of Notre-Dame de Paris", icon: Compass, mark: "GROW" },
 ];
 
 const steps = [
-  ["Begin with your story", "We start with where you are: your experience, priorities, questions and the possibilities you are considering."],
-  ["Make sense of the options", "Explore the choices that fit your circumstances. We can help you see the details to compare and the questions to ask."],
-  ["Prepare with intention", "Turn decisions into practical next steps, with guidance on documents, applications and the conversations ahead."],
-  ["Find your footing", "Keep the wider picture in view as plans take shape—from preparing to leave to navigating the first questions in France."],
+  ["Listen, then find the real question", "We begin with your experience, priorities and the decisions in front of you. No assumptions about what your journey should look like."],
+  ["Make the choices easier to see", "We sort through the options that fit your circumstances and identify what needs checking with official sources or institutions."],
+  ["Agree a practical next step", "If working together feels right, we clarify the scope and fee before any support begins. You stay in charge of each decision."],
 ];
 
 export default function Home() {
@@ -34,67 +32,68 @@ export default function Home() {
         <Image className="home-cover-image" src="/images/editorial/france-evening-20261014.webp" alt="Paris at blue hour, with the Eiffel Tower illuminated beyond the Seine" fill priority sizes="100vw" />
         <div className="home-cover-veil" />
         <div className="home-cover-frame">
-          <p className="home-overline"><span /> INDEPENDENT GUIDANCE · FRANCE</p>
-          <h1 id="home-title">A future in<br /><em>France.</em></h1>
-          <p className="home-cover-intro">A more considered way to study, settle and find your next chapter—guided by someone who knows France as home.</p>
+          <p className="home-overline"><span /> AN INDEPENDENT FRANCE ADVISORY <i>—</i> PARIS</p>
+          <h1 id="home-title">Your France<br /><em>story,</em> your way.</h1>
+          <p className="home-cover-intro">A considered beginning for the life you’re building in France. Independent, one-to-one guidance for study, a new home and the work ahead.</p>
           <div className="home-cover-actions">
-            <Link className="home-button home-button-gold" href="/book-consultation">Begin a conversation <ArrowUpRight size={17} /></Link>
-            <a className="home-text-link home-cover-explore" href="#welcome">Discover Althéa <ArrowDown size={15} /></a>
+            <Link className="home-button home-button-gold" href="/book-consultation">Begin with a conversation <ArrowUpRight size={17} /></Link>
+            <a className="home-text-link home-cover-explore" href="#welcome">Enter the journal <ArrowDown size={15} /></a>
           </div>
         </div>
-        <div className="home-cover-index"><span>48°51′ N&nbsp; 2°21′ E</span><span>AN INDEPENDENT FRANCE ADVISORY</span></div>
-        <a className="home-scroll-cue" href="#welcome" aria-label="Scroll to discover"><span>SCROLL TO DISCOVER</span><i /></a>
+        <div className="home-cover-index"><span>48°51′ N&nbsp; 2°21′ E</span><span>FRANCE, WITH A PERSON TO ASK</span></div>
+        <a className="home-scroll-cue" href="#welcome" aria-label="Continue to the next chapter"><span>THE FIRST CHAPTER</span><i /></a>
+        <div className="home-cover-seal" aria-hidden="true"><span>ALTHÉA</span><i>✳</i><small>FRANCE · EST. WITH CARE</small></div>
       </section>
 
       <section className="home-welcome home-wrap" id="welcome">
-        <Reveal><p className="home-eyebrow">A MORE PERSONAL WAY FORWARD <span>—</span> ALTHÉA CONSULTING</p>
-          <div className="home-welcome-grid"><h2>Big decisions<br />deserve <em>room to breathe.</em></h2>
-            <div className="home-welcome-copy"><p>Moving towards a life in France is made up of many decisions: what to study, where to begin, how to prepare, and what comes after arrival.</p><p>Althéa offers independent, one-to-one guidance for the journey—thoughtful support shaped around the person making it.</p><Link className="home-underlink" href="/about">Meet your adviser <ArrowUpRight size={16} /></Link></div>
-          </div>
-        </Reveal>
-        <div className="home-ornament" aria-hidden="true"><span>✳</span></div>
+        <p className="home-eyebrow">01 &nbsp; A PLACE TO BEGIN <span>—</span> ALTHÉA CONSULTING</p>
+        <div className="home-welcome-grid"><h2>Big decisions<br />need <em>clear space.</em></h2>
+          <div className="home-welcome-copy"><p>Studying, settling or building a career in France can begin with one question—and quickly become a dozen more.</p><p>From Paris, Harshita offers independent, personal guidance to help you understand your options and decide what comes next, at your own pace.</p><Link className="home-underlink" href="/about">A note from your adviser <ArrowUpRight size={16} /></Link></div>
+        </div>
+        <div className="home-ornament" aria-hidden="true"><span>✳</span><i /></div>
       </section>
 
       <section className="home-pathways" aria-labelledby="pathways-title">
         <div className="home-wrap">
-          <Reveal><div className="home-section-head"><div><p className="home-eyebrow">THREE WAYS TO FIND YOUR WAY</p><h2 id="pathways-title">France, <em>in your own way.</em></h2></div><p>Start with the question on your mind today. We’ll help you see how it connects to the bigger picture.</p></div></Reveal>
-          <div className="home-path-grid">{pathways.map(({ number, name, note, text, href, image, alt, icon: Icon }) => <Reveal key={number}><article className="home-path-card">
-            <Link href={href} className="home-path-image" aria-label={`Explore ${name}`}><Image src={image} alt={alt} fill sizes="(max-width: 760px) 90vw, 30vw" /><span className="home-path-number">{number}</span><span className="home-path-arrow"><MoveUpRight size={18} /></span></Link>
-            <div className="home-path-copy"><p className="home-eyebrow"><Icon size={14} /> {note}</p><h3>{name}</h3><p>{text}</p><Link className="home-underlink" href={href}>Explore this path <ArrowUpRight size={15} /></Link></div>
-          </article></Reveal>)}</div>
+          <div className="home-section-head"><div><p className="home-eyebrow">02 &nbsp; CHOOSE YOUR CHAPTER</p><h2 id="pathways-title">Where will your<br /><em>story lead?</em></h2></div><p>Start with the question that’s closest today. Each path leads to more detail and a practical way to begin.</p></div>
+          <div className="home-path-list">{pathways.map(({ number, name, note, text, href, image, alt, icon: Icon, mark }) => <article key={number} className="home-path-card">
+            <Link href={href} className="home-path-image" aria-label={`Explore ${name}`}><Image src={image} alt={alt} fill sizes="(max-width: 760px) 90vw, 45vw" /><span className="home-path-number">{number} / {mark}</span><span className="home-path-arrow"><MoveUpRight size={18} /></span></Link>
+            <div className="home-path-copy"><p className="home-eyebrow"><Icon size={14} /> {note}</p><h3>{name}</h3><p>{text}</p><Link className="home-underlink" href={href}>Explore this chapter <ArrowUpRight size={15} /></Link></div>
+          </article>)}</div>
         </div>
       </section>
 
-      <section className="home-interlude" aria-label="A thoughtful journey">
-        <Image src="/images/editorial/france-campus.webp" alt="An architectural detail of a historic university in France" fill sizes="100vw" />
+      <section className="home-interlude" aria-label="A personal perspective from Paris">
+        <Image src="/images/editorial/france-campus.webp" alt="Architectural detail of a historic university in France" fill sizes="100vw" />
         <div className="home-interlude-shade" />
-        <Reveal><p className="home-eyebrow">THOUGHTFUL, STEP BY STEP</p><p className="home-interlude-quote">“The right next step<br />begins with <em>understanding you.”</em></p><span>PERSONAL GUIDANCE · PARIS, FRANCE</span></Reveal>
+        <div className="home-interlude-copy"><p className="home-eyebrow">A VIEW FROM THE OTHER SIDE OF THE MOVE</p><p className="home-interlude-quote">A new country is made of<br />big plans <em>and small details.</em></p><span>PERSONAL GUIDANCE · PARIS, FRANCE</span></div>
+        <span className="home-photo-caption">A MOMENT BETWEEN CHAPTERS <i>—</i> FRANCE</span>
       </section>
 
       <section className="home-journey home-wrap" aria-labelledby="journey-title">
-        <Reveal><div className="home-section-head home-journey-heading"><div><p className="home-eyebrow">FROM FIRST QUESTIONS TO NEW BEGINNINGS</p><h2 id="journey-title">Clarity for the<br /><em>road ahead.</em></h2></div><p>Every journey is different. Here’s a sense of how personal guidance can make a complex move feel more navigable.</p></div></Reveal>
-        <div className="home-steps">{steps.map(([title, text], index) => <Reveal key={title}><article className="home-step"><span className="home-step-no">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><span className="home-step-mark" aria-hidden="true">✳</span></article></Reveal>)}</div>
-        <p className="home-note">Guidance is tailored to your situation. Official requirements, admissions decisions and immigration outcomes remain with the relevant institutions and authorities.</p>
+        <div className="home-journey-heading"><div><p className="home-eyebrow">03 &nbsp; A THOUGHTFUL WAY OF WORKING</p><h2 id="journey-title">No one-size-fits-all.<br /><em>A clear next step.</em></h2></div><p>First, a conversation. Then a shared understanding of what you need—and whether personal guidance is the right fit.</p></div>
+        <div className="home-steps">{steps.map(([title, text], index) => <article key={title} className="home-step"><span className="home-step-no">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><span className="home-step-mark" aria-hidden="true">✳</span></article>)}</div>
+        <p className="home-note">Althéa is an independent advisory, not a university or government representative. Admissions, scholarships, visas and official requirements are decided by the relevant institutions and authorities.</p>
       </section>
 
       <section className="home-adviser">
-        <div className="home-adviser-photo"><Image src="/images/editorial/notre-dame.webp" alt="A Parisian streetscape in the historic heart of the city" fill sizes="(max-width: 760px) 100vw, 50vw" /><span>PARIS, FRANCE <i>·</i> A PLACE TO BEGIN</span></div>
-        <Reveal><div className="home-adviser-copy"><p className="home-eyebrow">A LOCAL PERSPECTIVE, A PERSONAL CONVERSATION</p><h2>Meet Harshita.<br /><em>Your guide in France.</em></h2><p>Based in Paris, Harshita Kohli brings a personal perspective to the questions that come with studying, settling and building a future in France.</p><p>Start with a conversation about what matters to you. Together, you can explore the right questions and a practical direction for what comes next.</p><Link href="/about" className="home-underlink">A little more about Harshita <ArrowUpRight size={16} /></Link></div></Reveal>
+        <div className="home-adviser-photo"><Image src="/images/editorial/notre-dame.webp" alt="A Parisian streetscape in the historic heart of the city" fill sizes="(max-width: 760px) 100vw, 50vw" /><span>PARIS, FRANCE <i>·</i> WHERE HARSHITA CALLS HOME</span><div className="home-photo-stamp" aria-hidden="true">A local<br /><em>perspective</em></div></div>
+        <div className="home-adviser-copy"><p className="home-eyebrow">04 &nbsp; THE PERSON BEHIND THE GUIDANCE</p><h2>Meet Harshita.<br /><em>Begin with a person.</em></h2><p>Harshita Kohli is a France-based career coach and former international student. She understands the move from both sides: as someone who has made it, and as someone who now helps others think it through.</p><p>Her approach begins by listening, then making the options, scope and next steps clear before you decide how to proceed.</p><Link href="/about" className="home-underlink">Get to know Harshita <ArrowUpRight size={16} /></Link></div>
       </section>
 
       <section className="home-guidance home-wrap">
-        <Reveal><div className="home-guidance-top"><p className="home-eyebrow">USEFUL TO KNOW</p><p>Make informed decisions with official sources, a clear picture of your options and the right questions in hand.</p></div>
-          <div className="home-guidance-panel"><div><span className="home-guidance-spark">✳</span><p className="home-eyebrow">YOUR FRANCE FIELD NOTES</p><h2>A thoughtful start<br />is a <em>strong start.</em></h2><p>Explore practical guides to French programmes, the application journey, arrival and life in France—all in one place.</p><Link className="home-button home-button-navy" href="/knowledge">Explore the guides <ArrowUpRight size={16} /></Link></div><div className="home-guidance-links"><Link href="/study-in-france"><span>01</span><strong>Study in France</strong><ArrowUpRight size={16} /></Link><Link href="/settle-in-france"><span>02</span><strong>Life and arrival</strong><ArrowUpRight size={16} /></Link><Link href="/career-support"><span>03</span><strong>Career support</strong><ArrowUpRight size={16} /></Link><Link href="/first-30-days-france"><span>04</span><strong>Your first 30 days</strong><ArrowUpRight size={16} /></Link></div></div>
-        </Reveal>
+        <div className="home-guidance-top"><p className="home-eyebrow">05 &nbsp; YOUR FIELD NOTES</p><p>Useful context for the questions ahead. For current rules and decisions, always follow the relevant official source.</p></div>
+        <div className="home-guidance-panel"><div><span className="home-guidance-spark">✳</span><p className="home-eyebrow">A SMALL LIBRARY FOR A BIG MOVE</p><h2>Know the terrain.<br /><em>Choose your pace.</em></h2><p>Explore practical guides to French programmes, applications, arrival and everyday life in France.</p><Link className="home-button home-button-navy" href="/knowledge">Explore the guides <ArrowUpRight size={16} /></Link></div><div className="home-guidance-links"><Link href="/study-in-france"><span>01</span><strong>Study in France</strong><ArrowUpRight size={16} /></Link><Link href="/settle-in-france"><span>02</span><strong>Life and arrival</strong><ArrowUpRight size={16} /></Link><Link href="/career-support"><span>03</span><strong>Career support</strong><ArrowUpRight size={16} /></Link><Link href="/first-30-days-france"><span>04</span><strong>Your first 30 days</strong><ArrowUpRight size={16} /></Link></div></div>
+        <div className="home-official"><span>THE OFFICIAL WORD</span><p>For current application routes, arrival checklists and visa information, consult <a href="https://www.campusfrance.org/en/application-etudes-en-france-procedure?lang=en" target="_blank" rel="noreferrer">Campus France ↗</a> and <a href="https://france-visas.gouv.fr/en/" target="_blank" rel="noreferrer">France-Visas ↗</a>.</p></div>
       </section>
 
       <section className="home-faq home-wrap" aria-labelledby="home-faq-title">
-        <Reveal><div className="home-faq-heading"><div><p className="home-eyebrow">A FEW GOOD QUESTIONS</p><h2 id="home-faq-title">Before we <em>begin.</em></h2><p>A little clarity can make the first conversation easier.</p></div><Link className="home-underlink" href="/faq">More answers <ArrowUpRight size={16} /></Link></div><div className="home-faq-list"><FAQ /></div></Reveal>
+        <div className="home-faq-heading"><div><p className="home-eyebrow">06 &nbsp; A FEW GOOD QUESTIONS</p><h2 id="home-faq-title">Before we <em>begin.</em></h2><p>A little clarity can make the first conversation easier.</p></div><Link className="home-underlink" href="/faq">More answers <ArrowUpRight size={16} /></Link></div><div className="home-faq-list"><FAQ /></div>
       </section>
 
       <section className="home-contact" id="begin">
-        <div className="home-contact-copy"><p className="home-eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h2>Let’s make the<br /><em>first step yours.</em></h2><p>Share a little about what you’re considering. We’ll start with your questions and explore whether personal guidance feels right for you.</p><div className="home-contact-aside"><Sparkles size={15} /><span>Thoughtful, personal guidance. No pressure to decide on a service.</span></div></div>
-        <div className="home-contact-form"><Booking defaultCountry="France" /></div>
+        <div className="home-contact-copy"><p className="home-eyebrow">07 &nbsp; WHEN YOU’RE READY</p><h2>One question<br />can begin a <em>lot.</em></h2><p>Tell us a little about the France story you’re considering. We’ll begin there and see whether personal guidance feels right.</p><div className="home-contact-aside"><Sparkles size={15} /><span>First, understand your situation. Agree scope and fee before any work begins.</span></div></div>
+        <div className="home-contact-form"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><Booking defaultCountry="France" /></div>
       </section>
     </main>
     <Footer />
