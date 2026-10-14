@@ -200,7 +200,7 @@ for row in uk_tables["COURSELOCATION.csv"]:
     key = (row.get("PUBUKPRN"), row.get("UKPRN"), row.get("KISCOURSEID"), row.get("KISMODE"))
     uk_course_locations.setdefault(key, []).append(row.get("LOCID", ""))
 
-uk_course_source = "HESA / Discover Uni dataset · 2026/27 · CC BY 4.0"
+uk_course_source = "HESA / Discover Uni 2026 dataset · 2027–28 courses · CC BY 4.0"
 uk_course_seen = set()
 for row in uk_tables["KISCOURSE.csv"]:
     published_provider_id = row.get("PUBUKPRN", "").strip()
@@ -311,7 +311,7 @@ coverage = {
         "canada": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue.",
         "usa": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included.",
         "australia": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13).",
-        "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} current eligible undergraduate course/location records from HESA Discover Uni 2026/27; tuition is not included.",
+        "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included.",
         "germany": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities.",
         "ireland": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers.",
 }
