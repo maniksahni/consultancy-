@@ -8,14 +8,14 @@
       "coverage": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition."
     },
     "uk": {
-      "institutionCount": 755,
-      "courseCount": 0,
-      "coverage": "Current Student-route sponsor register; includes providers licensed to sponsor international students, not a course/fee catalogue."
+      "institutionCount": 1052,
+      "courseCount": 32533,
+      "coverage": "Current Student-route sponsor register plus 32,533 eligible undergraduate course/location records from HESA Discover Uni 2026/27; tuition is not included."
     },
     "usa": {
       "institutionCount": 4059,
-      "courseCount": 0,
-      "coverage": "IPEDS degree-granting institution directory (2024); tuition and programmes are not included in this snapshot."
+      "courseCount": 211486,
+      "coverage": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included."
     },
     "canada": {
       "institutionCount": 1424,

@@ -1,6 +1,6 @@
 """Refresh selected official country registries for the in-site directory.
 
-This collects institution-level records and the Australian CRICOS course export.
+This collects institution-level records plus publicly reusable country course/programme datasets.
 It deliberately does not invent tuition, admission or housing values absent from
 the source. Run with: python3 scripts/data/refresh-global-registries.py
 """
@@ -108,6 +108,34 @@ for row in csv_rows(hd_zip.read(hd_name)):
         "sourceDate": "2024",
     })
 
+# United States: College Scorecard's latest public field-of-study file. These
+# institution/CIP/credential rows describe federal award-history records, not
+# each institution's current admissions catalogue or official course title.
+scorecard_url = "https://ed-public-download.scorecard.network/downloads/Most-Recent-Cohorts-Field-of-Study_06102026.zip"
+scorecard_zip = zipfile.ZipFile(io.BytesIO(download(scorecard_url)))
+scorecard_csv = next(name for name in scorecard_zip.namelist() if name.lower().endswith(".csv"))
+scorecard_reader = csv.DictReader(io.TextIOWrapper(scorecard_zip.open(scorecard_csv), encoding="utf-8-sig", newline=""))
+us_institutions = {item["identifier"]: item for item in institutions if item["country"] == "usa"}
+us_source = "U.S. Department of Education · College Scorecard field-of-study file · updated 2026-06-10"
+seen_us_programmes = set()
+for row in scorecard_reader:
+    unitid, cip, credential = (row.get("UNITID", "").strip(), row.get("CIPCODE", "").strip(), row.get("CREDLEV", "").strip())
+    programme_name = row.get("CIPDESC", "").strip()
+    institution = us_institutions.get(unitid)
+    if not (unitid and cip and credential and programme_name and institution):
+        continue
+    record_id = f"us-programme-{unitid}-{cip}-{credential}"
+    if record_id in seen_us_programmes:
+        continue
+    seen_us_programmes.add(record_id)
+    courses.append({
+        "id": record_id, "country": "usa", "institutionId": institution["id"],
+        "institution": row.get("INSTNM") or institution["name"], "name": programme_name,
+        "city": institution.get("city"), "level": row.get("CREDDESC"),
+        "subject": f"CIP {cip}", "language": None, "tuition": None, "currency": "USD",
+        "registrySource": us_source, "sourceDate": "2026-06-10",
+    })
+
 # United Kingdom: current Home Office student-sponsor register. It is a
 # visa-sponsor list (including schools/providers), not a course catalogue.
 uk_page = download("https://www.gov.uk/government/publications/register-of-licensed-sponsors-students").decode("utf-8", errors="replace")
@@ -117,17 +145,82 @@ if not uk_match:
 uk_url = uk_match.group(1).replace("&amp;", "&")
 uk_page_date = re.search(r"Updated\s+on\s+([0-9]{1,2}\s+[A-Za-z]+\s+[0-9]{4})", uk_page)
 uk_date = uk_page_date.group(1) if uk_page_date else TODAY
+uk_institutions = {}
 for index, row in enumerate(csv_rows(download(uk_url))):
     if row.get("Route", "").strip() != "Student":
         continue
-    institutions.append({
+    sponsor = {
         "id": "uk-" + str(index) + "-" + re.sub(r"[^a-z0-9]+", "-", row.get("Sponsor Name", "").lower()).strip("-"),
         "country": "uk", "name": row.get("Sponsor Name"), "city": row.get("Town/City"),
         "campus": row.get("Additional Locations"), "institutionType": row.get("Sponsor Type"),
         "sponsorStatus": row.get("Status"),
         "registrySource": "UK Home Office · Register of licensed student sponsors",
         "sourceDate": uk_date,
-    })
+    }
+    institutions.append(sponsor)
+
+# The HESA / Discover Uni dataset is an openly licensed, current catalogue of
+# eligible undergraduate courses. HESA exposes the current dated archive here.
+uk_discover_url = "https://unistatsdatasetdownloadfunction.azurewebsites.net/api/UnistatsDatasetDownload"
+uk_discover_zip = zipfile.ZipFile(io.BytesIO(download(uk_discover_url)))
+uk_discover_root = next(name.split("/")[0] for name in uk_discover_zip.namelist() if name.endswith("/KISCOURSE.csv"))
+uk_discover_date = re.match(r"on_(\d{4}_\d{2}_\d{2})", uk_discover_root).group(1).replace("_", "-")
+uk_tables = {}
+for table in ("INSTITUTION.csv", "LOCATION.csv", "KISCOURSE.csv", "COURSELOCATION.csv", "KISAIM.csv"):
+    name = f"{uk_discover_root}/{table}"
+    uk_tables[table] = list(csv.DictReader(io.TextIOWrapper(uk_discover_zip.open(name), encoding="utf-8-sig")))
+
+def uk_norm(value):
+    return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
+
+uk_names = {uk_norm(item.get("name")): item for item in institutions if item.get("country") == "uk"}
+for row in uk_tables["INSTITUTION.csv"]:
+    provider_id = row.get("PUBUKPRN", "").strip()
+    if not provider_id:
+        continue
+    provider_name = (row.get("FIRST_TRADING_NAME") or row.get("LEGAL_NAME") or "").strip()
+    institution = uk_names.get(uk_norm(provider_name))
+    if institution is None:
+        institution = {
+            "id": "uk-ukprn-" + provider_id, "country": "uk", "name": provider_name,
+            "city": (row.get("PROVADDRESS", "").split(",")[-2:-1] or [""])[0].strip(),
+            "institutionType": "Discover Uni reporting provider", "sponsorStatus": "Not matched to sponsor register",
+        }
+        institutions.append(institution)
+        uk_names[uk_norm(provider_name)] = institution
+    institution["identifier"] = provider_id
+    uk_institutions[provider_id] = institution
+
+uk_locations = {row.get("LOCID", ""): row for row in uk_tables["LOCATION.csv"]}
+uk_aims = {row.get("KISAIMCODE", ""): row.get("KISAIMLABEL", "") for row in uk_tables["KISAIM.csv"]}
+uk_course_locations = {}
+for row in uk_tables["COURSELOCATION.csv"]:
+    key = (row.get("PUBUKPRN"), row.get("KISCOURSEID"), row.get("KISMODE"))
+    uk_course_locations.setdefault(key, []).append(row.get("LOCID", ""))
+
+uk_course_source = "HESA / Discover Uni dataset · 2026/27 · CC BY 4.0"
+uk_course_seen = set()
+for row in uk_tables["KISCOURSE.csv"]:
+    provider_id = row.get("PUBUKPRN", "").strip()
+    institution = uk_institutions.get(provider_id)
+    if not institution:
+        continue
+    key = (provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""))
+    location_ids = uk_course_locations.get(key) or [""]
+    for location_id in location_ids:
+        location = uk_locations.get(location_id, {})
+        city = location.get("LOCNAME", "").strip() or institution.get("city")
+        record_id = "uk-course-" + "-".join((provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""), location_id))
+        if record_id in uk_course_seen:
+            continue
+        uk_course_seen.add(record_id)
+        courses.append({
+            "id": record_id, "country": "uk", "institutionId": institution["id"],
+            "institution": institution.get("name", ""), "name": row.get("TITLE", "").strip(),
+            "city": city, "level": "Undergraduate", "subject": uk_aims.get(row.get("KISAIMCODE", "")) or "Undergraduate study",
+            "language": "English", "tuition": None, "currency": "GBP",
+            "registrySource": uk_course_source, "sourceDate": uk_discover_date,
+        })
 
 # Ireland: institutions listed by the Higher Education Authority (publicly
 # funded/core-funded HEIs); not all QQI-validated private providers.
@@ -213,9 +306,9 @@ for row in csv_rows(download(course_csv)):
 coverage = {
         "france": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition.",
         "canada": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue.",
-        "usa": "IPEDS degree-granting institution directory (2024); tuition and programmes are not included in this snapshot.",
+        "usa": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included.",
         "australia": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13).",
-        "uk": "Current Student-route sponsor register; includes providers licensed to sponsor international students, not a course/fee catalogue.",
+        "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} current eligible undergraduate course/location records from HESA Discover Uni 2026/27; tuition is not included.",
         "germany": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities.",
         "ireland": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers.",
 }
@@ -228,8 +321,18 @@ for country in country_slugs:
     (OUT_DIR / f"{country}.json").write_text(json.dumps({
         "country": country, "refreshedAt": TODAY, "institutions": country_institutions,
     }, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    course_sources = sorted({item.get("registrySource") for item in country_courses if item.get("registrySource")})
+    course_dates = sorted({item.get("sourceDate") for item in country_courses if item.get("sourceDate")})
+    compact_courses = [
+        {key: value for key, value in item.items() if key not in ("registrySource", "sourceDate")}
+        if len(course_sources) == 1 and len(course_dates) == 1 else item
+        for item in country_courses
+    ]
     (OUT_DIR / f"{country}-courses.json").write_text(json.dumps({
-        "country": country, "refreshedAt": TODAY, "courses": country_courses,
+        "country": country, "refreshedAt": TODAY,
+        "courseSource": course_sources[0] if len(course_sources) == 1 else None,
+        "courseSourceDate": course_dates[0] if len(course_dates) == 1 else None,
+        "courses": compact_courses,
     }, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     manifest["countries"][country] = {
         "institutionCount": len(country_institutions), "courseCount": len(country_courses),

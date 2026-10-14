@@ -16,11 +16,11 @@ type RegistryCourse = {
   id: string; institutionId: string; institution: string; name: string; city?: string;
   level?: string; subject?: string; language?: string; durationWeeks?: string;
   tuition: number | null; currency: string | null; nonTuitionFee?: string;
-  estimatedTotalCost?: string; sourceDate?: string;
+  estimatedTotalCost?: string; sourceDate?: string; registrySource?: string;
 };
 type CountryRegistry = {
   institutions: RegistryInstitution[]; courses: RegistryCourse[]; refreshedAt: string;
-  institutionsLoaded: boolean; coursesLoaded: boolean;
+  institutionsLoaded: boolean; coursesLoaded: boolean; courseSource?: string; courseSourceDate?: string;
 };
 type RegistryManifest = { refreshedAt: string; countries: Record<string, { institutionCount: number; courseCount: number; coverage: string }> };
 
@@ -89,6 +89,8 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
           institutions: data.institutions || old[country]?.institutions || [],
           courses: data.courses || old[country]?.courses || [],
           refreshedAt: data.refreshedAt || old[country]?.refreshedAt || "",
+          courseSource: data.courseSource || old[country]?.courseSource,
+          courseSourceDate: data.courseSourceDate || old[country]?.courseSourceDate,
           institutionsLoaded: data.institutions !== undefined || old[country]?.institutionsLoaded || false,
           coursesLoaded: data.courses !== undefined || old[country]?.coursesLoaded || false,
         },
@@ -207,12 +209,12 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
           <h3>{r.name}</h3><p>{r.institution}</p>
           <p className="course-result-fee"><strong>{r.tuition === null ? "Fee not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published tuition</span>}</p>
           <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
-            <div><dt>Published tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : "Parcoursup 2026 catalogue; fees not included in source"}</small></dd></div>
+            <div><dt>Published tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : country === "france" ? "Parcoursup 2026 catalogue; fees not included in source" : country === "uk" ? "Discover Uni course catalogue; tuition not included in this record" : country === "usa" ? "College Scorecard historical award fields; programme tuition not included" : "Tuition not included in this record"}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}
             {r.language && <div><dt>Language</dt><dd>{r.language}</dd></div>}
-          </dl><p className="muted">Registry evidence: {country === "australia" ? "Australian Government CRICOS course export" : "French Ministry of Higher Education · Parcoursup 2026 open-data catalogue"}. This listing does not include accommodation availability or every individual admission condition.</p></details>
+          </dl><p className="muted">Registry evidence: {r.registrySource || directory.courseSource || (country === "australia" ? "Australian Government CRICOS course export" : "French Ministry of Higher Education · Parcoursup 2026 open-data catalogue")}{r.sourceDate || directory.courseSourceDate ? ` · snapshot ${r.sourceDate || directory.courseSourceDate}` : ""}. This listing does not include accommodation availability or every individual admission condition.</p></details>
         </article>)}</div> : <p className="snapshot-note">This official institution registry does not provide a line-by-line course and fee catalogue. The reviewed programme records above are the course-level information currently available in this site; no external search link is shown.</p>}
         {pageCount > 1 && <nav className="research-actions" aria-label="Directory pages" style={{ justifyContent: "center", marginTop: 28 }}><button className="text-button" disabled={page === 0} onClick={() => setPage(page - 1)}>← Previous</button><span>Page {page + 1} of {pageCount}</span><button className="text-button" disabled={page + 1 >= pageCount} onClick={() => setPage(page + 1)}>Next →</button></nav>}
       </>}
