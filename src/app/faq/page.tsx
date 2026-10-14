@@ -4,14 +4,15 @@ import Page from "@/components/althea/Page";
 import FAQ from "@/components/althea/FAQ";
 import { official } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/faq', {
-  title: 'Study in France FAQ: Admissions, Language & Consultation',
-  description: "Clear answers before your first step.",
+  title: 'France Arrival, Career & Study Support FAQ',
+  description: "Clear answers about practical France support, career guidance and independent study admissions preparation.",
 });
 export default function Content() {
   return (
     <Page
-      title={"A few good questions."}
-      intro={"Clear answers before your first step."}
+      eyebrow="SETTLING · CAREER · STUDY"
+      title={"Clear answers before your next step."}
+      intro={"What Althéa can help with, what remains with official providers, and how support works."}
     >
       <FAQ />
       <div className="prose">

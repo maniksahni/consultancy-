@@ -13,7 +13,7 @@ export default function ReviewsPage() {
     <Page
       eyebrow="LES VOIX DU VOYAGE"
       title="A journey worth sharing."
-      intro="The moments that matter: finding clarity, feeling heard, and knowing your next step."
+      intro="Explore the kind of support across arrival, career and admissions. Each stage is clearly marked; examples are illustrative until client-approved reviews are available."
     >
       <div className="review-page-note">
         <p className="eyebrow">ABOUT THIS COLLECTION</p>

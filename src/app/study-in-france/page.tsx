@@ -1,22 +1,32 @@
 import { pageMetadata } from "@/lib/seo";
+import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import KnowledgeHub from "@/components/althea/KnowledgeHub";
 import Link from "next/link";
 import { official, checked, cities } from "@/data/france";
+import { ArrowUpRight, Check } from "lucide-react";
 export const metadata: Metadata = pageMetadata('/study-in-france', {
-  title: 'Study in France: Universities, Costs & Applications',
+  title: 'Study in France: Independent Admissions Guidance',
   description:
-    "Bring your academic ambitions and everyday life into the same plan.",
+    `Independent programme and application guidance for France, with practical pre-departure planning from ${brand.shortName}.`,
 });
 export default function Content() {
   return (
     <Page
-      title={"Your French chapter."}
+      eyebrow="INDEPENDENT ADMISSIONS GUIDANCE"
+      title={"Study in France, with a plan."}
       intro={
-        "Bring your academic ambitions and everyday life into the same plan."
+        "Explore the right education pathway, prepare a thoughtful application and plan for the transition to life in France."
       }
     >
+      <section className="study-services"><div><p className="eyebrow">A CLEARER APPLICATION JOURNEY</p><h2>Make each decision<br/><em>with purpose.</em></h2><p>Independent guidance, with partner-supported application assistance where appropriate. We help you navigate the process; institutions make admissions decisions.</p></div><div className="study-service-list">{[
+        "Choose programmes aligned with your goals and experience",
+        "Understand French education pathways and official application routes",
+        "Review application documents, CV and statement of purpose",
+        "Prepare for interviews and organise application materials",
+        "Plan pre-departure steps and practical arrival questions",
+      ].map(x=><p key={x}><Check size={16}/>{x}</p>)}<Link className="button" href="/book-consultation">Discuss your study plan <ArrowUpRight size={17}/></Link></div></section>
       <KnowledgeHub country="france" />
       <div className="content-grid">
         {[
@@ -44,6 +54,10 @@ export default function Content() {
         ))}
       </div>
       <div className="prose">
+        <h2>Your support does not end at the offer letter</h2>
+        <p>Once you have an offer, arrival brings its own practical questions. Plan your transition with our <Link href="/settle-in-france">Settle in France support</Link>.</p>
+        <h2>Independent guidance, clearly scoped</h2>
+        <p>Althéa is not a university representative. Any partner-supported application assistance is described before work begins; admission, scholarships and visas are decided by the relevant institutions and authorities and cannot be guaranteed.</p>
         <h2>Your official starting points</h2>
         <p>
           <a href={official.catalogue}>Campus France programme resources ↗</a>

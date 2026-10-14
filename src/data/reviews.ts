@@ -1,27 +1,30 @@
 // Design examples only. Replace with client-approved reviews and attribution.
 export const sampleReviews = [
   {
-    id: "direction",
-    topic: "Finding direction",
+    id: "arrival",
+    stage: "Arrival",
+    topic: "First steps in France",
     quote:
       "I came in with a hundred questions. I left with a clearer picture of what to explore, what to prepare, and where to begin.",
-    detail: "Programme research & first consultation",
-    takeaway: "From overwhelmed to organised.",
+    detail: "Arrival essentials & practical orientation · sample only",
+    takeaway: "A clearer first step after arrival.",
   },
   {
-    id: "application",
-    topic: "Preparing an application",
+    id: "career",
+    stage: "Career",
+    topic: "Preparing for work in France",
     quote:
-      "What I appreciated most was the personal attention. The conversation helped me put my ambitions into words and approach my application with more purpose.",
-    detail: "Application planning & document review",
-    takeaway: "A story that feels like your own.",
+      "We focused on how to explain my experience, what roles to explore, and how to prepare for the conversations ahead.",
+    detail: "CV feedback & career planning · sample only",
+    takeaway: "A practical plan for the next move.",
   },
   {
-    id: "arrival",
-    topic: "Thinking beyond admission",
+    id: "admissions",
+    stage: "Admissions",
+    topic: "Planning a study application",
     quote:
       "We talked about the everyday details too — the city, the budget, and life after arriving. That made the next chapter feel much easier to imagine.",
-    detail: "Budget conversations & arrival planning",
+    detail: "Programme research & application preparation · sample only",
     takeaway: "A plan for the life beyond the offer.",
   },
 ];

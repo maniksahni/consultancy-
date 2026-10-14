@@ -15,7 +15,7 @@ export default function AboutPage() {
       image="/images/editorial/france-campus.webp"
       eyebrow="L’ESPRIT DE LA MAISON"
       title="A world of ambition. A very personal maison."
-      intro="Parisian at heart. Open to the world. Built around the person behind every application."
+      intro="France-based, shaped by lived experience and focused on the practical realities of studying, settling and building a career here."
     >
       <section className="maison-story">
         <div className="story-photo">
@@ -63,14 +63,16 @@ export default function AboutPage() {
         <div>
           <p className="letter-opening">A personal beginning.</p>
           <p>
-            {brand.person} is {brand.shortName}’s {brand.role}, based in
-            Paris. Your first conversation makes space for your academic
-            background, career ambitions and the practical questions that come
-            with choosing a new country.
+            I’m {brand.person}—France-based career coach and former
+            international student, helping you navigate the realities of life
+            and career in France. I know that arriving is the beginning of a
+            new set of practical questions, not the end of the journey.
           </p>
           <p>
-            We begin by listening. Then we discuss the options, the research and
-            the scope of support that makes sense for your plans.
+            We begin by listening. Then we agree the practical next steps, the
+            scope of support and the fee before we start. For study applications,
+            I offer independent guidance and partner-supported application
+            assistance where appropriate; I do not represent a university.
           </p>
           <Link className="button" href="/book-consultation">
             Let’s talk about your next chapter <span>↗</span>

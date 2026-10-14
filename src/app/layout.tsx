@@ -1,4 +1,5 @@
 import JsonLd from "@/components/seo/JsonLd";
+import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
@@ -54,13 +55,14 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <FloatingWhatsApp />
         <JsonLd data={{
           "@context": "https://schema.org",
           "@graph": [
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
               name: brand.name, alternateName: brand.shortName, url: siteUrl,
               logo: `${siteUrl}${brand.assets.logo}`,
-              description: "Independent study abroad advisory with a specialist focus on France, based in Paris.",
+              description: "France-based practical support for settling, student life and career readiness, with independent study guidance.",
               founder: { "@id": `${siteUrl}/#adviser` } },
             { "@type": "Person", "@id": `${siteUrl}/#adviser`, name: brand.person,
               jobTitle: brand.role, url: `${siteUrl}/about`,

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
 
 const WHATSAPP_URL =
-  `https://wa.me/${brand.whatsappNumber}?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20my%20study%20abroad%20profile%201-on-1.`;
+  `https://wa.me/${brand.whatsappNumber}?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20settling%2C%20studying%20or%20building%20my%20career%20in%20France.`;
 
 export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);

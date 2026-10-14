@@ -2,324 +2,80 @@ import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, MoveDown } from "lucide-react";
+import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import DestinationAtlas from "@/components/althea/DestinationAtlas";
-import ChapterConcierge from "@/components/althea/ChapterConcierge";
-import Testimonials from "@/components/althea/Testimonials";
 import FAQ from "@/components/althea/FAQ";
-import { articles } from "@/data/france";
 
-export const metadata = pageMetadata("/", { title: "Study in France: Programme & Admissions Guidance", description: "Independent study abroad guidance from Althéa Consulting in Paris. Explore French programmes, applications and arrival planning with Harshita Kohli." });
+export const metadata = pageMetadata("/", {
+  title: "Settle, Study & Build Your Career in France",
+  description: "Practical, France-based support for international students and young professionals—from arrival essentials to career readiness, with independent study guidance too.",
+});
 
-const support = [
-  {
-    n: "01",
-    title: "The possibility",
-    accent: "Study.",
-    text: "Find the subject, the programme and the place that reflect your ambition.",
-    href: "/france/programmes",
-    tag: "ACADEMIC DIRECTION & PROGRAMME RESEARCH",
-  },
-  {
-    n: "02",
-    title: "The preparation",
-    accent: "Settle.",
-    text: "Turn big questions into practical next steps, from applications to arrival.",
-    href: "/services",
-    tag: "APPLICATION SUPPORT & ARRIVAL PLANNING",
-  },
-  {
-    n: "03",
-    title: "The bigger picture",
-    accent: "Succeed.",
-    text: "Think beyond the offer. Build a plan for the life and career you want next.",
-    href: "/about",
-    tag: "PERSONAL CONVERSATIONS & CAREER DIRECTION",
-  },
+const arrivalOffers = [
+  { number: "01", title: "France Arrival Essentials", text: "Make sense of your first steps: SIM options, bank-account preparation, transport and the everyday systems you’ll meet.", tag: "ARRIVAL · EVERYDAY LIFE" },
+  { number: "02", title: "Student Life Setup", text: "Get oriented with accommodation-search preparation, CAF information, insurance, paperwork and a local-life checklist.", tag: "STUDENT LIFE · ORIENTATION" },
+  { number: "03", title: "Career Launch in France", text: "Shape a French-style CV and LinkedIn profile, plan your search and prepare for interviews, internships and alternance.", tag: "CAREER · JOB SEARCH" },
+  { number: "04", title: "Business French for Work", text: "Build practical language confidence for university, administration and professional conversations.", tag: "FRENCH · COMMUNICATION" },
 ];
+
 export default function Home() {
-  return (
-    <>
-      <Navbar />
-      <main id="main-content" className="edition-home">
-        <section className="edition-hero wrap">
-          <div className="edition-topline">
-            <span>LA MAISON DU NOUVEAU DÉPART</span>
-            <span>{brand.location} · INDEPENDENT GUIDANCE</span>
-            <span>EST. IN AMBITION</span>
+  return <>
+    <Navbar />
+    <main id="main-content" className="positioned-home">
+      <section className="position-hero wrap">
+        <div className="position-hero-copy">
+          <p className="eyebrow">FRANCE-BASED · PERSON-TO-PERSON SUPPORT</p>
+          <h1>Your trusted guide for studying, settling, and succeeding in France.</h1>
+          <p className="position-lead">Practical support for international students and young professionals—from arrival essentials to career readiness.</p>
+          <div className="position-actions">
+            <Link className="button" href="/settle-in-france">Get Settling Support <ArrowUpRight size={18} /></Link>
+            <Link className="button button-outline" href="/study-in-france">Explore Study in France <ArrowUpRight size={18} /></Link>
           </div>
-          <div className="edition-cover">
-            <div className="edition-cover-copy">
-              <p className="eyebrow">BIENVENUE · STUDY. SETTLE. SUCCEED.</p>
-              <h1>
-                Votre avenir.
-                <br />
-                <em>A future in France.</em>
-              </h1>
-              <p>
-                Independent study abroad guidance from Paris. Plan your studies in France with programme research, application support and arrival planning.
-              </p>
-              <Link href="/book-consultation" className="button">
-                Start your next chapter{" "}
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-              <a className="cover-explore" href="#the-world">
-                THE WORLD IS WAITING <MoveDown size={15} aria-hidden="true" />
-              </a>
-            </div>
-            <div className="edition-cover-art">
-              <div className="cover-picture">
-                <Image
-                  src="/images/editorial/france-evening.webp"
-                  alt="The Eiffel Tower and Pont Alexandre III at blue hour on the Seine in Paris"
-                  fill
-                  priority
-                  sizes="(max-width:760px) 90vw, 55vw"
-                />
-                <span className="cover-image-label">
-                  01 / EIFFEL TOWER · PONT ALEXANDRE III
-                </span>
-              </div>
-              <div className="hero-image-caption">
-                <span>PARIS · 48°51′ N, 2°21′ E</span>
-                <a
-                  href="https://commons.wikimedia.org/wiki/File:Eiffel_Tower_and_Pont_Alexandre_III_at_night.jpg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  PHOTO: GETFUNKY PARIS · CC BY 2.0 ↗
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="edition-colophon">
-            <span>INDEPENDENT GUIDANCE</span>
-            <span>FRANCE FIRST</span>
-            <span>ONE VERY PERSONAL JOURNEY</span>
-          </div>
-        </section>
-        <section className="edition-manifesto wrap" id="bienvenue">
-          <p className="eyebrow">01 / OUR PERSPECTIVE</p>
-          <div>
-            <h2>
-              You’re not just choosing
-              <br />a university.
-              <br />
-              <em>You’re choosing a life.</em>
-            </h2>
-            <div className="manifesto-bottom">
-              <p>
-                A subject that excites you. A city that feels like possibility.
-                A future you can see yourself in. We connect the academic
-                choices with the human ones.
-              </p>
-              <Link
-                href="/about"
-                className="circle-link"
-                aria-label={`Get to know ${brand.shortName}`}
-              >
-                <ArrowUpRight size={30} />
-                <span>MEET THE MAISON</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-        <section className="edition-world" id="the-world">
-          <div className="wrap">
-            <div className="edition-section-heading">
-              <div>
-                <p className="eyebrow">02 / FRANCE & OTHER DESTINATIONS</p>
-                <h2>
-                  France, first.
-                  <br />
-                  <em>The world, next.</em>
-                </h2>
-              </div>
-              <Link className="text-link" href="/destinations">
-                Open the destination atlas <ArrowUpRight size={16} />
-              </Link>
-            </div>
-            <DestinationAtlas compact />
-          </div>
-        </section>
-        <section className="edition-support wrap">
-          <div className="edition-section-heading">
-            <div>
-              <p className="eyebrow">03 / LE PARCOURS</p>
-              <h2>
-                Big dreams.
-                <br />
-                <em>Considered steps.</em>
-              </h2>
-            </div>
-            <p>
-              Thoughtful support.
-              <br />
-              At the turning points that matter.
-            </p>
-          </div>
-          <div className="support-ledger">
-            {support.map((s) => (
-              <Link href={s.href} key={s.n}>
-                <span className="ledger-number">{s.n}</span>
-                <div className="ledger-title">
-                  <span>{s.title}</span>
-                  <h3>{s.accent}</h3>
-                </div>
-                <div className="ledger-detail">
-                  <p>{s.text}</p>
-                  <span>{s.tag}</span>
-                </div>
-                <ArrowUpRight size={30} strokeWidth={1.2} aria-hidden="true" />
-              </Link>
-            ))}
-          </div>
-        </section>
-        <section className="edition-interlude">
-          <Image
-            src="/images/editorial/notre-dame.webp"
-            alt="The west façade of Notre-Dame Cathedral on Île de la Cité in Paris"
-            fill
-            sizes="100vw"
-          />
-          <div className="interlude-shade" />
-          <div className="wrap">
-            <span className="eyebrow">
-              ROOTED IN FRANCE. OPEN TO THE WORLD.
-            </span>
-            <h2>
-              A Parisian heart.
-              <br />
-              <em>A boundless ambition.</em>
-            </h2>
-            <Link href="/study-in-france">
-              DISCOVER OUR FRENCH CHAPTER <ArrowUpRight size={22} />
-            </Link>
-          </div>
-          <span className="interlude-coordinate">NOTRE-DAME · ÎLE DE LA CITÉ · PARIS</span>
-        </section>
-        <section className="edition-adviser wrap">
-          <div className="adviser-editorial-note">
-            <span className="eyebrow">04 / THE PERSON BEHIND THE PLAN</span>
-            <span className="editorial-asterisk" aria-hidden="true">
-              ✳
-            </span>
-            <span>{brand.location}</span>
-          </div>
-          <div className="edition-adviser-copy">
-            <h2>
-              A human conversation.
-              <br />
-              <em>A whole new perspective.</em>
-            </h2>
-            <p>
-              Meet {brand.person}, {brand.role}. Begin with your
-              questions, your ambitions, and the details that make your journey
-              yours.
-            </p>
-            <div className="adviser-signoff">
-              <span>
-                {brand.person}<small>{brand.role}</small>
-              </span>
-              <Link className="text-link" href="/book-consultation">
-                Let’s talk <ArrowUpRight size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-        <ChapterConcierge />
-        <Testimonials />
-        <section className="edition-library wrap">
-          <div className="edition-section-heading">
-            <div>
-              <p className="eyebrow">05 / THE READING ROOM</p>
-              <h2>
-                A little knowledge.
-                <br />
-                <em>A lot more clarity.</em>
-              </h2>
-            </div>
-            <Link className="text-link" href="/knowledge">
-              Enter the knowledge hub <ArrowUpRight size={16} />
-            </Link>
-          </div>
-          <div className="reading-room">
-            <Link className="reading-feature" href="/france/universities">
-              <span className="eyebrow">THE FRANCE COLLECTION</span>
-              <span className="reading-flower" aria-hidden="true">
-                ✳
-              </span>
-              <h3>
-                Find a place
-                <br />
-                for your
-                <br />
-                <em>curiosity.</em>
-              </h3>
-              <span>
-                UNIVERSITIES & PROGRAMMES <ArrowUpRight size={21} />
-              </span>
-            </Link>
-            <div className="reading-stories">
-              {articles.map((a, i) => (
-                <Link key={a.slug} href={`/insights/${a.slug}`}>
-                  <span className="eyebrow">
-                    0{i + 1} / {a.category}
-                  </span>
-                  <h3>{a.title}</h3>
-                  <span>
-                    READ THE GUIDE <ArrowUpRight size={18} />
-                  </span>
-                </Link>
-              ))}
-              <Link className="reading-source" href="/campus-france-guide">
-                Campus France: understand your application path{" "}
-                <ArrowUpRight size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-        <section className="wrap section faq-section">
-          <div>
-            <p className="eyebrow">06 / BEFORE YOU BEGIN</p>
-            <h2>
-              Good questions.
-              <br />
-              <em>Clearer beginnings.</em>
-            </h2>
-            <Link className="text-link" href="/faq">
-              More answers ↗
-            </Link>
-          </div>
-          <FAQ />
-        </section>
-        <section className="edition-finale">
-          <div className="wrap">
-            <p className="eyebrow">EVERY GREAT JOURNEY BEGINS SOMEWHERE.</p>
-            <h2>
-              Make the
-              <br />
-              <em>first move.</em>
-            </h2>
-            <div>
-              <p>
-                Your world is waiting.
-                <br />
-                Let’s find your way into it.
-              </p>
-              <Link className="button" href="/book-consultation">
-                Begin with a conversation <ArrowUpRight size={18} />
-              </Link>
-            </div>
-            <span className="finale-flower" aria-hidden="true">
-              ✳
-            </span>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </>
-  );
+          <div className="position-proof"><span>BASED IN {brand.location.toUpperCase()}</span><span>INDEPENDENT GUIDANCE</span><span>SUPPORT THROUGH THE NEXT STEPS</span></div>
+        </div>
+        <div className="position-hero-image">
+          <Image src="/images/editorial/france-evening.webp" alt="Paris at blue hour, a city many international students make their new home" fill priority sizes="(max-width:760px) 92vw, 47vw" />
+          <span>YOUR NEXT CHAPTER · FRANCE</span>
+        </div>
+      </section>
+
+      <section className="position-intro wrap">
+        <p className="eyebrow">ARRIVAL IS A BEGINNING</p>
+        <div><h2>You made it to France.<br/><em>Now let’s make it work for you.</em></h2><p>From the first practical questions to your next career move, get clear guidance shaped by lived experience and local understanding.</p></div>
+      </section>
+
+      <section className="position-offers wrap" id="settling-support">
+        <div className="position-heading"><div><p className="eyebrow">01 / SETTLE IN FRANCE</p><h2>Real life here.<br/><em>Made easier to navigate.</em></h2></div><Link className="text-link" href="/settle-in-france">Explore all settling support <ArrowUpRight size={17}/></Link></div>
+        <div className="position-offer-grid">
+          {arrivalOffers.map((offer) => <article className="position-offer" key={offer.number}>
+            <span className="position-number">{offer.number}</span><p className="eyebrow">{offer.tag}</p><h3>{offer.title}</h3><p>{offer.text}</p><Link href="/settle-in-france" aria-label={`Explore ${offer.title}`}>Explore this support <ArrowUpRight size={16}/></Link>
+          </article>)}
+        </div>
+        <div className="position-boundary"><Check size={18}/><p>Support means guidance, preparation, checklists and referrals where appropriate. We don’t provide legal or immigration advice, arrange banking or guarantee housing.</p></div>
+      </section>
+
+      <section className="position-checklist">
+        <div className="wrap position-checklist-inner"><div><p className="eyebrow">A FREE, PRACTICAL RESOURCE</p><h2>Your first 30 days<br/><em>in France, with a plan.</em></h2><p>Use the arrival checklist to keep first steps, documents and useful follow-ups in one place.</p><Link className="button light" href="/first-30-days-france">Get the free checklist <ArrowUpRight size={18}/></Link></div><div className="checklist-preview" aria-label="Checklist preview"><span>FIRST 30 DAYS · FRANCE</span>{["Arrival essentials", "Student setup", "Everyday systems", "Career foundations"].map(x=><p key={x}><Check size={17}/>{x}</p>)}<span>YOUR OWN PACE · YOUR NEXT STEP</span></div></div>
+      </section>
+
+      <section className="position-founder wrap">
+        <div className="position-founder-image"><Image src="/images/editorial/notre-dame.webp" alt="Notre-Dame and the Seine in Paris" fill sizes="(max-width:760px) 90vw, 38vw"/></div>
+        <div><p className="eyebrow">02 / LOCAL EXPERIENCE, PERSONAL SUPPORT</p><h2>Meet Harshita.<br/><em>Your France-based guide.</em></h2><p>I’m Harshita Kohli—France-based career coach and former international student, helping you navigate the realities of life and career in France.</p><p>Bring the question you’re facing. We’ll make a practical plan, agree the scope and fee, and identify your next steps together.</p><div className="position-founder-actions"><Link className="text-link" href="/about">About Harshita <ArrowUpRight size={17}/></Link><Link className="button" href="/book-consultation">Book a Call <ArrowUpRight size={17}/></Link></div></div>
+      </section>
+
+      <section className="position-career">
+        <div className="wrap position-career-inner"><div><p className="eyebrow">03 / CAREER SUPPORT</p><h2>Build a career<br/><em>that fits France.</em></h2></div><div><p>French-style CV and LinkedIn guidance, internship and alternance preparation, interview practice and a search strategy that reflects your goals.</p><Link className="button light" href="/career-support">Explore career support <ArrowUpRight size={18}/></Link></div></div>
+      </section>
+
+      <section className="position-study wrap">
+        <div><p className="eyebrow">04 / STUDY IN FRANCE</p><h2>Independent admissions guidance.<br/><em>Practical from the start.</em></h2><p>Explore education pathways and programmes, review your application materials and prepare for the move. Your support does not end when you receive an offer letter.</p></div>
+        <div className="position-study-list">{["Programme choices aligned with your goals", "French education pathways & application routes", "CV, SOP and interview preparation", "Pre-departure planning and arrival transition"].map((item)=><p key={item}><Check size={17}/>{item}</p>)}<Link className="text-link" href="/study-in-france">Explore Study in France <ArrowUpRight size={17}/></Link></div>
+      </section>
+
+      <section className="position-faq wrap"><div><p className="eyebrow">GOOD TO KNOW</p><h2>Clear support.<br/><em>Honest boundaries.</em></h2><Link className="text-link" href="/faq">All frequently asked questions <ArrowUpRight size={17}/></Link></div><FAQ/></section>
+      <section className="position-final"><div className="wrap"><p className="eyebrow">YOU DON’T HAVE TO FIGURE IT ALL OUT ALONE</p><h2>Tell us what’s next.<br/><em>We’ll find a first step.</em></h2><div><Link className="button light" href="/book-consultation">Book a Call <ArrowUpRight size={18}/></Link><a className="position-whatsapp" href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/> WhatsApp Harshita</a></div></div></section>
+    </main>
+    <Footer />
+  </>;
 }

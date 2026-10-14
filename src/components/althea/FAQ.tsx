@@ -23,11 +23,6 @@ export default function FAQ() {
           </h3>
           <div id={`faq-${i}`} hidden={open !== i}>
             <p>{a}</p>
-            {i === 0 && (
-              <a href="https://www.inde.campusfrance.org/">
-                Visit Campus France India ↗
-              </a>
-            )}
           </div>
         </div>
       ))}

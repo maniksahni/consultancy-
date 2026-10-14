@@ -41,19 +41,17 @@ export default function Footer() {
         </div>
         <div>
           <span className="eyebrow">EXPLORE</span>
-          <Link href="/destinations">The destination atlas</Link>
+          <Link href="/settle-in-france">Settle in France</Link>
           <Link href="/study-in-france">Study in France</Link>
-          <Link href="/programmes">Programme fees & deadlines</Link>
-          <Link href="/france/universities">French universities</Link>
-          <Link href="/knowledge">October 2026 knowledge hub</Link>
-          <Link href="/campus-france-guide">Campus France guide</Link>
-          <Link href="/about">Our maison</Link>
-          <Link href="/reviews">The review collection</Link>
+          <Link href="/career-support">Career Support</Link>
+          <Link href="/about">About Harshita</Link>
+          <Link href="/knowledge">Resources & guides</Link>
+          <Link href="/first-30-days-france">Free arrival checklist</Link>
         </div>
         <div>
           <span className="eyebrow">YOUR NEXT STEP</span>
-          <Link href="/book-consultation">Request a consultation ↗</Link>
-          <Link href="/services">Explore support</Link>
+          <Link href="/book-consultation">Book a Call ↗</Link>
+          <Link href="/services">All support</Link>
           <details>
             <summary>Other study destinations</summary>
             {["uk", "usa", "canada", "germany", "australia", "ireland"].map(

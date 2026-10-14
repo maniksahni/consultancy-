@@ -3,14 +3,12 @@ import { brand } from "@/config/brand";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 const links = [
-
-  ["France", "/study-in-france"],
-  ["Universities", "/france/universities"],
-  ["Courses", "/france/programmes"],
-  ["Services", "/services"],
-  ["About", "/about"],
-  ["Reviews", "/reviews"],
-  ["Knowledge", "/knowledge"],
+  ["Home", "/"],
+  ["Settle in France", "/settle-in-france"],
+  ["Study in France", "/study-in-france"],
+  ["Career Support", "/career-support"],
+  ["About Harshita", "/about"],
+  ["Resources", "/knowledge"],
 ];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -47,7 +45,7 @@ export default function Navbar() {
           href="/book-consultation"
           onClick={() => setOpen(false)}
         >
-          Book Consultation <span>↗</span>
+          Book a Call <span>↗</span>
         </Link>
       </nav>
     </header>

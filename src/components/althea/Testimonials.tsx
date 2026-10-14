@@ -46,7 +46,7 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
           <div className="voice-card" key={review.id}>
             <div className="voice-card-top">
               <span className="sample-badge">Sample review</span>
-              <span className="voice-topic">{review.topic}</span>
+              <span className="voice-topic">{review.stage} · {review.topic}</span>
             </div>
             <Quote
               className="voice-quote-icon"
@@ -101,10 +101,10 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
           {sampleReviews.map((r, i) => (
             <article key={r.id}>
               <span className="eyebrow">
-                0{i + 1} / {r.topic}
+                0{i + 1} / {r.stage} · {r.topic}
               </span>
               <h3>{r.takeaway}</h3>
-              <p>Sample review · Illustrative content</p>
+              <p>{r.stage} journey · Sample only, not a client testimonial</p>
             </article>
           ))}
         </div>

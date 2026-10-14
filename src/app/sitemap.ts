@@ -9,6 +9,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "study-in-france",
+    "settle-in-france",
+    "career-support",
+    "first-30-days-france",
     "destinations",
     "knowledge",
     "france/institutions",
