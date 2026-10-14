@@ -198,7 +198,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   }
 
     return <section className="university-explorer" aria-label="University and student cost explorer">
-    <p className="snapshot-note">Search the country directories and reviewed course records inside this site. Registry coverage and data dates are stated for each country. A registry listing confirms the source&rsquo;s record; it does not mean every course, fee or room is included.</p>
+    {country === "all" && <p className="snapshot-note">Search the country directories and reviewed course records inside this site. Registry coverage and data dates are stated for each country. A registry listing confirms the source&rsquo;s record; it does not mean every course, fee or room is included.</p>}
     <div className="snapshot-filters">
       <label>Country<select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}><option value="all">All seven countries</option>{destinations.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}</select></label>
       {country !== "all" && <label>Find by name, subject, city or ID<input type="search" value={query} onChange={(e) => { setQuery(e.target.value); setPage(0); }} placeholder="Search this directory" /></label>}
@@ -220,6 +220,8 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       })}</div>
     </>}
 
+    {country !== "all" && <div className="directory-layout">
+    <aside className="directory-sidebar" aria-label="Country costs and directory information">
     {selected && <details className="directory-extra-info" style={{ margin: "18px 0" }}>
       <summary>Living costs, accommodation &amp; budget guide</summary>
       <article className="content-card" style={{ margin: "18px 0" }}>
@@ -235,8 +237,12 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
     </details>}
 
     {country !== "all" && <>
-      {manifest?.countries[country] && <p className="snapshot-note"><strong>Data scope:</strong> {manifest.countries[country].coverage} Snapshot retrieved {directory?.refreshedAt || manifest.refreshedAt}.</p>}
-      {curated.length > 0 && <details className="directory-extra-info reviewed-programmes" style={{ margin: "18px 0" }}><summary>Reviewed programme guides ({curated.length})</summary><section className="knowledge-grid" style={{ margin: "18px 0" }} aria-label="Reviewed programme records">{curated.map((p) => <article key={p.slug}><p className="eyebrow">{p.level} · {p.city} · {p.duration}</p><h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3><p>{p.institution}</p><p><strong>{publishedMoney(p)}</strong> · {p.fee.period} · {p.fee.year}</p><p>{p.requirements}</p><p className="muted">Published fee category: {p.fee.category}. Application timing: {p.deadline.label} ({p.deadline.status}).</p><Link className="text-link" href={`/programmes/${p.slug}`}>Full in-site record →</Link></article>)}</section></details>}
+      {manifest?.countries[country] && <details className="directory-extra-info directory-scope-card" style={{ margin: "18px 0" }}><summary><span>Directory coverage</span><small>{(manifest.countries[country].courseCount || 0).toLocaleString("en-IN")} course records · {(manifest.countries[country].uniqueInstitutionCount ?? manifest.countries[country].institutionCount).toLocaleString("en-IN")} institutions</small></summary><p><strong>Data scope:</strong> {manifest.countries[country].coverage} Snapshot retrieved {directory?.refreshedAt || manifest.refreshedAt}.</p></details>}
+      {curated.length > 0 && <details className="directory-extra-info reviewed-programmes" style={{ margin: "18px 0" }}><summary><span>Reviewed programme guides</span><small>{curated.length} guides</small></summary><section className="knowledge-grid" style={{ margin: "18px 0" }} aria-label="Reviewed programme records">{curated.map((p) => <article key={p.slug}><p className="eyebrow">{p.level} · {p.city} · {p.duration}</p><h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3><p>{p.institution}</p><p><strong>{publishedMoney(p)}</strong> · {p.fee.period} · {p.fee.year}</p><p>{p.requirements}</p><p className="muted">Published fee category: {p.fee.category}. Application timing: {p.deadline.label} ({p.deadline.status}).</p><Link className="text-link" href={`/programmes/${p.slug}`}>Full in-site record →</Link></article>)}</section></details>}
+    </>}
+    </aside>
+    <main className="directory-primary">
+    {country !== "all" && <>
 
       {directory && <>
         <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : country === "usa" ? "historical field/credential records" : country === "uk" ? "course/location records" : "course records"}{query || (kind === "courses" && (courseCategoryFilter !== "all" || courseInstitutionFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit)) ? " matching your filters" : ""}</p></div>
@@ -287,5 +293,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       {directory && kind === "institutions" && !filteredInstitutions.length && <p className="snapshot-note">No institution records match this search.</p>}
       {directory && kind === "courses" && directory.coursesLoaded && !filteredCourses.length && <p className="snapshot-note">No registry course records match this search.</p>}
     </>}
+    </main>
+    </div>}
   </section>;
 }
