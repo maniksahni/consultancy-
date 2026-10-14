@@ -22,15 +22,15 @@
     },
     "canada": {
       "institutionCount": 1424,
-      "courseCount": 0,
+      "courseCount": 22,
       "uniqueInstitutionCount": 1096,
-      "coverage": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue."
+      "coverage": "All post-secondary designated learning institution campus rows, plus 22 University of British Columbia undergraduate programme fees published for international students for 2026/27. Not a complete Canadian course or fee catalogue."
     },
     "germany": {
       "institutionCount": 618,
-      "courseCount": 0,
+      "courseCount": 4,
       "uniqueInstitutionCount": 462,
-      "coverage": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities."
+      "coverage": "ROR education-type organization records (CC0), plus 4 Technical University of Munich degree fees officially published for international students from third countries. Broad registry is not a complete list of state-recognized universities."
     },
     "australia": {
       "institutionCount": 1545,
@@ -40,9 +40,9 @@
     },
     "ireland": {
       "institutionCount": 18,
-      "courseCount": 0,
+      "courseCount": 77,
       "uniqueInstitutionCount": 18,
-      "coverage": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers."
+      "coverage": "HEA-listed publicly funded/core-funded higher education institutions, plus University College Cork 2026/27 international undergraduate fee-schedule course records. Not all QQI-validated private providers."
     }
   }
 }

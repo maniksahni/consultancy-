@@ -1236,11 +1236,11 @@ textarea {
 
 /* Althéa — the Parisian maison */
 :root {
-  --navy: var(--color81);
-  --blue: var(--color82);
-  --ivory: var(--color83);
-  --gold: var(--color84);
-  --line: var(--color85);
+  --navy: #102d76;
+  --blue: #2259a8;
+  --ivory: #f7f3eb;
+  --gold: #c4a575;
+  --line: #d8d8d6;
 }
 
 /* A quiet, cinematic welcome to Paris. */
@@ -3922,11 +3922,11 @@ textarea {
 
 /* Althéa / The editorial edition — a new composition throughout. */
 :root {
-  --navy: var(--color196);
-  --blue: var(--color197);
-  --ivory: var(--color198);
-  --gold: var(--color199);
-  --line: var(--color200);
+  --navy: #102d76;
+  --blue: #2259a8;
+  --ivory: #f7f3eb;
+  --gold: #c4a575;
+  --line: #d8d8d6;
 }
 .site-header {
   background: rgba(250, 247, 240, 0.98);
@@ -5009,7 +5009,7 @@ textarea {
 .booking-form .whatsapp-fallback { min-height: 44px; display: inline-flex; align-items: center; }
 
 /* Althéa home: an editorial, image-led journey from first impression to enquiry. */
-.althea-home { --home-ink: #142b4d; --home-gold: #b39461; --home-paper: #f8f6f0; --home-muted: #687284; --home-line: rgba(20,43,77,.16); color: var(--home-ink); background: var(--home-paper); }
+.althea-home { --home-ink: var(--navy); --home-gold: var(--gold); --home-paper: var(--ivory); --home-muted: var(--muted); --home-line: color-mix(in srgb, var(--navy) 16%, transparent); color: var(--home-ink); background: var(--home-paper); }
 .althea-home .site-header { position: absolute; z-index: 20; inset: 0 0 auto; width: 100%; min-height: 88px; background: linear-gradient(180deg,rgba(7,19,36,.45),transparent); border: 0; color: white; }
 .althea-home .simple-wordmark,.althea-home .navigation a:not(.button),.althea-home .menu-toggle { color: #fff; }
 .althea-home .simple-wordmark small { color: rgba(255,255,255,.72); }
@@ -5207,7 +5207,7 @@ textarea {
 }
 
 /* 2026 editorial home direction: quiet luxury, useful chapters, accessible motion. */
-.althea-home { --home-ink:#132746; --home-gold:#ae8b58; --home-paper:#f8f6f0; --home-muted:#647082; --home-line:rgba(19,39,70,.18); color:var(--home-ink); background:var(--home-paper); }
+.althea-home { --home-ink:var(--navy); --home-gold:var(--gold); --home-paper:var(--ivory); --home-muted:var(--muted); --home-line:color-mix(in srgb,var(--navy) 18%,transparent); color:var(--home-ink); background:var(--home-paper); }
 .althea-home .site-header { min-height:88px; padding-inline:5.2%; }
 .althea-home .simple-wordmark { font-size:31px; letter-spacing:.02em; }
 .althea-home .simple-wordmark small { letter-spacing:.34em; }

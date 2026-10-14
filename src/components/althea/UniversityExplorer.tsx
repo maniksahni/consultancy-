@@ -17,6 +17,8 @@ type RegistryCourse = {
   level?: string; subject?: string; language?: string; durationWeeks?: string;
   tuition: number | null; currency: string | null; nonTuitionFee?: string;
   estimatedTotalCost?: string; sourceDate?: string; registrySource?: string;
+  tuitionPeriod?: string; tuitionBasis?: string; feeAcademicYear?: string;
+  tuitionSource?: string; tuitionSourceUrl?: string;
 };
 type CountryRegistry = {
   institutions: RegistryInstitution[]; courses: RegistryCourse[]; refreshedAt: string;
@@ -72,21 +74,6 @@ function courseTuitionSummary(course: RegistryCourse, country: string, records: 
       };
     }
   }
-  if (course.tuition === null && country === "uk") return {
-    headline: "£11,400–£38,000 per year estimated",
-    detail: "British Council international undergraduate tuition range across UK courses; not this provider’s quoted fee. Verify the course fee with the university.",
-    period: "British Council international undergraduate range · checked October 2026",
-  };
-  if (course.tuition === null && country === "france") return {
-    headline: "€2,902–€3,950 per year public-sector reference",
-    detail: "2026–27 standard non-EU registration rates for public Bachelor/Master study. Exemptions, engineering routes, private schools and institution-specific fees can differ; this is not a course quote.",
-    period: "French public-fee schedule · annual reference",
-  };
-  if (course.tuition === null && country === "usa") return {
-    headline: "$9,041–$19,534 yearly public-college reference",
-    detail: "NCES 2024–25 average tuition and required fees for public out-of-state students at two-year and four-year institutions, in constant 2024 dollars. This historical study-field record has no current programme quote; private and international prices may differ.",
-    period: "U.S. national institutional average · 2024–25",
-  };
   if (course.tuition === null) return null;
   if (country === "australia") {
     const weeks = Number(course.durationWeeks);
@@ -97,7 +84,14 @@ function courseTuitionSummary(course: RegistryCourse, country: string, records: 
       period: "CRICOS registered-course total",
     };
   }
-  return { headline: `${money(course.tuition)} published tuition`, detail: "The source does not specify a comparable annual or semester period.", period: "Source period not stated" };
+  const period = course.tuitionPeriod || "Source period not stated";
+  const basis = course.tuitionBasis || "Published tuition";
+  const sourceYear = course.feeAcademicYear ? ` · ${course.feeAcademicYear}` : "";
+  return {
+    headline: `${money(course.tuition)} ${period}`,
+    detail: `${basis}${sourceYear}. ${course.nonTuitionFee ? `${course.nonTuitionFee}. ` : ""}${course.tuitionSourceUrl ? "Official source is identified below." : "The source does not specify additional fee details."}`,
+    period: `${basis}${sourceYear}`,
+  };
 }
 
 export default function UniversityExplorer({ initialCountry = "all" }: { initialCountry?: string }) {
@@ -279,7 +273,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
           <h3>{r.name}</h3><p>{r.institution}</p>
           <p className="course-result-fee"><strong>{courseTuitionSummary(r, country, directory.courses)?.headline || tuitionUnavailableText(country)}</strong>{courseTuitionSummary(r, country, directory.courses) && <span> · {courseTuitionSummary(r, country, directory.courses)?.period}</span>}</p>
           <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
-            <div><dt>{country === "australia" ? "Tuition / budget period" : "Tuition estimate / source"}</dt><dd>{courseTuitionSummary(r, country, directory.courses)?.headline || tuitionUnavailableText(country)}<small>{courseTuitionSummary(r, country, directory.courses)?.detail || "No numeric amount is present in the underlying course record."} {country === "australia" ? `CRICOS snapshot ${r.sourceDate || directory.courseSourceDate}` : country === "france" ? "Campus France 2026–27 rates · Parcoursup 2026 course record" : country === "uk" ? "British Council Study UK fee guide · Discover Uni 2026 course record" : country === "usa" ? "NCES IPEDS 2024–25 benchmark · College Scorecard historical award field" : "Source does not provide a course-level fee"}</small></dd></div>
+            <div><dt>Tuition / fee source</dt><dd>{courseTuitionSummary(r, country, directory.courses)?.headline || tuitionUnavailableText(country)}<small>{courseTuitionSummary(r, country, directory.courses)?.detail || "No numeric course-level amount appears in this source record; this site does not substitute another course’s fee."} {r.tuitionSource || r.registrySource || "Course source"}{r.sourceDate || directory.courseSourceDate ? ` · record date ${r.sourceDate || directory.courseSourceDate}` : ""}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}

@@ -306,14 +306,29 @@ for row in csv_rows(download(course_csv)):
         "registrySource": aus_source, "sourceDate": "2026-04-13",
     })
 
+# Verified, institution-published international tuition schedules. This is a
+# deliberately curated set: never fill an unknown course fee with a country
+# average or a neighbouring programme's price.
+curated_path = Path("scripts/data/curated-tuition-programmes.json")
+if curated_path.exists():
+    curated_courses = json.loads(curated_path.read_text(encoding="utf-8"))
+    seen_course_ids = {item["id"] for item in courses}
+    for item in curated_courses:
+        if item["id"] not in seen_course_ids:
+            courses.append(item)
+            seen_course_ids.add(item["id"])
+    for item in institutions:
+        if item.get("id") == "de-02kkvpp62":
+            item["name"] = "Technical University of Munich (TUM)"
+
 coverage = {
         "france": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition.",
-        "canada": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue.",
+        "canada": "All post-secondary designated learning institution campus rows, plus 22 University of British Columbia undergraduate programme fees published for international students for 2026/27. Not a complete Canadian course or fee catalogue.",
         "usa": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included.",
         "australia": f"CRICOS provider records and {len([item for item in courses if item['country'] == 'australia']):,} non-expired registered courses (tuition amount included in 25,360 records; snapshot {TODAY}).",
         "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included.",
-        "germany": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities.",
-        "ireland": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers.",
+        "germany": "ROR education-type organization records (CC0), plus 4 Technical University of Munich degree fees officially published for international students from third countries. Broad registry is not a complete list of state-recognized universities.",
+        "ireland": "HEA-listed publicly funded/core-funded higher education institutions, plus University College Cork 2026/27 international undergraduate fee-schedule course records. Not all QQI-validated private providers.",
 }
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 country_slugs = ["france", "uk", "usa", "canada", "germany", "australia", "ireland"]
