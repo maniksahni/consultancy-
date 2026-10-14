@@ -25,11 +25,30 @@ type CountryRegistry = {
 type RegistryManifest = { refreshedAt: string; countries: Record<string, { institutionCount: number; courseCount: number; coverage: string }> };
 
 const PAGE_SIZE = 30;
+const COURSE_CATEGORIES = [
+  { id: "technology", label: "Technology & IT", match: /computer|information technolog|information systems|cyber|software|data science|artificial intelligence|network|digital|informatique|numérique|cybersécurité|électronique/i },
+  { id: "business", label: "Business & Management", match: /business|management|account|finance|marketing|commerce|entrepreneur|gestion|comptabil|économie|administration/i },
+  { id: "engineering", label: "Engineering", match: /engineering|engineer|civil|mechanical|electrical|automotive|construction|maintenance|ingénieur|électrotechnique|bâtiment/i },
+  { id: "health", label: "Health & Medicine", match: /health|medical|medicine|nursing|nurse|care|pharmacy|dent|infirm|santé|paramedic|welfare/i },
+  { id: "education", label: "Education", match: /education|teaching|teacher|school|éducation|professorat|pédagog/i },
+  { id: "law", label: "Law & Society", match: /law|legal|justice|social|humanit|society|psycholog|politic|droit|travail social|sciences humaines/i },
+  { id: "creative", label: "Arts, Design & Media", match: /art|design|creative|media|communication|film|music|fashion|journal|audiovisual|spectacle|culture|graphique/i },
+  { id: "hospitality", label: "Hospitality & Tourism", match: /hospitality|tourism|travel|hotel|restaurant|culinary|food|hôtellerie|tourisme|restauration/i },
+  { id: "science", label: "Science & Environment", match: /science|biology|chemistry|physics|environment|agricultur|veterinary|math|scientifique|biologie|agronom/i },
+  { id: "architecture", label: "Architecture & Building", match: /architecture|building|urban|interior|construction|bâtiment|urbanisme/i },
+  { id: "other", label: "Other fields", match: /.*/ },
+];
+
+function courseCategory(course: RegistryCourse) {
+  const haystack = `${course.name} ${course.subject || ""} ${course.level || ""}`;
+  return COURSE_CATEGORIES.find((category) => category.id !== "other" && category.match.test(haystack))?.id || "other";
+}
 
 export default function UniversityExplorer({ initialCountry = "all" }: { initialCountry?: string }) {
   const [country, setCountry] = useState(initialCountry);
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"institutions" | "courses">("institutions");
+  const [courseCategoryFilter, setCourseCategoryFilter] = useState("all");
   const [page, setPage] = useState(0);
   const [manifest, setManifest] = useState<RegistryManifest | null>(null);
   const [loaded, setLoaded] = useState<Record<string, CountryRegistry>>({});
@@ -74,13 +93,19 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
     `${r.name} ${r.nativeName || ""} ${r.city || ""} ${r.region || ""} ${r.campus || ""} ${r.institutionType || ""} ${r.identifier || ""}`.toLowerCase().includes(query.toLowerCase().trim())
   ), [directory, query]);
   const filteredCourses = useMemo(() => (directory?.courses || []).filter((r) =>
+    (courseCategoryFilter === "all" || courseCategory(r) === courseCategoryFilter) &&
     `${r.name} ${r.institution} ${r.city || ""} ${r.subject || ""} ${r.level || ""} ${r.language || ""}`.toLowerCase().includes(query.toLowerCase().trim())
-  ), [directory, query]);
+  ), [directory, query, courseCategoryFilter]);
+  const courseCategoryCounts = useMemo(() => {
+    const counts: Record<string, number> = Object.fromEntries(COURSE_CATEGORIES.map((category) => [category.id, 0]));
+    (directory?.courses || []).forEach((course) => { counts[courseCategory(course)] += 1; });
+    return counts;
+  }, [directory]);
   const records = kind === "institutions" ? filteredInstitutions : filteredCourses;
   const pageCount = Math.ceil(records.length / PAGE_SIZE);
   const currentPageRecords = records.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
-  function chooseCountry(slug: string) { setCountry(slug); setQuery(""); setPage(0); setKind("institutions"); }
+  function chooseCountry(slug: string) { setCountry(slug); setQuery(""); setPage(0); setKind("institutions"); setCourseCategoryFilter("all"); }
 
   return <section className="university-explorer" aria-label="University and student cost explorer">
     <p className="snapshot-note">Search the country directories and reviewed course records inside this site. Registry coverage and data dates are stated for each country. A registry listing confirms the source&rsquo;s record; it does not mean every course, fee or room is included.</p>
@@ -116,9 +141,16 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       {directory && <>
         <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : "course records"}{query ? " matching this search" : ""}</p>
           <div className="research-actions">
-            <label>Show<select aria-label="Directory records" value={kind} onChange={(e) => { setKind(e.target.value as "institutions" | "courses"); setPage(0); }}><option value="institutions">Institutions</option><option value="courses" disabled={!manifest?.countries[country]?.courseCount}>{manifest?.countries[country]?.courseCount ? `Courses (${manifest.countries[country].courseCount.toLocaleString("en-IN")})` : "Courses (not in this registry)"}</option></select></label>
+            <label>Show<select aria-label="Directory records" value={kind} onChange={(e) => { setKind(e.target.value as "institutions" | "courses"); setCourseCategoryFilter("all"); setPage(0); }}><option value="institutions">Institutions</option><option value="courses" disabled={!manifest?.countries[country]?.courseCount}>{manifest?.countries[country]?.courseCount ? `Courses (${manifest.countries[country].courseCount.toLocaleString("en-IN")})` : "Courses (not in this registry)"}</option></select></label>
           </div>
         </div>
+        {kind === "courses" && directory.courses.length > 0 && <section className="course-category-picker" aria-label="Browse courses by field">
+          <div className="course-category-heading"><h2>Browse by field</h2><p>Choose an area to narrow the {directory.courses.length.toLocaleString("en-IN")} course records. Counts show courses in this country directory.</p></div>
+          <div className="course-category-chips" role="group" aria-label="Course field filters">
+            <button type="button" className={courseCategoryFilter === "all" ? "active" : ""} aria-pressed={courseCategoryFilter === "all"} onClick={() => { setCourseCategoryFilter("all"); setPage(0); }}>All courses <span>{directory.courses.length.toLocaleString("en-IN")}</span></button>
+            {COURSE_CATEGORIES.filter((category) => courseCategoryCounts[category.id] > 0).map((category) => <button key={category.id} type="button" className={courseCategoryFilter === category.id ? "active" : ""} aria-pressed={courseCategoryFilter === category.id} onClick={() => { setCourseCategoryFilter(category.id); setPage(0); }}>{category.label} <span>{courseCategoryCounts[category.id].toLocaleString("en-IN")}</span></button>)}
+          </div>
+        </section>}
         {kind === "institutions" ? <div className="knowledge-grid research-grid">{(currentPageRecords as RegistryInstitution[]).map((r) => <article key={r.id}>
           <p className="eyebrow">{r.region || destinations.find((d) => d.slug === country)?.name}{r.city ? ` · ${r.city}` : ""}</p>
           <h3>{r.name}</h3>
