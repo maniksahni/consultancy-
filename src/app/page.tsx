@@ -5,7 +5,7 @@ import { ArrowDown, ArrowUpRight, Compass, GraduationCap, MapPin, MoveUpRight, S
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/althea/FAQ";
-import Booking from "@/components/althea/Booking";
+import { brand } from "@/config/brand";
 
 export const metadata = pageMetadata("/", {
   title: "Your next chapter in France",
@@ -55,7 +55,13 @@ export default function Home() {
       <section className="home-pathways" aria-labelledby="pathways-title">
         <div className="home-wrap">
           <div className="home-section-head"><div><p className="home-eyebrow">02 &nbsp; CHOOSE YOUR CHAPTER</p><h2 id="pathways-title">Where will your<br /><em>story lead?</em></h2></div><p>Start with the question that’s closest today. Each path leads to more detail and a practical way to begin.</p></div>
-          <div className="home-path-list">{pathways.map(({ number, name, note, text, href, image, alt, icon: Icon, mark }) => <article key={number} className="home-path-card">
+          <nav className="home-route-map" aria-label="Jump to a France guidance chapter">
+            <svg viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true"><path d="M84 75 C190 75 180 32 310 40 S430 112 505 77 610 25 700 44 826 104 916 70" /><circle cx="84" cy="75" r="7" /><circle cx="505" cy="77" r="7" /><circle cx="916" cy="70" r="7" /></svg>
+            <Link href="#study-path"><span>01</span><strong>LEARN</strong><small>Study in France</small></Link>
+            <Link href="#settle-path"><span>02</span><strong>ARRIVE</strong><small>Settle in France</small></Link>
+            <Link href="#career-path"><span>03</span><strong>GROW</strong><small>Career support</small></Link>
+          </nav>
+          <div className="home-path-list">{pathways.map(({ number, name, note, text, href, image, alt, icon: Icon, mark }) => <article id={`${number === "01" ? "study" : number === "02" ? "settle" : "career"}-path`} key={number} className="home-path-card">
             <Link href={href} className="home-path-image" aria-label={`Explore ${name}`}><Image src={image} alt={alt} fill sizes="(max-width: 760px) 90vw, 45vw" /><span className="home-path-number">{number} / {mark}</span><span className="home-path-arrow"><MoveUpRight size={18} /></span></Link>
             <div className="home-path-copy"><p className="home-eyebrow"><Icon size={14} /> {note}</p><h3>{name}</h3><p>{text}</p><Link className="home-underlink" href={href}>Explore this chapter <ArrowUpRight size={15} /></Link></div>
           </article>)}</div>
@@ -92,7 +98,7 @@ export default function Home() {
 
       <section className="home-contact" id="begin">
         <div className="home-contact-copy"><p className="home-eyebrow">07 &nbsp; WHEN YOU’RE READY</p><h2>One question<br />can begin a <em>lot.</em></h2><p>Tell us a little about the France story you’re considering. We’ll begin there and see whether personal guidance feels right.</p><div className="home-contact-aside"><Sparkles size={15} /><span>First, understand your situation. Agree scope and fee before any work begins.</span></div></div>
-        <div className="home-contact-form"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><Booking defaultCountry="France" /></div>
+        <div className="home-contact-choice"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><p>Choose the way that feels easiest. There’s no obligation to book a service.</p><Link className="home-button home-button-gold" href="/book-consultation">Arrange an introductory call <ArrowUpRight size={16} /></Link><a href={`https://wa.me/${brand.whatsappNumber}`} className="home-contact-alt">Or start with a WhatsApp message <ArrowUpRight size={15} /></a><a href={`mailto:${brand.email}`} className="home-contact-alt">Prefer email? Write to Harshita <ArrowUpRight size={15} /></a></div>
       </section>
     </main>
     <Footer />
