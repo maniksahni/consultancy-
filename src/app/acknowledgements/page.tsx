@@ -1,3 +1,4 @@
+import photoCredits from "@/data/photoCredits.json";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
@@ -33,15 +34,39 @@ export default function Content() {
           TSE international programmes ↗
         </a>
         <h2>Global destination resources</h2>
-        <p>Country guides link to Study UK (British Council), EducationUSA, EduCanada, DAAD, Study Australia and Education in Ireland. These are research resources, not partnerships. Destination guidance reviewed on 14 October 2026; always check the publisher for current requirements.</p>
-        <h2>Photography</h2>
         <p>
-          Paris photography is sourced from Unsplash image assets. Photo IDs:
-          photo-1502602898657-3e91760cbb34 and photo-1499856871958-5b9627545d1a.
-          These locally hosted photographs are used under the Unsplash licence, which permits commercial use. Photographer identity: Not yet verified. The image IDs above are retained for provenance; no endorsement is implied.
+          Country guides link to Study UK (British Council), EducationUSA,
+          EduCanada, DAAD, Study Australia and Education in Ireland. These are
+          research resources, not partnerships. Destination guidance reviewed on
+          14 October 2026; always check the publisher for current requirements.
         </p>
-        <a href="https://unsplash.com/license">Unsplash licence ↗</a>
-        <p>Destination photography provenance: Not yet verified. These existing local assets must have their individual source and licence records completed before the acceptance release.</p>
+        <h2>Licensed photography</h2>
+        <p>
+          These photographs are hosted locally. Their responsive derivatives
+          retain the source photograph’s licence. Source records reviewed 14
+          October 2026.
+        </p>
+        {photoCredits.map((photo) => (
+          <article key={photo.asset} className="photo-credit">
+            <h3>
+              {photo.asset.includes("destinations")
+                ? photo.asset
+                    .split("/")
+                    .pop()
+                    ?.replace(".webp", "")
+                    .toUpperCase()
+                : "Paris collection"}
+            </h3>
+            <p>
+              <a href={photo.filePage}>{photo.title.replace("File:", "")} ↗</a>
+            </p>
+            <p>
+              Photograph by {photo.artist}.{" "}
+              <a href={photo.licenseUrl}>{photo.license} ↗</a>
+            </p>
+            <p className="muted">{photo.changes}</p>
+          </article>
+        ))}
         <h2>Independent editorial work</h2>
         <p>
           The design is an original implementation inspired by Parisian

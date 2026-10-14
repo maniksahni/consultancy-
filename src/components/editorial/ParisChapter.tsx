@@ -7,7 +7,7 @@ export default function ParisChapter() {
     <section className="edition-interlude">
       <Image
         src="/images/paris-street.webp"
-        alt="Evening light over the Seine and the architecture of Paris"
+        alt="Parisian architecture at Boulevard Haussmann"
         fill
         sizes="100vw"
       />

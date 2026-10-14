@@ -4881,7 +4881,7 @@ textarea {
 /* Small, progressively enhanced editorial movement. */
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal] { transition: transform 600ms ease, opacity 600ms ease; }
-  [data-reveal="pending"] { opacity: 0; transform: translateY(12px); }
+  [data-reveal="pending"] { opacity: 1; transform: translateY(12px); }
   [data-reveal="visible"] { opacity: 1; transform: translateY(0); }
   @view-transition { navigation: auto; }
   ::view-transition-old(root) { animation: editorial-exit 140ms ease both; }
@@ -4919,3 +4919,5 @@ textarea {
 }
 /* Keep progressive image depth inside its editorial frame. */
 .edition-interlude { overflow:clip; }
+.photo-credit { padding-block:var(--space-3); border-bottom:1px solid var(--line); }
+.photo-credit h3 { font-size:1.5rem; }

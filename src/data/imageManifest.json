@@ -1,42 +1,42 @@
 {
   "/images/paris-eiffel.webp": {
-    "width": 1200,
-    "height": 798,
+    "width": 1440,
+    "height": 2023,
     "key": "paris-eiffel"
   },
   "/images/paris-street.webp": {
-    "width": 1000,
-    "height": 707,
+    "width": 1440,
+    "height": 1080,
     "key": "paris-street"
   },
   "/images/destinations/uk.webp": {
-    "width": 760,
-    "height": 506,
+    "width": 1440,
+    "height": 810,
     "key": "destinations-uk"
   },
   "/images/destinations/usa.webp": {
-    "width": 760,
-    "height": 506,
+    "width": 1440,
+    "height": 480,
     "key": "destinations-usa"
   },
   "/images/destinations/canada.webp": {
-    "width": 760,
-    "height": 506,
+    "width": 1440,
+    "height": 779,
     "key": "destinations-canada"
   },
   "/images/destinations/germany.webp": {
-    "width": 760,
-    "height": 507,
+    "width": 1440,
+    "height": 913,
     "key": "destinations-germany"
   },
   "/images/destinations/australia.webp": {
-    "width": 760,
-    "height": 506,
+    "width": 1440,
+    "height": 491,
     "key": "destinations-australia"
   },
   "/images/destinations/ireland.webp": {
-    "width": 760,
-    "height": 506,
+    "width": 1440,
+    "height": 433,
     "key": "destinations-ireland"
   }
 }

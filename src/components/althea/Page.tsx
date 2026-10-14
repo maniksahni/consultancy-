@@ -37,7 +37,7 @@ export default function Page({
             <div className="interior-cover-photo">
               <Image
                 src="/images/paris-street.webp"
-                alt="Paris in the evening light"
+                alt="Haussmann architecture on a Paris boulevard"
                 fill
                 sizes="(max-width:760px) 90vw, 35vw"
               />

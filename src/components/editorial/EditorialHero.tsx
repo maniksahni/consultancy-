@@ -38,7 +38,7 @@ export default function EditorialHero() {
           <div className="cover-picture">
             <Image
               src="/images/paris-eiffel.webp"
-              alt="The Eiffel Tower and the Seine at sunset, a view towards a new life in Paris"
+              alt="The Eiffel Tower in Paris, photographed from Pont Mirabeau"
               fill
               priority
               sizes="(max-width:760px) 90vw, 55vw"
