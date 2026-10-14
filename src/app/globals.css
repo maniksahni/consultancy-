@@ -2378,6 +2378,13 @@ textarea {
   font-size: 13px;
   line-height: 1.9;
 }
+.directory-record-note {
+  display: block;
+  margin-top: 3px;
+  color: #77716a;
+  font-size: 11px;
+  line-height: 1.6;
+}
 .planning-grid a {
   display: inline-block;
   font-size: 11px;

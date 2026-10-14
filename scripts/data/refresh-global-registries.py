@@ -339,6 +339,7 @@ for country in country_slugs:
     }, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     manifest["countries"][country] = {
         "institutionCount": len(country_institutions), "courseCount": len(country_courses),
+        "uniqueInstitutionCount": len({re.sub(r"[^a-z0-9]+", "", item.get("name", "").lower()) for item in country_institutions if item.get("name")}),
         "coverage": coverage[country],
     }
 (OUT_DIR / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

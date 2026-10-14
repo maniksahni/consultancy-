@@ -22,7 +22,7 @@ type CountryRegistry = {
   institutions: RegistryInstitution[]; courses: RegistryCourse[]; refreshedAt: string;
   institutionsLoaded: boolean; coursesLoaded: boolean; courseSource?: string; courseSourceDate?: string;
 };
-type RegistryManifest = { refreshedAt: string; countries: Record<string, { institutionCount: number; courseCount: number; coverage: string }> };
+type RegistryManifest = { refreshedAt: string; countries: Record<string, { institutionCount: number; uniqueInstitutionCount?: number; courseCount: number; coverage: string }> };
 
 const PAGE_SIZE = 30;
 const COURSE_CATEGORIES = [
@@ -44,11 +44,20 @@ function courseCategory(course: RegistryCourse) {
   return COURSE_CATEGORIES.find((category) => category.id !== "other" && category.match.test(haystack))?.id || "other";
 }
 
+function tuitionUnavailableText(country: string) {
+  if (country === "france") return "Tuition varies by institution and fee status; Parcoursup does not publish a course fee here.";
+  if (country === "uk") return "Tuition varies by provider and fee status; this course source does not include the fee amount.";
+  if (country === "usa") return "This is historical field and award data; current programme tuition is not included.";
+  if (country === "australia") return "The provider did not publish a tuition amount in this CRICOS record.";
+  return "The source does not provide a course-level tuition amount.";
+}
+
 export default function UniversityExplorer({ initialCountry = "all" }: { initialCountry?: string }) {
   const [country, setCountry] = useState(initialCountry);
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"institutions" | "courses">("institutions");
   const [courseCategoryFilter, setCourseCategoryFilter] = useState("all");
+  const [courseInstitutionFilter, setCourseInstitutionFilter] = useState("all");
   const [courseCityFilter, setCourseCityFilter] = useState("all");
   const [courseLevelFilter, setCourseLevelFilter] = useState("all");
   const [courseFeeLimit, setCourseFeeLimit] = useState("");
@@ -110,17 +119,27 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   }, [directory?.coursesLoaded, kind]);
   const courseCities = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.city?.trim()).filter((city): city is string => Boolean(city)))].sort((a, b) => a.localeCompare(b)), [directory]);
   const courseLevels = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.level?.trim()).filter((level): level is string => Boolean(level)))].sort((a, b) => a.localeCompare(b)), [directory]);
+  const courseInstitutions = useMemo(() => {
+    const institutions = new Map<string, { id: string; name: string; count: number }>();
+    (directory?.courses || []).forEach((course) => {
+      const entry = institutions.get(course.institutionId);
+      if (entry) entry.count += 1;
+      else institutions.set(course.institutionId, { id: course.institutionId, name: course.institution, count: 1 });
+    });
+    return [...institutions.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }, [directory]);
   const curated = useMemo(() => programmeResearch.filter((p) => country === "all" || p.country === country), [country]);
   const filteredInstitutions = useMemo(() => (directory?.institutions || []).filter((r) =>
     `${r.name} ${r.nativeName || ""} ${r.city || ""} ${r.region || ""} ${r.campus || ""} ${r.institutionType || ""} ${r.identifier || ""}`.toLowerCase().includes(query.toLowerCase().trim())
   ), [directory, query]);
   const filteredCourses = useMemo(() => (directory?.courses || []).filter((r) =>
     (courseCategoryFilter === "all" || courseCategory(r) === courseCategoryFilter) &&
+    (courseInstitutionFilter === "all" || r.institutionId === courseInstitutionFilter) &&
     (courseCityFilter === "all" || r.city === courseCityFilter) &&
     (courseLevelFilter === "all" || r.level === courseLevelFilter) &&
     (!courseFeeLimit || (r.tuition !== null && r.tuition <= Number(courseFeeLimit))) &&
     `${r.name} ${r.institution} ${r.city || ""} ${r.subject || ""} ${r.level || ""} ${r.language || ""}`.toLowerCase().includes(query.toLowerCase().trim())
-  ), [directory, query, courseCategoryFilter, courseCityFilter, courseLevelFilter, courseFeeLimit]);
+  ), [directory, query, courseCategoryFilter, courseInstitutionFilter, courseCityFilter, courseLevelFilter, courseFeeLimit]);
   const courseCategoryCounts = useMemo(() => {
     const counts: Record<string, number> = Object.fromEntries(COURSE_CATEGORIES.map((category) => [category.id, 0]));
     (directory?.courses || []).forEach((course) => { counts[courseCategory(course)] += 1; });
@@ -133,10 +152,10 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   function chooseCountry(slug: string) {
     setCountry(slug); setQuery(""); setPage(0);
     setKind(manifest?.countries[slug]?.courseCount ? "courses" : "institutions");
-    setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit("");
+    setCourseCategoryFilter("all"); setCourseInstitutionFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit("");
   }
 
-  return <section className="university-explorer" aria-label="University and student cost explorer">
+    return <section className="university-explorer" aria-label="University and student cost explorer">
     <p className="snapshot-note">Search the country directories and reviewed course records inside this site. Registry coverage and data dates are stated for each country. A registry listing confirms the source&rsquo;s record; it does not mean every course, fee or room is included.</p>
     <div className="snapshot-filters">
       <label>Country<select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}><option value="all">All seven countries</option>{destinations.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}</select></label>
@@ -155,7 +174,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
         const c = universityCoverage[d.slug];
         const recordLabel = d.slug === "usa" ? "historical field/credential records" : d.slug === "uk" ? "course/location records" : "course records";
         const browseLabel = d.slug === "usa" ? "Browse U.S. study fields" : "Find a course in " + d.name;
-        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${counts.institutionCount.toLocaleString("en-IN")} institution/campus records` : "Loading directory summary…"}</strong></p>{Boolean(counts?.courseCount) && <p><strong>{counts!.courseCount.toLocaleString("en-IN")} {recordLabel}</strong></p>}<p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>{counts?.courseCount ? `${browseLabel} →` : `Browse ${d.name} institutions →`}</button></article>;
+        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${(counts.uniqueInstitutionCount ?? counts.institutionCount).toLocaleString("en-IN")} listed institution names` : "Loading directory summary…"}</strong><small className="directory-record-note">Across {counts?.institutionCount.toLocaleString("en-IN") || "…"} source records/campuses</small></p>{Boolean(counts?.courseCount) && <p><strong>{counts!.courseCount.toLocaleString("en-IN")} {recordLabel}</strong></p>}<p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>{counts?.courseCount ? `${browseLabel} →` : `Browse ${d.name} institutions →`}</button></article>;
       })}</div>
     </>}
 
@@ -178,7 +197,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       {curated.length > 0 && <details className="directory-extra-info reviewed-programmes" style={{ margin: "18px 0" }}><summary>Reviewed programme guides ({curated.length})</summary><section className="knowledge-grid" style={{ margin: "18px 0" }} aria-label="Reviewed programme records">{curated.map((p) => <article key={p.slug}><p className="eyebrow">{p.level} · {p.city} · {p.duration}</p><h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3><p>{p.institution}</p><p><strong>{publishedMoney(p)}</strong> · {p.fee.period} · {p.fee.year}</p><p>{p.requirements}</p><p className="muted">Published fee category: {p.fee.category}. Application timing: {p.deadline.label} ({p.deadline.status}).</p><Link className="text-link" href={`/programmes/${p.slug}`}>Full in-site record →</Link></article>)}</section></details>}
 
       {directory && <>
-        <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : country === "usa" ? "historical field/credential records" : country === "uk" ? "course/location records" : "course records"}{query || (kind === "courses" && (courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit)) ? " matching your filters" : ""}</p></div>
+        <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : country === "usa" ? "historical field/credential records" : country === "uk" ? "course/location records" : "course records"}{query || (kind === "courses" && (courseCategoryFilter !== "all" || courseInstitutionFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit)) ? " matching your filters" : ""}</p></div>
         {kind === "courses" && directory.courses.length > 0 && <section id="course-finder" className="course-category-picker" style={{ scrollMarginTop: 28 }} aria-label="Browse courses by field">
           <div className="course-category-heading"><div><p className="eyebrow">{country === "usa" ? "STUDY FIELD INDEX" : "COURSE FINDER"} · {selected?.country}</p><h2>What would you like to study?</h2></div><p>Start with a field, then narrow by {country === "uk" ? "delivery location" : "city"}, qualification or published course fee.</p></div>
           <div className="course-category-chips" role="group" aria-label="Course field filters">
@@ -189,7 +208,8 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
             <label>{country === "uk" ? "Delivery location" : "City"}<select value={courseCityFilter} onChange={(e) => { setCourseCityFilter(e.target.value); setPage(0); }}><option value="all">{country === "uk" ? "All locations" : "All cities"}</option>{courseCities.map((city) => <option key={city} value={city}>{city}</option>)}</select></label>
             <label>Qualification<select value={courseLevelFilter} onChange={(e) => { setCourseLevelFilter(e.target.value); setPage(0); }}><option value="all">All levels</option>{courseLevels.map((level) => <option key={level} value={level}>{level}</option>)}</select></label>
             {directory.courses.some((course) => course.tuition !== null) && <label>Maximum published tuition<select value={courseFeeLimit} onChange={(e) => { setCourseFeeLimit(e.target.value); setPage(0); }}><option value="">Any published fee</option>{[10000, 20000, 30000, 50000, 75000, 100000].map((amount) => <option key={amount} value={amount}>{new Intl.NumberFormat("en-AU", { style: "currency", currency: directory.courses.find((course) => course.currency)?.currency || "AUD", maximumFractionDigits: 0 }).format(amount)} or less</option>)}</select></label>}
-            {(courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit || query) && <button className="course-reset-button" type="button" onClick={() => { setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit(""); setQuery(""); setPage(0); }}>Clear filters</button>}
+            <label>University ({courseInstitutions.length} with records)<select value={courseInstitutionFilter} onChange={(e) => { setCourseInstitutionFilter(e.target.value); setPage(0); }}><option value="all">All universities · {directory.courses.length.toLocaleString("en-IN")} records</option>{courseInstitutions.map((institution) => <option key={institution.id} value={institution.id}>{institution.name} · {institution.count.toLocaleString("en-IN")} {country === "usa" ? "fields" : country === "uk" ? "course/location records" : "courses"}</option>)}</select></label>
+            {(courseCategoryFilter !== "all" || courseInstitutionFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit || query) && <button className="course-reset-button" type="button" onClick={() => { setCourseCategoryFilter("all"); setCourseInstitutionFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit(""); setQuery(""); setPage(0); }}>Clear filters</button>}
           </div>
         </section>}
         {kind === "institutions" ? <div className="knowledge-grid research-grid">{(currentPageRecords as RegistryInstitution[]).map((r) => <article key={r.id}>
@@ -209,9 +229,9 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
         </article>)}</div> : directory.courses.length ? <div className="knowledge-grid research-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => <article key={r.id}>
           <p className="eyebrow">{r.city || destinations.find((d) => d.slug === country)?.name}{r.level ? ` · ${r.level}` : ""}</p>
           <h3>{r.name}</h3><p>{r.institution}</p>
-          <p className="course-result-fee"><strong>{r.tuition === null ? "Fee not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published tuition</span>}</p>
+          <p className="course-result-fee"><strong>{r.tuition === null ? tuitionUnavailableText(country) : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published tuition</span>}</p>
           <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
-            <div><dt>Published tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : country === "france" ? "Parcoursup 2026 catalogue; fees not included in source" : country === "uk" ? "Discover Uni course catalogue; tuition not included in this record" : country === "usa" ? "College Scorecard historical award fields; programme tuition not included" : "Tuition not included in this record"}</small></dd></div>
+            <div><dt>Published tuition</dt><dd>{r.tuition === null ? tuitionUnavailableText(country) : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : country === "france" ? "Parcoursup 2026 catalogue" : country === "uk" ? "Discover Uni 2026 · course year 2027–28" : country === "usa" ? "College Scorecard historical award fields" : "Source does not provide a course-level fee"}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}

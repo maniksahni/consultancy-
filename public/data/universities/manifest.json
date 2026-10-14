@@ -5,37 +5,44 @@
     "france": {
       "institutionCount": 245,
       "courseCount": 25805,
-      "coverage": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition."
+      "coverage": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition.",
+      "uniqueInstitutionCount": 245
     },
     "uk": {
       "institutionCount": 1052,
       "courseCount": 32533,
-      "coverage": "Current Student-route sponsor register plus 32,533 eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included."
+      "coverage": "Current Student-route sponsor register plus 32,533 eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included.",
+      "uniqueInstitutionCount": 1050
     },
     "usa": {
       "institutionCount": 4059,
       "courseCount": 211486,
-      "coverage": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included."
+      "coverage": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included.",
+      "uniqueInstitutionCount": 4019
     },
     "canada": {
       "institutionCount": 1424,
       "courseCount": 0,
-      "coverage": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue."
+      "coverage": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue.",
+      "uniqueInstitutionCount": 1096
     },
     "germany": {
       "institutionCount": 618,
       "courseCount": 0,
-      "coverage": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities."
+      "coverage": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities.",
+      "uniqueInstitutionCount": 465
     },
     "australia": {
       "institutionCount": 1545,
       "courseCount": 25542,
-      "coverage": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13)."
+      "coverage": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13).",
+      "uniqueInstitutionCount": 1510
     },
     "ireland": {
       "institutionCount": 18,
       "courseCount": 0,
-      "coverage": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers."
+      "coverage": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers.",
+      "uniqueInstitutionCount": 18
     }
   }
 }
