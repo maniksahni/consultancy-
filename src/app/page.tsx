@@ -6,6 +6,12 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/althea/FAQ";
 import FranceChapterJourney from "@/components/home/FranceChapterJourney";
+import universityManifest from "../../public/data/universities/manifest.json";
+
+const universityCounts = Object.values(universityManifest.countries);
+const courseRecordCount = universityCounts.reduce((sum, country) => sum + country.courseCount, 0);
+const institutionRecordCount = universityCounts.reduce((sum, country) => sum + country.institutionCount, 0);
+const countFormat = new Intl.NumberFormat("en-IN");
 
 export const metadata = pageMetadata("/", {
   title: "Your next chapter in France",
@@ -44,6 +50,27 @@ export default function Home() {
           <div className="home-welcome-copy"><p>Studying, settling or building a career in France can begin with one question—and quickly become a dozen more.</p><p>From Paris, Harshita offers independent, personal guidance to help you understand your options and decide what comes next, at your own pace.</p><Link className="home-underlink" href="/about">A note from your adviser <ArrowUpRight size={16} /></Link></div>
         </div>
         <div className="home-ornament" aria-hidden="true"><span>✳</span><i /></div>
+      </section>
+
+      <section className="home-guidance home-wrap" aria-labelledby="home-universities-title">
+        <div className="home-guidance-top">
+          <p className="home-eyebrow">02 &nbsp; THE UNIVERSITY &amp; COURSE DIRECTORY</p>
+          <p>Your course search is here. Browse the records already on the site, then narrow them by subject, city, level and published tuition.</p>
+        </div>
+        <div className="home-guidance-panel">
+          <div>
+            <p className="home-eyebrow">A CLEARER PLACE TO BEGIN</p>
+            <h2 id="home-universities-title">Find your course.<br /><em>See the details.</em></h2>
+            <p>Search course records from France and Australia, or browse institution listings across seven destinations. Listings show their coverage and source dates.</p>
+            <Link className="home-button home-button-navy" href="/universities">Open the full directory <ArrowUpRight size={16} /></Link>
+          </div>
+          <div className="home-guidance-links">
+            <Link href="/universities?country=france&view=courses"><span>01</span><strong>France · {countFormat.format(universityManifest.countries.france.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
+            <Link href="/universities?country=australia&view=courses"><span>02</span><strong>Australia · {countFormat.format(universityManifest.countries.australia.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
+            <Link href="/universities"><span>03</span><strong>{countFormat.format(institutionRecordCount)} institution &amp; campus records</strong><ArrowUpRight size={16} /></Link>
+            <p className="home-eyebrow">{countFormat.format(courseRecordCount)} course records in the current catalogue snapshot · updated {universityManifest.refreshedAt}</p>
+          </div>
+        </div>
       </section>
 
       <FranceChapterJourney />

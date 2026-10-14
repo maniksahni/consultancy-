@@ -63,6 +63,15 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   }, []);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedCountry = params.get("country");
+    if (requestedCountry && (requestedCountry === "all" || destinations.some((destination) => destination.slug === requestedCountry))) {
+      setCountry(requestedCountry);
+    }
+    if (params.get("view") === "courses") setKind("courses");
+  }, []);
+
+  useEffect(() => {
     setPage(0);
     if (country === "all") return;
     const current = loaded[country];
