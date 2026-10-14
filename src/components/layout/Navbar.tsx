@@ -1,10 +1,10 @@
 "use client";
 import { brand } from "@/config/brand";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 const links = [
   ["Home", "/"],
-  ["Directory", "/universities"],
+  ["Discovery", "/#destinations", "Directory", "/universities"],
   ["Settle in France", "/settle-in-france"],
   ["Study in France", "/study-in-france"],
   ["Career Support", "/career-support"],
@@ -36,10 +36,13 @@ export default function Navbar() {
         aria-label="Main navigation"
         className={open ? "navigation open" : "navigation"}
       >
-        {links.map(([label, url]) => (
-          <Link key={url} href={url} onClick={() => setOpen(false)}>
-            {label}
-          </Link>
+        {links.map(([label, url, mobileLabel, mobileUrl]) => (
+          <Fragment key={url}>
+            {mobileLabel && mobileUrl ? <>
+              <Link className="nav-wide-only" href={url} onClick={() => setOpen(false)}>{label}</Link>
+              <Link className="nav-small-only" href={mobileUrl} onClick={() => setOpen(false)}>{mobileLabel}</Link>
+            </> : <Link href={url} onClick={() => setOpen(false)}>{label}</Link>}
+          </Fragment>
         ))}
         <Link
           className="button small"

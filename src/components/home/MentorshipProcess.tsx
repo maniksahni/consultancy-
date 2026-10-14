@@ -19,7 +19,7 @@ export default function MentorshipProcess() {
     {
       stepNumber: "01",
       title: "Deep Profile & Budget Assessment",
-      subtitle: "1-on-1 Planning & Reality Check",
+      subtitle: "1-on-1 Discovery & Reality Check",
       desc: "We jump on a 45-minute deep-dive video call. I evaluate your undergraduate GPA, work experience, English tests, budget tolerance, and long-term career aspirations.",
       deliverables: [
         "Academic & career trajectory mapping",

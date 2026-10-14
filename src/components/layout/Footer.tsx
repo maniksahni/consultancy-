@@ -8,7 +8,7 @@ const footerGroups = [
   {
     title: "EXPLORE",
     links: [
-      ["Directory · all destinations", "/destinations"],
+      ["Discovery · all destinations", "/destinations"],
       ["Universities & courses", "/universities"],
       ["Reviewed programmes & fees", "/programmes"],
       ["Study in France", "/study-in-france"],
