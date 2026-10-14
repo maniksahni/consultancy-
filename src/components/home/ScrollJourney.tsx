@@ -67,7 +67,7 @@ export default function ScrollJourney() {
     <section
       id="process"
       ref={containerRef}
-      className="bg-[#0B0A08] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden"
+      className="bg-[var(--color5)] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden"
     >
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-terra/5 rounded-full blur-[140px] pointer-events-none" />
@@ -126,7 +126,7 @@ export default function ScrollJourney() {
                 >
                   {/* Glowing Node on Timeline */}
                   <div
-                    className={`absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[#0B0A08] border-2 transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-20 flex items-center justify-center ${
+                    className={`absolute left-4 sm:left-6 lg:left-1/2 -translate-x-1/2 h-5 w-5 rounded-full bg-[var(--color5)] border-2 transition-all duration-[450ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] z-20 flex items-center justify-center ${
                       isActive
                         ? "border-terra shadow-[0_0_18px_rgba(194,91,26,0.95)] scale-110"
                         : "border-cream/30 scale-95"

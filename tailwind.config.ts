@@ -19,20 +19,20 @@ const config: Config = {
       },
       colors: {
         cream: {
-          DEFAULT: "#F2EDE4",
+          DEFAULT: "#F7F3EB",
           50: "#FAF7F2",
-          100: "#F2EDE4",
+          100: "#F7F3EB",
           200: "#E6DDD0",
         },
         ink: {
-          DEFAULT: "#14120C",
+          DEFAULT: "#1C2534",
           soft: "#2C271E",
           muted: "#4A4237",
         },
         terra: {
-          DEFAULT: "#C25B1A",
-          light: "#D97035",
-          dark: "#9E4812",
+          DEFAULT: "#102D76",
+          light: "#2259A8",
+          dark: "#102D76",
         },
         stone: {
           DEFAULT: "#786B5E",

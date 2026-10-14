@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import FAQAccordion from "@/components/experience/FAQAccordion";
-
-export const metadata: Metadata = { title: "FAQ | Pathways Global", description: "Answers about mentorship scope, pricing, prior refusals, outcomes, and timing." };
-
-export default function FAQPage() {
+import Page from "@/components/althea/Page";
+import FAQ from "@/components/althea/FAQ";
+import { official } from "@/data/france";
+export const metadata: Metadata = {
+  title: "A few good questions.",
+  description: "Clear answers before your first step.",
+};
+export default function Content() {
   return (
-    <EditorialPage eyebrow="Admissions & Advisory Clarity" title="Questions &" accent="Answers."
-      intro="Practical answers about the mentorship service and the decisions that remain with universities and visa authorities.">
-      <FAQAccordion />
-    </EditorialPage>
+    <Page
+      title={"A few good questions."}
+      intro={"Clear answers before your first step."}
+    >
+      <FAQ />
+      <div className="prose">
+        <h2>Check the official requirements</h2>
+        <a href={official.india}>Campus France India ↗</a>
+        <br />
+        <a href={official.visa}>France-Visas ↗</a>
+      </div>
+    </Page>
   );
 }

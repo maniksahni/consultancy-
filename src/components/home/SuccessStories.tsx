@@ -180,7 +180,7 @@ export default function SuccessStories() {
   });
 
   return (
-    <section id="stories" className="py-24 sm:py-32 bg-[#030712] relative overflow-hidden border-b border-white/[0.08]">
+    <section id="stories" className="py-24 sm:py-32 bg-[var(--color6)] relative overflow-hidden border-b border-white/[0.08]">
       {/* Background radial spotlight */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[550px] w-[550px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none" />
 
@@ -332,7 +332,7 @@ export default function SuccessStories() {
 
                 {/* Dossier Operational Details */}
                 <p className="text-[11px] text-slate-300 leading-relaxed italic border-l-2 border-slate-700 pl-3">
-                  "{file.dossierHighlights}"
+                  &quot;{file.dossierHighlights}&quot;
                 </p>
 
               </div>

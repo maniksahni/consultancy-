@@ -205,13 +205,13 @@ export default function ConsultationModal({ isOpen, onClose, defaultCountry = "U
 
             <div className="space-y-2">
               <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/20">
-                Session Confirmed • Calendar Invite Sent
+                Enquiry details
               </span>
               <h3 className="text-2xl font-bold text-white">
-                You're All Set, {formData.name || 'Scholar'}!
+                Your enquiry, {formData.name || 'Scholar'}!
               </h3>
               <p className="text-slate-300 text-sm max-w-md mx-auto">
-                We've reserved your slot for <strong className="text-white">{formData.targetCountry}</strong> consultation. A calendar invite & Zoom link have been dispatched to <strong className="text-emerald-400">{formData.email || 'your email'}</strong>.
+                Your requested destination is <strong className="text-white">{formData.targetCountry}</strong> consultation. An appointment must be confirmed separately using <strong className="text-emerald-400">{formData.email || 'your email'}</strong>.
               </p>
             </div>
 

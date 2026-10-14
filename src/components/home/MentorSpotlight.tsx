@@ -22,7 +22,7 @@ const PRINCIPLES = [
 
 export default function MentorSpotlight() {
   return (
-    <section id="mentorship" className="bg-[#FAF7F2] text-ink py-12 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
+    <section id="mentorship" className="bg-[var(--color4)] text-ink py-12 sm:py-24 lg:py-32 border-b border-ink/15 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Asymmetric Layout: Dramatic Image + High-Impact Typography ── */}

@@ -39,15 +39,15 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
               </clipPath>
             </defs>
             <g clipPath={`url(#${clipId})`}>
-              <rect width="60" height="36" fill="#012169" />
+              <rect width="60" height="36" fill="var(--color11)" />
               {/* White saltire */}
-              <path d="M0 0l60 36m0-36L0 36" stroke="#fff" strokeWidth="6" />
+              <path d="M0 0l60 36m0-36L0 36" stroke="var(--color9)" strokeWidth="6" />
               {/* Red saltire */}
-              <path d="M0 0l60 36m0-36L0 36" stroke="#C8102E" strokeWidth="4" />
+              <path d="M0 0l60 36m0-36L0 36" stroke="var(--color12)" strokeWidth="4" />
               {/* White St George Cross */}
-              <path d="M30 0v36M0 18h60" stroke="#fff" strokeWidth="10" />
+              <path d="M30 0v36M0 18h60" stroke="var(--color9)" strokeWidth="10" />
               {/* Red St George Cross */}
-              <path d="M30 0v36M0 18h60" stroke="#C8102E" strokeWidth="6" />
+              <path d="M30 0v36M0 18h60" stroke="var(--color12)" strokeWidth="6" />
             </g>
           </svg>
         );
@@ -62,18 +62,18 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
             style={{ objectFit: "cover", objectPosition: "center" }}
             preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="60" height="36" fill="#B22234" />
+            <rect width="60" height="36" fill="var(--color13)" />
             {/* White stripes: 6 alternating stripes */}
-            <rect y="2.77" width="60" height="2.77" fill="#fff" />
-            <rect y="8.31" width="60" height="2.77" fill="#fff" />
-            <rect y="13.85" width="60" height="2.77" fill="#fff" />
-            <rect y="19.38" width="60" height="2.77" fill="#fff" />
-            <rect y="24.92" width="60" height="2.77" fill="#fff" />
-            <rect y="30.46" width="60" height="2.77" fill="#fff" />
+            <rect y="2.77" width="60" height="2.77" fill="var(--color9)" />
+            <rect y="8.31" width="60" height="2.77" fill="var(--color9)" />
+            <rect y="13.85" width="60" height="2.77" fill="var(--color9)" />
+            <rect y="19.38" width="60" height="2.77" fill="var(--color9)" />
+            <rect y="24.92" width="60" height="2.77" fill="var(--color9)" />
+            <rect y="30.46" width="60" height="2.77" fill="var(--color9)" />
             {/* Blue canton: 7 stripes tall */}
-            <rect width="25" height="19.38" fill="#3C3B6E" />
+            <rect width="25" height="19.38" fill="var(--color14)" />
             {/* Crisp 50-star arrangement representation */}
-            <g fill="#fff">
+            <g fill="var(--color9)">
               <circle cx="5" cy="3.5" r="1.1" />
               <circle cx="11" cy="3.5" r="1.1" />
               <circle cx="17" cy="3.5" r="1.1" />
@@ -102,13 +102,13 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
             style={{ objectFit: "cover", objectPosition: "center" }}
             preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="15" height="36" fill="#D80621" />
-            <rect x="15" width="30" height="36" fill="#FFFFFF" />
-            <rect x="45" width="15" height="36" fill="#D80621" />
+            <rect width="15" height="36" fill="var(--color15)" />
+            <rect x="15" width="30" height="36" fill="var(--color16)" />
+            <rect x="45" width="15" height="36" fill="var(--color15)" />
             {/* Stylized Maple Leaf */}
             <path
               d="M30 6l2.2 5.5 4.4-2.2-1.1 4.4 4.4 1.1-3.3 3.3 2.2 4.4-5.5-1.1v4.5h-2.2v-4.5l-5.5 1.1 2.2-4.4-3.3-3.3 4.4-1.1-1.1-4.4 4.4 2.2z"
-              fill="#D80621"
+              fill="var(--color15)"
             />
           </svg>
         );
@@ -122,9 +122,9 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
             style={{ objectFit: "cover", objectPosition: "center" }}
             preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="60" height="12" fill="#000000" />
-            <rect y="12" width="60" height="12" fill="#DD0000" />
-            <rect y="24" width="60" height="12" fill="#FFCC00" />
+            <rect width="60" height="12" fill="var(--color17)" />
+            <rect y="12" width="60" height="12" fill="var(--color18)" />
+            <rect y="24" width="60" height="12" fill="var(--color19)" />
           </svg>
         );
 
@@ -137,27 +137,27 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
             style={{ objectFit: "cover", objectPosition: "center" }}
             preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="60" height="36" fill="#00008B" />
+            <rect width="60" height="36" fill="var(--color20)" />
             {/* Mini Union Jack canton */}
             <g>
-              <rect width="30" height="18" fill="#012169" />
-              <path d="M0 0l30 18m0-18L0 18" stroke="#fff" strokeWidth="4" />
-              <path d="M0 0l30 18m0-18L0 18" stroke="#C8102E" strokeWidth="2" />
-              <path d="M15 0v18M0 9h30" stroke="#fff" strokeWidth="6" />
-              <path d="M15 0v18M0 9h30" stroke="#C8102E" strokeWidth="3" />
+              <rect width="30" height="18" fill="var(--color11)" />
+              <path d="M0 0l30 18m0-18L0 18" stroke="var(--color9)" strokeWidth="4" />
+              <path d="M0 0l30 18m0-18L0 18" stroke="var(--color12)" strokeWidth="2" />
+              <path d="M15 0v18M0 9h30" stroke="var(--color9)" strokeWidth="6" />
+              <path d="M15 0v18M0 9h30" stroke="var(--color12)" strokeWidth="3" />
             </g>
             {/* Commonwealth Star */}
             <polygon
               points="15,22 17,27 22,27 18,30 20,35 15,32 10,35 12,30 8,27 13,27"
-              fill="#fff"
+              fill="var(--color9)"
               transform="scale(0.8) translate(3.5, 4)"
             />
             {/* Southern Cross stars */}
-            <circle cx="45" cy="8" r="1.3" fill="#fff" />
-            <circle cx="52" cy="14" r="1.3" fill="#fff" />
-            <circle cx="42" cy="18" r="1.3" fill="#fff" />
-            <circle cx="48" cy="27" r="1.3" fill="#fff" />
-            <circle cx="49" cy="20" r="0.9" fill="#fff" />
+            <circle cx="45" cy="8" r="1.3" fill="var(--color9)" />
+            <circle cx="52" cy="14" r="1.3" fill="var(--color9)" />
+            <circle cx="42" cy="18" r="1.3" fill="var(--color9)" />
+            <circle cx="48" cy="27" r="1.3" fill="var(--color9)" />
+            <circle cx="49" cy="20" r="0.9" fill="var(--color9)" />
           </svg>
         );
 
@@ -170,9 +170,9 @@ const CountryFlag = React.memo(function CountryFlag({ country, className = "", s
             style={{ objectFit: "cover", objectPosition: "center" }}
             preserveAspectRatio="xMidYMid meet"
           >
-            <rect width="20" height="36" fill="#169B62" />
-            <rect x="20" width="20" height="36" fill="#FFFFFF" />
-            <rect x="40" width="20" height="36" fill="#FF883E" />
+            <rect width="20" height="36" fill="var(--color21)" />
+            <rect x="20" width="20" height="36" fill="var(--color16)" />
+            <rect x="40" width="20" height="36" fill="var(--color22)" />
           </svg>
         );
 

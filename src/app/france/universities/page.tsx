@@ -1,0 +1,3 @@
+import Page from '@/components/althea/Page';import UniversityExplorer from '@/components/althea/UniversityExplorer';import Link from 'next/link';
+export const metadata={title:'French university discovery'};
+export default function Universities(){return <Page eyebrow="ACADEMIC POSSIBILITIES" title="An institution. A new perspective." intro="A curated introduction to French universities, with official websites for your next step."><p style={{marginBottom:30}}><Link className="text-link" href="/france/institutions">Browse the official government institution registry ↗</Link></p><UniversityExplorer/></Page>}

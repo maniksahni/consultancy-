@@ -3,12 +3,12 @@
 // strictly upon form submission or user interaction.
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDummyKeyReplaceWithYourOwnIfRestricted",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "consultancyworld2.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "consultancyworld2",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "consultancyworld2.appspot.com",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "662735113847",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:662735113847:web:consultancyworld2web",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 let cachedApp: any = null;
@@ -18,6 +18,13 @@ async function getFirebaseInstance() {
   if (cachedDb && cachedApp) {
     return { app: cachedApp, db: cachedDb };
   }
+  if (
+    !firebaseConfig.apiKey ||
+    !firebaseConfig.appId ||
+    !firebaseConfig.projectId ||
+    firebaseConfig.apiKey.includes("Dummy")
+  )
+    throw new Error("Firebase is not configured.");
   const { initializeApp, getApps, getApp } = await import("firebase/app");
   const { getFirestore } = await import("firebase/firestore");
   cachedApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
@@ -45,7 +52,8 @@ export async function saveEligibilityLead(data: {
   scholarshipScore?: number;
 }) {
   try {
-    const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    const { collection, addDoc, serverTimestamp } =
+      await import("firebase/firestore");
     const { db } = await getFirebaseInstance();
     const docRef = await addDoc(collection(db, "leads"), {
       ...data,
@@ -74,24 +82,36 @@ export async function saveMentorshipBooking(data: {
   utm?: Record<string, any>;
 }) {
   try {
-    const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    const { collection, addDoc, serverTimestamp } =
+      await import("firebase/firestore");
     const { db } = await getFirebaseInstance();
 
     // Defensive input sanitization & length bounding
     const payload: Record<string, any> = {
-      fullName: (data.fullName || "").replace(/<[^>]*>/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim().slice(0, 100),
-      whatsapp: (data.whatsapp || "").replace(/\D/g, "").slice(0, 10),
-      qualification: (data.qualification || "").replace(/<[^>]*>/g, "").replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim().slice(0, 250),
-      targetCountry: (data.targetCountry || "").slice(0, 50),
-      targetIntake: (data.targetIntake || "").slice(0, 50),
-      helpNeeded: (data.helpNeeded || "").slice(0, 100),
+      fullName: data.fullName
+        .replace(/<[^>]*>/g, "")
+        .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
+        .trim()
+        .slice(0, 100),
+      whatsapp: data.whatsapp.replace(/\D/g, "").slice(0, 10),
+      qualification: data.qualification
+        .replace(/<[^>]*>/g, "")
+        .replace(/[\u0000-\u001F\u007F-\u009F]/g, "")
+        .trim()
+        .slice(0, 250),
+      targetCountry: data.targetCountry.slice(0, 50),
+      targetIntake: data.targetIntake.slice(0, 50),
+      helpNeeded: data.helpNeeded.slice(0, 100),
       source: "personal_mentorship_booking",
       createdAt: serverTimestamp(),
       status: "pending_review",
     };
 
     if (data.email) {
-      payload.email = data.email.replace(/<[^>]*>/g, "").trim().slice(0, 100);
+      payload.email = data.email
+        .replace(/<[^>]*>/g, "")
+        .trim()
+        .slice(0, 100);
     }
     if (data.preferredSlot) {
       payload.preferredSlot = data.preferredSlot.slice(0, 100);
@@ -113,10 +133,15 @@ export async function saveMentorshipBooking(data: {
  */
 export async function registerWithEmail(email: string, pass: string) {
   try {
-    const { getAuth, createUserWithEmailAndPassword } = await import("firebase/auth");
+    const { getAuth, createUserWithEmailAndPassword } =
+      await import("firebase/auth");
     const { app } = await getFirebaseInstance();
     const auth = getAuth(app);
-    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      pass,
+    );
     return { user: userCredential.user, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };
@@ -125,7 +150,8 @@ export async function registerWithEmail(email: string, pass: string) {
 
 export async function loginWithEmail(email: string, pass: string) {
   try {
-    const { getAuth, signInWithEmailAndPassword } = await import("firebase/auth");
+    const { getAuth, signInWithEmailAndPassword } =
+      await import("firebase/auth");
     const { app } = await getFirebaseInstance();
     const auth = getAuth(app);
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);

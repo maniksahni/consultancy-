@@ -61,7 +61,7 @@ export default function BookingSection() {
         particleCount: 55,
         spread: 50,
         origin: { y: 0.6 },
-        colors: ["#C25B1A", "#F2EDE4", "#14120C", "#E0D9CE"],
+        colors: ["var(--color2)", "var(--color7)", "var(--color3)", "var(--color10)"],
       });
     } catch {
       // safe
@@ -181,7 +181,7 @@ export default function BookingSection() {
   return (
     <section
       id="booking"
-      className="bg-[#14120C] text-cream py-space-5 sm:py-space-6 lg:py-space-7 overflow-hidden w-full relative"
+      className="bg-[var(--color3)] text-cream py-space-5 sm:py-space-6 lg:py-space-7 overflow-hidden w-full relative"
     >
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
@@ -334,7 +334,7 @@ export default function BookingSection() {
                   <select
                     value={formData.targetCountry}
                     onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                    className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                    className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                   >
                     {countries.map((c) => (
                       <option key={c.value} value={c.value}>{c.label}</option>
@@ -369,7 +369,7 @@ export default function BookingSection() {
                         <select
                           value={formData.targetIntake}
                           onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                          className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                          className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                         >
                           {intakes.map((itk) => (
                             <option key={itk} value={itk}>{itk}</option>
@@ -397,7 +397,7 @@ export default function BookingSection() {
                         <select
                           value={formData.helpNeeded}
                           onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
-                          className="w-full bg-[#14120C] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                          className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-3.5 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                         >
                           {helpOptions.map((opt) => (
                             <option key={opt} value={opt}>{opt}</option>
@@ -649,7 +649,7 @@ export default function BookingSection() {
                     <select
                       value={formData.targetCountry}
                       onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                      className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                     >
                       {countries.map((c) => (
                         <option key={c.value} value={c.value}>{c.label}</option>
@@ -664,7 +664,7 @@ export default function BookingSection() {
                     <select
                       value={formData.targetIntake}
                       onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                      className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                     >
                       {intakes.map((itk) => (
                         <option key={itk} value={itk}>{itk}</option>
@@ -695,7 +695,7 @@ export default function BookingSection() {
                   <select
                     value={formData.helpNeeded}
                     onChange={(e) => setFormData({ ...formData, helpNeeded: e.target.value })}
-                    className="w-full bg-[#14120C] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
+                    className="w-full bg-[var(--color3)] border border-cream/15 px-4 py-4 text-cream text-sm focus:outline-none focus:border-cream/60 rounded-none"
                   >
                     {helpOptions.map((opt) => (
                       <option key={opt} value={opt}>{opt}</option>

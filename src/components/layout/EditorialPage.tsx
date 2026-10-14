@@ -19,10 +19,10 @@ export default function EditorialPage({
 }) {
   return (
     <div className="min-h-screen flex flex-col bg-cream text-ink">
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-20 bg-[#14120C]" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-20 bg-[var(--color3)]" />
       <Navbar />
       <main id="main-content" tabIndex={-1} className="flex-1 pt-20 focus:outline-none">
-        <header className="bg-[#14120C] text-cream py-16 lg:py-24">
+        <header className="bg-[var(--color3)] text-cream py-16 lg:py-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             <Link href="/" className="inline-flex items-center gap-2 label text-cream/50 hover:text-cream transition-colors mb-12">
               <ArrowLeft className="h-4 w-4" /> Back to Home

@@ -36,7 +36,7 @@ const COMPARISON_ROWS = [
 
 export default function MentorshipDifference() {
   return (
-    <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
+    <section id="comparison" className="bg-[var(--color7)] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15">
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
         {/* ── Top Editorial Split Layout ── */}
