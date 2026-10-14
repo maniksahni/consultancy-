@@ -5831,6 +5831,29 @@ textarea {
   align-self: center;
   margin: 0;
 }
+
+/* Keep the homepage's editorial palette readable at small text sizes. */
+.althea-home {
+  --home-muted: #566273;
+  --home-gold: #80623d;
+}
+.althea-home .home-eyebrow,
+.althea-home .home-chapter-intro > span,
+.althea-home .home-chapter-current,
+.althea-home .home-chapter-word small,
+.althea-home .home-official > span,
+.althea-home .home-form-kicker { color: #6b583a; }
+.althea-home .home-contact-copy .home-eyebrow { color: #d2ba91; }
+.althea-home .home-chapter-copy .home-eyebrow { color: #dfc899; }
+.althea-home .home-button-gold { color: #fff; background: #80623d; }
+.althea-home .home-button-gold:hover { background: #6b512f; }
+.althea-home .home-section-head h2 em,
+.althea-home .home-adviser-copy h2 em,
+.althea-home .home-guidance-panel h2 em,
+.althea-home .home-guidance-links a > span { color: #80663f; }
+.althea-home .home-note { color: #5b6675; }
+.althea-home .home-chapter-body { color: rgba(255,255,255,.9); }
+
 @media (max-width: 760px) {
   .brand-contact-actions a { min-height: 46px; padding: 8px 2px; }
 }

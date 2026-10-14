@@ -79,7 +79,7 @@ export default function FranceChapterJourney() {
           </div>
         </div>
 
-        <div className="home-chapter-tabs" role="tablist" aria-label="Choose where to begin your France journey">
+        <div className="home-chapter-tabs" role="tablist" aria-live="polite" aria-label="Choose where to begin your France journey">
           <svg className="home-chapter-route" viewBox="0 0 1000 94" preserveAspectRatio="none" aria-hidden="true">
             <path d="M82 42 C207 42 222 70 333 56 S450 19 502 41 596 69 691 46 810 20 918 42" />
           </svg>
@@ -107,7 +107,7 @@ export default function FranceChapterJourney() {
               <span className="home-chapter-word"><small>{chapter.number} / CHAPTER</small><strong>{chapter.verb}</strong><em>{chapter.label}</em></span>
             </button>;
           })}
-          <span className="home-chapter-current" aria-live="polite">{active.number} <i>/</i> 03</span>
+          <span className="home-chapter-current">{active.number} <i>/</i> 03</span>
         </div>
 
         <div className="home-chapter-feature" id="home-chapter-panel" role="tabpanel" aria-labelledby={`home-chapter-${active.id}`}>
