@@ -8,12 +8,14 @@ export default function Page({
   title,
   image,
   intro,
+  headerActions,
   children,
 }: {
   eyebrow?: string;
   title: string;
   image?: string;
   intro: string;
+  headerActions?: React.ReactNode;
   children: React.ReactNode;
 }) {
   const pageKey = `${eyebrow} ${title}`.toLocaleLowerCase();
@@ -48,6 +50,7 @@ export default function Page({
               <p className="eyebrow">{eyebrow}</p>
               <h1>{title}</h1>
               <p className="lead">{intro}</p>
+              {headerActions && <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 20 }}>{headerActions}</div>}
               <div className="interior-seal" aria-hidden="true">
                 <span>{brand.shortName}</span>
                 <i>✳</i>

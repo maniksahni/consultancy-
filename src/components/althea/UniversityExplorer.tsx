@@ -100,6 +100,12 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
   const selected = country === "all" ? null : universityCoverage[country];
   const directory = loaded[country];
+  useEffect(() => {
+    const requestedCourses = new URLSearchParams(window.location.search).get("view") === "courses";
+    if (requestedCourses && kind === "courses" && directory?.coursesLoaded) {
+      document.getElementById("course-finder")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [directory?.coursesLoaded, kind]);
   const courseCities = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.city?.trim()).filter((city): city is string => Boolean(city)))].sort((a, b) => a.localeCompare(b)), [directory]);
   const courseLevels = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.level?.trim()).filter((level): level is string => Boolean(level)))].sort((a, b) => a.localeCompare(b)), [directory]);
   const curated = useMemo(() => programmeResearch.filter((p) => country === "all" || p.country === country), [country]);
@@ -169,7 +175,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
       {directory && <>
         <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : "course records"}{query || (kind === "courses" && (courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit)) ? " matching your filters" : ""}</p></div>
-        {kind === "courses" && directory.courses.length > 0 && <section className="course-category-picker" aria-label="Browse courses by field">
+        {kind === "courses" && directory.courses.length > 0 && <section id="course-finder" className="course-category-picker" style={{ scrollMarginTop: 28 }} aria-label="Browse courses by field">
           <div className="course-category-heading"><div><p className="eyebrow">COURSE FINDER · {selected?.country}</p><h2>What would you like to study?</h2></div><p>Start with a field, then narrow by city, qualification or published course fee.</p></div>
           <div className="course-category-chips" role="group" aria-label="Course field filters">
             <button type="button" className={courseCategoryFilter === "all" ? "active" : ""} aria-pressed={courseCategoryFilter === "all"} onClick={() => { setCourseCategoryFilter("all"); setPage(0); }}>All courses <span>{directory.courses.length.toLocaleString("en-IN")}</span></button>
