@@ -1,0 +1,58 @@
+[
+  {
+    "route": "/",
+    "base": "https://altheaconsulting.in",
+    "fetchTime": "2026-10-14T11:39:24.307Z",
+    "scores": {
+      "performance": 85,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 69
+    },
+    "lcp": 3796.3135,
+    "cls": 0,
+    "tbt": 119
+  },
+  {
+    "route": "/destinations",
+    "base": "https://altheaconsulting.in",
+    "fetchTime": "2026-10-14T11:39:38.659Z",
+    "scores": {
+      "performance": 93,
+      "accessibility": 98,
+      "best-practices": 100,
+      "seo": 69
+    },
+    "lcp": 3166.0845,
+    "cls": 0,
+    "tbt": 12
+  },
+  {
+    "route": "/study-in-france",
+    "base": "https://altheaconsulting.in",
+    "fetchTime": "2026-10-14T11:39:52.216Z",
+    "scores": {
+      "performance": 94,
+      "accessibility": 98,
+      "best-practices": 100,
+      "seo": 69
+    },
+    "lcp": 3013.687,
+    "cls": 0,
+    "tbt": 12
+  },
+  {
+    "route": "/book-consultation",
+    "base": "https://altheaconsulting.in",
+    "fetchTime": "2026-10-14T11:40:04.876Z",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 69
+    },
+    "lcp": 3107.3095,
+    "cls": 0,
+    "tbt": 12
+  }
+]

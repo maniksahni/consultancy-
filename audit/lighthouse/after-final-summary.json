@@ -1,0 +1,58 @@
+[
+  {
+    "route": "/",
+    "base": "http://127.0.0.1:3016",
+    "fetchTime": "2026-10-14T12:09:31.357Z",
+    "scores": {
+      "performance": 96,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 2779.795,
+    "cls": 0,
+    "tbt": 8
+  },
+  {
+    "route": "/destinations",
+    "base": "http://127.0.0.1:3016",
+    "fetchTime": "2026-10-14T12:09:43.306Z",
+    "scores": {
+      "performance": 97,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 2504.7496499999997,
+    "cls": 0,
+    "tbt": 14
+  },
+  {
+    "route": "/study-in-france",
+    "base": "http://127.0.0.1:3016",
+    "fetchTime": "2026-10-14T12:09:56.143Z",
+    "scores": {
+      "performance": 96,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 2680.5522250000004,
+    "cls": 0,
+    "tbt": 85.5
+  },
+  {
+    "route": "/book-consultation",
+    "base": "http://127.0.0.1:3016",
+    "fetchTime": "2026-10-14T12:10:08.923Z",
+    "scores": {
+      "performance": 97,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcp": 2624.188275,
+    "cls": 0,
+    "tbt": 6.5
+  }
+]
