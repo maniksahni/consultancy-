@@ -6,7 +6,7 @@
 .home-reverie .site-header .navigation>.button:hover { background:#2259a8; }
 .home-reverie .menu-toggle { color:var(--rv-green); }
 .home-reverie em { color:var(--rv-brass); }
-.rv-hero { min-height:min(850px,calc(100svh - 92px)); min-height:max(660px,min(850px,calc(100svh - 92px))); position:relative; isolation:isolate; display:flex; align-items:center; color:white; background:#13203a; }
+.rv-hero { min-height:calc(100svh - 88px); position:relative; isolation:isolate; display:flex; align-items:center; color:white; background:#13203a; }
 .rv-hero-image { object-fit:cover; object-position:57% 51%; z-index:-3; animation:rv-image-arrive 1.3s ease-out both; }
 .rv-hero-shade { position:absolute; inset:0; z-index:-2; background:linear-gradient(90deg,rgba(8,17,43,.87) 0%,rgba(14,28,63,.67) 43%,rgba(14,28,63,.09) 100%),linear-gradient(0deg,rgba(8,17,43,.53),transparent 26%); }
 .rv-hero-grain { position:absolute; inset:0; opacity:.12; z-index:-1; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E"); }
@@ -27,7 +27,7 @@
 .rv-hero-side i { display:block; height:66px; width:1px; background:var(--rv-brass); }
 .rv-hero-bottom { position:absolute; bottom:25px; left:6%; display:flex; align-items:center; gap:14px; color:rgba(255,255,255,.76); font-size:8px; letter-spacing:.16em; }
 .rv-coordinate { position:absolute; bottom:25px; right:6%; display:flex; gap:18px; color:rgba(255,255,255,.7); font-size:8px; letter-spacing:.1em; }
-.rv-manifesto { position:relative; padding:112px max(6%,calc((100% - 1240px)/2)) 120px; background:var(--rv-paper); }
+.rv-manifesto { position:relative; padding:clamp(56px,6vw,82px) max(6%,calc((100% - 1240px)/2)) 120px; background:var(--rv-paper); }
 .rv-section-mark { display:flex; align-items:center; gap:12px; color:#8b8b7e; font:10px var(--font-body); letter-spacing:.16em; }
 .rv-section-mark i { width:63px; height:1px; background:var(--rv-brass); }
 .rv-manifesto-layout { display:grid; grid-template-columns:minmax(140px,.72fr) minmax(0,1.6fr); gap:clamp(36px,9vw,150px); margin:60px 0 0 7%; align-items:start; }
@@ -136,10 +136,10 @@
   .home-reverie .navigation.open { display:flex; flex-direction:column; align-items:stretch; gap:0; }
   .home-reverie .navigation>a { min-height:47px; display:flex; align-items:center; border-bottom:1px solid rgba(32,58,49,.1); }
   .home-reverie .navigation>.button { justify-content:center; margin-top:13px; border:0; }
-  .rv-hero { min-height:calc(100svh - 74px); min-height:max(640px,calc(100svh - 74px)); align-items:flex-end; }
+  .rv-hero { min-height:calc(100svh - 74px); align-items:flex-end; }
   .rv-hero-image { object-position:58% 50%; }
   .rv-hero-shade { background:linear-gradient(0deg,rgba(8,17,43,.87) 0%,rgba(12,24,56,.69) 44%,rgba(12,24,56,.04) 100%),linear-gradient(90deg,rgba(8,17,43,.28),transparent 100%); }
-  .rv-hero-content { width:88%; padding:0 0 110px; }
+  .rv-hero-content { width:88%; padding:0 0 88px; }
   .rv-kicker { font-size:8px; letter-spacing:.16em; }
   .rv-hero h1 { font-size:clamp(48px,12vw,72px); margin:23px 0 19px; line-height:.97; }
   .rv-hero-lede { max-width:390px; font-size:12px; line-height:1.75; }

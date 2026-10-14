@@ -171,6 +171,8 @@ export const articles = [
     paragraphs: [
       "Start with your previous studies, the subjects you want to explore and any prerequisites. Read course modules and check whether the degree is the qualification you need for your next step.",
       "Verify teaching language, campus, admission evidence and the route for your country of residence. Keep a dated note of the official requirements and revisit them before submitting.",
+      "Compare a small shortlist against the same questions: curriculum fit, entry requirements, language evidence, location, total fees and application calendar. A consistent comparison makes trade-offs visible and helps you avoid choosing from a title alone.",
+      "Before applying, confirm the exact course is open for your intake and whether applications go through the institution, Études en France or another official platform. Save the official programme and application links with the date you checked them.",
     ],
     source: official.catalogue,
   },
@@ -183,6 +185,8 @@ export const articles = [
     paragraphs: [
       "Make separate lines for tuition, housing, deposits, transport, food, insurance and initial travel. Use current university and accommodation information for the city and campus you are considering.",
       "Do not treat an unconfirmed scholarship as available funding. Check eligibility and deadlines with the awarding body, and build a plan that explains how you will cover the costs.",
+      "Separate one-time arrival costs from recurring monthly costs. Ask what is due before enrolment, whether housing requires a deposit or guarantor, and which services are included in rent. Keep a contingency line for timing gaps and unexpected travel.",
+      "French public-institution fees can depend on degree, institution, nationality, academic year and exemption policy; private schools set their own schedules. Use current national guidance as context, then ask the institution for the written fee applicable to your programme and status.",
     ],
     source: official.scholarships,
   },
@@ -195,6 +199,8 @@ export const articles = [
     paragraphs: [
       "Études en France supports application procedures for applicants in participating countries. Your local Campus France office and the institution explain the applicable route and calendar.",
       "For applicants resident in India, start with Campus France India's application guidance. If you already have an admission offer, confirm the next steps with the local office rather than assuming the process is complete.",
+      "Residence, nationality, study level and programme type all matter. Some first-year undergraduate routes may involve DAP or Parcoursup, while other levels and institutions can follow different calendars or direct application paths. Use the current Campus France procedure page to identify your route before preparing a submission.",
+      "Keep a simple tracker with each platform, required action, deadline, fee, document status and confirmation number. Do not treat an admission offer as completion of enrolment or visa formalities; follow the institution and France-Visas instructions for your circumstances.",
     ],
     source: official.india,
   },

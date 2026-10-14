@@ -26,7 +26,18 @@ export default function City({ params }: { params: { slug: string } }) {
           support and accommodation resources. Budget amounts depend on your own
           choices and current availability.
         </p>
+        <h2>Build a city shortlist around real details.</h2>
+        <p>For each programme, note the teaching site or campus—not only the institution’s main address. Check the first and last public-transport connections you would use, whether classes are split across sites, and what student services are available near your campus. Ask the institution about its own housing guidance and arrival dates.</p>
+        <h2>Questions to answer before you commit</h2>
+        <ul>
+          <li>Which campus will host most of your teaching, and can you reach it from likely housing areas?</li>
+          <li>What is included in the published tuition, and what additional costs should you budget for?</li>
+          <li>Where does the institution publish current accommodation, transport and international-student guidance?</li>
+        </ul>
+        <p><a href={c.url} target="_blank" rel="noreferrer">Visit the official {c.name} or university resource ↗</a></p>
+        <p><Link href={`/universities?country=france&view=courses#course-finder`}>Search published France programme records ↗</Link></p>
         <Link href="/destinations/france">Explore the France destination guide ↗</Link>
+        <br/><Link href="/first-30-days-france">Open the first 30 days checklist ↗</Link>
         <p className="muted">
           Editorial orientation updated 14 October 2026. No rent, availability
           or cost estimate is guaranteed.

@@ -22,6 +22,7 @@ export default function Content() {
           aim is to organise your questions and decide what needs further
           research.
         </p>
+        <p>Bring a current CV or study summary if you have one, plus links to the programmes or job paths you are considering. If you are still exploring, that is fine: a question list is enough to begin.</p>
         <h2>A hypothetical journey</h2>
         <p>
           A student interested in a taught master’s might first compare academic
@@ -29,12 +30,16 @@ export default function Content() {
           finally confirm the relevant application route. This is an
           illustration, not a student testimonial or reported outcome.
         </p>
+        <p>A useful result from that conversation can be a short, prioritised research plan: which requirements to verify first, which official pages to use, and what information is still missing. Any further work is optional and discussed separately.</p>
         <h2>Honest expectations</h2>
         <p>
           We do not publish success rates or student stories without documentary
           evidence and permission. No offer, scholarship or visa decision is
           guaranteed.
         </p>
+        <h2>What you can prepare now</h2>
+        <ul><li>Your preferred study level, subject or career direction.</li><li>Two or three questions that would unblock your next decision.</li><li>Your target timing, budget range and any practical constraints.</li><li>Links to official programme, employer or authority pages you have already checked.</li></ul>
+        <p>Consultations open WhatsApp with your details ready to send. No fee or service commitment is created by the enquiry; scope and any fee are discussed before work begins.</p>
       </div>
     </Page>
   );
