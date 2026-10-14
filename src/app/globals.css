@@ -5939,6 +5939,34 @@ textarea {
   .footer-masthead { margin-top: 34px; padding-top: 27px; }
 }
 
+/* Reviews stay concise on phones; full stories and outcomes remain available on demand. */
+.voice-quote-more { display:none; }
+@media (max-width: 760px) {
+  .voices-full { padding:24px 16px; }
+  .voices-full .voices-layout { gap:22px; }
+  .voices-full .voices-intro h2 { font-size:36px; }
+  .voices-full .voices-intro > p:not(.eyebrow) { font-size:11px; line-height:1.7; }
+  .voices-full .voices-disclosure { margin-top:13px; }
+  .voices-full .voices-disclosure p { font-size:9px; line-height:1.65; }
+  .voices-full .voice-card { padding:16px; }
+  .voices-full .voice-card-top { gap:8px; }
+  .voices-full .sample-badge { max-width:58%; font-size:8px; }
+  .voices-full .voice-topic { font-size:7px; }
+  .voices-full .voice-quote-icon { width:25px; height:25px; margin-top:13px; }
+  .voices-full .voice-card blockquote.voice-quote-collapsed { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:7; overflow:hidden; margin:9px 0 12px; font-size:21px; line-height:1.22; }
+  .voices-full .voice-quote-more { display:block; margin:-4px 0 13px; }
+  .voices-full .voice-quote-more summary { display:flex; align-items:center; min-height:44px; color:var(--navy); font-size:10px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .voices-full .voice-quote-more p { padding:10px 0 0; color:var(--navy); font-family:var(--font-cormorant),serif; font-size:19px; line-height:1.4; }
+  .voices-full .voice-attribution { gap:10px; padding-top:12px; }
+  .voices-full .voice-monogram { width:37px; height:37px; font-size:22px; }
+  .voices-full .voice-controls { padding-top:12px; }
+  .voices-full .voice-progress button { width:clamp(14px,5vw,21px); }
+  .voices-full .voice-notes { display:flex; gap:11px; overflow-x:auto; margin:24px -16px 0 0; padding:0 16px 12px 0; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .voices-full .voice-notes article { flex:0 0 min(78vw,300px); min-width:0; padding:14px; border:1px solid rgba(255,255,255,.18); border-top:1px solid var(--color76); scroll-snap-align:start; }
+  .voices-full .voice-notes h3 { margin:11px 0 8px; font-size:22px; line-height:1.15; }
+  .voices-full .voice-notes p { font-size:9px; line-height:1.6; }
+}
+
 /* Compact study journeys: keep the editorial cards, let mobile users browse them horizontally. */
 .nav-small-only { display:none; }
 

@@ -56,7 +56,8 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
               strokeWidth={1}
               aria-hidden="true"
             />
-            <blockquote>{review.quote}</blockquote>
+            <blockquote className={full ? "voice-quote-collapsed" : undefined}>{review.quote}</blockquote>
+            {full && <details className="voice-quote-more"><summary>Read the full student story</summary><p>{review.quote}</p></details>}
             <div className="voice-attribution">
               <span className="voice-monogram" aria-hidden="true">
                 {review.initials}
