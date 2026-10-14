@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import KnowledgeHub from "@/components/althea/KnowledgeHub";
 import Link from "next/link";
-import { official, checked, cities } from "@/data/france";
+import { checked, cities } from "@/data/france";
 import { ArrowUpRight, Check } from "lucide-react";
 export const metadata: Metadata = pageMetadata('/study-in-france', {
   title: 'Study in France Admissions Guide',
@@ -59,13 +59,11 @@ export default function Content() {
         <p>Althéa is not a university representative. Any partner-supported application assistance is described before work begins; admission, scholarships and visas are decided by the relevant institutions and authorities and cannot be guaranteed.</p>
         <h2>Your official starting points</h2>
         <p>
-          <a href={official.catalogue}>Campus France programme resources ↗</a>
+          <Link href="/programmes">Explore the programme directory ↗</Link>
           <br />
-          <a href={official.india}>
-            Campus France India: application guidance ↗
-          </a>
+          <Link href="/campus-france-guide">Explore the application procedure guide ↗</Link>
           <br />
-          <a href={official.visa}>France-Visas: student guidance ↗</a>
+          <Link href="/france/visas">Explore the student visa guide ↗</Link>
         </p>
         <p className="muted">
           Editorial overview checked {checked}. This is independent orientation;

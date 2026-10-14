@@ -30,10 +30,10 @@ export default function Footer() {
                     <Phone size={17} aria-hidden="true" />
                     <span><small>CALL</small>+33 7 55 74 90 29</span>
                   </a>
-                  <a href={`https://wa.me/${brand.whatsappNumber}`}>
+                  <Link href="/book-consultation">
                     <MessageCircle size={17} aria-hidden="true" />
-                    <span><small>WHATSAPP</small>Start a conversation</span>
-                  </a>
+                    <span><small>MESSAGE</small>Start a conversation</span>
+                  </Link>
                 </>
               )}
             </div>

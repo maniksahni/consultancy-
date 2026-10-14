@@ -22,17 +22,8 @@ export default function Content() {
           2026. The Toulouse listing was found in official search results but
           still needs a complete page review.
         </p>
-        <a href="https://www.psl.eu/en/education/masters-degree-computer-science">
-          PSL Computer Science ↗
-        </a>
-        <br />
-        <a href="https://www.psl.eu/en/education/master-s-degree-artificial-intelligence-and-society">
-          PSL Artificial Intelligence and Society ↗
-        </a>
-        <br />
-        <a href="https://www.tse-fr.eu/international-masters-programs">
-          TSE international programmes ↗
-        </a>
+        <p>PSL Computer Science · PSL Artificial Intelligence and Society · TSE international programmes</p>
+
         <h2>Global destination resources</h2>
         <p>Country guides link to Study UK (British Council), EducationUSA, EduCanada, DAAD, Study Australia and Education in Ireland. These are research resources, not partnerships. Destination guidance reviewed on 14 October 2026; always check the publisher for current requirements.</p>
         <h2 id="photography">Photographs and image licences</h2>
@@ -47,19 +38,7 @@ export default function Content() {
         <ul className="photo-credits">
           {imageCredits.map((photo) => (
             <li key={photo.file}>
-              <a href={photo.source} target="_blank" rel="noopener noreferrer">
-                {photo.place} — {photo.author}
-              </a>
-              {" · "}
-              <a
-                href={photo.licenseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {photo.license}
-              </a>
-              {" · "}
-              <code>{photo.file}</code>
+              {photo.place} — {photo.author} · {photo.license} · <code>{photo.file}</code>
             </li>
           ))}
         </ul>

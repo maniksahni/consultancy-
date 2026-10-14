@@ -1,6 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import Page from "@/components/althea/Page";
+import Link from "next/link";
 import { cities } from "@/data/france";
 export function generateStaticParams() {
   return cities.map((c) => ({ slug: c.slug }));
@@ -25,9 +26,7 @@ export default function City({ params }: { params: { slug: string } }) {
           support and accommodation resources. Budget amounts depend on your own
           choices and current availability.
         </p>
-        <a href={c.url} target="_blank" rel="noopener noreferrer">
-          Official city or university resource ↗
-        </a>
+        <Link href="/destinations/france">Explore the France destination guide ↗</Link>
         <p className="muted">
           Editorial orientation updated 14 October 2026. No rent, availability
           or cost estimate is guaranteed.

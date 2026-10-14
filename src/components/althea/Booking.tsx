@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
-import { buildConsultationWhatsAppUrl, enquiryLimits, enquirySchema } from "@/lib/consultation";
+import { brand } from "@/config/brand";
+import { enquiryLimits, enquirySchema } from "@/lib/consultation";
 
 export default function Booking({ defaultCountry = "France" }: { defaultCountry?: string }) {
   const id = useId();
@@ -25,11 +26,11 @@ export default function Booking({ defaultCountry = "France" }: { defaultCountry?
       (event.currentTarget.elements.namedItem(String(parsed.error.issues[0].path[0])) as HTMLElement | null)?.focus();
       return;
     }
-    const url = buildConsultationWhatsAppUrl(parsed.data);
+    const body = Object.entries(parsed.data).filter(([, value]) => value).map(([key, value]) => `${key}: ${value}`).join("\n");
+    const url = `mailto:${brand.email}?subject=${encodeURIComponent("Consultation request")}&body=${encodeURIComponent(body)}`;
     setErrors({});
     setStatus("");
     setWhatsAppUrl(url);
-    window.location.assign(url);
   }
   const fieldId = (name: string) => `${id}-${name}`;
   const error = (name: string) => errors[name] && <span id={`${fieldId(name)}-error`}>{errors[name]}</span>;
@@ -62,10 +63,10 @@ export default function Booking({ defaultCountry = "France" }: { defaultCountry?
       <label htmlFor={fieldId("preferredTime")}>Preferred time & time zone (optional)
         <input id={fieldId("preferredTime")} name="preferredTime" maxLength={enquiryLimits.preferredTime} placeholder="e.g. weekday afternoons, India time" />
       </label>
-      <button className="button" type="submit" disabled={!!whatsappUrl}>{whatsappUrl ? "Opening WhatsApp…" : "Request a conversation ↗"}</button>
-      <p className="muted">Submitting opens WhatsApp with your details ready to send.</p>
-      {whatsappUrl && <a className="text-link whatsapp-fallback" href={whatsappUrl}>Not redirected? Open WhatsApp</a>}
-      <p role="status" className={status ? "form-status" : ""}>{status || (whatsappUrl ? "Opening WhatsApp…" : "")}</p>
+      <button className="button" type="submit" disabled={!!whatsappUrl}>{whatsappUrl ? "Email ready to send" : "Prepare an email enquiry"}</button>
+      <p className="muted">Your email app opens with your message ready. Review it and choose whether to send.</p>
+      {whatsappUrl && <a className="text-link whatsapp-fallback" href={whatsappUrl}>Open your email app ↗</a>}
+      <p role="status" className={status ? "form-status" : ""}>{status || (whatsappUrl ? "Your email is ready. Choose Open your email app to send it." : "")}</p>
       <p className="muted">No fee or service commitment is created by this enquiry.</p>
     </form>
   );

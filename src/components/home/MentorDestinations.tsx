@@ -1,5 +1,4 @@
 "use client";
-import { brand } from "@/config/brand";
 
 import React from "react";
 import Link from "next/link";
@@ -209,15 +208,13 @@ export default function MentorDestinations() {
 
               {/* Card Footer: Action Buttons */}
               <div className="pt-4 border-t border-white/[0.06] flex items-center gap-2.5">
-                <a
-                  href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(dest.whatsappMsg)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={`/book-consultation?destination=${dest.code.toLowerCase()}`}
                   className="flex-1 flex items-center justify-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 py-2.5 px-3 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-colors"
                 >
                   <MessageCircle className="h-3.5 w-3.5" />
                   <span>Discuss {dest.code}</span>
-                </a>
+                </Link>
                 
                 <a
                   href="#booking"

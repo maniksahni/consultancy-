@@ -1,7 +1,8 @@
 "use client";
 import { brand } from "@/config/brand";
 import { useState } from "react";
-import { official, checked } from "@/data/france";
+import { checked } from "@/data/france";
+import Link from "next/link";
 export default function Procedure() {
   const [residence, setResidence] = useState("India");
   const [offer, setOffer] = useState("No");
@@ -42,20 +43,14 @@ export default function Procedure() {
             ? "An offer does not by itself complete all administrative or visa steps. Ask the local office about the procedure for applicants who already hold an admission offer."
             : "Check whether applications go through Études en France or the university's own procedure. Do not assume all institutions use the same route or calendar."}
         </p>
-        <a
-          href={residence === "India" ? official.india : official.procedure}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read the relevant official guidance ↗
-        </a>
+        <Link href="/campus-france-guide">Explore the application procedure guide ↗</Link>
         <h2>Before you submit</h2>
         <p>
           Confirm the programme, prerequisites, teaching language, fees,
           deadlines and requested documents. Use official platforms for
           applications; this website does not submit to Campus France.
         </p>
-        <a href={official.visa}>France-Visas student information ↗</a>
+        <Link href="/france/visas">Explore the student visa guide ↗</Link>
         <p className="muted">
           Process overview checked {checked} against official Campus France
           guidance. Exact requirements and timelines depend on residence,

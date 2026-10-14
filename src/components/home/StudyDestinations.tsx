@@ -1,5 +1,4 @@
 "use client";
-import { brand } from "@/config/brand";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
@@ -312,15 +311,13 @@ export default function StudyDestinations() {
 
                   {/* Actions: stark, high-contrast, rounded-none */}
                   <div className="pt-3.5 sm:pt-4 border-t border-ink/10 flex flex-col gap-2">
-                    <a
-                      href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(hub.whatsappMsg)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/book-consultation?destination=${slug || "france"}`}
                       className="w-full flex items-center justify-center gap-2 bg-ink text-cream hover:bg-ink/90 min-h-[44px] py-2 px-4 rounded-none text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.2em] font-medium transition-colors text-center"
                     >
                       <span>Discuss {hub.country} Strategy</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
+                    </Link>
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}
@@ -436,15 +433,13 @@ export default function StudyDestinations() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-6 pt-2">
-                    <a
-                      href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(hub.whatsappMsg)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/book-consultation?destination=${slug || "france"}`}
                       className="inline-flex items-center gap-2 bg-ink text-cream hover:bg-ink/90 px-6 py-3.5 rounded-none text-[10px] uppercase tracking-[0.2em] font-medium transition-colors"
                     >
                       <span>Discuss {hub.country} Strategy</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
+                    </Link>
                     {slug && (
                       <Link
                         href={`/destinations/${slug}`}

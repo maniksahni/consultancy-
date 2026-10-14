@@ -2,10 +2,8 @@
 import { brand } from "@/config/brand";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { MessageCircle, X, Clock, ChevronRight, Phone } from "lucide-react";
-
-const WHATSAPP_URL =
-  `https://wa.me/${brand.whatsappNumber}?text=Hi!%20I%E2%80%99d%20like%20to%20discuss%20settling%2C%20studying%20or%20building%20my%20career%20in%20France.`;
 
 export default function FloatingWhatsApp() {
   const [expanded, setExpanded] = useState(false);
@@ -173,34 +171,18 @@ export default function FloatingWhatsApp() {
               </div>
             </div>
 
-            {/* Quick chips */}
-            <div className="flex flex-wrap gap-1.5 ml-8">
-              {["UK 1-Yr Masters", "USA STEM OPT", "Germany €0 Tuition", "Consular Visa Prep"].map((chip) => (
-                <a
-                  key={chip}
-                  href={`${WHATSAPP_URL} ${encodeURIComponent(chip)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] font-medium text-stone border border-ink/12 bg-cream hover:border-terra/40 hover:text-terra px-2.5 py-1 transition-colors whitespace-nowrap"
-                >
-                  {chip}
-                </a>
-              ))}
-            </div>
-
             {/* CTA */}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/book-consultation"
+              onClick={() => setExpanded(false)}
               className="flex items-center justify-between gap-2 w-full bg-terra hover:bg-terra-dark text-cream min-h-[44px] py-2.5 px-4 label text-[10px] transition-colors group"
             >
               <div className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
-                Start WhatsApp Conversation
+                Start a Consultation
               </div>
               <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-            </a>
+            </Link>
 
             {/* Phone */}
             <a

@@ -5,7 +5,6 @@ import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/althea/FAQ";
-import { brand } from "@/config/brand";
 import FranceChapterJourney from "@/components/home/FranceChapterJourney";
 
 export const metadata = pageMetadata("/", {
@@ -70,7 +69,7 @@ export default function Home() {
       <section className="home-guidance home-wrap">
         <div className="home-guidance-top"><p className="home-eyebrow">05 &nbsp; YOUR FIELD NOTES</p><p>Useful context for the questions ahead. For current rules and decisions, always follow the relevant official source.</p></div>
         <div className="home-guidance-panel"><div><span className="home-guidance-spark">✳</span><p className="home-eyebrow">A SMALL LIBRARY FOR A BIG MOVE</p><h2>Know the terrain.<br /><em>Choose your pace.</em></h2><p>Explore practical guides to French programmes, applications, arrival and everyday life in France.</p><Link className="home-button home-button-navy" href="/knowledge">Explore the guides <ArrowUpRight size={16} /></Link></div><div className="home-guidance-links"><Link href="/study-in-france"><span>01</span><strong>Study in France</strong><ArrowUpRight size={16} /></Link><Link href="/settle-in-france"><span>02</span><strong>Life and arrival</strong><ArrowUpRight size={16} /></Link><Link href="/career-support"><span>03</span><strong>Career support</strong><ArrowUpRight size={16} /></Link><Link href="/first-30-days-france"><span>04</span><strong>Your first 30 days</strong><ArrowUpRight size={16} /></Link></div></div>
-        <div className="home-official"><span>THE OFFICIAL WORD</span><p>For current application routes, arrival checklists and visa information, consult <a href="https://www.campusfrance.org/en/application-etudes-en-france-procedure?lang=en" target="_blank" rel="noreferrer">Campus France ↗</a> and <a href="https://france-visas.gouv.fr/en/" target="_blank" rel="noreferrer">France-Visas ↗</a>.</p></div>
+        <div className="home-official"><span>THE OFFICIAL WORD</span><p>We help you understand the questions to ask and prepare your next steps. For current application routes and visa decisions, consult the relevant official authority.</p></div>
       </section>
 
       <section className="home-faq home-wrap" aria-labelledby="home-faq-title">
@@ -79,7 +78,7 @@ export default function Home() {
 
       <section className="home-contact" id="begin">
         <div className="home-contact-copy"><p className="home-eyebrow">07 &nbsp; WHEN YOU’RE READY</p><h2>One question<br />can begin a <em>lot.</em></h2><p>Tell us a little about the France story you’re considering. We’ll begin there and see whether personal guidance feels right.</p><div className="home-contact-aside"><Sparkles size={15} /><span>First, understand your situation. Agree scope and fee before any work begins.</span></div></div>
-        <div className="home-contact-choice"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><p>Choose the way that feels easiest. There’s no obligation to book a service.</p><Link className="home-button home-button-gold" href="/book-consultation">Arrange an introductory call <ArrowUpRight size={16} /></Link><a href={`https://wa.me/${brand.whatsappNumber}`} className="home-contact-alt">Or start with a WhatsApp message <ArrowUpRight size={15} /></a><a href={`mailto:${brand.email}`} className="home-contact-alt">Prefer email? Write to Harshita <ArrowUpRight size={15} /></a></div>
+        <div className="home-contact-choice"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><p>Choose the way that feels easiest. There’s no obligation to book a service.</p><Link className="home-button home-button-gold" href="/book-consultation">Arrange an introductory call <ArrowUpRight size={16} /></Link><Link href="/book-consultation" className="home-contact-alt">Share your question with Harshita <ArrowUpRight size={15} /></Link></div>
       </section>
     </main>
     <Footer />

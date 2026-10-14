@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/lib/seo";
+import Link from "next/link";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import FAQ from "@/components/althea/FAQ";
-import { official } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/faq', {
   title: 'France Study & Arrival FAQ',
   description: "Clear answers about practical France support, career guidance and independent study admissions preparation.",
@@ -17,9 +17,9 @@ export default function Content() {
       <FAQ />
       <div className="prose">
         <h2>Check the official requirements</h2>
-        <a href={official.india}>Campus France India ↗</a>
+        <Link href="/campus-france-guide">Application procedure guide ↗</Link>
         <br />
-        <a href={official.visa}>France-Visas ↗</a>
+        <Link href="/france/visas">Student visa guide ↗</Link>
       </div>
     </Page>
   );

@@ -1,7 +1,7 @@
 "use client";
-import { brand } from "@/config/brand";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
@@ -100,15 +100,13 @@ export default function PersonalHero() {
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </a>
 
-              <a
-                href={`https://wa.me/${brand.whatsappNumber}?text=Hi!%20I%20would%20like%20to%20chat%20directly%20about%20my%20study%20abroad%20plans.`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/book-consultation"
                 className="inline-flex items-center justify-center gap-2.5 rounded-xl border border-emerald-500/30 bg-slate-900/80 hover:bg-emerald-950/40 hover:border-emerald-500/50 px-6 py-4 text-sm font-semibold text-emerald-300 backdrop-blur-md transition-all shadow-md"
               >
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
-                <span>Chat Directly on WhatsApp</span>
-              </a>
+                <span>Share Your Question</span>
+              </Link>
             </div>
 
             {/* 3 Core Trust Pillars */}

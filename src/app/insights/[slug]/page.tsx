@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import { notFound } from "next/navigation";
 import Page from "@/components/althea/Page";
+import Link from "next/link";
 import { articles, checked } from "@/data/france";
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -30,9 +31,7 @@ export default function Article({ params }: { params: { slug: string } }) {
           <p key={p}>{p}</p>
         ))}
         <h2>Continue with the official source.</h2>
-        <a href={a.source} target="_blank" rel="noopener noreferrer">
-          Official guidance ↗
-        </a>
+        <Link href="/knowledge">Explore the reviewed guidance library ↗</Link>
         <p className="muted">
           General orientation. Confirm the current requirements for your own
           circumstances before applying.

@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
+import Link from "next/link";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
-import { official } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/scholarships', {
   title: 'France Scholarships for Students',
   description:
@@ -22,9 +22,7 @@ export default function Content() {
           calendars. Check your nationality, chosen degree, academic background
           and whether an institution must nominate you.
         </p>
-        <a href={official.scholarships}>
-          Campus France scholarship resources ↗
-        </a>
+        <Link href="/france/scholarships">Explore scholarship guidance ↗</Link>
         <h2>Build a realistic plan</h2>
         <p>
           Record deadlines, required evidence and the awarding organisation.
