@@ -12,12 +12,15 @@ export const metadata: Metadata = pageMetadata('/reviews', {
 
 export default function ReviewsPage() {
   return (
-    <Page
-      eyebrow="STUDENT EXPERIENCES"
-      title="A journey worth sharing."
-      intro="Explore real student journeys across admissions, scholarships, visa clearance, and settling into university life in France with Althéa Consulting."
-    >
-      <Testimonials full />
-    </Page>
+    <div className="review-page">
+      <Page
+        eyebrow="STUDENT EXPERIENCES"
+        title="A journey worth sharing."
+        intro="Explore real student journeys across admissions, scholarships, visa clearance, and settling into university life in France with Althéa Consulting."
+        image="/images/editorial/france-campus.webp"
+      >
+        <Testimonials full />
+      </Page>
+    </div>
   );
 }

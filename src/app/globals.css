@@ -6026,3 +6026,40 @@ textarea {
   .directory-mode-switch button { flex:1; justify-content:center; gap:6px; min-height:44px; padding:8px 5px; font-size:10px; }
   .directory-mode-switch span { padding:3px 5px; font-size:9px; }
 }
+
+/* Student stories page: shorter phone banner and tighter testimonial cards. */
+@media (max-width: 760px) {
+  .review-page .interior-cover { padding: 23px 0 21px; }
+  .review-page .interior-cover-layout { gap: 14px; }
+  .review-page .interior-cover .interior-breadcrumb { margin-bottom: 15px; }
+  .review-page .interior-cover .page-heading h1 {
+    margin: 12px 0 13px;
+    font-size: clamp(39px, 10vw, 50px);
+    line-height: .98;
+  }
+  .review-page .interior-cover .lead { max-width: 36rem; font-size: 11px; line-height: 1.62; }
+  .review-page .interior-cover-photo { height: 126px; border-radius: 70px 70px 2px 2px; }
+  .review-page .interior-cover-photo > span { left: 12px; right: 12px; bottom: 13px; font-size: 7px; }
+  .review-page .maison-interior .page-content { padding-top: 17px; padding-bottom: 29px; }
+  .review-page .voices-full { padding: 18px 13px; }
+  .review-page .voices-full .voices-layout { gap: 17px; }
+  .review-page .voices-full .voices-intro h2 { margin: 9px 0; font-size: 32px; line-height: 1.03; }
+  .review-page .voices-full .voices-intro > p:not(.eyebrow) { font-size: 10px; line-height: 1.6; }
+  .review-page .voices-full .voices-disclosure { margin-top: 10px; }
+  .review-page .voices-full .voices-disclosure p { margin-top: 6px; font-size: 8px; line-height: 1.55; }
+  .review-page .voices-full .voice-card { min-height: 0; padding: 14px; }
+  .review-page .voices-full .voice-quote-icon { margin-top: 10px; }
+  .review-page .voices-full .voice-card blockquote.voice-quote-collapsed { -webkit-line-clamp: 6; margin: 7px 0 9px; font-size: 20px; line-height: 1.18; }
+  .review-page .voices-full .voice-quote-more { margin: -3px 0 8px; }
+  .review-page .voices-full .voice-attribution { padding-top: 9px; }
+  .review-page .voices-full .voice-controls { gap: 7px; padding-top: 9px; }
+  .review-page .voices-full .voice-progress { gap: 1px; }
+  .review-page .voices-full .voice-progress button { width: clamp(13px, 4.2vw, 17px); }
+  .review-page .voices-full .voice-arrows { gap: 5px; }
+  .review-page .voices-full .voice-arrows button { width: 40px; height: 40px; }
+  .review-page .voices-full .voice-notes { margin-top: 18px; padding-bottom: 7px; }
+  .review-page .voices-full .voice-notes h3 { font-size: 20px; }
+  .review-page .interior-closing { padding: 42px 6%; }
+  .review-page .interior-closing h2 { font-size: clamp(39px, 10vw, 48px); margin: 14px 0; }
+  .review-page .interior-closing > p:not(.eyebrow) { margin-bottom: 17px; font-size: 11px; }
+}
