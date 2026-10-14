@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/althea/EditorialImage";
 import Link from "next/link";
 import Page from "@/components/althea/Page";
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "Bienvenue chez Althéa.",
   description:
     "Meet Althéa Consulting and Harshita Kohli, Career Coach & France Expert. A Parisian perspective on a personal journey.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/outcomes" },
   title: "A first conversation.",
   description:
     "Understand what a consultation can cover before deciding on further support.",

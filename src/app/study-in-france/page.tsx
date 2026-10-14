@@ -4,6 +4,7 @@ import KnowledgeHub from "@/components/althea/KnowledgeHub";
 import Link from "next/link";
 import { official, checked, cities } from "@/data/france";
 export const metadata: Metadata = {
+  alternates: { canonical: "/study-in-france" },
   title: "Your French chapter.",
   description:
     "Bring your academic ambitions and everyday life into the same plan.",

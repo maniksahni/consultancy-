@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import FAQ from "@/components/althea/FAQ";
-import { official } from "@/data/france";
+import { official, faqs } from "@/data/france";
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "A few good questions.",
   description: "Clear answers before your first step.",
 };
@@ -12,6 +13,10 @@ export default function Content() {
       title={"A few good questions."}
       intro={"Clear answers before your first step."}
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({
+        "@context":"https://schema.org", "@type":"FAQPage",
+        mainEntity:faqs.map(([question,answer])=>({"@type":"Question",name:question,acceptedAnswer:{"@type":"Answer",text:answer}}))
+      })}} />
       <FAQ />
       <div className="prose">
         <h2>Check the official requirements</h2>

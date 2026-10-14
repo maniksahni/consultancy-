@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Clear expectations.",
   description: "General website information and consultation enquiry terms.",
 };

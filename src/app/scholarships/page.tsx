@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { official } from "@/data/france";
 export const metadata: Metadata = {
+  alternates: { canonical: "/scholarships" },
   title: "Research your funding.",
   description:
     "Use official award information and plan without assuming an award.",

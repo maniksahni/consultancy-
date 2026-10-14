@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Page from "@/components/althea/Page";
 export const metadata: Metadata = {
+  alternates: { canonical: "/services" },
   title: "Support, thoughtfully scoped.",
   description:
     "Explore personal academic guidance, programme research, application review and arrival planning with Althéa.",

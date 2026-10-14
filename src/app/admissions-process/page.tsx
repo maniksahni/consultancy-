@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Procedure from "@/components/althea/Procedure";
 export const metadata: Metadata = {
+  alternates: { canonical: "/admissions-process" },
   title: "Your application, organised.",
   description:
     "Follow the programme and country-specific official instructions.",

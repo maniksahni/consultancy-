@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Your information, considered.",
   description:
     "Privacy information for the consultation enquiry and this website.",

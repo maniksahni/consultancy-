@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Booking from "@/components/althea/Booking";
 export const metadata: Metadata = {
+  alternates: { canonical: "/book-consultation" },
   title: "Let’s begin with your story.",
   description:
     "Request a conversation. Preferred times are requests, and an appointment is confirmed separately.",

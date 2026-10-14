@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/althea/EditorialImage";
 import Link from "next/link";
 import { ArrowUpRight, MoveDown } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -342,3 +342,5 @@ export default function Home() {
     </>
   );
 }
+
+export const metadata = { alternates: { canonical: "/" } };

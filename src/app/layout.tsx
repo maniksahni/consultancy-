@@ -20,13 +20,9 @@ export const viewport: Viewport = {
   themeColor: "var(--color1)",
 };
 export const metadata: Metadata = {
-  metadataBase: process.env.NEXT_PUBLIC_SITE_URL
-    ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
-    : undefined,
-  robots: process.env.NEXT_PUBLIC_SITE_URL
-    ? { index: true, follow: true }
-    : { index: false, follow: false },
-  alternates: { canonical: "./" },
+  metadataBase: new URL("https://altheaconsulting.in"),
+  robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
   title: {
     default: "Althéa Consulting | Your World. Your Future.",
     template: "%s | Althéa Consulting",
@@ -39,6 +35,7 @@ export const metadata: Metadata = {
     description: "Your world. Your future. Thoughtfully guided.",
     type: "website",
     locale: "en_IN",
+    images: [{url: "/images/og-althea.jpg", width:1200, height:630, alt:"Althéa Consulting — a Parisian perspective"}],
   },
 };
 export default function RootLayout({

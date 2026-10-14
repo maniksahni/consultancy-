@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { stages } from "@/data/france";
 export const metadata: Metadata = {
+  alternates: { canonical: "/mentorship-model" },
   title: "A considered path, together.",
   description:
     "Six stages to organise the conversation — adapted to your circumstances and agreed scope.",

@@ -3,6 +3,7 @@ import Page from "@/components/althea/Page";
 import Link from "next/link";
 import { articles } from "@/data/france";
 export const metadata: Metadata = {
+  alternates: { canonical: "/insights" },
   title: "Le journal Althéa.",
   description:
     "Practical notes for a thoughtful French chapter, with official sources.",

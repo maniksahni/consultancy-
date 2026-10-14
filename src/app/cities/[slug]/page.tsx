@@ -6,6 +6,7 @@ export function generateStaticParams() {
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
   return {
+    alternates: {canonical: `/cities/${params.slug}`},
     title: `Studying in ${cities.find((c) => c.slug === params.slug)?.name || "France"}`,
   };
 }

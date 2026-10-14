@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Finder from "@/components/althea/Finder";
 export const metadata: Metadata = {
+  alternates: { canonical: "/universities" },
   title: "Find your programme.",
   description:
     "A curated starting point, with official sources and clear review dates. No guaranteed admissions or assumed fees.",

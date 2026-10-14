@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Testimonials from "@/components/althea/Testimonials";
 export const metadata: Metadata = {
+  alternates: { canonical: "/reviews" },
   title: "The review collection",
   description:
     "Explore the Althéa review collection design. Current examples are clearly labelled illustrative samples.",
