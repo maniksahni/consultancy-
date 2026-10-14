@@ -46,6 +46,7 @@ export default function Footer() {
           <Link href="/career-support">Career Support</Link>
           <Link href="/about">About Harshita</Link>
           <Link href="/knowledge">Resources & guides</Link>
+          <Link href="/france/resources">France study library</Link>
           <Link href="/first-30-days-france">Free arrival checklist</Link>
         </div>
         <div>
