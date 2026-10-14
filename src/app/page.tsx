@@ -59,7 +59,7 @@ export default function Home() {
           </Link>)}
         </div>
         <div className="rv-rail-hint"><span>DRAG OR SWIPE TO WANDER</span><span>{destinations.length} PLACES TO BEGIN <i>✳</i></span></div>
-        <div className="rv-directory-note"><Globe2 size={17} /><p><strong>A useful first map, with honest edges.</strong> The directory brings together institution records across seven destinations and course or programme records where available. Coverage varies by country; records are not a complete admissions catalogue and fees are shown only where published.</p><Link href="/universities">Open the directory <ArrowUpRight size={15} /></Link></div>
+        <div className="rv-directory-note"><Globe2 size={17} /><p><strong>A useful first map, with honest edges.</strong> The directory brings together institution records across seven destinations and course or programme records where available. Coverage varies by country; records are not a complete admissions catalogue and fees are shown only where published.</p><Link href="/universities?country=france&view=courses#course-finder">Open the directory <ArrowUpRight size={15} /></Link></div>
       </section>
 
       <section className="rv-compass" id="find-your-way">

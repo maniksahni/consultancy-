@@ -5968,11 +5968,7 @@ textarea {
 }
 
 /* Compact study journeys: keep the editorial cards, let mobile users browse them horizontally. */
-.nav-small-only { display:none; }
-
 @media (max-width: 760px) {
-  .nav-wide-only { display:none!important; }
-  .nav-small-only { display:flex!important; }
   .study-services { display:grid; grid-template-columns:1fr; gap:12px; padding:16px 0 38px; border-bottom:1px solid var(--line); }
   .study-services h2 { margin:9px 0; font-size:38px; }
   .study-services > div:first-child > p:last-child { margin:0; font-size:11px; }
