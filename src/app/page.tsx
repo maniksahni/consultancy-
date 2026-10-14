@@ -73,18 +73,24 @@ export default function Home() {
               <div className="cover-picture">
                 <Image
                   src="/images/editorial/france-evening.webp"
-                  alt="The Eiffel Tower and the Seine at sunset, a view towards a new life in Paris"
+                  alt="The Eiffel Tower and Pont Alexandre III at blue hour on the Seine in Paris"
                   fill
                   priority
                   sizes="(max-width:760px) 90vw, 55vw"
                 />
                 <span className="cover-image-label">
-                  01 / A PARISIAN PERSPECTIVE
+                  01 / EIFFEL TOWER · PONT ALEXANDRE III
                 </span>
               </div>
               <div className="hero-image-caption">
                 <span>PARIS · 48°51′ N, 2°21′ E</span>
-                <span>YOUR NEXT CHAPTER, CONSIDERED.</span>
+                <a
+                  href="https://commons.wikimedia.org/wiki/File:Eiffel_Tower_and_Pont_Alexandre_III_at_night.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  PHOTO: GETFUNKY PARIS · CC BY 2.0 ↗
+                </a>
               </div>
             </div>
           </div>
@@ -173,8 +179,8 @@ export default function Home() {
         </section>
         <section className="edition-interlude">
           <Image
-            src="/images/editorial/paris-cafe.webp"
-            alt="A quiet Paris café terrace beside a Haussmann street"
+            src="/images/editorial/notre-dame.webp"
+            alt="The west façade of Notre-Dame Cathedral on Île de la Cité in Paris"
             fill
             sizes="100vw"
           />
@@ -192,7 +198,7 @@ export default function Home() {
               DISCOVER OUR FRENCH CHAPTER <ArrowUpRight size={22} />
             </Link>
           </div>
-          <span className="interlude-coordinate">48°51′ N · 2°21′ E</span>
+          <span className="interlude-coordinate">NOTRE-DAME · ÎLE DE LA CITÉ · PARIS</span>
         </section>
         <section className="edition-adviser wrap">
           <div className="adviser-editorial-note">

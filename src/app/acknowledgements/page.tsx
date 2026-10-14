@@ -1,6 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
+import { imageCredits } from "@/data/imageCredits";
 
 export const metadata: Metadata = pageMetadata('/acknowledgements', {
   title: "Sources & photography.",
@@ -34,15 +35,34 @@ export default function Content() {
         </a>
         <h2>Global destination resources</h2>
         <p>Country guides link to Study UK (British Council), EducationUSA, EduCanada, DAAD, Study Australia and Education in Ireland. These are research resources, not partnerships. Destination guidance reviewed on 14 October 2026; always check the publisher for current requirements.</p>
-        <h2>Photography and generated editorial imagery</h2>
+        <h2 id="photography">Photographs and image licences</h2>
         <p>
-          The current Paris, France and country destination scenes in the site
-          were generated as original editorial illustrations using OpenAI image
-          generation for this project. They are not documentary photographs of
-          specific university campuses or a representation of an official
-          institution. The country scenes are mood-setting images; follow the
-          linked official sources for facts.
+          The Paris and destination images are real photographs of the named
+          landmarks and campuses below, sourced from Wikimedia Commons. Each
+          local copy was resized and converted to WebP for the site; some page
+          layouts crop the image to fit. The listed licences apply to those
+          photo files. Photograph use does not imply an affiliation with a
+          university or destination organisation.
         </p>
+        <ul className="photo-credits">
+          {imageCredits.map((photo) => (
+            <li key={photo.file}>
+              <a href={photo.source} target="_blank" rel="noopener noreferrer">
+                {photo.place} — {photo.author}
+              </a>
+              {" · "}
+              <a
+                href={photo.licenseUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {photo.license}
+              </a>
+              {" · "}
+              <code>{photo.file}</code>
+            </li>
+          ))}
+        </ul>
         <h2>Independent editorial work</h2>
         <p>
           The design is an original implementation inspired by Parisian

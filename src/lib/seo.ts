@@ -17,7 +17,7 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
       title, description, url: absoluteUrl(path),
-      images: [{ url: absoluteUrl("/images/editorial/france-evening.webp"), alt: "Paris and the Eiffel Tower" }],
+      images: [{ url: absoluteUrl("/images/editorial/france-evening.webp"), alt: "The Eiffel Tower and Pont Alexandre III in Paris" }],
       ...metadata.openGraph,
     },
     twitter: { card: "summary_large_image", title, description,

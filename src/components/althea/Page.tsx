@@ -18,12 +18,21 @@ export default function Page({
 }) {
   const pageKey = `${eyebrow} ${title}`.toLocaleLowerCase();
   const pageImage = image || (
-    /university|programme|academic|research|course|study/.test(pageKey) ? "/images/editorial/france-library.webp" :
+    /university|programme|academic|research|course|study/.test(pageKey) ? "/images/editorial/sainte-genevieve.webp" :
     /visa|admission|application|official|campus/.test(pageKey) ? "/images/editorial/france-campus.webp" :
     /city|cost|living|scholarship|budget|outcome/.test(pageKey) ? "/images/editorial/france-bordeaux.webp" :
-    /service|consult|journey|welcome|about|maison|support/.test(pageKey) ? "/images/editorial/paris-cafe.webp" :
-    ["/images/editorial/france-evening.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/france-library.webp", "/images/editorial/france-campus.webp", "/images/editorial/paris-cafe.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
+    /service|consult|journey|welcome|about|maison|support/.test(pageKey) ? "/images/editorial/notre-dame.webp" :
+    ["/images/editorial/france-evening.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/sainte-genevieve.webp", "/images/editorial/france-campus.webp", "/images/editorial/notre-dame.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
   );
+  const imageAlt = pageImage.includes("sainte-genevieve")
+    ? "Reading room of the Bibliothèque Sainte-Geneviève in Paris"
+    : pageImage.includes("campus")
+      ? "The historic Sorbonne University building in Paris"
+      : pageImage.includes("bordeaux")
+        ? "The Place de la Bourse and Water Mirror in Bordeaux"
+        : pageImage.includes("notre-dame")
+          ? "The west façade of Notre-Dame Cathedral in Paris"
+          : "The Eiffel Tower and Pont Alexandre III at blue hour in Paris";
   return (
     <>
       <Navbar />
@@ -48,11 +57,11 @@ export default function Page({
             <div className="interior-cover-photo">
               <Image
                 src={pageImage}
-                alt={pageImage.includes("library") ? "A quiet French university library" : pageImage.includes("campus") ? "A French university courtyard" : pageImage.includes("bordeaux") ? "Bordeaux architecture reflected in the water" : pageImage.includes("cafe") ? "A Paris café terrace on a Haussmann street" : "The Eiffel Tower and Seine at blue hour"}
+                alt={imageAlt}
                 fill
                 sizes="(max-width:760px) 90vw, 35vw"
               />
-              <span>THE COLLECTION</span>
+              <span>{imageAlt}</span>
             </div>
           </div>
         </header>

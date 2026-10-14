@@ -21,11 +21,11 @@ export default function AboutPage() {
         <div className="story-photo">
           <Image
             src="/images/editorial/france-bordeaux.webp"
-            alt="The reflecting pool and warm limestone façades at Bordeaux, France"
+            alt="The Place de la Bourse and Water Mirror in Bordeaux"
             fill
             sizes="(max-width:760px) 90vw, 45vw"
           />
-          <span>{brand.location} · OUR PERSPECTIVE</span>
+          <span>BORDEAUX · PLACE DE LA BOURSE</span>
         </div>
         <div className="story-copy">
           <p className="eyebrow">THE ALTHÉA PHILOSOPHY</p>
@@ -53,8 +53,8 @@ export default function AboutPage() {
         <div className="founder-letter-heading">
           <p className="eyebrow">MEET YOUR ADVISER</p>
           <div className="founder-paris-photo">
-            <Image src="/images/editorial/france-library.webp" alt="A sunlit historic university library in France" fill sizes="(max-width:760px) 90vw, 40vw" />
-            <span className="founder-postcard">Une perspective parisienne</span>
+            <Image src="/images/editorial/sainte-genevieve.webp" alt="The reading room of the Bibliothèque Sainte-Geneviève in Paris" fill sizes="(max-width:760px) 90vw, 40vw" />
+            <span className="founder-postcard">Bibliothèque Sainte-Geneviève · Paris</span>
           </div>
           <h2>{brand.person}</h2>
           <span>{brand.role}</span>

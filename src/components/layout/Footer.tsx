@@ -1,26 +1,42 @@
 import { brand } from "@/config/brand";
 import Link from "next/link";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-top">
         <div>
           <Link className="footer-brand" href="/">
-            <img className="footer-brand-logo" src={brand.assets.logoLight} alt={brand.name} />
+            <img className="footer-brand-logo" src={brand.assets.logoLight} alt={brand.name} width={420} height={96} />
           </Link>
           <p>
             {brand.tagline}
           </p>
           <div className="brand-contact">
-            <strong>{brand.person} — {brand.role}</strong>
-            <small>{brand.location}</small>
-            {brand.email && <a href={`mailto:${brand.email}`}>Email: {brand.email}</a>}
-            {brand.whatsappNumber && (
-              <>
-                <a href={`tel:+${brand.whatsappNumber}`}>Phone: +{brand.whatsappNumber}</a>
-                <a href={`https://wa.me/${brand.whatsappNumber}`}>Chat on WhatsApp</a>
-              </>
-            )}
+            <div className="brand-contact-person">
+              <strong>{brand.person}</strong>
+              <span>{brand.role} <i aria-hidden="true">·</i> {brand.location}</span>
+            </div>
+            <div className="brand-contact-actions">
+              {brand.email && (
+                <a href={`mailto:${brand.email}`}>
+                  <Mail size={17} aria-hidden="true" />
+                  <span><small>EMAIL</small>{brand.email}</span>
+                </a>
+              )}
+              {brand.whatsappNumber && (
+                <>
+                  <a href={`tel:+${brand.whatsappNumber}`}>
+                    <Phone size={17} aria-hidden="true" />
+                    <span><small>CALL</small>+33 7 55 74 90 29</span>
+                  </a>
+                  <a href={`https://wa.me/${brand.whatsappNumber}`}>
+                    <MessageCircle size={17} aria-hidden="true" />
+                    <span><small>WHATSAPP</small>Start a conversation</span>
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div>
@@ -64,7 +80,7 @@ export default function Footer() {
         <div>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
-          <Link href="/acknowledgements">Sources & photography</Link>
+          <Link href="/acknowledgements#photography">Sources & photography</Link>
         </div>
       </div>
     </footer>
