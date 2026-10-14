@@ -52,6 +52,23 @@ function tuitionUnavailableText(country: string) {
   return "The source does not provide a course-level tuition amount.";
 }
 
+function courseTuitionSummary(course: RegistryCourse, country: string) {
+  if (course.tuition === null) return null;
+  const money = (amount: number) => new Intl.NumberFormat("en-IN", {
+    style: "currency", currency: course.currency || "AUD", maximumFractionDigits: 0,
+  }).format(amount);
+  if (country === "australia") {
+    const weeks = Number(course.durationWeeks);
+    const annual = weeks > 0 ? course.tuition * 52 / weeks : null;
+    return {
+      headline: `${money(course.tuition)} total published course tuition`,
+      detail: annual ? `About ${money(annual)} per 52 weeks / ${money(annual / 2)} per half-year, pro-rated from the registered ${weeks}-week course duration.` : "Published CRICOS tuition for the registered course; duration is not available to calculate an annual equivalent.",
+      period: "CRICOS registered-course total",
+    };
+  }
+  return { headline: `${money(course.tuition)} published tuition`, detail: "The source does not specify a comparable annual or semester period.", period: "Source period not stated" };
+}
+
 export default function UniversityExplorer({ initialCountry = "all" }: { initialCountry?: string }) {
   const [country, setCountry] = useState(initialCountry);
   const [query, setQuery] = useState("");
@@ -229,9 +246,9 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
         </article>)}</div> : directory.courses.length ? <div className="knowledge-grid research-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => <article key={r.id}>
           <p className="eyebrow">{r.city || destinations.find((d) => d.slug === country)?.name}{r.level ? ` · ${r.level}` : ""}</p>
           <h3>{r.name}</h3><p>{r.institution}</p>
-          <p className="course-result-fee"><strong>{r.tuition === null ? tuitionUnavailableText(country) : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published tuition</span>}</p>
+          <p className="course-result-fee"><strong>{courseTuitionSummary(r, country)?.headline || tuitionUnavailableText(country)}</strong>{courseTuitionSummary(r, country) && <span> · {courseTuitionSummary(r, country)?.period}</span>}</p>
           <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
-            <div><dt>Published tuition</dt><dd>{r.tuition === null ? tuitionUnavailableText(country) : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : country === "france" ? "Parcoursup 2026 catalogue" : country === "uk" ? "Discover Uni 2026 · course year 2027–28" : country === "usa" ? "College Scorecard historical award fields" : "Source does not provide a course-level fee"}</small></dd></div>
+            <div><dt>{country === "australia" ? "Tuition / budget period" : "Published tuition"}</dt><dd>{courseTuitionSummary(r, country)?.headline || tuitionUnavailableText(country)}<small>{courseTuitionSummary(r, country)?.detail || "No numeric amount is present in the underlying course record."} {country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : country === "france" ? "Parcoursup 2026 catalogue" : country === "uk" ? "Discover Uni 2026 · course year 2027–28" : country === "usa" ? "College Scorecard historical award fields" : "Source does not provide a course-level fee"}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}

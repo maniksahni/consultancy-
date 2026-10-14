@@ -284,7 +284,7 @@ for row in csv_rows(download(inst_csv)):
         "tradingName": row.get("Trading Name"), "city": row.get("Postal Address City"),
         "region": row.get("Postal Address State"), "institutionType": row.get("Institution Type"),
         "identifier": code, "website": row.get("Website"),
-        "registrySource": aus_source, "sourceDate": "2026-04-13",
+        "registrySource": aus_source, "sourceDate": TODAY,
     }
 institutions.extend(providers.values())
 for row in csv_rows(download(course_csv)):
@@ -310,7 +310,7 @@ coverage = {
         "france": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition.",
         "canada": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue.",
         "usa": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included.",
-        "australia": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13).",
+        "australia": f"CRICOS provider records and {len([item for item in courses if item['country'] == 'australia']):,} non-expired registered courses (tuition amount included in 25,360 records; snapshot {TODAY}).",
         "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included.",
         "germany": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities.",
         "ireland": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers.",
