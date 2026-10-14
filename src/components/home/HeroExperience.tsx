@@ -54,7 +54,7 @@ export default function HeroExperience() {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative bg-[#0B0A08] text-cream pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
+      className="relative bg-[var(--color5)] text-cream pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-18 lg:pb-24 border-b border-cream/10 overflow-hidden"
     >
       {/* Layer 2: WebGL ribbon */}
       <div data-hero-parallax className="pointer-events-none absolute inset-0"><HeroWebGL /></div>
@@ -189,7 +189,7 @@ export default function HeroExperience() {
               <div className="absolute inset-0 bg-gradient-to-tr from-terra/20 via-terra/5 to-transparent blur-2xl -z-10 hidden sm:block" />
 
               {/* Main Primary Image Panel: Mentor in 1px Hairline Frame */}
-              <div className="relative border border-cream/20 bg-[#14120C] p-1 sm:p-4 shadow-2xl overflow-hidden">
+              <div className="relative border border-cream/20 bg-[var(--color3)] p-1 sm:p-4 shadow-2xl overflow-hidden">
                 <div className="relative h-[220px] w-full overflow-hidden bg-cream/5 border border-cream/10 min-[390px]:h-[228px] min-[428px]:h-[236px] sm:h-auto sm:aspect-[4/5] sm:max-h-[460px] lg:max-h-none">
                   <picture>
                     <source srcSet="/images/mentor-hero.webp" type="image/webp" />
@@ -204,11 +204,11 @@ export default function HeroExperience() {
                     />
                   </picture>
                   {/* Subtle Cinematic Vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08]/80 via-transparent to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color5)]/80 via-transparent to-black/20 pointer-events-none" />
 
                   {/* Overlaid Bottom Title */}
                   <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 flex items-center justify-between text-cream font-mono text-[9px] sm:text-[10px] uppercase tracking-wider">
-                    <span className="px-2 py-0.5 bg-[#0B0A08]/90 border border-cream/20">
+                    <span className="px-2 py-0.5 bg-[var(--color5)]/90 border border-cream/20">
                       Single Dedicated Mentor
                     </span>
                     <span className="text-terra font-medium">Boutique Fiduciary</span>
@@ -219,7 +219,7 @@ export default function HeroExperience() {
               {/* Secondary Overlapping Panel: Plane / International Flight (Depth Layer) */}
               <motion.div
                 style={{ x: moveXReverse, y: moveYReverse }}
-                className="absolute -bottom-6 -left-6 sm:-left-8 w-44 sm:w-52 border border-cream/25 bg-[#14120C]/95 backdrop-blur-md p-2 shadow-2xl hidden sm:block"
+                className="absolute -bottom-6 -left-6 sm:-left-8 w-44 sm:w-52 border border-cream/25 bg-[var(--color3)]/95 backdrop-blur-md p-2 shadow-2xl hidden sm:block"
               >
                 <div className="relative aspect-[16/10] overflow-hidden border border-cream/10">
                   <img
@@ -239,7 +239,7 @@ export default function HeroExperience() {
               </motion.div>
 
               {/* Floating Verified Badge: fully inside the mentor image frame */}
-              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-5 lg:right-5 z-20 inline-flex w-max max-w-[calc(100%_-_1.5rem)] items-center gap-1.5 sm:gap-2 whitespace-nowrap border border-terra/40 bg-[#0B0A08]/95 px-3 py-1.5 shadow-xl backdrop-blur-md sm:px-3.5 sm:py-2">
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-5 lg:right-5 z-20 inline-flex w-max max-w-[calc(100%_-_1.5rem)] items-center gap-1.5 sm:gap-2 whitespace-nowrap border border-terra/40 bg-[var(--color5)]/95 px-3 py-1.5 shadow-xl backdrop-blur-md sm:px-3.5 sm:py-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-terra animate-pulse" />
                 <span className="font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-cream">
                   100% Unbiased Advisory

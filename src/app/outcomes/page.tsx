@@ -1,38 +1,40 @@
 import type { Metadata } from "next";
-import EditorialPage from "@/components/layout/EditorialPage";
-import { studentOutcomes } from "@/data/editorial";
-import TiltCard from "@/components/experience/TiltCard";
+import Page from "@/components/althea/Page";
 
-export const metadata: Metadata = { title: "Student Outcomes | Pathways Global", description: "Existing student case files, recorded with initials only." };
-
-export default function OutcomesPage() {
+export const metadata: Metadata = {
+  title: "A first conversation.",
+  description:
+    "Understand what a consultation can cover before deciding on further support.",
+};
+export default function Content() {
   return (
-    <EditorialPage eyebrow="Documented Admissions Records" title="Student" accent="Outcomes."
-      intro="Initials-only case files with the recorded profile and outcome details. Individual results do not predict future decisions.">
-      <div className="grid lg:grid-cols-2 gap-8">
-        {studentOutcomes.map((item, i) => (
-          <TiltCard key={item.ref} className="border border-ink/15 bg-white p-6 sm:p-8">
-          <article>
-            <div className="border-b border-ink/15 pb-5 mb-8 flex items-start justify-between gap-4">
-              <p className="text-[10px] uppercase tracking-widest text-stone">Case file {String(i + 1).padStart(3, "0")} · {item.ref}</p>
-              <p className="text-[10px] uppercase tracking-widest text-stone text-right">{item.country} · {item.intake}</p>
-            </div>
-            <h2 className="font-display text-4xl">Candidate {item.initials}</h2>
-            <p className="font-display text-2xl mt-5">{item.university}</p>
-            <p className="text-sm text-stone mt-1">{item.program}</p>
-            <p className="text-sm text-ink/75 leading-relaxed mt-8">{item.narrative}</p>
-            <div className="border-t border-b border-ink/15 py-4 mt-8">
-              <p className="text-[10px] uppercase tracking-widest text-stone mb-2">Recorded profile</p>
-              <p className="text-sm">{item.stats}</p>
-            </div>
-            <div className="bg-cream border border-ink/15 p-5 mt-6">
-              <p className="text-[10px] uppercase tracking-widest text-stone mb-2">Recorded outcome</p>
-              <p className="text-sm font-medium">{item.outcome}</p>
-            </div>
-          </article>
-          </TiltCard>
-        ))}
+    <Page
+      title={"A first conversation."}
+      intro={
+        "Understand what a consultation can cover before deciding on further support."
+      }
+    >
+      <div className="prose">
+        <h2>Your starting point</h2>
+        <p>
+          Discuss your academic background, interests, budget and timing. The
+          aim is to organise your questions and decide what needs further
+          research.
+        </p>
+        <h2>A hypothetical journey</h2>
+        <p>
+          A student interested in a taught master’s might first compare academic
+          requirements, then review teaching language and living costs, and
+          finally confirm the relevant application route. This is an
+          illustration, not a student testimonial or reported outcome.
+        </p>
+        <h2>Honest expectations</h2>
+        <p>
+          We do not publish success rates or student stories without documentary
+          evidence and permission. No offer, scholarship or visa decision is
+          guaranteed.
+        </p>
       </div>
-    </EditorialPage>
+    </Page>
   );
 }

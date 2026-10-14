@@ -1,0 +1,28 @@
+name: Stage official education data
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: official-data-${{ github.run_id }}
+          restore-keys: official-data-
+      - run: node scripts/data/import.mjs
+      - run: node scripts/data/validate.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: directory-human-review
+          path: |
+            data/staging
+            data/review

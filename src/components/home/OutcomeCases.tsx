@@ -173,7 +173,7 @@ export default function OutcomeCases() {
   return (
     <section
       id="outcomes"
-      className="bg-[#0B0A08] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden w-full"
+      className="bg-[var(--color5)] text-cream py-20 sm:py-24 lg:py-32 border-b border-cream/10 relative overflow-hidden w-full"
     >
       {/* Subtle Warm Amber Glow Behind Section */}
       <div className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-terra/5 rounded-full blur-[140px] pointer-events-none" />

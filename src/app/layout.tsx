@@ -1,17 +1,7 @@
+import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
-import dynamic from "next/dynamic";
 import "./globals.css";
-import SkipToContent from "@/components/common/SkipToContent";
-import UTMTracker from "@/components/common/UTMTracker";
-
-const ScrollExperience = dynamic(() => import("@/components/experience/ScrollExperience"), { ssr: false });
-const CustomCursor = dynamic(() => import("@/components/experience/CustomCursor"), { ssr: false });
-const RouteCurtain = dynamic(() => import("@/components/experience/RouteCurtain"), { ssr: false });
-const FloatingWhatsApp = dynamic(() => import("@/components/common/FloatingWhatsApp"), { ssr: false });
-const BackToTop = dynamic(() => import("@/components/common/BackToTop"), { ssr: false });
-const CookieBanner = dynamic(() => import("@/components/common/CookieBanner"), { ssr: false });
-
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "600"],
@@ -19,62 +9,63 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   display: "swap",
 });
-
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-jakarta",
   display: "swap",
 });
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#14120C",
+  themeColor: brand.colors.navy,
 };
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://consultancyworld2.firebaseapp.com"),
-  title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
+  metadataBase: new URL(brand.canonicalUrl),
+  robots: process.env.NEXT_PUBLIC_SITE_URL
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
+  alternates: { canonical: "./" },
+  title: {
+    default: `${brand.name} | Study, Settle & Succeed in France`,
+    template: `%s | ${brand.name}`,
+  },
   description:
-    "Bypass mass-processing agencies. Personalized profile assessment, Ivy League & Russell Group SOP curation, and foolproof consular visa preparation directly from a dedicated senior mentor. 99.2% visa grant record.",
-  keywords: [
-    "Pathways Global",
-    "Study abroad mentorship",
-    "1-on-1 overseas education advisory",
-    "Student visa consultancy",
-    "US F1 visa preparation",
-    "UK graduate route admissions",
-    "Germany public university APS",
-    "Canada study permit SDS",
-    "Australia Genuine Student statement",
-    "Elite SOP editorial",
-  ],
+    brand.tagline,
+  icons: { icon: brand.assets.favicon },
   openGraph: {
-    title: "Pathways Global | Elite 1-on-1 Study Abroad Mentorship",
-    description:
-      "Bypass mass-processing agencies. 100% unbiased advisory, Ivy League & Russell Group admissions strategy, and verified consular preparation.",
+    images: [{ url: brand.assets.og, width: 1200, height: 630 }],
+    url: "./",
+    title: brand.name,
+    description: brand.tagline,
     type: "website",
-    locale: "en_US",
+    locale: "en_IN",
   },
 };
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
-      <body className="bg-cream text-ink overflow-x-hidden w-full max-w-full font-sans">
-        <UTMTracker />
-        <SkipToContent />
-        <ScrollExperience />
-        <CustomCursor />
-        <RouteCurtain />
-        <div className="flex flex-col w-full max-w-full overflow-x-hidden">
-          {children}
-        </div>
-        <BackToTop />
-        <FloatingWhatsApp />
-        <CookieBanner />
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`}>
+      <body>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: brand.name,
+              url: brand.canonicalUrl,
+              description: "Independent education advisory with a specialist focus on France",
+            }),
+          }}
+        />
       </body>
     </html>
   );

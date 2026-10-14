@@ -44,3 +44,12 @@ tunnel_url.txt
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.next-althea-build/
+test-results/
+
+# Import cache and unreviewed source documents
+data/cache/
+data/staging/*.json
+data/staging/pages/
+data/review/*.json

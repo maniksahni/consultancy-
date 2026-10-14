@@ -33,7 +33,7 @@ export default function CinematicStatement() {
     <section
       ref={containerRef}
       aria-label="Editorial Intermission"
-      className="relative bg-[#0B0A08] text-cream py-24 sm:py-32 lg:py-44 border-b border-cream/10 overflow-hidden flex items-center justify-center min-h-[55vh] sm:min-h-[65vh] lg:min-h-[75vh]"
+      className="relative bg-[var(--color5)] text-cream py-24 sm:py-32 lg:py-44 border-b border-cream/10 overflow-hidden flex items-center justify-center min-h-[55vh] sm:min-h-[65vh] lg:min-h-[75vh]"
     >
       {/* ── Layer 1: Ambient Slow Moving Glow ── */}
       <motion.div

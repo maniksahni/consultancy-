@@ -72,7 +72,7 @@ export default function FinalCTA() {
   };
 
   return (
-    <section id="booking" className="bg-[#0B0A08] text-cream py-20 sm:py-28 lg:py-36 relative overflow-hidden">
+    <section id="booking" className="bg-[var(--color5)] text-cream py-20 sm:py-28 lg:py-36 relative overflow-hidden">
       {/* ── Large Warm Radial Glow Behind Headline ── */}
       <motion.div
         animate={{
@@ -233,7 +233,7 @@ export default function FinalCTA() {
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Manik Sahni"
-                    className="w-full bg-[#14120C] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
+                    className="w-full bg-[var(--color3)] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
                   />
                 </div>
 
@@ -247,7 +247,7 @@ export default function FinalCTA() {
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                     placeholder="e.g. +91 9876543210"
-                    className="w-full bg-[#14120C] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
+                    className="w-full bg-[var(--color3)] border border-cream/20 text-cream px-3.5 py-3 text-sm focus:border-terra focus:outline-none rounded-none placeholder:text-cream/30"
                   />
                 </div>
 
@@ -259,7 +259,7 @@ export default function FinalCTA() {
                     <select
                       value={formData.targetCountry}
                       onChange={(e) => setFormData({ ...formData, targetCountry: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
+                      className="w-full bg-[var(--color3)] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
                     >
                       <option value="United Kingdom">United Kingdom</option>
                       <option value="United States">United States</option>
@@ -278,7 +278,7 @@ export default function FinalCTA() {
                     <select
                       value={formData.targetIntake}
                       onChange={(e) => setFormData({ ...formData, targetIntake: e.target.value })}
-                      className="w-full bg-[#14120C] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
+                      className="w-full bg-[var(--color3)] border border-cream/20 text-cream px-3 py-3 text-sm focus:border-terra focus:outline-none rounded-none"
                     >
                       <option value="Fall 2026">Fall 2026</option>
                       <option value="Spring 2027">Spring 2027</option>

@@ -218,7 +218,7 @@ export default function FloatingWhatsApp() {
         <button
           onClick={() => setExpanded((prev) => !prev)}
           aria-label={expanded ? "Close WhatsApp chat" : "Chat with Senior Mentor on WhatsApp"}
-          className="h-10 w-10 min-h-0 min-w-0 rounded-full p-0 relative inline-flex items-center justify-center bg-[#14120C] text-cream border border-terra/60 shadow-2xl active:scale-[0.96] transition-transform duration-200"
+          className="h-10 w-10 min-h-0 min-w-0 rounded-full p-0 relative inline-flex items-center justify-center bg-[var(--color3)] text-cream border border-terra/60 shadow-2xl active:scale-[0.96] transition-transform duration-200"
         >
           {expanded ? (
             <X className="h-4 w-4 text-cream" />

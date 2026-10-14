@@ -200,7 +200,7 @@ export default function DifferenceGrid() {
   const activeDot = ((selectedIndex % PANELS.length) + PANELS.length) % PANELS.length;
 
   return (
-    <section id="comparison" className="bg-[#F2EDE4] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
+    <section id="comparison" className="bg-[var(--color7)] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full">
       <ComparisonSpotlight />
       <div className="relative z-10 max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
@@ -275,7 +275,7 @@ export default function DifferenceGrid() {
                     className={`flex-[0_0_84%] sm:flex-[0_0_46%] lg:flex-none pl-4 sm:pl-5 lg:pl-0 min-w-0 h-full ${idx >= PANELS.length ? "lg:hidden" : ""}`}
                   >
                     <div
-                      className="bg-[#FAF7F2] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-[3px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
+                      className="bg-[var(--color4)] border border-ink/20 p-6 sm:p-8 flex flex-col justify-between relative group transition-all duration-[400ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] h-full min-h-[360px] sm:min-h-[390px] hover:-translate-y-[3px] hover:border-terra/35 hover:shadow-[0_4px_24px_rgba(194,91,26,0.08)]"
                     >
                       <div>
                         {/* Top Bar with Big Editorial Number */}
@@ -360,7 +360,7 @@ export default function DifferenceGrid() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setSelectedStandard(null)}
-              className="fixed inset-0 bg-[#0B0A08]/70 backdrop-blur-sm cursor-pointer"
+              className="fixed inset-0 bg-[var(--color5)]/70 backdrop-blur-sm cursor-pointer"
               aria-hidden="true"
             />
 
@@ -370,10 +370,10 @@ export default function DifferenceGrid() {
               animate={{ x: 0, y: 0 }}
               exit={isMobile ? { y: "100%", x: 0 } : { x: "100%", y: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 w-full max-w-lg bg-[#FAF7F2] text-[#14120C] border-t md:border-t-0 md:border-l border-ink/20 shadow-2xl flex flex-col h-[85vh] md:h-full overflow-hidden"
+              className="relative z-10 w-full max-w-lg bg-[var(--color4)] text-[var(--color3)] border-t md:border-t-0 md:border-l border-ink/20 shadow-2xl flex flex-col h-[85vh] md:h-full overflow-hidden"
             >
               {/* Top Bar with Editorial Monospace Index & Close Target */}
-              <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-ink/15 bg-[#FAF7F2] flex-shrink-0">
+              <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-ink/15 bg-[var(--color4)] flex-shrink-0">
                 <div className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-terra" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink/60">
@@ -446,7 +446,7 @@ export default function DifferenceGrid() {
               </div>
 
               {/* Fixed Bottom Action Strip */}
-              <div className="p-6 sm:p-8 pt-4 border-t border-ink/15 bg-[#FAF7F2] flex-shrink-0">
+              <div className="p-6 sm:p-8 pt-4 border-t border-ink/15 bg-[var(--color4)] flex-shrink-0">
                 <button
                   type="button"
                   onClick={() => setSelectedStandard(null)}

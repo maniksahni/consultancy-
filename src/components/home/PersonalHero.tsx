@@ -48,7 +48,7 @@ export default function PersonalHero() {
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none" 
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, var(--color9) 1px, transparent 0)`,
           backgroundSize: "32px 32px",
         }}
       />

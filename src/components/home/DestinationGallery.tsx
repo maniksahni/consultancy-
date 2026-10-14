@@ -152,7 +152,7 @@ export default function DestinationGallery() {
   return (
     <section
       id="destinations"
-      className="bg-[#FAF7F2] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full"
+      className="bg-[var(--color4)] text-ink py-16 sm:py-20 lg:py-28 border-b border-ink/15 relative overflow-hidden w-full"
     >
       <div className="max-w-7xl mx-auto px-4 min-[390px]:px-5 sm:px-6 lg:px-16">
 
@@ -215,7 +215,7 @@ export default function DestinationGallery() {
                 >
                   <div
                     data-cursor-view
-                    className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[#0B0A08] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none"
+                    className="group relative h-[420px] sm:h-[460px] overflow-hidden border border-ink/20 bg-[var(--color5)] text-cream flex flex-col justify-end p-6 sm:p-7 rounded-none"
                   >
                     {/* Crisp 4-sided border overlay ensuring no image overlap */}
                     <div className="pointer-events-none absolute inset-0 border border-ink/20 z-20 group-hover:border-terra/50 transition-colors duration-[650ms]" />
@@ -232,7 +232,7 @@ export default function DestinationGallery() {
                     />
 
                     {/* Dark Gradient Overlay: Opacity slightly increases */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0A08] via-[#0B0A08]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color5)] via-[var(--color5)]/60 to-black/20 transition-opacity duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-95" />
 
                     {/* Ambient Warm Corner Glow (Micro glow: 0.18-0.22) */}
                     <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-terra/18 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-[650ms] pointer-events-none" />

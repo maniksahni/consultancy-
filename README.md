@@ -1,109 +1,40 @@
-# GlobalPathways™ Study Abroad & Student Visa Consultancy Web Application
+# Althéa Consulting
 
-A modern, high-converting, responsive study-abroad and student visa consultancy web application built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, **Lucide React**, **Framer Motion**, and **React Hook Form + Zod**.
+A mobile-first Parisian education advisory website for studying, settling and succeeding in France. Built with Next.js 14, React, TypeScript and Tailwind CSS.
 
----
+The design uses French blue, ivory, antique gold, locally bundled display and sans-serif fonts, original editorial layouts, Paris photography and motion that respects reduced-motion preferences. The supplied business card identifies Harshita Kohli as Career Coach & France Expert, based in Paris.
 
-## 🌟 Key Features
+## Development
 
-1. **Sticky Header / Navbar**: Brand emblem, responsive navigation dropdowns, "Book Free Counselling" CTA, Student Login, and mobile drawer.
-2. **High-Impact Hero Section**:
-   - Headline: *"Your Bridge to Global Universities & Visa Success"*
-   - Dual CTAs: *"Check Eligibility Now"* (scrolls to multi-step AI tool) and *"Book 1-on-1 Call"*
-   - Live **Quick Search Program Finder widget** (Country + Degree Level + Discipline).
-3. **4-Column Trust & Key Stats Bar**:
-   - 5,000+ Students Placed Worldwide
-   - 98.4% First-Attempt Visa Grant Rate
-   - 300+ Direct Partner Universities
-   - 100% Free Initial Strategy Session
-   - Official recognition badges: ICEF Accredited, AIRC Certified, British Council Trained Agent, PIER Australia Qualified.
-4. **Multi-Step Interactive Eligibility Checker (Lead Magnet)**:
-   - Built with **React Hook Form + Zod** validation across 4 interactive steps (Academics $\to$ English test $\to$ Country & Intake $\to$ Contact info).
-   - Generates an instant **Visa Probability Index (98% Match)**, 3-tier university shortlist (Ambitious, Target, Safe), estimated scholarship tiers, and post-study work authorization duration.
-5. **Top Destinations Grid & Sub-Pages**:
-   - Interactive destination cards for **USA, UK, Canada, Australia, Germany, and Ireland** with regional filters, average tuition fees, PSW work rights, and top universities.
-   - Dynamic deep-dive subpages at `/destinations/[slug]` with comprehensive visa checklists and employment rules.
-6. **The 5-Step Process Roadmap**:
-   - Visual interactive timeline covering:
-     1. Profile Assessment & University Shortlisting
-     2. SOP/LOR Preparation & Application Dispatch
-     3. Offer Letter & Financial Documentation / 0% Collateral Loan
-     4. Visa Filing & Mock Embassy Interview
-     5. Pre-Departure Briefing & Post-Landing Accommodation
-7. **Core Services Section**:
-   - 6 comprehensive offerings: University Admissions, SOP/LOR Mentorship, Student Visa Lodgment, Scholarship Hunting ($12M+ indexed), Education Loans, and Forex & Housing Support.
-8. **Social Proof & Verified Success Stories**:
-   - Verified student testimonials with green visa approval stamps, admitted university logos, scholarship badges, and a simulated 4.9★ Google Reviews rating.
-9. **Interactive Student Portal Preview & Dedicated Dashboard (`/portal`)**:
-   - Live application milestone tracker (Profile Evaluated $\to$ Documents Verified $\to$ Shortlist Approved $\to$ University Applied $\to$ Offer Received $\to$ Visa Approved).
-   - Encrypted Document Upload Vault with drag-and-drop file mock and verification tags.
-   - Assigned Lead Counsellor profile card with 1-click WhatsApp and direct phone call actions.
-10. **Global Scholarships Directory (`/scholarships`)**:
-    - Searchable database of global fellowships (Chevening, Fulbright, DAAD, Australia Awards) with country and coverage filters.
-11. **Persistent Floating WhatsApp Widget**:
-    - Bottom-right launcher with animated unread badge and quick conversation starter prompts.
-12. **Corporate Modals**:
-    - 1-on-1 Consultation Booking Modal with date & slot selector.
-    - Student Auth Modal with 1-click demo login.
-    - AI Eligibility Result Report Modal with PDF preview download trigger.
+Run `npm install`, then `npm run dev`. Open http://localhost:3000. Development uses `.next-dev` so it does not share production build files. Restart an older dev server after updating this configuration.
 
----
+## Build and preview
 
-## 🚀 Getting Started
+Run `npm run typecheck` and `npm run build`. The static website is exported to `out/`. Run `node audit/serve.cjs` to preview at http://127.0.0.1:3014. `PORT` and `ALTHEA_PREVIEW_ROOT` optionally override its port and export directory.
 
-### 1. Run the Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) with your browser.
+Run `npm test` after building. Playwright starts the export preview automatically and checks exported routes, responsive overflow, navigation, programme filters, FAQ, application guide, consultation form, accessibility and internal links.
 
-### 2. Build for Production
-```bash
-npm run build
-npm run start
-```
+## Content and integrations
 
----
+The programme finder is a small curated collection with dated review statuses and official university links. Campus France, Sorbonne Université and France-Visas resources are linked directly. This is not a live catalogue sync or institutional affiliation. Update `src/data/france.ts` when reviewing programme information.
 
-## 📁 Project Structure
+Consultation delivery uses Firebase with App Check. Complete the configuration in `.env.example` and enable enquiries only after provisioning the backend and privacy contact. Until configured, the form clearly reports that requests have not been sent. A WhatsApp number was not supplied; no guessed contact number is used.
 
-```
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx                # Global layout with SEO meta & fonts
-│   │   ├── page.tsx                  # Full Landing page with all 10 core sections
-│   │   ├── destinations/[slug]/      # Dynamic country guides (USA, UK, Canada, Australia, Germany, Ireland)
-│   │   │   └── page.tsx
-│   │   ├── portal/                   # Full interactive Student Portal & Live Tracker
-│   │   │   └── page.tsx
-│   │   ├── scholarships/             # Scholarship search & eligibility calculator
-│   │   │   └── page.tsx
-│   │   └── globals.css               # Tailwind setup + glassmorphism & gradients
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Navbar.tsx            # Sticky navbar with country dropdowns & CTAs
-│   │   │   └── Footer.tsx            # Corporate footer with certifications & newsletter
-│   │   ├── home/
-│   │   │   ├── Hero.tsx              # Hero headline, subhead, dual CTAs & quick search
-│   │   │   ├── TrustStats.tsx        # 4-column animated counters + accreditation badges
-│   │   │   ├── EligibilityChecker.tsx# Multi-step lead magnet (RHF + Zod)
-│   │   │   ├── DestinationsGrid.tsx  # Country cards with tuition, PSW rights & filters
-│   │   │   ├── ProcessRoadmap.tsx    # 5-step visual roadmap with document checklists
-│   │   │   ├── ServicesSection.tsx   # 6 core services with interactive highlights
-│   │   │   ├── SuccessStories.tsx    # Testimonial slider with visa badges & Google Reviews
-│   │   │   └── StudentPortalPreview.tsx # Live interactive dashboard simulation
-│   │   ├── modals/
-│   │   │   ├── ConsultationModal.tsx # Booking modal with date/time slots
-│   │   │   ├── AuthModal.tsx         # Student Login modal with 1-click demo login
-│   │   │   └── EligibilityResultModal.tsx # Custom university recommendations
-│   │   └── common/
-│   │       └── FloatingWhatsApp.tsx  # Floating WhatsApp button with chat popover
-│   ├── data/
-│   │   └── mockData.ts               # Complete dataset for destinations, testimonials, services, portal
-│   └── lib/
-│       ├── types.ts                  # Comprehensive TypeScript interfaces
-│       └── utils.ts                  # Class merger and calculation logic
-├── tailwind.config.ts
-├── tsconfig.json
-└── package.json
-```
+The screenshots informed the Parisian visual direction, Althéa name and adviser identity. The referenced Canva template could not be accessed, and its assets were not copied. The existing Paris photographs are retained; see the sources and photography page for attribution status.
+
+## Review collection and editorial pages
+
+The homepage includes an interactive planning-stage guide and a manual review carousel. `/reviews` is the dedicated review collection. Current review copy in `src/data/reviews.ts` is illustrative and labelled “Sample review”; it is not evidence of client outcomes. Replace it with client-approved source text and attribution before presenting it as genuine feedback. The About and Services pages share the updated maison headers, closing sections and footer.
+
+## Primary domain and deployment
+
+The main website is **https://altheaconsulting.in**. **https://www.altheaconsulting.in** redirects to it. The Firebase default domains are alternate addresses for the same Hosting site, so a single release updates all of them together.
+
+Use `npm run deploy` for production. It checks types, builds with the primary domain for canonical URLs and sitemap links, and deploys only Hosting to the explicit `consultancyworld2` site. HTML is revalidated on each visit; fingerprinted Next.js assets retain their immutable cache policy. Use the custom domain for preview handoffs and published links.
+
+## Client brief: France-first brand and reviewed directory
+
+Brand source: `src/config/brand.ts`; regenerate assets and CSS with `npm run brand:sync`.
+Data import, permission findings and the required human release procedure: `docs/DATA_SOURCES.md`.
+Owner confirmations and domain operations: `docs/CLIENT_OPEN_ITEMS.md`.
+Scheduled imports stage candidates only. The initial directory is empty pending recorded human review; existing editorial research files remain available for migration.

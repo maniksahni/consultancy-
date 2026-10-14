@@ -2,75 +2,22 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper functions for data sanitization & validation
-    function isValidString(val, minLen, maxLen) {
-      return val is string && val.size() >= minLen && val.size() <= maxLen;
-    }
-
-    function isValidPhone(val) {
-      // Must be exactly 10 numeric digits
-      return val is string && val.matches('^[0-9]{10}$');
-    }
-
-    // ─────────────────────────────────────────────────────────────
-    // 1. Mentorship Bookings collection (BookingSection leads)
-    // ─────────────────────────────────────────────────────────────
-    // • WRITE-ONLY: Public visitors can submit bookings.
-    // • NO READ: Listing, querying, or fetching leads is completely blocked.
-    // • NO UPDATE / DELETE: Once written, records cannot be modified or destroyed by clients.
-    // • SCHEMA VALIDATION: Rejects unauthorized keys, enforced data types & sizes.
-    match /mentorship_bookings/{bookingId} {
+    match /althea_enquiries/{id} {
       allow read, update, delete: if false;
-
-      allow create: if request.resource.data.keys().hasOnly([
-        'fullName', 'whatsapp', 'email', 'qualification',
-        'targetCountry', 'targetIntake', 'helpNeeded',
-        'preferredSlot', 'utm', 'source', 'createdAt', 'status'
-      ])
-      // Required core fields
-      && isValidString(request.resource.data.fullName, 1, 100)
-      && isValidPhone(request.resource.data.whatsapp)
-      && isValidString(request.resource.data.targetCountry, 1, 50)
-      && isValidString(request.resource.data.targetIntake, 1, 50)
-      && isValidString(request.resource.data.helpNeeded, 1, 100)
-      && request.resource.data.source == 'personal_mentorship_booking'
-      && request.resource.data.status == 'pending_review'
-      && request.resource.data.createdAt is timestamp
-
-      // Optional fields with bounds
-      && (!('qualification' in request.resource.data) || isValidString(request.resource.data.qualification, 0, 250))
-      && (!('email' in request.resource.data) || request.resource.data.email == null || isValidString(request.resource.data.email, 0, 100))
-      && (!('preferredSlot' in request.resource.data) || isValidString(request.resource.data.preferredSlot, 0, 100))
-      && (!('utm' in request.resource.data) || request.resource.data.utm is map);
+      allow create: if request.resource.data.keys().hasOnly(['fullName','email','phone','targetCountry','background','message','preferredTime','consent','createdAt','status','source','privacyVersion'])
+        && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2 && request.resource.data.fullName.size() <= 100
+        && request.resource.data.email is string && request.resource.data.email.size() <= 100 && request.resource.data.email.matches('^[^@]+@[^@]+[.][^@]+$')
+        && request.resource.data.phone is string && request.resource.data.phone.size() <= 25
+        && request.resource.data.background is string && request.resource.data.background.size() <= 500
+        && request.resource.data.message is string && request.resource.data.message.size() >= 10 && request.resource.data.message.size() <= 1500
+        && request.resource.data.preferredTime is string && request.resource.data.preferredTime.size() <= 100
+        && request.resource.data.targetCountry in ['France','UK','USA','Canada','Germany','Australia','Ireland','Undecided']
+        && request.resource.data.consent == true
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.status == 'pending_review'
+        && request.resource.data.source == 'althea_website'
+        && request.resource.data.privacyVersion == '2026-10-14';
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // 2. Eligibility Leads collection
-    // ─────────────────────────────────────────────────────────────
-    // • WRITE-ONLY: Public visitors can submit eligibility assessments.
-    // • NO READ / UPDATE / DELETE: Unauthenticated clients cannot read data.
-    match /leads/{leadId} {
-      allow read, update, delete: if false;
-
-      allow create: if request.resource.data.keys().hasOnly([
-        'fullName', 'phone', 'email', 'highestEducation', 'gradePercentage',
-        'targetCountry', 'targetIntake', 'englishTest', 'englishScore',
-        'backlogCount', 'workExperience', 'budgetPerYear', 'admitScore',
-        'scholarshipScore', 'source', 'createdAt'
-      ])
-      && isValidString(request.resource.data.fullName, 1, 100)
-      && isValidString(request.resource.data.phone, 7, 20)
-      && isValidString(request.resource.data.email, 3, 100)
-      && isValidString(request.resource.data.targetCountry, 1, 50)
-      && request.resource.data.source == 'website_eligibility_form'
-      && request.resource.data.createdAt is timestamp;
-    }
-
-    // ─────────────────────────────────────────────────────────────
-    // 3. Catch-all: Deny all access to any other collections
-    // ─────────────────────────────────────────────────────────────
-    match /{document=**} {
-      allow read, write: if false;
-    }
+    match /{document=**} { allow read, write: if false; }
   }
 }

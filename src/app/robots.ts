@@ -1,0 +1,13 @@
+import { brand } from "@/config/brand";
+import type { MetadataRoute } from "next";
+export default function robots(): MetadataRoute.Robots {
+  const host = process.env.NEXT_PUBLIC_SITE_URL ? brand.canonicalUrl : undefined;
+  return {
+    rules: {
+      userAgent: "*",
+      allow: host ? "/" : undefined,
+      disallow: host ? undefined : "/",
+    },
+    sitemap: host ? `${host.replace(/\/$/, "")}/sitemap.xml` : undefined,
+  };
+}
