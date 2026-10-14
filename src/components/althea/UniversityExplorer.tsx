@@ -49,6 +49,9 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState<"institutions" | "courses">("institutions");
   const [courseCategoryFilter, setCourseCategoryFilter] = useState("all");
+  const [courseCityFilter, setCourseCityFilter] = useState("all");
+  const [courseLevelFilter, setCourseLevelFilter] = useState("all");
+  const [courseFeeLimit, setCourseFeeLimit] = useState("");
   const [page, setPage] = useState(0);
   const [manifest, setManifest] = useState<RegistryManifest | null>(null);
   const [loaded, setLoaded] = useState<Record<string, CountryRegistry>>({});
@@ -88,14 +91,19 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
   const selected = country === "all" ? null : universityCoverage[country];
   const directory = loaded[country];
+  const courseCities = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.city?.trim()).filter((city): city is string => Boolean(city)))].sort((a, b) => a.localeCompare(b)), [directory]);
+  const courseLevels = useMemo(() => [...new Set((directory?.courses || []).map((course) => course.level?.trim()).filter((level): level is string => Boolean(level)))].sort((a, b) => a.localeCompare(b)), [directory]);
   const curated = useMemo(() => programmeResearch.filter((p) => country === "all" || p.country === country), [country]);
   const filteredInstitutions = useMemo(() => (directory?.institutions || []).filter((r) =>
     `${r.name} ${r.nativeName || ""} ${r.city || ""} ${r.region || ""} ${r.campus || ""} ${r.institutionType || ""} ${r.identifier || ""}`.toLowerCase().includes(query.toLowerCase().trim())
   ), [directory, query]);
   const filteredCourses = useMemo(() => (directory?.courses || []).filter((r) =>
     (courseCategoryFilter === "all" || courseCategory(r) === courseCategoryFilter) &&
+    (courseCityFilter === "all" || r.city === courseCityFilter) &&
+    (courseLevelFilter === "all" || r.level === courseLevelFilter) &&
+    (!courseFeeLimit || r.tuition === null || r.tuition <= Number(courseFeeLimit)) &&
     `${r.name} ${r.institution} ${r.city || ""} ${r.subject || ""} ${r.level || ""} ${r.language || ""}`.toLowerCase().includes(query.toLowerCase().trim())
-  ), [directory, query, courseCategoryFilter]);
+  ), [directory, query, courseCategoryFilter, courseCityFilter, courseLevelFilter, courseFeeLimit]);
   const courseCategoryCounts = useMemo(() => {
     const counts: Record<string, number> = Object.fromEntries(COURSE_CATEGORIES.map((category) => [category.id, 0]));
     (directory?.courses || []).forEach((course) => { counts[courseCategory(course)] += 1; });
@@ -105,7 +113,11 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   const pageCount = Math.ceil(records.length / PAGE_SIZE);
   const currentPageRecords = records.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
-  function chooseCountry(slug: string) { setCountry(slug); setQuery(""); setPage(0); setKind("institutions"); setCourseCategoryFilter("all"); }
+  function chooseCountry(slug: string) {
+    setCountry(slug); setQuery(""); setPage(0);
+    setKind(slug === "australia" || slug === "france" ? "courses" : "institutions");
+    setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit("");
+  }
 
   return <section className="university-explorer" aria-label="University and student cost explorer">
     <p className="snapshot-note">Search the country directories and reviewed course records inside this site. Registry coverage and data dates are stated for each country. A registry listing confirms the source&rsquo;s record; it does not mean every course, fee or room is included.</p>
@@ -114,16 +126,23 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       {country !== "all" && <label>Find by name, subject, city or ID<input type="search" value={query} onChange={(e) => { setQuery(e.target.value); setPage(0); }} placeholder="Search this directory" /></label>}
     </div>
 
+    {country !== "all" && <div className="directory-mode-switch" role="group" aria-label="Choose what to browse">
+      <button type="button" className={kind === "courses" ? "active" : ""} aria-pressed={kind === "courses"} disabled={!manifest?.countries[country]?.courseCount && country !== "australia" && country !== "france"} onClick={() => { setKind("courses"); setPage(0); }}>Find a course <span>{(manifest?.countries[country]?.courseCount || 0).toLocaleString("en-IN")}</span></button>
+      <button type="button" className={kind === "institutions" ? "active" : ""} aria-pressed={kind === "institutions"} onClick={() => { setKind("institutions"); setPage(0); }}>Browse institutions <span>{(manifest?.countries[country]?.institutionCount || 0).toLocaleString("en-IN")}</span></button>
+    </div>}
+
     {country === "all" && <>
       <p className="snapshot-note" style={{ marginTop: 20 }}>Choose a country to load its line-by-line directory. Each directory is loaded separately so the whole catalogue is not downloaded at once.</p>
       <div className="planning-grid" style={{ margin: "24px 0" }}>{destinations.map((d) => {
         const counts = manifest?.countries[d.slug];
         const c = universityCoverage[d.slug];
-        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${counts.institutionCount.toLocaleString("en-IN")} institution/campus records` : "Loading directory summary…"}</strong></p><p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>Open {d.name} directory →</button></article>;
+        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${counts.institutionCount.toLocaleString("en-IN")} institution/campus records` : "Loading directory summary…"}</strong></p>{Boolean(counts?.courseCount) && <p><strong>{counts!.courseCount.toLocaleString("en-IN")} course records</strong></p>}<p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>{counts?.courseCount ? `Find a course in ${d.name} →` : `Browse ${d.name} institutions →`}</button></article>;
       })}</div>
     </>}
 
-    {selected && <article className="content-card" style={{ margin: "28px 0" }}>
+    {selected && <details className="directory-extra-info" style={{ margin: "18px 0" }}>
+      <summary>Living costs, accommodation &amp; budget guide</summary>
+      <article className="content-card" style={{ margin: "18px 0" }}>
       <p className="eyebrow">{selected.country} / STUDENT BUDGET & STAY</p>
       <h2>Plan the cost of living.</h2>
       <dl className="research-facts">
@@ -132,23 +151,26 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
         <div><dt>Build the full budget</dt><dd>{selected.planning}<small>Tuition, deposits and housing are separate budget lines.</small></dd></div>
       </dl>
       <p className="muted">Evidence publishers: {selected.source}. Reviewed {selected.reviewed}. Figures can change; city, course, duration and personal circumstances affect the actual amount.</p>
-    </article>}
+      </article>
+    </details>}
 
     {country !== "all" && <>
       {manifest?.countries[country] && <p className="snapshot-note"><strong>Data scope:</strong> {manifest.countries[country].coverage} Snapshot retrieved {directory?.refreshedAt || manifest.refreshedAt}.</p>}
-      {curated.length > 0 && <section className="knowledge-grid" style={{ margin: "24px 0" }} aria-label="Reviewed programme records"><h2 style={{ gridColumn: "1 / -1" }}>Reviewed programme records</h2>{curated.map((p) => <article key={p.slug}><p className="eyebrow">{p.level} · {p.city} · {p.duration}</p><h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3><p>{p.institution}</p><p><strong>{publishedMoney(p)}</strong> · {p.fee.period} · {p.fee.year}</p><p>{p.requirements}</p><p className="muted">Published fee category: {p.fee.category}. Application timing: {p.deadline.label} ({p.deadline.status}).</p><Link className="text-link" href={`/programmes/${p.slug}`}>Full in-site record →</Link></article>)}</section>}
+      {curated.length > 0 && <details className="directory-extra-info reviewed-programmes" style={{ margin: "18px 0" }}><summary>Reviewed programme guides ({curated.length})</summary><section className="knowledge-grid" style={{ margin: "18px 0" }} aria-label="Reviewed programme records">{curated.map((p) => <article key={p.slug}><p className="eyebrow">{p.level} · {p.city} · {p.duration}</p><h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3><p>{p.institution}</p><p><strong>{publishedMoney(p)}</strong> · {p.fee.period} · {p.fee.year}</p><p>{p.requirements}</p><p className="muted">Published fee category: {p.fee.category}. Application timing: {p.deadline.label} ({p.deadline.status}).</p><Link className="text-link" href={`/programmes/${p.slug}`}>Full in-site record →</Link></article>)}</section></details>}
 
       {directory && <>
-        <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : "course records"}{query ? " matching this search" : ""}</p>
-          <div className="research-actions">
-            <label>Show<select aria-label="Directory records" value={kind} onChange={(e) => { setKind(e.target.value as "institutions" | "courses"); setCourseCategoryFilter("all"); setPage(0); }}><option value="institutions">Institutions</option><option value="courses" disabled={!manifest?.countries[country]?.courseCount}>{manifest?.countries[country]?.courseCount ? `Courses (${manifest.countries[country].courseCount.toLocaleString("en-IN")})` : "Courses (not in this registry)"}</option></select></label>
-          </div>
-        </div>
+        <div className="results-heading"><p role="status">{kind === "institutions" ? filteredInstitutions.length : filteredCourses.length} {kind === "institutions" ? "institution/campus records" : "course records"}{query || (kind === "courses" && (courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit)) ? " matching your filters" : ""}</p></div>
         {kind === "courses" && directory.courses.length > 0 && <section className="course-category-picker" aria-label="Browse courses by field">
-          <div className="course-category-heading"><h2>Browse by field</h2><p>Choose an area to narrow the {directory.courses.length.toLocaleString("en-IN")} course records. Counts show courses in this country directory.</p></div>
+          <div className="course-category-heading"><div><p className="eyebrow">COURSE FINDER · {selected?.country}</p><h2>What would you like to study?</h2></div><p>Start with a field, then narrow by city, qualification or published course fee.</p></div>
           <div className="course-category-chips" role="group" aria-label="Course field filters">
             <button type="button" className={courseCategoryFilter === "all" ? "active" : ""} aria-pressed={courseCategoryFilter === "all"} onClick={() => { setCourseCategoryFilter("all"); setPage(0); }}>All courses <span>{directory.courses.length.toLocaleString("en-IN")}</span></button>
             {COURSE_CATEGORIES.filter((category) => courseCategoryCounts[category.id] > 0).map((category) => <button key={category.id} type="button" className={courseCategoryFilter === category.id ? "active" : ""} aria-pressed={courseCategoryFilter === category.id} onClick={() => { setCourseCategoryFilter(category.id); setPage(0); }}>{category.label} <span>{courseCategoryCounts[category.id].toLocaleString("en-IN")}</span></button>)}
+          </div>
+          <div className="course-quick-filters">
+            <label>City<select value={courseCityFilter} onChange={(e) => { setCourseCityFilter(e.target.value); setPage(0); }}><option value="all">All cities</option>{courseCities.map((city) => <option key={city} value={city}>{city}</option>)}</select></label>
+            <label>Qualification<select value={courseLevelFilter} onChange={(e) => { setCourseLevelFilter(e.target.value); setPage(0); }}><option value="all">All levels</option>{courseLevels.map((level) => <option key={level} value={level}>{level}</option>)}</select></label>
+            {directory.courses.some((course) => course.tuition !== null) && <label>Maximum published course fee<select value={courseFeeLimit} onChange={(e) => { setCourseFeeLimit(e.target.value); setPage(0); }}><option value="">Any published fee</option>{[10000, 20000, 30000, 50000, 75000, 100000].map((amount) => <option key={amount} value={amount}>{new Intl.NumberFormat("en-AU", { style: "currency", currency: directory.courses.find((course) => course.currency)?.currency || "AUD", maximumFractionDigits: 0 }).format(amount)} or less</option>)}</select></label>}
+            {(courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit || query) && <button className="course-reset-button" type="button" onClick={() => { setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit(""); setQuery(""); setPage(0); }}>Clear filters</button>}
           </div>
         </section>}
         {kind === "institutions" ? <div className="knowledge-grid research-grid">{(currentPageRecords as RegistryInstitution[]).map((r) => <article key={r.id}>
@@ -165,17 +187,17 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
             {r.enrolment && <div><dt>Student enrolment</dt><dd>{r.enrolment}<small>2024 reported count</small></dd></div>}
           </dl>
           <p className="muted">Source: {r.registrySource} · record date {r.sourceDate}. Current course fees, housing availability and admissions are not part of this institution record.</p>
-        </article>)}</div> : directory.courses.length ? <div className="knowledge-grid research-grid">{(currentPageRecords as RegistryCourse[]).map((r) => <article key={r.id}>
+        </article>)}</div> : directory.courses.length ? <div className="knowledge-grid research-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => <article key={r.id}>
           <p className="eyebrow">{r.city || destinations.find((d) => d.slug === country)?.name}{r.level ? ` · ${r.level}` : ""}</p>
           <h3>{r.name}</h3><p>{r.institution}</p>
-          <dl className="research-facts">
-            <div><dt>Published tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>Course fee as shown in CRICOS · snapshot {r.sourceDate}</small></dd></div>
+          <p className="course-result-fee"><strong>{r.tuition === null ? "Fee not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published total course fee</span>}</p>
+          <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
+            <div><dt>Published total course tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : "Parcoursup 2026 catalogue; fees not included in source"}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}
             {r.language && <div><dt>Language</dt><dd>{r.language}</dd></div>}
-          </dl>
-          <p className="muted">Registry evidence: {country === "australia" ? "Australian Government CRICOS course export" : "French Ministry of Higher Education · Parcoursup 2026 open-data catalogue"}. This listing does not include accommodation availability or every individual admission condition.</p>
+          </dl><p className="muted">Registry evidence: {country === "australia" ? "Australian Government CRICOS course export" : "French Ministry of Higher Education · Parcoursup 2026 open-data catalogue"}. This listing does not include accommodation availability or every individual admission condition.</p></details>
         </article>)}</div> : <p className="snapshot-note">This official institution registry does not provide a line-by-line course and fee catalogue. The reviewed programme records above are the course-level information currently available in this site; no external search link is shown.</p>}
         {pageCount > 1 && <nav className="research-actions" aria-label="Directory pages" style={{ justifyContent: "center", marginTop: 28 }}><button className="text-button" disabled={page === 0} onClick={() => setPage(page - 1)}>← Previous</button><span>Page {page + 1} of {pageCount}</span><button className="text-button" disabled={page + 1 >= pageCount} onClick={() => setPage(page + 1)}>Next →</button></nav>}
       </>}
