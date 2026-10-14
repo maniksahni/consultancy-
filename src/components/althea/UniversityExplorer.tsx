@@ -132,7 +132,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
   function chooseCountry(slug: string) {
     setCountry(slug); setQuery(""); setPage(0);
-    setKind(slug === "australia" || slug === "france" ? "courses" : "institutions");
+    setKind(manifest?.countries[slug]?.courseCount ? "courses" : "institutions");
     setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit("");
   }
 
@@ -153,7 +153,9 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
       <div className="planning-grid" style={{ margin: "24px 0" }}>{destinations.map((d) => {
         const counts = manifest?.countries[d.slug];
         const c = universityCoverage[d.slug];
-        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${counts.institutionCount.toLocaleString("en-IN")} institution/campus records` : "Loading directory summary…"}</strong></p>{Boolean(counts?.courseCount) && <p><strong>{counts!.courseCount.toLocaleString("en-IN")} course records</strong></p>}<p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>{counts?.courseCount ? `Find a course in ${d.name} →` : `Browse ${d.name} institutions →`}</button></article>;
+        const recordLabel = d.slug === "usa" ? "historical field/credential records" : d.slug === "uk" ? "course/location records" : "course records";
+        const browseLabel = d.slug === "usa" ? "Browse U.S. study fields" : "Find a course in " + d.name;
+        return <article key={d.slug}><p className="eyebrow">{d.region}</p><h3>{d.name}</h3><p><strong>{counts ? `${counts.institutionCount.toLocaleString("en-IN")} institution/campus records` : "Loading directory summary…"}</strong></p>{Boolean(counts?.courseCount) && <p><strong>{counts!.courseCount.toLocaleString("en-IN")} {recordLabel}</strong></p>}<p>{counts?.coverage || "Country-level planning figures and reviewed records are available below."}</p><p>{c.living}</p><button className="text-button" type="button" onClick={() => chooseCountry(d.slug)}>{counts?.courseCount ? `${browseLabel} →` : `Browse ${d.name} institutions →`}</button></article>;
       })}</div>
     </>}
 
