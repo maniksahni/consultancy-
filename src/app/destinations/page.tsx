@@ -13,6 +13,7 @@ export default function Destinations() {
       title="The world is your next chapter."
       intro="From Parisian avenues to new horizons. Explore seven destinations and find the questions that will shape your decision."
     >
+      <h2 className="sr-only">Compare study destinations</h2>
       <DestinationAtlas />
       <section className="destination-planning">
         <p className="eyebrow">BEFORE YOU CHOOSE</p>

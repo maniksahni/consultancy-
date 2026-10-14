@@ -21,7 +21,7 @@ export default function MaisonPerspective() {
           <Link
             href="/about"
             className="circle-link"
-            aria-label="Get to know Althéa"
+            aria-label="Meet the maison — get to know Althéa"
           >
             <ArrowUpRight size={30} />
             <span>MEET THE MAISON</span>

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { faqs } from "@/data/france";
+import { faqs } from "@/data/faqs";
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (

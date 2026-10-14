@@ -21,7 +21,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="site-header">
-      <Link href="/" className="wordmark" aria-label="Althéa Consulting home">
+      <Link href="/" className="wordmark" aria-label="ALTHÉA CONSULTING home">
         <span className="monogram" aria-hidden="true">
           A<span>✦</span>
         </span>

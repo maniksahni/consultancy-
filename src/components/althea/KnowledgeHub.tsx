@@ -58,6 +58,7 @@ export default function KnowledgeHub({
   }
   return (
     <section className="knowledge-hub" id="country-knowledge">
+      <h2 className="sr-only">Source-backed country guidance</h2>
       <div className="knowledge-review">
         <span className="review-dot" />
         SOURCE REVIEW · {knowledgeReviewedAt}
