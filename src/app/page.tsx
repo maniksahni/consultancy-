@@ -37,6 +37,7 @@ export default function Home() {
           <p className="home-cover-intro">A considered beginning for the life you’re building in France. Independent, one-to-one guidance for study, a new home and the work ahead.</p>
           <div className="home-cover-actions">
             <Link className="home-button home-button-gold" href="/book-consultation">Begin with a conversation <ArrowUpRight size={17} /></Link>
+            <Link className="home-text-link home-cover-explore" href="/universities?country=france&amp;view=courses">Explore universities &amp; courses <ArrowUpRight size={15} /></Link>
             <a className="home-text-link home-cover-explore" href="#welcome">Enter the journal <ArrowDown size={15} /></a>
           </div>
         </div>
