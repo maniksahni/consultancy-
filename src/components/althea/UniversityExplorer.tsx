@@ -101,7 +101,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
     (courseCategoryFilter === "all" || courseCategory(r) === courseCategoryFilter) &&
     (courseCityFilter === "all" || r.city === courseCityFilter) &&
     (courseLevelFilter === "all" || r.level === courseLevelFilter) &&
-    (!courseFeeLimit || r.tuition === null || r.tuition <= Number(courseFeeLimit)) &&
+    (!courseFeeLimit || (r.tuition !== null && r.tuition <= Number(courseFeeLimit))) &&
     `${r.name} ${r.institution} ${r.city || ""} ${r.subject || ""} ${r.level || ""} ${r.language || ""}`.toLowerCase().includes(query.toLowerCase().trim())
   ), [directory, query, courseCategoryFilter, courseCityFilter, courseLevelFilter, courseFeeLimit]);
   const courseCategoryCounts = useMemo(() => {
@@ -169,7 +169,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
           <div className="course-quick-filters">
             <label>City<select value={courseCityFilter} onChange={(e) => { setCourseCityFilter(e.target.value); setPage(0); }}><option value="all">All cities</option>{courseCities.map((city) => <option key={city} value={city}>{city}</option>)}</select></label>
             <label>Qualification<select value={courseLevelFilter} onChange={(e) => { setCourseLevelFilter(e.target.value); setPage(0); }}><option value="all">All levels</option>{courseLevels.map((level) => <option key={level} value={level}>{level}</option>)}</select></label>
-            {directory.courses.some((course) => course.tuition !== null) && <label>Maximum published course fee<select value={courseFeeLimit} onChange={(e) => { setCourseFeeLimit(e.target.value); setPage(0); }}><option value="">Any published fee</option>{[10000, 20000, 30000, 50000, 75000, 100000].map((amount) => <option key={amount} value={amount}>{new Intl.NumberFormat("en-AU", { style: "currency", currency: directory.courses.find((course) => course.currency)?.currency || "AUD", maximumFractionDigits: 0 }).format(amount)} or less</option>)}</select></label>}
+            {directory.courses.some((course) => course.tuition !== null) && <label>Maximum published tuition<select value={courseFeeLimit} onChange={(e) => { setCourseFeeLimit(e.target.value); setPage(0); }}><option value="">Any published fee</option>{[10000, 20000, 30000, 50000, 75000, 100000].map((amount) => <option key={amount} value={amount}>{new Intl.NumberFormat("en-AU", { style: "currency", currency: directory.courses.find((course) => course.currency)?.currency || "AUD", maximumFractionDigits: 0 }).format(amount)} or less</option>)}</select></label>}
             {(courseCategoryFilter !== "all" || courseCityFilter !== "all" || courseLevelFilter !== "all" || courseFeeLimit || query) && <button className="course-reset-button" type="button" onClick={() => { setCourseCategoryFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit(""); setQuery(""); setPage(0); }}>Clear filters</button>}
           </div>
         </section>}
@@ -190,9 +190,9 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
         </article>)}</div> : directory.courses.length ? <div className="knowledge-grid research-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => <article key={r.id}>
           <p className="eyebrow">{r.city || destinations.find((d) => d.slug === country)?.name}{r.level ? ` · ${r.level}` : ""}</p>
           <h3>{r.name}</h3><p>{r.institution}</p>
-          <p className="course-result-fee"><strong>{r.tuition === null ? "Fee not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published total course fee</span>}</p>
+          <p className="course-result-fee"><strong>{r.tuition === null ? "Fee not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}</strong>{r.tuition !== null && <span> published tuition</span>}</p>
           <details className="course-result-details"><summary>Course details</summary><dl className="research-facts">
-            <div><dt>Published total course tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : "Parcoursup 2026 catalogue; fees not included in source"}</small></dd></div>
+            <div><dt>Published tuition</dt><dd>{r.tuition === null ? "Not published in this record" : new Intl.NumberFormat("en-IN", { style: "currency", currency: r.currency || "AUD", maximumFractionDigits: 0 }).format(r.tuition)}<small>{country === "australia" ? `CRICOS snapshot ${r.sourceDate}` : "Parcoursup 2026 catalogue; fees not included in source"}</small></dd></div>
             <div><dt>Additional / total cost</dt><dd>{r.estimatedTotalCost || r.nonTuitionFee || "Not published in this record"}</dd></div>
             {r.subject && <div><dt>Study field</dt><dd>{r.subject}</dd></div>}
             {r.durationWeeks && <div><dt>Duration</dt><dd>{r.durationWeeks} weeks</dd></div>}
