@@ -57,7 +57,7 @@ function courseTuitionSummary(course: RegistryCourse, country: string, records: 
     style: "currency", currency: course.currency || "AUD", maximumFractionDigits: 0,
   }).format(amount);
   if (course.tuition === null && country === "australia") {
-    const priced = records.filter((record) => record.tuition !== null && Number(record.durationWeeks) > 0);
+    const priced = records.filter((record) => record.tuition !== null && record.tuition > 0 && Number(record.durationWeeks) > 0);
     const comparable = priced.filter((record) => record.level === course.level && record.subject === course.subject);
     const levelMatches = priced.filter((record) => record.level === course.level);
     const peers = comparable.length >= 5 ? comparable : levelMatches.length >= 5 ? levelMatches : priced;
@@ -75,7 +75,7 @@ function courseTuitionSummary(course: RegistryCourse, country: string, records: 
   if (course.tuition === null && country === "uk") return {
     headline: "£11,400–£38,000 per year estimated",
     detail: "British Council international undergraduate tuition range across UK courses; not this provider’s quoted fee. Verify the course fee with the university.",
-    period: "UK international undergraduate range · 2026 guide",
+    period: "British Council international undergraduate range · checked October 2026",
   };
   if (course.tuition === null && country === "france") return {
     headline: "€2,902–€3,950 per year public-sector reference",
