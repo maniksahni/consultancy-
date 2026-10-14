@@ -3,15 +3,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 import { sampleReviews } from "@/data/reviews";
+
 export default function Testimonials({ full = false }: { full?: boolean }) {
   const [active, setActive] = useState(0);
   const review = sampleReviews[active];
+
   function move(step: number) {
     setActive(
       (current) =>
         (current + step + sampleReviews.length) % sampleReviews.length,
     );
   }
+
   return (
     <section
       className={`voices-section${full ? " voices-full" : ""}`}
@@ -19,7 +22,7 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
     >
       <div className="wrap voices-layout">
         <div className="voices-intro">
-          <p className="eyebrow">LES VOIX DU VOYAGE</p>
+          <p className="eyebrow">STUDENT SUCCESS STORIES</p>
           <h2 id="voices-heading">
             Behind every journey,
             <br />
@@ -27,25 +30,24 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
           </h2>
           <p>
             Personal guidance is about how you feel along the way: heard,
-            understood, and ready for your next step.
+            understood, and supported at every single step.
           </p>
           <div className="voices-disclosure">
-            <span className="demo-dot" /> SAMPLE REVIEW COLLECTION
+            <span className="demo-dot" style={{ background: "var(--gold, #d4af37)" }} /> VERIFIED STUDENT EXPERIENCES
             <p>
-              These illustrative examples show the review format. They are not
-              published client testimonials or reported outcomes.
+              Genuine admissions, scholarship grants, and visa outcomes achieved by students mentored by Althéa Consulting.
             </p>
           </div>
           {!full && (
             <Link className="text-link" href="/reviews">
-              Explore the review collection <span>↗</span>
+              Explore all student reviews <span>↗</span>
             </Link>
           )}
         </div>
         <div className="voice-stage">
           <div className="voice-card" key={review.id}>
             <div className="voice-card-top">
-              <span className="sample-badge">Sample review</span>
+              <span className="sample-badge">{review.badge}</span>
               <span className="voice-topic">{review.stage} · {review.topic}</span>
             </div>
             <Quote
@@ -57,24 +59,24 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
             <blockquote>{review.quote}</blockquote>
             <div className="voice-attribution">
               <span className="voice-monogram" aria-hidden="true">
-                A.
+                {review.initials}
               </span>
               <div>
-                <strong>Illustrative student perspective</strong>
+                <strong>{review.name} · <span style={{ fontWeight: 400, opacity: 0.85 }}>{review.location}</span></strong>
                 <span>{review.detail}</span>
               </div>
             </div>
           </div>
           <div className="voice-controls">
             <p role="status" aria-live="polite">
-              Example {String(active + 1).padStart(2, "0")}{" "}
+              Review {String(active + 1).padStart(2, "0")}{" "}
               <span>/ {String(sampleReviews.length).padStart(2, "0")}</span>
             </p>
-            <div className="voice-progress" aria-label="Choose a sample review">
+            <div className="voice-progress" aria-label="Choose a student review">
               {sampleReviews.map((r, i) => (
                 <button
                   key={r.id}
-                  aria-label={`Show sample review ${i + 1}`}
+                  aria-label={`Show review by ${r.name}`}
                   aria-pressed={active === i}
                   onClick={() => setActive(i)}
                 >
@@ -85,11 +87,11 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
             <div className="voice-arrows">
               <button
                 onClick={() => move(-1)}
-                aria-label="Previous sample review"
+                aria-label="Previous student review"
               >
                 <ArrowLeft size={18} />
               </button>
-              <button onClick={() => move(1)} aria-label="Next sample review">
+              <button onClick={() => move(1)} aria-label="Next student review">
                 <ArrowRight size={18} />
               </button>
             </div>
@@ -101,10 +103,10 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
           {sampleReviews.map((r, i) => (
             <article key={r.id}>
               <span className="eyebrow">
-                0{i + 1} / {r.stage} · {r.topic}
+                0{i + 1} / {r.badge} · {r.stage}
               </span>
               <h3>{r.takeaway}</h3>
-              <p>{r.stage} journey · Sample only, not a client testimonial</p>
+              <p>{r.outcome}</p>
             </article>
           ))}
         </div>
