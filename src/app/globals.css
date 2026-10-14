@@ -4898,3 +4898,24 @@ textarea {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* Touch sizing and a centered, padded mobile atlas rail. */
+.voice-progress button { min-width:44px; min-height:44px; }
+.country-tabs > a, .interior-breadcrumb > a, .text-link { min-height:44px; display:inline-flex; align-items:center; }
+@media (max-width:760px) {
+  .atlas-index, .edition-world .atlas-index {
+    gap:8px; padding:8px max(8px,calc((100% - 176px)/2));
+    scroll-padding-inline:max(8px,calc((100% - 176px)/2));
+    scroll-snap-type:x mandatory;
+  }
+  .atlas-index button, .edition-world .atlas-index button {
+    flex:0 0 176px; min-height:64px; scroll-snap-align:center;
+    border:1px solid var(--line); padding:16px; margin:0;
+  }
+  .atlas-index button[aria-pressed="true"] { padding-left:16px; }
+  .voice-controls { flex-wrap:wrap; }
+  .voice-progress { gap:0; }
+  .country-tabs { gap:8px 16px; }
+}
+/* Keep progressive image depth inside its editorial frame. */
+.edition-interlude { overflow:clip; }

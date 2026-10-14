@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import KnowledgeHub from "@/components/althea/KnowledgeHub";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { official, checked, cities } from "@/data/france";
 export const metadata: Metadata = {
   alternates: { canonical: "/study-in-france" },
