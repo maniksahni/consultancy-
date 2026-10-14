@@ -1,3 +1,4 @@
+import EditorialMotion from "@/components/althea/EditorialMotion";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -20,6 +21,7 @@ export const viewport: Viewport = {
   themeColor: "var(--color1)",
 };
 export const metadata: Metadata = {
+  icons: {icon:"/brand/favicon.svg"},
   metadataBase: new URL("https://altheaconsulting.in"),
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
@@ -50,6 +52,7 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <EditorialMotion />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

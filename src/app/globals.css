@@ -4877,3 +4877,24 @@ textarea {
   --section-space: clamp(3.5rem, 7vw, 7rem);
 }
 .edition-manifesto, .edition-support, .edition-adviser, .edition-library { padding-block: var(--section-space); }
+
+/* Small, progressively enhanced editorial movement. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] { transition: transform 600ms ease, opacity 600ms ease; }
+  [data-reveal="pending"] { opacity: 0; transform: translateY(12px); }
+  [data-reveal="visible"] { opacity: 1; transform: translateY(0); }
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: editorial-exit 140ms ease both; }
+  ::view-transition-new(root) { animation: editorial-enter 180ms ease both; }
+  @keyframes editorial-exit { to { opacity: 0; } }
+  @keyframes editorial-enter { from { opacity: 0; transform: translateY(4px); } }
+  @supports (animation-timeline: view()) {
+    .edition-interlude img { animation: editorial-depth linear both; animation-timeline: view(); }
+    @keyframes editorial-depth { from { transform: scale(1.04) translateY(-8px); } to { transform: scale(1.04) translateY(8px); } }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
