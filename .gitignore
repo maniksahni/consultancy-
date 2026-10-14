@@ -47,3 +47,7 @@ next-env.d.ts
 
 .next-althea-build/
 test-results/
+
+.next-dev/
+data/staging/
+playwright-report/

@@ -14,56 +14,8 @@ type Row = {
 };
 const source =
   "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-principaux-etablissements-enseignement-superieur/";
-const api =
-  "https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-principaux-etablissements-enseignement-superieur/records";
-const selection =
-  "etablissement_id_paysage,uo_lib,type_d_etablissement,com_nom,reg_nom,url,secteur_d_etablissement";
 const input =
   "min-h-12 w-full border border-[var(--color23)]/20 bg-white px-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--color41)]";
-function str(v: unknown) {
-  return typeof v === "string"
-    ? v.trim()
-    : Array.isArray(v)
-      ? v.join(", ")
-      : "";
-}
-function safeUrl(value: unknown) {
-  const val = str(value);
-  try {
-    const u = new URL(val);
-    return u.protocol === "https:" || u.protocol === "http:" ? u.href : "";
-  } catch {
-    return "";
-  }
-}
-async function batch(offset: number) {
-  const p = new URLSearchParams({
-    select: selection,
-    limit: "100",
-    offset: String(offset),
-  });
-  const res = await fetch(api + "?" + p, {
-    signal: AbortSignal.timeout(18000),
-  });
-  if (!res.ok) throw Error("Official data API is unavailable right now.");
-  const body = await res.json();
-  if (!Array.isArray(body.results) || typeof body.total_count !== "number")
-    throw Error("Unexpected official data response.");
-  return {
-    rows: body.results
-      .map((v: Record<string, unknown>) => ({
-        id: str(v.etablissement_id_paysage) || str(v.uo_lib),
-        name: str(v.uo_lib),
-        city: str(v.com_nom),
-        region: str(v.reg_nom),
-        type: str(v.type_d_etablissement),
-        sector: str(v.secteur_d_etablissement),
-        website: safeUrl(v.url),
-      }))
-      .filter((u: Row) => u.name),
-    total: body.total_count,
-  };
-}
 export default function LiveFrenchRegistry() {
   const [records, setRecords] = useState<Row[]>([]);
   const [state, setState] = useState<"idle" | "loading" | "ready" | "error">(
@@ -73,39 +25,30 @@ export default function LiveFrenchRegistry() {
   const [q, setQ] = useState("");
   const [region, setRegion] = useState("All");
   const [page, setPage] = useState(0);
-  const MAX = 1200;
   async function load() {
     setState("loading");
     setMessage("");
     try {
-      const first = await batch(0);
-      const collected = first.rows;
-      const cap = Math.min(first.total, MAX);
-      // Keep requests bounded and sequentially paced for the public API.
-      for (let offset = 100; offset < cap; offset += 100) {
-        const next = await batch(offset);
-        collected.push(...next.rows);
-      }
-      const unique = Array.from(
-        new Map<string, Row>(
-          collected.map((r: Row) => [r.id, r] as [string, Row]),
-        ).values(),
-      );
-      setRecords(unique);
+      const response = await fetch("/data/institutions.json", {
+        signal: AbortSignal.timeout(12000),
+      });
+      if (!response.ok)
+        throw new Error("The reviewed institution snapshot is unavailable.");
+      const snapshot = await response.json();
+      if (!snapshot.review || !Array.isArray(snapshot.records))
+        throw new Error("Institution snapshot has not been reviewed.");
+      setRecords(snapshot.records);
       setPage(0);
       setState("ready");
-      if (first.total > MAX)
-        setMessage(
-          "Only the first " +
-            MAX +
-            " records were loaded. Visit the official dataset for the complete index.",
-        );
-    } catch (e) {
+      setMessage(
+        `Official registry snapshot reviewed ${snapshot.review.reviewedAt.slice(0, 10)}. Programme fees and eligibility: Not yet verified.`,
+      );
+    } catch (error) {
       setState("error");
       setMessage(
-        e instanceof Error
-          ? e.message
-          : "Unable to load official records right now.",
+        error instanceof Error
+          ? error.message
+          : "Unable to load institution records.",
       );
     }
   }
@@ -142,10 +85,10 @@ export default function LiveFrenchRegistry() {
             Explore France’s official <em>institution register.</em>
           </h2>
           <p className="mt-5 max-w-2xl text-sm leading-8 text-[var(--color44)]">
-            Load an openly licensed reference dataset published by the French
-            Ministry of Higher Education. It identifies institutions and
-            locations, but does not prove course availability or admissions
-            eligibility.
+            Load a reviewed, locally cached snapshot of the openly licensed
+            dataset published by the French Ministry of Higher Education. It
+            identifies institutions and locations, but does not prove course
+            availability or admissions eligibility.
           </p>
           <button
             type="button"
@@ -183,6 +126,7 @@ export default function LiveFrenchRegistry() {
           <div className="border border-[var(--color23)]/15 bg-[var(--color42)] p-6 sm:p-8">
             <div className="flex flex-wrap justify-between gap-4">
               <h2 className="font-display text-3xl">Filter official records</h2>
+              <p className="text-sm">{message}</p>
               <span className="self-center text-xs text-[var(--color46)]">
                 {records.length} institution records loaded
               </span>
