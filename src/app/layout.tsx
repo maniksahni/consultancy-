@@ -1,3 +1,5 @@
+import JsonLd from "@/components/seo/JsonLd";
+import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
@@ -22,10 +24,9 @@ export const viewport: Viewport = {
 };
 export const metadata: Metadata = {
   metadataBase: new URL(brand.canonicalUrl),
-  robots: process.env.NEXT_PUBLIC_SITE_URL
+  robots: isIndexable
     ? { index: true, follow: true }
     : { index: false, follow: false },
-  alternates: { canonical: "./" },
   title: {
     default: `${brand.name} | Study, Settle & Succeed in France`,
     template: `%s | ${brand.name}`,
@@ -35,7 +36,6 @@ export const metadata: Metadata = {
   icons: { icon: brand.assets.favicon },
   openGraph: {
     images: [{ url: brand.assets.og, width: 1200, height: 630 }],
-    url: "./",
     title: brand.name,
     description: brand.tagline,
     type: "website",
@@ -54,18 +54,22 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: brand.name,
-              url: brand.canonicalUrl,
-              description: "Independent education advisory with a specialist focus on France",
-            }),
-          }}
-        />
+        <JsonLd data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            { "@type": "Organization", "@id": `${siteUrl}/#organization`,
+              name: brand.name, alternateName: brand.shortName, url: siteUrl,
+              logo: `${siteUrl}${brand.assets.logo}`,
+              description: "Independent study abroad advisory with a specialist focus on France, based in Paris.",
+              founder: { "@id": `${siteUrl}/#adviser` } },
+            { "@type": "Person", "@id": `${siteUrl}/#adviser`, name: brand.person,
+              jobTitle: brand.role, url: `${siteUrl}/about`,
+              worksFor: { "@id": `${siteUrl}/#organization` } },
+            { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,
+              url: siteUrl, inLanguage: "en",
+              publisher: { "@id": `${siteUrl}/#organization` } },
+          ],
+        }} />
       </body>
     </html>
   );

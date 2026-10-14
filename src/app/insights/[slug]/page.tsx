@@ -1,3 +1,6 @@
+import JsonLd from "@/components/seo/JsonLd";
+import { siteUrl } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import { notFound } from "next/navigation";
 import Page from "@/components/althea/Page";
@@ -7,7 +10,7 @@ export function generateStaticParams() {
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
-  return { title: a?.title || "Journal", description: a?.intro };
+  return pageMetadata(`/insights/${params.slug}`, { title: a?.title || "Journal", description: a?.intro });
 }
 export default function Article({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
@@ -30,19 +33,13 @@ export default function Article({ params }: { params: { slug: string } }) {
           circumstances before applying.
         </p>
       </article>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: a.title,
-            description: a.intro,
-            dateModified: "2026-10-14",
-            author: { "@type": "Organization", name: `${brand.shortName} Editorial` },
-          }),
-        }}
-      />
+      <JsonLd data={{
+        "@context": "https://schema.org", "@type": "Article",
+        headline: a.title, description: a.intro, dateModified: "2026-10-14",
+        mainEntityOfPage: `${siteUrl}/insights/${a.slug}`,
+        author: { "@type": "Organization", name: `${brand.shortName} Editorial`, url: `${siteUrl}/insights` },
+        publisher: { "@id": `${siteUrl}/#organization` }, citation: a.source,
+      }} />
     </Page>
   );
 }

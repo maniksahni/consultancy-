@@ -1,11 +1,12 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { official } from "@/data/france";
-export const metadata: Metadata = {
-  title: "Research your funding.",
+export const metadata: Metadata = pageMetadata('/scholarships', {
+  title: 'Study in France Scholarships & Funding Guidance',
   description:
     "Use official award information and plan without assuming an award.",
-};
+});
 export default function Content() {
   return (
     <Page

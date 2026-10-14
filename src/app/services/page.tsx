@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -10,11 +11,11 @@ import {
   Luggage,
 } from "lucide-react";
 import Page from "@/components/althea/Page";
-export const metadata: Metadata = {
-  title: "Support, thoughtfully scoped.",
+export const metadata: Metadata = pageMetadata('/services', {
+  title: 'Study Abroad Consulting & Application Support',
   description:
     `Explore personal academic guidance, programme research, application review and arrival planning with ${brand.shortName}.`,
-};
+});
 const services = [
   {
     title: "Academic direction",

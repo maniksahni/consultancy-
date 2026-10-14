@@ -1,9 +1,10 @@
-import { brand } from "@/config/brand";
+import { isIndexable, siteUrl } from "@/lib/seo";
+import { guides } from "@/data/franceGuides";
 import type { MetadataRoute } from "next";
 import {programmeResearch} from "@/data/programmeResearch";
-import { articles, cities, programmes } from "@/data/france";
+import { articles, cities } from "@/data/france";
 export default function sitemap(): MetadataRoute.Sitemap {
-  const host = process.env.NEXT_PUBLIC_SITE_URL ? brand.canonicalUrl : undefined;
+  const host = isIndexable ? siteUrl : undefined;
   if (!host) return [];
   const paths = [
     "",
@@ -11,6 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "destinations",
     "knowledge",
     "france/institutions",
+    "france/programmes",
+    "france/universities",
+    "france/resources",
+    ...guides.map(g => `france/${g.slug}`),
     "universities",
     "programmes",
     "campus-france-guide",

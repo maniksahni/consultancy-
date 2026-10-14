@@ -1,13 +1,14 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Page from "@/components/althea/Page";
-export const metadata: Metadata = {
-  title: `Bienvenue chez ${brand.shortName}.`,
+export const metadata: Metadata = pageMetadata('/about', {
+  title: 'About Althéa Consulting & Harshita Kohli',
   description:
     `Meet ${brand.name} and ${brand.person}, ${brand.role}. A Parisian perspective on a personal journey.`,
-};
+});
 export default function AboutPage() {
   return (
     <Page

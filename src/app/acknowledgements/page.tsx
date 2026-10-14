@@ -1,10 +1,11 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('/acknowledgements', {
   title: "Sources & photography.",
   description: "Attribution and the limits of this editorial collection.",
-};
+});
 export default function Content() {
   return (
     <Page

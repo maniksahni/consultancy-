@@ -1,11 +1,12 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Procedure from "@/components/althea/Procedure";
-export const metadata: Metadata = {
-  title: "Your application, organised.",
+export const metadata: Metadata = pageMetadata('/admissions-process', {
+  title: 'Study Abroad Admissions Process & Application Planning',
   description:
     "Follow the programme and country-specific official instructions.",
-};
+});
 export default function Content() {
   return (
     <Page

@@ -1,13 +1,14 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import KnowledgeHub from "@/components/althea/KnowledgeHub";
 import Link from "next/link";
 import { official, checked, cities } from "@/data/france";
-export const metadata: Metadata = {
-  title: "Your French chapter.",
+export const metadata: Metadata = pageMetadata('/study-in-france', {
+  title: 'Study in France: Universities, Costs & Applications',
   description:
     "Bring your academic ambitions and everyday life into the same plan.",
-};
+});
 export default function Content() {
   return (
     <Page

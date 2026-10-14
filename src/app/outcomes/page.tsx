@@ -1,11 +1,12 @@
+import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('/outcomes', {
   title: "A first conversation.",
   description:
     "Understand what a consultation can cover before deciding on further support.",
-};
+});
 export default function Content() {
   return (
     <Page

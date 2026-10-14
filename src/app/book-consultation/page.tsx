@@ -1,12 +1,13 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Booking from "@/components/althea/Booking";
-export const metadata: Metadata = {
-  title: "Let’s begin with your story.",
+export const metadata: Metadata = pageMetadata('/book-consultation', {
+  title: 'Book a Study Abroad Consultation',
   description:
     "Request a conversation. Preferred times are requests, and an appointment is confirmed separately.",
-};
+});
 export default function Content() {
   return (
     <Page

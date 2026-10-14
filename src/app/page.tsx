@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,8 @@ import ChapterConcierge from "@/components/althea/ChapterConcierge";
 import Testimonials from "@/components/althea/Testimonials";
 import FAQ from "@/components/althea/FAQ";
 import { articles } from "@/data/france";
+
+export const metadata = pageMetadata("/", { title: "Study in France: Programme & Admissions Guidance", description: "Independent study abroad guidance from Althéa Consulting in Paris. Explore French programmes, applications and arrival planning with Harshita Kohli." });
 
 const support = [
   {
@@ -60,7 +63,7 @@ export default function Home() {
                 <em>A future in France.</em>
               </h1>
               <p>
-                {brand.tagline}
+                Independent study abroad guidance from Paris. Plan your studies in France with programme research, application support and arrival planning.
               </p>
               <Link href="/book-consultation" className="button">
                 Start your next chapter{" "}

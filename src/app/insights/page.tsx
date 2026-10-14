@@ -1,13 +1,14 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Link from "next/link";
 import { articles } from "@/data/france";
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('/insights', {
   title: `Le journal ${brand.shortName}.`,
   description:
     "Practical notes for a thoughtful French chapter, with official sources.",
-};
+});
 export default function Content() {
   return (
     <Page

@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import Page from "@/components/althea/Page";
 import { cities } from "@/data/france";
@@ -5,9 +6,9 @@ export function generateStaticParams() {
   return cities.map((c) => ({ slug: c.slug }));
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
-  return {
+  return pageMetadata(`/cities/${params.slug}`, {
     title: `Studying in ${cities.find((c) => c.slug === params.slug)?.name || "France"}`,
-  };
+    description: cities.find(c=>c.slug===params.slug)?.text });
 }
 export default function City({ params }: { params: { slug: string } }) {
   const c = cities.find((c) => c.slug === params.slug);

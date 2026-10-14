@@ -1,12 +1,13 @@
+import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Testimonials from "@/components/althea/Testimonials";
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata('/reviews', {
   title: "The review collection",
   description:
     `Explore the ${brand.shortName} review collection design. Current examples are clearly labelled illustrative samples.`,
-};
+});
 export default function ReviewsPage() {
   return (
     <Page

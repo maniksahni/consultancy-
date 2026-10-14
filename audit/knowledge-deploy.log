@@ -1,0 +1,24 @@
+
+=== Deploying to 'consultancyworld2'...
+
+i  deploying hosting
+i  hosting[consultancyworld2]: beginning deploy...
+i  hosting[consultancyworld2]: found 184 files in out
+i  hosting: uploading new files [0/146] (0%)
+i  hosting: uploading new files [6/146] (4%)
+i  hosting: uploading new files [28/146] (19%)
+i  hosting: uploading new files [124/146] (84%)
+i  hosting: uploading new files [137/146] (93%)
+i  hosting: uploading new files [142/146] (97%)
+i  hosting: uploading new files [144/146] (98%)
+i  hosting: upload complete
+✔  hosting[consultancyworld2]: file upload complete
+i  hosting[consultancyworld2]: finalizing version...
+✔  hosting[consultancyworld2]: version finalized
+i  hosting[consultancyworld2]: releasing new version...
+✔  hosting[consultancyworld2]: release complete
+
+✔  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/consultancyworld2/overview
+Hosting URL: https://consultancyworld2.web.app

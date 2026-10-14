@@ -10,7 +10,18 @@ export default function Footer() {
           </Link>
           <p>
             {brand.tagline}
-          </p><div className="brand-contact"><strong>{brand.person} — {brand.role}</strong><small>{brand.location}</small>{brand.email ? <a href={`mailto:${brand.email}`}>{brand.email}</a> : <small>Email: awaiting owner confirmation</small>}{brand.whatsappNumber ? <a href={`https://wa.me/${brand.whatsappNumber}`}>Chat on WhatsApp</a> : <small>WhatsApp: awaiting owner confirmation</small>}{brand.whatsappQr ? <><img src={brand.whatsappQr} width="120" height="120" alt="WhatsApp chat QR code"/><small>Scan to chat on WhatsApp</small></> : <small>Scan to chat on WhatsApp — QR available after number confirmation</small>}</div>
+          </p>
+          <div className="brand-contact">
+            <strong>{brand.person} — {brand.role}</strong>
+            <small>{brand.location}</small>
+            {brand.email && <a href={`mailto:${brand.email}`}>Email: {brand.email}</a>}
+            {brand.whatsappNumber && (
+              <>
+                <a href={`tel:+${brand.whatsappNumber}`}>Phone: +{brand.whatsappNumber}</a>
+                <a href={`https://wa.me/${brand.whatsappNumber}`}>Chat on WhatsApp</a>
+              </>
+            )}
+          </div>
         </div>
         <div>
           <span className="eyebrow">EXPLORE</span>

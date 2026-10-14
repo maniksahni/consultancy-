@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import Page from '@/components/althea/Page';import Link from 'next/link';
-export const metadata={title:'The France resource collection'};
+export const metadata=pageMetadata('/france/resources', {title:'The France resource collection'});
 export default function Resources(){return <Page title="Clarity for every chapter." intro="Find the guide that matches your next question."><div className="content-grid">{[['Universities','/france/universities'],['Programmes','/france/programmes'],['Government institution register','/france/institutions'],['Campus France procedure','/campus-france-guide'],['Scholarships','/france/scholarships'],['Visas','/france/visas'],['Living in France','/france/living'],['Planning your budget','/france/costs']].map(([t,h])=><Link className="content-card" href={h} key={h}><h2>{t}</h2><p>Explore the guide ↗</p></Link>)}</div></Page>}

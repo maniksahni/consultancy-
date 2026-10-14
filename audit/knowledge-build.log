@@ -1,0 +1,107 @@
+
+> althea-consulting@1.0.0 build
+> ALTHEA_BUILD=1 next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/components/home/DestinationGallery.tsx
+224:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/DestinationShowcase.tsx
+118:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+185:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/DestinationsSlider.tsx
+344:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/HeroExperience.tsx
+225:19  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/MentorFeature.tsx
+34:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/StudyDestinations.tsx
+258:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+377:21  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/SuccessStories.tsx
+250:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/home/Team.tsx
+126:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/52) ...
+   Generating static pages (13/52) 
+   Generating static pages (26/52) 
+   Generating static pages (39/52) 
+ ✓ Generating static pages (52/52)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                    Size     First Load JS
+┌ ○ /                                          3.06 kB         109 kB
+├ ○ /_not-found                                876 B          88.5 kB
+├ ○ /about                                     859 B          97.2 kB
+├ ○ /acknowledgements                          859 B          97.2 kB
+├ ○ /admissions-process                        2.78 kB        99.1 kB
+├ ○ /book-consultation                         16.9 kB         113 kB
+├ ○ /campus-france-guide                       2.78 kB        99.1 kB
+├ ● /cities/[slug]                             859 B          97.2 kB
+├   ├ /cities/paris
+├   ├ /cities/lyon
+├   ├ /cities/toulouse
+├   └ [+3 more paths]
+├ ○ /destinations                              201 B           106 kB
+├ ● /destinations/[slug]                       205 B           112 kB
+├   ├ /destinations/uk
+├   ├ /destinations/usa
+├   ├ /destinations/canada
+├   └ [+3 more paths]
+├ ○ /faq                                       2.22 kB        98.6 kB
+├ ○ /france                                    200 B           107 kB
+├ ● /france/[topic]                            859 B          97.2 kB
+├   ├ /france/scholarships
+├   ├ /france/visas
+├   ├ /france/living
+├   └ [+2 more paths]
+├ ○ /france/campus-france                      2.78 kB        99.1 kB
+├ ○ /france/institutions                       4.22 kB         101 kB
+├ ○ /france/programmes                         3.83 kB         100 kB
+├ ○ /france/resources                          859 B          97.2 kB
+├ ○ /france/universities                       3.94 kB         100 kB
+├ ○ /insights                                  859 B          97.2 kB
+├ ● /insights/[slug]                           859 B          97.2 kB
+├   ├ /insights/choosing-your-programme
+├   ├ /insights/planning-your-france-budget
+├   └ /insights/understanding-campus-france
+├ ○ /knowledge                                 1.19 kB         108 kB
+├ ○ /mentorship-model                          859 B          97.2 kB
+├ ○ /outcomes                                  859 B          97.2 kB
+├ ○ /privacy                                   859 B          97.2 kB
+├ ● /programmes/[slug]                         859 B          97.2 kB
+├   ├ /programmes/psl-computer-science
+├   ├ /programmes/psl-ai-society
+├   └ /programmes/tse-international-economics
+├ ○ /robots.txt                                0 B                0 B
+├ ○ /scholarships                              859 B          97.2 kB
+├ ○ /services                                  859 B          97.2 kB
+├ ○ /sitemap.xml                               0 B                0 B
+├ ○ /study-in-france                           200 B           107 kB
+├ ○ /terms                                     859 B          97.2 kB
+└ ○ /universities                              3.07 kB        99.4 kB
++ First Load JS shared by all                  87.6 kB
+  ├ chunks/2117-a639e259e292cf13.js            31.8 kB
+  ├ chunks/fd9d1056-30c5e30b6b40472f.js        53.6 kB
+  └ other shared chunks (total)                2.14 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses getStaticProps)
+

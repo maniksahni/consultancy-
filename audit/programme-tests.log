@@ -1,0 +1,27 @@
+
+> althea-consulting@1.0.0 test
+> playwright test
+
+
+Running 14 tests using 2 workers
+
+(node:62672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:62671) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 tests/knowledge.spec.ts:2:5 › country and topic filters, dated evidence and guide download (673ms)
+  ✓   3 tests/knowledge.spec.ts:9:5 › budget uses entered amounts without currency conversion (192ms)
+  ✓   1 tests/atlas.spec.ts:2:5 › destination discovery, persistent shortlist and comparison (1.2s)
+  ✓   4 tests/programme-research.spec.ts:2:5 › programme search exposes fee period, applicant category and dated evidence (703ms)
+  ✓   6 tests/programme-research.spec.ts:7:5 › programme export and closed-round filters preserve provenance (227ms)
+  ✓   5 tests/site.spec.ts:10:7 › every exported route: 320px (3.9s)
+  ✓   7 tests/site.spec.ts:10:7 › every exported route: 390px (3.6s)
+  ✓   8 tests/site.spec.ts:10:7 › every exported route: 768px (3.8s)
+  ✓   9 tests/site.spec.ts:10:7 › every exported route: 1440px (4.4s)
+  ✓  10 tests/site.spec.ts:49:5 › homepage fits all requested widths and landscape (2.1s)
+  ✓  11 tests/site.spec.ts:75:5 › navigation, finder, FAQ, process and form states (1.0s)
+  ✓  12 tests/site.spec.ts:123:5 › WCAG A/AA audit of all routes on mobile and desktop (42.3s)
+  ✓  13 tests/site.spec.ts:144:5 › internal links resolve and no source points to a fake portal (3.5s)
+  ✓  14 tests/site.spec.ts:161:5 › sample reviews and journey guidance work on mobile (439ms)
+
+  14 passed (1.1m)
