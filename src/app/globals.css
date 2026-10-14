@@ -5298,7 +5298,7 @@ textarea {
   .home-cover-veil { background:linear-gradient(90deg,rgba(5,18,34,.72),rgba(5,18,34,.34)),linear-gradient(0deg,rgba(5,18,34,.55),transparent 55%); }
   .home-cover-frame { width:calc(100% - 44px); margin-top:63px; padding:60px 0 105px; }
   .home-overline { font-size:7px; letter-spacing:.16em; }
-  .home-cover h1 { max-width:540px; margin-top:30px; font-size:clamp(59px,10vw,82px); line-height:.86; }
+  .home-cover h1 { max-width:540px; margin-top:30px; font-size:clamp(68px,12vw,86px); line-height:.86; }
   .home-cover-intro { max-width:360px; margin-top:28px; font-size:13px; }
   .home-cover-index { left:22px; right:22px; bottom:19px; font-size:6px; letter-spacing:.1em; }
   .home-scroll-cue { display:none; }
