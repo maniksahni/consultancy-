@@ -40,9 +40,9 @@
     },
     "ireland": {
       "institutionCount": 18,
-      "courseCount": 77,
+      "courseCount": 286,
       "uniqueInstitutionCount": 18,
-      "coverage": "HEA-listed publicly funded/core-funded higher education institutions, plus University College Cork 2026/27 international undergraduate fee-schedule course records. Not all QQI-validated private providers."
+      "coverage": "HEA-listed publicly funded/core-funded institutions, plus 2026/27 course-level non-EU fee rows from University College Cork and Trinity College Dublin. Not all QQI-validated private providers."
     }
   }
 }

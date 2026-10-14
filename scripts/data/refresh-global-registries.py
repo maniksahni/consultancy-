@@ -328,7 +328,7 @@ coverage = {
         "australia": f"CRICOS provider records and {len([item for item in courses if item['country'] == 'australia']):,} non-expired registered courses (tuition amount included in 25,360 records; snapshot {TODAY}).",
         "uk": f"Student-route sponsor register plus {len([item for item in courses if item['country'] == 'uk']):,} eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included.",
         "germany": "ROR education-type organization records (CC0), plus 4 Technical University of Munich degree fees officially published for international students from third countries. Broad registry is not a complete list of state-recognized universities.",
-        "ireland": "HEA-listed publicly funded/core-funded higher education institutions, plus University College Cork 2026/27 international undergraduate fee-schedule course records. Not all QQI-validated private providers.",
+        "ireland": f"HEA-listed publicly funded/core-funded institutions, plus {len([item for item in courses if item['country'] == 'ireland']):,} curated programme fee records from University College Cork and Trinity College Dublin 2026/27 official schedules. Not all QQI-validated private providers.",
 }
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 country_slugs = ["france", "uk", "usa", "canada", "germany", "australia", "ireland"]
