@@ -2,22 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    match /althea_enquiries/{id} {
-      allow read, update, delete: if false;
-      allow create: if request.resource.data.keys().hasOnly(['fullName','email','phone','targetCountry','background','message','preferredTime','consent','createdAt','status','source','privacyVersion'])
-        && request.resource.data.fullName is string && request.resource.data.fullName.size() >= 2 && request.resource.data.fullName.size() <= 100
-        && request.resource.data.email is string && request.resource.data.email.size() <= 100 && request.resource.data.email.matches('^[^@]+@[^@]+[.][^@]+$')
-        && request.resource.data.phone is string && request.resource.data.phone.size() <= 25
-        && request.resource.data.background is string && request.resource.data.background.size() <= 500
-        && request.resource.data.message is string && request.resource.data.message.size() >= 10 && request.resource.data.message.size() <= 1500
-        && request.resource.data.preferredTime is string && request.resource.data.preferredTime.size() <= 100
-        && request.resource.data.targetCountry in ['France','UK','USA','Canada','Germany','Australia','Ireland','Undecided']
-        && request.resource.data.consent == true
-        && request.resource.data.createdAt == request.time
-        && request.resource.data.status == 'pending_review'
-        && request.resource.data.source == 'althea_website'
-        && request.resource.data.privacyVersion == '2026-10-14';
-    }
+    // Consultation details are handed to WhatsApp; website storage is disabled.
+    match /althea_enquiries/{id} { allow read, write: if false; }
     match /{document=**} { allow read, write: if false; }
   }
 }

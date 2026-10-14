@@ -1,83 +1,61 @@
 import { z } from "zod";
+import { brand } from "@/config/brand";
+
+export const enquiryLimits = {
+  fullName: 80,
+  phone: 32,
+  targetCountry: 32,
+  background: 160,
+  message: 400,
+  preferredTime: 80,
+} as const;
+
+export function sanitizeEnquiryValue(value: unknown, limit: number): string {
+  if (typeof value !== "string") return "";
+  return Array.from(value.normalize("NFC")
+    .replace(/<[^>]*>/g, "")
+    .replace(/[\u0000-\u001F\u007F-\u009F\u202A-\u202E\u2066-\u2069]/g, " ")
+    .replace(/\s+/g, " ").trim())
+    .filter(char => !/^[\uD800-\uDFFF]$/.test(char))
+    .slice(0, limit).join("");
+}
+
+const field = (key: keyof typeof enquiryLimits, required = false) =>
+  z.preprocess(value => sanitizeEnquiryValue(value, enquiryLimits[key]),
+    required ? z.string().min(1, key === "fullName" ? "Enter your full name." : "Please share what you would like to explore.") : z.string());
+
 export const enquirySchema = z.object({
-  fullName: z.string().trim().min(2, "Enter your full name.").max(100),
-  email: z.string().trim().email("Enter a valid email address.").max(100),
-  phone: z
-    .string()
-    .trim()
-    .max(25)
-    .refine(
-      (v) => !v || /^\+?[\d\s()-]{7,25}$/.test(v),
-      "Enter a valid phone number.",
-    ),
-  targetCountry: z.enum([
-    "France",
-    "UK",
-    "USA",
-    "Canada",
-    "Germany",
-    "Australia",
-    "Ireland",
-    "Undecided",
-  ]),
-  background: z.string().trim().max(500),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Please share a little more about your plans.")
-    .max(1500),
-  preferredTime: z.string().trim().max(100),
-  consent: z.literal(true, {
-    errorMap: () => ({ message: "Please consent to an enquiry response." }),
-  }),
-  website: z.string().max(0),
+  fullName: field("fullName", true),
+  phone: field("phone"),
+  targetCountry: field("targetCountry"),
+  background: field("background"),
+  message: field("message", true),
+  preferredTime: field("preferredTime"),
 });
-export const enquiryEnabled =
-  process.env.NEXT_PUBLIC_ENQUIRIES_ENABLED === "true" &&
-  !!process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
-  !process.env.NEXT_PUBLIC_FIREBASE_API_KEY.includes("Dummy") &&
-  !!process.env.NEXT_PUBLIC_FIREBASE_APP_ID &&
-  !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID &&
-  !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY &&
-  !!process.env.NEXT_PUBLIC_PRIVACY_CONTACT &&
-  !!process.env.NEXT_PUBLIC_RETENTION_DAYS;
-export async function submitEnquiry(input: unknown) {
+export type Enquiry = z.output<typeof enquirySchema>;
+
+/** Pure URL construction: no persistence, network calls, or logging. */
+export function buildConsultationWhatsAppUrl(input: Enquiry): string {
   const data = enquirySchema.parse(input);
-  if (!enquiryEnabled)
-    throw new Error(
-      "Enquiry delivery is not yet enabled. Your request has not been sent.",
-    );
-  const { initializeApp, getApps, getApp } = await import("firebase/app");
-  const app = getApps().length
-    ? getApp()
-    : initializeApp({
-        apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-        authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-        appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      });
-  const { initializeAppCheck, ReCaptchaV3Provider, getToken } =
-    await import("firebase/app-check");
-  const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(
-      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
-    ),
-    isTokenAutoRefreshEnabled: true,
-  });
-  await getToken(appCheck);
-  const { getFirestore, collection, addDoc, serverTimestamp } =
-    await import("firebase/firestore");
-  const { website, ...payload } = data;
-  void website;
-  const result = await addDoc(
-    collection(getFirestore(app), "althea_enquiries"),
-    {
-      ...payload,
-      createdAt: serverTimestamp(),
-      status: "pending_review",
-      source: "althea_website",
-      privacyVersion: "2026-10-14",
-    },
-  );
-  return result.id;
+  const entries = [
+    ["Name", data.fullName],
+    ["Phone", data.phone],
+    ["Study destination", data.targetCountry],
+    ["Academic background", data.background],
+    ["I'd like to explore", data.message],
+    ["Preferred time & time zone", data.preferredTime],
+  ].filter(([, value]) => value);
+  const prefix = `https://wa.me/${brand.whatsappNumber}?text=`;
+  const url = () => new URL(prefix + encodeURIComponent([
+    `Bonjour ${brand.shortName}, I'd like to book a consultation.`,
+    ...entries.map(([label, value]) => `${label}: ${value}`),
+  ].join("\n"))).href;
+  // Bound encoded bytes, including emoji and non-Latin scripts, preserving each nonempty line.
+  while (url().length > 1800) {
+    const entry = entries.filter(([, value]) => Array.from(value).length > 1)
+      .sort((a, b) => encodeURIComponent(b[1]).length - encodeURIComponent(a[1]).length)[0];
+    if (!entry) throw new Error("Consultation message exceeds the URL limit.");
+    entry[1] = Array.from(entry[1]).slice(0, -1).join("").trimEnd();
+  }
+  return url();
 }

@@ -109,16 +109,7 @@ test("navigation, finder, FAQ, process and form states", async ({ page }) => {
   await expect(page.getByRole("status")).toHaveText(
     "Please check the highlighted fields.",
   );
-  await page.getByLabel("Full name").fill("Test Student");
-  await page.getByLabel("Email address").fill("test@example.com");
-  await page
-    .getByLabel("What would you like to explore?")
-    .fill("I would like to explore a master in France.");
-  await page.locator("input[name=consent]").check();
-  await page.getByRole("button", { name: "Request a conversation" }).click();
-  await expect(page.getByRole("status")).toContainText(
-    "Your request has not been sent",
-  );
+
 });
 test("WCAG A/AA audit of all routes on mobile and desktop", async ({
   page,

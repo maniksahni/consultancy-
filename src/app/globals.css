@@ -4871,3 +4871,4 @@ textarea {
 .founder-postcard { position: absolute; left: 22px; bottom: 18px; z-index: 1; color: var(--white); font-family: var(--font-display); font-style: italic; font-size: 25px; }
 .founder-letter-heading h2 { font-size: clamp(38px, 4vw, 58px); }
 @media (max-width:760px) { .founder-letter { gap: 30px; } .founder-paris-photo { height: 260px; } }
+.booking-form .whatsapp-fallback { min-height: 44px; display: inline-flex; align-items: center; }

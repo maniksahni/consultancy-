@@ -13,7 +13,7 @@ export const brand = {
     "www.altheaconsulting.in"
   ],
   "email": null,
-  "whatsappNumber": null,
+  "whatsappNumber": "33755749029",
   "whatsappQr": null,
   "socialLinks": {},
   "fonts": {
