@@ -257,7 +257,7 @@ export default function StudyDestinations() {
                     {/* Landmark photo banner: sharp edges, no soft styling */}
                     <div className="relative w-full h-36 min-[390px]:h-40 sm:h-44 rounded-none overflow-hidden mb-4 sm:mb-6 border border-ink/10">
                       <img
-                        src={`/images/destinations/${slug}.webp`}
+                        src={`/images/editorial/${slug}.webp`}
                         alt={`${hub.country} landmark`}
                         className="w-full h-full object-cover"
                         loading="lazy"
@@ -376,7 +376,7 @@ export default function StudyDestinations() {
                 <div className="col-span-3">
                   <div className="relative w-full h-52 rounded-none overflow-hidden border border-ink/10">
                     <img
-                      src={`/images/destinations/${slug}.webp`}
+                      src={`/images/editorial/${slug}.webp`}
                       alt={`${hub.country} landmark`}
                       className="w-full h-full object-cover"
                       loading="lazy"

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer-top">
         <div>
           <Link className="footer-brand" href="/">
-            {brand.name}
+            <img className="footer-brand-logo" src={brand.assets.logoLight} alt={brand.name} />
           </Link>
           <p>
             {brand.tagline}

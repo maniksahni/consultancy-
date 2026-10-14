@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   description:
     brand.tagline,
-  icons: { icon: brand.assets.favicon },
+  icons: { icon: brand.assets.favicon, shortcut: brand.assets.favicon, apple: brand.assets.favicon },
   openGraph: {
     images: [{ url: brand.assets.og, width: 1200, height: 630 }],
     title: brand.name,

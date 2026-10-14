@@ -12,6 +12,7 @@ export const metadata: Metadata = pageMetadata('/about', {
 export default function AboutPage() {
   return (
     <Page
+      image="/images/editorial/france-campus.webp"
       eyebrow="L’ESPRIT DE LA MAISON"
       title="A world of ambition. A very personal maison."
       intro="Parisian at heart. Open to the world. Built around the person behind every application."
@@ -19,8 +20,8 @@ export default function AboutPage() {
       <section className="maison-story">
         <div className="story-photo">
           <Image
-            src="/images/paris-street.webp"
-            alt="The Seine and Parisian architecture in the soft evening light"
+            src="/images/editorial/france-bordeaux.webp"
+            alt="The reflecting pool and warm limestone façades at Bordeaux, France"
             fill
             sizes="(max-width:760px) 90vw, 45vw"
           />
@@ -52,7 +53,7 @@ export default function AboutPage() {
         <div className="founder-letter-heading">
           <p className="eyebrow">MEET YOUR ADVISER</p>
           <div className="founder-paris-photo">
-            <Image src="/images/paris-eiffel.webp" alt="The Eiffel Tower above the Seine at dusk in Paris" fill sizes="(max-width:760px) 90vw, 40vw" />
+            <Image src="/images/editorial/france-library.webp" alt="A sunlit historic university library in France" fill sizes="(max-width:760px) 90vw, 40vw" />
             <span className="founder-postcard">Une perspective parisienne</span>
           </div>
           <h2>{brand.person}</h2>

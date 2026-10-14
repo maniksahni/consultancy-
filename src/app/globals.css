@@ -4849,6 +4849,7 @@ textarea {
 .programme-evidence .effective-date{overflow-wrap:anywhere;}
 
 .brand-logo { width: 190px; height: auto; }
+.footer-brand-logo { display: block; width: 205px; max-width: 100%; height: auto; }
 .brand-portrait { width: 100%; height: auto; }
 .brand-contact { border-top: 1px solid var(--gold); padding-top: 20px; margin-top: 20px; }
 .brand-contact small { display:block; }
@@ -4872,3 +4873,117 @@ textarea {
 .founder-letter-heading h2 { font-size: clamp(38px, 4vw, 58px); }
 @media (max-width:760px) { .founder-letter { gap: 30px; } .founder-paris-photo { height: 260px; } }
 .booking-form .whatsapp-fallback { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* Maison homepage: quiet, confident first impression. */
+.edition-home .edition-topline {
+  padding: 22px 0 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 8px;
+  letter-spacing: .19em;
+}
+.edition-home .edition-cover {
+  grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
+  gap: clamp(42px, 7vw, 112px);
+  padding: clamp(48px, 6vw, 88px) 0 clamp(42px, 5vw, 70px);
+}
+.edition-cover-copy h1 {
+  max-width: 640px;
+  font-size: clamp(66px, 7vw, 112px);
+  line-height: .91;
+  letter-spacing: -.035em;
+  margin: 28px 0 30px;
+}
+.edition-cover-copy h1 em {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 400;
+}
+.edition-cover-copy > .eyebrow {
+  letter-spacing: .2em;
+}
+.edition-cover-copy > p:not(.eyebrow) {
+  max-width: 390px;
+  font-size: 14px;
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+.edition-cover-copy .button {
+  min-height: 58px;
+  padding-inline: 27px;
+  letter-spacing: .035em;
+}
+.edition-cover-art {
+  min-height: clamp(470px, 43vw, 620px);
+}
+.cover-picture {
+  inset: 0 0 0 26px;
+  border-radius: 260px 260px 2px 2px;
+}
+.cover-picture > img {
+  object-position: 58% center;
+  transform: scale(1.015);
+}
+.cover-picture::after {
+  background: linear-gradient(180deg, transparent 58%, rgba(9, 20, 37, .55));
+}
+.hero-image-caption {
+  position: absolute;
+  z-index: 2;
+  left: 58px;
+  right: 28px;
+  bottom: 23px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: white;
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+.edition-home .edition-colophon {
+  padding: 18px 0;
+  letter-spacing: .2em;
+}
+.edition-home .edition-manifesto {
+  padding-top: 118px;
+  padding-bottom: 118px;
+}
+@media (max-width: 1050px) {
+  .edition-home .edition-cover { gap: 36px; }
+  .edition-cover-copy h1 { font-size: clamp(58px, 7.5vw, 78px); }
+  .edition-cover-art { min-height: 470px; }
+}
+@media (max-width: 760px) {
+  .edition-home .edition-topline {
+    padding: 18px 0 13px;
+    font-size: 6px;
+  }
+  .edition-home .edition-cover {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 42px 0 32px;
+  }
+  .edition-cover-copy h1 {
+    font-size: clamp(58px, 14vw, 86px);
+    line-height: .93;
+    margin: 20px 0 22px;
+  }
+  .edition-cover-copy > p:not(.eyebrow) { font-size: 13px; }
+  .edition-cover-art {
+    min-height: min(112vw, 490px);
+    margin-left: 3px;
+  }
+  .cover-picture {
+    inset: 0 0 0 15px;
+    border-radius: 180px 180px 2px 2px;
+  }
+  .hero-image-caption {
+    left: 33px;
+    right: 15px;
+    bottom: 18px;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 7px;
+  }
+  .edition-home .edition-colophon { padding: 15px 0; }
+  .edition-home .edition-manifesto { padding: 66px 0; }
+}

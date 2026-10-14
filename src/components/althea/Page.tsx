@@ -6,14 +6,24 @@ import Image from "next/image";
 export default function Page({
   eyebrow = "La maison",
   title,
+  image,
   intro,
   children,
 }: {
   eyebrow?: string;
   title: string;
+  image?: string;
   intro: string;
   children: React.ReactNode;
 }) {
+  const pageKey = `${eyebrow} ${title}`.toLocaleLowerCase();
+  const pageImage = image || (
+    /university|programme|academic|research|course|study/.test(pageKey) ? "/images/editorial/france-library.webp" :
+    /visa|admission|application|official|campus/.test(pageKey) ? "/images/editorial/france-campus.webp" :
+    /city|cost|living|scholarship|budget|outcome/.test(pageKey) ? "/images/editorial/france-bordeaux.webp" :
+    /service|consult|journey|welcome|about|maison|support/.test(pageKey) ? "/images/editorial/paris-cafe.webp" :
+    ["/images/editorial/france-evening.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/france-library.webp", "/images/editorial/france-campus.webp", "/images/editorial/paris-cafe.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
+  );
   return (
     <>
       <Navbar />
@@ -37,8 +47,8 @@ export default function Page({
             </div>
             <div className="interior-cover-photo">
               <Image
-                src="/images/paris-street.webp"
-                alt="Paris in the evening light"
+                src={pageImage}
+                alt={pageImage.includes("library") ? "A quiet French university library" : pageImage.includes("campus") ? "A French university courtyard" : pageImage.includes("bordeaux") ? "Bordeaux architecture reflected in the water" : pageImage.includes("cafe") ? "A Paris café terrace on a Haussmann street" : "The Eiffel Tower and Seine at blue hour"}
                 fill
                 sizes="(max-width:760px) 90vw, 35vw"
               />

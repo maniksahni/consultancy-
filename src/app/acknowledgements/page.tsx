@@ -34,14 +34,15 @@ export default function Content() {
         </a>
         <h2>Global destination resources</h2>
         <p>Country guides link to Study UK (British Council), EducationUSA, EduCanada, DAAD, Study Australia and Education in Ireland. These are research resources, not partnerships. Destination guidance reviewed on 14 October 2026; always check the publisher for current requirements.</p>
-        <h2>Photography</h2>
+        <h2>Photography and generated editorial imagery</h2>
         <p>
-          Paris photography is sourced from Unsplash image assets. Photo IDs:
-          photo-1502602898657-3e91760cbb34 and photo-1499856871958-5b9627545d1a.
-          Final photographer attribution and licence documentation require
-          confirmation before release.
+          The current Paris, France and country destination scenes in the site
+          were generated as original editorial illustrations using OpenAI image
+          generation for this project. They are not documentary photographs of
+          specific university campuses or a representation of an official
+          institution. The country scenes are mood-setting images; follow the
+          linked official sources for facts.
         </p>
-        <a href="https://unsplash.com/license">Unsplash licence ↗</a>
         <h2>Independent editorial work</h2>
         <p>
           The design is an original implementation inspired by Parisian

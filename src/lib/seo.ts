@@ -17,11 +17,11 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
       title, description, url: absoluteUrl(path),
-      images: [{ url: absoluteUrl("/images/paris-eiffel.webp"), alt: "Paris and the Eiffel Tower" }],
+      images: [{ url: absoluteUrl("/images/editorial/france-evening.webp"), alt: "Paris and the Eiffel Tower" }],
       ...metadata.openGraph,
     },
     twitter: { card: "summary_large_image", title, description,
-      images: [absoluteUrl("/images/paris-eiffel.webp")], ...metadata.twitter },
+      images: [absoluteUrl("/images/editorial/france-evening.webp")], ...metadata.twitter },
   };
 }
 

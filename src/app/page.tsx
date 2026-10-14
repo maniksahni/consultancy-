@@ -50,10 +50,6 @@ export default function Home() {
             <span>{brand.location} · INDEPENDENT GUIDANCE</span>
             <span>EST. IN AMBITION</span>
           </div>
-          <div className="edition-masthead" aria-hidden="true">
-            <span>{brand.shortName}</span>
-            <i>✳</i>
-          </div>
           <div className="edition-cover">
             <div className="edition-cover-copy">
               <p className="eyebrow">BIENVENUE · STUDY. SETTLE. SUCCEED.</p>
@@ -76,7 +72,7 @@ export default function Home() {
             <div className="edition-cover-art">
               <div className="cover-picture">
                 <Image
-                  src="/images/paris-eiffel.webp"
+                  src="/images/editorial/france-evening.webp"
                   alt="The Eiffel Tower and the Seine at sunset, a view towards a new life in Paris"
                   fill
                   priority
@@ -86,35 +82,10 @@ export default function Home() {
                   01 / A PARISIAN PERSPECTIVE
                 </span>
               </div>
-              <img className="brand-portrait" src={brand.assets.illustration} alt="Original illustration of the Eiffel Tower, balloon and clouds"/>
-              <div className="cover-ticket">
-                <span>YOUR NEXT CHAPTER</span>
-                <strong>
-                  Anywhere.
-                  <br />
-                  <em>Entirely yours.</em>
-                </strong>
-                <div>
-                  <span>
-                    DEPARTURE
-                    <br />
-                    <b>YOUR AMBITION</b>
-                  </span>
-                  <ArrowUpRight size={22} />
-                  <span>
-                    ARRIVAL
-                    <br />
-                    <b>YOUR FUTURE</b>
-                  </span>
-                </div>
+              <div className="hero-image-caption">
+                <span>PARIS · 48°51′ N, 2°21′ E</span>
+                <span>YOUR NEXT CHAPTER, CONSIDERED.</span>
               </div>
-              <span className="cover-roundel" aria-hidden="true">
-                LE MONDE
-                <br />
-                <i>✦</i>
-                <br />
-                VOUS ATTEND
-              </span>
             </div>
           </div>
           <div className="edition-colophon">
@@ -202,8 +173,8 @@ export default function Home() {
         </section>
         <section className="edition-interlude">
           <Image
-            src="/images/paris-street.webp"
-            alt="Evening light over the Seine and the architecture of Paris"
+            src="/images/editorial/paris-cafe.webp"
+            alt="A quiet Paris café terrace beside a Haussmann street"
             fill
             sizes="100vw"
           />
