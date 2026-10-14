@@ -174,43 +174,46 @@ def uk_norm(value):
     return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
 
 uk_names = {uk_norm(item.get("name")): item for item in institutions if item.get("country") == "uk"}
+uk_provider_pairs = {}
 for row in uk_tables["INSTITUTION.csv"]:
-    provider_id = row.get("PUBUKPRN", "").strip()
-    if not provider_id:
+    published_provider_id = row.get("PUBUKPRN", "").strip()
+    provider_id = row.get("UKPRN", "").strip()
+    if not published_provider_id or not provider_id:
         continue
     provider_name = (row.get("FIRST_TRADING_NAME") or row.get("LEGAL_NAME") or "").strip()
     institution = uk_names.get(uk_norm(provider_name))
     if institution is None:
         institution = {
-            "id": "uk-ukprn-" + provider_id, "country": "uk", "name": provider_name,
+            "id": "uk-provider-" + published_provider_id + "-" + provider_id, "country": "uk", "name": provider_name,
             "city": (row.get("PROVADDRESS", "").split(",")[-2:-1] or [""])[0].strip(),
             "institutionType": "Discover Uni reporting provider", "sponsorStatus": "Not matched to sponsor register",
         }
         institutions.append(institution)
         uk_names[uk_norm(provider_name)] = institution
     institution["identifier"] = provider_id
-    uk_institutions[provider_id] = institution
+    uk_provider_pairs[(published_provider_id, provider_id)] = institution
 
-uk_locations = {row.get("LOCID", ""): row for row in uk_tables["LOCATION.csv"]}
+uk_locations = {(row.get("UKPRN", ""), row.get("LOCID", "")): row for row in uk_tables["LOCATION.csv"]}
 uk_aims = {row.get("KISAIMCODE", ""): row.get("KISAIMLABEL", "") for row in uk_tables["KISAIM.csv"]}
 uk_course_locations = {}
 for row in uk_tables["COURSELOCATION.csv"]:
-    key = (row.get("PUBUKPRN"), row.get("KISCOURSEID"), row.get("KISMODE"))
+    key = (row.get("PUBUKPRN"), row.get("UKPRN"), row.get("KISCOURSEID"), row.get("KISMODE"))
     uk_course_locations.setdefault(key, []).append(row.get("LOCID", ""))
 
 uk_course_source = "HESA / Discover Uni dataset · 2026/27 · CC BY 4.0"
 uk_course_seen = set()
 for row in uk_tables["KISCOURSE.csv"]:
-    provider_id = row.get("PUBUKPRN", "").strip()
-    institution = uk_institutions.get(provider_id)
+    published_provider_id = row.get("PUBUKPRN", "").strip()
+    provider_id = row.get("UKPRN", "").strip()
+    institution = uk_provider_pairs.get((published_provider_id, provider_id))
     if not institution:
         continue
-    key = (provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""))
+    key = (published_provider_id, provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""))
     location_ids = uk_course_locations.get(key) or [""]
     for location_id in location_ids:
-        location = uk_locations.get(location_id, {})
+        location = uk_locations.get((provider_id, location_id), {})
         city = location.get("LOCNAME", "").strip() or institution.get("city")
-        record_id = "uk-course-" + "-".join((provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""), location_id))
+        record_id = "uk-course-" + "-".join((published_provider_id, provider_id, row.get("KISCOURSEID", ""), row.get("KISMODE", ""), location_id))
         if record_id in uk_course_seen:
             continue
         uk_course_seen.add(record_id)

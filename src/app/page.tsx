@@ -62,14 +62,16 @@ export default function Home() {
           <div>
             <p className="home-eyebrow">A CLEARER PLACE TO BEGIN</p>
             <h2 id="home-universities-title">Find your course.<br /><em>See the details.</em></h2>
-            <p>Search course records from France and Australia, or browse institution listings across seven destinations. Listings show their coverage and source dates.</p>
+            <p>Browse course catalogues from France, the UK and Australia, alongside U.S. historical study-field records and institution listings across seven destinations. Each country shows its data scope and source date.</p>
             <Link className="home-button home-button-navy" href="/universities">Open the full directory <ArrowUpRight size={16} /></Link>
           </div>
           <div className="home-guidance-links">
             <Link href="/universities?country=france&view=courses"><span>01</span><strong>France · {countFormat.format(universityManifest.countries.france.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities?country=australia&view=courses"><span>02</span><strong>Australia · {countFormat.format(universityManifest.countries.australia.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities"><span>03</span><strong>{countFormat.format(institutionRecordCount)} institution &amp; campus records</strong><ArrowUpRight size={16} /></Link>
-            <p className="home-eyebrow">{countFormat.format(courseRecordCount)} course records in the current catalogue snapshot · updated {universityManifest.refreshedAt}</p>
+            <Link href="/universities?country=uk&view=courses"><span>02</span><strong>United Kingdom · {countFormat.format(universityManifest.countries.uk.courseCount)} course/location records</strong><ArrowUpRight size={16} /></Link>
+            <Link href="/universities?country=australia&view=courses"><span>03</span><strong>Australia · {countFormat.format(universityManifest.countries.australia.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
+            <Link href="/universities?country=usa&view=courses"><span>04</span><strong>United States · {countFormat.format(universityManifest.countries.usa.courseCount)} historical field/credential records</strong><ArrowUpRight size={16} /></Link>
+            <Link href="/universities"><span>05</span><strong>{countFormat.format(institutionRecordCount)} institution &amp; campus records</strong><ArrowUpRight size={16} /></Link>
+            <p className="home-eyebrow">{countFormat.format(courseRecordCount)} course and study-field records in the current snapshot · updated {universityManifest.refreshedAt}</p>
           </div>
         </div>
       </section>
