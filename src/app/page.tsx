@@ -32,9 +32,9 @@ export default function Home() {
         <Image className="home-cover-image" src="/images/editorial/althea-france-atlas-hero.jpg" alt="An open blue atlas with a brass route marker leading across France, beside a Paris window at dusk" fill priority sizes="100vw" />
         <div className="home-cover-veil" />
         <div className="home-cover-frame">
-          <p className="home-overline"><span /> AN INDEPENDENT FRANCE ADVISORY <i>—</i> PARIS</p>
-          <h1 id="home-title">Your next chapter<br /><em>in France.</em></h1>
-          <p className="home-cover-intro">A considered beginning for the life you’re building in France. Independent, one-to-one guidance for study, a new home and the work ahead.</p>
+          <p className="home-overline"><span /> FOR THE CURIOSITY THAT CARRIES YOU FURTHER <i>—</i> PARIS</p>
+          <h1 id="home-title">See the world.<br /><em>Find yourself.</em></h1>
+          <p className="home-cover-intro">We go abroad to explore new places, discover new perspectives, and meet parts of ourselves we haven’t yet known. The world grows wider—and so can our sense of what’s possible. If France is calling, let’s find your first step.</p>
           <div className="home-cover-actions">
             <Link className="home-button home-button-gold" href="/book-consultation">Begin with a conversation <ArrowUpRight size={17} /></Link>
             <Link className="home-text-link home-cover-explore" href="/universities?country=france&amp;view=courses">Explore universities &amp; courses <ArrowUpRight size={15} /></Link>
