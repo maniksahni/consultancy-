@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { programmeResearch, publishedMoney } from "@/data/programmeResearch";
 import { programmes } from "@/data/france";
 export default function Finder() {

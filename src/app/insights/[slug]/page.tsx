@@ -6,7 +6,7 @@ export function generateStaticParams() {
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
-  return { title: a?.title || "Journal", description: a?.intro };
+  return {alternates:{canonical:`/insights/${params.slug}`}, title: a?.title || "Journal", description: a?.intro };
 }
 export default function Article({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);

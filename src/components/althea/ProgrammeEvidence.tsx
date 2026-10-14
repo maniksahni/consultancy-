@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import Page from "./Page";
 import { ProgrammeResearch, publishedMoney } from "@/data/programmeResearch";
 import { destinations } from "@/data/destinations";

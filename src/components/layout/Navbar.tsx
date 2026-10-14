@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { useEffect, useState } from "react";
 const links = [
   ["Destinations", "/destinations"],

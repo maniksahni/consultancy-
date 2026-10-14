@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "@/components/althea/EditorialImage";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import Navbar from "@/components/layout/Navbar";
 import KnowledgeHub from "@/components/althea/KnowledgeHub";
 import Footer from "@/components/layout/Footer";
 import { destinations } from "@/data/destinations";
 export function generateStaticParams() {
   return destinations
-    .filter((d) => d.slug !== "france")
     .map((d) => ({ slug: d.slug }));
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
@@ -18,7 +17,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
 }
 export default function Destination({ params }: { params: { slug: string } }) {
   const d = destinations.find((d) => d.slug === params.slug);
-  if (!d || d.slug === "france") notFound();
+  if (!d) notFound();
   return (
     <>
       <Navbar />

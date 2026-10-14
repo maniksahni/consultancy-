@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { ArrowUpRight, MoveDown } from "lucide-react";
 import { articles } from "@/data/france";
 
@@ -37,7 +37,7 @@ export default function ReadingRoom() {
         </Link>
         <div className="reading-stories">
           {articles.map((a, i) => (
-            <Link key={a.slug} href={`/insights/${a.slug}`}>
+            <Link key={a.slug} href={`/knowledge/${a.slug}`}>
               <span className="eyebrow">
                 0{i + 1} / {a.category}
               </span>

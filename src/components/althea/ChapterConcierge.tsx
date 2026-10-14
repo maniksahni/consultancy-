@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { Check, ArrowUpRight } from "lucide-react";
 const chapters = [
   {

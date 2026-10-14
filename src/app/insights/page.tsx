@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { articles } from "@/data/france";
 export const metadata: Metadata = {
   alternates: { canonical: "/insights" },

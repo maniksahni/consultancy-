@@ -1,0 +1,58 @@
+import {
+  Compass,
+  BookOpen,
+  FilePenLine,
+  Route,
+  GraduationCap,
+  Luggage,
+} from "lucide-react";
+export const services = [
+  {
+    slug: "academic-direction",
+    title: "Academic direction",
+    note: "START WITH THE PERSON",
+    text: "Explore your academic background, subject interests and the constraints that matter. Begin with a clearer sense of what you’re looking for.",
+    icon: Compass,
+    detail: "Your background · Your interests · Your priorities",
+  },
+  {
+    slug: "programme-research",
+    title: "Programme research",
+    note: "GIVE YOUR CHOICES A REASON",
+    text: "Compare official course information, teaching languages and prerequisites. Create a reasoned shortlist around your ambitions.",
+    icon: BookOpen,
+    detail: "Course content · Eligibility · A considered shortlist",
+  },
+  {
+    slug: "application-review",
+    title: "Application review",
+    note: "YOUR STORY, THOUGHTFULLY TOLD",
+    text: "Discuss feedback on your CV and written materials. Find ways to express your experience clearly while keeping the work truthful and your own.",
+    icon: FilePenLine,
+    detail: "CV feedback · Written materials · Document planning",
+  },
+  {
+    slug: "process-orientation",
+    title: "Process orientation",
+    note: "MAKE SENSE OF THE NEXT STEP",
+    text: "Understand where to find official university and Campus France instructions, and how to check the procedure that applies to you.",
+    icon: Route,
+    detail: "Official resources · Application routes · Preparation",
+  },
+  {
+    slug: "funding-research",
+    title: "Funding research",
+    note: "PLAN WITH YOUR BUDGET IN MIND",
+    text: "Explore official scholarship resources and the eligibility conditions. Consider funding alongside tuition and everyday living costs.",
+    icon: GraduationCap,
+    detail: "Scholarship resources · Eligibility · Budget questions",
+  },
+  {
+    slug: "arrival-planning",
+    title: "Arrival planning",
+    note: "THINK BEYOND THE ACCEPTANCE",
+    text: "Build a practical checklist for housing research, transport and life after arriving. Make room for the everyday details of a new country.",
+    icon: Luggage,
+    detail: "Housing research · Transport · Arrival checklist",
+  },
+];

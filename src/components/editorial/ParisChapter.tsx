@@ -1,5 +1,5 @@
 import Image from "@/components/althea/EditorialImage";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { ArrowUpRight, MoveDown } from "lucide-react";
 
 export default function ParisChapter() {

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 import { sampleReviews } from "@/data/reviews";
 export default function Testimonials({ full = false }: { full?: boolean }) {

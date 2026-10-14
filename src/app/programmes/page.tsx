@@ -1,6 +1,6 @@
 import Page from "@/components/althea/Page";
 import ProgrammeResearchFinder from "@/components/althea/ProgrammeResearchFinder";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 export const metadata = {
   alternates: { canonical: "/programmes" },
   title: "Programme fees & application deadlines",

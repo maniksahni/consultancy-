@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { services } from "@/data/services";
+import { institutions } from "@/data/franceDirectory";
 import {programmeResearch} from "@/data/programmeResearch";
 import { articles, cities, programmes } from "@/data/france";
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -14,6 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "programmes",
     "campus-france-guide",
     "services",
+    ...services.map(s=>`services/${s.slug}`),
+    ...institutions.map(i=>`universities/${i.id}`),
+    ...articles.map(a=>`knowledge/${a.slug}`),
+    "destinations/france",
     "about",
     "reviews",
     "mentorship-model",

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "@/components/althea/EditorialImage";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { destinations, destinationHref } from "@/data/destinations";
 export default function DestinationAtlas({
   compact = false,

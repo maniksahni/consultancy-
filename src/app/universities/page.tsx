@@ -15,10 +15,17 @@ export default function Content() {
         "A curated starting point, with official sources and clear review dates. No guaranteed admissions or assumed fees."
       }
     >
-      <p style={{marginBottom:30}}><a className="text-link" href="/france/institutions">Explore the official French institution registry ↗</a></p>
+      <p style={{ marginBottom: 30 }}>
+        <a className="text-link" href="/france/institutions">
+          Explore the official French institution registry ↗
+        </a>
+      </p>
       <Finder />
       <p className="muted" style={{ marginTop: 25 }}>
-        Programme evidence reviewed 14 October 2026. Open the programme detail for published fees, applicant categories and application calendars. Conditional waivers and track-specific requirements are stated separately.
+        Programme evidence reviewed 14 October 2026. Open the programme detail
+        for published fees, applicant categories and application calendars.
+        Conditional waivers and track-specific requirements are stated
+        separately.
       </p>
     </Page>
   );

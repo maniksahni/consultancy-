@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { destinations } from "@/data/destinations";
 import { programmeResearch, publishedMoney } from "@/data/programmeResearch";
 export default function ProgrammeResearchFinder() {

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import { ArrowUpRight, MoveDown } from "lucide-react";
 const support = [
   {
@@ -6,7 +6,7 @@ const support = [
     title: "The possibility",
     accent: "Study.",
     text: "Find the subject, the programme and the place that reflect your ambition.",
-    href: "/france/programmes",
+    href: "/programmes",
     tag: "ACADEMIC DIRECTION & PROGRAMME RESEARCH",
   },
   {
@@ -22,7 +22,7 @@ const support = [
     title: "The bigger picture",
     accent: "Succeed.",
     text: "Think beyond the offer. Build a plan for the life and career you want next.",
-    href: "/about",
+    href: "/services/academic-direction",
     tag: "PERSONAL CONVERSATIONS & CAREER DIRECTION",
   },
 ];

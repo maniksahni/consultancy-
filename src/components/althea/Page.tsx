@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import Image from "@/components/althea/EditorialImage";
 export default function Page({
   eyebrow = "LA MAISON ALTHÉA",
@@ -20,11 +20,11 @@ export default function Page({
         <header className="interior-cover">
           <div className="wrap interior-cover-layout">
             <div className="page-heading">
-              <div className="interior-breadcrumb">
+              <nav className="interior-breadcrumb" aria-label="Breadcrumb">
                 <Link href="/">La Maison Althéa</Link>
                 <span aria-hidden="true">/</span>
-                <span>{eyebrow}</span>
-              </div>
+                <span aria-current="page">{eyebrow}</span>
+              </nav>
               <p className="eyebrow">{eyebrow}</p>
               <h1>{title}</h1>
               <p className="lead">{intro}</p>

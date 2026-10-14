@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 export default function Footer() {
   return (
     <footer className="site-footer">

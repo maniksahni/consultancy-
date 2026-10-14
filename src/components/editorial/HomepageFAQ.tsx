@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import FAQ from "@/components/althea/FAQ";
 
 export default function HomepageFAQ() {

@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/althea/EditorialLink";
 import {
   enquirySchema,
   enquiryEnabled,
