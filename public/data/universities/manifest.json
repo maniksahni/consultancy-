@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "refreshedAt": "2026-10-14",
+  "countries": {
+    "france": {
+      "institutionCount": 245,
+      "courseCount": 25805,
+      "coverage": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition."
+    },
+    "uk": {
+      "institutionCount": 755,
+      "courseCount": 0,
+      "coverage": "Current Student-route sponsor register; includes providers licensed to sponsor international students, not a course/fee catalogue."
+    },
+    "usa": {
+      "institutionCount": 4059,
+      "courseCount": 0,
+      "coverage": "IPEDS degree-granting institution directory (2024); tuition and programmes are not included in this snapshot."
+    },
+    "canada": {
+      "institutionCount": 1424,
+      "courseCount": 0,
+      "coverage": "All post-secondary designated learning institution campus rows; source is a study-permit designation list, not a full course/fee catalogue."
+    },
+    "germany": {
+      "institutionCount": 618,
+      "courseCount": 0,
+      "coverage": "ROR education-type organization records (CC0); broad research-organizations data, not a complete legal list of state-recognized universities."
+    },
+    "australia": {
+      "institutionCount": 1545,
+      "courseCount": 25542,
+      "coverage": "CRICOS provider records and non-expired registered courses with published tuition (snapshot 2026-04-13)."
+    },
+    "ireland": {
+      "institutionCount": 18,
+      "courseCount": 0,
+      "coverage": "HEA-listed publicly funded/core-funded higher education institutions; not all QQI-validated private providers."
+    }
+  }
+}

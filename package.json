@@ -14,7 +14,8 @@
     "prebuild": "npm run brand:sync",
     "data:import": "node scripts/data/import.mjs",
     "data:validate": "node scripts/data/validate.mjs",
-    "data:publish": "node scripts/data/publish.mjs"
+    "data:publish": "node scripts/data/publish.mjs",
+    "data:refresh-registries": "python3 scripts/data/refresh-global-registries.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
