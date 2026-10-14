@@ -7,7 +7,22 @@ import {
   submitEnquiry,
 } from "@/lib/consultation";
 export default function Booking() {
-  useEffect(() => { const slug=new URLSearchParams(window.location.search).get("destination"); const countries:Record<string,string>={france:"France",uk:"UK",usa:"USA",canada:"Canada",germany:"Germany",australia:"Australia",ireland:"Ireland"}; const select=document.querySelector<HTMLSelectElement>("select[name=targetCountry]"); if(select&&slug&&countries[slug])select.value=countries[slug]; }, []);
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("destination");
+    const countries: Record<string, string> = {
+      france: "France",
+      uk: "UK",
+      usa: "USA",
+      canada: "Canada",
+      germany: "Germany",
+      australia: "Australia",
+      ireland: "Ireland",
+    };
+    const select = document.querySelector<HTMLSelectElement>(
+      "select[name=targetCountry]",
+    );
+    if (select && slug && countries[slug]) select.value = countries[slug];
+  }, []);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
@@ -155,7 +170,14 @@ export default function Booking() {
             ? "Enquiry received"
             : "Request a conversation ↗"}
       </button>
-      <a className="text-link" href="https://wa.me/33755749029?text=Bonjour%20Alth%C3%A9a%2C%20I%20would%20like%20to%20discuss%20my%20study%20plans." target="_blank" rel="noopener noreferrer">Prefer a conversation? Continue on WhatsApp ↗</a>
+      <a
+        className="text-link"
+        href="https://wa.me/33755749029?text=Bonjour%20Alth%C3%A9a%2C%20I%20would%20like%20to%20discuss%20my%20study%20plans."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Prefer a conversation? Continue on WhatsApp ↗
+      </a>
       <p role="status" className={status ? "form-status" : ""}>
         {status}
       </p>

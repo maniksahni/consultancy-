@@ -4855,3 +4855,25 @@ textarea {
 .published-charges h3{font-size:29px;margin-bottom:15px;}
 .published-charges dd small{display:block;font-size:10px;color:var(--color147);}
 .programme-evidence .effective-date{overflow-wrap:anywhere;}
+
+/* The maison palette and rhythm: shared by Tailwind and editorial CSS. */
+:root {
+  --royal: #102D76;
+  --royal-deep: #142E61;
+  --cream: #FBF9F3;
+  --gold: #D8BB8E;
+  --navy: var(--royal-deep);
+  --blue: var(--royal);
+  --ivory: var(--cream);
+  --ink: var(--royal-deep);
+  --muted: #53617A;
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --section-space: clamp(3.5rem, 7vw, 7rem);
+}
+.edition-manifesto, .edition-support, .edition-adviser, .edition-library { padding-block: var(--section-space); }

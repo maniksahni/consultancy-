@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import {programmeResearch,publishedMoney} from "@/data/programmeResearch";
+import { programmeResearch, publishedMoney } from "@/data/programmeResearch";
 import { programmes } from "@/data/france";
 export default function Finder() {
   const [query, setQuery] = useState("");
@@ -118,8 +118,17 @@ export default function Finder() {
             <p className="programme-meta">
               {p.teachingLanguages.join(" / ")} · {p.duration}
             </p>
-            <p className="muted">{(() => {const e=programmeResearch.find(e=>e.slug===p.slug);return e?`${publishedMoney(e)} · ${e.fee.year} · ${e.fee.period}`:"Programme fee not yet researched";})()}</p>
-            <p className="muted">{programmeResearch.find(e=>e.slug===p.slug)?.deadline.label}</p>
+            <p className="muted">
+              {(() => {
+                const e = programmeResearch.find((e) => e.slug === p.slug);
+                return e
+                  ? `${publishedMoney(e)} · ${e.fee.year} · ${e.fee.period}`
+                  : "Programme fee not yet researched";
+              })()}
+            </p>
+            <p className="muted">
+              {programmeResearch.find((e) => e.slug === p.slug)?.deadline.label}
+            </p>
             <span className="source-badge">
               {p.reviewStatus === "verified"
                 ? "Published fee evidence reviewed"

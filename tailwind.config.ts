@@ -1,92 +1,35 @@
 import type { Config } from "tailwindcss";
-
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{ts,tsx,mdx}"],
   theme: {
     extend: {
-      spacing: {
-        "space-1": "8px",
-        "space-2": "16px",
-        "space-3": "24px",
-        "space-4": "32px",
-        "space-5": "48px",
-        "space-6": "64px",
-        "space-7": "96px",
-      },
       colors: {
+        royal: { DEFAULT: "var(--royal)", deep: "var(--royal-deep)" },
         cream: {
-          DEFAULT: "#F7F3EB",
-          50: "#FAF7F2",
-          100: "#F7F3EB",
-          200: "#E6DDD0",
+          DEFAULT: "var(--cream)",
+          50: "var(--cream)",
+          100: "var(--cream)",
+          200: "var(--line)",
         },
-        ink: {
-          DEFAULT: "#1C2534",
-          soft: "#2C271E",
-          muted: "#4A4237",
-        },
-        terra: {
-          DEFAULT: "#102D76",
-          light: "#2259A8",
-          dark: "#102D76",
-        },
-        stone: {
-          DEFAULT: "#786B5E",
-          light: "#A09286",
-          dark: "#584D42",
-        },
-        sand: "#E0D9CE",
-        // keep legacy tokens so CountryFlag and other untouched components still compile
-        gold: {
-          50: "#FAF7F2",
-          100: "#F4EFE6",
-          200: "#E8DEC9",
-          300: "#DBCBAA",
-          400: "#CDB68B",
-          500: "#C5A880",
-          600: "#B49363",
-          700: "#987848",
-          800: "#765C37",
-          900: "#554228",
-        },
-        obsidian: {
-          950: "#04060A",
-          900: "#070A11",
-          850: "#0B0F19",
-          800: "#101625",
-          700: "#182236",
-        },
+        gold: { DEFAULT: "var(--gold)", 500: "var(--gold)" },
+        ink: { DEFAULT: "var(--ink)", muted: "var(--muted)" },
+      },
+      spacing: {
+        "space-1": "var(--space-1)",
+        "space-2": "var(--space-2)",
+        "space-3": "var(--space-3)",
+        "space-4": "var(--space-4)",
+        "space-5": "var(--space-5)",
+        "space-6": "var(--space-6)",
+        "space-7": "var(--space-7)",
       },
       fontFamily: {
-        display: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "Cambria", "serif"],
-        serif: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "Cambria", "serif"],
-        sans: ["var(--font-jakarta)", "Plus Jakarta Sans", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
-      },
-      keyframes: {
-        "slide-up-fade": {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        ping: {
-          "75%, 100%": { transform: "scale(2)", opacity: "0" },
-        },
-      },
-      animation: {
-        "slide-up-fade": "slide-up-fade 0.3s ease-out forwards",
-        marquee: "marquee 28s linear infinite",
-        ping: "ping 1s cubic-bezier(0,0,0.2,1) infinite",
+        display: ["var(--font-cormorant)", "Georgia", "serif"],
+        serif: ["var(--font-cormorant)", "Georgia", "serif"],
+        sans: ["var(--font-jakarta)", "sans-serif"],
       },
     },
   },
   plugins: [],
 };
-
 export default config;

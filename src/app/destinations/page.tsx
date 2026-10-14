@@ -1,5 +1,48 @@
-import Page from '@/components/althea/Page';
-import DestinationAtlas from '@/components/althea/DestinationAtlas';
-export const metadata={
-  alternates: { canonical: "/destinations" },title:'The destination atlas',description:'Explore seven study destinations, save your shortlist and compare official resources.'};
-export default function Destinations(){return <Page eyebrow="THE ALTHÉA ATLAS" title="The world is your next chapter." intro="From Parisian avenues to new horizons. Explore seven destinations and find the questions that will shape your decision."><DestinationAtlas/><section className="destination-planning"><p className="eyebrow">BEFORE YOU CHOOSE</p><h2>Choose a life.<br/><em>Not just a location.</em></h2><div className="planning-grid">{[['Academic fit','Read the actual modules, research interests and entry requirements. Your programme matters more than a postcard.'],['A realistic budget','Add tuition, accommodation, insurance, travel and application costs. Check the latest figures with official sources.'],['Everyday life','Consider language, housing, accessibility, weather and the support you will need when you arrive.']].map(([t,p])=><article key={t}><h3>{t}</h3><p>{p}</p></article>)}</div></section></Page>}
+import Page from "@/components/althea/Page";
+import DestinationAtlas from "@/components/althea/DestinationAtlas";
+export const metadata = {
+  alternates: { canonical: "/destinations" },
+  title: "The destination atlas",
+  description:
+    "Explore seven study destinations, save your shortlist and compare official resources.",
+};
+export default function Destinations() {
+  return (
+    <Page
+      eyebrow="THE ALTHÉA ATLAS"
+      title="The world is your next chapter."
+      intro="From Parisian avenues to new horizons. Explore seven destinations and find the questions that will shape your decision."
+    >
+      <DestinationAtlas />
+      <section className="destination-planning">
+        <p className="eyebrow">BEFORE YOU CHOOSE</p>
+        <h2>
+          Choose a life.
+          <br />
+          <em>Not just a location.</em>
+        </h2>
+        <div className="planning-grid">
+          {[
+            [
+              "Academic fit",
+              "Read the actual modules, research interests and entry requirements. Your programme matters more than a postcard.",
+            ],
+            [
+              "A realistic budget",
+              "Add tuition, accommodation, insurance, travel and application costs. Check the latest figures with official sources.",
+            ],
+            [
+              "Everyday life",
+              "Consider language, housing, accessibility, weather and the support you will need when you arrive.",
+            ],
+          ].map(([t, p]) => (
+            <article key={t}>
+              <h3>{t}</h3>
+              <p>{p}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </Page>
+  );
+}
