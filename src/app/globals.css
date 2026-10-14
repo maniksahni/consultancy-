@@ -5278,6 +5278,8 @@ textarea {
 .home-contact-form .booking-form > .eyebrow { display:none; }
 .althea-home ~ .fixed.z-50 { display:none; }
 .althea-home .site-footer { margin-top:0; }
+.home-cover h1 { max-width:1050px; font-size:clamp(80px,10vw,142px); line-height:.82; }
+.home-cover-seal { display:none; }
 @media (max-width:1000px) {
   .althea-home .navigation { gap:11px; }
   .althea-home .navigation > a:not(.button) { font-size:9px; }
@@ -5296,12 +5298,8 @@ textarea {
   .home-cover-veil { background:linear-gradient(90deg,rgba(5,18,34,.72),rgba(5,18,34,.34)),linear-gradient(0deg,rgba(5,18,34,.55),transparent 55%); }
   .home-cover-frame { width:calc(100% - 44px); margin-top:63px; padding:60px 0 105px; }
   .home-overline { font-size:7px; letter-spacing:.16em; }
-  .home-cover h1 { margin-top:30px; font-size:clamp(77px,17vw,118px); line-height:.79; }
+  .home-cover h1 { max-width:540px; margin-top:30px; font-size:clamp(59px,10vw,82px); line-height:.86; }
   .home-cover-intro { max-width:360px; margin-top:28px; font-size:13px; }
-  .home-cover-seal { right:25px; bottom:110px; width:82px; height:82px; gap:4px; }
-  .home-cover-seal span { font-size:6px; }
-  .home-cover-seal i { font-size:13px; }
-  .home-cover-seal small { font-size:4px; }
   .home-cover-index { left:22px; right:22px; bottom:19px; font-size:6px; letter-spacing:.1em; }
   .home-scroll-cue { display:none; }
   .home-wrap { width:calc(100% - 44px); }

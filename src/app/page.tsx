@@ -8,7 +8,7 @@ import FAQ from "@/components/althea/FAQ";
 import Booking from "@/components/althea/Booking";
 
 export const metadata = pageMetadata("/", {
-  title: "Your France story, thoughtfully guided",
+  title: "Your next chapter in France",
   description: "Independent, personal guidance for studying, settling and building a career in France. Meet Paris-based adviser Harshita Kohli and find a thoughtful next step.",
 });
 
@@ -33,7 +33,7 @@ export default function Home() {
         <div className="home-cover-veil" />
         <div className="home-cover-frame">
           <p className="home-overline"><span /> AN INDEPENDENT FRANCE ADVISORY <i>—</i> PARIS</p>
-          <h1 id="home-title">Your France<br /><em>story,</em> your way.</h1>
+          <h1 id="home-title">Your next chapter<br /><em>in France.</em></h1>
           <p className="home-cover-intro">A considered beginning for the life you’re building in France. Independent, one-to-one guidance for study, a new home and the work ahead.</p>
           <div className="home-cover-actions">
             <Link className="home-button home-button-gold" href="/book-consultation">Begin with a conversation <ArrowUpRight size={17} /></Link>
@@ -42,7 +42,6 @@ export default function Home() {
         </div>
         <div className="home-cover-index"><span>48°51′ N&nbsp; 2°21′ E</span><span>FRANCE, WITH A PERSON TO ASK</span></div>
         <a className="home-scroll-cue" href="#welcome" aria-label="Continue to the next chapter"><span>THE FIRST CHAPTER</span><i /></a>
-        <div className="home-cover-seal" aria-hidden="true"><span>ALTHÉA</span><i>✳</i><small>FRANCE · EST. WITH CARE</small></div>
       </section>
 
       <section className="home-welcome home-wrap" id="welcome">
