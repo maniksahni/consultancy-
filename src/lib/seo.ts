@@ -17,11 +17,11 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
       title, description, url: absoluteUrl(path),
-      images: [{ url: absoluteUrl("/images/editorial/france-evening.webp"), alt: "The Eiffel Tower and Pont Alexandre III in Paris" }],
+      images: [{ url: absoluteUrl("/images/editorial/france-evening-20261014.webp"), alt: "The Eiffel Tower and Pont Alexandre III in Paris" }],
       ...metadata.openGraph,
     },
     twitter: { card: "summary_large_image", title, description,
-      images: [absoluteUrl("/images/editorial/france-evening.webp")], ...metadata.twitter },
+      images: [absoluteUrl("/images/editorial/france-evening-20261014.webp")], ...metadata.twitter },
   };
 }
 

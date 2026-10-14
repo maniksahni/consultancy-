@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowDownToLine, ArrowUpRight, Check } from "lucide-react";
 
 export const metadata = pageMetadata("/first-30-days-france", {
-  title: "Free First 30 Days in France Student Arrival Checklist",
+  title: "First 30 Days in France Checklist",
   description: "A free, printable checklist to help international students organise the practical first steps after arriving in France.",
 });
 

@@ -21,7 +21,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="site-header">
-      <Link href="/" className="wordmark simple-wordmark" aria-label={`${brand.name} home`}><span>{brand.shortName}</span><small>CONSULTING</small></Link>
+      <Link href="/" className="wordmark simple-wordmark"><span>{brand.shortName}</span><small>CONSULTING</small></Link>
       <button
         className="menu-toggle"
         aria-expanded={open}

@@ -6,9 +6,10 @@ export function generateStaticParams() {
   return cities.map((c) => ({ slug: c.slug }));
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
+  const city = cities.find((c) => c.slug === params.slug);
   return pageMetadata(`/cities/${params.slug}`, {
-    title: `Studying in ${cities.find((c) => c.slug === params.slug)?.name || "France"}`,
-    description: cities.find(c=>c.slug===params.slug)?.text });
+    title: `Study in ${city?.name || "France"}`,
+    description: city ? `Explore student life in ${city.name}, France. Compare campus locations, transport, housing research and official local resources.` : "Explore student life and practical study resources in France." });
 }
 export default function City({ params }: { params: { slug: string } }) {
   const c = cities.find((c) => c.slug === params.slug);

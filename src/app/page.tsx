@@ -6,8 +6,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata = pageMetadata("/", {
-  title: "Paris, a New Beginning",
-  description: "Bienvenue à Paris. Personal guidance for studying, settling and building your next chapter in France with Harshita Kohli.",
+  title: "Study in France with Personal Guidance",
+  description: "Personal guidance for studying, settling and building a career in France. Explore programmes, applications and student life with Harshita Kohli.",
 });
 
 export default function Home() {
@@ -15,12 +15,12 @@ export default function Home() {
     <Navbar />
     <main id="main-content" className="paris-arrival-home">
       <section className="paris-arrival-hero">
-        <Image src="/images/editorial/france-evening.webp" alt="The Eiffel Tower glowing over the Seine at blue hour in Paris" fill priority sizes="100vw" />
+        <Image src="/images/editorial/france-evening-20261014.webp" alt="The Eiffel Tower glowing over the Seine at blue hour in Paris" fill priority sizes="100vw" />
         <div className="paris-arrival-shade" />
         <div className="paris-arrival-copy">
           <p className="paris-arrival-kicker">BIENVENUE À PARIS <span>·</span> FRANCE</p>
-          <h1>Paris.<br/><em>A new beginning.</em></h1>
-          <p>Study, settle and find your way here—with Harshita.</p>
+          <h1>Study in<br/><em>France.</em></h1>
+          <p>Independent guidance for studying, settling and building a career in France—with Paris-based adviser Harshita Kohli.</p>
           <Link className="paris-arrival-cta" href="/book-consultation">Your next chapter <ArrowUpRight size={17}/></Link>
         </div>
         <span className="paris-arrival-caption">THE SEINE · PARIS, FRANCE</span>

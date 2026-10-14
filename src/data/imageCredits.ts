@@ -1,6 +1,6 @@
 export const imageCredits = [
   {
-    file: "/images/editorial/france-evening.webp",
+    file: "/images/editorial/france-evening-20261014.webp",
     place: "Eiffel Tower and Pont Alexandre III, Paris",
     title: "Eiffel Tower and Pont Alexandre III at night.jpg",
     author: "Getfunky Paris",

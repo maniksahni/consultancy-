@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 
 export const metadata = pageMetadata("/career-support", {
-  title: "Career Support in France for International Students",
+  title: "Career Support in France",
   description: `Build your job search plan in France with practical CV, LinkedIn, interview, internship and alternance guidance from ${brand.shortName}.`,
 });
 

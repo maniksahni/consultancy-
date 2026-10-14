@@ -22,7 +22,7 @@ export default function Page({
     /visa|admission|application|official|campus/.test(pageKey) ? "/images/editorial/france-campus.webp" :
     /city|cost|living|scholarship|budget|outcome/.test(pageKey) ? "/images/editorial/france-bordeaux.webp" :
     /service|consult|journey|welcome|about|maison|support/.test(pageKey) ? "/images/editorial/notre-dame.webp" :
-    ["/images/editorial/france-evening.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/sainte-genevieve.webp", "/images/editorial/france-campus.webp", "/images/editorial/notre-dame.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
+    ["/images/editorial/france-evening-20261014.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/sainte-genevieve.webp", "/images/editorial/france-campus.webp", "/images/editorial/notre-dame.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
   );
   const imageAlt = pageImage.includes("sainte-genevieve")
     ? "Reading room of the Bibliothèque Sainte-Geneviève in Paris"

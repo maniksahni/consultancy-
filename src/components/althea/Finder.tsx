@@ -128,13 +128,7 @@ export default function Finder() {
             </span>
             <div className="card-links">
               <Link href={`/programmes/${p.slug}`}>Explore programme →</Link>
-              <a
-                href={p.programmeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Official source ↗
-              </a>
+              <span className="muted">Evidence recorded in this listing</span>
             </div>
           </article>
         ))}
@@ -143,13 +137,8 @@ export default function Finder() {
         <div className="empty-state">
           <h3>No curated matches yet.</h3>
           <p>
-            This is a small starting collection, not a complete catalogue of
-            France. Try broader filters or explore the official Campus France
-            catalogue.
+            This is a limited researched collection, not a complete catalogue. No matching listing is published in this site yet.
           </p>
-          <a href="https://www.campusfrance.org/en/finding-a-university-programme-France">
-            Official programme resources ↗
-          </a>
         </div>
       )}
     </>

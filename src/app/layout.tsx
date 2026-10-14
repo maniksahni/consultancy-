@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   description:
     brand.tagline,
   icons: { icon: brand.assets.favicon, shortcut: brand.assets.favicon, apple: brand.assets.favicon },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   openGraph: {
     images: [{ url: brand.assets.og, width: 1200, height: 630 }],
     title: brand.name,
@@ -62,7 +65,16 @@ export default function RootLayout({
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
               name: brand.name, alternateName: brand.shortName, url: siteUrl,
               logo: `${siteUrl}${brand.assets.logo}`,
+              ...(brand.email ? { email: brand.email } : {}),
+              ...(brand.whatsappNumber || brand.email ? { contactPoint: {
+                "@type": "ContactPoint",
+                ...(brand.whatsappNumber ? { telephone: `+${brand.whatsappNumber}` } : {}),
+                ...(brand.email ? { email: brand.email } : {}),
+                contactType: "customer support",
+              } } : {}),
               description: "France-based practical support for settling, student life and career readiness, with independent study guidance.",
+              areaServed: [{ "@type": "City", name: "Paris" }, { "@type": "Country", name: "France" }],
+              knowsAbout: ["Studying in France", "French university admissions", "Campus France applications", "Student life in France", "Career guidance in France"],
               founder: { "@id": `${siteUrl}/#adviser` } },
             { "@type": "Person", "@id": `${siteUrl}/#adviser`, name: brand.person,
               jobTitle: brand.role, url: `${siteUrl}/about`,

@@ -4,7 +4,7 @@ import Page from "@/components/althea/Page";
 import FAQ from "@/components/althea/FAQ";
 import { official } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/faq', {
-  title: 'France Arrival, Career & Study Support FAQ',
+  title: 'France Study & Arrival FAQ',
   description: "Clear answers about practical France support, career guidance and independent study admissions preparation.",
 });
 export default function Content() {

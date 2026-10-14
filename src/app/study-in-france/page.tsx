@@ -7,9 +7,8 @@ import Link from "next/link";
 import { official, checked, cities } from "@/data/france";
 import { ArrowUpRight, Check } from "lucide-react";
 export const metadata: Metadata = pageMetadata('/study-in-france', {
-  title: 'Study in France: Independent Admissions Guidance',
-  description:
-    `Independent programme and application guidance for France, with practical pre-departure planning from ${brand.shortName}.`,
+  title: 'Study in France Admissions Guide',
+  description: `Plan a French university application with independent programme guidance, official application routes and practical arrival advice from ${brand.shortName}.`,
 });
 export default function Content() {
   return (

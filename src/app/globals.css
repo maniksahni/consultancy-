@@ -829,7 +829,7 @@ textarea {
   min-height: 0;
 }
 .prose .photo-credits code {
-  color: var(--color164);
+  color: #455164;
   font-size: 11px;
 }
 .booking-layout {
@@ -1296,7 +1296,7 @@ textarea {
 .paris-arrival-links { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(30px, 8vw, 120px); padding: 25px 20px; border-bottom: 1px solid var(--line); }
 .paris-arrival-links a { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; color: var(--navy); font-size: 11px; text-decoration: none; }
 .paris-arrival-links a:hover { color: var(--gold); }
-@keyframes paris-arrival-reveal { from { transform: scale(1.04); filter: saturate(.8); } to { transform: scale(1); filter: saturate(1); } }
+@keyframes paris-arrival-reveal { from { transform: scale(1.04); opacity: .88; } to { transform: scale(1); opacity: 1; } }
 @keyframes paris-copy-arrive { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .paris-arrival-hero > img, .paris-arrival-copy { animation: none; } }
 @media (max-width: 760px) {

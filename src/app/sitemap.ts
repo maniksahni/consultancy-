@@ -42,5 +42,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       (s) => `destinations/${s}`,
     ),
   ];
-  return paths.map((p) => ({ url: `${host.replace(/\/$/, "")}/${p}` }));
+  const canonicalHost = host.replace(/\/$/, "");
+  return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost }));
 }

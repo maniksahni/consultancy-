@@ -9,7 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
-    "deploy": "npm run typecheck && npm run build && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
+    "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
     "prebuild": "npm run brand:sync",
     "data:import": "node scripts/data/import.mjs",

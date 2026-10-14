@@ -10,7 +10,12 @@ export function generateStaticParams() {
 }
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
-  return pageMetadata(`/insights/${params.slug}`, { title: a?.title || "Journal", description: a?.intro });
+  const searchTitles: Record<string, string> = {
+    "choosing-your-programme": "Choosing Your French Study Programme",
+    "understanding-campus-france": "Études en France Application Steps",
+    "planning-your-france-budget": "France Student Budget Guide",
+  };
+  return pageMetadata(`/insights/${params.slug}`, { title: searchTitles[params.slug] || a?.title || "Journal", description: a?.intro });
 }
 export default function Article({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);

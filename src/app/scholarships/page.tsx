@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { official } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/scholarships', {
-  title: 'Study in France Scholarships & Funding Guidance',
+  title: 'France Scholarships for Students',
   description:
     "Use official award information and plan without assuming an award.",
 });

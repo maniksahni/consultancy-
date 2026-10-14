@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 
 export const metadata = pageMetadata("/settle-in-france", {
-  title: "Settle in France: Arrival & Student Life Support",
+  title: "Settle in France: Student Support",
   description: `Practical arrival, student life and career orientation for international students and young professionals in France, with ${brand.shortName}.`,
 });
 
