@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 const links = [
   ["Home", "/"],
+  ["Directory", "/universities"],
   ["Settle in France", "/settle-in-france"],
   ["Study in France", "/study-in-france"],
   ["Career Support", "/career-support"],
@@ -21,7 +22,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="site-header">
-      <Link href="/" className="wordmark simple-wordmark"><span>{brand.shortName}</span><small>CONSULTING</small></Link>
+      <Link href="/" className="wordmark" aria-label={`${brand.name} home`}><img className="brand-logo" src={brand.assets.logo} alt={brand.name} width={420} height={96}/></Link>
       <button
         className="menu-toggle"
         aria-expanded={open}

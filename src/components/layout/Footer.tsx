@@ -1,13 +1,67 @@
 import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Mail, MessageCircle, Phone } from "lucide-react";
+import { cities } from "@/data/france";
+import { destinations, destinationHref } from "@/data/destinations";
+
+const footerGroups = [
+  {
+    title: "EXPLORE",
+    links: [
+      ["Directory · all destinations", "/destinations"],
+      ["Universities & courses", "/universities"],
+      ["Reviewed programmes & fees", "/programmes"],
+      ["Study in France", "/study-in-france"],
+      ["Settle in France", "/settle-in-france"],
+      ["Career support", "/career-support"],
+      ["All services", "/services"],
+      ["About Harshita", "/about"],
+    ],
+  },
+  {
+    title: "DESTINATIONS",
+    links: destinations.map((destination) => [destination.name, destinationHref(destination.slug)]),
+  },
+  {
+    title: "STUDY & ARRIVAL",
+    links: [
+      ["Admissions process", "/admissions-process"],
+      ["Scholarships", "/scholarships"],
+      ["Study costs in France", "/france/costs"],
+      ["Student life in France", "/france/living"],
+      ["Student visa guide", "/france/visas"],
+      ["Campus France guide", "/campus-france-guide"],
+      ["France universities & institutions", "/france/institutions"],
+      ["First 30 days checklist", "/first-30-days-france"],
+    ],
+  },
+  {
+    title: "CITY GUIDES",
+    links: cities.map((city) => [`Study in ${city.name}`, `/cities/${city.slug}`]),
+  },
+  {
+    title: "MORE TO EXPLORE",
+    links: [
+      ["Resources & guides", "/knowledge"],
+      ["France study library", "/france/resources"],
+      ["France study topics", "/france"],
+      ["Insights & articles", "/insights"],
+      ["FAQs", "/faq"],
+      ["Mentorship model", "/mentorship-model"],
+      ["Student outcomes", "/outcomes"],
+      ["Student reviews", "/reviews"],
+      ["Book a call", "/book-consultation"],
+    ],
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-top">
-        <div>
+      <div className="footer-top footer-sitemap">
+        <div className="footer-brand-block">
           <Link className="footer-brand" href="/">
-            <span className="footer-simple-wordmark"><strong>{brand.shortName}</strong><small>CONSULTING</small></span>
+            <img className="footer-brand-logo" src={brand.assets.logoLight} alt={brand.name} width={420} height={96} />
           </Link>
           <p>
             {brand.tagline}
@@ -39,31 +93,10 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div>
-          <span className="eyebrow">EXPLORE</span>
-          <Link href="/settle-in-france">Settle in France</Link>
-          <Link href="/study-in-france">Study in France</Link>
-          <Link href="/career-support">Career Support</Link>
-          <Link href="/about">About Harshita</Link>
-          <Link href="/knowledge">Resources & guides</Link>
-          <Link href="/france/resources">France study library</Link>
-          <Link href="/first-30-days-france">Free arrival checklist</Link>
-        </div>
-        <div>
-          <span className="eyebrow">YOUR NEXT STEP</span>
-          <Link href="/book-consultation">Book a Call ↗</Link>
-          <Link href="/services">All support</Link>
-          <details>
-            <summary>Other study destinations</summary>
-            {["uk", "usa", "canada", "germany", "australia", "ireland"].map(
-              (s) => (
-                <Link key={s} href={`/destinations/${s}`}>
-                  {s.toUpperCase()}
-                </Link>
-              ),
-            )}
-          </details>
-        </div>
+        {footerGroups.map((group) => <nav className="footer-group" key={group.title} aria-label={group.title.toLowerCase()}>
+          <span className="eyebrow footer-group-title">{group.title}</span>
+          {group.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
+        </nav>)}
       </div>
       <div className="footer-masthead" aria-hidden="true">
         <span>{brand.shortName}.</span>

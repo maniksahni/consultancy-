@@ -1,115 +1,83 @@
 import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Compass, Globe2, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import FAQ from "@/components/althea/FAQ";
-import FranceChapterJourney from "@/components/home/FranceChapterJourney";
-import universityManifest from "../../public/data/universities/manifest.json";
-
-const universityCounts = Object.values(universityManifest.countries);
-const courseRecordCount = universityCounts.reduce((sum, country) => sum + country.courseCount, 0);
-const institutionRecordCount = universityCounts.reduce((sum, country) => sum + country.institutionCount, 0);
-const countFormat = new Intl.NumberFormat("en-IN");
+import HomeChapterPicker from "@/components/home/HomeChapterPicker";
+import { destinations } from "@/data/destinations";
+import "./home.css";
 
 export const metadata = pageMetadata("/", {
-  title: "Your next chapter in France",
-  description: "Independent, personal guidance for studying, settling and building a career in France. Meet Paris-based adviser Harshita Kohli and find a thoughtful next step.",
+  title: "A world of possibility. A life that feels like yours.",
+  description: "We go abroad to explore, discover and meet new parts of ourselves. Find thoughtful, independent guidance for your next chapter in France.",
 });
 
 const steps = [
-  ["Listen, then find the real question", "We begin with your experience, priorities and the decisions in front of you. No assumptions about what your journey should look like."],
-  ["Make the choices easier to see", "We sort through the options that fit your circumstances and identify what needs checking with official sources or institutions."],
-  ["Agree a practical next step", "If working together feels right, we clarify the scope and fee before any support begins. You stay in charge of each decision."],
+  { number: "01", title: "Tell us what’s pulling you forward.", copy: "A place, a possibility, a question you can’t quite put down. We start with what matters to you." },
+  { number: "02", title: "Make the unfamiliar feel navigable.", copy: "We bring your priorities into focus, explore relevant routes and flag what needs confirming with official sources." },
+  { number: "03", title: "Choose your own next step.", copy: "You decide what feels right. If we work together, the support and fee are clear before anything begins." },
 ];
 
 export default function Home() {
-  return <div className="althea-home">
+  return <div className="althea-home home-reverie">
     <Navbar />
-    <main id="main-content" className="home-story">
-      <section className="home-cover" aria-labelledby="home-title">
-        <Image className="home-cover-image" src="/images/editorial/althea-france-atlas-hero.jpg" alt="An open blue atlas with a brass route marker leading across France, beside a Paris window at dusk" fill priority sizes="100vw" />
-        <div className="home-cover-veil" />
-        <div className="home-cover-frame">
-          <p className="home-overline"><span /> AN INDEPENDENT FRANCE ADVISORY <i>—</i> PARIS</p>
-          <h1 id="home-title">Your next chapter<br /><em>in France.</em></h1>
-          <p className="home-cover-intro">A considered beginning for the life you’re building in France. Independent, one-to-one guidance for study, a new home and the work ahead.</p>
-          <div className="home-cover-actions">
-            <Link className="home-button home-button-gold" href="/book-consultation">Begin with a conversation <ArrowUpRight size={17} /></Link>
-            <Link className="home-text-link home-cover-explore" href="/universities?country=france&amp;view=courses">Explore universities &amp; courses <ArrowUpRight size={15} /></Link>
-            <a className="home-text-link home-cover-explore" href="#welcome">Enter the journal <ArrowDown size={15} /></a>
-          </div>
+    <main id="main-content">
+      <section className="rv-hero" aria-labelledby="rv-title">
+        <Image className="rv-hero-image" src="/images/editorial/althea-france-atlas-hero.jpg" alt="An open atlas and a route towards Paris in the evening light" fill priority sizes="100vw" />
+        <div className="rv-hero-shade" />
+        <div className="rv-hero-grain" aria-hidden="true" />
+        <div className="rv-hero-content">
+          <div className="rv-kicker rv-kicker-light"><span className="rv-kicker-star">✳</span> THE WORLD, A LITTLE MORE YOURS <i>·</i> PARIS</div>
+          <h1 id="rv-title">We go to see<br />the world.<br /><em>And meet ourselves.</em></h1>
+          <p className="rv-hero-lede">New places have a way of opening something in us. If France is calling, let’s make the first step feel a little less unknown—and a lot more yours.</p>
+          <div className="rv-hero-actions"><Link className="rv-button rv-button-light" href="#find-your-way">Find your way <ArrowRight size={17} /></Link><Link className="rv-hero-link" href="/universities">Explore study destinations <ArrowUpRight size={16} /></Link></div>
         </div>
-        <div className="home-cover-index"><span>48°51′ N&nbsp; 2°21′ E</span><span>FRANCE, WITH A PERSON TO ASK</span></div>
-        <a className="home-scroll-cue" href="#welcome" aria-label="Continue to the next chapter"><span>THE FIRST CHAPTER</span><i /></a>
+        <div className="rv-hero-side" aria-hidden="true"><span>AN OPENING, NOT AN ANSWER</span><i /></div>
+        <a className="rv-hero-bottom" href="#the-feeling"><span>SCROLL INTO YOUR NEXT CHAPTER</span><ArrowDown size={15} /></a>
+        <div className="rv-coordinate" aria-hidden="true"><span>48°51′24″N</span><span>2°21′08″E</span></div>
       </section>
 
-      <section className="home-welcome home-wrap" id="welcome">
-        <p className="home-eyebrow">01 &nbsp; A PLACE TO BEGIN <span>—</span> ALTHÉA CONSULTING</p>
-        <div className="home-welcome-grid"><h2>Big decisions<br />need <em>clear space.</em></h2>
-          <div className="home-welcome-copy"><p>Studying, settling or building a career in France can begin with one question—and quickly become a dozen more.</p><p>From Paris, Harshita offers independent, personal guidance to help you understand your options and decide what comes next, at your own pace.</p><Link className="home-underlink" href="/about">A note from your adviser <ArrowUpRight size={16} /></Link></div>
+      <section className="rv-manifesto" id="the-feeling">
+        <div className="rv-section-mark"><span>01</span><i /></div>
+        <div className="rv-manifesto-layout">
+          <p className="rv-kicker">A LIFE CAN BEGIN WITH A QUESTION</p>
+          <div><h2>Maybe you leave<br />to find <em>more of you.</em></h2><p className="rv-manifesto-copy">To learn in a different language. To get lost on streets you’ll one day know by heart. To find out what you’re capable of when everything is new. Going abroad is never only about the place. It’s about the person you become along the way.</p><Link className="rv-underlink" href="/about">A more personal kind of guidance <ArrowUpRight size={15} /></Link></div>
         </div>
-        <div className="home-ornament" aria-hidden="true"><span>✳</span><i /></div>
+        <div className="rv-manifesto-aside"><span>GO WITH CURIOSITY.</span><span>ARRIVE AS YOURSELF.</span><i>✳</i></div>
       </section>
 
-      <section className="home-guidance home-wrap" aria-labelledby="home-universities-title">
-        <div className="home-guidance-top">
-          <p className="home-eyebrow">02 &nbsp; THE UNIVERSITY &amp; COURSE DIRECTORY</p>
-          <p>Your course search is here. Browse the records already on the site, then narrow them by subject, city, level and published tuition.</p>
+      <section className="rv-discover" id="destinations" aria-labelledby="rv-discover-title">
+        <div className="rv-section-top"><div><div className="rv-kicker"><span className="rv-number">02</span> SEVEN DESTINATIONS, A WORLD OF DIFFERENCE</div><h2 id="rv-discover-title">Where could<br /><em>curiosity take you?</em></h2></div><p>Every country has its own rhythm, routes and questions. Begin with a feeling—or browse the study records available here.</p></div>
+        <div className="rv-country-rail" aria-label="Explore study destinations">
+          {destinations.map((country, index) => <Link className={`rv-country-card ${index === 0 ? "rv-country-card-featured" : ""}`} href={`/universities?country=${country.slug}&view=courses`} key={country.slug}>
+            <Image src={country.image} alt={country.photoCaption} fill sizes="(max-width: 700px) 78vw, (max-width: 1100px) 42vw, 26vw" />
+            <span className="rv-country-shade" />
+            <span className="rv-country-index">0{index + 1} <i>—</i> {country.region.toUpperCase()}</span>
+            <span className="rv-country-copy"><span>{country.city}</span><strong>{country.name}</strong><em>{country.mood}</em></span>
+            <span className="rv-country-open" aria-label={`Explore ${country.name}`}><ArrowUpRight size={17} /></span>
+          </Link>)}
         </div>
-        <div className="home-guidance-panel">
-          <div>
-            <p className="home-eyebrow">A CLEARER PLACE TO BEGIN</p>
-            <h2 id="home-universities-title">Find your course.<br /><em>See the details.</em></h2>
-            <p>Browse course catalogues from France, the UK and Australia, alongside U.S. historical study-field records and institution listings across seven destinations. Each country shows its data scope and source date.</p>
-            <Link className="home-button home-button-navy" href="/universities">Open the full directory <ArrowUpRight size={16} /></Link>
-          </div>
-          <div className="home-guidance-links">
-            <Link href="/universities?country=france&view=courses"><span>01</span><strong>France · {countFormat.format(universityManifest.countries.france.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities?country=uk&view=courses"><span>02</span><strong>United Kingdom · {countFormat.format(universityManifest.countries.uk.courseCount)} course/location records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities?country=australia&view=courses"><span>03</span><strong>Australia · {countFormat.format(universityManifest.countries.australia.courseCount)} course records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities?country=usa&view=courses"><span>04</span><strong>United States · {countFormat.format(universityManifest.countries.usa.courseCount)} historical field/credential records</strong><ArrowUpRight size={16} /></Link>
-            <Link href="/universities"><span>05</span><strong>{countFormat.format(institutionRecordCount)} institution &amp; campus records</strong><ArrowUpRight size={16} /></Link>
-            <p className="home-eyebrow">{countFormat.format(courseRecordCount)} course and study-field records in the current snapshot · updated {universityManifest.refreshedAt}</p>
-          </div>
-        </div>
+        <div className="rv-rail-hint"><span>DRAG OR SWIPE TO WANDER</span><span>{destinations.length} PLACES TO BEGIN <i>✳</i></span></div>
+        <div className="rv-directory-note"><Globe2 size={17} /><p><strong>A useful first map, with honest edges.</strong> The directory brings together institution records across seven destinations and course or programme records where available. Coverage varies by country; records are not a complete admissions catalogue and fees are shown only where published.</p><Link href="/universities">Open the directory <ArrowUpRight size={15} /></Link></div>
       </section>
 
-      <FranceChapterJourney />
-
-      <section className="home-interlude" aria-label="A personal perspective from Paris">
-        <Image src="/images/editorial/france-campus.webp" alt="Architectural detail of a historic university in France" fill sizes="100vw" />
-        <div className="home-interlude-shade" />
-        <div className="home-interlude-copy"><p className="home-eyebrow">A VIEW FROM THE OTHER SIDE OF THE MOVE</p><p className="home-interlude-quote">A new country is made of<br />big plans <em>and small details.</em></p><span>PERSONAL GUIDANCE · PARIS, FRANCE</span></div>
-        <span className="home-photo-caption">A MOMENT BETWEEN CHAPTERS <i>—</i> FRANCE</span>
+      <section className="rv-compass" id="find-your-way">
+        <div className="rv-compass-image"><Image src="/images/editorial/france-evening-20261014.webp" alt="Paris at blue hour, seen across the Seine" fill sizes="(max-width: 760px) 100vw, 48vw" /><span>PARIS, JUST AFTER SUNSET <i>·</i> A PLACE THAT CAN FEEL LIKE A BEGINNING</span><div className="rv-image-star">✳</div></div>
+        <div className="rv-compass-panel"><div className="rv-kicker"><span className="rv-number">03</span> START WHERE YOU ARE</div><h2 id="compass-title">What feels<br /><em>closest right now?</em></h2><p className="rv-compass-intro">You don’t need the whole plan. Just choose the thought that’s been on your mind.</p><HomeChapterPicker /><div className="rv-compass-footer"><Compass size={16} /><span>One step at a time. Always in your own direction.</span></div></div>
       </section>
 
-      <section className="home-journey home-wrap" aria-labelledby="journey-title">
-        <div className="home-journey-heading"><div><p className="home-eyebrow">03 &nbsp; A THOUGHTFUL WAY OF WORKING</p><h2 id="journey-title">No one-size-fits-all.<br /><em>A clear next step.</em></h2></div><p>First, a conversation. Then a shared understanding of what you need—and whether personal guidance is the right fit.</p></div>
-        <div className="home-steps">{steps.map(([title, text], index) => <article key={title} className="home-step"><span className="home-step-no">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><span className="home-step-mark" aria-hidden="true">✳</span></article>)}</div>
-        <p className="home-note">Althéa is an independent advisory, not a university or government representative. Admissions, scholarships, visas and official requirements are decided by the relevant institutions and authorities.</p>
+      <section className="rv-process" aria-labelledby="rv-process-title">
+        <div className="rv-process-head"><div><div className="rv-kicker"><span className="rv-number">04</span> A HUMAN WAY THROUGH THE DETAILS</div><h2 id="rv-process-title">Less noise.<br /><em>A clearer way forward.</em></h2></div><p>Independent guidance for the questions that come with a big move. Personal, thoughtful, and shaped around your circumstances.</p></div>
+        <div className="rv-steps">{steps.map((step) => <article className="rv-step" key={step.number}><span className="rv-step-number">{step.number}</span><div><h3>{step.title}</h3><p>{step.copy}</p></div><span className="rv-step-flower" aria-hidden="true">✳</span></article>)}</div>
+        <div className="rv-trust-line"><span>INDEPENDENT ADVISORY <i>·</i> PARIS</span><p>Althéa is an independent advisory, not a university or government representative. Admissions, scholarships and visa decisions belong to the relevant institutions and authorities.</p></div>
       </section>
 
-      <section className="home-adviser">
-        <div className="home-adviser-photo"><Image src="/images/editorial/notre-dame.webp" alt="A Parisian streetscape in the historic heart of the city" fill sizes="(max-width: 760px) 100vw, 50vw" /><span>PARIS, FRANCE <i>·</i> WHERE HARSHITA CALLS HOME</span><div className="home-photo-stamp" aria-hidden="true">A local<br /><em>perspective</em></div></div>
-        <div className="home-adviser-copy"><p className="home-eyebrow">04 &nbsp; THE PERSON BEHIND THE GUIDANCE</p><h2>Meet Harshita.<br /><em>Begin with a person.</em></h2><p>Harshita Kohli is a France-based career coach and former international student. She understands the move from both sides: as someone who has made it, and as someone who now helps others think it through.</p><p>Her approach begins by listening, then making the options, scope and next steps clear before you decide how to proceed.</p><Link href="/about" className="home-underlink">Get to know Harshita <ArrowUpRight size={16} /></Link></div>
+      <section className="rv-human">
+        <div className="rv-human-copy"><div className="rv-kicker rv-kicker-light"><span className="rv-number">05</span> GOOD GUIDANCE STARTS WITH LISTENING</div><h2>There’s a person<br />on the other side<br /><em>of your question.</em></h2><p>Harshita Kohli is a France-based career coach and former international student. She knows the feeling of beginning somewhere new—and believes the best advice starts by understanding your story first.</p><Link className="rv-light-link" href="/about">Meet Harshita <ArrowUpRight size={16} /></Link><span className="rv-human-signature">A conversation, at your pace. <i>✳</i></span></div>
       </section>
 
-      <section className="home-guidance home-wrap">
-        <div className="home-guidance-top"><p className="home-eyebrow">05 &nbsp; YOUR FIELD NOTES</p><p>Useful context for the questions ahead. For current rules and decisions, always follow the relevant official source.</p></div>
-        <div className="home-guidance-panel"><div><span className="home-guidance-spark">✳</span><p className="home-eyebrow">A SMALL LIBRARY FOR A BIG MOVE</p><h2>Know the terrain.<br /><em>Choose your pace.</em></h2><p>Explore practical guides to French programmes, applications, arrival and everyday life in France.</p><Link className="home-button home-button-navy" href="/knowledge">Explore the guides <ArrowUpRight size={16} /></Link></div><div className="home-guidance-links"><Link href="/study-in-france"><span>01</span><strong>Study in France</strong><ArrowUpRight size={16} /></Link><Link href="/settle-in-france"><span>02</span><strong>Life and arrival</strong><ArrowUpRight size={16} /></Link><Link href="/career-support"><span>03</span><strong>Career support</strong><ArrowUpRight size={16} /></Link><Link href="/first-30-days-france"><span>04</span><strong>Your first 30 days</strong><ArrowUpRight size={16} /></Link></div></div>
-        <div className="home-official"><span>THE OFFICIAL WORD</span><p>We help you understand the questions to ask and prepare your next steps. For current application routes and visa decisions, consult the relevant official authority.</p></div>
-      </section>
-
-      <section className="home-faq home-wrap" aria-labelledby="home-faq-title">
-        <div className="home-faq-heading"><div><p className="home-eyebrow">06 &nbsp; A FEW GOOD QUESTIONS</p><h2 id="home-faq-title">Before we <em>begin.</em></h2><p>A little clarity can make the first conversation easier.</p></div><Link className="home-underlink" href="/faq">More answers <ArrowUpRight size={16} /></Link></div><div className="home-faq-list"><FAQ /></div>
-      </section>
-
-      <section className="home-contact" id="begin">
-        <div className="home-contact-copy"><p className="home-eyebrow">07 &nbsp; WHEN YOU’RE READY</p><h2>One question<br />can begin a <em>lot.</em></h2><p>Tell us a little about the France story you’re considering. We’ll begin there and see whether personal guidance feels right.</p><div className="home-contact-aside"><Sparkles size={15} /><span>First, understand your situation. Agree scope and fee before any work begins.</span></div></div>
-        <div className="home-contact-choice"><p className="home-form-kicker">A PERSONAL INTRODUCTION</p><h3>Let’s begin with what’s on your mind.</h3><p>Choose the way that feels easiest. There’s no obligation to book a service.</p><Link className="home-button home-button-gold" href="/book-consultation">Arrange an introductory call <ArrowUpRight size={16} /></Link><Link href="/book-consultation" className="home-contact-alt">Share your question with Harshita <ArrowUpRight size={15} /></Link></div>
-      </section>
+      <section className="rv-last-call" id="begin"><div className="rv-last-ornament" aria-hidden="true">✳</div><div className="rv-kicker"><span className="rv-number">06</span> WHEN YOU’RE READY</div><h2>The first step can be<br /><em>a conversation.</em></h2><p>Tell us what you’re hoping to discover. We’ll start there, make space for your questions and see whether personal guidance feels right.</p><Link className="rv-button rv-button-dark" href="/book-consultation">Let’s talk about your next chapter <ArrowUpRight size={17} /></Link><span className="rv-last-note"><Sparkles size={14} /> No pressure. Scope and fee are clear before any work begins.</span></section>
     </main>
     <Footer />
   </div>;

@@ -290,6 +290,7 @@ export const brand = {
     "illustration": "/brand/paris-balloon.svg",
     "leaf": "/brand/leaf.svg",
     "favicon": "/brand/favicon.svg",
+    "faviconPng": "/brand/favicon.png",
     "og": "/brand/og.svg"
   },
   "svg": {

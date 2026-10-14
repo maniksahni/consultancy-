@@ -34,7 +34,11 @@ export const metadata: Metadata = {
   },
   description:
     brand.tagline,
-  icons: { icon: brand.assets.favicon, shortcut: brand.assets.favicon, apple: brand.assets.favicon },
+  icons: {
+    icon: [{ url: brand.assets.faviconPng, type: "image/png", sizes: "512x512" }, { url: brand.assets.favicon, type: "image/svg+xml" }],
+    shortcut: brand.assets.faviconPng,
+    apple: brand.assets.faviconPng,
+  },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
     : undefined,
@@ -64,7 +68,7 @@ export default function RootLayout({
           "@graph": [
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
               name: brand.name, alternateName: brand.shortName, url: siteUrl,
-              logo: `${siteUrl}${brand.assets.logo}`,
+              logo: `${siteUrl}${brand.assets.faviconPng}`,
               ...(brand.email ? { email: brand.email } : {}),
               ...(brand.whatsappNumber || brand.email ? { contactPoint: {
                 "@type": "ContactPoint",

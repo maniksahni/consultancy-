@@ -5892,3 +5892,117 @@ textarea {
 @media (max-width: 760px) {
   .brand-contact-actions a { min-height: 46px; padding: 8px 2px; }
 }
+
+/* A browsable site map: keep the real destinations and guides visible on mobile. */
+.footer-sitemap {
+  grid-template-columns: minmax(230px, 1.55fr) repeat(5, minmax(115px, 1fr));
+  align-items: start;
+  gap: 32px 24px;
+}
+.footer-sitemap .footer-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.footer-sitemap .footer-group-title {
+  min-height: 26px;
+  margin-bottom: 11px;
+  color: rgba(247, 243, 235, .72);
+  font-size: 9px;
+  letter-spacing: .17em;
+}
+.footer-sitemap .footer-group > a {
+  min-height: 39px;
+  height: auto;
+  padding: 8px 0;
+  align-items: flex-start;
+  line-height: 1.5;
+  font-size: 11px;
+  color: rgba(247, 243, 235, .91);
+  overflow-wrap: anywhere;
+}
+.footer-sitemap .footer-group > a:hover,
+.footer-sitemap .footer-group > a:focus-visible {
+  color: var(--gold);
+}
+@media (max-width: 1100px) {
+  .footer-sitemap { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 28px; }
+  .footer-sitemap > .footer-brand-block { grid-column: 1 / -1; }
+}
+@media (max-width: 760px) {
+  .site-footer { padding: 38px 6% 22px; }
+  .footer-sitemap { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 27px 19px; }
+  .footer-sitemap > .footer-brand-block { grid-column: 1 / -1; }
+  .footer-sitemap .footer-group-title { font-size: 8px; margin-bottom: 7px; }
+  .footer-sitemap .footer-group > a { min-height: 40px; font-size: 10px; padding: 9px 0; }
+  .footer-masthead { margin-top: 34px; padding-top: 27px; }
+}
+
+/* Compact study journeys: keep the editorial cards, let mobile users browse them horizontally. */
+.study-services { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(28px,7vw,100px); padding:30px 0 65px; border-bottom:1px solid var(--line); }
+.study-services h2 { margin:15px 0; font-size:clamp(38px,4.5vw,58px); }
+.study-services > div:first-child > p:last-child { max-width:520px; color:var(--muted); font-size:13px; line-height:1.8; }
+.study-service-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 22px; align-content:center; }
+.study-service-list > p { display:flex; align-items:flex-start; gap:10px; padding:13px 0; margin:0; border-bottom:1px solid var(--line); font-size:12px; line-height:1.6; }
+.study-service-list > p svg { flex:0 0 auto; color:var(--blue); }
+.study-service-list > .button { margin-top:20px; width:max-content; }
+
+@media (max-width: 760px) {
+  .study-services { grid-template-columns:1fr; gap:12px; padding:16px 0 38px; }
+  .study-services h2 { margin:9px 0; font-size:38px; }
+  .study-services > div:first-child > p:last-child { margin:0; font-size:11px; }
+  .study-service-list { grid-template-columns:1fr 1fr; gap:0 14px; }
+  .study-service-list > p { gap:7px; padding:9px 0; font-size:10px; }
+  .study-service-list > p svg { width:14px; height:14px; }
+  .study-service-list > .button { grid-column:1/-1; margin-top:14px; }
+  .knowledge-hub .study-guide-rail { display:flex; gap:12px; overflow-x:auto; padding:0 5% 12px 0; margin-right:-5%; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .knowledge-hub .study-guide-rail article { flex:0 0 min(82vw,360px); min-width:0; padding:20px; scroll-snap-align:start; }
+  .knowledge-hub .study-guide-rail h3 { margin:12px 0; font-size:26px; }
+  .knowledge-hub .study-guide-rail article > p:not(.eyebrow):not(.effective-date) { font-size:11px; line-height:1.7; }
+  .content-grid { grid-template-columns:1fr; gap:12px; }
+  .content-grid .content-card { padding:19px; }
+  .content-grid .content-card h2,.content-grid .content-card h3 { font-size:27px; margin-bottom:10px; }
+  .content-grid .content-card p { font-size:11px; line-height:1.7; margin-bottom:8px; }
+  .settle-intro { padding-bottom:20px; }
+  .settle-intro h2,.settle-scope h2,.settle-bridge h2 { font-size:36px; }
+  .settle-intro > p { margin:0; font-size:11px; line-height:1.7; }
+  .settle-packages { display:flex; gap:12px; overflow-x:auto; margin-right:-5%; padding:0 5% 12px 0; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .settle-package,.settle-package:last-child { flex:0 0 min(84vw,380px); padding:20px; scroll-snap-align:start; }
+  .settle-package h2 { margin:13px 0; font-size:29px; }
+  .settle-package li { padding:7px 0; font-size:10px; }
+  .settle-package-bottom { align-items:flex-start; gap:10px; margin-top:15px; }
+  .settle-scope { margin-top:28px; padding:21px; }
+  .settle-scope > p:not(.eyebrow) { margin:12px 0 18px; font-size:11px; line-height:1.75; }
+  .settle-bridge,.checklist-next { padding-top:38px; }
+  .career-intro { gap:12px; padding-bottom:24px; }
+  .career-intro > p { margin:0; font-size:11px; line-height:1.7; }
+  .career-steps { display:flex; gap:12px; overflow-x:auto; margin-right:-5%; padding:0 5% 12px 0; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .career-steps article { flex:0 0 min(84vw,380px); min-height:0; padding:20px; scroll-snap-align:start; }
+  .career-steps h2 { margin:14px 0 8px; font-size:27px; }
+  .career-steps p { margin:0; font-size:11px; line-height:1.7; }
+  .career-steps article > svg { width:16px; }
+  .course-category-picker { margin:12px 0 18px; padding:15px; }
+  .course-category-heading { display:block; margin-bottom:10px; }
+  .course-category-heading h2 { font-size:26px; }
+  .course-category-heading > p { margin-top:5px; font-size:10px; line-height:1.5; }
+  .course-category-chips { flex-wrap:nowrap; overflow-x:auto; margin:0 -15px; padding:3px 15px 10px; scroll-snap-type:x proximity; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .course-category-chips button { flex:0 0 auto; min-height:40px; padding:7px 11px; scroll-snap-align:start; font-size:10px; }
+  .course-quick-filters { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-top:9px; padding-top:12px; }
+  .course-quick-filters label { min-width:0; gap:5px; font-size:9px; }
+  .course-quick-filters label:last-of-type { grid-column:1/-1; }
+  .course-quick-filters select { min-width:0; min-height:44px; padding:7px; font-size:10px; }
+  .course-reset-button { min-height:44px; font-size:10px; }
+  .directory-primary .course-results { display:flex; gap:12px; overflow-x:auto; margin-right:-5%; padding:0 5% 14px 0; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; }
+  .directory-primary .course-results article { flex:0 0 min(84vw,390px); min-width:0; padding:18px; scroll-snap-align:start; }
+  .directory-primary .course-results h3 { font-size:25px; }
+  .directory-primary .course-results article > p { font-size:11px; }
+  .course-result-fee strong { font-size:22px; }
+  .snapshot-filters { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:14px 0; }
+  .snapshot-filters label { min-width:0; gap:5px; font-size:10px; }
+  .snapshot-filters label:nth-child(1) { grid-column:1/-1; }
+  .snapshot-filters input,.snapshot-filters select { min-height:44px; padding:8px; font-size:11px; }
+  .directory-mode-switch { gap:2px; margin-bottom:12px; }
+  .directory-mode-switch button { flex:1; justify-content:center; gap:6px; min-height:44px; padding:8px 5px; font-size:10px; }
+  .directory-mode-switch span { padding:3px 5px; font-size:9px; }
+}
