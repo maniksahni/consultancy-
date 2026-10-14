@@ -41,6 +41,7 @@ export const enquiryEnabled =
   !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY &&
   !!process.env.NEXT_PUBLIC_PRIVACY_CONTACT &&
   !!process.env.NEXT_PUBLIC_RETENTION_DAYS;
+let appCheckReady: Promise<void> | undefined;
 export async function submitEnquiry(input: unknown) {
   const data = enquirySchema.parse(input);
   if (!enquiryEnabled)
@@ -56,15 +57,25 @@ export async function submitEnquiry(input: unknown) {
         projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
         appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
       });
-  const { initializeAppCheck, ReCaptchaV3Provider, getToken } =
-    await import("firebase/app-check");
-  const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(
-      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
-    ),
-    isTokenAutoRefreshEnabled: true,
-  });
-  await getToken(appCheck);
+  if (!appCheckReady) {
+    appCheckReady = (async () => {
+      const { initializeAppCheck, ReCaptchaV3Provider, getToken } =
+        await import("firebase/app-check");
+      const appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(
+          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+        ),
+        isTokenAutoRefreshEnabled: true,
+      });
+      await getToken(appCheck);
+    })();
+  }
+  try {
+    await appCheckReady;
+  } catch (error) {
+    appCheckReady = undefined;
+    throw error;
+  }
   const { getFirestore, collection, addDoc, serverTimestamp } =
     await import("firebase/firestore");
   const { website, ...payload } = data;

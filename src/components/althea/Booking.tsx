@@ -170,14 +170,10 @@ export default function Booking() {
             ? "Enquiry received"
             : "Request a conversation ↗"}
       </button>
-      <a
-        className="text-link"
-        href="https://wa.me/33755749029?text=Bonjour%20Alth%C3%A9a%2C%20I%20would%20like%20to%20discuss%20my%20study%20plans."
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Prefer a conversation? Continue on WhatsApp ↗
-      </a>
+      <p className="muted">
+        WhatsApp number and business contact details: Not yet verified. Owner
+        confirmation required before publishing a contact link.
+      </p>
       <p role="status" className={status ? "form-status" : ""}>
         {status}
       </p>
