@@ -43,7 +43,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
     {institutions.map(([name, courses]) => <article className="snapshot-record" key={name}>
       <p className="eyebrow">{destinations.find((d) => d.slug === courses[0].country)?.name} · {courses[0].city}</p>
       <h2>{name}</h2>
-      <p>{courses.length} researched programme{courses.length === 1 ? "" : "s"} in this collection. This is not the institution's complete course catalogue.</p>
+      <p>{courses.length} researched programme{courses.length === 1 ? "" : "s"} in this collection. This is not the institution&apos;s complete course catalogue.</p>
       <div className="knowledge-grid">{courses.map((p) => <article key={p.slug}>
         <p className="eyebrow">{p.level} · {p.duration}</p>
         <h3><Link href={`/programmes/${p.slug}`}>{p.title}</Link></h3>
