@@ -1,22 +1,17 @@
 import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Compass, GraduationCap, MapPin, MoveUpRight, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FAQ from "@/components/althea/FAQ";
 import { brand } from "@/config/brand";
+import FranceChapterJourney from "@/components/home/FranceChapterJourney";
 
 export const metadata = pageMetadata("/", {
   title: "Your next chapter in France",
   description: "Independent, personal guidance for studying, settling and building a career in France. Meet Paris-based adviser Harshita Kohli and find a thoughtful next step.",
 });
-
-const pathways = [
-  { number: "01", name: "Study in France", note: "For the next step in your education", text: "Make sense of programmes, applications and preparation with guidance shaped around your own goals.", href: "/study-in-france", image: "/images/editorial/sainte-genevieve.webp", alt: "The reading room of the Bibliothèque Sainte-Geneviève in Paris", icon: GraduationCap, mark: "LEARN" },
-  { number: "02", name: "Settle in France", note: "For finding your feet in a new place", text: "Think through arrival, practical questions and the everyday details that help a new home feel more familiar.", href: "/settle-in-france", image: "/images/editorial/france-bordeaux.webp", alt: "The historic Place de la Bourse in Bordeaux beside the Garonne", icon: MapPin, mark: "ARRIVE" },
-  { number: "03", name: "Build your career", note: "For the work you want to do next", text: "Bring focus to your CV, professional profile, interviews and the next steps in your job search.", href: "/career-support", image: "/images/editorial/notre-dame.webp", alt: "The west façade of Notre-Dame de Paris", icon: Compass, mark: "GROW" },
-];
 
 const steps = [
   ["Listen, then find the real question", "We begin with your experience, priorities and the decisions in front of you. No assumptions about what your journey should look like."],
@@ -29,7 +24,7 @@ export default function Home() {
     <Navbar />
     <main id="main-content" className="home-story">
       <section className="home-cover" aria-labelledby="home-title">
-        <Image className="home-cover-image" src="/images/editorial/france-evening-20261014.webp" alt="Paris at blue hour, with the Eiffel Tower illuminated beyond the Seine" fill priority sizes="100vw" />
+        <Image className="home-cover-image" src="/images/editorial/althea-france-atlas-hero.jpg" alt="An open blue atlas with a brass route marker leading across France, beside a Paris window at dusk" fill priority sizes="100vw" />
         <div className="home-cover-veil" />
         <div className="home-cover-frame">
           <p className="home-overline"><span /> AN INDEPENDENT FRANCE ADVISORY <i>—</i> PARIS</p>
@@ -52,21 +47,7 @@ export default function Home() {
         <div className="home-ornament" aria-hidden="true"><span>✳</span><i /></div>
       </section>
 
-      <section className="home-pathways" aria-labelledby="pathways-title">
-        <div className="home-wrap">
-          <div className="home-section-head"><div><p className="home-eyebrow">02 &nbsp; CHOOSE YOUR CHAPTER</p><h2 id="pathways-title">Where will your<br /><em>story lead?</em></h2></div><p>Start with the question that’s closest today. Each path leads to more detail and a practical way to begin.</p></div>
-          <nav className="home-route-map" aria-label="Jump to a France guidance chapter">
-            <svg viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true"><path d="M84 75 C190 75 180 32 310 40 S430 112 505 77 610 25 700 44 826 104 916 70" /><circle cx="84" cy="75" r="7" /><circle cx="505" cy="77" r="7" /><circle cx="916" cy="70" r="7" /></svg>
-            <Link href="#study-path"><span>01</span><strong>LEARN</strong><small>Study in France</small></Link>
-            <Link href="#settle-path"><span>02</span><strong>ARRIVE</strong><small>Settle in France</small></Link>
-            <Link href="#career-path"><span>03</span><strong>GROW</strong><small>Career support</small></Link>
-          </nav>
-          <div className="home-path-list">{pathways.map(({ number, name, note, text, href, image, alt, icon: Icon, mark }) => <article id={`${number === "01" ? "study" : number === "02" ? "settle" : "career"}-path`} key={number} className="home-path-card">
-            <Link href={href} className="home-path-image" aria-label={`Explore ${name}`}><Image src={image} alt={alt} fill sizes="(max-width: 760px) 90vw, 45vw" /><span className="home-path-number">{number} / {mark}</span><span className="home-path-arrow"><MoveUpRight size={18} /></span></Link>
-            <div className="home-path-copy"><p className="home-eyebrow"><Icon size={14} /> {note}</p><h3>{name}</h3><p>{text}</p><Link className="home-underlink" href={href}>Explore this chapter <ArrowUpRight size={15} /></Link></div>
-          </article>)}</div>
-        </div>
-      </section>
+      <FranceChapterJourney />
 
       <section className="home-interlude" aria-label="A personal perspective from Paris">
         <Image src="/images/editorial/france-campus.webp" alt="Architectural detail of a historic university in France" fill sizes="100vw" />
