@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { AltheaHeader, AltheaFooter } from "@/components/althea/SiteChrome";
 import UniversityExplorer from "@/components/althea/UniversityExplorer";
-export const metadata:Metadata={title:"Explore French Universities | Althéa Consulting",description:"Explore a curated directory of French universities linked directly to their official programme catalogues. Filter by city or field and verify admissions at the source.",alternates:{canonical:"/france/universities"}};
+export const metadata:Metadata={title:"Find French Universities by City & Subject",description:"Explore a curated directory of French universities linked directly to their official programme catalogues. Filter by city or field and verify admissions at the source.",alternates:{canonical:"/france/universities"}};
 export default function UniversityDirectory(){return <main className="min-h-screen overflow-x-clip bg-[#FCFAF6] text-[#173563]">
  <AltheaHeader/>
  <section className="relative overflow-hidden bg-[#122E60] px-5 pb-16 pt-14 text-[#FAF8F3] sm:px-9 sm:pb-24 sm:pt-20 lg:px-14">
