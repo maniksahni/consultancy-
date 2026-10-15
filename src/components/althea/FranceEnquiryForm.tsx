@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ArrowUpRight, CheckCircle2, AlertCircle } from "lucide-react";
-import { saveMentorshipBooking } from "@/lib/firebase";
 
 const HELP = ["University & course selection", "Campus France application guidance", "Scholarships and funding", "Student visa preparation", "Full France study journey"] as const;
 const INTAKES = ["2027 intake", "2028 intake", "Undecided / researching"] as const;
@@ -20,12 +19,21 @@ export default function FranceEnquiryForm(){
   const phone=data.phone.replace(/\D/g,"");
   if(name.length<2||!/^[6-9]\d{9}$/.test(phone)){setStatus("error");setError("Please add your name and a valid Indian 10-digit WhatsApp number.");return;}
   setStatus("loading");setError("");
-  const result=await saveMentorshipBooking({
-   fullName:name,whatsapp:phone,email:data.email.trim().slice(0,100)||undefined,
-   qualification:data.qualification.trim().slice(0,250),targetCountry:"France",
-   targetIntake:data.intake,helpNeeded:data.help
-  });
-  if(result.success){setStatus("success");}else{setStatus("error");setError("We couldn't securely save your request right now. Please use the WhatsApp contact link below instead.");}
+  // Load the Firebase SDK only when a visitor actually submits the form.
+  // Keep the first page visit free of Firestore initialization and its network cost.
+  try {
+   const { saveMentorshipBooking } = await import("@/lib/firebase");
+   const result=await saveMentorshipBooking({
+    fullName:name,whatsapp:phone,email:data.email.trim().slice(0,100)||undefined,
+    qualification:data.qualification.trim().slice(0,250),targetCountry:"France",
+    targetIntake:data.intake,helpNeeded:data.help
+   });
+   if(result.success){setStatus("success");return;}
+  } catch {
+   // Client connectivity, SDK initialization and Firestore write errors share a safe fallback.
+  }
+  setStatus("error");
+  setError("We couldn't securely save your request right now. Please use the WhatsApp contact link below instead.");
  }
  return <div className="border border-[#173969]/15 bg-[#FCFAF6] p-5 shadow-[0_20px_60px_rgba(13,38,79,.05)] sm:p-8">
   {status==="success"?<div role="status" className="py-8 text-center">
