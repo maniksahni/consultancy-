@@ -1,3 +1,4 @@
+import SeoPageSchema from "@/components/seo/SeoPageSchema";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {ArrowRight,ArrowUpRight,BookOpen,GraduationCap,FileCheck2,Plane,Landmark,MapPin} from "lucide-react";
@@ -13,7 +14,7 @@ const steps=[
  {number:"06",title:"Plan your arrival",detail:"Check France-Visas instructions and prepare housing, insurance and local registrations for your situation."},
 ];
 export default function FrancePage(){return <main className="min-h-screen overflow-x-clip bg-[#FCFAF6] text-[#153260]">
- <AltheaHeader/>
+ <AltheaHeader/><SeoPageSchema path="/france" title="Study in France" description="Step-by-step admissions and Campus France guidance" breadcrumbs={[{name:"Study in France",path:"/france"}]} />
  <section className="relative overflow-hidden bg-[#142F65] px-5 pb-20 pt-14 text-[#FBF9F3] sm:px-9 sm:pb-28 sm:pt-20 lg:px-14">
   <div aria-hidden className="pointer-events-none absolute -right-[15%] top-[-40%] aspect-square w-[75%] rounded-full border border-white/10 shadow-[0_0_0_65px_rgba(255,255,255,.025),0_0_0_130px_rgba(255,255,255,.018)]"/>
   <div className="relative mx-auto grid max-w-[1328px] gap-16 lg:grid-cols-12 lg:items-end">
