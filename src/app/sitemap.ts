@@ -9,7 +9,7 @@ const routes=[
   ...guides.map(guide=>"/france/"+guide.slug),
 ];
 export default function sitemap():MetadataRoute.Sitemap{
- return [...new Set(routes)].map(path=>({
+ return Array.from(new Set(routes)).map(path=>({
   url:absoluteUrl(path),
   changeFrequency:path==="/"?"weekly" as const:"monthly" as const,
   priority:path==="/"?1:path==="/france"?.9:.6,
