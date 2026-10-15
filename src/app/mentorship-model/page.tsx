@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
 import AltheaInfoPage from "@/components/althea/AltheaInfoPage";
-export const metadata:Metadata={title:"Our Approach to France Study Guidance",description:"Personal study-in-France guidance with official university sources and clear admissions support."};
+export const metadata:Metadata={title:"Our Approach to France Study Guidance",description:"Personal study-in-France guidance with official university sources and clear admissions support." ,alternates:{canonical:"/mentorship-model"}};
 const rows=[
 {title:"Understand your profile",description:"We start with your academic record, goals, budget and practical constraints. No university can promise an admission outcome before evaluating your application.",href:"/#consultation",label:"Request a conversation"},
 {title:"Research French programmes",description:"Study levels, disciplines, language of teaching and institution rules determine your options. Begin with our curated university directory and follow official links.",href:"/france/universities",label:"Explore universities"},
