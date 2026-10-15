@@ -3,7 +3,7 @@ import Link from "next/link";
 import {ArrowRight,ArrowUpRight,BookOpen,GraduationCap,FileCheck2,Plane,Landmark,MapPin} from "lucide-react";
 import {AltheaHeader,AltheaFooter} from "@/components/althea/SiteChrome";
 import {franceSources} from "@/data/franceDirectory";
-export const metadata:Metadata={title:"Study in France — Your Guide | Althéa Consulting",description:"A considered introduction to French higher education: Études en France, Campus France India, university programmes, scholarships and official visa resources.",alternates:{canonical:"/france"}};
+export const metadata:Metadata={title:"Study in France: Complete Application Guide",description:"A considered introduction to French higher education: Études en France, Campus France India, university programmes, scholarships and official visa resources.",alternates:{canonical:"/france"}};
 const steps=[
  {number:"01",title:"Explore programmes",detail:"Compare degree levels, subjects, teaching languages and locations through official university and Campus France catalogues."},
  {number:"02",title:"Check your route",detail:"Your country of residence, level of study and chosen institution affect which application process applies."},
