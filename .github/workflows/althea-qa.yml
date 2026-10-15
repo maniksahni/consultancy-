@@ -5,6 +5,7 @@ on:
       - "src/**"
       - "scripts/**"
       - ".github/workflows/althea-qa.yml"
+      - ".github/workflows/althea-deploy.yml"
       - "firebase.json"
       - "next.config.mjs"
   workflow_dispatch:
