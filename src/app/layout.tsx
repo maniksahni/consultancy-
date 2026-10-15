@@ -35,9 +35,13 @@ export const metadata: Metadata = {
   description:
     brand.tagline,
   icons: {
-    icon: [{ url: brand.assets.faviconPng, type: "image/png", sizes: "512x512" }, { url: brand.assets.favicon, type: "image/svg+xml" }],
-    shortcut: brand.assets.faviconPng,
-    apple: brand.assets.faviconPng,
+    icon: [
+      { url: brand.assets.faviconIco, sizes: "any" },
+      { url: brand.assets.faviconPng, type: "image/png", sizes: "512x512" },
+      { url: brand.assets.favicon, type: "image/svg+xml" },
+    ],
+    shortcut: brand.assets.faviconIco,
+    apple: brand.assets.appleTouch,
   },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
