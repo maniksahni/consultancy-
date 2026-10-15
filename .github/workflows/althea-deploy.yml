@@ -3,51 +3,100 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+
+# A new push must not race another live deployment.
+concurrency:
+  group: althea-firebase-production
+  cancel-in-progress: false
+
 permissions:
   contents: read
+
 jobs:
   verify-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.ALTHEA_CUSTOM_DOMAIN != '' && format('https://{0}', vars.ALTHEA_CUSTOM_DOMAIN) || 'https://consultancyworld2.web.app' }}
+      PUBLICATION_DOMAIN: ${{ vars.ALTHEA_CUSTOM_DOMAIN != '' && vars.ALTHEA_CUSTOM_DOMAIN || 'consultancyworld2.web.app' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
-      - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npm run build
-      - run: npx playwright install --with-deps chromium
-      - name: Verify responsive production export
+
+      # Failing here is intentional: never report success without a deployment.
+      # Add the secret through GitHub Settings or Firebase's hosting:github wizard.
+      - name: Verify Firebase service-account permission
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2 || secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
-          node scripts/serve-export.mjs > /tmp/althea-qa-server.log 2>&1 &
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::Firebase deployment is NOT configured. Add GitHub Actions secret FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2. No deployment occurred."
+            exit 1
+          fi
+          node -e 'const k=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT); if(k.type!=="service_account"||k.project_id!=="consultancyworld2"||!k.private_key||!k.client_email)throw new Error("Firebase service-account JSON is invalid or points to the wrong project"); console.log("Firebase service-account project matches consultancyworld2");'
+          if ! printf '%s' "$PUBLICATION_DOMAIN" | grep -Eq '^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$'; then
+            echo "::error::Invalid custom domain: set ALTHEA_CUSTOM_DOMAIN to a bare hostname (example: altheaconsulting.in, without https://)."
+            exit 1
+          fi
+
+      - name: Install locked dependencies
+        run: npm ci
+      - name: TypeScript validation
+        run: npx tsc --noEmit
+      - name: Build static Firebase Hosting export with canonical domain
+        run: npm run build
+      - name: Audit exported SEO and performance
+        run: node scripts/check-seo-performance.mjs
+
+      - name: Embed a non-secret deployment revision marker
+        run: |
+          node -e 'require("fs").writeFileSync("out/deploy-meta.json",JSON.stringify({commit:process.env.GITHUB_SHA,project:"consultancyworld2",builtAt:new Date().toISOString()})+"\n")'
+
+      - run: npx playwright install --with-deps chromium
+      - name: Verify mobile/desktop static export and interactions
+        run: |
+          node scripts/serve-export.mjs > /tmp/althea-deploy-qa.log 2>&1 &
           for i in $(seq 1 45); do
-            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then break; fi
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then break; fi
             sleep 2
           done
           node scripts/check-althea-responsive.mjs
-      - name: Check hosting credentials
-        id: firebase
-        env:
-          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2 || secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: |
-          if [ -n "$SERVICE_ACCOUNT" ]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Firebase deployment skipped: no Hosting service-account credential configured."
-          fi
-      - name: Deploy verified static export to Firebase Hosting
-        if: steps.firebase.outputs.available == 'true'
+
+      - name: Save QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: althea-deploy-qa
+          path: artifacts/qa
+          retention-days: 14
+
+      - name: Deploy tested export to Firebase Hosting live channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSULTANCYWORLD2 || secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
           projectId: consultancyworld2
           entryPoint: .
-      - name: Summary
-        if: always()
+
+      - name: Verify deployed revision on public domain
+        env:
+          DOMAIN: ${{ vars.ALTHEA_CUSTOM_DOMAIN != '' && vars.ALTHEA_CUSTOM_DOMAIN || 'consultancyworld2.web.app' }}
         run: |
-          echo "Built Next static export; Firebase deployment requires configured service account." >> "$GITHUB_STEP_SUMMARY"
+          echo "Checking HTTPS publication at $DOMAIN"
+          for i in $(seq 1 8); do
+            if curl --fail --silent --show-error --location --max-time 20 "https://$DOMAIN/deploy-meta.json?revision=$GITHUB_SHA" -o /tmp/althea-deploy-meta.json; then
+              if node -e 'const fs=require("fs");let m=JSON.parse(fs.readFileSync("/tmp/althea-deploy-meta.json","utf8"));process.exit(m.commit===process.env.GITHUB_SHA?0:1)' ; then
+                echo "Verified: $GITHUB_SHA is live at https://$DOMAIN"
+                echo "### Verified live deployment" >> "$GITHUB_STEP_SUMMARY"
+                echo "- Commit: \`$GITHUB_SHA\`" >> "$GITHUB_STEP_SUMMARY"
+                echo "- Live URL: https://$DOMAIN" >> "$GITHUB_STEP_SUMMARY"
+                exit 0
+              fi
+            fi
+            sleep 8
+          done
+          echo "::error::Deploy action completed, but the current commit could not be verified on https://$DOMAIN. Check Firebase Hosting custom-domain mapping, DNS and CDN propagation."
+          exit 1
