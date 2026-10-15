@@ -3,7 +3,7 @@ import Link from "next/link";
 import {ArrowLeft,ArrowUpRight,CheckCircle2,FileText,BookOpen,Landmark,Plane,ShieldCheck} from "lucide-react";
 import {AltheaHeader,AltheaFooter} from "@/components/althea/SiteChrome";
 import FrancePathFinder from "@/components/althea/FrancePathFinder";
-export const metadata:Metadata={title:"Campus France & Études en France Guide",description:"Understand the Études en France application procedure, likely India-specific routes and official sources with Althéa Consulting.",alternates:{canonical:"/france/campus-france"}};
+export const metadata:Metadata={title:"Campus France & Études en France for Indian Students",description:"Understand the Études en France application procedure, likely India-specific routes and official sources with Althéa Consulting.",alternates:{canonical:"/france/campus-france"}};
 const steps=[
  {n:"01",title:"Find courses through official catalogues",desc:"Check the institution's programme language, eligibility, start date and application channel. Not every programme appears in the EEF platform."},
  {n:"02",title:"Confirm the application route",desc:"DAP, non-DAP, Parcoursup, institution portals and doctoral school applications are not interchangeable. Your background matters."},
