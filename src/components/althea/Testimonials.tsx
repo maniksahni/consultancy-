@@ -100,7 +100,7 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
         </div>
       </div>
       {full && (
-        <div className="wrap voice-notes">
+        <div className="wrap voice-notes" tabIndex={0} role="region" aria-label="Student review notes">
           {sampleReviews.map((r, i) => (
             <article key={r.id}>
               <span className="eyebrow">

@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMetadata('/admissions-process', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/admissions-process"
       title={"Your application, organised."}
       intro={"Follow the programme and country-specific official instructions."}
     >

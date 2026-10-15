@@ -10,8 +10,8 @@ export const metadata: Metadata = pageMetadata('/book-consultation', {
 });
 export default function Content() {
   return (
-    <Page
-      title={"Let’s begin with your story."}
+    <Page path="/book-consultation"
+      title={"Book a consultation with Althéa"}
       intro={
         "Request a conversation. Preferred times are requests, and an appointment is confirmed separately."
       }

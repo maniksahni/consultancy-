@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMetadata('/outcomes', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/outcomes"
       title={"A first conversation."}
       intro={
         "Understand what a consultation can cover before deciding on further support."

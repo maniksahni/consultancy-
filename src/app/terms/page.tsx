@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMetadata('/terms', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/terms"
       title={"Clear expectations."}
       intro={"General website information and consultation enquiry terms."}
     >

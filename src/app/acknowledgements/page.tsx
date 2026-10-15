@@ -2,6 +2,8 @@ import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { imageCredits } from "@/data/imageCredits";
+import {photoCaption} from "@/lib/photography";
+import photoCollection from "@/data/photoSources.json";
 
 export const metadata: Metadata = pageMetadata('/acknowledgements', {
   title: "Sources & photography.",
@@ -9,7 +11,7 @@ export const metadata: Metadata = pageMetadata('/acknowledgements', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/acknowledgements"
       title={"Sources & photography."}
       intro={"Attribution and the limits of this editorial collection."}
     >
@@ -42,6 +44,9 @@ export default function Content() {
             </li>
           ))}
         </ul>
+        <h2>New editorial photography collection</h2>
+        <p>Each page and image placement has its own photograph. Images are resized, converted to WebP and cropped by the page layout. Names below describe the photograph; they do not imply institutional affiliation.</p>
+        <ul className="photo-credits">{Object.entries(photoCollection).map(([placement,photo])=><li key={placement}><a href={photo.source} target="_blank" rel="noreferrer">{photoCaption(photo)}</a> — {photo.author} · <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> · <code>{photo.file}</code></li>)}</ul>
         <h2>Independent editorial work</h2>
         <p>
           The design is an original implementation inspired by Parisian

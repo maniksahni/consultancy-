@@ -1,0 +1,10 @@
+"use client";
+import { useState } from "react";
+import { ArrowUpRight, BookOpen, Compass, BriefcaseBusiness } from "lucide-react";
+import Link from "next/link";
+const directions=[
+ {name:'YOUR STUDIES',label:'Choose with purpose.',detail:'A programme that connects your interests, preparation and ambition.',href:'/study-in-france',Icon:BookOpen},
+ {name:'YOUR EVERYDAY',label:'Make space for life.',detail:'The practical details that make a new country feel more familiar.',href:'/settle-in-france',Icon:Compass},
+ {name:'YOUR FUTURE',label:'Move with direction.',detail:'A clearer story about your experience and what you want next.',href:'/career-support',Icon:BriefcaseBusiness}
+];
+export default function PersonalBlueprint(){const[active,setActive]=useState(0);const d=directions[active];return <div className="bp-blueprint"><div className="bp-topline"><span>A PLAN BUILT AROUND YOU</span><span>PERSONAL / BY DESIGN</span></div><div className={`bp-map bp-focus-${active}`}><svg className="bp-connections" viewBox="0 0 500 320" fill="none" aria-hidden="true"><defs><linearGradient id="bp-glow"><stop stopColor="#9cf5d6"/><stop offset="1" stopColor="#9cf5d6" stopOpacity=".1"/></linearGradient></defs><circle cx="250" cy="160" r="83"/><ellipse cx="250" cy="160" rx="150" ry="115"/><path className={active===0?'is-active':''} d="M250 160 Q170 50 85 70"/><path className={active===1?'is-active':''} d="M250 160 Q360 70 430 105"/><path className={active===2?'is-active':''} d="M250 160 Q230 280 365 270"/><path d="M15 160H485M250 15V305" className="bp-axis"/></svg><div className="bp-centre"><span>THE CONSTANT</span><strong>YOU.</strong><span>YOUR AMBITION FIRST</span></div>{directions.map(({name,Icon},i)=><button key={name} className={`bp-node bp-node-${i}`} aria-pressed={active===i} onClick={()=>setActive(i)} onFocus={()=>setActive(i)}><Icon size={20}/><span>{name}</span></button>)}</div><div className="bp-bottom" key={active}><span>0{active+1} / THE PERSONAL PICTURE</span><h3>{d.label}</h3><p>{d.detail}</p><Link href={d.href}>Explore this direction<ArrowUpRight size={17}/></Link></div></div>;}

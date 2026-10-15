@@ -28,3 +28,39 @@ Google may take days or weeks to crawl and index a new or recently changed site.
 - Restored the Althéa logo lockup in the global header and footer. Added a stable square 512×512 PNG favicon alongside the SVG and point the Organization structured-data `logo` to that square PNG.
 - Verified the live homepage advertises both favicon formats and the header/footer logo assets. The PNG is publicly crawlable. Google Search Console confirms the homepage is indexed and accepted a fresh indexing request on 15 October 2026 after the logo/favicon update.
 - Google can take several days or weeks to recrawl and refresh a favicon, and display is not guaranteed. Recheck the Google result after the next crawl; do not submit the homepage again unless it changes.
+
+## Search appearance diagnosis — 15 October 2026
+
+The user reported a globe favicon, a single homepage result without sitelinks, and no Althéa citation in the AI answer for a branded query. Live inspection found HTTP 200 responses for the homepage, robots file, sitemap, root ICO, 512×512 PNG and SVG favicon. The homepage already advertises all three icon formats, `og:site_name` and WebSite structured data. There is no evidence that an unavailable or blocked favicon caused the reported globe.
+
+Search Console's homepage inspection reports **URL is on Google**, a successful smartphone crawl on **14 October 2026 at 21:30:11** (as displayed in Search Console), crawling and indexing allowed, and the inspected HTTPS URL as Google's canonical. This crawl predates the 15 October favicon refresh. The overview still reports that performance and indexing data are processing. These observations do not establish why Google chose a particular favicon or omitted sitelinks.
+
+Additional changes clarify the brand in visible homepage content, add a visible six-link service navigation, use descriptive headings for About, Services, Career Support, Reviews and Consultation pages, simplify the university navigation URL, specify the ICO's actual embedded sizes, and describe the existing logo with its image dimensions. Organization details identify Paris, France and the founder, without claiming unsupported affiliations or linking unrelated similarly named consulting firms.
+
+Google controls favicon selection, site names, sitelinks and AI citations. No markup can force a six-link result or AI Overview inclusion. Do not change favicon URLs repeatedly or submit unchanged pages every day. Reassess after Google crawls the updated page.
+
+Official references:
+- https://developers.google.com/search/docs/appearance/favicon-in-search
+- https://developers.google.com/search/docs/appearance/sitelinks
+- https://developers.google.com/search/docs/appearance/site-names
+- https://developers.google.com/search/docs/appearance/ai-features
+
+### Publication verification — 15 October 2026
+
+The first Firebase upload failed with a content-hash mismatch. A separate snapshot of the export passed the 69-page audit and was successfully released to Firebase Hosting (`consultancyworld2`). Post-deployment HTTP checks on `https://altheaconsulting.in` confirmed the six-link homepage navigation, updated About/Career/Reviews/Services/Consultation headings, the brand FAQ answer, the Organization logo dimensions and the public 512px favicon. Priority-page layout checks passed at 320, 390, 768 and 1440 pixels.
+
+Search Console also confirms that `/about` is already indexed. A missing grouped sitelink does not mean that the About page is absent from Google's index.
+
+A fresh homepage indexing request was attempted after publication. Google's live-indexability test ran, then an empty reCAPTCHA iframe appeared without an acceptance dialog. No CAPTCHA was completed and **this new request is not confirmed as queued**. The user-owned Search Console tab was left open for follow-up. The earlier 15 October request recorded above remains the last confirmed request. Screenshot: `audit/seo-google-indexed-20261015.png`.
+
+## Follow-up verification — 15 October 2026
+
+A fresh live Google search for `althéa consulting` in the user's connected Chrome session showed the homepage as the first organic result, with separate About and Programmes results. The homepage still displayed a generic globe, an HTTP display URL, and no grouped sitelinks. These are observations from this personalised search, not universal rank claims. The expanded AI Overview described Althéa Groupe (management/digital transformation consulting), linked that unrelated firm's domain and did not cite altheaconsulting.in.
+
+The prior indexing-request dialog has now resolved to **“Oops! Something went wrong — We had a problem submitting your indexing request. Please try again later.”** Therefore that fresh request failed; it is not merely pending verification and must not be reported as queued.
+
+Independent HTTP verification confirmed 200 responses on the homepage, About, Study, Settle, Career, Reviews and Consultation pages; the six-link homepage navigation; canonical HTTPS metadata; index/follow and unrestricted Google snippet controls; Organization/Person/WebSite/WebPage entities; the public 512×512 PNG favicon and root ICO; permissive robots.txt; and 67 canonical sitemap URLs.
+
+Evidence:
+- `audit/google-verification-full-20261015.png`
+- `audit/google-indexing-request-failed-20261015.png`

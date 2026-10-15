@@ -5,6 +5,7 @@ import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import "./site-theme.css";
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "600"],
@@ -21,12 +22,12 @@ const jakarta = Plus_Jakarta_Sans({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: brand.colors.navy,
+  themeColor: "#050b10",
 };
 export const metadata: Metadata = {
   metadataBase: new URL(brand.canonicalUrl),
   robots: isIndexable
-    ? { index: true, follow: true }
+    ? { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } }
     : { index: false, follow: false },
   title: {
     default: `${brand.name} | Study, Settle & Succeed in France`,
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     brand.tagline,
   icons: {
     icon: [
-      { url: brand.assets.faviconIco, sizes: "any" },
+      { url: brand.assets.faviconIco, type: "image/x-icon", sizes: "16x16 32x32 48x48" },
       { url: brand.assets.faviconPng, type: "image/png", sizes: "512x512" },
       { url: brand.assets.favicon, type: "image/svg+xml" },
     ],
@@ -72,7 +73,11 @@ export default function RootLayout({
           "@graph": [
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
               name: brand.name, alternateName: brand.shortName, url: siteUrl,
-              logo: `${siteUrl}${brand.assets.faviconPng}`,
+              logo: { "@type": "ImageObject", "@id": `${siteUrl}/#logo`,
+                url: `${siteUrl}${brand.assets.faviconPng}`, contentUrl: `${siteUrl}${brand.assets.faviconPng}`,
+                width: 512, height: 512, caption: brand.name },
+              address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
+              disambiguatingDescription: "Independent France study, settling and career advisory founded by Harshita Kohli in Paris.",
               ...(brand.email ? { email: brand.email } : {}),
               ...(brand.whatsappNumber || brand.email ? { contactPoint: {
                 "@type": "ContactPoint",
@@ -88,7 +93,7 @@ export default function RootLayout({
               jobTitle: brand.role, url: `${siteUrl}/about`,
               worksFor: { "@id": `${siteUrl}/#organization` } },
             { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,
-              alternateName: [brand.shortName, "Althea Consulting"],
+              alternateName: ["Althea Consulting", "altheaconsulting.in"],
               url: siteUrl, inLanguage: "en",
               publisher: { "@id": `${siteUrl}/#organization` } },
           ],

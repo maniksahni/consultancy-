@@ -16,7 +16,7 @@ export default function City({ params }: { params: { slug: string } }) {
   const c = cities.find((c) => c.slug === params.slug);
   if (!c) notFound();
   return (
-    <Page eyebrow="LE CHAPITRE FRANÇAIS" title={c.name} intro={c.tag}>
+    <Page path={`/cities/${params.slug}`} eyebrow="LE CHAPITRE FRANÇAIS" title={c.name} intro={c.tag}>
       <div className="prose">
         <p>{c.text}</p>
         <h2>Plan around your campus.</h2>
@@ -36,7 +36,7 @@ export default function City({ params }: { params: { slug: string } }) {
         </ul>
         <p><a href={c.url} target="_blank" rel="noreferrer">Visit the official {c.name} or university resource ↗</a></p>
         <p><Link href={`/universities?country=france&view=courses#course-finder`}>Search published France programme records ↗</Link></p>
-        <Link href="/destinations/france">Explore the France destination guide ↗</Link>
+        <Link href="/study-in-france">Explore the France destination guide ↗</Link>
         <br/><Link href="/first-30-days-france">Open the first 30 days checklist ↗</Link>
         <p className="muted">
           Editorial orientation updated 14 October 2026. No rent, availability

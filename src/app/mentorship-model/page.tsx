@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMetadata('/mentorship-model', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/mentorship-model"
       title={"A considered path, together."}
       intro={
         "Six stages to organise the conversation — adapted to your circumstances and agreed scope."

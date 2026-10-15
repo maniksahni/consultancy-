@@ -1,3 +1,6 @@
+import JsonLd from "@/components/seo/JsonLd";
+import { faqs } from "@/data/france";
+import { absoluteUrl } from "@/lib/seo";
 import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -9,11 +12,19 @@ export const metadata: Metadata = pageMetadata('/faq', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/faq"
       eyebrow="SETTLING · CAREER · STUDY"
       title={"Clear answers before your next step."}
       intro={"What Althéa can help with, what remains with official providers, and how support works."}
     >
+      <JsonLd data={{
+        "@context": "https://schema.org", "@type": "FAQPage",
+        "@id": `${absoluteUrl("/faq")}#faq`,
+        mainEntity: faqs.map(([question, answer]) => ({
+          "@type": "Question", name: question,
+          acceptedAnswer: { "@type": "Answer", text: answer },
+        })),
+      }} />
       <FAQ />
       <div className="prose">
         <h2>Check the official requirements</h2>

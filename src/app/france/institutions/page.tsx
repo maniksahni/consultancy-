@@ -8,5 +8,5 @@ export const metadata = pageMetadata("/france/institutions", {
 });
 
 export default function Directory() {
-  return <Page eyebrow="LE PARCOURS · FRANCE" title="French institutions." intro="Browse French higher education institutions, reviewed programme fees and application information here on the site."><UniversityExplorer initialCountry="france" /></Page>;
+  return <Page path="/france/institutions" eyebrow="LE PARCOURS · FRANCE" title="French institutions." intro="Browse French higher education institutions, reviewed programme fees and application information here on the site."><UniversityExplorer initialCountry="france" /></Page>;
 }

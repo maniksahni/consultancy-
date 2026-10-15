@@ -2,6 +2,7 @@ import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import Image from "next/image";
+import {photoFor,photoCaption} from "@/lib/photography";
 import Link from "next/link";
 import Page from "@/components/althea/Page";
 export const metadata: Metadata = pageMetadata('/about', {
@@ -11,21 +12,32 @@ export const metadata: Metadata = pageMetadata('/about', {
 });
 export default function AboutPage() {
   return (
-    <Page
+    <Page path="/about"
       image="/images/editorial/france-campus.webp"
       eyebrow="L’ESPRIT DE LA MAISON"
-      title="A world of ambition. A very personal maison."
+      title="About Althéa Consulting & Harshita Kohli"
       intro="France-based, shaped by lived experience and focused on the practical realities of studying, settling and building a career here."
     >
+      <section className="prose" aria-labelledby="althea-facts-title" style={{ marginBottom: 48 }}>
+        <h2 id="althea-facts-title">Althéa Consulting at a glance</h2>
+        <p>Althéa Consulting is an independent advisory based in Paris, France, founded by Harshita Kohli. We support international students and young professionals with study planning, settling into life in France and career preparation.</p>
+        <dl>
+          <dt><strong>Founder and adviser</strong></dt><dd>{brand.person} — {brand.role}</dd>
+          <dt><strong>Location</strong></dt><dd>{brand.location}</dd>
+          <dt><strong>Official website</strong></dt><dd><a href={brand.canonicalUrl}>altheaconsulting.in</a></dd>
+          <dt><strong>Contact</strong></dt><dd><a href={`mailto:${brand.email}`}>{brand.email}</a></dd>
+        </dl>
+        <p><Link href="/study-in-france">Study guidance</Link> · <Link href="/settle-in-france">Settling support</Link> · <Link href="/career-support">Career preparation</Link></p>
+      </section>
       <section className="maison-story">
         <div className="story-photo">
           <Image
-            src="/images/editorial/france-bordeaux.webp"
-            alt="The Place de la Bourse and Water Mirror in Bordeaux"
+            src={photoFor("/about/body/philosophy")!.file}
+            alt={photoCaption(photoFor("/about/body/philosophy")!)}
             fill
             sizes="(max-width:760px) 90vw, 45vw"
           />
-          <span>BORDEAUX · PLACE DE LA BOURSE</span>
+          <span>{photoCaption(photoFor("/about/body/philosophy")!)}</span>
         </div>
         <div className="story-copy">
           <p className="eyebrow">THE ALTHÉA PHILOSOPHY</p>
@@ -53,7 +65,7 @@ export default function AboutPage() {
         <div className="founder-letter-heading">
           <p className="eyebrow">MEET YOUR ADVISER</p>
           <div className="founder-paris-photo">
-            <Image src="/images/editorial/sainte-genevieve.webp" alt="The reading room of the Bibliothèque Sainte-Geneviève in Paris" fill sizes="(max-width:760px) 90vw, 40vw" />
+            <Image src={photoFor("/about/body/adviser")!.file} alt={photoCaption(photoFor("/about/body/adviser")!)} fill sizes="(max-width:760px) 90vw, 40vw" />
             <span className="founder-postcard">Bibliothèque Sainte-Geneviève · Paris</span>
           </div>
           <h2>{brand.person}</h2>

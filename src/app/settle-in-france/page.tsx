@@ -18,7 +18,7 @@ const packages = [
 ];
 
 export default function SettleInFrancePage() {
-  return <Page eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France, with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
+  return <Page path="/settle-in-france" eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France, with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
     <section className="settle-intro"><div><p className="eyebrow">SUPPORT THAT MEETS YOU HERE</p><h2>Less guesswork.<br/><em>More confidence in your next step.</em></h2></div><p>Choose a focused session or explore a broader support package. We’ll agree what’s included and the fee before any work begins. Every service is guidance and preparation tailored to your situation.</p></section>
     <div className="settle-packages">
       {packages.map((item, i) => <article className="settle-package" key={item.name}><div className="settle-package-top"><span>0{i+1}</span><span className="eyebrow">{item.label}</span></div><h2>{item.name}</h2><ul>{item.includes.map(x=><li key={x}><Check size={16}/>{x}</li>)}</ul><div className="settle-package-bottom"><span><small>PRICING</small>Fee confirmed before booking</span><Link href={`/book-consultation?service=${encodeURIComponent(item.name)}`} className="text-link">Ask about this package <ArrowUpRight size={17}/></Link></div></article>)}

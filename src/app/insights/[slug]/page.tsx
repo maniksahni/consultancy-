@@ -22,7 +22,7 @@ export default function Article({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
   if (!a) notFound();
   return (
-    <Page eyebrow={a.category} title={a.title} intro={a.intro}>
+    <Page path={`/insights/${params.slug}`} eyebrow={a.category} title={a.title} intro={a.intro}>
       <article className="prose">
         <p className="eyebrow">
           ALTHÉA EDITORIAL · UPDATED {checked.toUpperCase()}
@@ -31,7 +31,8 @@ export default function Article({ params }: { params: { slug: string } }) {
           <p key={p}>{p}</p>
         ))}
         <h2>Continue with the official source.</h2>
-        <Link href="/knowledge">Explore the reviewed guidance library ↗</Link>
+        <a href={a.source} target="_blank" rel="noreferrer">Read the official source ↗</a>
+        <p><Link href="/knowledge">Explore the reviewed guidance library ↗</Link></p>
         <p className="muted">
           General orientation. Confirm the current requirements for your own
           circumstances before applying.

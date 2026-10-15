@@ -14,17 +14,18 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
       ? metadata.title.absolute
       : brand.name;
   const description = metadata.description || `Explore ${title.toLowerCase()} with ${brand.name}, an independent study abroad advisory based in Paris with a specialist focus on France.`;
+  const socialTitle = typeof metadata.title === "string" ? `${title} | ${brand.name}` : title;
   return {
     ...metadata,
     description,
     alternates: { ...metadata.alternates, canonical: absoluteUrl(path) },
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
-      title, description, url: absoluteUrl(path),
+      title: socialTitle, description, url: absoluteUrl(path),
       images: [{ url: absoluteUrl("/images/editorial/france-evening-20261014.webp"), alt: "The Eiffel Tower and Pont Alexandre III in Paris" }],
       ...metadata.openGraph,
     },
-    twitter: { card: "summary_large_image", title, description,
+    twitter: { card: "summary_large_image", title: socialTitle, description,
       images: [absoluteUrl("/images/editorial/france-evening-20261014.webp")], ...metadata.twitter },
   };
 }

@@ -9,7 +9,7 @@ export const metadata: Metadata = pageMetadata('/scholarships', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/scholarships"
       title={"Research your funding."}
       intro={
         "Use official award information and plan without assuming an award."

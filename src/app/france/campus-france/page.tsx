@@ -1,1 +1,3 @@
-export {default,metadata} from '../../campus-france-guide/page';
+import CampusFranceContent from "@/components/althea/CampusFranceContent";
+export { metadata } from "../../campus-france-guide/page";
+export default function Content() { return <CampusFranceContent imagePlacement="/france/campus-france" />; }

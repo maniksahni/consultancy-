@@ -12,7 +12,7 @@ for (const width of [320, 390, 768, 1440])
     for (const route of routes) {
       const response = await page.goto(route);
       expect(response?.status(), route).toBe(200);
-      await expect(page.locator("main")).toBeVisible();
+      await expect(page.locator("#main-content")).toBeVisible();
       await expect(page.locator("h1")).toHaveCount(1);
       expect(
         await page.evaluate(

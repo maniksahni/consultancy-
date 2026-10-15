@@ -5,7 +5,9 @@ async function files(dir) {
   return (await Promise.all(entries.map(e => e.isDirectory() ? files(`${dir}/${e.name}`) : `${dir}/${e.name}`))).flat();
 }
 const pages = (await files('out')).filter(p => p.endsWith('.html') && !p.endsWith('/404.html'));
+const exportFiles = new Set(await files('out'));
 const urls = new Set();
+const descriptionCanonicals = new Map();
 const titleCanonicals = new Map();
 for (const path of pages) {
   const html = await readFile(path, 'utf8');
@@ -24,8 +26,36 @@ for (const path of pages) {
   const existingTitleCanonical = titleCanonicals.get(title);
   assert.ok(!existingTitleCanonical || existingTitleCanonical === canonical[1], `Search title is duplicated across canonical pages: ${title} (${existingTitleCanonical}, ${canonical[1]})`);
   titleCanonicals.set(title, canonical[1]);
+  const previousDescription = descriptionCanonicals.get(description);
+  assert.ok(!previousDescription || previousDescription === canonical[1], `Duplicate description across canonical pages: ${path}`);
+  descriptionCanonicals.set(description, canonical[1]);
   urls.add(canonical[1]);
-  for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(match[1]);
+  const entities = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] || [data]; });
+  const webpage = entities.find(entity => entity['@type'] === 'WebPage');
+  assert.ok(webpage, `Missing WebPage identity: ${path}`);
+  assert.equal(webpage.url, canonical[1], `WebPage identity must match canonical: ${path}`);
+  if (new URL(canonical[1]).pathname !== '/') {
+    const breadcrumb = entities.find(entity => entity['@type'] === 'BreadcrumbList');
+    assert.ok(breadcrumb, `Missing breadcrumb: ${path}`);
+    assert.equal(breadcrumb.itemListElement.at(-1).item, canonical[1], `Breadcrumb must resolve to canonical: ${path}`);
+  }
+  // Check local navigation in the exported HTML, without depending on hydration.
+  for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"#]+)"/g)) {
+    const target = new URL(href.replaceAll('&amp;', '&'), canonical[1]);
+    if (target.origin !== new URL(canonical[1]).origin) continue;
+    const pathname = decodeURIComponent(target.pathname).replace(/\/$/, '') || '/';
+    assert.ok(pathname === '/' || exportFiles.has(`out${pathname}.html`) || exportFiles.has(`out${pathname}/index.html`) || exportFiles.has(`out${pathname}`), `Broken internal link: ${href} on ${path}`);
+  }
+}
+const home = await readFile('out/index.html', 'utf8');
+assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon-20261015.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
+assert.match(home, /<nav class="home-service-links" aria-label="Explore Althéa Consulting">/, 'Homepage must render the primary service navigation');
+const favicon = await readFile('out/brand/favicon-20261015.png');
+assert.equal(favicon.readUInt32BE(16), 512, 'Brand favicon width');
+assert.equal(favicon.readUInt32BE(20), 512, 'Brand favicon height');
+for (const route of ['study-in-france', 'settle-in-france', 'career-support', 'about', 'reviews', 'book-consultation']) {
+  assert.ok(home.includes(`href="/${route}"`), `Homepage must link directly to /${route}`);
 }
 const sitemap = await readFile('out/sitemap.xml', 'utf8');
 const sitemapUrls = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));

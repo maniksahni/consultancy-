@@ -1,9 +1,13 @@
+import PageIdentity from "@/components/seo/PageIdentity";
 import { brand } from "@/config/brand";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import { photoFor, photoCaption } from "@/lib/photography";
 export default function Page({
+  path,
+  imagePlacement,
   eyebrow = "La maison",
   title,
   image,
@@ -11,6 +15,8 @@ export default function Page({
   headerActions,
   children,
 }: {
+  path?: string;
+  imagePlacement?: string;
   eyebrow?: string;
   title: string;
   image?: string;
@@ -18,35 +24,22 @@ export default function Page({
   headerActions?: React.ReactNode;
   children: React.ReactNode;
 }) {
-  const pageKey = `${eyebrow} ${title}`.toLocaleLowerCase();
-  const pageImage = image || (
-    /university|programme|academic|research|course|study/.test(pageKey) ? "/images/editorial/sainte-genevieve.webp" :
-    /visa|admission|application|official|campus/.test(pageKey) ? "/images/editorial/france-campus.webp" :
-    /city|cost|living|scholarship|budget|outcome/.test(pageKey) ? "/images/editorial/france-bordeaux.webp" :
-    /service|consult|journey|welcome|about|maison|support/.test(pageKey) ? "/images/editorial/notre-dame.webp" :
-    ["/images/editorial/france-evening-20261014.webp", "/images/editorial/france-bordeaux.webp", "/images/editorial/sainte-genevieve.webp", "/images/editorial/france-campus.webp", "/images/editorial/notre-dame.webp"][Array.from(pageKey).reduce((n, c) => n + c.codePointAt(0)!, 0) % 5]
-  );
-  const imageAlt = pageImage.includes("sainte-genevieve")
-    ? "Reading room of the Bibliothèque Sainte-Geneviève in Paris"
-    : pageImage.includes("campus")
-      ? "The historic Sorbonne University building in Paris"
-      : pageImage.includes("bordeaux")
-        ? "The Place de la Bourse and Water Mirror in Bordeaux"
-        : pageImage.includes("notre-dame")
-          ? "The west façade of Notre-Dame Cathedral in Paris"
-          : "The Eiffel Tower and Pont Alexandre III at blue hour in Paris";
+  const assignedPhoto = (imagePlacement || path) ? photoFor((imagePlacement || path)!) : undefined;
+  const pageImage = assignedPhoto?.file || image;
+  const imageAlt = assignedPhoto ? photoCaption(assignedPhoto) : "Editorial photograph";
   return (
     <>
+      {path && <PageIdentity path={path} title={title} description={intro} />}
       <Navbar />
       <main id="main-content" className="maison-interior">
         <header className="interior-cover">
           <div className="wrap interior-cover-layout">
             <div className="page-heading">
-              <div className="interior-breadcrumb">
+              <nav className="interior-breadcrumb" aria-label="Breadcrumb">
                 <Link href="/">La Maison {brand.shortName}</Link>
                 <span aria-hidden="true">/</span>
-                <span>{eyebrow}</span>
-              </div>
+                <span aria-current="page">{title}</span>
+              </nav>
               <p className="eyebrow">{eyebrow}</p>
               <h1>{title}</h1>
               <p className="lead">{intro}</p>
@@ -57,7 +50,7 @@ export default function Page({
                 <small>PERSONAL BY DESIGN</small>
               </div>
             </div>
-            <div className="interior-cover-photo">
+            {pageImage && <div className="interior-cover-photo">
               <Image
                 src={pageImage}
                 alt={imageAlt}
@@ -65,7 +58,7 @@ export default function Page({
                 sizes="(max-width:760px) 90vw, 35vw"
               />
               <span>{imageAlt}</span>
-            </div>
+            </div>}
           </div>
         </header>
         <div className="wrap page-content">{children}</div>

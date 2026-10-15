@@ -53,3 +53,6 @@ data/cache/
 data/staging/*.json
 data/staging/pages/
 data/review/*.json
+
+# Local Next.js development cache
+/.next-dev/

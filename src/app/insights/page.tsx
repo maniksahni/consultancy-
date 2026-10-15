@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata('/insights', {
 });
 export default function Content() {
   return (
-    <Page
+    <Page path="/insights"
       title={`Le journal ${brand.shortName}.`}
       intro={
         "Practical notes for a thoughtful French chapter, with official sources."

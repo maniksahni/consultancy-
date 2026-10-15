@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 const links = [
   ["Home", "/"],
-  ["Directory", "/universities?country=france&view=courses#course-finder"],
+  ["Universities", "/universities"],
   ["Settle in France", "/settle-in-france"],
   ["Study in France", "/study-in-france"],
   ["Career Support", "/career-support"],
   ["About Harshita", "/about"],
   ["Resources", "/knowledge"],
 ];
-export default function Navbar() {
+export default function Navbar({ appearance = "dark" }: { appearance?: "light" | "dark" }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
@@ -22,7 +22,7 @@ export default function Navbar() {
   }, []);
   return (
     <header className="site-header">
-      <Link href="/" className="wordmark" aria-label={`${brand.name} home`}><img className="brand-logo" src={brand.assets.logo} alt={brand.name} width={420} height={96}/></Link>
+      <Link href="/" className="wordmark" aria-label={`${brand.name} home`}><img className="brand-logo" src={appearance === "dark" ? brand.assets.logoLight : brand.assets.logo} alt={brand.name} width={420} height={96}/></Link>
       <button
         className="menu-toggle"
         aria-expanded={open}
