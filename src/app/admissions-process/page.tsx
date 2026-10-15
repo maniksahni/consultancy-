@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
 import AltheaInfoPage from "@/components/althea/AltheaInfoPage";
-export const metadata:Metadata={title:"Admissions Process in France | Althéa Consulting",description:"Understand French university shortlisting, Études en France, applications and visa preparation."};
+export const metadata:Metadata={title:"French University Admissions Process",description:"Understand French university shortlisting, Études en France, applications and visa preparation." ,alternates:{canonical:"/admissions-process"}};
 const rows=[
 {title:"01 · Discover your course",description:"Research subjects and levels using institutional admissions pages. Check the language of teaching, prerequisites, programme duration and current intake.",href:"/france/programmes",label:"Find courses"},
 {title:"02 · Identify the correct route",description:"For India and other relevant countries, Études en France often applies. DAP, non-DAP and school-specific procedures depend on your situation.",href:"/france/campus-france",label:"Campus France guide"},

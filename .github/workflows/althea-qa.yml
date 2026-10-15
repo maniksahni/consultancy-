@@ -5,7 +5,12 @@ on:
       - "src/**"
       - "scripts/**"
       - ".github/workflows/althea-qa.yml"
+      - "firebase.json"
+      - "next.config.mjs"
   workflow_dispatch:
+concurrency:
+  group: althea-seo-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   build-and-mobile-qa:
     runs-on: ubuntu-latest
@@ -21,6 +26,8 @@ jobs:
       - run: node --check scripts/serve-export.mjs
       - run: npx tsc --noEmit
       - run: npm run build
+      - name: Audit SEO, indexability and first-party performance budgets
+        run: node scripts/check-seo-performance.mjs
       - name: Check official live registry API (nonblocking)
         continue-on-error: true
         run: node scripts/check-open-data-api.mjs

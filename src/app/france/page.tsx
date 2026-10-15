@@ -1,9 +1,11 @@
+import FranceAnswers from "@/components/althea/FranceAnswers";
+import SeoPageSchema from "@/components/seo/SeoPageSchema";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {ArrowRight,ArrowUpRight,BookOpen,GraduationCap,FileCheck2,Plane,Landmark,MapPin} from "lucide-react";
 import {AltheaHeader,AltheaFooter} from "@/components/althea/SiteChrome";
 import {franceSources} from "@/data/franceDirectory";
-export const metadata:Metadata={title:"Study in France — Your Guide | Althéa Consulting",description:"A considered introduction to French higher education: Études en France, Campus France India, university programmes, scholarships and official visa resources.",alternates:{canonical:"/france"}};
+export const metadata:Metadata={title:"Study in France: Complete Application Guide",description:"A considered introduction to French higher education: Études en France, Campus France India, university programmes, scholarships and official visa resources.",alternates:{canonical:"/france"}};
 const steps=[
  {number:"01",title:"Explore programmes",detail:"Compare degree levels, subjects, teaching languages and locations through official university and Campus France catalogues."},
  {number:"02",title:"Check your route",detail:"Your country of residence, level of study and chosen institution affect which application process applies."},
@@ -13,7 +15,7 @@ const steps=[
  {number:"06",title:"Plan your arrival",detail:"Check France-Visas instructions and prepare housing, insurance and local registrations for your situation."},
 ];
 export default function FrancePage(){return <main className="min-h-screen overflow-x-clip bg-[#FCFAF6] text-[#153260]">
- <AltheaHeader/>
+ <AltheaHeader/><SeoPageSchema path="/france" title="Study in France" description="Step-by-step admissions and Campus France guidance" breadcrumbs={[{name:"Study in France",path:"/france"}]} />
  <section className="relative overflow-hidden bg-[#142F65] px-5 pb-20 pt-14 text-[#FBF9F3] sm:px-9 sm:pb-28 sm:pt-20 lg:px-14">
   <div aria-hidden className="pointer-events-none absolute -right-[15%] top-[-40%] aspect-square w-[75%] rounded-full border border-white/10 shadow-[0_0_0_65px_rgba(255,255,255,.025),0_0_0_130px_rgba(255,255,255,.018)]"/>
   <div className="relative mx-auto grid max-w-[1328px] gap-16 lg:grid-cols-12 lg:items-end">
@@ -30,5 +32,6 @@ export default function FrancePage(){return <main className="min-h-screen overfl
  <p className="mt-7 text-xs leading-6 text-[#66768A]">Althéa Consulting is an independent advisory service and is not affiliated with Campus France. Programme listings and official policies may change.</p></div></section>
  <section className="mx-auto grid max-w-[1328px] gap-10 px-5 py-20 sm:px-9 lg:grid-cols-2 lg:gap-20 lg:px-14 lg:py-28"><div><p className="text-xs uppercase tracking-[.3em] text-[#A08B65]">03 / Le choix</p><h2 className="mt-4 font-display text-5xl leading-[.98] sm:text-6xl">Choose your <em>future.</em></h2><p className="mt-6 max-w-xl text-sm leading-8 text-[#596B81]">Research universities by location, degree level and specialisation. Start with verified university links and visit the institution directly for up-to-date course details, deadlines and fees.</p><Link href="/france/universities" className="mt-9 inline-flex min-h-12 items-center gap-3 bg-[#173969] px-7 py-3 text-xs font-semibold uppercase tracking-[.16em] text-white hover:bg-[#285393]">Discover universities <ArrowRight size={18}/></Link></div><div className="grid grid-cols-2 gap-3 sm:gap-4">{[{name:"Paris",icon:Landmark},{name:"Bordeaux",icon:MapPin},{name:"Grenoble",icon:GraduationCap},{name:"Across France",icon:BookOpen}].map(({name,icon:Icon},i)=><div key={name} className={"flex min-h-[155px] flex-col justify-between border border-[#173969]/15 p-5 sm:min-h-[190px] sm:p-7 "+(i%3===0?"bg-[#193B72] text-white":"bg-[#F0EBE3] text-[#183765]")}><Icon size={23} strokeWidth={1.3}/><span className="font-display text-2xl sm:text-3xl">{name}</span></div>)}</div></section>
  <section className="bg-[#173969] px-5 py-20 text-white sm:px-9 lg:px-14"><div className="mx-auto flex max-w-[1328px] flex-col justify-between gap-8 lg:flex-row lg:items-center"><div><p className="text-xs uppercase tracking-[.3em] text-[#DCC39A]">Let's begin / Althéa Consulting</p><h2 className="mt-5 font-display text-5xl leading-[1] sm:text-6xl">Your French story <em>awaits.</em></h2><p className="mt-5 max-w-xl text-sm leading-7 text-white/70">Ready to explore your options? Begin with a conversation about your academic goals.</p></div><Link className="inline-flex min-h-12 shrink-0 items-center justify-center gap-3 bg-[#E4C89B] px-7 py-4 text-xs font-semibold uppercase tracking-[.15em] text-[#173969] hover:bg-white" href="/#consultation">Speak with Althéa <ArrowUpRight size={18}/></Link></div></section>
+ <FranceAnswers/>
  <AltheaFooter/>
  </main>}
