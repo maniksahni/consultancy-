@@ -1,3 +1,4 @@
+import SeoPageSchema from "@/components/seo/SeoPageSchema";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -5,7 +6,7 @@ import { AltheaHeader, AltheaFooter } from "@/components/althea/SiteChrome";
 import UniversityExplorer from "@/components/althea/UniversityExplorer";
 export const metadata:Metadata={title:"Find French Universities by City & Subject",description:"Explore a curated directory of French universities linked directly to their official programme catalogues. Filter by city or field and verify admissions at the source.",alternates:{canonical:"/france/universities"}};
 export default function UniversityDirectory(){return <main className="min-h-screen overflow-x-clip bg-[#FCFAF6] text-[#173563]">
- <AltheaHeader/>
+ <AltheaHeader/><SeoPageSchema path="/france/universities" title="Find French universities" description="Source-linked university directory" breadcrumbs={[{name:"Study in France",path:"/france"},{name:"Universities",path:"/france/universities"}]} />
  <section className="relative overflow-hidden bg-[#122E60] px-5 pb-16 pt-14 text-[#FAF8F3] sm:px-9 sm:pb-24 sm:pt-20 lg:px-14">
   <div aria-hidden className="pointer-events-none absolute -right-24 -top-32 h-[550px] w-[550px] rounded-full border border-white/10"/>
   <div className="relative mx-auto max-w-[1328px]"><Link href="/france" className="inline-flex min-h-11 items-center gap-2 text-[11px] uppercase tracking-[.2em] text-white/65 hover:text-white"><ArrowLeft size={16}/>Study in France</Link>
