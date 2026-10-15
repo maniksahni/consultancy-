@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, BookOpen, Globe2, Landmark, Compass, CheckCir
 import { AltheaHeader, AltheaFooter } from "@/components/althea/SiteChrome";
 import FranceEnquiryForm from "@/components/althea/FranceEnquiryForm";
 import StudentReviewsSection from "@/components/althea/StudentReviewsSection";
-export const metadata:Metadata={title:"Althéa Consulting | A French Future, Thoughtfully Guided",description:"Althéa Consulting helps students explore study opportunities in France with considered one-to-one guidance and official-source university research.",alternates:{canonical:"/"}};
+export const metadata:Metadata={title:"Study in France: Universities, Courses & Admissions",description:"Althéa Consulting helps students explore study opportunities in France with considered one-to-one guidance and official-source university research.",alternates:{canonical:"/"}};
 const services=[
  {no:"01",title:"Academic discovery",subtitle:"Find your direction",body:"Research universities, disciplines, degree levels and language options that align with your future.",icon:GraduationCap},
  {no:"02",title:"Application guidance",subtitle:"Make every step count",body:"Understand relevant application routes, document preparation and programme-specific requirements.",icon:BookOpen},
