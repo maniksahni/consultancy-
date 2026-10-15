@@ -24,7 +24,7 @@ for(const path of routes){
  if(!title||title.length<12||title.length>110)failures.push(path+": missing/poor length title");
  if((title.match(/Althéa Consulting/g)||[]).length>1)failures.push(path+": repeated organisation title");
  if(!descriptionTag||tagAttr(descriptionTag,"content").length<60)failures.push(path+": missing or very short description");
- if(canonTags.length!==1||canon!==expected)failures.push(path+": expected exactly one self-canonical "+expected+"; got "+canon);
+ if(canonTags.length!==1||!canon||new URL(canon).href!==new URL(expected).href)failures.push(path+": expected exactly one self-canonical "+expected+"; got "+canon);
  if(h1!==1)failures.push(path+": expected one H1; got "+h1);
  const schemaBlocks=[...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
  if(!schemaBlocks.length)failures.push(path+": missing schema");
