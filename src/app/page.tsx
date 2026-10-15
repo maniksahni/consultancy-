@@ -9,8 +9,8 @@ import { destinations } from "@/data/destinations";
 import "./home.css";
 
 export const metadata = pageMetadata("/", {
-  title: "A world of possibility. A life that feels like yours.",
-  description: "We go abroad to explore, discover and meet new parts of ourselves. Find thoughtful, independent guidance for your next chapter in France.",
+  title: { absolute: "Althéa Consulting | Study in France & Career Guidance" },
+  description: "Althéa Consulting offers independent study abroad guidance in France, with practical support for programmes, applications, student life and career planning.",
 });
 
 const steps = [

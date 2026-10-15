@@ -84,6 +84,7 @@ export default function RootLayout({
               jobTitle: brand.role, url: `${siteUrl}/about`,
               worksFor: { "@id": `${siteUrl}/#organization` } },
             { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,
+              alternateName: [brand.shortName, "Althea Consulting"],
               url: siteUrl, inLanguage: "en",
               publisher: { "@id": `${siteUrl}/#organization` } },
           ],

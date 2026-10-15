@@ -1,8 +1,11 @@
+"use client";
+
 import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { cities } from "@/data/france";
 import { destinations, destinationHref } from "@/data/destinations";
+import { useEffect } from "react";
 
 const footerGroups = [
   {
@@ -56,6 +59,15 @@ const footerGroups = [
 ];
 
 export default function Footer() {
+  useEffect(() => {
+    const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>(".footer-group-details"));
+    const media = window.matchMedia("(max-width: 760px)");
+    const syncGroups = () => groups.forEach((group) => { group.open = !media.matches; });
+    syncGroups();
+    media.addEventListener("change", syncGroups);
+    return () => media.removeEventListener("change", syncGroups);
+  }, []);
+
   return (
     <footer className="site-footer">
       <div className="footer-top footer-sitemap">
@@ -93,10 +105,12 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        {footerGroups.map((group) => <nav className="footer-group" key={group.title} aria-label={group.title.toLowerCase()}>
-          <span className="eyebrow footer-group-title">{group.title}</span>
-          {group.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-        </nav>)}
+        {footerGroups.map((group) => <details className="footer-group footer-group-details" key={group.title}>
+          <summary className="eyebrow footer-group-title">{group.title}</summary>
+          <nav className="footer-group-links" aria-label={group.title.toLowerCase()}>
+            {group.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
+          </nav>
+        </details>)}
       </div>
       <div className="footer-masthead" aria-hidden="true">
         <span>{brand.shortName}.</span>

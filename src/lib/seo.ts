@@ -8,7 +8,11 @@ export const isIndexable = process.env.SITE_INDEXABLE !== "false" &&
 export const absoluteUrl = (path: string) => `${siteUrl}${path === "/" ? "" : path}`;
 
 export function pageMetadata(path: string, metadata: Metadata): Metadata {
-  const title = typeof metadata.title === "string" ? metadata.title : brand.name;
+  const title = typeof metadata.title === "string"
+    ? metadata.title
+    : metadata.title && typeof metadata.title === "object" && "absolute" in metadata.title
+      ? metadata.title.absolute
+      : brand.name;
   const description = metadata.description || `Explore ${title.toLowerCase()} with ${brand.name}, an independent study abroad advisory based in Paris with a specialist focus on France.`;
   return {
     ...metadata,
