@@ -1,16 +1,22 @@
 import { chromium } from "playwright";
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:3000";
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440];
 const routes = ["/", "/france", "/france/universities", "/france/programmes", "/france/campus-france", "/france/institutions", "/france/resources", "/france/scholarships", "/france/visas", "/france/living", "/france/costs", "/france/faq", "/scholarships", "/faq", "/outcomes", "/admissions-process", "/mentorship-model"];
 const failures = [];
+const vitals = [];
 await mkdir("artifacts/qa", { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
  for (const width of widths) {
   const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
   page.on("pageerror", error => failures.push(`JS error at ${width}px: ${error.message}`));
+  await page.addInitScript(() => {
+   window.__altheaVitals = { lcp: null, cls: 0 };
+   try { new PerformanceObserver(list => { for (const e of list.getEntries()) window.__altheaVitals.lcp = e.startTime; }).observe({type:"largest-contentful-paint",buffered:true}); } catch {}
+   try { new PerformanceObserver(list => { for (const e of list.getEntries()) if (!e.hadRecentInput) window.__altheaVitals.cls += e.value; }).observe({type:"layout-shift",buffered:true}); } catch {}
+  });
   for (const route of routes) {
    try {
     const response = await page.goto(base + route, { waitUntil: "domcontentloaded", timeout: 45000 });
@@ -62,6 +68,14 @@ try {
     }
     if (width === 390 || width === 1440) {
      await page.evaluate(async () => { await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {}))); });
+     if (route === "/") {
+      const entry=await page.evaluate(() => ({
+       lcp:window.__altheaVitals?.lcp||null,
+       cls:window.__altheaVitals?.cls||0,
+       fcp:performance.getEntriesByName("first-contentful-paint")[0]?.startTime||null
+      }));
+      vitals.push({route,width,...entry,measurement:"Unthrottled CI Chromium lab; not field Core Web Vitals"});
+     }
      const label = route === "/" ? "home" : route.slice(1).replaceAll("/", "-");
      await page.screenshot({ path: `artifacts/qa/${label}-${width}.png`, fullPage: true });
     }
@@ -71,5 +85,7 @@ try {
   await page.close();
  }
 } finally { await browser.close(); }
+await writeFile("artifacts/qa/unthrottled-vitals.json", JSON.stringify(vitals,null,2)+"\n");
+console.log("Unthrottled mobile/desktop paint metrics:",JSON.stringify(vitals));
 if (failures.length) { console.error("FAILED QUALITY GATES:\n"+failures.join("\n")); process.exitCode = 1; }
 else console.log(`PASS: ${widths.length * routes.length} route/viewport checks plus interactions`);
