@@ -38,3 +38,27 @@ Current primary guidance:
 - Google: https://developers.google.com/search/docs/appearance/ai-features
 - Google: https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
 - Bing AI Performance: https://www.bing.com/webmasters/help/ai-performance-9f8e7d6c
+
+## Branded search investigation — 16 October 2026
+
+The supplied Google screenshots show this domain already indexed, a generic favicon, and an AI Overview describing Althéa Groupe. That overview is about a different entity; it is not evidence this site's own structured data contains the Groupe's address or headcount.
+
+Live checks found crawlable homepage metadata, the advertised 512×512 PNG returning HTTP 200 with image/png, permissive robots.txt, and a 301 from www to the canonical hostname. Keep the existing favicon URLs stable rather than rotating them to force a refresh. Google does not guarantee favicon display, and processing can take days to weeks.
+
+The homepage now leads its search title with the full brand, names its founder and Paris location in the description, and renders an explicit business definition in visible HTML. Organization and WebSite share full-brand spelling alternatives; Organization links the about page and the three real service pages through an OfferCatalog. The audit checks visible identity, service links and favicon asset existence. No unverified social profiles, company identifiers, affiliations or reviews were added.
+
+After deployment, request homepage recrawling in Search Console URL Inspection and inspect the Google-selected canonical and last crawl date. Submit the existing sitemap if not already submitted. Compare branded queries such as “Althéa Consulting Harshita Kohli” and “Althea Consulting study in France” with the ambiguous short query. Keep real external profiles consistent with the full brand, domain and founder; add sameAs only after the actual profiles are verified. AI Overview inclusion cannot be forced through markup or a special AI file.
+
+Primary references:
+- https://developers.google.com/search/docs/appearance/favicon-in-search
+- https://developers.google.com/search/docs/appearance/site-names
+- https://developers.google.com/search/docs/appearance/structured-data/organization
+- https://developers.google.com/search/docs/appearance/ai-features
+
+### Search Console follow-up, 16 October evening
+
+Opened the signed-in Safari Search Console domain property. Homepage URL Inspection reports “URL is on Google”, successful Googlebot smartphone fetch, crawling/indexing allowed, and Google-selected canonical equal to the inspected homepage. Last crawl shown: 15 Oct 2026, 17:15:52 (as displayed by Search Console), before the latest changes. The URL-level report says no referring sitemaps detected; inspect the actual Sitemaps report separately before treating that as a submission failure. Started Request indexing; do not treat a running live test as successful submission. A daily 10:00 local-time thread follow-up is configured to check actual search appearance and remain quiet on unchanged state.
+
+Sitemaps report verified directly: https://altheaconsulting.in/sitemap.xml, submitted 14 Oct, last read 16 Oct, Success, 68 discovered pages. Thus the URL Inspection “no referring sitemaps” field is not a sitemap submission error. Homepage indexing request progressed from live testing to “Submitting request”.
+
+Confirmed final Search Console dialog: “Indexing requested”; “URL was added to a priority crawl queue.” Request accepted, not merely attempted. Google explicitly states repeated submissions do not change queue position or priority. Actual favicon/AI Overview resolution remains unverified and is the follow-up's success condition.

@@ -1,117 +1,50 @@
 "use client";
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { sampleReviews } from "@/data/reviews";
+import { Kicker, TextLink } from "@/components/maison/ui";
 
+/** Student stories: a featured stage that turns on its own, plus the full collection. */
 export default function Testimonials({ full = false }: { full?: boolean }) {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
   const review = sampleReviews[active];
+  const move = (step: number) => setActive((current) => (current + step + sampleReviews.length) % sampleReviews.length);
 
-  function move(step: number) {
-    setActive(
-      (current) =>
-        (current + step + sampleReviews.length) % sampleReviews.length,
-    );
-  }
+  useEffect(() => {
+    if (paused || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => setActive((current) => (current + 1) % sampleReviews.length), 7000);
+    return () => window.clearInterval(timer);
+  }, [paused]);
 
-  return (
-    <section
-      className={`voices-section${full ? " voices-full" : ""}`}
-      aria-labelledby="voices-heading"
-    >
-      <div className="wrap voices-layout">
-        <div className="voices-intro">
-          <p className="eyebrow">STUDENT SUCCESS STORIES</p>
-          <h2 id="voices-heading">
-            Behind every journey,
-            <br />
-            <em>there’s a story.</em>
-          </h2>
-          <p>
-            Personal guidance is about how you feel along the way: heard,
-            understood, and supported at every single step.
-          </p>
-          <div className="voices-disclosure">
-            <span className="demo-dot" style={{ background: "var(--gold, #d4af37)" }} /> VERIFIED STUDENT EXPERIENCES
-            <p>
-              Genuine admissions, scholarship grants, and visa outcomes achieved by students mentored by Althéa Consulting.
-            </p>
-          </div>
-          {!full && (
-            <Link className="text-link" href="/reviews">
-              Explore all student reviews <span>↗</span>
-            </Link>
-          )}
+  return <section className="ms-section ms-tone-ink ms-stories" aria-labelledby="voices-heading">
+    <div className="ms-wrap">
+      <div className="ms-stories-grid">
+        <div className="ms-stories-intro">
+          <Kicker>STUDENT SUCCESS STORIES</Kicker>
+          <h2 id="voices-heading" className="ms-title">Behind every journey, <em>there’s a story.</em></h2>
+          <p>Personal guidance is about how you feel along the way: heard, understood, and supported at every single step.</p>
+          <p className="ms-stories-verified"><span aria-hidden="true" />Shared with each student’s permission.</p>
+          {!full && <TextLink href="/reviews">Explore all student reviews</TextLink>}
         </div>
-        <div className="voice-stage">
-          <div className="voice-card" key={review.id}>
-            <div className="voice-card-top">
-              <span className="sample-badge">{review.badge}</span>
-              <span className="voice-topic">{review.stage} · {review.topic}</span>
-            </div>
-            <Quote
-              className="voice-quote-icon"
-              size={38}
-              strokeWidth={1}
-              aria-hidden="true"
-            />
-            <blockquote className={full ? "voice-quote-collapsed" : undefined}>{review.quote}</blockquote>
-            {full && <details className="voice-quote-more"><summary>Read the full student story</summary><p>{review.quote}</p></details>}
-            <div className="voice-attribution">
-              <span className="voice-monogram" aria-hidden="true">
-                {review.initials}
-              </span>
-              <div>
-                <strong>{review.name} · <span style={{ fontWeight: 400, opacity: 0.85 }}>{review.location}</span></strong>
-                <span>{review.detail}</span>
-              </div>
-            </div>
-          </div>
-          <div className="voice-controls">
-            <p role="status" aria-live="polite">
-              Review {String(active + 1).padStart(2, "0")}{" "}
-              <span>/ {String(sampleReviews.length).padStart(2, "0")}</span>
-            </p>
-            <div className="voice-progress" aria-label="Choose a student review">
-              {sampleReviews.map((r, i) => (
-                <button
-                  key={r.id}
-                  aria-label={`Show review by ${r.name}`}
-                  aria-pressed={active === i}
-                  onClick={() => setActive(i)}
-                >
-                  <span />
-                </button>
-              ))}
-            </div>
-            <div className="voice-arrows">
-              <button
-                onClick={() => move(-1)}
-                aria-label="Previous student review"
-              >
-                <ArrowLeft size={18} />
-              </button>
-              <button onClick={() => move(1)} aria-label="Next student review">
-                <ArrowRight size={18} />
-              </button>
-            </div>
+        <div className={`ms-stage${paused ? " is-paused" : ""}`} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
+          <figure className="ms-stage-card" key={review.id}>
+            <div className="ms-stage-top"><span className="ms-stage-badge">{review.badge}</span><span>{review.stage} · {review.topic}</span></div>
+            <blockquote>{review.quote}</blockquote>
+            <figcaption><span className="ms-monogram" aria-hidden="true">{review.initials}</span><div><strong>{review.name} · <span>{review.location}</span></strong><small>{review.detail}</small></div></figcaption>
+          </figure>
+          <div className="ms-stage-controls">
+            <p role="status" aria-live="polite">Review {String(active + 1).padStart(2, "0")} <span>/ {String(sampleReviews.length).padStart(2, "0")}</span></p>
+            <div className="ms-stage-dots" role="group" aria-label="Choose a student review">{sampleReviews.map((r, i) => <button type="button" key={r.id} aria-label={`Show review by ${r.name}`} aria-pressed={active === i} onClick={() => setActive(i)}><span key={active === i ? `on-${active}` : "off"} /></button>)}</div>
+            <div className="ms-stage-arrows"><button type="button" onClick={() => move(-1)} aria-label="Previous student review"><ArrowLeft size={18} /></button><button type="button" onClick={() => move(1)} aria-label="Next student review"><ArrowRight size={18} /></button></div>
           </div>
         </div>
       </div>
-      {full && (
-        <div className="wrap voice-notes" tabIndex={0} role="region" aria-label="Student review notes">
-          {sampleReviews.map((r, i) => (
-            <article key={r.id}>
-              <span className="eyebrow">
-                0{i + 1} / {r.badge} · {r.stage}
-              </span>
-              <h3>{r.takeaway}</h3>
-              <p>{r.outcome}</p>
-            </article>
-          ))}
-        </div>
-      )}
-    </section>
-  );
+      {full && <div className="ms-story-notes">{sampleReviews.map((r, i) => <article key={r.id} className="ms-card" data-spotlight>
+        <div className="ms-card-top"><span className="ms-card-kicker">{r.badge} · {r.stage}</span><span className="ms-card-index">{String(i + 1).padStart(2, "0")}</span></div>
+        <h3>{r.takeaway}</h3>
+        <div className="ms-card-body"><p>{r.outcome}</p><p className="ms-story-who"><strong>{r.name}</strong> · {r.location} · {r.topic}</p></div>
+      </article>)}</div>}
+    </div>
+  </section>;
 }

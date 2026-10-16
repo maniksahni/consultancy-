@@ -1,0 +1,42 @@
+/* Althéa base — resets, typography defaults and accessibility helpers. */
+*, *::before, *::after { box-sizing:border-box; }
+html { -webkit-text-size-adjust:100%; scroll-padding-top:96px; color-scheme:dark; }
+body { margin:0; min-height:100vh; background:#060608; color:#f4f1ea; font:400 16px/1.65 var(--font-body),system-ui,sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; overflow-x:clip; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin:0; }
+h1, h2, h3, h4, h5, h6 { font-weight:400; line-height:1.1; }
+em { font-style:italic; }
+a { color:inherit; text-decoration:none; }
+img, svg, video, canvas { display:block; max-width:100%; }
+img { height:auto; }
+button, input, select, textarea { font:inherit; color:inherit; }
+button { -webkit-tap-highlight-color:transparent; }
+select { -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23c9bcff' stroke-width='1.6'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px !important; }
+table { border-collapse:collapse; }
+code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; }
+::selection { background:#ffb46b; color:#0d0c16; }
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline:2px solid #9d8bff; outline-offset:4px; border-radius:6px; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.skip-link { position:fixed; top:-100px; left:16px; z-index:300; padding:14px 18px; border-radius:12px; background:#0d0c16; color:#fff; font-weight:600; transition:top .2s; }
+.skip-link:focus { top:12px; }
+
+/* The Althéa brand lockup */
+.althea-brand-lockup { display:inline-flex; align-items:center; gap:11px; color:inherit; white-space:nowrap; vertical-align:middle; }
+.althea-brand-mark { display:inline-block; flex-shrink:0; width:36px; height:36px; object-fit:contain; border-radius:9px; }
+.althea-brand-name { font:400 28px/1 var(--font-italic),Georgia,serif; letter-spacing:-.01em; }
+
+/* Quiet scrollbars that match the palette */
+html { scrollbar-color:#3a3555 #060608; }
+::-webkit-scrollbar { width:11px; height:11px; }
+::-webkit-scrollbar-track { background:#060608; }
+::-webkit-scrollbar-thumb { background:#3a3555; border-radius:999px; border:3px solid #060608; }
+
+/* Lumière atmosphere: slow aurora light and a fine film grain behind every page */
+body::before { content:""; position:fixed; inset:-20vmax; z-index:-2; pointer-events:none; background:
+  radial-gradient(38vmax 30vmax at 18% 12%, #5b3dff38, transparent 70%),
+  radial-gradient(34vmax 28vmax at 86% 18%, #ff5f9e2b, transparent 70%),
+  radial-gradient(40vmax 30vmax at 70% 88%, #ff9c5a22, transparent 72%),
+  radial-gradient(30vmax 26vmax at 8% 82%, #2f7bff26, transparent 70%);
+  filter:saturate(1.15); animation:lx-aurora 28s ease-in-out infinite alternate; }
+body::after { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.07; mix-blend-mode:overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@keyframes lx-aurora { 0% { transform:translate3d(0,0,0) rotate(0deg); } 50% { transform:translate3d(3vmax,-2vmax,0) rotate(8deg); } 100% { transform:translate3d(-2vmax,2vmax,0) rotate(-6deg); } }
+@media (prefers-reduced-motion:reduce) { body::before { animation:none; } }

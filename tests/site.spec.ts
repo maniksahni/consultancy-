@@ -75,41 +75,29 @@ test("homepage fits all requested widths and landscape", async ({ page }) => {
 test("navigation, finder, FAQ, process and form states", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto("/");
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(
-    page.getByRole("navigation", { name: "Main navigation" }),
-  ).toBeVisible();
+  const toggle = page.getByRole("button", { name: "Open menu" });
+  await toggle.click();
+  await expect(page.getByRole("dialog", { name: "Site menu" })).toHaveAttribute("data-open", "true");
   await page.keyboard.press("Escape");
-  await expect(
-    page.getByRole("navigation", { name: "Main navigation" }),
-  ).toBeHidden();
-  await page.goto("/universities");
-  await page.getByLabel("City", { exact: true }).selectOption("Toulouse");
-  await expect(page.getByRole("status")).toHaveText("1 curated listing");
-  await page.getByLabel("Degree", { exact: true }).selectOption("PhD");
-  await expect(page.getByText("No curated matches yet.")).toBeVisible();
-  await page.getByRole("button", { name: "Reset filters" }).click();
-  await expect(page.getByRole("status")).toHaveText("3 curated listings");
+  await expect(page.locator("#site-menu")).toHaveAttribute("data-open", "false");
+  await expect(toggle).toBeFocused();
+  await page.goto("/universities?country=france&view=courses");
+  await expect(page.locator(".course-results").first()).toBeVisible({ timeout: 30000 });
+  await page.getByRole("combobox", { name: /^City/ }).selectOption("Toulouse");
+  await expect(page.getByRole("status").filter({ hasText: "course records" })).toContainText("matching your filters");
+  await page.getByRole("button", { name: "Clear filters" }).click();
+  await expect(page.getByRole("status").filter({ hasText: "course records" })).not.toContainText("matching your filters");
   await page.goto("/faq");
-  await page
-    .getByRole("button", { name: "Can you guarantee admission or a visa?" })
-    .click();
-  await expect(
-    page.getByText("No. Universities decide admissions", { exact: false }),
-  ).toBeVisible();
-  await expect(page.locator("[aria-expanded=true]")).toHaveCount(1);
+  await page.getByRole("button", { name: "Can you guarantee admission, a visa or a job?" }).click();
+  await expect(page.getByText("No. Universities, authorities and employers make those decisions", { exact: false })).toBeVisible();
+  await expect(page.locator("#main-content [aria-expanded=true]")).toHaveCount(1);
   await page.goto("/campus-france-guide");
-  await page.getByLabel("Where do you live?").selectOption("Another country");
-  await page.getByLabel("Do you have an admission offer?").selectOption("Yes");
-  await expect(
-    page.getByRole("heading", { name: "Confirm the post-admission steps." }),
-  ).toBeVisible();
+  await page.getByRole("group", { name: "Where do you live?" }).getByRole("button", { name: "Another country" }).click();
+  await page.getByRole("group", { name: "Do you have an admission offer?" }).getByRole("button", { name: "Yes" }).click();
+  await expect(page.getByRole("heading", { name: "Confirm the post-admission steps." })).toBeVisible();
   await page.goto("/book-consultation");
-  await page.getByRole("button", { name: "Request a conversation" }).click();
-  await expect(page.getByRole("status")).toHaveText(
-    "Please check the highlighted fields.",
-  );
-
+  await page.getByRole("button", { name: "Continue to WhatsApp" }).click();
+  await expect(page.locator(".booking-form [role=status]")).toHaveText("Please check the highlighted fields.");
 });
 test("WCAG A/AA audit of all routes on mobile and desktop", async ({
   page,
@@ -117,6 +105,8 @@ test("WCAG A/AA audit of all routes on mobile and desktop", async ({
   const findings = [];
   for (const width of [320, 1440]) {
     await page.setViewportSize({ width, height: 900 });
+    // Audit settled states: reduced motion removes entrance animations and fades.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     for (const route of routes) {
       await page.goto(route);
       const results = await new AxeBuilder({ page })
@@ -149,37 +139,16 @@ test("internal links resolve and no source points to a fake portal", async ({
     expect((await request.get(href)).status(), href).toBe(200);
 });
 
-test("sample reviews and journey guidance work on mobile", async ({ page }) => {
+test("student stories turn, can be chosen and lead to the full collection", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await page.getByRole("button", { name: "Ready to apply" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "Turn your shortlist into a considered plan.",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Planning my arrival" }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: "An offer is a beginning. Plan the life ahead.",
-    }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Next sample review" }).click();
-  await expect(
-    page.getByText("What I appreciated most", { exact: false }),
-  ).toBeVisible();
-  await expect(page.getByText("Sample review", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Show sample review 3" }).click();
-  await expect(
-    page.getByRole("button", { name: "Show sample review 3" }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await page
-    .getByRole("link", { name: "Explore the review collection" })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "A journey worth sharing." }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Genuine client reviews", { exact: false }),
-  ).toBeVisible();
+  const stage = page.locator("#outcomes");
+  await stage.getByRole("button", { name: "Next student review" }).click();
+  await expect(stage.getByRole("status")).toContainText("Review 02");
+  await stage.getByRole("button", { name: "Show review by Rohan Deshpande" }).click();
+  await expect(stage.getByRole("button", { name: "Show review by Rohan Deshpande" })).toHaveAttribute("aria-pressed", "true");
+  await stage.getByRole("link", { name: "Explore all student reviews" }).click();
+  await expect(page.locator("h1")).toContainText("Student reviews");
+  await expect(page.getByText("Shared with each student’s permission.")).toBeVisible();
 });

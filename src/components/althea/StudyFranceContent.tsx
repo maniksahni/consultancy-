@@ -1,177 +1,81 @@
-import { pageMetadata } from "@/lib/seo";
-import { brand } from "@/config/brand";
-import type { Metadata } from "next";
-import Page from "@/components/althea/Page";
-import KnowledgeHub from "@/components/althea/KnowledgeHub";
+import Image from "next/image";
 import Link from "next/link";
-import { checked, cities, official } from "@/data/france";
-import { ArrowUpRight, Check, Compass, FileText, Globe, GraduationCap, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, BookOpen, Compass, Landmark, Wallet } from "lucide-react";
+import Page from "@/components/althea/Page";
+import { GuideChapterIndex } from "@/components/guides/GuideChapterPage";
+import { franceGuide } from "@/data/guides/france";
+import { Btn, Card, Checklist, Grid, Kicker, Notice, Section, Split, TextLink } from "@/components/maison/ui";
+import { checked, cities } from "@/data/france";
+import { coverFor, paris } from "@/lib/paris";
 
 export default function StudyFranceContent({ imagePlacement = "/study-in-france" }: { imagePlacement?: string }) {
+  const student = paris("student-cafe");
   return (
     <Page
       path="/study-in-france"
       imagePlacement={imagePlacement}
-      image="/images/editorial/france-campus.webp"
       eyebrow="INDEPENDENT ADMISSIONS GUIDANCE"
-      title="Study in France from India, with a plan."
+      title="Study in France from India,"
+      accent="with a plan."
       intro="Explore the right education pathway, prepare a thoughtful application and plan for the transition to life in France."
     >
-      {/* ── 1. Services & Decision Framework ── */}
-      <section className="study-services">
-        <div className="study-services-copy">
-          <p className="eyebrow">A CLEARER APPLICATION JOURNEY</p>
-          <h2>
-            Make each decision<br />
-            <em>with purpose.</em>
-          </h2>
-          <p className="study-services-lead">
-            Independent guidance with partner-supported application assistance where appropriate. We help you navigate the process; institutions make admissions decisions.
-          </p>
-          <div className="study-services-seal">
-            <span>
-              <strong>Personal by Design:</strong> Direct guidance with Harshita Kohli, based in Paris, helping you align degree ambitions with French career reality.
-            </span>
-          </div>
-        </div>
-
-        <div className="study-service-list">
-          {[
+      <Section tone="ivory">
+        <Split image={student.file} alt={student.alt} caption="Paris">
+          <Kicker>A CLEARER APPLICATION JOURNEY</Kicker>
+          <h2>Make each decision<br /><em>with purpose.</em></h2>
+          <p>Independent guidance with partner-supported application assistance where appropriate. We help you navigate the process; institutions make admissions decisions.</p>
+          <Checklist items={[
             "Choose programmes aligned with your goals and experience",
             "Understand French education pathways and official application routes",
             "Review application documents, CV and statement of purpose",
             "Prepare for interviews and organise application materials",
             "Plan pre-departure steps and practical arrival questions",
-          ].map((x) => (
-            <div className="study-service-item" key={x}>
-              <span className="study-check-icon">
-                <Check size={14} />
-              </span>
-              <span className="study-service-text">{x}</span>
-            </div>
-          ))}
-          <Link className="study-service-btn" href="/book-consultation">
-            <span>Discuss your study plan</span>
-            <ArrowUpRight size={16} />
-          </Link>
-        </div>
-      </section>
+          ]} />
+          <p className="ms-muted"><strong>Personal by design:</strong> direct guidance with Harshita Kohli, based in Paris, helping you align degree ambitions with French career reality.</p>
+          <Btn href="/book-consultation">Discuss your study plan</Btn>
+        </Split>
+      </Section>
 
-      {/* ── 2. First Answers for Indian Applicants ── */}
-      <section className="india-answers-section" aria-labelledby="india-study-answers">
-        <div className="india-answers-header">
-          <p className="eyebrow">A CLEAR START FOR APPLICANTS IN INDIA</p>
-          <h2 id="india-study-answers">Study in France from India: the first answers.</h2>
-        </div>
+      <Section tone="ink" kicker="A CLEAR START FOR APPLICANTS IN INDIA" title="Study in France from India:" accent="the first answers.">
+        <Grid cols={3}>
+          <Card index={1} title="Which application route should I follow?" href="/campus-france-guide" cta="The Campus France process, step by step"><p>India is covered by the Études en France procedure: create your account, upload documents, pay the ₹20,000 fee once your file is validated, attend the academic interview, accept one offer and apply for the visa. Our guide walks through every step.</p></Card>
+          <Card index={2} title="What should I compare before choosing a course?" href="/universities?country=france&view=courses#course-finder" cta="Browse France course records"><p>Check the curriculum, entry requirements, teaching language, tuition for your applicant category and the institution’s current deadline. Compare English-taught Master’s tracks with public universities and Grandes Écoles.</p></Card>
+          <Card index={3} title="Can an adviser guarantee admission or a visa?" href="/france/visas" cta="The French student visa, explained"><p>No. Institutions decide admissions and awards; French authorities decide visas. Our visa chapter lists every document, fee and deadline so your application is complete. Althéa provides independent preparation, not guaranteed outcomes.</p></Card>
+        </Grid>
+      </Section>
 
-        <div className="india-answers-grid">
-          <article className="india-answer-card">
-            <div>
-              <span className="india-card-num">01</span>
-              <h3>Which application route should I follow?</h3>
-              <p>
-                India is covered by the Études en France procedure. Start with Campus France India’s current application and admission instructions, then confirm the route for your exact degree, programme and institution. Not every course follows the same calendar or application path.
-              </p>
-            </div>
-            <a href={official.india} target="_blank" rel="noreferrer" className="india-card-link">
-              Campus France India Instructions <ArrowUpRight size={14} />
-            </a>
-          </article>
+      <Section tone="paper" kicker={`THE COMPLETE FRANCE GUIDE · ${franceGuide.chapters.length} CHAPTERS`} title="Everything, A to Z." accent="On one site." intro="From choosing a programme to your first job in France: fees, Campus France, visa, housing, work and post-study rules, all checked against official French sources in October 2026.">
+        <GuideChapterIndex guide={franceGuide} />
+      </Section>
 
-          <article className="india-answer-card">
-            <div>
-              <span className="india-card-num">02</span>
-              <h3>What should I compare before choosing a course?</h3>
-              <p>
-                Check the curriculum, entry requirements, teaching language, tuition for your applicant category and the institution’s current deadline. Compare English-taught Master’s tracks with public universities and Grandes Écoles.
-              </p>
-            </div>
-            <Link href="/universities?country=france&view=courses#course-finder" className="india-card-link">
-              Browse France Course Records <ArrowUpRight size={14} />
-            </Link>
-          </article>
+      <Section tone="ivory" kicker="FOUR PLANNING MOVES" title="Plan the whole picture," accent="not just the application.">
+        <Grid cols={4}>
+          <Card icon={<BookOpen size={22} strokeWidth={1.4} />} title="Start with the subject" href="/universities?country=france&view=courses#course-finder" cta="Open the guide"><p>Compare course content, academic prerequisites and teaching language before choosing an institution.</p></Card>
+          <Card icon={<Wallet size={22} strokeWidth={1.4} />} title="Build the whole budget" href="/knowledge#budget" cta="Open the guide"><p>Include tuition, housing, deposits, transport, food and arrival costs. Do not assume a scholarship will be awarded.</p></Card>
+          <Card icon={<Landmark size={22} strokeWidth={1.4} />} title="Find your application route" href="/campus-france-guide" cta="Open the guide"><p>The institution, degree, nationality and country of residence can affect the route. Check your local Campus France office.</p></Card>
+          <Card icon={<Compass size={22} strokeWidth={1.4} />} title="Prepare for everyday France" href="/france/living" cta="Open the guide"><p>Consider campus location, accommodation, transport and French language learning alongside your studies.</p></Card>
+        </Grid>
+      </Section>
 
-          <article className="india-answer-card">
-            <div>
-              <span className="india-card-num">03</span>
-              <h3>Can an adviser guarantee admission or a visa?</h3>
-              <p>
-                No. Institutions decide admissions and awards; French authorities decide visas. Use France-Visas student guidance for the requirements that apply to your situation. Althéa provides independent preparation, not guaranteed outcomes.
-              </p>
-            </div>
-            <a href={official.visa} target="_blank" rel="noreferrer" className="india-card-link">
-              France-Visas Official Guidance <ArrowUpRight size={14} />
-            </a>
-          </article>
-        </div>
-      </section>
+      <Section tone="ink" kicker="SIX STUDENT CITIES" title="Find your city." accent="Then your campus." intro="Paris is only the beginning. Explore the cities where many international students build their French chapter.">
+        <div className="ms-cities">{cities.map((c, i) => { const photo = coverFor(`/cities/${c.slug}`); return (
+          <Link key={c.slug} href={`/cities/${c.slug}`} className={`ms-city${i === 0 ? " is-lead" : ""}`} data-cursor="Explore">
+            <Image src={photo.file} alt={photo.alt} fill sizes="(max-width:900px) 92vw, 33vw" />
+            <div className="ms-city-copy"><span>{String(i + 1).padStart(2, "0")}</span><h3>{c.name}</h3><p>{c.tag}</p></div>
+            <span className="ms-city-arrow"><ArrowUpRight size={20} aria-hidden="true" /></span>
+          </Link>); })}</div>
+      </Section>
 
-      {/* ── 3. Knowledge Hub ── */}
-      <KnowledgeHub country="france" />
-
-      {/* ── 4. Strategic Planning Cards ── */}
-      <div className="content-grid">
-        {[
-          [
-            "Start with the subject",
-            "Compare course content, academic prerequisites and teaching language before choosing an institution.",
-            "/universities?country=france&view=courses#course-finder",
-          ],
-          [
-            "Build the whole budget",
-            "Include tuition, housing, deposits, transport, food and arrival costs. Do not assume a scholarship will be awarded.",
-            "/knowledge#budget",
-          ],
-          [
-            "Find your application route",
-            "The institution, degree, nationality and country of residence can affect the route. Check your local Campus France office.",
-            "/campus-france-guide",
-          ],
-          [
-            "Prepare for everyday France",
-            "Consider campus location, accommodation, transport and French language learning alongside your studies.",
-            "/france/living",
-          ],
-        ].map(([title, text, href]) => (
-          <Link className="content-card" href={href} key={title} aria-label={`${title} — open guide`}>
-            <h2>{title}</h2>
-            <p>{text}</p>
-          </Link>
-        ))}
-      </div>
-
-      {/* ── 5. Editorial Wrap ── */}
-      <div className="prose">
-        <h2>Your support does not end at the offer letter</h2>
-        <p>
-          Once you have an offer, arrival brings its own practical questions. Plan your transition with our <Link href="/settle-in-france">Settle in France support</Link>.
-        </p>
-        <h2>Independent guidance, clearly scoped</h2>
-        <p>
-          Althéa is not a university representative. Any partner-supported application assistance is described before work begins; admission, scholarships and visas are decided by the relevant institutions and authorities and cannot be guaranteed.
-        </p>
-        <h2>Your official starting points</h2>
-        <p>
-          <Link href="/programmes">Explore the programme directory ↗</Link>
-          <br />
-          <Link href="/campus-france-guide">Explore the application procedure guide ↗</Link>
-          <br />
-          <Link href="/france/visas">Explore the student visa guide ↗</Link>
-        </p>
-        <p className="muted">
-          Editorial overview checked {checked}. This is independent orientation;
-          official requirements must be checked for your own circumstances.
-        </p>
-      </div>
-
-      <div className="content-grid">
-        {cities.map((c) => (
-          <Link className="content-card" key={c.slug} href={`/cities/${c.slug}`}>
-            <h3>{c.name} ↗</h3>
-            <p>{c.tag}</p>
-          </Link>
-        ))}
-      </div>
+      <Section tone="ivory" kicker="AFTER THE OFFER LETTER" title="Your support doesn’t end" accent="at the offer." align="split">
+        <Grid cols={2}>
+          <Card title="Arrival brings its own questions" href="/settle-in-france" cta="Settle in France support"><p>Once you have an offer, arrival brings its own practical questions. Plan your transition with our Settle in France support.</p></Card>
+          <Card title="Independent guidance, clearly scoped"><p>Althéa is not a university representative. Any partner-supported application assistance is described before work begins; admission, scholarships and visas are decided by the relevant institutions and authorities and cannot be guaranteed.</p></Card>
+        </Grid>
+        <Notice kicker="YOUR OFFICIAL STARTING POINTS">
+          <div className="ms-row"><TextLink href="/programmes">Explore the programme directory</TextLink><TextLink href="/campus-france-guide">Explore the application procedure guide</TextLink><TextLink href="/france/visas">Explore the student visa guide</TextLink></div>
+          <p className="ms-muted" style={{ marginTop: 16 }}>Editorial overview checked {checked}. This is independent orientation; official requirements must be checked for your own circumstances.</p>
+        </Notice>
+      </Section>
     </Page>
   );
 }

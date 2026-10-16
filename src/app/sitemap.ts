@@ -1,5 +1,6 @@
 import { isIndexable, siteUrl } from "@/lib/seo";
-import { guides } from "@/data/franceGuides";
+import { franceGuide } from "@/data/guides/france";
+import { destinationGuides } from "@/data/guides";
 import type { MetadataRoute } from "next";
 import {programmeResearch} from "@/data/programmeResearch";
 import { articles, cities } from "@/data/france";
@@ -11,14 +12,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "study-in-france",
     "settle-in-france",
     "career-support",
+    "jobs",
     "first-30-days-france",
     "destinations",
+    "compare",
     "knowledge",
     "france/institutions",
     "france/programmes",
     "france/universities",
     "france/resources",
-    ...guides.map(g => `france/${g.slug}`),
+    ...franceGuide.chapters.filter(c => c.path.startsWith("/france/")).map(c => c.path.slice(1)),
     "universities",
     "programmes",
     "campus-france-guide",
@@ -41,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...["uk", "usa", "canada", "germany", "australia", "ireland"].map(
       (s) => `destinations/${s}`,
     ),
+    ...destinationGuides.flatMap(g => g.chapters.map(c => c.path.slice(1))),
   ];
   const canonicalHost = host.replace(/\/$/, "");
   return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost }));

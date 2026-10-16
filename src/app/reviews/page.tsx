@@ -12,15 +12,8 @@ export const metadata: Metadata = pageMetadata('/reviews', {
 
 export default function ReviewsPage() {
   return (
-    <div className="review-page">
-      <Page path="/reviews"
-        eyebrow="STUDENT EXPERIENCES"
-        title="Student reviews & experiences"
-        intro="Explore real student journeys across admissions, scholarships, visa clearance, and settling into university life in France with Althéa Consulting."
-        image="/images/editorial/france-campus.webp"
-      >
-        <Testimonials full />
-      </Page>
-    </div>
+    <Page path="/reviews" eyebrow="STUDENT EXPERIENCES" title="Student reviews" accent="& experiences." intro="Explore real student journeys across admissions, scholarships, visa clearance, and settling into university life in France with Althéa Consulting.">
+      <Testimonials full />
+    </Page>
   );
 }

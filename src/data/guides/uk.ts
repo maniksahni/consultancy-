@@ -1,0 +1,461 @@
+import type { CountryGuide, GuideChapter } from "./types";
+import { chapterPath } from "./paths";
+
+const reviewedAt = "17 October 2026";
+const p = (slug: string) => chapterPath("uk", slug);
+const S = {
+  visa: { label: "GOV.UK · Student visa", url: "https://www.gov.uk/student-visa" },
+  money: { label: "GOV.UK · Student visa money", url: "https://www.gov.uk/student-visa/money" },
+  ihs: { label: "GOV.UK · Immigration health surcharge", url: "https://www.gov.uk/healthcare-immigration-application" },
+  graduate: { label: "GOV.UK · Graduate visa", url: "https://www.gov.uk/graduate-visa" },
+  skilled: { label: "GOV.UK · Skilled Worker visa", url: "https://www.gov.uk/skilled-worker-visa" },
+  english: { label: "GOV.UK · Knowledge of English", url: "https://www.gov.uk/student-visa/knowledge-of-english" },
+  work: { label: "GOV.UK · Student visa: what you can and cannot do", url: "https://www.gov.uk/student-visa" },
+  ucas: { label: "UCAS", url: "https://www.ucas.com/" },
+  studyuk: { label: "British Council · Study UK", url: "https://study-uk.britishcouncil.org/" },
+  great: { label: "British Council · GREAT Scholarships", url: "https://study-uk.britishcouncil.org/scholarships-funding/great-scholarships" },
+  chevening: { label: "Chevening Scholarships", url: "https://www.chevening.org/" },
+  commonwealth: { label: "Commonwealth Scholarship Commission", url: "https://cscuk.fcdo.gov.uk/" },
+  atas: { label: "GOV.UK · ATAS", url: "https://www.gov.uk/guidance/academic-technology-approval-scheme" },
+  nhs: { label: "NHS · Register with a GP", url: "https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/" },
+  ni: { label: "GOV.UK · National Insurance number", url: "https://www.gov.uk/apply-national-insurance-number" },
+  deposit: { label: "GOV.UK · Tenancy deposit protection", url: "https://www.gov.uk/tenancy-deposit-protection" },
+  wage: { label: "GOV.UK · National Minimum Wage rates", url: "https://www.gov.uk/national-minimum-wage-rates" },
+  tcs: { label: "Income Tax Department of India", url: "https://www.incometax.gov.in/" },
+};
+
+const chapters: Omit<GuideChapter, "reviewedAt">[] = [
+  {
+    slug: "why-study", path: p("why-study"), label: "Why study in the UK", eyebrow: "UK · CHAPTER 1",
+    title: "Why the UK,", accent: "and is it right for you?",
+    seoTitle: "Why Study in the UK: Pros & Cons",
+    description: "One-year master's, world-ranked universities and the Graduate visa: the real advantages and trade-offs of studying in the UK for Indian students.",
+    summary: "The UK offers one-year taught master's degrees, globally recognised universities and a post-study Graduate visa. The trade-offs are high tuition and London living costs, no dependants for most master's students, and a Graduate visa that shortens from two years to 18 months for applications from 1 January 2027.",
+    facts: [
+      { label: "Taught master's length", value: "Usually 1 year" },
+      { label: "Student visa fee", value: "£558" },
+      { label: "Work during term", value: "20 hours / week", note: "Degree-level students" },
+      { label: "Graduate visa", value: "2 years → 18 months", note: "For applications from 1 Jan 2027" },
+    ],
+    blocks: [
+      { heading: "What the UK does well", checklist: [
+        "One-year master's degrees save a year of living costs and lost income compared with two-year programmes.",
+        "Many universities appear in global rankings, and UK degrees are widely recognised by Indian employers.",
+        "Everything is in English, so there is no second language to learn for daily life.",
+        "Large Indian community and direct flights from major Indian cities.",
+        "A Graduate visa lets you stay and work after your degree without employer sponsorship.",
+      ] },
+      { heading: "The honest trade-offs", paragraphs: [
+        "Tuition is among the highest in Europe, and London rents are expensive. A one-year master's also leaves less time for internships before the job search starts.",
+        "Since January 2024 most master's students cannot bring dependants; only postgraduate research students and government-sponsored students can. The Graduate visa falls to 18 months for non-PhD applications made from 1 January 2027.",
+        "Skilled Worker sponsorship after the Graduate visa needs a job that meets salary and skill thresholds, which rose in July 2025.",
+      ] },
+      { heading: "Who the UK suits best", checklist: [
+        "Students who want a respected master's in one year",
+        "Business, finance, law, data, engineering and public-health applicants",
+        "Students comfortable investing more for a shorter programme",
+      ] },
+    ],
+    faqs: [
+      { q: "Is the UK good for Indian students in 2027?", a: "Yes, for students who value a one-year master's and strong university brands. Plan for higher costs and an 18-month Graduate visa if you apply for it from January 2027." },
+    ],
+    sources: [S.visa, S.graduate, S.studyuk],
+  },
+  {
+    slug: "education-system", path: p("education-system"), label: "Universities & degrees", eyebrow: "UK · CHAPTER 2",
+    title: "UK universities", accent: "and degrees explained.",
+    seoTitle: "UK Education System Explained",
+    description: "Bachelor's, one-year master's, MRes, PhD, Russell Group and intakes in the UK explained for Indian students planning 2027 admission.",
+    summary: "Bachelor's degrees take three years in England, Wales and Northern Ireland and four in Scotland. Taught master's (MSc, MA, MBA) usually take one year; research master's (MRes, MPhil) and PhDs take longer. The main intake is September, with a smaller January intake for many master's programmes.",
+    blocks: [
+      { heading: "Degree levels", table: { head: ["Degree", "Typical length", "Notes"], rows: [
+        ["Bachelor's (BA, BSc, BEng)", "3 years (4 in Scotland)", "Integrated master's (MEng, MSci) take 4 years"],
+        ["Taught master's (MSc, MA, LLM)", "12 months", "Some include a placement year (2 years)"],
+        ["MBA", "1 year", "Usually needs work experience"],
+        ["Research master's (MRes, MPhil)", "1–2 years", "Research-focused"],
+        ["PhD", "3–4 years", "Graduate visa of 3 years afterwards"],
+      ] } },
+      { heading: "Types of university", paragraphs: [
+        "The Russell Group is an association of 24 research-intensive universities, but excellent teaching and employer links exist well beyond it. Compare programme content, placement options, location and graduate outcomes rather than labels alone.",
+        "Every university that sponsors international students must be a licensed student sponsor. Check this before you apply, because you need a Confirmation of Acceptance for Studies (CAS) from that sponsor for your visa.",
+      ] },
+      { heading: "Intakes", checklist: [
+        "September/October: main intake for all levels",
+        "January/February: many taught master's programmes",
+        "Some business and computing master's also run May or June starts",
+      ] },
+      { heading: "Which level can you enter from India?", table: { head: ["Indian qualification", "Usual UK entry"], rows: [
+        ["Class 12", "Bachelor's (some universities ask for a foundation year depending on board and marks)"],
+        ["3-year Bachelor's", "Most taught master's; some universities ask for a higher percentage or a pre-master's"],
+        ["4-year B.Tech / B.E.", "Taught master's"],
+        ["Master's", "PhD or second master's"],
+      ] } },
+    ],
+    faqs: [
+      { q: "Is a one-year UK master's recognised in India?", a: "UK master's degrees from recognised universities are widely accepted by employers. For government jobs or further study, check the rules of the specific body." },
+    ],
+    sources: [S.studyuk, S.visa],
+  },
+  {
+    slug: "admissions", path: p("admissions"), label: "Admission requirements", eyebrow: "UK · CHAPTER 3",
+    title: "UK admission", accent: "requirements.",
+    seoTitle: "UK University Admission Requirements",
+    description: "Marks, documents, English scores and deadlines for UK bachelor's and master's admission from India for the September 2027 intake.",
+    summary: "UK universities ask for transcripts, a personal statement, references and an English test. Bachelor's applications go through UCAS; master's applications go directly to each university, usually on a rolling basis. Apply 8–12 months before your course to keep scholarship and housing options open.",
+    blocks: [
+      { heading: "Documents", checklist: [
+        "Passport",
+        "Class 10 and 12 marksheets",
+        "Bachelor's transcripts and degree (for postgraduate)",
+        "Personal statement",
+        "One or two references",
+        "English test score (IELTS, TOEFL, PTE or others accepted by the university)",
+        "CV for postgraduate and MBA",
+        "Portfolio for art, design and architecture",
+      ] },
+      { heading: "Undergraduate: UCAS", paragraphs: [
+        "Bachelor's applications go through UCAS with one personal statement for up to five choices. Oxford, Cambridge, medicine, dentistry and veterinary science close in mid-October the year before entry; most other courses have a late-January equal-consideration deadline.",
+      ] },
+      { heading: "Postgraduate: direct applications", paragraphs: [
+        "Master's applications go to each university's online portal. Many accept applications until programmes fill, but popular courses close earlier and scholarships have fixed deadlines. Universities typically state minimum Indian percentages or CGPAs on their country pages.",
+      ] },
+      { heading: "Typical timeline for September 2027", table: { head: ["When", "What to do"], rows: [
+        ["Sep–Oct 2026", "Shortlist; book IELTS/PTE; Oxbridge and medicine UCAS deadline mid-October"],
+        ["Oct 2026 – Jan 2027", "Apply to master's; UCAS equal-consideration deadline late January"],
+        ["Nov 2026 – Apr 2027", "Offers arrive; scholarship applications"],
+        ["Apr – Jul 2027", "Meet conditions, pay deposit, receive CAS"],
+        ["Jun – Aug 2027", "Hold funds 28 days, apply for visa (up to 6 months before course)"],
+      ] } },
+      { heading: "Conditional vs unconditional offers", paragraphs: [
+        "A conditional offer lists what you must still provide — final marks or an English score. Once met, it becomes unconditional, you pay any tuition deposit, and the university issues your CAS for the visa.",
+      ] },
+    ],
+    faqs: [
+      { q: "What percentage is required for a master's in the UK?", a: "It depends on the university and course. Many ask for 55–60% or above from Indian universities; competitive universities ask for more. Check the university's India entry-requirements page." },
+    ],
+    sources: [S.ucas, S.studyuk],
+  },
+  {
+    slug: "application-process", path: p("application-process"), label: "Application & CAS process", eyebrow: "UK · CHAPTER 4",
+    title: "From application", accent: "to CAS, step by step.",
+    seoTitle: "UK Application & CAS Process",
+    description: "Step-by-step UK university application from India: UCAS or direct portals, offers, deposits, CAS, ATAS and the credibility interview.",
+    summary: "Apply through UCAS (bachelor's) or the university portal (master's), accept an offer, meet the conditions, pay the deposit and complete the university's pre-CAS checks. The university then issues a Confirmation of Acceptance for Studies (CAS) number that you use for the Student visa.",
+    blocks: [
+      { heading: "The steps", steps: [
+        { title: "Shortlist and check sponsor status", body: "Confirm the university is a licensed student sponsor and that your course is full-time at degree level." },
+        { title: "Apply", body: "UCAS for bachelor's; university portals for master's and PhD." },
+        { title: "Receive and accept an offer", body: "Accept your firm choice. For UCAS, also choose an insurance offer." },
+        { title: "Meet conditions and pay the deposit", body: "Upload final transcripts and English results; pay the tuition deposit the university requests." },
+        { title: "Pre-CAS checks", body: "Many universities run a credibility interview and financial checks before issuing a CAS." },
+        { title: "ATAS if required", body: "Some science and engineering subjects need Academic Technology Approval Scheme clearance; your offer will say so. It is free but can take several weeks." },
+        { title: "Receive your CAS", body: "The CAS lists your course, fees paid and any remaining balance. Check every detail before applying for the visa." },
+      ] },
+      { heading: "Preparing for the credibility interview", checklist: [
+        "Why this course, why this university and why the UK",
+        "How the course fits your academic background",
+        "Your funding and living-cost plan",
+        "Your career plan after graduation",
+        "Details of your accommodation and city",
+      ] },
+    ],
+    sources: [S.ucas, S.visa, S.atas],
+  },
+  {
+    slug: "language-tests", path: p("language-tests"), label: "IELTS, TOEFL & PTE", eyebrow: "UK · CHAPTER 5",
+    title: "English tests", accent: "for UK study.",
+    seoTitle: "IELTS & PTE Scores for the UK",
+    description: "IELTS, PTE, TOEFL and Duolingo scores UK universities ask for, the B2 visa rule and when you can use a waiver based on Class 12 English.",
+    summary: "For a degree-level Student visa your English must be at least B2 (CEFR), assessed by your university. Universities commonly ask for IELTS Academic 6.5 with no band below 6.0 for master's, or equivalent PTE and TOEFL scores. Some accept Class 12 English marks as a waiver.",
+    blocks: [
+      { heading: "Typical scores", table: { head: ["Test", "Typical master's requirement"], rows: [
+        ["IELTS Academic", "6.5 overall, 6.0 per band (7.0 for law, medicine, some top universities)"],
+        ["PTE Academic", "58–65"],
+        ["TOEFL iBT", "88–100"],
+        ["Duolingo English Test", "Accepted by some universities; 115–125"],
+      ], caption: "Planning ranges; each course sets its own requirement." } },
+      { heading: "Waivers", paragraphs: [
+        "Some universities accept a high Class 12 English mark from CBSE, ISC or certain state boards instead of a test. The waiver is the university's decision and the university must still confirm your English level on your CAS.",
+      ] },
+    ],
+    sources: [S.english],
+  },
+  {
+    slug: "sop-lor-cv", path: p("sop-lor-cv"), label: "Personal statement & references", eyebrow: "UK · CHAPTER 6",
+    title: "Personal statement,", accent: "references and CV.",
+    seoTitle: "UK Personal Statement & LOR Tips",
+    description: "How to write a UK personal statement for UCAS and master's applications, choose referees and prepare a UK-style CV.",
+    summary: "UK admissions tutors want a personal statement that shows subject interest, preparation and fit with the course. UCAS has its own structured statement for bachelor's applicants; master's statements are usually 500–1,000 words. Two academic references are standard.",
+    blocks: [
+      { heading: "Master's personal statement structure", steps: [
+        { title: "Your motivation", body: "What draws you to the subject, with a concrete example." },
+        { title: "Your preparation", body: "Relevant modules, projects, dissertation, internships and results." },
+        { title: "Course fit", body: "Specific modules, staff research or industry links at this university." },
+        { title: "Your goals", body: "Where the degree takes you, and how the UK experience helps." },
+      ] },
+      { heading: "References", checklist: [
+        "Usually two; academic referees preferred for recent graduates",
+        "Many universities email referees directly — warn them in advance",
+        "Ask referees to mention ranking, specific projects and skills",
+      ] },
+      { heading: "UK CV basics", checklist: [
+        "Two pages maximum; no photo, date of birth or marital status",
+        "Reverse-chronological education and experience",
+        "Achievements with numbers where possible",
+      ] },
+    ],
+    sources: [S.ucas],
+  },
+  {
+    slug: "costs", path: p("costs"), label: "Fees & cost of living", eyebrow: "UK · CHAPTER 7",
+    title: "The real cost", accent: "of studying in the UK.",
+    seoTitle: "Cost of Studying in the UK 2026",
+    description: "UK tuition fees for international students, £558 visa, health surcharge and monthly living costs in London and other UK cities for 2026–27.",
+    summary: "International tuition typically runs from about £16,000 to £35,000 a year for taught master's and more for MBA, medicine and top universities. Add the £558 visa fee, the £776-a-year health surcharge and living costs of roughly £1,500–2,200 a month in London or £1,000–1,500 elsewhere.",
+    facts: [
+      { label: "Visa fee", value: "£558" },
+      { label: "Health surcharge (students)", value: "£776 / year" },
+      { label: "Visa funds, London", value: "£1,529 / month", note: "Up to 9 months" },
+      { label: "Visa funds, elsewhere", value: "£1,171 / month", note: "Up to 9 months" },
+    ],
+    blocks: [
+      { heading: "Tuition ranges", table: { head: ["Programme", "Typical international fee / year"], rows: [
+        ["Bachelor's (arts, business)", "£16,000–28,000"],
+        ["Bachelor's (science, engineering)", "£19,000–35,000"],
+        ["Taught master's", "£16,000–35,000"],
+        ["MBA", "£25,000–70,000+"],
+        ["Medicine (clinical)", "£40,000–70,000+"],
+      ], caption: "Althéa planning ranges for 2026–27; check each course page." } },
+      { heading: "Monthly living costs", table: { head: ["Expense", "London", "Other cities"], rows: [
+        ["Rent (shared or halls)", "£850–1,400", "£550–900"],
+        ["Food", "£250–350", "£200–300"],
+        ["Transport", "£100–180", "£40–80"],
+        ["Phone, utilities, personal", "£150–250", "£120–200"],
+        ["Total", "£1,500–2,200", "£1,000–1,500"],
+      ], caption: "Althéa planning estimates, autumn 2026." } },
+      { heading: "One-time costs", table: { head: ["Item", "Amount"], rows: [
+        ["Student visa", "£558"],
+        ["Immigration health surcharge", "£776 per year of visa"],
+        ["Tuition deposit", "Often £2,000–6,000, set by the university"],
+        ["Accommodation deposit", "Capped at 5 weeks' rent in England for most tenancies"],
+        ["TB test (India)", "Required; paid at an approved clinic"],
+      ] } },
+    ],
+    faqs: [
+      { q: "How much does it cost to study in the UK for Indian students?", a: "Plan for tuition of £16,000–35,000 a year for most master's, plus about £12,000–20,000 for a year's living costs depending on city, and visa and health-surcharge fees." },
+    ],
+    sources: [S.visa, S.money, S.ihs, S.deposit],
+  },
+  {
+    slug: "scholarships", path: p("scholarships"), label: "Scholarships", eyebrow: "UK · CHAPTER 8",
+    title: "UK scholarships", accent: "for Indian students.",
+    seoTitle: "UK Scholarships for Indian Students",
+    description: "Chevening, GREAT, Commonwealth and university scholarships for Indian students in the UK: what they cover, eligibility and deadlines.",
+    summary: "Chevening is the UK government's fully funded master's scholarship for future leaders with work experience. GREAT Scholarships give at least £10,000 towards tuition for one-year master's at participating universities. Commonwealth Scholarships, university awards and private trusts fill the rest.",
+    blocks: [
+      { heading: "Main options", table: { head: ["Scholarship", "Covers", "Key condition", "Typical deadline"], rows: [
+        ["Chevening", "Tuition, stipend, flights, visa", "Usually 2 years' work experience; return home for 2 years", "Early November, for study the next year"],
+        ["GREAT Scholarships", "At least £10,000 towards tuition", "Nationality, participating university and subject", "Set by each university, often spring"],
+        ["Commonwealth Scholarships", "Tuition, stipend, travel", "Eligibility depends on country and scheme each year", "Autumn–winter"],
+        ["University scholarships", "£2,000 to full tuition", "Merit; often automatic with offer", "Varies; apply early"],
+        ["Private trusts (e.g. Inlaks, Tata trusts)", "Varies", "Merit and need", "Varies"],
+      ] } },
+      { heading: "Tips", checklist: [
+        "Apply for the course early; many university scholarships need an offer first.",
+        "Prepare leadership and impact examples for Chevening.",
+        "Do not include unconfirmed scholarships in visa funds.",
+      ] },
+    ],
+    sources: [S.chevening, S.great, S.commonwealth],
+  },
+  {
+    slug: "funding-loans", path: p("funding-loans"), label: "Proof of funds & loans", eyebrow: "UK · CHAPTER 9",
+    title: "Proof of funds", accent: "and loans for the UK.",
+    seoTitle: "UK Student Visa Funds & Loans",
+    description: "UK Student visa maintenance funds, the 28-day rule, education loans from India and TCS on remittances explained for 2026–27.",
+    summary: "You must show remaining first-year tuition plus £1,529 a month (London) or £1,171 a month (elsewhere) for up to nine months, held for 28 consecutive days ending within 31 days of your visa application. Loan letters from regulated lenders are accepted.",
+    facts: [
+      { label: "London", value: "£13,761", note: "£1,529 × 9 months" },
+      { label: "Outside London", value: "£10,539", note: "£1,171 × 9 months" },
+      { label: "Holding period", value: "28 days", note: "Ending within 31 days of applying" },
+      { label: "TCS on loan-funded fees", value: "Nil" },
+    ],
+    blocks: [
+      { heading: "How the 28-day rule works", paragraphs: [
+        "The balance must never drop below the required total for 28 consecutive days, and the last day of that period must be within 31 days of your application date. The account can be in your name or a parent's (with their consent letter and your birth certificate).",
+        "Rates have been reported to rise for applications from 30 November 2026; check GOV.UK on the day you apply and keep a margin above the minimum.",
+      ] },
+      { heading: "Education loans", paragraphs: [
+        "A sanction letter from a regulated lender stating the amount, your name and that funds are available for your studies is accepted as evidence. Secured loans have lower interest; unsecured loans depend on your admission and co-applicant income.",
+        "Remittances funded by an education loan carry nil TCS; self-funded remittances above ₹10 lakh a year carry 2% TCS from April 2026, adjustable against income tax.",
+      ] },
+    ],
+    faqs: [
+      { q: "How much bank balance is needed for a UK student visa?", a: "Remaining first-year tuition plus £13,761 for London or £10,539 outside London, held for 28 consecutive days." },
+    ],
+    sources: [S.money, S.tcs],
+  },
+  {
+    slug: "visa", path: p("visa"), label: "Student visa", eyebrow: "UK · CHAPTER 10",
+    title: "The UK Student visa,", accent: "step by step.",
+    seoTitle: "UK Student Visa Guide 2026",
+    description: "UK Student visa from India: CAS, £558 fee, health surcharge, TB test, documents, biometrics and decision times for 2026–27.",
+    summary: "With your CAS, apply online up to six months before your course, pay £558 and the health surcharge, attend a VFS biometrics appointment, and receive a decision usually within three weeks. Indian applicants also need a TB test certificate from an approved clinic.",
+    facts: [
+      { label: "Application fee", value: "£558" },
+      { label: "Apply from", value: "6 months before course" },
+      { label: "Usual decision", value: "Within 3 weeks" },
+      { label: "Health surcharge", value: "£776 / year" },
+    ],
+    blocks: [
+      { heading: "Documents", checklist: [
+        "Valid passport",
+        "CAS number and the documents listed on it",
+        "Proof of funds (28-day rule)",
+        "TB test certificate from an approved clinic",
+        "ATAS certificate if your course requires it",
+        "Parental consent and birth certificate if using parents' funds",
+        "English-language evidence if your university asks for it",
+      ] },
+      { heading: "The steps", steps: [
+        { title: "Get your CAS", body: "Check name, course dates, fees paid and English assessment on it." },
+        { title: "TB test", body: "Book at an approved clinic in India; the certificate is valid for six months." },
+        { title: "Apply online", body: "Complete the GOV.UK form, pay £558 and the health surcharge." },
+        { title: "Biometrics", body: "Attend a VFS appointment to give fingerprints and a photo and submit documents." },
+        { title: "Decision and eVisa", body: "UK immigration status is now digital (eVisa). Create your UKVI account and keep your details updated." },
+        { title: "Travel", body: "You can usually enter up to one week before a course of six months or less, or one month before a longer course." },
+      ] },
+      { heading: "Dependants", paragraphs: [
+        "Only students on postgraduate research programmes (such as a PhD) or government-sponsored students can bring a partner and children. Taught master's students generally cannot.",
+      ] },
+    ],
+    faqs: [
+      { q: "What is the UK student visa fee in 2026?", a: "£558 from outside the UK, plus the immigration health surcharge of £776 for each year of your visa." },
+      { q: "Can I take my spouse to the UK on a master's?", a: "Generally not on a taught master's. Postgraduate research students and government-sponsored students can bring dependants." },
+    ],
+    sources: [S.visa, S.ihs],
+  },
+  {
+    slug: "pre-departure", path: p("pre-departure"), label: "Pre-departure checklist", eyebrow: "UK · CHAPTER 11",
+    title: "Before you fly", accent: "to the UK.",
+    seoTitle: "UK Pre-Departure Checklist",
+    description: "What to finish in India before flying to the UK: eVisa, documents, money, accommodation, packing and your first-week plan.",
+    summary: "Before you fly, confirm your eVisa, book accommodation, arrange money for your first month, carry original documents and plan your first-week tasks: university enrolment, GP registration, bank account and phone.",
+    blocks: [
+      { heading: "Documents (originals + digital copies)", checklist: ["Passport and eVisa share code", "CAS and offer letter", "Academic certificates", "Proof of funds", "TB certificate", "Accommodation contract", "Insurance for belongings"] },
+      { heading: "Money", checklist: ["Forex card or international debit card", "£200–300 in cash for arrival", "First month's rent and deposit if not paid", "Budget for winter clothing if buying in the UK"] },
+      { heading: "Packing", checklist: ["Waterproof jacket and layers (rain is frequent)", "UK plug adapters (type G)", "Prescription medicines with prescriptions", "Laptop and unlocked phone"] },
+    ],
+    sources: [S.visa],
+  },
+  {
+    slug: "arrival", path: p("arrival"), label: "First weeks in the UK", eyebrow: "UK · CHAPTER 12",
+    title: "Your first weeks", accent: "in the UK.",
+    seoTitle: "First Weeks in the UK: Student Guide",
+    description: "After arriving in the UK: enrol, check your eVisa, register with a GP, open a bank account, get a SIM and a railcard.",
+    summary: "In your first two weeks: enrol at university, confirm your eVisa status is linked to your passport, register with a GP, open a bank account, get a UK SIM and apply for a 16–25 or student railcard.",
+    blocks: [
+      { heading: "The right order", steps: [
+        { title: "Day 1", body: "Get a UK SIM and move into accommodation." },
+        { title: "Week 1: enrol", body: "Complete university registration and show your passport and eVisa." },
+        { title: "Week 1: GP", body: "Register with a local GP practice; your health surcharge gives you NHS access." },
+        { title: "Week 1–2: bank account", body: "App-based and high-street banks open accounts with passport, eVisa and university letter." },
+        { title: "Before working", body: "Apply for a National Insurance number." },
+      ] },
+    ],
+    sources: [S.nhs, S.ni],
+  },
+  {
+    slug: "housing", path: p("housing"), label: "Housing & student life", eyebrow: "UK · CHAPTER 13",
+    title: "Student housing", accent: "in the UK.",
+    seoTitle: "Student Accommodation in the UK",
+    description: "University halls, private student accommodation and shared houses in the UK: costs, deposits, Right to Rent checks and avoiding scams.",
+    summary: "First-year international students usually choose university halls or private purpose-built student accommodation. Shared houses are cheaper later. In England, most tenancy deposits are capped at five weeks' rent and must be protected in a government-approved scheme.",
+    blocks: [
+      { heading: "Options", table: { head: ["Option", "London / month", "Elsewhere / month"], rows: [
+        ["University halls", "£900–1,500", "£550–900"],
+        ["Private student accommodation", "£1,100–1,800", "£650–1,100"],
+        ["Shared house (room)", "£800–1,200", "£450–700"],
+      ], caption: "Althéa planning ranges, autumn 2026." } },
+      { heading: "Protect yourself", checklist: ["Landlords must check your Right to Rent (share code).", "Deposits must be protected in an approved scheme.", "Never pay to someone who will not show the property or a contract.", "Read what bills are included."] },
+    ],
+    sources: [S.deposit],
+  },
+  {
+    slug: "health-banking", path: p("health-banking"), label: "Health, bank & phone", eyebrow: "UK · CHAPTER 14",
+    title: "NHS, bank", accent: "and phone in the UK.",
+    seoTitle: "NHS & Bank Accounts for UK Students",
+    description: "Using the NHS as an international student, registering with a GP, prescriptions, opening a UK bank account and choosing a phone plan.",
+    summary: "Your immigration health surcharge gives NHS access on similar terms to residents. Register with a GP near you. Prescriptions in England carry a fixed charge; dental and optical care usually cost extra. Open a UK bank account in your first weeks.",
+    blocks: [
+      { heading: "Healthcare", checklist: ["Register with a GP surgery near your address", "Call 111 for urgent non-emergency advice, 999 for emergencies", "Prescriptions in England have a set charge per item", "Dental and eye care are partly charged"] },
+      { heading: "Banking and phone", checklist: ["App-based banks open accounts in minutes", "High-street banks may need a university bank letter", "SIM-only plans start around £8–15 a month"] },
+    ],
+    sources: [S.nhs, S.ihs],
+  },
+  {
+    slug: "part-time-work", path: p("part-time-work"), label: "Part-time work", eyebrow: "UK · CHAPTER 15",
+    title: "Working while", accent: "you study in the UK.",
+    seoTitle: "Part-Time Jobs in the UK for Students",
+    description: "UK Student visa work rules: 20 hours a week in term, full time in vacations, minimum wage, National Insurance and common student jobs.",
+    summary: "Degree-level students can usually work up to 20 hours a week during term and full time during official vacations. You need a National Insurance number. Self-employment, freelancing and professional sports are not allowed on a Student visa.",
+    blocks: [
+      { heading: "Rules", checklist: ["Up to 20 hours per week in term (degree level)", "Full time in official university vacations", "No self-employment or freelancing", "Placements that are part of the course are allowed", "Your CAS and university set your exact term dates"] },
+      { heading: "Common jobs", checklist: ["Retail and hospitality", "University jobs: ambassador, library, events, research assistance", "Tutoring and care work"] },
+    ],
+    faqs: [{ q: "How many hours can students work in the UK?", a: "Up to 20 hours a week in term for degree-level students, and full time during official vacations." }],
+    sources: [S.work, S.wage, S.ni],
+  },
+  {
+    slug: "after-graduation", path: p("after-graduation"), label: "Graduate visa & staying on", eyebrow: "UK · CHAPTER 16",
+    title: "Staying in the UK", accent: "after graduation.",
+    seoTitle: "UK Graduate Visa for Indians 2026",
+    description: "UK Graduate visa: 2 years if you apply by 31 December 2026, 18 months from 1 January 2027, 3 years for PhDs; then Skilled Worker sponsorship.",
+    summary: "The Graduate visa lets you work or look for work without sponsorship. Non-PhD applications made by 31 December 2026 get two years; applications from 1 January 2027 get 18 months. PhD graduates get three years. Afterwards most graduates move to a Skilled Worker visa with a sponsoring employer.",
+    facts: [
+      { label: "Apply by 31 Dec 2026", value: "2 years" },
+      { label: "Apply from 1 Jan 2027", value: "18 months" },
+      { label: "PhD graduates", value: "3 years" },
+      { label: "Sponsor needed?", value: "No (Graduate visa)" },
+    ],
+    blocks: [
+      { heading: "Graduate visa conditions", checklist: ["Be in the UK on a Student visa", "Complete your course with the university having reported it", "Apply before your Student visa expires", "Pay the application fee and health surcharge"] },
+      { heading: "Moving to a Skilled Worker visa", paragraphs: [
+        "Skilled Worker visas need a job offer from a licensed sponsor in an eligible occupation, paying at least the general salary threshold or the going rate. Since July 2025 the general threshold is £41,700, with lower \"new entrant\" rates for recent graduates. Occupation lists and rates change; check before accepting an offer.",
+      ] },
+    ],
+    faqs: [{ q: "How long is the UK post-study work visa?", a: "Two years for non-PhD applications made by 31 December 2026, 18 months for applications from 1 January 2027, and three years for PhD graduates." }],
+    sources: [S.graduate, S.skilled],
+  },
+  {
+    slug: "jobs", path: p("jobs"), label: "Jobs & careers in the UK", eyebrow: "UK · CHAPTER 17",
+    title: "Finding a job", accent: "in the UK.",
+    seoTitle: "Jobs in the UK for Indian Graduates",
+    description: "Sectors hiring graduates in the UK, starting salaries, graduate schemes, sponsor-licensed employers and where to search.",
+    summary: "Graduate demand is strongest in technology, data, engineering, healthcare, finance and consulting. Big employers recruit through graduate schemes that open in the autumn a year before start dates. Target employers on the Home Office register of licensed sponsors.",
+    blocks: [
+      { heading: "Typical starting salaries", table: { head: ["Field", "Typical graduate salary / year"], rows: [["Software and data", "£30,000–45,000"], ["Engineering", "£28,000–38,000"], ["Finance and consulting", "£32,000–50,000+"], ["Marketing and business", "£25,000–32,000"]], caption: "Althéa planning ranges; London pays more." } },
+      { heading: "Where to search", checklist: ["University careers service and job board", "LinkedIn, Indeed, Prospects, TargetJobs, Gradcracker (engineering)", "Company graduate-scheme portals (apply from September)", "Home Office register of licensed sponsors"] },
+    ],
+    sources: [S.skilled, S.graduate],
+  },
+  {
+    slug: "faq", path: p("faq"), label: "UK study FAQ", eyebrow: "UK · CHAPTER 18",
+    title: "Studying in the UK:", accent: "your questions answered.",
+    seoTitle: "UK Study FAQ for Indian Students",
+    description: "Quick answers on UK study from India: fees, IELTS, visa, funds, work hours, Graduate visa and dependants for 2026–27.",
+    summary: "The questions Indian students ask most about the UK, answered briefly. Each topic has its own chapter with full detail.",
+    blocks: [{ heading: "Read the full guide", paragraphs: ["Use the chapter list above for the complete detail on each answer."] }],
+    faqs: [
+      { q: "What is the UK student visa fee?", a: "£558, plus a health surcharge of £776 per year." },
+      { q: "How much money do I need for a UK student visa?", a: "Remaining first-year tuition plus £1,529 a month in London or £1,171 a month elsewhere, for up to nine months, held for 28 days." },
+      { q: "What IELTS score is needed for the UK?", a: "Usually 6.5 overall with 6.0 in each band for master's courses." },
+      { q: "Can I work while studying in the UK?", a: "Up to 20 hours a week in term and full time in vacations for degree-level students." },
+      { q: "How long is the UK Graduate visa?", a: "Two years if you apply by 31 December 2026, 18 months from 1 January 2027, three years after a PhD." },
+      { q: "Can I bring my spouse?", a: "Only on postgraduate research programmes or with government sponsorship." },
+    ],
+    sources: [S.visa, S.money, S.graduate],
+  },
+];
+
+export const ukGuide: CountryGuide = { country: "uk", name: "UK", prose: "the UK", hubPath: "/destinations/uk", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };

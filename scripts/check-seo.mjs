@@ -49,12 +49,27 @@ for (const path of pages) {
   }
 }
 const home = await readFile('out/index.html', 'utf8');
-assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon-20261015.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
-assert.match(home, /<nav class="home-service-links" aria-label="Explore Althéa Consulting">/, 'Homepage must render the primary service navigation');
-const favicon = await readFile('out/brand/favicon-20261015.png');
+assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon-20261016.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
+assert.match(home, /<nav class="ms-nav-links" aria-label="Main navigation">/, 'Homepage must render the primary desktop navigation');
+const homeEntities = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] || [data]; });
+const organization = homeEntities.find(entity => entity['@type'] === 'Organization');
+const website = homeEntities.find(entity => entity['@type'] === 'WebSite');
+assert.equal(organization.name, website.name, 'Organization and site name must agree');
+assert.ok(organization.alternateName.includes('Althea Consulting'), 'Expose the unaccented brand spelling');
+assert.equal(organization.founder['@id'], 'https://altheaconsulting.in/#adviser');
+assert.ok(home.includes('Althéa Consulting (altheaconsulting.in) is an independent'), 'Brand identity must be visible before hydration');
+assert.equal(organization.hasOfferCatalog.itemListElement.length, 3);
+for (const offer of organization.hasOfferCatalog.itemListElement) {
+  assert.ok(home.includes(`href="${new URL(offer.itemOffered.url).pathname}"`), 'Marked-up services must be linked visibly');
+}
+for (const [, asset] of home.matchAll(/<link[^>]+rel="(?:icon|shortcut icon|apple-touch-icon)"[^>]+href="([^"]+)"/g)) {
+  assert.ok(exportFiles.has(`out${asset}`), `Missing advertised favicon: ${asset}`);
+}
+const favicon = await readFile('out/brand/favicon-20261016.png');
 assert.equal(favicon.readUInt32BE(16), 512, 'Brand favicon width');
 assert.equal(favicon.readUInt32BE(20), 512, 'Brand favicon height');
-for (const route of ['study-in-france', 'settle-in-france', 'career-support', 'about', 'reviews', 'book-consultation']) {
+for (const route of ['study-in-france', 'settle-in-france', 'career-support', 'jobs', 'about', 'reviews', 'book-consultation']) {
   assert.ok(home.includes(`href="/${route}"`), `Homepage must link directly to /${route}`);
 }
 const sitemap = await readFile('out/sitemap.xml', 'utf8');

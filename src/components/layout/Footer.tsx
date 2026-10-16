@@ -1,142 +1,41 @@
-"use client";
-
+import BrandLockup from "@/components/brand/BrandLockup";
 import { brand } from "@/config/brand";
 import Link from "next/link";
-import { Instagram, Linkedin, Mail, MessageCircle, Phone } from "lucide-react";
-import { cities } from "@/data/france";
-import { destinations, destinationHref } from "@/data/destinations";
-import { useEffect } from "react";
+import { ArrowUp, Instagram, Linkedin, Mail, MapPin, MessageCircle } from "lucide-react";
 
-const footerGroups = [
-  {
-    title: "EXPLORE",
-    links: [
-      ["Directory · all destinations", "/universities?country=france&view=courses#course-finder"],
-      ["Universities & courses", "/universities"],
-      ["Reviewed programmes & fees", "/programmes"],
-      ["Study in France", "/study-in-france"],
-      ["Settle in France", "/settle-in-france"],
-      ["Career support", "/career-support"],
-      ["All services", "/services"],
-      ["About Harshita", "/about"],
-    ],
-  },
-  {
-    title: "DESTINATIONS",
-    links: destinations.map((destination) => [destination.name, destinationHref(destination.slug)]),
-  },
-  {
-    title: "STUDY & ARRIVAL",
-    links: [
-      ["Admissions process", "/admissions-process"],
-      ["Scholarships", "/scholarships"],
-      ["Study costs in France", "/france/costs"],
-      ["Student life in France", "/france/living"],
-      ["Student visa guide", "/france/visas"],
-      ["Campus France guide", "/campus-france-guide"],
-      ["France universities & institutions", "/france/institutions"],
-      ["First 30 days checklist", "/first-30-days-france"],
-    ],
-  },
-  {
-    title: "CITY GUIDES",
-    links: cities.map((city) => [`Study in ${city.name}`, `/cities/${city.slug}`]),
-  },
-  {
-    title: "MORE TO EXPLORE",
-    links: [
-      ["Resources & guides", "/knowledge"],
-      ["France study library", "/france/resources"],
-      ["France study topics", "/france"],
-      ["Insights & articles", "/insights"],
-      ["FAQs", "/faq"],
-      ["Mentorship model", "/mentorship-model"],
-      ["Student outcomes", "/outcomes"],
-      ["Student reviews", "/reviews"],
-      ["Book a call", "/book-consultation"],
-    ],
-  },
+const groups = [
+  { title: "Explore", links: [["Study destinations", "/destinations"], ["Universities & courses", "/universities"], ["Programmes & fees", "/programmes"], ["Student stories", "/reviews"], ["The journal", "/knowledge"], ["Insights", "/insights"]] },
+  { title: "Your next step", links: [["Study in France", "/study-in-france"], ["Settle in France", "/settle-in-france"], ["Career support", "/career-support"], ["Scholarship guidance", "/scholarships"], ["Jobs & opportunities", "/jobs"], ["Our support", "/services"]] },
+  { title: "Good to know", links: [["Admissions process", "/admissions-process"], ["Campus France guide", "/campus-france-guide"], ["First 30 days in France", "/first-30-days-france"], ["The mentorship model", "/mentorship-model"], ["Your questions, answered", "/faq"], ["About Harshita", "/about"]] },
 ];
 
-export default function Footer() {
-  useEffect(() => {
-    const groups = Array.from(document.querySelectorAll<HTMLDetailsElement>(".footer-group-details"));
-    const media = window.matchMedia("(max-width: 760px)");
-    const syncGroups = () => groups.forEach((group) => { group.open = !media.matches; });
-    syncGroups();
-    media.addEventListener("change", syncGroups);
-    return () => media.removeEventListener("change", syncGroups);
-  }, []);
+export default function Footer({ showCallout = true }: { showCallout?: boolean }) {
+  return <footer className="ms-footer" id="footer">
+    <div className="ms-wrap">
 
-  return (
-    <footer className="site-footer">
-      <div className="footer-top footer-sitemap">
-        <div className="footer-brand-block">
-          <Link className="footer-brand" href="/">
-            <img className="footer-brand-logo" src={brand.assets.logoLight} alt={brand.name} width={420} height={96} />
-          </Link>
-          <p>
-            {brand.tagline}
-          </p>
-          <div className="brand-contact">
-            <div className="brand-contact-person">
-              <strong>{brand.person}</strong>
-              <span>{brand.role} <i aria-hidden="true">·</i> {brand.location}</span>
-            </div>
-            <div className="brand-contact-actions">
-              {brand.email && (
-                <a href={`mailto:${brand.email}`}>
-                  <Mail size={17} aria-hidden="true" />
-                  <span><small>EMAIL</small>{brand.email}</span>
-                </a>
-              )}
-              {brand.whatsappNumber && (
-                <>
-                  <a href={`tel:+${brand.whatsappNumber}`}>
-                    <Phone size={17} aria-hidden="true" />
-                    <span><small>CALL</small>+33 7 55 74 90 29</span>
-                  </a>
-                  <Link href="/book-consultation">
-                    <MessageCircle size={17} aria-hidden="true" />
-                    <span><small>MESSAGE</small>Start a conversation</span>
-                  </Link>
-                </>
-              )}
-              <a href={brand.socialLinks.instagram} target="_blank" rel="me noreferrer">
-                <Instagram size={17} aria-hidden="true" />
-                <span><small>INSTAGRAM</small>@helloharshitainparis</span>
-              </a>
-              <a href={brand.socialLinks.linkedin} target="_blank" rel="me noreferrer">
-                <Linkedin size={17} aria-hidden="true" />
-                <span><small>LINKEDIN</small>{brand.person}</span>
-              </a>
-            </div>
-          </div>
+      <div className="ms-footer-grid">
+        <div className="ms-footer-brand">
+          <Link href="/" aria-label={`${brand.name} home`}><BrandLockup /></Link>
+          <p>A wider world. A personal way forward. Independent study, settling and career guidance from Paris.</p>
+          <ul className="ms-footer-contact">
+            <li><a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a></li>
+            <li><a href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noreferrer"><MessageCircle size={15} aria-hidden="true" />+33 7 55 74 90 29</a></li>
+            <li><span><MapPin size={15} aria-hidden="true" />{brand.location}</span></li>
+            <li><a href={brand.socialLinks.instagram} target="_blank" rel="me noreferrer"><Instagram size={15} aria-hidden="true" />Instagram · @helloharshitainparis</a></li>
+            <li><a href={brand.socialLinks.linkedin} target="_blank" rel="me noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn · {brand.person}</a></li>
+          </ul>
         </div>
-        {footerGroups.map((group) => <details className="footer-group footer-group-details" key={group.title}>
-          <summary className="eyebrow footer-group-title">{group.title}</summary>
-          <nav className="footer-group-links" aria-label={group.title.toLowerCase()}>
-            {group.links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-          </nav>
-        </details>)}
+        {groups.map((group) => <nav key={group.title} aria-label={group.title} className="ms-footer-col">
+          <p className="ms-footer-title">{group.title}</p>
+          <ul>{group.links.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}</ul>
+        </nav>)}
       </div>
-      <div className="footer-masthead" aria-hidden="true">
-        <span>{brand.shortName}.</span>
-        <em>
-          A wider world.
-          <br />A personal way forward.
-        </em>
+
+      <div className="ms-footer-legal">
+        <p>© {new Date().getFullYear()} {brand.name} · Independent advisory based in France. Admissions, scholarships and visas are decided by institutions and authorities.</p>
+        <div><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="#main-content" className="ms-top">Back to top<ArrowUp size={14} aria-hidden="true" /></a></div>
       </div>
-      <div className="footer-bottom">
-        <span>
-          © {new Date().getFullYear()} {brand.name} · Independent education advisory · No affiliation with Campus France or universities
-        </span>
-        <div>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <Link href="/acknowledgements#photography">Sources & photography</Link>
-        </div>
-      </div>
-    </footer>
-  );
+    </div>
+    <div className="ms-footer-word" aria-hidden="true">Althéa</div>
+  </footer>;
 }

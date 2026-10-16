@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   Briefcase,
   BriefcaseBusiness,
-  Calculator,
   Calendar,
   CheckCircle2,
   Clock,
@@ -19,13 +18,13 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
-  TrendingUp,
   X
 } from "lucide-react";
 import { brand } from "@/config/brand";
 import { destinations } from "@/data/destinations";
 import { careerRoleTypes, careerRoles, opportunityTypeLabels, type OpportunityType } from "@/data/careerRoles";
 import ConsultationModal from "@/components/modals/ConsultationModal";
+import { Facts, Kicker, Section, Steps } from "@/components/maison/ui";
 
 interface DestinationWorkFramework {
   code: string;
@@ -78,10 +77,10 @@ const destinationWorkData: Record<string, DestinationWorkFramework> = {
     studentWorkLimit: "20 Hours / Week",
     studentWorkNote: "Term-time statutory cap; full-time permissible during official vacations",
     minWage: "£11.44 / hour",
-    minWageNote: "UK National Living Wage (statutory statutory wage floor)",
+    minWageNote: "UK National Living Wage (statutory wage floor)",
     postStudyVisa: "2-Year Graduate Route",
     postStudyNote: "Unsponsored stay-and-work authorization (3 years for PhD graduates)",
-    avgStudentNetMonthly: "£750 – €1,100 / mo",
+    avgStudentNetMonthly: "£750 – £1,100 / mo",
   },
   usa: {
     code: "US",
@@ -243,631 +242,149 @@ export default function JobsExplorer() {
     };
   }, [role]);
 
+  const typeIcon = (type: OpportunityType, size = 18) => type === "job" ? <Briefcase size={size} aria-hidden="true" /> : type === "internship" ? <GraduationCap size={size} aria-hidden="true" /> : <Sparkles size={size} aria-hidden="true" />;
+  const hoursShare = ((calcHours - 8) / (25 - 8)) * 100;
+  const rateMin = Math.floor(activeFramework.minHourlyRate);
+  const rateShare = ((calcRate - rateMin) / (activeFramework.maxHourlyRate - rateMin)) * 100;
+
   return (
-    <section className="jobs-explorer" aria-label="Jobs and work opportunities across seven destinations">
-      {/* ── 1. Hero Feature Card with Dynamic Celestial Radar ── */}
-      <div className="jobs-feature">
-        <div className="jobs-feature-copy">
-          <p className="jobs-feature-kicker">
-            <span /> THE OPPORTUNITY RADAR <i>·</i> 2026 EDITION
-          </p>
-          <h2>
-            Make your next move<br />
-            <em>mean something.</em>
-          </h2>
-          <p>
-            Explore roles, internships, and work-study routes that turn your degree into an international career.
-            Start with {destination.name}, or explore seven global destinations.
-          </p>
-
-          {/* Destination Quick Selector Chips */}
-          <div className="jobs-hero-chips" aria-label="Select destination">
-            {destinations.map((d) => (
-              <button
-                key={d.slug}
-                type="button"
-                className={`jobs-hero-chip ${country === d.slug ? "active" : ""}`}
-                onClick={() => {
-                  setCountry(d.slug);
-                  setSelected(null);
-                }}
-              >
-                <span className="jobs-chip-dot" />
-                {d.name}
-              </button>
-            ))}
+    <div className="jobs-explorer ms-jobs">
+      <Section tone="ink" className="ms-jobs-hero">
+        <div className="ms-jobs-hero-grid">
+          <div className="ms-jobs-hero-copy">
+            <Kicker>THE OPPORTUNITY RADAR · 2026 EDITION</Kicker>
+            <h2 className="ms-title">Make your next move <em>mean something.</em></h2>
+            <p className="ms-lead">Explore roles, internships, and work-study routes that turn your degree into an international career. Start with {destination.name}, or explore seven global destinations.</p>
+            <div className="ms-pills ms-pills-dark" role="group" aria-label="Select destination">{destinations.map((d) => <button key={d.slug} type="button" aria-pressed={country === d.slug} onClick={() => { setCountry(d.slug); setSelected(null); }}>{d.name}</button>)}</div>
+            <div className="ms-row">
+              <a href="#jobs-discover" className="ms-btn ms-btn-gold mx-magnetic"><span>Explore {destination.name} pathways</span><ArrowUpRight size={17} aria-hidden="true" /></a>
+              <button type="button" onClick={() => setIsConsultationOpen(true)} className="ms-btn ms-btn-light"><span>Book a strategy session</span><Calendar size={16} aria-hidden="true" /></button>
+            </div>
           </div>
-
-          <div className="jobs-hero-actions">
-            <a href="#jobs-discover" className="jobs-feature-link">
-              Explore {destination.name} Pathways <ArrowUpRight size={16} />
-            </a>
-            <button
-              type="button"
-              onClick={() => setIsConsultationOpen(true)}
-              className="jobs-feature-link-secondary"
-            >
-              Book Strategy Session
-            </button>
+          <div className="ms-radar" aria-hidden="true">
+            <div className="ms-radar-sweep" />
+            <i /><i /><i />
+            <div className="ms-radar-core" key={country}><strong>{activeFramework.code}</strong><small>{activeFramework.capital}<br />{activeFramework.coords}</small></div>
+            <span className="ms-radar-node is-a">JOB</span><span className="ms-radar-node is-b">INTERNSHIP</span><span className="ms-radar-node is-c">WORK-STUDY</span>
           </div>
         </div>
+        <dl className="ms-jobs-stats"><div><dt>Destinations with work-rights roadmaps</dt><dd>07</dd></div><div><dt>Pathway models · job, stage, alternance</dt><dd>03</dd></div><div><dt>Curated career field dossiers</dt><dd>{String(careerRoles.length).padStart(2, "0")}</dd></div></dl>
+      </Section>
 
-        {/* Dynamic Celestial Orbit Graphic */}
-        <div className="jobs-orbit-art" aria-hidden="true">
-          <div className="jobs-orbit-glow" />
-          <div className="jobs-orbit-ring jobs-orbit-ring-one" />
-          <div className="jobs-orbit-ring jobs-orbit-ring-two" />
-          <div className="jobs-orbit-ring jobs-orbit-ring-three" />
-          <div className="jobs-orbit-core">
-            <span className="jobs-orbit-code">{activeFramework.code}</span>
-            <small className="jobs-orbit-location">
-              {activeFramework.capital}
-              <br />
-              {activeFramework.coords}
-            </small>
-          </div>
-          <span className="jobs-orbit-node jobs-orbit-node-a">JOB</span>
-          <span className="jobs-orbit-node jobs-orbit-node-b">INTERN</span>
-          <span className="jobs-orbit-node jobs-orbit-node-c">WORK-STUDY</span>
-          <span className="jobs-orbit-coordinate">{destination.name.toUpperCase()} / ACTIVE HORIZON</span>
-        </div>
+      <Section tone="paper" kicker={`STATUTORY FRAMEWORK · ${destination.name.toUpperCase()}`} title="Know your student work" accent="& post-study rights." intro="Understanding labour rules and post-study visas before departure helps you plan realistically and talk to employers with confidence.">
+        <Facts items={[
+          { label: <><Clock size={14} aria-hidden="true" /> Student work permission</>, value: activeFramework.studentWorkLimit, note: activeFramework.studentWorkNote },
+          { label: <><ShieldCheck size={14} aria-hidden="true" /> Statutory minimum wage</>, value: activeFramework.minWage, note: activeFramework.minWageNote },
+          { label: <><GraduationCap size={14} aria-hidden="true" /> Post-study work visa</>, value: activeFramework.postStudyVisa, note: activeFramework.postStudyNote },
+        ]} />
+        <p className="ms-muted ms-jobs-caveat"><HelpCircle size={14} aria-hidden="true" /> Planning references. Rules and rates change and depend on your permit and profile—confirm the current position with the official government source before relying on them.</p>
+      </Section>
 
-        {/* Stats Row */}
-        <div className="jobs-feature-stats">
-          <div>
-            <strong>07</strong>
-            <span>destinations<br />with legal roadmaps</span>
+      <Section tone="ivory">
+        <div className="ms-calc">
+          <div className="ms-calc-controls">
+            <Kicker>PRACTICAL BUDGET PLANNING</Kicker>
+            <h3 className="ms-sub" style={{ margin: "14px 0 10px" }}>Student earnings <em>estimator · {destination.name}</em></h3>
+            <p className="ms-muted">Calculate an indicative part-time monthly income while studying. Many international students use part-time work to help with living and housing costs.</p>
+            <label className="ms-slider">
+              <span className="ms-slider-head"><span>Work hours per week</span><strong>{calcHours} hrs / week</strong></span>
+              <input type="range" min={8} max={25} step={1} value={calcHours} onChange={(e) => setCalcHours(Number(e.target.value))} aria-label="Hours per week" style={{ "--fill": `${hoursShare}%` } as React.CSSProperties} />
+              <span className="ms-slider-ticks"><span>8 hrs</span><span>20 hrs · common term-time cap</span><span>25 hrs</span></span>
+            </label>
+            <label className="ms-slider">
+              <span className="ms-slider-head"><span>Estimated hourly rate ({activeFramework.currencySymbol})</span><strong>{activeFramework.currencySymbol}{calcRate} / hr</strong></span>
+              <input type="range" min={rateMin} max={activeFramework.maxHourlyRate} step={0.5} value={calcRate} onChange={(e) => setCalcRate(Number(e.target.value))} aria-label="Hourly rate" style={{ "--fill": `${rateShare}%` } as React.CSSProperties} />
+              <span className="ms-slider-ticks"><span>Min wage {activeFramework.currencySymbol}{activeFramework.minHourlyRate}</span><span>Mid {activeFramework.currencySymbol}{Math.round((activeFramework.minHourlyRate + activeFramework.maxHourlyRate) / 2)}</span><span>Skilled {activeFramework.currencySymbol}{activeFramework.maxHourlyRate}</span></span>
+            </label>
           </div>
-          <div>
-            <strong>03</strong>
-            <span>pathway models<br />(Job, Stage, Alternance)</span>
-          </div>
-          <div>
-            <strong>16</strong>
-            <span>curated career<br />field dossiers</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── 2. Statutory Legal Work Framework in Active Country ── */}
-      <section className="jobs-framework-section" aria-label="Legal Work Regulations">
-        <div className="jobs-framework-header">
-          <div>
-            <span className="jobs-framework-eyebrow">STATUTORY FRAMEWORK · {destination.name.toUpperCase()}</span>
-            <h3>Know your legal student work & post-study rights.</h3>
-          </div>
-          <p>
-            Understanding labor rules and post-study visas before departure makes your application stand out to international employers.
-          </p>
-        </div>
-
-        <div className="jobs-framework-grid">
-          <div className="jobs-framework-card">
-            <div className="jobs-card-icon">
-              <Clock size={22} />
-            </div>
-            <div className="jobs-card-content">
-              <span className="jobs-card-badge">STUDENT WORK PERMISSION</span>
-              <h4>{activeFramework.studentWorkLimit}</h4>
-              <p>{activeFramework.studentWorkNote}</p>
-            </div>
-          </div>
-
-          <div className="jobs-framework-card">
-            <div className="jobs-card-icon">
-              <ShieldCheck size={22} />
-            </div>
-            <div className="jobs-card-content">
-              <span className="jobs-card-badge">STATUTORY MINIMUM WAGE</span>
-              <h4>{activeFramework.minWage}</h4>
-              <p>{activeFramework.minWageNote}</p>
-            </div>
-          </div>
-
-          <div className="jobs-framework-card">
-            <div className="jobs-card-icon">
-              <GraduationCap size={22} />
-            </div>
-            <div className="jobs-card-content">
-              <span className="jobs-card-badge">POST-STUDY WORK VISA</span>
-              <h4>{activeFramework.postStudyVisa}</h4>
-              <p>{activeFramework.postStudyNote}</p>
-            </div>
+          <div className="ms-calc-summary" aria-live="polite">
+            <span>Estimated take-home</span>
+            <p className="ms-calc-figure"><small>{activeFramework.currencySymbol}</small>{calculatedMonthlyNet.toLocaleString()}<small>/ month</small></p>
+            <p className="ms-calc-gross">Gross approx. {activeFramework.currencySymbol}{calculatedMonthlyGross.toLocaleString()} / month, before ~{Math.round(activeFramework.taxRate * 100)}% tax and social charges.</p>
+            <dl><div><dt>Typical student range</dt><dd>{activeFramework.avgStudentNetMonthly}</dd></div><div><dt>Status</dt><dd><CheckCircle2 size={15} aria-hidden="true" /> Planning estimate · confirm your permit conditions</dd></div></dl>
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* ── 3. Interactive Student Take-Home Earnings Estimator ── */}
-      <section className="jobs-calculator-section" aria-label="Student Earnings Calculator">
-        <div className="jobs-calculator-card">
-          <div className="jobs-calculator-controls">
-            <div className="jobs-calc-header">
-              <span className="jobs-calc-eyebrow">PRACTICAL BUDGET PLANNING</span>
-              <h3>Student Earning Estimator in {destination.name}</h3>
-              <p>
-                Calculate your estimated part-time monthly earnings while studying. Most international students use part-time earnings to offset living and housing costs.
-              </p>
-            </div>
-
-            <div className="jobs-calc-sliders">
-              <div className="jobs-slider-group">
-                <div className="jobs-slider-label">
-                  <span>Work Hours per Week</span>
-                  <strong>{calcHours} hrs / week</strong>
-                </div>
-                <input
-                  type="range"
-                  min="8"
-                  max="25"
-                  step="1"
-                  value="calcHours"
-                  onChange={(e) => setCalcHours(Number(e.target.value))}
-                  className="jobs-range-input"
-                  aria-label="Hours per week"
-                />
-                <div className="jobs-slider-ticks">
-                  <span>10 hrs (light)</span>
-                  <span>20 hrs (standard cap)</span>
-                  <span>25 hrs (holiday)</span>
-                </div>
-              </div>
-
-              <div className="jobs-slider-group">
-                <div className="jobs-slider-label">
-                  <span>Estimated Hourly Rate ({activeFramework.currencySymbol})</span>
-                  <strong>{activeFramework.currencySymbol}{calcRate} / hr</strong>
-                </div>
-                <input
-                  type="range"
-                  min={Math.floor(activeFramework.minHourlyRate)}
-                  max={activeFramework.maxHourlyRate}
-                  step="0.5"
-                  value="calcRate"
-                  onChange={(e) => setCalcRate(Number(e.target.value))}
-                  className="jobs-range-input"
-                  aria-label="Hourly rate"
-                />
-                <div className="jobs-slider-ticks">
-                  <span>Min Wage: {activeFramework.currencySymbol}{activeFramework.minHourlyRate}</span>
-                  <span>Mid: {activeFramework.currencySymbol}{Math.round((activeFramework.minHourlyRate + activeFramework.maxHourlyRate) / 2)}</span>
-                  <span>Skilled: {activeFramework.currencySymbol}{activeFramework.maxHourlyRate}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="jobs-calculator-summary">
-            <div className="jobs-summary-pill">ESTIMATED TAKE-HOME NET</div>
-            <div className="jobs-summary-figure">
-              <span className="jobs-sum-symbol">{activeFramework.currencySymbol}</span>
-              <span className="jobs-sum-val">{calculatedMonthlyNet.toLocaleString()}</span>
-              <span className="jobs-sum-period">/ month</span>
-            </div>
-            <p className="jobs-summary-gross">
-              Gross: approx. {activeFramework.currencySymbol}{calculatedMonthlyGross.toLocaleString()} / mo (before ~{Math.round(activeFramework.taxRate * 100)}% tax/social charges)
-            </p>
-            <div className="jobs-summary-stats">
-              <div>
-                <span>Typical Student Average</span>
-                <strong>{activeFramework.avgStudentNetMonthly}</strong>
-              </div>
-              <div className="jobs-summary-badge">
-                <CheckCircle2 size={16} /> 100% Authorized on Student Visa
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. Pathway Type Rail ── */}
-      <div className="jobs-discover" id="jobs-discover">
-        <div>
-          <p className="eyebrow">START WHERE YOU ARE</p>
-          <h3>
-            Choose your kind<br />
-            of opportunity.
-          </h3>
-        </div>
-        <p>
-          Every route is different. Filter by opportunity type to explore specific entry points and what hiring leads expect on international applications.
-        </p>
-      </div>
-
-      <div className="jobs-type-rail" aria-label="Opportunity types">
-        {(Object.entries(opportunityTypeLabels) as [OpportunityType, string][]).map(([type, label]) => {
+      <Section tone="paper" id="jobs-discover" kicker="START WHERE YOU ARE" title="Choose your kind" accent="of opportunity." intro="Every route is different. Filter by opportunity type to explore specific entry points and what hiring leads expect on international applications.">
+        <div className="ms-jobs-types" role="group" aria-label="Opportunity types">{(Object.entries(opportunityTypeLabels) as [OpportunityType, string][]).map(([type, label], i) => {
           const count = careerRoles.filter((item) => careerRoleTypes[item.slug]?.includes(type)).length;
           const isActive = opportunityType === type;
-          return (
-            <button
-              key={type}
-              type="button"
-              aria-pressed={isActive}
-              className={`jobs-type-card ${isActive ? "active" : ""}`}
-              onClick={() => setOpportunityType(isActive ? "all" : type)}
-            >
-              <div className="jobs-type-top">
-                <span className="jobs-type-index">0{Object.keys(opportunityTypeLabels).indexOf(type) + 1}</span>
-                <span className="jobs-type-icon-wrapper">
-                  {type === "job" && <Briefcase size={17} />}
-                  {type === "internship" && <GraduationCap size={17} />}
-                  {type === "work-study" && <Sparkles size={17} />}
-                </span>
-              </div>
-              <div className="jobs-type-body">
-                <span className="jobs-type-title">{label}</span>
-                <small className="jobs-type-subtitle">{count} comprehensive pathway dossiers</small>
-              </div>
-              <span className="jobs-type-action">
-                {isActive ? "Active Filter" : "Filter by this route"} <ArrowUpRight size={15} />
-              </span>
-            </button>
-          );
-        })}
-      </div>
+          return <button key={type} type="button" aria-pressed={isActive} className="ms-jobs-type" onClick={() => setOpportunityType(isActive ? "all" : type)} data-spotlight>
+            <span className="ms-card-top"><span className="ms-card-icon">{typeIcon(type)}</span><span className="ms-card-index">{String(i + 1).padStart(2, "0")}</span></span>
+            <strong>{label}</strong><small>{count} pathway dossiers</small>
+            <span className="ms-card-cta">{isActive ? "Active filter" : "Filter by this route"}<ArrowUpRight size={15} aria-hidden="true" /></span>
+          </button>;
+        })}</div>
 
-      {/* ── 5. Enhanced Filters Toolbar ── */}
-      <div className="jobs-filters-container">
-        <div className="jobs-filters">
-          <label>
-            <span className="jobs-filter-label">
-              <MapPin size={13} /> Destination Country
-            </span>
-            <select
-              aria-label="Job destination"
-              value={country}
-              onChange={(event) => {
-                setCountry(event.target.value);
-                setSelected(null);
-              }}
-            >
-              {destinations.map((item) => (
-                <option key={item.slug} value={item.slug}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            <span className="jobs-filter-label">
-              <Briefcase size={13} /> Opportunity Route
-            </span>
-            <select
-              aria-label="Opportunity type"
-              value={opportunityType}
-              onChange={(event) => setOpportunityType(event.target.value as OpportunityType | "all")}
-            >
-              <option value="all">All pathways ({careerRoles.length})</option>
-              {(Object.entries(opportunityTypeLabels) as [OpportunityType, string][]).map(([type, label]) => (
-                <option key={type} value={type}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            <span className="jobs-filter-label">
-              <Compass size={13} /> Sector / Industry
-            </span>
-            <select
-              aria-label="Job sector"
-              value={sector}
-              onChange={(event) => setSector(event.target.value)}
-            >
-              <option value="all">All sectors ({sectors.length})</option>
-              {sectors.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="jobs-keyword">
-            <span className="jobs-filter-label">
-              <Search size={13} /> Search Roles or Skills
-            </span>
-            <span className="jobs-search-field">
-              <Search size={16} />
-              <input
-                aria-label="Search roles and skills"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="e.g. data, nursing, CAD, Python..."
-              />
-            </span>
-          </label>
-        </div>
-      </div>
-
-      {/* ── Results Bar ── */}
-      <div className="jobs-results-heading">
-        <p className="jobs-count" role="status">
-          <span className="jobs-results-dot" aria-hidden="true" /> Showing{" "}
-          <strong>{results.length.toString().padStart(2, "0")}</strong> pathways in {destination.name}
-        </p>
-        {hasActiveFilters && (
-          <button type="button" onClick={clearFilters} className="jobs-clear-btn">
-            Reset filters ×
-          </button>
-        )}
-      </div>
-
-      <div className="jobs-data-note">
-        <span className="jobs-note-tag">CAREER INTELLIGENCE</span>
-        <p>
-          Explore entry qualifications, skills, language preparation, and ATS CV guidance for each pathway. These dossiers support your professional preparation; they are not live recruitment vacancies.
-        </p>
-      </div>
-
-      {/* ── 6. Pathway Dossier Grid ── */}
-      {results.length ? (
-        <div className="jobs-grid">
-          {results.map((item, index) => {
-            const roleTypesList = careerRoleTypes[item.slug] || ["job"];
-            const isSelected = selected === item.slug;
-            return (
-              <article
-                className={`job-card ${isSelected ? "selected" : ""}`}
-                key={item.slug}
-                role="button"
-                tabIndex={0}
-                aria-haspopup="dialog"
-                aria-label={`Open ${item.title} pathway details`}
-                onClick={() => setSelected(item.slug)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setSelected(item.slug);
-                  }
-                }}
-              >
-                <div className="job-card-heading">
-                  <span className="job-card-sector">
-                    <BriefcaseBusiness size={14} /> {item.sector}
-                  </span>
-                  <span className="job-card-number">{String(index + 1).padStart(2, "0")}</span>
-                </div>
-
-                <h3>{item.title}</h3>
-                <p className="job-card-summary">{item.summary}</p>
-
-                <div className="job-type-tags">
-                  {roleTypesList.map((type) => (
-                    <span key={type} className={`job-tag-${type}`}>
-                      {opportunityTypeLabels[type]}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="job-card-skills-wrapper">
-                  <span className="job-skills-label">KEY CV COMPETENCIES</span>
-                  <ul className="job-card-skills">
-                    {item.skills.slice(0, 2).map((skill) => (
-                      <li key={skill}>
-                        <span className="job-bullet-dot" /> {skill}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="job-card-footer">
-                  <span className="job-card-country">{destination.name}</span>
-                  <span className="job-card-action">
-                    Explore Pathway Dossier <ArrowUpRight size={15} />
-                  </span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="jobs-empty-state">
-          <p className="jobs-empty-title">No pathways match those filters.</p>
-          <p className="jobs-empty-text">Try resetting your keyword, or choosing &ldquo;All pathways&rdquo; and &ldquo;All sectors&rdquo;.</p>
-          <button type="button" onClick={clearFilters} className="jobs-empty-reset">
-            Clear All Filters
-          </button>
-        </div>
-      )}
-
-      {/* ── 7. Editorial Guidance Strip ── */}
-      <section className="jobs-support-strip" aria-label="How career support can help">
-        <div className="jobs-support-intro">
-          <p className="eyebrow">ALTHEA CAREER COMPASS</p>
-          <h3>
-            Good guidance can<br />
-            <em>change the whole search.</em>
-          </h3>
-          <p className="jobs-support-copy">
-            From rebuilding your Indian qualifications into local ATS CV standards to navigating statutory work permits and post-study visas, our advisors help you secure real opportunities.
-          </p>
+        <div className="ms-kh-bar ms-jobs-filters">
+          <label className="ms-field"><span><MapPin size={13} aria-hidden="true" /> Destination</span><select aria-label="Job destination" value={country} onChange={(event) => { setCountry(event.target.value); setSelected(null); }}>{destinations.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label>
+          <label className="ms-field"><span><Briefcase size={13} aria-hidden="true" /> Opportunity route</span><select aria-label="Opportunity type" value={opportunityType} onChange={(event) => setOpportunityType(event.target.value as OpportunityType | "all")}><option value="all">All pathways ({careerRoles.length})</option>{(Object.entries(opportunityTypeLabels) as [OpportunityType, string][]).map(([type, label]) => <option key={type} value={type}>{label}</option>)}</select></label>
+          <label className="ms-field"><span><Compass size={13} aria-hidden="true" /> Sector / industry</span><select aria-label="Job sector" value={sector} onChange={(event) => setSector(event.target.value)}><option value="all">All sectors ({sectors.length})</option>{sectors.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+          <label className="ms-field ms-kh-search"><span><Search size={13} aria-hidden="true" /> Search roles or skills</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" /><input aria-label="Search roles and skills" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="e.g. data, nursing, CAD, Python..." /></span></label>
         </div>
 
-        <div className="jobs-support-steps">
-          <div className="jobs-support-step-item">
-            <span className="jobs-step-num">01</span>
+        <div className="ms-dir-results-head">
+          <p role="status">Showing <strong>{results.length.toString().padStart(2, "0")}</strong> pathways in {destination.name}</p>
+          {hasActiveFilters && <button type="button" onClick={clearFilters} className="ms-btn ms-btn-ghost ms-dir-reset"><span>Reset filters</span><X size={15} aria-hidden="true" /></button>}
+        </div>
+        <p className="ms-dir-note"><strong>Career intelligence · </strong>Explore entry qualifications, skills, language preparation, and ATS CV guidance for each pathway. These dossiers support your professional preparation; they are not live recruitment vacancies.</p>
+
+        {results.length ? <div className="ms-jobs-grid">{results.map((item, index) => {
+          const roleTypesList = careerRoleTypes[item.slug] || ["job"];
+          return <button type="button" className="ms-job" key={item.slug} aria-haspopup="dialog" aria-label={`Open ${item.title} pathway details`} onClick={() => setSelected(item.slug)} data-spotlight data-cursor="Open">
+            <span className="ms-job-top"><span><BriefcaseBusiness size={14} aria-hidden="true" /> {item.sector}</span><span className="ms-card-index">{String(index + 1).padStart(2, "0")}</span></span>
+            <strong className="ms-job-title">{item.title}</strong>
+            <span className="ms-job-summary">{item.summary}</span>
+            <span className="ms-job-tags">{roleTypesList.map((type) => <span key={type} className={`is-${type}`}>{opportunityTypeLabels[type]}</span>)}</span>
+            <span className="ms-job-skills"><small>Key CV competencies</small>{item.skills.slice(0, 2).map((skill) => <span key={skill}>{skill}</span>)}</span>
+            <span className="ms-job-foot"><span>{destination.name}</span><span className="ms-card-cta">Explore the dossier<ArrowUpRight size={15} aria-hidden="true" /></span></span>
+          </button>;
+        })}</div> : <div className="ms-empty"><h3>No pathways match those filters.</h3><p>Try resetting your keyword, or choosing “All pathways” and “All sectors”.</p><button type="button" onClick={clearFilters} className="ms-btn ms-btn-ghost"><span>Clear all filters</span><X size={15} aria-hidden="true" /></button></div>}
+      </Section>
+
+      <Section tone="ink" kicker="ALTHÉA CAREER COMPASS" title="Good guidance can" accent="change the whole search." intro="From adapting your Indian qualifications to local CV conventions to understanding work permits and post-study visas, we help you prepare for real opportunities." align="split">
+        <Steps items={[
+          { title: "Make your experience clear on your CV.", body: <p>Reconstruct your academic and work profile to match destination ATS formatting (French CV, UK standard, US 1-page).</p> },
+          { title: "Understand employer technical expectations.", body: <p>Translate your syllabus into industry-recognised accreditations (CTI, ABET, Eurocodes, FE/PE licensures).</p> },
+          { title: "Plan your visa & post-study roadmap.", body: <p>Map out every statutory milestone from student visa to post-study work authorisation (APS, STEM OPT, Graduate Route).</p> },
+        ]} />
+        <div className="ms-row" style={{ marginTop: 36 }}>
+          <button type="button" onClick={() => setIsConsultationOpen(true)} className="ms-btn ms-btn-gold"><span>Book a career strategy session</span><ArrowUpRight size={17} aria-hidden="true" /></button>
+          <a href={whatsappHref} target="_blank" rel="noreferrer" className="ms-btn ms-btn-light"><span>Chat directly on WhatsApp</span><MessageCircle size={17} aria-hidden="true" /></a>
+        </div>
+      </Section>
+
+      {role && <div className="ms-dialog-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
+        <article id="job-detail" className="ms-dialog" role="dialog" aria-modal="true" aria-labelledby="job-dialog-title" data-lenis-prevent>
+          <div className="ms-dialog-top">
             <div>
-              <strong>Make your experience clear on your CV.</strong>
-              <p>Reconstruct your academic and work profile to match destination ATS formatting (French CV, UK standard, US 1-page).</p>
+              <p className="ms-kicker">{destination.name} · {role.sector} · CAREER DOSSIER</p>
+              <h3 id="job-dialog-title">{role.title}</h3>
+              <p className="ms-dialog-summary">{role.summary}</p>
+              <span className="ms-job-tags">{roleTypes.map((type) => <span key={type} className={`is-${type}`}>{opportunityTypeLabels[type]}</span>)}</span>
             </div>
+            <button className="ms-dialog-close" type="button" autoFocus onClick={() => setSelected(null)} aria-label="Close role details"><X size={20} /></button>
           </div>
-          <div className="jobs-support-step-item">
-            <span className="jobs-step-num">02</span>
-            <div>
-              <strong>Understand employer technical expectations.</strong>
-              <p>Translate your syllabus into industry-recognized accreditations (CTI, ABET, Eurocodes, FE/PE licensures).</p>
-            </div>
-          </div>
-          <div className="jobs-support-step-item">
-            <span className="jobs-step-num">03</span>
-            <div>
-              <strong>Plan your visa & post-study roadmap.</strong>
-              <p>Map out every statutory milestone from student visa to post-study work authorization (APS, STEM OPT, Graduate Route).</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="jobs-support-cta-box">
-          <button
-            type="button"
-            onClick={() => setIsConsultationOpen(true)}
-            className="jobs-support-btn"
-          >
-            <span>Book Career Strategy Session</span>
-            <ArrowUpRight size={16} />
-          </button>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            className="jobs-support-whatsapp"
-          >
-            <MessageCircle size={17} />
-            <span>Chat directly on WhatsApp</span>
+          <a className="ms-dialog-cta" href={whatsappHref} target="_blank" rel="noreferrer">
+            <span className="ms-form-icon"><MessageCircle size={22} aria-hidden="true" /></span>
+            <span><strong>Need dedicated help with your CV & applications?</strong><small>Message Harshita on WhatsApp about this {role.title} pathway in {destination.name}</small></span>
+            <ArrowUpRight size={18} aria-hidden="true" />
           </a>
-        </div>
-      </section>
+          <div className="ms-dialog-grid">
+            <section><h4><FileCheck size={17} aria-hidden="true" /> What employers commonly look for</h4><ul>{role.qualifications.map((item) => <li key={item}>{item}</li>)}</ul></section>
+            <section><h4><Sparkles size={17} aria-hidden="true" /> Skills to highlight on your CV</h4><ul>{role.skills.map((item) => <li key={item}>{item}</li>)}</ul></section>
+            <section className="is-wide"><h4><Compass size={17} aria-hidden="true" /> Language & local requirements</h4><p>{role.language}</p></section>
+            <section className="is-wide is-ink"><h4><ShieldCheck size={17} aria-hidden="true" /> Work rights in {destination.name}</h4><dl><div><dt>Student limit</dt><dd>{activeFramework.studentWorkLimit}</dd></div><div><dt>Statutory wage</dt><dd>{activeFramework.minWage}</dd></div><div><dt>Post-study visa</dt><dd>{activeFramework.postStudyVisa}</dd></div></dl></section>
+          </div>
+          <div className="ms-dialog-foot">
+            <p>A practical pathway guide developed by Althéa Consulting. Requirements, employer work authorisation, and statutory visa processes vary by candidate profile and jurisdiction.</p>
+            <button type="button" onClick={() => { setSelected(null); setIsConsultationOpen(true); }} className="ms-btn ms-btn-ink"><span>Book a 1-on-1 consultation</span><Calendar size={16} aria-hidden="true" /></button>
+          </div>
+        </article>
+      </div>}
 
-      {/* ── 8. Detailed Pathway Dossier Modal ── */}
-      {role && (
-        <div
-          className="job-modal-backdrop"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setSelected(null);
-          }}
-        >
-          <article
-            id="job-detail"
-            className="job-detail"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="job-dialog-title"
-          >
-            <div className="job-detail-top">
-              <div>
-                <p className="eyebrow">
-                  {destination.name} · {role.sector} · CAREER DOSSIER
-                </p>
-                <h3 id="job-dialog-title">{role.title}</h3>
-                <p className="job-detail-summary">{role.summary}</p>
-                <div className="job-type-tags">
-                  {roleTypes.map((type) => (
-                    <span key={type} className={`job-tag-${type}`}>
-                      {opportunityTypeLabels[type]}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <button
-                className="job-close"
-                type="button"
-                autoFocus
-                onClick={() => setSelected(null)}
-                aria-label="Close role details"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Direct WhatsApp Callout */}
-            <a className="job-cv-cta" href={whatsappHref} target="_blank" rel="noreferrer">
-              <div className="job-cta-icon">
-                <MessageCircle size={24} />
-              </div>
-              <div className="job-cta-text">
-                <strong>Need dedicated assistance with your CV & applications?</strong>
-                <small>
-                  Message Harshita directly on WhatsApp about this {role.title} pathway in {destination.name}
-                </small>
-              </div>
-              <ArrowUpRight size={18} className="job-cta-arrow" />
-            </a>
-
-            {/* Dossier Specifications */}
-            <div className="job-requirements">
-              <div className="job-req-card">
-                <h4>
-                  <FileCheck size={18} /> What employers commonly look for
-                </h4>
-                <ul>
-                  {role.qualifications.map((item) => (
-                    <li key={item}>
-                      <span className="job-bullet-dot" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="job-req-card">
-                <h4>
-                  <Sparkles size={18} /> Skills to highlight on your CV
-                </h4>
-                <ul>
-                  {role.skills.map((item) => (
-                    <li key={item}>
-                      <span className="job-bullet-dot" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="job-req-card job-req-full">
-                <h4>
-                  <Compass size={18} /> Language & local statutory requirements
-                </h4>
-                <p>{role.language}</p>
-              </div>
-
-              <div className="job-req-card job-req-full job-req-statutory">
-                <h4>
-                  <ShieldCheck size={18} /> Statutory Work Rights in {destination.name}
-                </h4>
-                <div className="job-statutory-mini-grid">
-                  <div>
-                    <span>Student Limit</span>
-                    <strong>{activeFramework.studentWorkLimit}</strong>
-                  </div>
-                  <div>
-                    <span>Statutory Wage</span>
-                    <strong>{activeFramework.minWage}</strong>
-                  </div>
-                  <div>
-                    <span>Post-Study Visa</span>
-                    <strong>{activeFramework.postStudyVisa}</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="job-modal-footer">
-              <p className="jobs-disclaimer">
-                A practical pathway guide developed by Althéa Consulting. Requirements, employer work authorization, and statutory visa processes vary by candidate profile and jurisdiction.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelected(null);
-                  setIsConsultationOpen(true);
-                }}
-                className="job-modal-book-btn"
-              >
-                Book 1-on-1 Consultation
-              </button>
-            </div>
-          </article>
-        </div>
-      )}
-
-      {/* ── 9. Consultation Modal ── */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-        defaultCountry={destination.name}
-        defaultMessage={`I would like career guidance and work pathway advice for ${destination.name}.`}
-      />
-    </section>
+      <ConsultationModal isOpen={isConsultationOpen} onClose={() => setIsConsultationOpen(false)} defaultCountry={destination.name} defaultMessage={`I would like career guidance and work pathway advice for ${destination.name}.`} />
+    </div>
   );
 }

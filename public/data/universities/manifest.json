@@ -6,19 +6,19 @@
       "institutionCount": 245,
       "courseCount": 25805,
       "uniqueInstitutionCount": 245,
-      "coverage": "245 higher-education institution entries plus 2026 Parcoursup undergraduate programme catalogue. Parcoursup records do not include tuition."
+      "coverage": "245 higher-education institution entries plus the 2026 Parcoursup undergraduate catalogue. Every course has a sourced tuition planning figure using public/private and apprenticeship context where matched; estimates are distinct from published course fees."
     },
     "uk": {
       "institutionCount": 1052,
       "courseCount": 32533,
       "uniqueInstitutionCount": 1050,
-      "coverage": "Student-route sponsor register plus 32,533 eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026; tuition is not included."
+      "coverage": "Student-route sponsor register plus 32,533 eligible undergraduate course/location records for 2027–28 from HESA Discover Uni 2026. Missing course fees use British Council international tuition planning ranges, not provider quotes."
     },
     "usa": {
       "institutionCount": 4059,
       "courseCount": 211486,
       "uniqueInstitutionCount": 4019,
-      "coverage": "IPEDS institutions (2024) plus U.S. Department of Education College Scorecard field/credential history (updated 2026-06-10). Programme rows reflect reported award cohorts, not a current admissions catalogue; no programme-level tuition is included."
+      "coverage": "IPEDS institutions (2024) and College Scorecard historical field/credential records (updated 2026-06-10), not a current admissions catalogue. Approximate budgets use 2023–24 IPEDS institution-level out-of-state fees or peer ranges; they are not current course-specific quotes."
     },
     "canada": {
       "institutionCount": 1424,

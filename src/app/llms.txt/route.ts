@@ -1,6 +1,7 @@
 import { brand } from "@/config/brand";
 import { articles, cities, faqs } from "@/data/france";
-import { guides } from "@/data/franceGuides";
+import { franceGuide } from "@/data/guides/france";
+import { destinationGuides } from "@/data/guides";
 import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -22,13 +23,14 @@ export function GET() {
     link("Book a consultation", "/book-consultation", `speak with ${brand.person}`),
     link("About", "/about", `${brand.name} and ${brand.person}`),
     "",
-    "## France guides",
-    link("Campus France India application guide", "/campus-france-guide", "the Études en France procedure step by step"),
-    ...guides.map(g => link(`${g.title} ${g.accent}`, `/france/${g.slug}`, g.summary)),
+    "## The complete France guide",
+    ...franceGuide.chapters.map(c => link(c.label, c.path, c.summary)),
     link("First 30 days in France checklist", "/first-30-days-france", "printable arrival checklist for international students"),
     link("Scholarships", "/scholarships", "study abroad scholarships and funding"),
     link("Universities in France", "/france/universities", "researched programmes, tuition and application timing"),
     link("Jobs", "/jobs", "jobs, internships and work-study pathways in France and six other countries"),
+    "",
+    ...destinationGuides.flatMap(g => ["", `## The complete ${g.name} guide`, ...g.chapters.map(c => link(c.label, c.path, c.summary))]),
     "",
     "## Student cities in France",
     ...cities.map(c => link(`Study in ${c.name}`, `/cities/${c.slug}`, `student life in ${c.name}`)),

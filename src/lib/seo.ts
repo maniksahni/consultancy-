@@ -22,11 +22,11 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
       title: socialTitle, description, url: absoluteUrl(path),
-      images: [{ url: absoluteUrl("/images/editorial/france-evening-20261014.webp"), alt: "The Eiffel Tower and Pont Alexandre III in Paris" }],
+      images: [{ url: absoluteUrl("/images/paris/og-althea.jpg"), width: 1200, height: 630, alt: "Althéa — the Eiffel Tower beneath a pink autumn sky in Paris" }],
       ...metadata.openGraph,
     },
     twitter: { card: "summary_large_image", title: socialTitle, description,
-      images: [absoluteUrl("/images/editorial/france-evening-20261014.webp")], ...metadata.twitter },
+      images: [absoluteUrl("/images/paris/og-althea.jpg")], ...metadata.twitter },
   };
 }
 

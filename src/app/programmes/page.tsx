@@ -1,5 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
 import Page from '@/components/althea/Page';
-import SnapshotFinder from '@/components/althea/SnapshotFinder';
-export const metadata=pageMetadata('/programmes', {title: 'Study Programmes & Fees', description: 'Search in-site programme records with published tuition, entry requirements and application dates, where verified.'});
-export default function Directory(){return <Page path="/programmes" eyebrow="LE PARCOURS · FRANCE" title="Find your programme." intro="Explore the reviewed collection. Published figures and evidence summaries are shown here; unverified details are labelled."><SnapshotFinder kind="programmes"/></Page>}
+import ProgrammeResearchFinder from '@/components/althea/ProgrammeResearchFinder';
+import { Section } from "@/components/maison/ui";
+export const metadata=pageMetadata('/programmes', {title: 'Study Programmes & Fees', description: 'Search in-site programme records with published tuition, entry requirements and application dates, with official sources and labelled planning estimates.'});
+export default function Directory(){return <Page path="/programmes" eyebrow="THE GLOBAL PROGRAMME COLLECTION" title="Find your" accent="programme." intro="Compare study options across seven destinations with tuition, application timing, entry preparation and clear source links."><Section tone="ivory"><ProgrammeResearchFinder/></Section></Page>}

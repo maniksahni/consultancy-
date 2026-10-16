@@ -3,8 +3,7 @@
     "argv": [
       "/usr/local/bin/node",
       "/Users/maniksahni/Desktop/consultancy-website/node_modules/.bin/playwright",
-      "test",
-      "tests/consultation.spec.ts"
+      "test"
     ],
     "configFile": "/Users/maniksahni/Desktop/consultancy-website/playwright.config.ts",
     "rootDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
@@ -18,7 +17,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 2
     },
     "preserveOutput": "always",
     "projects": [
@@ -27,7 +26,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "id": "",
         "name": "",
@@ -47,7 +46,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "name": "",
         "testDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
@@ -95,6 +94,478 @@
   },
   "suites": [
     {
+      "title": "atelier.spec.ts",
+      "file": "atelier.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "homepage at 320px: story sections and destination gallery",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6164,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    11 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    11 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59",
+                    "location": {
+                      "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                      "column": 59,
+                      "line": 9
+                    },
+                    "snippet": "   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                        "column": 59,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    11 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n\n   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:38.442Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/atelier-homepage-at-320px--bf932-ons-and-destination-gallery/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                    "column": 59,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-5a454f4752d81af3f4aa",
+          "file": "atelier.spec.ts",
+          "line": 4,
+          "column": 7
+        },
+        {
+          "title": "homepage at 390px: story sections and destination gallery",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5428,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    8 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    8 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59",
+                    "location": {
+                      "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                      "column": 59,
+                      "line": 9
+                    },
+                    "snippet": "   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                        "column": 59,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    8 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n\n\n   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:48.863Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/atelier-homepage-at-390px--ea61c-ons-and-destination-gallery/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                    "column": 59,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-c9565628afa934201df2",
+          "file": "atelier.spec.ts",
+          "line": 4,
+          "column": 7
+        },
+        {
+          "title": "homepage at 430px: story sections and destination gallery",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5389,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59",
+                    "location": {
+                      "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                      "column": 59,
+                      "line": 9
+                    },
+                    "snippet": "   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                        "column": 59,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n\n   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:55.784Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/atelier-homepage-at-430px--1cab4-ons-and-destination-gallery/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                    "column": 59,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-6b0ebb3303f288065109",
+          "file": "atelier.spec.ts",
+          "line": 4,
+          "column": 7
+        },
+        {
+          "title": "homepage at 768px: story sections and destination gallery",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6544,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    6 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    6 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59",
+                    "location": {
+                      "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                      "column": 59,
+                      "line": 9
+                    },
+                    "snippet": "   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                        "column": 59,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    6 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m      - unexpected value \"Bonjour,future.\"\u001b[22m\n\n\n   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:03.109Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/atelier-homepage-at-768px--e05ac-ons-and-destination-gallery/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                    "column": 59,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-674c8afbaf4575f0a239",
+          "file": "atelier.spec.ts",
+          "line": 4,
+          "column": 7
+        },
+        {
+          "title": "homepage at 1440px: story sections and destination gallery",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6079,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59",
+                    "location": {
+                      "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                      "column": 59,
+                      "line": 9
+                    },
+                    "snippet": "   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                        "column": 59,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { level: 1 })\nExpected substring: \u001b[32m\"\u001b[7mGo further\u001b[27m.\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBonjour,future\u001b[27m.\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByRole('heading', { level: 1 }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { level: 1 })\u001b[22m\n\u001b[2m    10 × locator resolved to <h1 id=\"lx-hero-title\">…</h1>\u001b[22m\n\u001b[2m       - unexpected value \"Bonjour,future.\"\u001b[22m\n\n\n   7 |     await page.setViewportSize({ width, height: 900 });\n   8 |     await page.goto('/');\n>  9 |     await expect(page.getByRole('heading', { level: 1 })).toContainText('Go further.');\n     |                                                           ^\n  10 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n  11 |     const gallery = page.getByRole('region', { name: 'Study destinations', exact: true });\n  12 |     await expect(gallery.locator('.mx-dest')).toHaveCount(8);\n    at /Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts:9:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:12.571Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/atelier-homepage-at-1440px-9161a-ons-and-destination-gallery/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/maniksahni/Desktop/consultancy-website/tests/atelier.spec.ts",
+                    "column": 59,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-bd1564e800c84a9bc9a9",
+          "file": "atelier.spec.ts",
+          "line": 4,
+          "column": 7
+        },
+        {
+          "title": "site menu opens as a dialog, closes with Escape and returns focus",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:22.407Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-c0c63c611f90a4e9e39d",
+          "file": "atelier.spec.ts",
+          "line": 24,
+          "column": 5
+        },
+        {
+          "title": "homepage finder carries country and query into the course finder",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:36.648Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-30e9b95ebca32b7135ab",
+          "file": "atelier.spec.ts",
+          "line": 41,
+          "column": 5
+        },
+        {
+          "title": "FAQ expands and collapses; the finale opens the booking flow",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3376,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:42.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e45d29c3e3e9c7583ac-c56782c57505aeb23cb2",
+          "file": "atelier.spec.ts",
+          "line": 52,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "atlas.spec.ts",
+      "file": "atlas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "destination discovery, persistent shortlist and comparison",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:38.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bed8efe74e8526a653f7-da3e8bcd5b83599f0ae1",
+          "file": "atlas.spec.ts",
+          "line": 2,
+          "column": 5
+        }
+      ]
+    },
+    {
       "title": "consultation.spec.ts",
       "file": "consultation.spec.ts",
       "column": 0,
@@ -113,15 +584,15 @@
               "projectName": "",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 37,
+                  "duration": 157,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-14T11:41:09.329Z",
+                  "startTime": "2026-10-16T17:30:48.351Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -147,15 +618,15 @@
               "projectName": "",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 982,
+                  "duration": 1356,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-14T11:41:09.391Z",
+                  "startTime": "2026-10-16T17:30:48.524Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -181,15 +652,15 @@
               "projectName": "",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 682,
+                  "duration": 1218,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-14T11:41:10.829Z",
+                  "startTime": "2026-10-16T17:30:49.904Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -215,15 +686,15 @@
               "projectName": "",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 705,
+                  "duration": 1500,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-14T11:41:11.519Z",
+                  "startTime": "2026-10-16T17:30:51.144Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -237,15 +708,503 @@
           "column": 43
         }
       ]
+    },
+    {
+      "title": "knowledge.spec.ts",
+      "file": "knowledge.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "country and topic filters, dated evidence and guide download",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:52.674Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0828a03cd0e93ee0ce1b-dae0ce84a4adbd57f9fc",
+          "file": "knowledge.spec.ts",
+          "line": 2,
+          "column": 5
+        },
+        {
+          "title": "budget uses entered amounts without currency conversion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 591,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:53.562Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0828a03cd0e93ee0ce1b-82c2a7738f4b29b32356",
+          "file": "knowledge.spec.ts",
+          "line": 12,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "programme-research.spec.ts",
+      "file": "programme-research.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "programme search exposes fee period, applicant category and dated evidence",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1672,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:54.173Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f7a026c5d6036f0456bf-3fd7b3588e8e80160b5f",
+          "file": "programme-research.spec.ts",
+          "line": 2,
+          "column": 5
+        },
+        {
+          "title": "programme export and closed-round filters preserve provenance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:55.859Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f7a026c5d6036f0456bf-289f049b87686f2c8cdc",
+          "file": "programme-research.spec.ts",
+          "line": 7,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "site.spec.ts",
+      "file": "site.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "every exported route: 320px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 41198,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:30:56.343Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-af44ee9cbe55d18c7f9a",
+          "file": "site.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "every exported route: 390px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 21693,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:37.566Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-139fb7035d5bb329d982",
+          "file": "site.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "every exported route: 768px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 27130,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:31:59.292Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-d72f6f3317390bda185c",
+          "file": "site.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "every exported route: 1440px",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 24980,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:32:26.432Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-7090298c2826e5713f3b",
+          "file": "site.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "homepage fits all requested widths and landscape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:32:51.438Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-f2f38031974f6dda842a",
+          "file": "site.spec.ts",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "title": "navigation, finder, FAQ, process and form states",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:32:59.977Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-cb1dac2cb7c35e1de438",
+          "file": "site.spec.ts",
+          "line": 75,
+          "column": 5
+        },
+        {
+          "title": "WCAG A/AA audit of all routes on mobile and desktop",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "timedOut",
+                  "duration": 120062,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/maniksahni/Desktop/consultancy-website/tests/site.spec.ts",
+                        "column": 23,
+                        "line": 112
+                      },
+                      "message": "Error: page.evaluate: Test timeout of 120000ms exceeded.\n Please check out https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/error-handling.md\n\n  110 |     for (const route of routes) {\n  111 |       await page.goto(route);\n> 112 |       const results = await new AxeBuilder({ page })\n      |                       ^\n  113 |         .withTags([\"wcag2a\", \"wcag2aa\", \"wcag21aa\"])\n  114 |         .analyze();\n  115 |       if (results.violations.length)\n    at AxeBuilder.analyze (/Users/maniksahni/Desktop/consultancy-website/node_modules/@axe-core/playwright/dist/index.js:253:13)\n    at /Users/maniksahni/Desktop/consultancy-website/tests/site.spec.ts:112:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:33:04.222Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/maniksahni/Desktop/consultancy-website/test-results/site-WCAG-A-AA-audit-of-all-routes-on-mobile-and-desktop/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-106fa5357dd4700389bf",
+          "file": "site.spec.ts",
+          "line": 102,
+          "column": 5
+        },
+        {
+          "title": "internal links resolve and no source points to a fake portal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10535,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:35:04.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-f79c72ab8f8c178411b9",
+          "file": "site.spec.ts",
+          "line": 125,
+          "column": 5
+        },
+        {
+          "title": "student stories turn, can be chosen and lead to the full collection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 779,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T17:35:15.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5c02723ad68c2a0d50c5-9532fd9ae512a9d1db23",
+          "file": "site.spec.ts",
+          "line": 142,
+          "column": 5
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-14T11:41:09.001Z",
-    "duration": 3281.947,
-    "expected": 4,
+    "startTime": "2026-10-16T17:30:37.439Z",
+    "duration": 279077.198,
+    "expected": 20,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 6,
     "flaky": 0
   }
 }

@@ -206,4 +206,4 @@ export const articles = [
   },
 ];
 
-for (const p of programmes) { const evidence=programmeResearch.find(e=>e.slug===p.slug); if(evidence){p.tuitionAmount=evidence.fee.amount;p.lastVerifiedAt=evidence.reviewedAt;} }
+for (const p of programmes) { const evidence=programmeResearch.find(e=>e.slug===p.slug); if(evidence){p.tuitionAmount=evidence.fee.amount;p.intakePeriod=evidence.deadline.label;p.lastVerifiedAt=evidence.reviewedAt;} }

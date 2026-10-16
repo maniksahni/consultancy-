@@ -29,14 +29,14 @@ for (const width of [320, 390, 1440]) test(`WhatsApp form at ${width}px: validat
   await expect(form.locator('input[type="email"]')).toHaveCount(0);
   await expect(page.getByText("Online enquiries are being configured", { exact: false })).toHaveCount(0);
   await expect(form.locator("[required]")).toHaveCount(2);
-  const button = form.getByRole("button", { name: "Request a conversation" });
+  const button = form.getByRole("button", { name: "Continue to WhatsApp" });
   await expect(button).toBeEnabled();
   await button.click();
   await expect(form.getByRole("status")).toHaveText("Please check the highlighted fields.");
   await expect(form.getByLabel("Full name")).toBeFocused();
   await form.getByLabel("Full name").fill(sample.fullName);
   await form.getByLabel("Phone number").fill(sample.phone);
-  await form.getByLabel("Study destination").selectOption(sample.targetCountry);
+  await form.locator("select[name=targetCountry]").selectOption(sample.targetCountry);
   await form.getByLabel("Academic background").fill(sample.background);
   await form.getByLabel("What would you like to explore?").fill(sample.message);
   await form.getByLabel("Preferred time").fill(sample.preferredTime);
@@ -52,7 +52,7 @@ for (const width of [320, 390, 1440]) test(`WhatsApp form at ${width}px: validat
   await expect.poll(() => captured).toBe(buildConsultationWhatsAppUrl(sample));
   await expect(form.getByRole("button", { name: "Opening WhatsApp…" })).toBeVisible();
   await expect(form.getByRole("link", { name: "Not redirected? Open WhatsApp" })).toHaveAttribute("href", captured);
-  await expect(form.getByText("Submitting opens WhatsApp with your details ready to send.")).toBeVisible();
+  await expect(form.getByText("WhatsApp opens with your details filled in.", { exact: false })).toBeVisible();
   expect(writes).toEqual([]);
   expect(errors).toEqual([]);
 });

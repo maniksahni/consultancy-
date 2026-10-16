@@ -1,5 +1,5 @@
 import { brand } from "@/config/brand";
-import {studyKnowledge} from "./studyKnowledge";
+import {studyKnowledge,knowledgeReviewedAt} from "./studyKnowledge";
 export type FrenchGuide = {
  slug:"scholarships"|"visas"|"living"|"costs"|"faq";
  eyebrow:string;title:string;accent:string;summary:string;
@@ -41,4 +41,4 @@ export const guides:FrenchGuide[]=[
 ];
 export function getGuide(slug:string){return guides.find(g=>g.slug===slug);}
 
-for (const guide of guides) { const topic:Record<string,string>={costs:"Costs",visas:"Visa",scholarships:"Scholarships"}; const record=studyKnowledge.find(e=>e.country==="france"&&e.topic===topic[guide.slug]); if(record)guide.entries.unshift({title:record.title,description:record.summary+" Source review: 14 October 2026. "+record.basis+".",source:record.publisher,url:record.source}); }
+for (const guide of guides) { const topic:Record<string,string>={costs:"Costs",visas:"Visa",scholarships:"Scholarships"}; const record=studyKnowledge.find(e=>e.country==="france"&&e.topic===topic[guide.slug]); if(record)guide.entries.unshift({title:record.title,description:record.summary+" Source review: "+(record.reviewedAt||knowledgeReviewedAt)+". "+record.basis+".",source:record.publisher,url:record.source}); }

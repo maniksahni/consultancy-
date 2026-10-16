@@ -1,10 +1,9 @@
 import { pageMetadata } from "@/lib/seo";
-import { brand } from "@/config/brand";
 import type { Metadata } from "next";
 import CampusFranceContent from "@/components/althea/CampusFranceContent";
 export const metadata: Metadata = pageMetadata('/campus-france-guide', {
-  title: 'Campus France Application Guide',
+  title: 'Campus France India Application Guide',
   description:
-    "Start with your country of residence and the requirements of your chosen programme.",
+    "Campus France India (Études en France) step by step: account, documents, ₹20,000 fee, academic interview, offers and visa for 2027 intake.",
 });
 export default function Content() { return <CampusFranceContent />; }

@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
 import Page from "@/components/althea/Page";
-import Link from "next/link";
-import { ArrowDownToLine, ArrowUpRight, Check } from "lucide-react";
+import { Card, Checklist, Grid, Kicker, Notice, Section, TextLink } from "@/components/maison/ui";
+import { ArrowDownToLine } from "lucide-react";
 
 export const metadata = pageMetadata("/first-30-days-france", {
   title: "First 30 Days in France Checklist",
@@ -15,8 +15,10 @@ const groups = [
 ];
 
 export default function FirstThirtyDaysPage() {
-  return <Page path="/first-30-days-france" eyebrow="FREE STUDENT RESOURCE" title="Your first 30 days in France." intro="A simple checklist for the practical things that can make settling into a new country feel more manageable.">
-    <div className="checklist-download"><div><p className="eyebrow">KEEP IT HANDY</p><h2>Take the checklist<br/><em>with you.</em></h2><p>Download a plain, printable copy and work through it at your own pace. Some steps depend on your city, status and individual circumstances—always confirm requirements with the relevant official service.</p><a className="button" href="/downloads/first-30-days-france-checklist.txt" download><ArrowDownToLine size={17}/> Download the free checklist</a></div><div className="checklist-groups">{groups.map(([title,...items])=><section key={title}><h3>{title}</h3>{items.map(item=><p key={item}><Check size={16}/>{item}</p>)}</section>)}</div></div>
-    <section className="checklist-next"><p className="eyebrow">WANT PERSONAL GUIDANCE?</p><h2>Get help with the steps<br/><em>that matter to you.</em></h2><Link className="text-link" href="/settle-in-france">Explore Settle in France packages <ArrowUpRight size={17}/></Link></section>
+  return <Page path="/first-30-days-france" eyebrow="FREE STUDENT RESOURCE" title="Your first 30 days" accent="in France." intro="A simple checklist for the practical things that can make settling into a new country feel more manageable.">
+    <Section tone="ivory" kicker="KEEP IT HANDY" title="Take the checklist" accent="with you." intro="Download a plain, printable copy and work through it at your own pace. Some steps depend on your city, status and individual circumstances—always confirm requirements with the relevant official service." action={<a className="ms-btn ms-btn-gold" href="/downloads/first-30-days-france-checklist.txt" download><span>Download the free checklist</span><ArrowDownToLine size={17} aria-hidden="true" /></a>}>
+      <Grid cols={3}>{groups.map(([title, ...items], i) => <Card key={title} index={i + 1} title={title}><Checklist items={items} /></Card>)}</Grid>
+      <Notice kicker="WANT PERSONAL GUIDANCE?"><p className="ms-notice-title">Get help with the steps <em>that matter to you.</em></p><TextLink href="/settle-in-france">Explore Settle in France packages</TextLink></Notice>
+    </Section>
   </Page>;
 }

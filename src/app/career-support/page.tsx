@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
-import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { Btn, Kicker, Section, Split, Steps, TextLink } from "@/components/maison/ui";
+import { paris } from "@/lib/paris";
 
 export const metadata = pageMetadata("/career-support", {
   title: "Career Coach in France for Students",
@@ -17,9 +17,19 @@ const steps = [
 ];
 
 export default function CareerSupportPage() {
-  return <Page path="/career-support" eyebrow="CAREER SUPPORT IN FRANCE" title="Career support in France" intro="Practical career preparation for international students and young professionals building a future in France.">
-    <div className="career-intro"><p>Start with your goals, current experience, language level and the reality of your target sector. Together, we turn those details into a clear and workable plan.</p><Link className="button" href="/book-consultation">Book a career support call <ArrowUpRight size={17}/></Link></div>
-    <div className="career-steps" tabIndex={0} role="region" aria-label="Career support steps">{steps.map(([title,text], i)=><article key={title}><span>0{i+1}</span><Check size={19}/><h2>{title}</h2><p>{text}</p></article>)}</div>
-    <aside className="settle-scope"><p className="eyebrow">PERSONAL, INDEPENDENT GUIDANCE</p><h2>A plan built around<br/><em>your own experience.</em></h2><p>We provide coaching, feedback and preparation. Hiring, admission to a programme, internship offers and work authorisation decisions belong to employers and official authorities and cannot be guaranteed.</p><Link className="text-link" href="/settle-in-france">See all settling support <ArrowUpRight size={17}/></Link></aside>
+  const walk = paris("la-defense-walk");
+  return <Page path="/career-support" eyebrow="CAREER SUPPORT IN FRANCE" title="Career support" accent="in France." intro="Practical career preparation for international students and young professionals building a future in France.">
+    <Section tone="ivory" kicker="WHERE WE START" title="Your experience." accent="A workable plan." intro="Start with your goals, current experience, language level and the reality of your target sector. Together, we turn those details into a clear and workable plan." action={<Btn href="/book-consultation">Book a career support call</Btn>}>
+      <Steps items={steps.map(([title, text]) => ({ title, body: <p>{text}</p> }))} />
+    </Section>
+    <Section tone="ink">
+      <Split image={walk.file} alt={walk.alt} caption="La Défense" reverse>
+        <Kicker>PERSONAL, INDEPENDENT GUIDANCE</Kicker>
+        <h2>A plan built around<br /><em>your own experience.</em></h2>
+        <p>We provide coaching, feedback and preparation. Hiring, admission to a programme, internship offers and work authorisation decisions belong to employers and official authorities and cannot be guaranteed.</p>
+        <TextLink href="/settle-in-france">See all settling support</TextLink>
+        <TextLink href="/jobs">Explore jobs & opportunities in France</TextLink>
+      </Split>
+    </Section>
   </Page>;
 }

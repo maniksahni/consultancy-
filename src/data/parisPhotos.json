@@ -1,0 +1,470 @@
+{
+ "eiffel-autumn-sky": {
+  "file": "/images/paris/eiffel-autumn-sky.webp",
+  "alt": "The Eiffel Tower beneath a pink autumn sky above the Seine",
+  "width": 2600,
+  "height": 1733,
+  "photographer": "Rosivan Morais",
+  "source": "https://www.pexels.com/photo/6053202/",
+  "licence": "Pexels License"
+ },
+ "pont-alexandre-night": {
+  "file": "/images/paris/pont-alexandre-night.webp",
+  "alt": "Pont Alexandre III illuminated over the Seine at night",
+  "width": 2400,
+  "height": 1601,
+  "photographer": "Hernan Berwart",
+  "source": "https://www.pexels.com/photo/33729364/",
+  "licence": "Pexels License"
+ },
+ "champs-elysees-night": {
+  "file": "/images/paris/champs-elysees-night.webp",
+  "alt": "The Champs-Élysées glowing at night, seen from above",
+  "width": 2000,
+  "height": 1028,
+  "photographer": "Maximilian Orlowsky",
+  "source": "https://www.pexels.com/photo/30399123/",
+  "licence": "Pexels License"
+ },
+ "paris-night-aerial": {
+  "file": "/images/paris/paris-night-aerial.webp",
+  "alt": "The lights of Paris at night, seen from above",
+  "width": 2000,
+  "height": 1125,
+  "photographer": "Chait Goli",
+  "source": "https://www.pexels.com/photo/1796717/",
+  "licence": "Pexels License"
+ },
+ "louvre-night": {
+  "file": "/images/paris/louvre-night.webp",
+  "alt": "The Louvre pyramid reflected on wet stone at night",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Artūras Kokorevas",
+  "source": "https://www.pexels.com/photo/29731400/",
+  "licence": "Pexels License"
+ },
+ "louvre-sunset": {
+  "file": "/images/paris/louvre-sunset.webp",
+  "alt": "The Louvre and its pyramid reflected at sunset",
+  "width": 2000,
+  "height": 1502,
+  "photographer": "Elpida Manchin",
+  "source": "https://www.pexels.com/photo/10191050/",
+  "licence": "Pexels License"
+ },
+ "cafe-night": {
+  "file": "/images/paris/cafe-night.webp",
+  "alt": "A Parisian café glowing on a street corner at night",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Ali Burak Cesur",
+  "source": "https://www.pexels.com/photo/35349451/",
+  "licence": "Pexels License"
+ },
+ "cafe-palais-royal": {
+  "file": "/images/paris/cafe-palais-royal.webp",
+  "alt": "A café terrace near the Palais-Royal on a sunny day",
+  "width": 1800,
+  "height": 1297,
+  "photographer": "Fleur van Deijck",
+  "source": "https://www.pexels.com/photo/30132163/",
+  "licence": "Pexels License"
+ },
+ "montmartre-cafe": {
+  "file": "/images/paris/montmartre-cafe.webp",
+  "alt": "The terrace of La Bonne Franquette in Montmartre",
+  "width": 1800,
+  "height": 1350,
+  "photographer": "Josef Kali",
+  "source": "https://www.pexels.com/photo/37945066/",
+  "licence": "Pexels License"
+ },
+ "cafe-red-chairs": {
+  "file": "/images/paris/cafe-red-chairs.webp",
+  "alt": "Red café chairs on a Parisian terrace",
+  "width": 1800,
+  "height": 1193,
+  "photographer": "Anna Urlapova",
+  "source": "https://www.pexels.com/photo/2956952/",
+  "licence": "Pexels License"
+ },
+ "metro-rain-night": {
+  "file": "/images/paris/metro-rain-night.webp",
+  "alt": "A Métropolitain entrance glowing on a wet Paris street at night",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Artūras Kokorevas",
+  "source": "https://www.pexels.com/photo/29731402/",
+  "licence": "Pexels License"
+ },
+ "metro-art-nouveau": {
+  "file": "/images/paris/metro-art-nouveau.webp",
+  "alt": "An Art Nouveau Métropolitain entrance at night",
+  "width": 1800,
+  "height": 2400,
+  "photographer": "Studio Saiz",
+  "source": "https://www.pexels.com/photo/19798792/",
+  "licence": "Pexels License"
+ },
+ "metro-platform": {
+  "file": "/images/paris/metro-platform.webp",
+  "alt": "Travellers walking along a Paris métro platform",
+  "width": 1800,
+  "height": 2700,
+  "photographer": "Brandon Hawkins",
+  "source": "https://www.pexels.com/photo/17674710/",
+  "licence": "Pexels License"
+ },
+ "paris-street-dusk": {
+  "file": "/images/paris/paris-street-dusk.webp",
+  "alt": "A Paris boulevard at dusk",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Daria Agafonova",
+  "source": "https://www.pexels.com/photo/30297593/",
+  "licence": "Pexels License"
+ },
+ "eiffel-between-buildings": {
+  "file": "/images/paris/eiffel-between-buildings.webp",
+  "alt": "The Eiffel Tower framed by Haussmann buildings",
+  "width": 1800,
+  "height": 1204,
+  "photographer": "Darya Sannikova",
+  "source": "https://www.pexels.com/photo/17501700/",
+  "licence": "Pexels License"
+ },
+ "haussmann-crossing": {
+  "file": "/images/paris/haussmann-crossing.webp",
+  "alt": "Pedestrians crossing in front of Haussmann buildings",
+  "width": 1800,
+  "height": 1013,
+  "photographer": "Bingqian Li",
+  "source": "https://www.pexels.com/photo/40076593/",
+  "licence": "Pexels License"
+ },
+ "paris-rooftops": {
+  "file": "/images/paris/paris-rooftops.webp",
+  "alt": "The zinc rooftops and chimneys of Paris",
+  "width": 2000,
+  "height": 1335,
+  "photographer": "Diego F. Parra",
+  "source": "https://www.pexels.com/photo/16923125/",
+  "licence": "Pexels License"
+ },
+ "rooftops-eiffel": {
+  "file": "/images/paris/rooftops-eiffel.webp",
+  "alt": "Parisian rooftops with the Eiffel Tower in the distance",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Fiona Murray",
+  "source": "https://www.pexels.com/photo/38058526/",
+  "licence": "Pexels License"
+ },
+ "paris-skyline-storm": {
+  "file": "/images/paris/paris-skyline-storm.webp",
+  "alt": "The Paris skyline under dramatic clouds",
+  "width": 2000,
+  "height": 1125,
+  "photographer": "Syed Abdul Moiz",
+  "source": "https://www.pexels.com/photo/34207006/",
+  "licence": "Pexels License"
+ },
+ "invalides-sunset": {
+  "file": "/images/paris/invalides-sunset.webp",
+  "alt": "Les Invalides above the Paris rooftops at sunset",
+  "width": 2000,
+  "height": 1125,
+  "photographer": "Tripatpal Singh",
+  "source": "https://www.pexels.com/photo/36399558/",
+  "licence": "Pexels License"
+ },
+ "sacre-coeur-night": {
+  "file": "/images/paris/sacre-coeur-night.webp",
+  "alt": "Sacré-Cœur illuminated above Montmartre at night",
+  "width": 2000,
+  "height": 1125,
+  "photographer": "Pierre Blaché",
+  "source": "https://www.pexels.com/photo/9701151/",
+  "licence": "Pexels License"
+ },
+ "sacre-coeur-dusk": {
+  "file": "/images/paris/sacre-coeur-dusk.webp",
+  "alt": "Sacré-Cœur against a pink sky at dusk",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Sergey Guk",
+  "source": "https://www.pexels.com/photo/28688859/",
+  "licence": "Pexels License"
+ },
+ "bnf-salle-ovale": {
+  "file": "/images/paris/bnf-salle-ovale.webp",
+  "alt": "The Salle Ovale reading room in Paris",
+  "width": 2400,
+  "height": 1350,
+  "photographer": "Ariyan",
+  "source": "https://www.pexels.com/photo/39844516/",
+  "licence": "Pexels License"
+ },
+ "student-cafe": {
+  "file": "/images/paris/student-cafe.webp",
+  "alt": "A student studying with a laptop in a Parisian café",
+  "width": 1800,
+  "height": 1012,
+  "photographer": "K2 Production",
+  "source": "https://www.pexels.com/photo/10609655/",
+  "licence": "Pexels License"
+ },
+ "student-late": {
+  "file": "/images/paris/student-late.webp",
+  "alt": "A student working late among books and a laptop",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "Ron Lach",
+  "source": "https://www.pexels.com/photo/8085257/",
+  "licence": "Pexels License"
+ },
+ "ile-de-la-cite": {
+  "file": "/images/paris/ile-de-la-cite.webp",
+  "alt": "Plane trees along the Seine on the Île de la Cité",
+  "width": 2000,
+  "height": 1500,
+  "photographer": "Matt Hardy",
+  "source": "https://www.pexels.com/photo/2239471/",
+  "licence": "Pexels License"
+ },
+ "seine-sunset": {
+  "file": "/images/paris/seine-sunset.webp",
+  "alt": "The Seine at sunset with a river boat",
+  "width": 2000,
+  "height": 1334,
+  "photographer": "Josh Withers",
+  "source": "https://www.pexels.com/photo/16823627/",
+  "licence": "Pexels License"
+ },
+ "conciergerie-dusk": {
+  "file": "/images/paris/conciergerie-dusk.webp",
+  "alt": "The Conciergerie and the Seine at dusk",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Pixabay",
+  "source": "https://www.pexels.com/photo/358561/",
+  "licence": "Pexels License"
+ },
+ "luxembourg-garden": {
+  "file": "/images/paris/luxembourg-garden.webp",
+  "alt": "People relaxing in the Jardin du Luxembourg",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "Alina Rossoshanska",
+  "source": "https://www.pexels.com/photo/16848795/",
+  "licence": "Pexels License"
+ },
+ "haussmann-facade": {
+  "file": "/images/paris/haussmann-facade.webp",
+  "alt": "Looking up at an ornate Haussmann façade",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "MuffinLand",
+  "source": "https://www.pexels.com/photo/37782358/",
+  "licence": "Pexels License"
+ },
+ "paris-window": {
+  "file": "/images/paris/paris-window.webp",
+  "alt": "A Parisian street seen from an apartment window",
+  "width": 1800,
+  "height": 1207,
+  "photographer": "Jill Evans",
+  "source": "https://www.pexels.com/photo/15308877/",
+  "licence": "Pexels License"
+ },
+ "la-defense-walk": {
+  "file": "/images/paris/la-defense-walk.webp",
+  "alt": "People walking through La Défense",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "Stas Knop",
+  "source": "https://www.pexels.com/photo/1168746/",
+  "licence": "Pexels License"
+ },
+ "la-defense-skyline": {
+  "file": "/images/paris/la-defense-skyline.webp",
+  "alt": "The La Défense business district skyline",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "urtimud.89",
+  "source": "https://www.pexels.com/photo/12154453/",
+  "licence": "Pexels License"
+ },
+ "tgv-arrival": {
+  "file": "/images/paris/tgv-arrival.webp",
+  "alt": "A traveller passing a TGV train at a Paris station",
+  "width": 1800,
+  "height": 1460,
+  "photographer": "Rohit Verma",
+  "source": "https://www.pexels.com/photo/19091075/",
+  "licence": "Pexels License"
+ },
+ "gare-du-nord": {
+  "file": "/images/paris/gare-du-nord.webp",
+  "alt": "Travellers inside Gare du Nord",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "Bingqian Li",
+  "source": "https://www.pexels.com/photo/40076559/",
+  "licence": "Pexels License"
+ },
+ "paris-bookshop": {
+  "file": "/images/paris/paris-bookshop.webp",
+  "alt": "A visitor browsing a Parisian bookshop",
+  "width": 1800,
+  "height": 1202,
+  "photographer": "David Henry",
+  "source": "https://www.pexels.com/photo/6904292/",
+  "licence": "Pexels License"
+ },
+ "graduation": {
+  "file": "/images/paris/graduation.webp",
+  "alt": "Graduates throwing their caps into the air",
+  "width": 1800,
+  "height": 1200,
+  "photographer": "Kaboompics",
+  "source": "https://www.pexels.com/photo/8106547/",
+  "licence": "Pexels License"
+ },
+ "pont-alexandre-couple": {
+  "file": "/images/paris/pont-alexandre-couple.webp",
+  "alt": "Two people on Pont Alexandre III",
+  "width": 1800,
+  "height": 1105,
+  "photographer": "Antonio Miralles Andorra",
+  "source": "https://www.pexels.com/photo/32603608/",
+  "licence": "Pexels License"
+ },
+ "eiffel-sun-rays": {
+  "file": "/images/paris/eiffel-sun-rays.webp",
+  "alt": "Sun rays behind the Eiffel Tower above the Paris rooftops",
+  "width": 2400,
+  "height": 1543,
+  "photographer": "Ismail Maqbool",
+  "source": "https://www.pexels.com/photo/34503355/",
+  "licence": "Pexels License"
+ },
+ "eiffel-dusk-leaves": {
+  "file": "/images/paris/eiffel-dusk-leaves.webp",
+  "alt": "The Eiffel Tower at dusk, framed by leaves",
+  "width": 2400,
+  "height": 1800,
+  "photographer": "Jarod Barton",
+  "source": "https://www.pexels.com/photo/17185651/",
+  "licence": "Pexels License"
+ },
+ "london": {
+  "file": "/images/paris/london.webp",
+  "alt": "Tower Bridge and the Thames at dusk, London",
+  "width": 2000,
+  "height": 1300,
+  "photographer": "Pixabay",
+  "source": "https://www.pexels.com/photo/372470/",
+  "licence": "Pexels License"
+ },
+ "new-york": {
+  "file": "/images/paris/new-york.webp",
+  "alt": "Manhattan's skyline at twilight, New York",
+  "width": 2000,
+  "height": 1334,
+  "photographer": "Ramon Perucho",
+  "source": "https://www.pexels.com/photo/35318714/",
+  "licence": "Pexels License"
+ },
+ "toronto": {
+  "file": "/images/paris/toronto.webp",
+  "alt": "Toronto's skyline and the CN Tower at night",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Mike Norris",
+  "source": "https://www.pexels.com/photo/30831616/",
+  "licence": "Pexels License"
+ },
+ "sydney": {
+  "file": "/images/paris/sydney.webp",
+  "alt": "Sydney Opera House and Harbour Bridge at night",
+  "width": 2000,
+  "height": 1335,
+  "photographer": "Rijan Hamidovic",
+  "source": "https://www.pexels.com/photo/2193300/",
+  "licence": "Pexels License"
+ },
+ "berlin": {
+  "file": "/images/paris/berlin.webp",
+  "alt": "A cyclist passing the Brandenburg Gate at sunset, Berlin",
+  "width": 2000,
+  "height": 2500,
+  "photographer": "Naro K",
+  "source": "https://www.pexels.com/photo/18799537/",
+  "licence": "Pexels License"
+ },
+ "dublin": {
+  "file": "/images/paris/dublin.webp",
+  "alt": "The Custom House on the River Liffey at sunset, Dublin",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Selim Karadayı",
+  "source": "https://www.pexels.com/photo/14200784/",
+  "licence": "Pexels License"
+ },
+ "city-bordeaux": {
+  "file": "/images/paris/city-bordeaux.webp",
+  "alt": "The Miroir d’eau reflecting Place de la Bourse, Bordeaux",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Miguel Cuenca",
+  "source": "https://www.pexels.com/photo/17356595/",
+  "licence": "Pexels License"
+ },
+ "city-lille": {
+  "file": "/images/paris/city-lille.webp",
+  "alt": "The Vieille Bourse and belfry on the Grand Place, Lille",
+  "width": 2000,
+  "height": 1332,
+  "photographer": "Matteo Angeloni",
+  "source": "https://www.pexels.com/photo/18596312/",
+  "licence": "Pexels License"
+ },
+ "city-lyon": {
+  "file": "/images/paris/city-lyon.webp",
+  "alt": "Lyon’s riverside façades on the Saône at sunset",
+  "width": 2000,
+  "height": 1333,
+  "photographer": "Luca Nardone",
+  "source": "https://www.pexels.com/photo/4827690/",
+  "licence": "Pexels License"
+ },
+ "city-toulouse": {
+  "file": "/images/paris/city-toulouse.webp",
+  "alt": "Pont Saint-Pierre and the Dôme de la Grave, Toulouse",
+  "width": 2000,
+  "height": 1125,
+  "photographer": "TBD Traveller",
+  "source": "https://www.pexels.com/photo/30753243/",
+  "licence": "Pexels License"
+ },
+ "city-nice": {
+  "file": "/images/paris/city-nice.webp",
+  "alt": "Sun rays over the Promenade des Anglais, Nice",
+  "width": 2000,
+  "height": 1354,
+  "photographer": "Huy Phan",
+  "source": "https://www.pexels.com/photo/28602953/",
+  "licence": "Pexels License"
+ },
+ "seine-night": {
+  "file": "/images/paris/seine-night.webp",
+  "alt": "The Hôtel de Ville and the Seine lit at night, Paris",
+  "width": 2400,
+  "height": 1600,
+  "photographer": "Olivier Darny",
+  "source": "https://www.pexels.com/photo/10656992/",
+  "licence": "Pexels License"
+ }
+}

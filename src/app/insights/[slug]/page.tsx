@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import { notFound } from "next/navigation";
 import Page from "@/components/althea/Page";
-import Link from "next/link";
+import { Notice, Prose, Section, TextLink } from "@/components/maison/ui";
 import { articles, checked } from "@/data/france";
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -22,22 +22,16 @@ export default function Article({ params }: { params: { slug: string } }) {
   const a = articles.find((a) => a.slug === params.slug);
   if (!a) notFound();
   return (
-    <Page path={`/insights/${params.slug}`} eyebrow={a.category} title={a.title} intro={a.intro}>
-      <article className="prose">
-        <p className="eyebrow">
-          ALTHÉA EDITORIAL · UPDATED {checked.toUpperCase()}
-        </p>
-        {a.paragraphs.map((p) => (
-          <p key={p}>{p}</p>
-        ))}
-        <h2>Continue with the official source.</h2>
-        <a href={a.source} target="_blank" rel="noreferrer">Read the official source ↗</a>
-        <p><Link href="/knowledge">Explore the reviewed guidance library ↗</Link></p>
-        <p className="muted">
-          General orientation. Confirm the current requirements for your own
-          circumstances before applying.
-        </p>
-      </article>
+    <Page path={`/insights/${params.slug}`} eyebrow={a.category} title={a.title} intro={a.intro} closing={{ kicker: "KEEP READING", title: "Your questions,", accent: "answered in person.", body: "Turn what you have read into a plan that fits your own circumstances." }}>
+      <Section tone="ivory" narrow>
+        <p className="ms-kicker" style={{ marginBottom: 30 }}>ALTHÉA EDITORIAL · UPDATED {checked.toUpperCase()}</p>
+        <Prose>
+          {a.paragraphs.map((p) => <p key={p}>{p}</p>)}
+          <h2>Continue with the official source.</h2>
+        </Prose>
+        <div className="ms-row" style={{ marginTop: 10 }}><TextLink href={a.source}>Read the official source</TextLink><TextLink href="/knowledge">Explore the reviewed guidance library</TextLink></div>
+        <Notice kicker="GENERAL ORIENTATION"><p>Confirm the current requirements for your own circumstances before applying.</p></Notice>
+      </Section>
       <JsonLd data={{
         "@context": "https://schema.org", "@type": "Article",
         headline: a.title, description: a.intro, dateModified: "2026-10-14",

@@ -48,7 +48,8 @@ for offset in range(0, total, 100):
         })
 
 # France: current Parcoursup programme catalogue (2026). The source lists
-# programme names and locations but does not contain tuition amounts.
+# programme names and locations; numeric tuition is absent from this extract.
+# Run build-tuition-context.py afterwards to rebuild separate sourced benchmarks.
 parcoursup_url = "https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-cartographie_formations_parcoursup/exports/csv?where=annee%3D%272026%27"
 parcoursup_rows = csv_rows(download(parcoursup_url), delimiter=";")
 for row in parcoursup_rows:
@@ -246,6 +247,15 @@ for name in ireland_names:
 
 # Germany: ROR's openly licensed research-organization register. ROR contains
 # education-type organizations, but it is not the legal state-recognition list.
+def ror_name(row):
+    """The official display name, preferring English labels over acronyms."""
+    names = row.get("names") or []
+    for wanted in ("ror_display", "label"):
+        for name in names:
+            if wanted in name.get("types", []):
+                return name.get("value")
+    return names[0].get("value") if names else row.get("id")
+
 ror_page = 1
 ror_total = None
 while ror_total is None or len([item for item in institutions if item["country"] == "germany"]) < ror_total:
@@ -258,7 +268,7 @@ while ror_total is None or len([item for item in institutions if item["country"]
         loc = next((location.get("geonames_details", {}) for location in row.get("locations", []) if location.get("geonames_details", {}).get("country_code") == "DE"), {})
         institutions.append({
             "id": "de-" + row.get("id", "").rsplit("/", 1)[-1], "country": "germany",
-            "name": row.get("names", [{}])[0].get("value") if row.get("names") else row.get("id"),
+            "name": ror_name(row),
             "city": loc.get("name"), "region": loc.get("country_subdivision_name"),
             "institutionType": ", ".join(row.get("types", [])),
             "identifier": row.get("id"),

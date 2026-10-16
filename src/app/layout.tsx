@@ -1,38 +1,45 @@
 import JsonLd from "@/components/seo/JsonLd";
 import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
+import SiteMotion from "@/components/motion/SiteMotion";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
-import { Caveat, Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
-import "./site-theme.css";
-import "./atelier.css";
-import "./horizon.css";
-import "./jobs.css";
-import "./editorial-pages.css";
+import { Caveat, Instrument_Serif, Manrope, Syne } from "next/font/google";
+import "./base.css";
+import "./maison-ui.css";
+import "./maison.css";
+import "./lumiere.css";
+import "./motion.css";
 const handwriting = Caveat({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-handwriting",
   display: "swap",
 });
-const cormorant = Cormorant_Garamond({
+// Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
+const display = Syne({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-display",
   display: "swap",
 });
-const jakarta = Plus_Jakarta_Sans({
+const body = Manrope({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-jakarta",
+  variable: "--font-body",
+  display: "swap",
+});
+const italic = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-italic",
   display: "swap",
 });
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#faf6ee",
+  themeColor: "#060608",
 };
 export const metadata: Metadata = {
   metadataBase: new URL(brand.canonicalUrl),
@@ -61,6 +68,7 @@ export const metadata: Metadata = {
     images: [{ url: brand.assets.og, width: 1200, height: 630 }],
     title: brand.name,
     description: brand.tagline,
+    siteName: brand.name,
     type: "website",
     locale: "en_IN",
   },
@@ -71,23 +79,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${handwriting.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${italic.variable} ${handwriting.variable}`} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
         {children}
         <FloatingWhatsApp />
+        <SiteMotion />
         <JsonLd data={{
           "@context": "https://schema.org",
           "@graph": [
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
-              name: brand.name, alternateName: brand.shortName, url: siteUrl,
+              name: brand.name, alternateName: ["Althea Consulting", "Althéa Consulting Paris"], url: siteUrl,
+              mainEntityOfPage: `${siteUrl}/about`,
               logo: { "@type": "ImageObject", "@id": `${siteUrl}/#logo`,
                 url: `${siteUrl}${brand.assets.faviconPng}`, contentUrl: `${siteUrl}${brand.assets.faviconPng}`,
                 width: 512, height: 512, caption: brand.name },
               address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
-              disambiguatingDescription: "Independent France study, settling and career advisory founded by Harshita Kohli in Paris.",
+              disambiguatingDescription: "Althéa Consulting at altheaconsulting.in is the independent student and career advisory founded by Harshita Kohli in Paris, serving Indian and international students planning studies and life in France.",
+              hasOfferCatalog: { "@type": "OfferCatalog", name: "Student and career advisory services",
+                itemListElement: [
+                  { name: "Study in France guidance", path: "/study-in-france" },
+                  { name: "Settling in France support", path: "/settle-in-france" },
+                  { name: "Career preparation in France", path: "/career-support" },
+                ].map(service => ({ "@type": "Offer", itemOffered: {
+                  "@type": "Service", name: service.name, url: `${siteUrl}${service.path}`,
+                  provider: { "@id": `${siteUrl}/#organization` },
+                } })),
+              },
               ...(brand.email ? { email: brand.email } : {}),
               ...(brand.whatsappNumber || brand.email ? { contactPoint: {
                 "@type": "ContactPoint",
@@ -108,7 +128,7 @@ export default function RootLayout({
               knowsAbout: ["Studying in France", "Campus France applications", "Career coaching in France", "Settling in France"],
               worksFor: { "@id": `${siteUrl}/#organization` } },
             { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,
-              alternateName: ["Althea Consulting", "altheaconsulting.in"],
+              alternateName: ["Althea Consulting", "Althéa Consulting Paris", "altheaconsulting.in"],
               url: siteUrl, inLanguage: "en",
               publisher: { "@id": `${siteUrl}/#organization` } },
           ],

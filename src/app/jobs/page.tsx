@@ -2,23 +2,32 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import JobsExplorer from "@/components/althea/JobsExplorer";
 import { pageMetadata } from "@/lib/seo";
+import { Card, Grid, Section } from "@/components/maison/ui";
+import { countryGuides } from "@/data/guides";
 
 export const metadata: Metadata = pageMetadata("/jobs", {
-  title: "Jobs in France and Six Other Countries | Althéa Consulting",
-  description: "Explore job, internship and work-study pathways in France, the UK, USA, Canada, Germany, Australia and Ireland with legal work frameworks and statutory minimums.",
+  title: "Jobs Across France and Six Countries",
+  description: "Find jobs, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland. Check official work rules.",
 });
 
 export default function JobsPage() {
   return (
     <Page
       path="/jobs"
-      image="/images/editorial/france-campus.webp"
       imagePlacement="/jobs"
       eyebrow="CAREER OPPORTUNITIES · FRANCE & SIX DESTINATIONS"
-      title="Your next move starts here."
+      title="Your next move"
+      accent="starts here."
       intro="Explore roles, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland with official statutory work rights and ATS resume standards."
     >
       <JobsExplorer />
+      <Section tone="paper" kicker="CAREER GUIDES · SEVEN COUNTRIES" title="Jobs, salaries and" accent="work rights, by country." intro="Where graduates get hired, typical starting salaries, where to search, part-time work rules and how to stay after your degree.">
+        <Grid cols={3}>{countryGuides.map((g, i) => {
+          const jobs = g.chapters.find((c) => c.slug === "jobs")!;
+          const after = g.chapters.find((c) => c.slug === "after-graduation")!;
+          return <Card key={g.country} index={i + 1} kicker={g.name.toUpperCase()} title={`Jobs in ${g.prose}`} href={jobs.path} cta="Read the jobs guide"><p>{jobs.summary}</p><p className="ms-card-note">{after.facts?.[0] ? `After graduation · ${after.facts[0].label}: ${after.facts[0].value}` : after.label}</p></Card>;
+        })}</Grid>
+      </Section>
     </Page>
   );
 }

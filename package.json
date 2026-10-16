@@ -12,11 +12,12 @@
     "test": "playwright test",
     "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
-    "prebuild": "npm run brand:sync && node scripts/build-site-theme.cjs",
+    "prebuild": "npm run brand:sync && python3 scripts/data/build-home-explorer.py",
     "data:import": "node scripts/data/import.mjs",
     "data:validate": "node scripts/data/validate.mjs",
     "data:publish": "node scripts/data/publish.mjs",
-    "data:refresh-registries": "python3 scripts/data/refresh-global-registries.py"
+    "data:refresh-registries": "python3 scripts/data/refresh-global-registries.py",
+    "data:build-home-explorer": "python3 scripts/data/build-home-explorer.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

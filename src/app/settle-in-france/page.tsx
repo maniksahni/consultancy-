@@ -1,8 +1,8 @@
 import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
-import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { Btn, Card, Checklist, Grid, Kicker, Notice, Section, Split, TextLink } from "@/components/maison/ui";
+import { paris } from "@/lib/paris";
 
 export const metadata = pageMetadata("/settle-in-france", {
   title: "Settle in France: Student Support",
@@ -18,12 +18,24 @@ const packages = [
 ];
 
 export default function SettleInFrancePage() {
-  return <Page path="/settle-in-france" eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France, with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
-    <section className="settle-intro"><div><p className="eyebrow">SUPPORT THAT MEETS YOU HERE</p><h2>Less guesswork.<br/><em>More confidence in your next step.</em></h2></div><p>Choose a focused session or explore a broader support package. We’ll agree what’s included and the fee before any work begins. Every service is guidance and preparation tailored to your situation.</p></section>
-    <div className="settle-packages">
-      {packages.map((item, i) => <article className="settle-package" key={item.name}><div className="settle-package-top"><span>0{i+1}</span><span className="eyebrow">{item.label}</span></div><h2>{item.name}</h2><ul>{item.includes.map(x=><li key={x}><Check size={16}/>{x}</li>)}</ul><div className="settle-package-bottom"><span><small>PRICING</small>Fee confirmed before booking</span><Link href={`/book-consultation?service=${encodeURIComponent(item.name)}`} className="text-link">Ask about this package <ArrowUpRight size={17}/></Link></div></article>)}
-    </div>
-    <aside className="settle-scope"><p className="eyebrow">CLEAR SCOPE, REALISTIC EXPECTATIONS</p><h2>Guidance you can use.<br/><em>Decisions stay yours.</em></h2><p>Althéa provides orientation, preparation, checklists and referrals where appropriate. We do not provide legal or immigration advice, make decisions for banks or housing providers, guarantee accommodation, or guarantee administrative outcomes. For regulated or official decisions, we’ll point you to the relevant organisation or qualified professional.</p><Link className="button" href="/book-consultation">Book a Call <ArrowUpRight size={17}/></Link></aside>
-    <section className="settle-bridge"><p className="eyebrow">YOUR SUPPORT DOESN’T END AT ARRIVAL</p><h2>Planning to study here too?<br/><em>We can help you prepare.</em></h2><Link className="text-link" href="/study-in-france">Explore independent Study in France guidance <ArrowUpRight size={17}/></Link></section>
+  const metro = paris("metro-platform");
+  return <Page path="/settle-in-france" eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France," accent="with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
+    <Section tone="ivory" kicker="SUPPORT THAT MEETS YOU HERE" title="Less guesswork." accent="More confidence in your next step." intro="Choose a focused session or explore a broader support package. We’ll agree what’s included and the fee before any work begins. Every service is guidance and preparation tailored to your situation.">
+      <Grid cols={3} className="ms-package-grid">{packages.map((item, i) => <Card key={item.name} index={i + 1} kicker={item.label} title={item.name} href={`/book-consultation?service=${encodeURIComponent(item.name)}#consultation-form`} cta="Ask about this package" feature={i === 0}>
+        <Checklist items={item.includes} />
+        <p className="ms-card-note">Pricing · fee confirmed before booking</p>
+      </Card>)}</Grid>
+    </Section>
+    <Section tone="paper">
+      <Split image={metro.file} alt={metro.alt} caption="Paris" reverse>
+        <Kicker>CLEAR SCOPE, REALISTIC EXPECTATIONS</Kicker>
+        <h2>Guidance you can use.<br /><em>Decisions stay yours.</em></h2>
+        <p>Althéa provides orientation, preparation, checklists and referrals where appropriate. We do not provide legal or immigration advice, make decisions for banks or housing providers, guarantee accommodation, or guarantee administrative outcomes. For regulated or official decisions, we’ll point you to the relevant organisation or qualified professional.</p>
+        <Btn href="/book-consultation">Book a call</Btn>
+      </Split>
+    </Section>
+    <Section tone="ivory">
+      <Notice kicker="YOUR SUPPORT DOESN’T END AT ARRIVAL" tone="ink"><p className="ms-notice-title">Planning to study here too? <em>We can help you prepare.</em></p><TextLink href="/study-in-france">Explore independent Study in France guidance</TextLink></Notice>
+    </Section>
   </Page>;
 }
