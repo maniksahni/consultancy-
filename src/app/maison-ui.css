@@ -879,3 +879,58 @@ html:not(.sx-seen) .ms-cover :is(.ms-crumbs, .ms-kicker, .ms-cover-line > *, .ms
   .ms-guide-pager a:last-child { text-align:left; }
   .ms-guide-table th, .ms-guide-table td { padding:11px 12px; font-size:14px; }
 }
+
+/* ---------- Live jobs ---------- */
+.ms-livejobs { display:grid; gap:18px; }
+.ms-livejobs-bar { display:grid; gap:14px; padding:16px; border-radius:22px; background:var(--ms-paper); border:1px solid var(--ms-line); }
+.ms-livejobs-countries button { display:inline-flex; align-items:center; gap:8px; }
+.ms-livejobs-countries button span { padding:3px 7px; border-radius:999px; background:#ffffff14; font-size:11px; font-variant-numeric:tabular-nums; }
+.ms-livejobs-filters { display:grid; grid-template-columns:minmax(0,1fr) 220px auto; gap:10px; align-items:center; }
+.ms-livejobs-check { display:inline-flex; align-items:center; gap:8px; font:600 13px/1.2 var(--ms-sans); color:var(--ms-text); white-space:nowrap; cursor:pointer; }
+.ms-livejobs-check input { width:18px; height:18px; accent-color:var(--lx-rose,#ff6fa3); }
+.ms-livejobs-status { margin:0; font-size:14px; color:var(--ms-muted); }
+.ms-livejobs-status strong { color:var(--ms-text); }
+.ms-livejobs-layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:22px; align-items:start; }
+.ms-livejobs-list { list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.ms-livejob { display:grid; gap:10px; padding:22px 24px; border-radius:20px; background:linear-gradient(160deg,#ffffff0d,#ffffff04); border:1px solid #ffffff17; transition:border-color .3s,transform .3s var(--ms-ease); }
+.ms-livejob:hover { border-color:#c9bcff55; transform:translateY(-2px); }
+.ms-livejob-head { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; }
+.ms-livejob h3 { margin:0; font:650 clamp(18px,1.5vw,21px)/1.25 var(--ms-serif); letter-spacing:-.01em; }
+.ms-livejob h3 a { color:var(--ms-text); }
+.ms-livejob h3 a:hover { color:var(--ms-gold-text); }
+.ms-livejob-when { display:inline-flex; align-items:center; gap:6px; flex:none; font-size:12px; color:var(--ms-muted); white-space:nowrap; }
+.ms-livejob-meta { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:0; font-size:14px; color:var(--ms-muted); }
+.ms-livejob-meta strong { color:var(--ms-text); font-weight:600; }
+.ms-livejob-tags { display:flex; flex-wrap:wrap; gap:6px; margin:0; }
+.ms-livejob-tags span { padding:5px 10px; border-radius:999px; border:1px solid var(--ms-line); font:600 11.5px/1 var(--ms-sans); color:var(--ms-muted); }
+.ms-livejob-tags .is-onsite { color:#7fe0b0; border-color:#7fe0b055; }
+.ms-livejob-tags .is-remote { color:#c9bcff; border-color:#c9bcff55; }
+.ms-livejob-tags .is-salary { color:var(--ms-champagne); border-color:#ffd2b055; }
+.ms-livejob-summary { margin:0; font-size:14.5px; line-height:1.6; color:var(--ms-muted); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.ms-livejob-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; margin-top:4px; }
+.ms-livejob-actions .ms-btn { min-height:46px; padding:12px 18px 12px 22px; }
+.ms-livejob-help { display:inline-flex; align-items:center; gap:8px; font:600 14px/1.2 var(--ms-sans); color:var(--ms-text); border-bottom:1px solid currentColor; padding-bottom:3px; }
+.ms-livejob-help:hover { color:var(--ms-gold-text); }
+.ms-livejobs-help { position:sticky; top:100px; display:grid; gap:14px; padding:26px; border-radius:22px; background:radial-gradient(80% 80% at 100% 0%,#5b3dff40,transparent 70%),#100e1a; border:1px solid #c9bcff33; }
+.ms-livejobs-help h3 { margin:0; font:650 22px/1.2 var(--ms-serif); color:var(--ms-text); }
+.ms-livejobs-help h3 em { font-style:italic; color:var(--ms-champagne); }
+.ms-livejobs-help ul { margin:0; padding-left:18px; display:grid; gap:8px; font-size:14.5px; color:var(--ms-muted); }
+.ms-livejobs-more { justify-self:start; }
+.ms-livejobs-note { margin:0; max-width:900px; font-size:13px; line-height:1.6; color:var(--ms-muted); }
+.ms-livejobs-note a { color:var(--ms-text); text-decoration:underline; text-underline-offset:3px; }
+@media (max-width:900px) {
+  .ms-livejobs-layout { grid-template-columns:1fr; }
+  .ms-livejobs-help { position:static; order:-1; }
+  .ms-livejobs-filters { grid-template-columns:1fr 1fr; }
+  .ms-livejobs-search { grid-column:1/-1; }
+}
+@media (max-width:640px) {
+  .ms-livejobs-countries { flex-wrap:nowrap; overflow-x:auto; margin-inline:-16px; padding:0 16px 4px; scrollbar-width:none; }
+  .ms-livejobs-countries::-webkit-scrollbar { display:none; }
+  .ms-livejobs-countries button { flex:none; }
+  .ms-livejobs-filters { grid-template-columns:1fr; }
+  .ms-livejob { padding:18px; }
+  .ms-livejob-head { flex-direction:column; gap:6px; }
+  .ms-livejobs-help { padding:20px; }
+  .ms-livejobs-help ul { display:none; }
+}

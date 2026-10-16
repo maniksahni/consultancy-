@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import JobsExplorer from "@/components/althea/JobsExplorer";
+import LiveJobs from "@/components/althea/LiveJobs";
 import { pageMetadata } from "@/lib/seo";
 import { Card, Grid, Section } from "@/components/maison/ui";
 import { countryGuides } from "@/data/guides";
@@ -20,6 +21,9 @@ export default function JobsPage() {
       accent="starts here."
       intro="Explore roles, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland with official statutory work rights and ATS resume standards."
     >
+      <Section tone="ivory" id="live-jobs" kicker="LIVE LISTINGS · UPDATED WITH EVERY RELEASE" title="Real jobs." accent="Apply today." intro="Open roles in Paris, London, Berlin and beyond, plus remote jobs open to each country. Every listing opens the original posting so you apply directly — and we are one message away if you want help.">
+        <LiveJobs />
+      </Section>
       <JobsExplorer />
       <Section tone="paper" kicker="CAREER GUIDES · SEVEN COUNTRIES" title="Jobs, salaries and" accent="work rights, by country." intro="Where graduates get hired, typical starting salaries, where to search, part-time work rules and how to stay after your degree.">
         <Grid cols={3}>{countryGuides.map((g, i) => {
