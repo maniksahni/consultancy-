@@ -57,10 +57,10 @@ export const institutions: FranceInstitution[] = [
   }
 ];
 export const franceSources = [
-  { title: "Études en France — official application route", category: "Applications", href: "https://www.campusfrance.org/en/application-etudes-en-france-procedure?lang=en", description: "Learn which applicants use the platform and how their application route works." },
-  { title: "Campus France India — application procedure", category: "India guidance", href: "https://www.inde.campusfrance.org/application-and-admission-procedure", description: "Country-specific application guidance for students in India." },
-  { title: "Find a programme — Campus France", category: "Programmes", href: "https://www.campusfrance.org/en/finding-a-university-programme-France", description: "Official Bachelor's, Master's and English-taught programme catalogues." },
-  { title: "France-Visas — student visa", category: "Visa", href: "https://www.france-visas.gouv.fr/en/web/france-visas/etudiant", description: "Official France visa information. Always verify requirements for your profile." },
-  { title: "Campus Bourses — scholarship discovery", category: "Funding", href: "https://campusbourses.campusfrance.org/", description: "Browse scholarship opportunities and confirm eligibility with the provider." },
-  { title: "Study in France — practical guide", category: "Living in France", href: "https://www.campusfrance.org/en", description: "Official information on accommodation, life in France and preparation." }
+  { title: "Études en France — Complete Procedure", category: "Applications", href: "/france/campus-france", description: "Interactive 6-stage roadmap, document readiness tracker, and mock interview answers." },
+  { title: "Jobs & Careers in France (France Travail / APS)", category: "Careers & Work", href: "/jobs", description: "Student part-time jobs (964 hrs/yr), paid internships (€4.35/hr min), and 2-Year post-study work visa." },
+  { title: "English-Taught Courses & Degrees", category: "Programmes", href: "/france/programmes", description: "Explore full syllabus, ECTS credits, tuition fees, and admission intakes without leaving Althéa." },
+  { title: "Student Visa (VLS-TS) & Proof of Funds", category: "Visa", href: "/france/visas", description: "Official €615/mo financial guarantee calculator, VFS Global steps, and online OFII validation." },
+  { title: "Scholarships & Eligibility Calculator", category: "Funding", href: "/france/scholarships", description: "France Excellence Eiffel, Charpak, Erasmus+, and merit tuition fee waivers." },
+  { title: "Living in France & CAF Housing Aid", category: "Living in France", href: "/france/living", description: "Calculate your monthly CAF housing grant (€100–€220/mo back), free French health insurance, and banking." }
 ] as const;
