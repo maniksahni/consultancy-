@@ -104,6 +104,7 @@ export default function RootLayout({
             { "@type": "Person", "@id": `${siteUrl}/#adviser`, name: brand.person,
               jobTitle: brand.role, url: `${siteUrl}/about`,
               homeLocation: { "@type": "City", name: "Paris" },
+              sameAs: Object.values(brand.socialLinks),
               knowsAbout: ["Studying in France", "Campus France applications", "Career coaching in France", "Settling in France"],
               worksFor: { "@id": `${siteUrl}/#organization` } },
             { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,

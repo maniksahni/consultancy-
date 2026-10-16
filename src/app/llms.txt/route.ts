@@ -41,6 +41,8 @@ export function GET() {
     "## Contact",
     `- Email: ${brand.email}`,
     `- WhatsApp: +${brand.whatsappNumber}`,
+    `- Instagram: ${brand.socialLinks.instagram}`,
+    `- LinkedIn (${brand.person}): ${brand.socialLinks.linkedin}`,
     `- Website: ${siteUrl}`,
     "",
   ].join("\n");

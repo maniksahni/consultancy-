@@ -15,7 +15,10 @@ export const brand = {
   "email": "harshita@altheaconsulting.in",
   "whatsappNumber": "33755749029",
   "whatsappQr": null,
-  "socialLinks": {},
+  "socialLinks": {
+    "instagram": "https://www.instagram.com/helloharshitainparis/",
+    "linkedin": "https://www.linkedin.com/in/harshita-kohli-imtbs/"
+  },
   "fonts": {
     "display": "var(--font-cormorant), Georgia, serif",
     "body": "var(--font-jakarta), sans-serif"

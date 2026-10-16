@@ -2,7 +2,7 @@
 
 import { brand } from "@/config/brand";
 import Link from "next/link";
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { Instagram, Linkedin, Mail, MessageCircle, Phone } from "lucide-react";
 import { cities } from "@/data/france";
 import { destinations, destinationHref } from "@/data/destinations";
 import { useEffect } from "react";
@@ -102,6 +102,14 @@ export default function Footer() {
                   </Link>
                 </>
               )}
+              <a href={brand.socialLinks.instagram} target="_blank" rel="me noreferrer">
+                <Instagram size={17} aria-hidden="true" />
+                <span><small>INSTAGRAM</small>@helloharshitainparis</span>
+              </a>
+              <a href={brand.socialLinks.linkedin} target="_blank" rel="me noreferrer">
+                <Linkedin size={17} aria-hidden="true" />
+                <span><small>LINKEDIN</small>{brand.person}</span>
+              </a>
             </div>
           </div>
         </div>
