@@ -126,6 +126,27 @@ button:disabled {
   letter-spacing: 0.35em;
   margin-top: 7px;
 }
+.brand-mark {
+  display: block;
+  width: 40px;
+  height: 40px;
+  max-width: none;
+  flex: 0 0 40px;
+  object-fit: contain;
+}
+.wordmark .brand-wordmark-copy {
+  display: block;
+  font-size: 25px;
+  letter-spacing: 0.025em;
+  line-height: 0.9;
+}
+.wordmark .brand-wordmark-copy small {
+  margin-top: 5px;
+  font-size: 7px;
+  letter-spacing: 0.34em;
+  line-height: 1;
+}
+.wordmark-dark { color: var(--ivory); }
 .monogram {
   font-size: 49px;
   position: relative;
@@ -2431,7 +2452,7 @@ textarea {
   max-width: 1100px;
 }
 .country-hero h1 em {
-  color: var(--color103);
+  color: #f7d598;
 }
 .country-hero p:not(.eyebrow) {
   font-size: 17px;
@@ -4984,7 +5005,7 @@ textarea {
 .directory-sidebar .reviewed-programmes > section h3 { font-size:23px; }
 .directory-sidebar .reviewed-programmes > section article > p:not(.eyebrow) { font-size:11px; }
 .directory-primary > .results-heading { margin-top:0; }
-.directory-primary .course-results { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.directory-primary .course-results { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; align-items:start; }
 .directory-primary .course-results article { padding:23px; }
 @media (max-width: 1050px) {
   .directory-layout { grid-template-columns:minmax(0,1fr) minmax(235px,285px); gap:22px; }
@@ -5012,7 +5033,7 @@ textarea {
 .course-result-fee { margin:10px 0 15px!important; color:var(--navy); }
 .course-result-fee strong { font-family:var(--font-cormorant); font-size:27px; }
 .course-result-fee span { font-size:11px; color:var(--color147); }
-.course-result-details { margin-top:auto; border-top:1px solid var(--line); padding-top:12px; }
+.course-result-details { margin-top:12px; border-top:1px solid var(--line); padding-top:12px; }
 .course-result-details > summary { color:var(--navy); font-size:11px; text-decoration:underline; cursor:pointer; }
 .course-result-details .research-facts { grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
 .course-result-details .research-facts dd { font-family:var(--font-jakarta); font-size:12px; line-height:1.6; overflow-wrap:anywhere; }

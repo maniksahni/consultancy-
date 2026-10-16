@@ -1,75 +1,603 @@
 @import "./site-theme.generated.css";
 
+/* One shared palette, matching the Global Journey homepage. */
 :root {
-  color-scheme: dark;
-  --site-deep:#050b10;
-  --site-panel:#0b191b;
-  --site-panel-raised:#112322;
-  --site-mint:#9cf5d6;
-  --site-text:#e7efeb;
-  --site-muted:#a1b8ad;
-  --site-line:#29473e;
-  --site-error:#ffaaa3;
-  --navy:var(--site-mint);
-  --blue:var(--site-mint);
-  --ivory:var(--site-deep);
-  --ink:var(--site-text);
-  --gold:var(--site-mint);
-  --white:var(--site-panel);
-  --muted:var(--site-muted);
-  --line:var(--site-line);
-  --sand:var(--site-panel);
-  --color58:var(--site-panel);
-  --color59:var(--site-text);
-  --color232:var(--site-panel-raised);
-  --color233:var(--site-text);
-  --color234:var(--site-muted);
-  --color235:var(--site-muted);
-  --color236:var(--site-line);
-  --color237:var(--site-text);
+  color-scheme: light;
+  --site-deep: #faf6ee;
+  --site-panel: #fffaf3;
+  --site-panel-raised: #efe3d2;
+  --site-mint: #051f33;
+  --site-text: #142b3e;
+  --site-muted: #596877;
+  --site-line: #e5d9c7;
+  --site-error: #bd4c4b;
+  --navy: #051f33;
+  --blue: #153d57;
+  --ivory: #faf6ee;
+  --ink: #142b3e;
+  --gold: #ac8751;
+  --white: #fffaf3;
+  --muted: #596877;
+  --line: #e5d9c7;
+  --sand: #efe3d2;
+  --color58: var(--site-panel);
+  --color59: var(--ink);
+  --color232: var(--sand);
+  --color233: var(--ink);
+  --color234: var(--muted);
+  --color235: var(--muted);
+  --color236: var(--line);
+  --color237: var(--ink);
 }
-html { background:var(--site-deep); }
-body { background:var(--site-deep); color:var(--site-text); }
-::selection { background:var(--site-mint); color:var(--site-deep); }
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible { outline-color:var(--site-mint); }
-.site-header { background:rgba(5,11,16,.97); border-color:var(--site-line); }
-.site-header .navigation>a,.menu-toggle { color:var(--site-text); }
-.site-header .navigation>a:hover { color:var(--site-mint); }
-.site-header .navigation>.button,.button,.button.light,.button.champagne,button[type=submit] { background:var(--site-mint); border-color:var(--site-mint); color:var(--site-deep); }
-.button:hover,.button.light:hover,.button.champagne:hover,button[type=submit]:hover { background:#baffea; color:var(--site-deep); border-color:#baffea; }
-.maison-interior,.page-content,.page-heading,.country-intro,.destination-planning,.country-checklist { color:var(--site-text); }
-.interior-cover { background:radial-gradient(ellipse at 85% 40%,#10332a,var(--site-deep) 65%); color:var(--site-text); border-bottom:1px solid var(--site-line); }
-.interior-cover .page-heading h1,.interior-cover .interior-breadcrumb a { color:var(--site-text); }
-.interior-cover .eyebrow,.interior-cover h1 em { color:var(--site-mint); }
-.interior-cover .lead,.interior-cover .interior-breadcrumb { color:var(--site-muted); }
-.interior-cover-photo { border:1px solid #9cf5d655; }
-.interior-cover-photo>span,.founder-postcard,.country-hero h1,.country-hero>div p,.country-back,.country-photo-caption,.country-coordinates { color:#eef8f2; }
-.interior-cover-photo:after { background:linear-gradient(0deg,rgba(5,11,16,.85),transparent); }
-.interior-closing,.closing,.maison-closing { background:var(--site-panel); color:var(--site-text); border-top:1px solid var(--site-line); }
-.interior-closing h2,.interior-closing h2 em,.interior-closing .eyebrow,.interior-closing .closing-ornament { color:var(--site-mint); }
-.interior-closing>p:not(.eyebrow) { color:var(--site-muted); }
-.interior-closing .button.light { background:var(--site-mint); color:var(--site-deep); border-color:var(--site-mint); }
-:is(input,textarea,select) { background:var(--site-deep); color:var(--site-text); border-color:#44695b; caret-color:var(--site-mint); accent-color:var(--site-mint); }
-:is(input,textarea)::placeholder { color:#8aab9a; opacity:1; }
-:is(input,textarea,select):focus { border-color:var(--site-mint); }
-option { background:var(--site-panel); color:var(--site-text); }
-.booking-form { background:var(--site-panel); border-color:var(--site-line); color:var(--site-text); }
-.booking-form label,.booking-form .consent { color:var(--site-text); }
-.booking-form [aria-invalid=true] { border-color:var(--site-error); }
-.booking-form [id$="-error"],.booking-form [role=alert] { color:var(--site-error); }
-.content-card,.snapshot-card,.course-card,.course-results article,.university-card,.reviewed-programmes article,.knowledge-card,.budget-inputs,.finder-panel,.programme-research-card { background:var(--site-panel); color:var(--site-text); border-color:var(--site-line); }
-.content-card h2,.content-card h3,.content-card a,.course-results h3 { color:var(--site-mint); }
-.content-card p,.course-results article p { color:var(--site-muted); }
-:is(.country-tabs,.directory-mode-switch,.course-category-chips,.knowledge-controls,.atlas-regions) :is(button,a)[aria-pressed=true],.country-tabs a.active,.directory-mode-switch button.active,.course-category-chips button.active,.knowledge-controls button.active,.atlas-regions button[aria-pressed=true] { background:var(--site-mint); color:var(--site-deep); border-color:var(--site-mint); }
-.course-category-chips button.active span,.course-category-chips button:hover span { background:#d6ffec; color:#13362b; }
-.atlas-index button[aria-pressed=true] { color:var(--site-mint); background:var(--site-panel); }
-.site-footer { background:var(--site-deep); color:var(--site-text); border-top:1px solid var(--site-line); }
-.site-footer :is(.footer-brand,.footer-top p,.footer-top .eyebrow,.footer-bottom,.footer-masthead,.footer-masthead em) { color:var(--site-text); }
-.site-footer :is(.footer-masthead,.footer-bottom) { border-color:var(--site-line); }
-.site-footer a:hover { color:var(--site-mint); }
-@media(max-width:900px) { .navigation,.navigation.open { background:var(--site-deep); border-color:var(--site-line); }.menu-toggle { background:transparent; border-color:var(--site-line); } }
-@media (max-width:360px) { .directory-primary .knowledge-grid article { padding:17px; } }
-.directory-primary .research-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-@media(max-width:760px) { .directory-primary .research-grid { grid-template-columns:minmax(0,1fr); } }
-.directory-primary .knowledge-grid article { min-width:0; }
-.directory-primary .research-grid :is(h3,p,dt,dd,small) { overflow-wrap:anywhere; }
+html,
+body {
+  background: var(--ivory);
+  color: var(--ink);
+}
+::selection {
+  background: var(--navy);
+  color: var(--white);
+}
+:is(a, button, input, select, textarea, summary):focus-visible {
+  outline-color: var(--gold);
+}
+.site-header {
+  background: #fcfaf5;
+  border-color: var(--line);
+}
+.site-header .navigation > a,
+.menu-toggle,
+.site-header .wordmark {
+  color: var(--ink);
+}
+.site-header .navigation > a:hover,
+.site-header .wordmark:hover {
+  color: var(--gold);
+}
+.site-header .navigation > .button,
+.button,
+.button.light,
+.button.champagne,
+button[type="submit"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.button:hover,
+.button.light:hover,
+.button.champagne:hover,
+button[type="submit"]:hover {
+  background: #153d57;
+  border-color: #153d57;
+  color: var(--white);
+}
+.maison-interior,
+.page-content,
+.page-heading,
+.country-intro,
+.destination-planning,
+.country-checklist {
+  color: var(--ink);
+}
+.interior-cover {
+  background: radial-gradient(ellipse at 82% 30%, #efe3d280, var(--ivory) 72%);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.interior-cover .page-heading h1,
+.interior-cover .interior-breadcrumb a,
+.page-content :is(h1, h2, h3, h4),
+.maison-interior :is(h1, h2, h3, h4),
+.content-card :is(h2, h3),
+.course-results h3 {
+  color: var(--navy);
+}
+.interior-cover .eyebrow,
+.interior-cover h1 em,
+.page-content .eyebrow,
+.maison-interior .eyebrow {
+  color: var(--gold);
+}
+.interior-cover .lead,
+.interior-cover .interior-breadcrumb,
+:is(
+    .page-content,
+    .maison-interior,
+    .page-heading,
+    .country-intro,
+    .destination-planning,
+    .country-checklist
+  )
+  :is(p, li, dd, dt, small, .lead) {
+  color: var(--muted);
+}
+.page-content :is(a, .text-link),
+.maison-interior :is(a, .text-link) {
+  color: var(--navy);
+}
+.page-content a.button,
+.maison-interior a.button {
+  background: var(--navy);
+  color: var(--white);
+}
+.interior-cover-photo {
+  border-color: var(--line);
+}
+.interior-cover-photo:after,
+.city-photo:after {
+  background: linear-gradient(0deg, #051f33b8, transparent 68%);
+}
+.interior-cover-photo > span,
+.founder-postcard,
+.photo-caption,
+.city-photo > div {
+  color: #fffaf3;
+}
+
+/* ── Country Hero (USA, UK, Canada, Australia, Germany, Ireland) ── */
+.country-hero {
+  color: #fffaf3 !important;
+}
+.country-shade {
+  background: linear-gradient(90deg, rgba(5, 31, 51, 0.88), rgba(5, 31, 51, 0.45)),
+              linear-gradient(0deg, rgba(5, 31, 51, 0.9) 0%, transparent 65%) !important;
+}
+.country-hero .country-back {
+  color: #eed6aa !important;
+}
+.country-hero .country-back:hover {
+  color: #ffffff !important;
+}
+.country-hero .eyebrow {
+  color: #eed6aa !important;
+  letter-spacing: 0.18em;
+}
+.country-hero h1 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.65);
+}
+.country-hero h1 em {
+  color: #f7d598 !important; /* Standout warm champagne gold for country name */
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-style: italic;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.65);
+  display: inline-block;
+}
+.country-hero .wrap p,
+.country-hero p:not(.eyebrow) {
+  color: #e2ebf0 !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+.country-hero .country-coordinates {
+  color: #c5d8e2 !important;
+}
+.country-hero .country-photo-caption {
+  color: #9ab4c2 !important;
+}
+
+/* ── Dark Closing Sections Across All Pages ── */
+.interior-closing,
+.closing,
+.maison-closing {
+  background: #08222e !important;
+  color: #ffffff !important;
+  border-color: #143544 !important;
+}
+:is(.interior-closing, .closing, .maison-closing) :is(h2, h2 em, .eyebrow, .closing-ornament) {
+  color: #f7d598 !important;
+}
+:is(.interior-closing, .closing, .maison-closing) h2 {
+  color: #ffffff !important;
+}
+:is(.interior-closing, .closing, .maison-closing) h2 em {
+  color: #f7d598 !important;
+}
+:is(.interior-closing, .closing, .maison-closing) .eyebrow {
+  color: #eed6aa !important;
+}
+:is(.interior-closing, .closing, .maison-closing) > p:not(.eyebrow) {
+  color: #c8d8da !important;
+}
+:is(.interior-closing, .closing, .maison-closing) :is(.button, .champagne, .button.light) {
+  background: #f7d598 !important;
+  color: #07202c !important;
+  border-color: #f7d598 !important;
+  font-weight: 600 !important;
+}
+:is(.interior-closing, .closing, .maison-closing) :is(.button, .champagne, .button.light):hover {
+  background: #ffffff !important;
+  color: #07202c !important;
+}
+.maison-interior .interior-closing .button.light {
+  background: var(--white);
+  border-color: var(--line);
+  color: var(--navy);
+}
+.french-chapter,
+.journal-section,
+.consultation-preview,
+.finder-filters,
+.method-section {
+  background: var(--sand);
+  color: var(--ink);
+}
+:is(input, textarea, select) {
+  background: var(--site-panel);
+  color: var(--ink);
+  border-color: var(--line);
+  caret-color: var(--navy);
+  accent-color: var(--navy);
+}
+:is(input, textarea)::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+:is(input, textarea, select):focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px #ac87511c;
+}
+option {
+  background: var(--site-panel);
+  color: var(--ink);
+}
+.booking-form,
+.content-card,
+.snapshot-card,
+.course-card,
+.course-results article,
+.university-card,
+.reviewed-programmes article,
+.knowledge-card,
+.budget-inputs,
+.finder-panel,
+.programme-research-card,
+.destination-card,
+.programme-card {
+  background: var(--site-panel);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.booking-form label,
+.booking-form .consent {
+  color: var(--ink);
+}
+.booking-form [aria-invalid="true"] {
+  border-color: var(--site-error);
+}
+.booking-form [id$="-error"],
+.booking-form [role="alert"] {
+  color: var(--site-error);
+}
+.content-card :is(h2, h3, a),
+.course-results h3,
+:is(.destination-card, .programme-card, .university-card, .knowledge-card) h3 {
+  color: var(--navy);
+}
+.content-card p,
+.course-results article p {
+  color: var(--muted);
+}
+:is(
+    .country-tabs,
+    .directory-mode-switch,
+    .course-category-chips,
+    .knowledge-controls,
+    .atlas-regions
+  )
+  :is(button, a)[aria-pressed="true"],
+.country-tabs a.active,
+.directory-mode-switch button.active,
+.course-category-chips button.active,
+.knowledge-controls button.active,
+.atlas-regions button[aria-pressed="true"] {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+.course-category-chips button.active span,
+.course-category-chips button:hover span {
+  background: var(--sand);
+  color: var(--navy);
+}
+.atlas-index button[aria-pressed="true"] {
+  color: var(--navy);
+  background: var(--sand);
+}
+.site-footer {
+  background: #021a2c;
+  color: var(--white);
+  border-top: 1px solid #16354a;
+}
+.site-footer
+  :is(
+    .footer-brand,
+    .footer-top p,
+    .footer-top .eyebrow,
+    .footer-bottom,
+    .footer-masthead,
+    .footer-masthead em,
+    .footer-group-links > a
+  ) {
+  color: var(--white);
+}
+.site-footer :is(.footer-masthead, .footer-bottom) {
+  border-color: #8497a32e;
+}
+.site-footer a:hover,
+.site-footer .footer-group-title {
+  color: #e7c98e;
+}
+.site-footer .brand-contact {
+  border-color: #8497a348;
+}
+.site-footer .brand-contact-person strong,
+.site-footer .brand-contact-actions > a,
+.site-footer .brand-contact-actions > a > span {
+  color: var(--white);
+}
+.site-footer .brand-contact-person span {
+  color: #c5d0d8;
+}
+.site-footer .brand-contact-actions > a {
+  border-color: #8497a348;
+}
+.site-footer .brand-contact-actions small {
+  color: #e7c98e;
+}
+
+/* The original leaf emblem and a consistent live wordmark across every brand placement. */
+.althea-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: inherit;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.althea-brand-mark {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+  vertical-align: middle;
+}
+.althea-brand-name {
+  font:
+    400 27px/1.1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.055em;
+}
+.site-header .wordmark {
+  display: inline-flex;
+  flex-direction: row;
+  width: auto;
+}
+.site-header .wordmark .althea-brand-name {
+  font:
+    400 27px/1.1 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.055em;
+}
+.site-footer .althea-brand-lockup {
+  color: #fff2dc;
+}
+.site-footer .footer-brand {
+  display: inline-flex;
+  width: auto;
+}
+.site-footer .footer-bottom .althea-brand-mark,
+.gj-footer-bottom .althea-brand-mark {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+.interior-brand-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.interior-brand-crumb .althea-brand-mark {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+.interior-seal .althea-brand-mark {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+.gj-logo .althea-brand-name {
+  font-size: clamp(23px, 2.1vw, 31px);
+}
+.gj-logo .althea-brand-mark {
+  width: 38px;
+  height: 38px;
+}
+.gj-footer .gj-logo .althea-brand-name {
+  font-size: 26px;
+}
+.gj-footer .gj-logo .althea-brand-mark {
+  width: 34px;
+  height: 34px;
+}
+.directory-primary .research-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.directory-primary .knowledge-grid article {
+  min-width: 0;
+}
+.directory-primary .research-grid :is(h3, p, dt, dd, small) {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .site-header .wordmark .althea-brand-name {
+    font-size: 23px;
+  }
+  .site-header .althea-brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+}
+@media (max-width: 900px) {
+  .navigation,
+  .navigation.open {
+    background: var(--ivory);
+    border-color: var(--line);
+  }
+  .menu-toggle {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--navy);
+  }
+}
+@media (max-width: 760px) {
+  .directory-primary .research-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .gj-logo .althea-brand-lockup {
+    gap: 8px;
+  }
+  .gj-logo .althea-brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+  .gj-logo .althea-brand-name {
+    font-size: 23px;
+  }
+  .gj-footer .gj-logo .althea-brand-name {
+    font-size: 24px;
+  }
+  .site-footer .althea-brand-name {
+    font-size: 25px;
+  }
+}
+@media (max-width: 360px) {
+  .directory-primary .knowledge-grid article {
+    padding: 17px;
+  }
+  .gj-logo .althea-brand-mark {
+    width: 29px;
+    height: 29px;
+  }
+  .gj-logo .althea-brand-name {
+    font-size: 20px;
+  }
+  .site-header .wordmark .althea-brand-name {
+    font-size: 21px;
+  }
+}
+
+.footer-masthead > .footer-masthead-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  font-size: clamp(76px, 15vw, 224px);
+}
+.footer-masthead-brand .althea-brand-mark {
+  width: clamp(56px, 8vw, 112px);
+  height: clamp(56px, 8vw, 112px);
+  border-radius: 15%;
+}
+/* Mobile cards remain in normal page flow, with no offscreen content rails. */
+@media (max-width: 760px) {
+  .knowledge-hub .study-guide-rail,
+  .settle-packages,
+  .career-steps,
+  .voices-full .voice-notes,
+  .directory-primary .course-results {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    overflow: visible;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    scroll-snap-type: none;
+  }
+  .knowledge-hub .study-guide-rail > article,
+  .settle-packages > .settle-package,
+  .career-steps > article,
+  .voices-full .voice-notes > article,
+  .directory-primary .course-results > article {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 0;
+    flex: initial;
+    grid-column: auto;
+  }
+  .course-category-chips {
+    flex-wrap: wrap;
+    overflow: visible;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 3px 0 10px;
+  }
+  .course-category-chips button {
+    flex: 1 1 42%;
+    white-space: normal;
+  }
+  .country-tabs,
+  .atlas-regions {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .maison-interior
+    :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  .maison-interior .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+  .maison-interior article {
+    min-width: 0;
+  }
+}
+
+/* Numeric tuition budgets stay legible at every screen size. */
+.course-result-fee strong {
+  display: block;
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--site-text);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.course-result-fee span { display: block; margin-top: 4px; line-height: 1.6; }
+.course-result-details .research-facts dd > a {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 8px;
+  color: var(--site-mint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.programme-next-step {
+  padding: 20px;
+  margin-top: 22px;
+  background: var(--site-panel-raised);
+  border-left: 2px solid var(--gold);
+  color: var(--site-text);
+  overflow-wrap: anywhere;
+}
+.programme-next-step > strong { display: block; font-size: 13px; line-height: 1.7; }
+.programme-next-step p { margin: 10px 0 !important; line-height: 1.8; }
+.programme-next-step small { font-size: 11px; line-height: 1.7; }
+.course-planning-guidance { border-top: 1px solid var(--line); padding-top: 20px; }
+.course-planning-guidance h4 { font-size: 15px; line-height: 1.6; }
+.course-planning-guidance h5 { font-size: 12px; margin: 20px 0 8px; }
+.course-planning-guidance p, .course-planning-guidance a { font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.course-planning-guidance a { text-decoration: underline; text-underline-offset: 3px; }
+.programme-evidence .content-card h3 { font-size: 22px; line-height: 1.4; }
+.programme-evidence .content-card p, .programme-evidence .content-card dd { overflow-wrap: anywhere; }

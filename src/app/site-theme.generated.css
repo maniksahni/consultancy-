@@ -17,6 +17,7 @@ em {
 .wordmark {
   color: var(--site-mint);
 }
+.wordmark-dark { color: var(--site-text); }
 .monogram {
   border-right: 1px solid var(--site-line);
 }
@@ -43,7 +44,7 @@ em {
   color: var(--site-mint);
 }
 .tiny-rule {
-  background: var(--site-panel);
+  background: var(--site-deep);
 }
 .french-mark i {
   background: var(--site-deep);
@@ -84,15 +85,6 @@ em {
 .section-aside {
   color: var(--site-mint);
 }
-.city-photo:after {
-  background: linear-gradient(transparent 35%, var(--site-deep));
-}
-.city-photo > div {
-  color: var(--site-text);
-}
-.city-photo .eyebrow {
-  color: var(--site-text);
-}
 .city-list > a {
   border-bottom: 1px solid var(--site-line);
 }
@@ -132,11 +124,11 @@ textarea {
   color: var(--site-mint);
 }
 .muted {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .source-badge {
   background: var(--site-panel);
-  color: var(--site-text);
+  color: var(--site-mint);
 }
 .card-links {
   color: var(--site-mint);
@@ -151,13 +143,13 @@ textarea {
 }
 .method-section .eyebrow,
 .method-section em {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .method-grid a {
   border-top: 1px solid var(--site-line);
 }
 .method-grid span {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .consultation-preview > div > p:not(.eyebrow) {
   color: var(--site-mint);
@@ -190,27 +182,6 @@ textarea {
   color: var(--site-mint);
 }
 .faq-item a {
-  color: var(--site-mint);
-}
-.closing {
-  background: var(--site-deep);
-  color: var(--site-text);
-}
-.closing .eyebrow,
-.closing em {
-  color: var(--site-text);
-}
-.closing p:not(.eyebrow) {
-  color: var(--site-text);
-}
-.footer-brand {
-  color: var(--site-mint);
-}
-.footer-top p {
-  color: var(--site-mint);
-}
-.footer-bottom {
-  border-top: 1px solid var(--site-line);
   color: var(--site-mint);
 }
 .page-heading {
@@ -274,7 +245,6 @@ textarea {
 .simple-wordmark {
   color: var(--site-mint);
 }
-.footer-simple-wordmark { color: var(--site-text); }
 .site-header {
   background: var(--site-panel);
   border-bottom-color: var(--site-line);
@@ -287,31 +257,8 @@ textarea {
 .button.champagne:hover {
   background: var(--site-panel);
 }
-.paris-hero {
-  background: var(--site-deep);
-  color: var(--site-text);
-}
-.paris-hero-shade {
-  background:
-    linear-gradient(
-      90deg,
-      var(--site-deep),
-      var(--site-deep) 42%,
-      rgba(156,245,214,.04) 78%
-    ),
-    linear-gradient(0deg, var(--site-deep), transparent 45%);
-}
-.paris-hero .eyebrow {
-  color: var(--site-mint);
-}
 .gold-line {
-  background: var(--site-panel);
-}
-.paris-hero h1 em {
-  color: var(--site-mint);
-}
-.paris-hero-description {
-  color: var(--site-text);
+  background: var(--site-deep);
 }
 .maison-ribbon {
   border-bottom: 1px solid var(--site-line);
@@ -324,13 +271,13 @@ textarea {
   color: var(--site-mint);
 }
 .small-caption {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .welcome-main h2 {
   color: var(--site-mint);
 }
 .welcome-copy {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .service-triptych {
   border-top: 1px solid var(--site-line);
@@ -355,33 +302,17 @@ textarea {
   color: var(--site-mint);
 }
 .service-panel p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .france-editorial {
   background: var(--site-panel);
-}
-.paris-postcard:after {
-  background: linear-gradient(0deg, var(--site-deep), transparent 75%);
-}
-.postcard-label {
-  color: var(--site-text);
-}
-.postcard-label .eyebrow {
-  color: var(--site-mint);
-}
-.postcard-label em {
-  color: var(--site-mint);
-}
-.postcard-stamp {
-  border: 1px solid var(--site-line);
-  color: var(--site-text);
 }
 .city-list > a {
   border-color: var(--site-line);
 }
 .catalogue-link {
   border-top: 1px solid var(--site-line);
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .catalogue-link span {
   color: var(--site-mint);
@@ -397,7 +328,7 @@ textarea {
   color: var(--site-mint);
 }
 .source-layout > div > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .source-links > a {
   border-bottom: 1px solid var(--site-line);
@@ -412,7 +343,7 @@ textarea {
   color: var(--site-mint);
 }
 .source-links p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .adviser-card {
   background: var(--site-panel);
@@ -431,7 +362,7 @@ textarea {
   color: var(--site-mint);
 }
 .adviser-copy > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .adviser-copy .adviser-manifesto {
   color: var(--site-mint);
@@ -442,7 +373,7 @@ textarea {
 }
 .maison-method .eyebrow,
 .maison-method em {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .maison-method .text-link {
   color: var(--site-text);
@@ -451,40 +382,12 @@ textarea {
   border-top: 1px solid var(--site-line);
 }
 .journey-dot {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .journey-line p {
   color: var(--site-text);
 }
-.maison-closing {
-  background: var(--site-panel);
-  color: var(--site-mint);
-  border-top: 1px solid var(--site-line);
-}
-.closing-ornament {
-  color: var(--site-mint);
-}
-.maison-closing .champagne {
-  background: var(--site-deep);
-  color: var(--site-text);
-  border-color: var(--site-line);
-}
-.maison-closing .champagne:hover {
-  background: var(--site-deep);
-}
-.closing-signature {
-  color: var(--site-muted);
-}
-.site-footer {
-  background: var(--site-panel);
-}
 @media (max-width: 760px) {
-  .paris-hero-shade {
-    background:
-      linear-gradient(90deg, var(--site-deep), var(--site-deep)),
-      linear-gradient(0deg, var(--site-deep), transparent 65%),
-      linear-gradient(180deg, var(--site-deep), transparent 65%);
-  }
   .service-panel,
   .service-panel:first-child {
     border-bottom: 1px solid var(--site-line);
@@ -530,10 +433,10 @@ textarea {
   color: var(--site-text);
 }
 .atlas-feature-copy .eyebrow {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .atlas-feature-copy h3 em {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .atlas-save {
   color: var(--site-text);
@@ -561,32 +464,6 @@ textarea {
   color: var(--site-mint);
   border-bottom: 1px solid var(--site-line);
 }
-.country-hero {
-  color: var(--site-text);
-}
-.country-shade {
-  background:
-    linear-gradient(90deg, var(--site-deep), var(--site-deep)),
-    linear-gradient(0deg, var(--site-deep), transparent);
-}
-.country-back {
-  color: var(--site-text);
-}
-.country-hero .eyebrow {
-  color: var(--site-mint);
-}
-.country-hero h1 em {
-  color: var(--site-mint);
-}
-.country-checklist {
-  border-top: 1px solid var(--site-line);
-}
-.country-checklist li {
-  border-bottom: 1px solid var(--site-line);
-}
-.country-checklist li span {
-  color: var(--site-mint);
-}
 @media (max-width: 760px) {
   .atlas-index button {
     border-right: 1px solid var(--site-line);
@@ -610,7 +487,7 @@ textarea {
 }
 .journal-grid > a:nth-child(2) .eyebrow,
 .journal-grid > a:nth-child(2) .text-link {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .journal-grid > a:nth-child(2) .journal-number {
   color: var(--site-text);
@@ -671,16 +548,13 @@ textarea {
 .effective-date {
   background: var(--site-panel);
   border-left: 2px solid var(--site-line);
-  color: var(--site-text);
+  color: var(--site-mint);
 }
 .knowledge-source a {
   color: var(--site-mint);
 }
 .knowledge-source span {
   color: var(--site-mint);
-}
-.country-tabs a {
-  border: 1px solid var(--site-line);
 }
 .budget-planner {
   background: var(--site-panel);
@@ -701,7 +575,7 @@ textarea {
   color: var(--site-mint);
 }
 .navigation > a:not(.button)::after {
-  background: var(--site-panel);
+  background: var(--site-deep);
 }
 .programme-card:hover {
   border-color: var(--site-line);
@@ -710,7 +584,7 @@ textarea {
   color: var(--site-mint);
 }
 .chapter-heading > p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .chapter-tabs {
   border: 1px solid var(--site-line);
@@ -728,7 +602,7 @@ textarea {
   color: var(--site-text);
 }
 .chapter-tabs button[aria-pressed="true"] > span {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .chapter-panel {
   border: 1px solid var(--site-line);
@@ -736,7 +610,7 @@ textarea {
 }
 .chapter-passport {
   background: var(--site-deep);
-  color: var(--site-mint);
+  color: var(--site-text);
   border: 1px solid var(--site-line);
 }
 .passport-bottom {
@@ -746,13 +620,13 @@ textarea {
   color: var(--site-mint);
 }
 .chapter-details > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .chapter-details li {
   border-bottom: 1px solid var(--site-line);
 }
 .chapter-details li svg {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .voices-section {
   background: var(--site-deep);
@@ -762,10 +636,10 @@ textarea {
   border: 1px solid var(--site-line);
 }
 .voices-intro .eyebrow {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .voices-intro em {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .voices-intro > p:not(.eyebrow) {
   color: var(--site-text);
@@ -774,7 +648,7 @@ textarea {
   color: var(--site-text);
 }
 .voices-disclosure {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .demo-dot {
   background: var(--site-panel);
@@ -809,7 +683,7 @@ textarea {
   color: var(--site-mint);
 }
 .voice-controls > p > span {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .voice-progress button > span {
   background: var(--site-deep);
@@ -828,7 +702,7 @@ textarea {
   border-top: 1px solid var(--site-line);
 }
 .voice-notes .eyebrow {
-  color: var(--site-mint);
+  color: var(--site-text);
 }
 .voice-notes p {
   color: var(--site-text);
@@ -837,10 +711,10 @@ textarea {
   border-left: 2px solid var(--site-line);
 }
 .review-page-note > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .interior-breadcrumb {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .interior-breadcrumb > a {
   color: var(--site-mint);
@@ -852,19 +726,6 @@ textarea {
 .interior-seal i {
   color: var(--site-mint);
 }
-.interior-closing {
-  background: var(--site-deep);
-}
-.interior-closing .closing-ornament {
-  color: var(--site-mint);
-}
-.footer-masthead {
-  border-top: 1px solid var(--site-line);
-  color: var(--site-mint);
-}
-.footer-masthead em {
-  color: var(--site-muted);
-}
 .story-photo::after {
   background: linear-gradient(0deg, var(--site-deep), transparent 50%);
 }
@@ -872,17 +733,17 @@ textarea {
   color: var(--site-text);
 }
 .story-copy > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .founder-letter {
   border: 1px solid var(--site-line);
   background: var(--site-panel);
 }
 .founder-letter-heading > small {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .founder-letter > div > p:not(.eyebrow):not(.letter-opening) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .letter-opening {
   color: var(--site-mint);
@@ -894,14 +755,14 @@ textarea {
   color: var(--site-mint);
 }
 .value-grid p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .independence-note {
   background: var(--site-panel);
   border-left: 2px solid var(--site-line);
 }
 .independence-note p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .service-editorial-card {
   border: 1px solid var(--site-line);
@@ -920,11 +781,11 @@ textarea {
   color: var(--site-mint);
 }
 .service-editorial-card > p:not(.eyebrow) {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .service-detail {
   border-top: 1px solid var(--site-line);
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .scope-conversation {
   border-top: 1px solid var(--site-line);
@@ -959,7 +820,7 @@ textarea {
   color: var(--site-mint);
 }
 .manifesto-bottom p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .circle-link {
   border: 1px solid var(--site-line);
@@ -981,13 +842,13 @@ textarea {
   color: var(--site-mint);
 }
 .ledger-title > span {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .ledger-title h3 {
   color: var(--site-mint);
 }
 .ledger-detail p {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .ledger-detail > span {
   color: var(--site-mint);
@@ -1004,7 +865,7 @@ textarea {
   color: var(--site-mint);
 }
 .adviser-editorial-note > span:last-child {
-  color: var(--site-muted);
+  color: var(--site-mint);
 }
 .adviser-signoff {
   border-top: 1px solid var(--site-line);
@@ -1037,66 +898,6 @@ textarea {
 .finale-flower {
   color: var(--site-mint);
 }
-.interior-cover {
-  background: var(--site-deep);
-  color: var(--site-text);
-}
-.interior-cover .interior-breadcrumb {
-  color: var(--site-text);
-}
-.interior-cover .interior-breadcrumb a {
-  color: var(--site-text);
-}
-.interior-cover .eyebrow {
-  color: var(--site-mint);
-}
-.interior-cover .page-heading h1 {
-  color: var(--site-text);
-}
-.interior-cover .lead {
-  color: var(--site-text);
-}
-.interior-cover-photo::after {
-  background: linear-gradient(0deg, var(--site-deep), transparent);
-}
-.interior-cover-photo > span {
-  color: var(--site-text);
-}
-.interior-closing {
-  background: var(--site-panel);
-  color: var(--site-mint);
-}
-.interior-closing h2,
-.interior-closing h2 em {
-  color: var(--site-mint);
-}
-.interior-closing .eyebrow,
-.interior-closing .closing-ornament,
-.interior-closing > p:not(.eyebrow) {
-  color: var(--site-mint);
-}
-.interior-closing .button.light {
-  background: var(--site-deep);
-  color: var(--site-text);
-  border-color: var(--site-line);
-}
-.site-footer {
-  background: var(--site-deep);
-  color: var(--site-text);
-}
-.footer-brand,
-.footer-top p,
-.footer-top .eyebrow,
-.footer-bottom,
-.footer-masthead,
-.footer-masthead em {
-  color: var(--site-text);
-}
-.footer-masthead,
-.footer-bottom {
-  border-color: var(--site-line);
-}
-.footer-brand em { color:var(--site-mint); }
 .research-actions select{border:1px solid var(--site-line);background:var(--site-panel);}
 .research-facts dt,.programme-evidence dt{color:var(--site-mint);}
 .research-facts dd{color:var(--site-mint);}
@@ -1138,7 +939,6 @@ textarea {
 .founder-letter { background: var(--site-panel); }
 .founder-paris-photo { border: 1px solid var(--site-line); }
 .founder-paris-photo::after { background: linear-gradient(transparent, var(--site-deep)); }
-.founder-postcard { color: var(--site-text); }
 .cover-picture::after {
   background: linear-gradient(180deg, transparent 58%, var(--site-deep));
 }
@@ -1174,9 +974,6 @@ textarea {
 .button-outline { color: var(--site-mint); }
 .button-outline:hover { color: var(--site-text); }
 .position-proof { color: var(--site-mint); }
-.position-hero-image { background: var(--site-deep); }
-.position-hero-image::after { background: linear-gradient(transparent,var(--site-deep)); }
-.position-hero-image > span { color: var(--site-text); }
 .position-intro { border-top: 1px solid var(--site-line); }
 .position-intro > div > p:last-child { color: var(--site-mint); }
 .position-offer-grid { border-top: 1px solid var(--site-line); border-bottom: 1px solid var(--site-line); }
@@ -1226,20 +1023,6 @@ textarea {
 }
 .brand-contact-actions a:first-child {
   border-top: 1px solid var(--site-line);
-}
-.footer-sitemap .footer-group-title {
-  color: var(--site-muted);
-}
-.footer-sitemap .footer-group-links > a {
-  color: var(--site-text);
-}
-.footer-sitemap .footer-group-links > a:hover,
-.footer-sitemap .footer-group-links > a:focus-visible {
-  color: var(--site-mint);
-}
-@media (max-width: 760px) {
-  .footer-sitemap .footer-group-title { border-top: 1px solid var(--site-line); }
-  .footer-sitemap .footer-group-title::after { color: var(--site-mint); }
 }
 @media (max-width: 760px) {
   .voices-full .voice-quote-more summary { color:var(--site-mint); }
