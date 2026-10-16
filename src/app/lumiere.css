@@ -392,3 +392,64 @@ a.lx-tile:hover { transform:translateY(-6px); border-color:#9d8bff66; box-shadow
   .ms-nav-actions{flex-shrink:0;gap:8px;}
   .ms-menu-btn{gap:8px;padding-left:12px;}
 }
+
+/* ---------- Student stories tile ---------- */
+.lx-reviews { justify-content:flex-start !important; gap:18px !important; padding:26px 28px 22px !important; background:radial-gradient(90% 120% at 0% 100%,#ff5f9e3d,transparent 60%),radial-gradient(80% 90% at 100% 0%,#6c4dff4a,transparent 62%),linear-gradient(160deg,#171229,#0b0a12) !important; border:1px solid #c9bcff2e; }
+.lx-reviews::before { content:""; position:absolute; inset:-1px; z-index:-1; border-radius:inherit; padding:1px; background:conic-gradient(from var(--lx-angle,0deg),#9d8bff,#ff6fa3,#ffb46b,#9d8bff); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:.55; animation:lx-spin 9s linear infinite; }
+.lx-reviews-mark { position:absolute; right:18px; top:-34px; z-index:-1; font:italic 400 260px/1 var(--ms-italic); background:var(--lx-grad); -webkit-background-clip:text; background-clip:text; color:transparent; opacity:.16; pointer-events:none; }
+.lx-reviews-glow { position:absolute; left:-20%; bottom:-40%; z-index:-1; width:70%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,#ff6fa344,transparent); filter:blur(20px); animation:lx-breathe 6s ease-in-out infinite alternate; pointer-events:none; }
+@keyframes lx-breathe { from { transform:scale(.9); opacity:.7; } to { transform:scale(1.15) translate(8%,-6%); opacity:1; } }
+.lx-reviews-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.lx-reviews-label { display:inline-flex; align-items:center; gap:7px; padding:7px 12px; border-radius:999px; background:#ffffff12; border:1px solid #ffffff1f; font:600 11px/1 var(--ms-sans); letter-spacing:.14em; text-transform:uppercase; color:#ffd2b0; }
+.lx-reviews-nav { display:flex; align-items:center; gap:8px; }
+.lx-reviews-count { margin-right:6px; font:500 12px/1 var(--ms-sans); color:#a8a5b8; font-variant-numeric:tabular-nums; }
+.lx-reviews-count b { color:#fff; font-weight:600; }
+.lx-reviews-nav button { display:grid; place-items:center; width:36px; height:36px; border-radius:50%; border:1px solid #ffffff2e; background:#ffffff0a; color:#fff; cursor:pointer; transition:background .3s,border-color .3s,transform .3s var(--ms-ease); }
+.lx-reviews-nav button:hover { background:#ffffff1f; border-color:#ffb46b99; transform:scale(1.06); }
+.lx-reviews-slide { display:grid; gap:14px; animation:lx-story-in .7s var(--ms-ease) both; }
+@keyframes lx-story-in { from { opacity:0; transform:translateY(14px); filter:blur(6px); } to { opacity:1; transform:none; filter:none; } }
+.lx-reviews-takeaway { margin:0 !important; max-width:none !important; font:italic 400 clamp(24px,2.1vw,32px)/1.12 var(--ms-italic) !important; letter-spacing:-.01em; background:linear-gradient(100deg,#fff 0%,#ffd2b0 60%,#ff9fc4 100%); -webkit-background-clip:text; background-clip:text; color:transparent !important; }
+.lx-reviews-quote { margin:0; font:400 15px/1.65 var(--ms-sans); color:#cbc7db; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.lx-reviews-who { display:flex; align-items:center; gap:12px; }
+.lx-reviews-avatar { display:grid; place-items:center; flex:none; width:44px; height:44px; border-radius:50%; font:600 14px/1 var(--ms-sans); color:#0b0910; background:var(--lx-grad); box-shadow:0 0 0 3px #0b0a12,0 0 0 4px #ffb46b80,0 10px 30px -8px #ff6fa3aa; }
+.lx-reviews-person { display:grid; gap:4px; min-width:0; }
+.lx-reviews-person strong { font:600 15px/1.2 var(--ms-sans); color:#fff; }
+.lx-reviews-person small { display:inline-flex; align-items:center; gap:5px; font-size:12.5px; color:#a8a5b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.lx-reviews-chips { display:flex; flex-wrap:wrap; gap:8px; margin:0 !important; max-width:none !important; }
+.lx-reviews-chips span { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border-radius:999px; font:600 12px/1.2 var(--ms-sans); }
+.lx-reviews-chips .is-school { background:#9d8bff1f; border:1px solid #9d8bff55; color:#e2d9ff; }
+.lx-reviews-chips .is-outcome { background:#7fe0b014; border:1px solid #7fe0b055; color:#bff3d8; }
+.lx-reviews-foot { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:auto; }
+.lx-reviews-bars { display:flex; gap:6px; flex:1; max-width:320px; }
+.lx-reviews-bars button { flex:1; height:16px; padding:6px 0; border:0; background:none; cursor:pointer; }
+.lx-reviews-bars i { display:block; position:relative; height:3px; border-radius:3px; background:#ffffff26; overflow:hidden; }
+.lx-reviews-bars i::after { content:""; position:absolute; inset:0; transform:scaleX(0); transform-origin:left; border-radius:inherit; background:var(--lx-grad); }
+.lx-reviews-bars .is-done i::after { transform:none; }
+.lx-reviews-bars .is-current i::after { animation:lx-bar var(--dwell,7s) linear forwards; }
+.lx-reviews-bars .is-paused i::after { animation-play-state:paused; }
+@keyframes lx-bar { to { transform:none; } }
+.lx-reviews-all { display:inline-flex; align-items:center; gap:6px; font:600 13px/1 var(--ms-sans); color:#fff; border-bottom:1px solid #ffffff55; padding-bottom:4px; white-space:nowrap; }
+.lx-reviews-all:hover { color:#ffd2b0; border-color:#ffd2b0; }
+@media (max-width:640px) {
+  .lx-reviews { padding:22px 20px 18px !important; min-height:440px; }
+  .lx-reviews-mark { font-size:200px; top:-24px; }
+  .lx-reviews-takeaway { font-size:24px !important; }
+  .lx-reviews-quote { -webkit-line-clamp:4; }
+  .lx-reviews-count { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .lx-reviews::before, .lx-reviews-glow, .lx-reviews-slide { animation:none; }
+  .lx-reviews-bars .is-current i::after { animation:none; transform:none; }
+}
+/* The old quote-tile rule styles every span; reset it inside the stories tile. */
+.lx-tile-quote.lx-reviews span { font-size:inherit; color:inherit; }
+.lx-reviews .lx-reviews-label { font-size:11px; color:#ffd2b0; }
+.lx-reviews .lx-reviews-count { font-size:12px; color:#a8a5b8; }
+.lx-reviews .lx-reviews-avatar { font-size:14px; color:#0b0910; font-weight:700; }
+.lx-reviews .lx-reviews-chips span { font-size:12px; }
+.lx-reviews .lx-reviews-chips .is-school { color:#e2d9ff; }
+.lx-reviews .lx-reviews-chips .is-outcome { color:#bff3d8; }
+@media (max-width:640px) {
+  .lx-reviews .lx-reviews-label { letter-spacing:.1em; padding:7px 10px; }
+  .lx-reviews-person small { white-space:normal; }
+}

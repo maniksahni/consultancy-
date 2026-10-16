@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import ReviewShowcase from "./ReviewShowcase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Briefcase, Command, Compass, GraduationCap, Plane, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -10,7 +11,7 @@ import Footer from "@/components/layout/Footer";
 import HomeFinder from "@/components/redesign/HomeFinder";
 import Testimonials from "@/components/althea/Testimonials";
 import Accordion from "@/components/maison/Accordion";
-import { countries, services, reviews, questions } from "@/components/redesign/content";
+import { countries, services, questions } from "@/components/redesign/content";
 import { ScrollWords, JourneyTrack, Chars, type HomeStats } from "@/components/redesign/HorizonMotion";
 import { countryPhoto, paris } from "@/lib/paris";
 
@@ -100,7 +101,7 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
             <Image src={paris("cafe-night").file} alt={paris("cafe-night").alt} fill sizes="(max-width:900px) 92vw, 50vw" />
             <div className="lx-tile-copy"><span className="lx-tag"><Compass size={14} aria-hidden="true" />Chapter 02 · Settle</span><h3>New city. <em>New rhythm.</em></h3></div>
           </Link>
-          <div className="lx-tile lx-tile-quote"><p>“{reviews[0].quote}”</p><span>{reviews[0].name} · {reviews[0].degree}</span></div>
+          <ReviewShowcase />
           <Link href="/career-support" className="lx-tile lx-tile-photo lx-span-2x1" data-cursor="Explore">
             <Image src={paris("la-defense-skyline").file} alt={paris("la-defense-skyline").alt} fill sizes="(max-width:900px) 92vw, 50vw" />
             <div className="lx-tile-copy"><span className="lx-tag"><Briefcase size={14} aria-hidden="true" />Chapter 03 · Succeed</span><h3>Bring your ambition. <em>Find your direction.</em></h3></div>
