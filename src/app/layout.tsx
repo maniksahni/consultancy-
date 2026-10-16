@@ -9,6 +9,7 @@ import "./site-theme.css";
 import "./atelier.css";
 import "./horizon.css";
 import "./jobs.css";
+import "./editorial-pages.css";
 const handwriting = Caveat({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
