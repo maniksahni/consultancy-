@@ -842,7 +842,7 @@ html:not(.sx-seen) .ms-cover :is(.ms-crumbs, .ms-kicker, .ms-cover-line > *, .ms
 .ms-guide-toc span[aria-current] { background:var(--ms-gold); border-color:var(--ms-gold); color:var(--ms-deep); }
 .ms-guide-facts { margin:0 0 48px; }
 .ms-guide-body { display:grid; gap:56px; max-width:900px; }
-.ms-guide-block > h2 { margin:0 0 18px; font:650 clamp(26px,2.6vw,38px)/1.08 var(--ms-serif); letter-spacing:-.02em; color:var(--ms-text); }
+.ms-guide-block > h2, .ms-guide-block > summary > h2 { margin:0 0 18px; font:650 clamp(26px,2.6vw,38px)/1.08 var(--ms-serif); letter-spacing:-.02em; color:var(--ms-text); }
 .ms-guide-block .ms-prose { max-width:none; }
 .ms-guide-block .ms-steps, .ms-guide-block .ms-checklist { margin-top:12px; }
 .ms-guide-table { overflow-x:auto; margin-top:16px; border:1px solid var(--ms-line); border-radius:var(--ms-radius); background:var(--ms-paper); }

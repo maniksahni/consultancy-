@@ -30,8 +30,8 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
         {chapter.facts?.length ? <div className="ms-guide-facts"><Facts items={chapter.facts} /></div> : null}
         <div className="ms-guide-body">
           {chapter.blocks.map((block) => (
-            <section key={block.heading} className="ms-guide-block">
-              <h2>{block.heading}</h2>
+            <details key={block.heading} className="ms-guide-block" open>
+              <summary><h2>{block.heading}</h2></summary>
               {block.paragraphs?.length ? <Prose>{block.paragraphs.map((p) => <p key={p}>{p}</p>)}</Prose> : null}
               {block.steps?.length ? <Steps items={block.steps.map((s) => ({ title: s.title, body: <p>{s.body}</p> }))} /> : null}
               {block.checklist?.length ? <Checklist columns={block.checklist.length > 6 ? 2 : 1} items={block.checklist} /> : null}
@@ -42,7 +42,7 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
                   <tbody>{block.table.rows.map((row) => <tr key={row.join("|")}>{row.map((cell, i) => i === 0 ? <th key={i} scope="row">{cell}</th> : <td key={i}>{cell}</td>)}</tr>)}</tbody>
                 </table>
               </div> : null}
-            </section>
+            </details>
           ))}
         </div>
       </Section>

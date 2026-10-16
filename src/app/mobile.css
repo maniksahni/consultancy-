@@ -1,0 +1,133 @@
+/* Mobile layout: swipe instead of scroll.
+   On phones, repeated cards become horizontal snap carousels and spacing tightens,
+   so each page reads in a few screens rather than a long vertical stack. */
+
+@media (max-width:640px) {
+  /* ---------- Spacing ---------- */
+  .ms-section { padding:52px 0; }
+  .ms-section + .ms-section.ms-tone-ivory, .ms-tone-ivory + .ms-tone-ivory { padding-top:0; }
+  .ms-head { gap:14px; margin-bottom:26px; }
+  .ms-head .ms-kicker { margin-bottom:10px; }
+  .ms-head-aside { gap:14px; }
+  .ms-head-aside p { font-size:15px; line-height:1.6; }
+  .ms-cover { padding:108px 0 40px; }
+  .ms-cover h1 { font-size:clamp(38px,11vw,56px); }
+  .ms-cover-intro { font-size:15px; line-height:1.6; }
+  .ms-closing { padding:72px 0; }
+  .ms-closing h2 { font-size:clamp(36px,10vw,52px); }
+  .ms-footer { padding-top:48px; }
+  .ms-footer-grid { grid-template-columns:1fr 1fr; gap:26px 18px; padding:36px 0; }
+  .ms-footer-brand { grid-column:1/-1; }
+  .ms-card { padding:22px; gap:10px; }
+  .ms-notice { padding:22px; }
+  .ms-prose { font-size:16px; line-height:1.7; }
+  .ms-acc-item button { padding:16px 0; font-size:18px; }
+  .ms-acc-panel > div { padding:0 0 18px 40px; }
+
+  /* Facts sit two to a row instead of one per screen-width. */
+  .ms-facts { grid-template-columns:1fr 1fr !important; }
+  .ms-facts > div { padding:18px 14px; border-bottom:1px solid var(--ms-line); }
+  .ms-facts > div:nth-child(odd) { border-right:1px solid var(--ms-line); }
+  .ms-facts dd:not(.ms-facts-note) { font-size:20px; }
+  .ms-facts dd.ms-facts-note { font-size:12.5px; }
+
+  /* ---------- Swipe carousels ---------- */
+  :is(.ms-grid, .ms-kh-grid, .ms-dir-grid, .ms-jobs-grid, .ms-jobs-types, .ms-dir-countries,
+      .ms-story-notes, .ms-cities, .ms-journal, .ms-steps, .ms-guide-index, .lx-bento, .lx-quotes, .ms-prog-hero) {
+    display:grid !important;
+    grid-template-columns:none !important;
+    grid-auto-flow:column;
+    grid-auto-columns:min(84%,330px);
+    grid-auto-rows:auto;
+    gap:12px;
+    margin-inline:calc(50% - 50vw) !important;
+    padding:4px 5vw 10px !important;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:5vw;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  :is(.ms-grid, .ms-kh-grid, .ms-dir-grid, .ms-jobs-grid, .ms-jobs-types, .ms-dir-countries,
+      .ms-story-notes, .ms-cities, .ms-journal, .ms-steps, .ms-guide-index, .lx-bento, .lx-quotes, .ms-prog-hero)::-webkit-scrollbar { display:none; }
+  :is(.ms-grid, .ms-kh-grid, .ms-dir-grid, .ms-jobs-grid, .ms-jobs-types, .ms-dir-countries,
+      .ms-story-notes, .ms-cities, .ms-journal, .ms-steps, .ms-guide-index, .lx-bento, .lx-quotes, .ms-prog-hero) > * {
+    scroll-snap-align:start; min-width:0; margin:0 !important;
+  }
+
+  /* Home bento tiles: reset desktop spans so each tile is one swipe card. */
+  .lx-bento > * { grid-column:auto !important; grid-row:auto !important; min-height:340px; }
+  .lx-section { padding-block:56px; }
+  .lx-founder-photo { aspect-ratio:16/11; min-height:0 !important; }
+
+  /* Filters: one per row, compact controls. */
+  .ms-kh-bar { display:grid !important; grid-template-columns:1fr !important; gap:8px !important; padding:12px !important; }
+  .ms-kh-bar > * { min-width:0; width:100% !important; }
+  .ms-kh-bar .ms-field > span { font-size:11.5px; }
+  .ms-kh-bar :is(select, input) { min-height:44px !important; padding-block:10px !important; }
+
+  /* Jobs page: smaller radar, tighter calculator. */
+  .ms-jobs-hero-grid { gap:24px !important; }
+  .ms-radar { max-width:230px; }
+  .ms-calc { gap:18px !important; }
+  .ms-calc-controls { gap:14px !important; }
+  .ms-job, .ms-jobs-type { padding:20px !important; gap:10px !important; }
+
+  /* Footer: tighter link lists. */
+  .ms-footer-col ul { gap:2px !important; }
+  .ms-footer-col a { font-size:14.5px; padding-block:5px; }
+
+  /* City tiles keep a fixed photo height. */
+  .ms-cities { grid-auto-rows:260px; }
+  .ms-city.is-lead { grid-row:auto; }
+
+  /* Chapter index: three compact rows that swipe sideways. */
+  .ms-guide-index { grid-template-rows:repeat(3,auto); grid-auto-columns:82%; }
+  .ms-guide-index a { padding:14px 16px; gap:12px; }
+  .ms-guide-index small { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+  /* Steps become swipeable step cards. */
+  .ms-steps::before { display:none; }
+  .ms-steps li { grid-template-columns:40px 1fr; gap:12px; padding:18px; border:1px solid var(--ms-line); border-radius:var(--ms-radius); background:#ffffff08; }
+  .ms-step-num { width:40px; height:40px; font-size:16px; }
+  .ms-steps h3 { font-size:18px; }
+
+  /* Long card bodies are clamped; the card still links to the full detail. */
+  .ms-kh-card .ms-card-body p, .ms-job-summary { display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
+
+  /* Swipe meter added by SwipeHints. */
+  .ms-swipe-meter { display:flex; align-items:center; gap:12px; margin:6px 0 4px; font:600 11px/1 var(--ms-sans); letter-spacing:.12em; text-transform:uppercase; color:var(--ms-muted); }
+  .ms-swipe-meter i { position:relative; flex:1; height:2px; border-radius:2px; background:var(--ms-line); overflow:hidden; }
+  .ms-swipe-meter i b { position:absolute; inset:0 auto 0 0; width:var(--w,20%); transform:translateX(var(--x,0)); border-radius:2px; background:linear-gradient(90deg,#9d8bff,#ff6fa3); transition:transform .2s; }
+
+  /* ---------- Guide chapters: tap to open each section ---------- */
+  .ms-guide-body { gap:0; }
+  .ms-guide-block { border-top:1px solid var(--ms-line); }
+  .ms-guide-block:last-child { border-bottom:1px solid var(--ms-line); }
+  .ms-guide-block > summary { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:18px 0; cursor:pointer; list-style:none; }
+  .ms-guide-block > summary::-webkit-details-marker { display:none; }
+  .ms-guide-block > summary > h2 { margin:0; font-size:22px; }
+  .ms-guide-block > summary::after { content:"+"; flex:0 0 32px; height:32px; display:grid; place-items:center; border-radius:50%; border:1px solid var(--ms-line); font:500 20px/1 var(--ms-sans); color:var(--ms-gold-text); transition:transform .3s var(--ms-ease); }
+  .ms-guide-block[open] > summary::after { transform:rotate(45deg); }
+  .ms-guide-block[open] { padding-bottom:22px; }
+  .ms-guide-facts { margin-bottom:28px; }
+  .ms-guide-toc { margin-bottom:24px; }
+}
+
+/* On larger screens the section headings stay static, never collapsible. */
+@media (min-width:641px) {
+  .ms-guide-block > summary { list-style:none; pointer-events:none; }
+  .ms-guide-block > summary::-webkit-details-marker { display:none; }
+}
+
+@media (max-width:640px) and (prefers-reduced-motion:reduce) {
+  .ms-swipe-meter i b { transition:none; }
+}
+
+/* Collapsible fee breakdown on programme pages. */
+.ms-prog-charges > summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.ms-prog-charges > summary::-webkit-details-marker { display:none; }
+.ms-prog-charges > summary h3 { margin:0; }
+.ms-prog-charges > summary::after { content:"+"; flex:0 0 28px; height:28px; display:grid; place-items:center; border-radius:50%; border:1px solid #ffffff2a; font:500 18px/1 var(--ms-sans); transition:transform .3s; }
+.ms-prog-charges[open] > summary::after { transform:rotate(45deg); }

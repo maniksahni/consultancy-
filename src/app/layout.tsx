@@ -1,6 +1,7 @@
 import JsonLd from "@/components/seo/JsonLd";
 import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import SiteMotion from "@/components/motion/SiteMotion";
+import SwipeHints from "@/components/motion/SwipeHints";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
@@ -10,6 +11,7 @@ import "./maison-ui.css";
 import "./maison.css";
 import "./lumiere.css";
 import "./motion.css";
+import "./mobile.css";
 const handwriting = Caveat({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -87,6 +89,7 @@ export default function RootLayout({
         {children}
         <FloatingWhatsApp />
         <SiteMotion />
+        <SwipeHints />
         <JsonLd data={{
           "@context": "https://schema.org",
           "@graph": [
