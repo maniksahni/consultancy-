@@ -8,13 +8,13 @@ import "./home-experience.css";
 import "./home-future.css";
 
 export const metadata = pageMetadata("/", {
-  title: { absolute: "Althéa Consulting | Study in France & Career Guidance" },
-  description: "Althéa Consulting offers independent study abroad guidance in France, with practical support for programmes, applications, student life and career planning.",
+  title: { absolute: "Althéa Consulting | Study in France Consultant, Paris" },
+  description: "Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France.",
 });
 
 export default function Home() {
   return <div className="althea-home ax-home">
-    <PageIdentity path="/" title="Althéa Consulting | Study in France & Career Guidance" description="Independent study guidance, arrival planning and career support in France, led by Harshita Kohli in Paris." />
+    <PageIdentity path="/" title="Althéa Consulting | Study in France Consultant, Paris" description="Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France." />
     <Navbar appearance="dark" />
     <main id="main-content"><AltheaExperience /><ServiceNavigation /></main>
     <Footer />

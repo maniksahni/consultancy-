@@ -1,4 +1,4 @@
 import { pageMetadata } from "@/lib/seo";
 import Page from '@/components/althea/Page';import UniversityExplorer from '@/components/althea/UniversityExplorer';import Link from 'next/link';
-export const metadata=pageMetadata('/france/universities', {title:'French university discovery'});
+export const metadata=pageMetadata('/france/universities', {title:'Universities in France: Fees & Courses', description:'Explore universities in France for international students: researched programmes, published tuition fees, entry requirements and application timing.'});
 export default function Universities(){return <Page path="/france/universities" eyebrow="ACADEMIC POSSIBILITIES" title="An institution. A new perspective." intro="A curated introduction to researched French university programmes, published tuition, entry preparation and application timing. Details stay on this site."><p style={{marginBottom:30}}><Link className="text-link" href="/france/institutions">Browse the in-site institution registry →</Link></p><UniversityExplorer initialCountry="france"/></Page>}

@@ -6,7 +6,7 @@ import {photoCaption} from "@/lib/photography";
 import photoCollection from "@/data/photoSources.json";
 
 export const metadata: Metadata = pageMetadata('/acknowledgements', {
-  title: "Sources & photography.",
+  title: "Sources & Photo Credits",
   description: "Attribution and the limits of this editorial collection.",
 });
 export default function Content() {

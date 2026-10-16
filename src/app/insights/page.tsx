@@ -5,9 +5,9 @@ import Page from "@/components/althea/Page";
 import Link from "next/link";
 import { articles } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/insights', {
-  title: `Le journal ${brand.shortName}.`,
+  title: "Study in France Blog & Guides",
   description:
-    "Practical notes for a thoughtful French chapter, with official sources.",
+    "Study in France blog: choosing a programme, Campus France application steps and student budget planning, each linked to official sources.",
 });
 export default function Content() {
   return (

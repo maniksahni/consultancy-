@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
 export const metadata: Metadata = pageMetadata('/terms', {
-  title: "Clear expectations.",
+  title: "Terms of Use",
   description: "General website information and consultation enquiry terms.",
 });
 export default function Content() {

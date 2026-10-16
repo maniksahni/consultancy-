@@ -11,10 +11,10 @@ const searchDescriptions:Record<string,string>={
   faq:"Clear answers about French universities, application procedures, scholarships, fees and student visas, with official sources to check next.",
 };
 const searchTitles:Record<string,string>={
-  costs:"Study Costs in France",
-  living:"Student Life in France",
-  scholarships:"France Scholarships Guide",
-  visas:"France Student Visa Guide",
+  costs:"Cost of Studying in France 2026",
+  living:"Student Life & Housing in France",
+  scholarships:"Scholarships to Study in France",
+  visas:"France Student Visa Guide 2026",
   faq:"France Study FAQ",
 };
 export function generateMetadata({params}:{params:{topic:string}}){const g=guides.find(x=>x.slug===params.topic);return pageMetadata(`/france/${params.topic}`, {title:searchTitles[params.topic] || (g?g.title+' '+g.accent:'France guide'), description: searchDescriptions[params.topic] || g?.summary });}

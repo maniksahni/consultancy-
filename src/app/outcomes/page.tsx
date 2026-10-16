@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 
 export const metadata: Metadata = pageMetadata('/outcomes', {
-  title: "A first conversation.",
+  title: "What a Study Abroad Consultation Covers",
   description:
-    "Understand what a consultation can cover before deciding on further support.",
+    "What a first study in France consultation covers: academic background, budget, course options and a prioritised research plan, with no admission guarantees.",
 });
 export default function Content() {
   return (

@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
-export const metadata: Metadata = pageMetadata('/privacy', { title: "Your information, considered.", description: "Privacy information for the consultation enquiry and this website." });
+export const metadata: Metadata = pageMetadata('/privacy', { title: "Privacy Policy", description: "Privacy information for the consultation enquiry and this website." });
 export default function Content() {
   return <Page path="/privacy" title="Your information, considered." intro="Privacy information for the consultation enquiry and this website."><div className="prose">
     <h2>Your consultation details</h2><p>The form asks for your name and what you would like to explore. Phone number, academic background and preferred time are optional; you may also choose a study destination.</p>

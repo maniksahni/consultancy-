@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { stages } from "@/data/france";
 export const metadata: Metadata = pageMetadata('/mentorship-model', {
-  title: "A considered path, together.",
+  title: "Study Abroad Mentorship Process",
   description:
-    "Six stages to organise the conversation — adapted to your circumstances and agreed scope.",
+    "How our six-stage study abroad mentorship works: profile review, course shortlisting, SOP and documents, application route and arrival in France.",
 });
 export default function Content() {
   return (
