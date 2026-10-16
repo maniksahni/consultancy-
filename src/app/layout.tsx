@@ -3,9 +3,18 @@ import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Caveat, Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "./site-theme.css";
+import "./atelier.css";
+import "./horizon.css";
+import "./jobs.css";
+const handwriting = Caveat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-handwriting",
+  display: "swap",
+});
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "600"],
@@ -22,7 +31,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#050b10",
+  themeColor: "#faf6ee",
 };
 export const metadata: Metadata = {
   metadataBase: new URL(brand.canonicalUrl),
@@ -61,7 +70,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${handwriting.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content
