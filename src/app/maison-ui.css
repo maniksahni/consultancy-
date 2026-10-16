@@ -92,23 +92,22 @@ html.ms-menu-open { overflow:hidden; }
 .ms-cover-media figcaption { position:absolute; right:4.5%; bottom:30px; z-index:2; max-width:300px; text-align:right; font-size:11px; letter-spacing:.04em; color:#bab5ce; }
 .ms-cover-shade { position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,#050508f0 0%,#050508b3 45%,#0505083d 100%),linear-gradient(0deg,#050508 0%,#05050800 50%),linear-gradient(180deg,#05050899,transparent 30%); }
 .ms-cover-copy { position:relative; }
-.ms-crumbs { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:34px; font-size:13px; color:#bab5ce; animation:sx-fade 1s var(--ms-ease) both; }
+.ms-crumbs { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:34px; font-size:13px; color:#bab5ce; animation:sx-fade .45s var(--ms-ease) both; }
 .ms-crumbs a { display:inline-flex; align-items:center; gap:8px; color:#fff; }
 .ms-crumbs a:hover { color:var(--ms-champagne); }
-.ms-cover .ms-kicker { animation:sx-fade 1s var(--ms-ease) .08s both; }
+.ms-cover .ms-kicker { animation:sx-fade .45s var(--ms-ease) .03s both; }
 .ms-cover h1 { display:flex; flex-direction:column; max-width:15ch; margin:20px 0 28px; font:650 clamp(44.3px,6.1vw,101.7px)/.95 var(--ms-serif); letter-spacing:-.035em; color:#fff; }
 .ms-cover-line { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.06em; }
-.ms-cover-line > * { display:inline-block; animation:sx-rise 1.25s var(--ms-ease) .12s both; }
-.ms-cover-line:nth-child(2) > * { animation-delay:.24s; }
+.ms-cover-line > * { display:inline-block; animation:sx-rise .7s var(--ms-ease) .04s both; }
+.ms-cover-line:nth-child(2) > * { animation-delay:.1s; }
 .ms-cover h1 em { color:var(--ms-champagne); font-style:italic; }
-.ms-cover-intro { max-width:620px; font-size:18px; line-height:1.7; color:#d8d4e6; animation:sx-fade 1s var(--ms-ease) .4s both; }
-.ms-cover-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; animation:sx-fade 1s var(--ms-ease) .52s both; }
+.ms-cover-intro { max-width:620px; font-size:18px; line-height:1.7; color:#d8d4e6; animation:sx-fade .5s var(--ms-ease) .14s both; }
+.ms-cover-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; animation:sx-fade .5s var(--ms-ease) .18s both; }
 .ms-cover-actions :is(a, .button) { display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:12px 20px; border-radius:999px; background:#ffffff14; border:1px solid #ffffff38; color:#fff; font:600 13px/1.2 var(--ms-sans); backdrop-filter:blur(10px); transition:background .3s; }
 .ms-cover-actions :is(a, .button):hover { background:#ffffff26; }
 .ms-cover-cue { position:absolute; left:50%; bottom:24px; translate:-50% 0; display:grid; justify-items:center; gap:9px; font-size:10px; letter-spacing:.3em; color:#bab5ce; }
 .ms-cover-cue i { position:relative; width:1px; height:40px; background:#ffffff30; overflow:hidden; }
 .ms-cover-cue i::after { content:""; position:absolute; inset:0; background:var(--ms-gold); animation:mx-cue 2s var(--ms-ease) infinite; }
-html:not(.sx-seen) .ms-cover :is(.ms-crumbs, .ms-kicker, .ms-cover-line > *, .ms-cover-intro, .ms-cover-actions) { animation-delay:1.8s; }
 
 /* ---------- Sections & headings ---------- */
 .ms-section { position:relative; padding:clamp(80px,10vw,140px) 0; }

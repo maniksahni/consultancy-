@@ -56,3 +56,6 @@ data/review/*.json
 
 # Local Next.js development cache
 /.next-dev/
+
+# Resized photo copies, generated at build by scripts/data/build-image-variants.py
+public/images/paris/w*/

@@ -55,9 +55,6 @@
 .mx-hero-actions { animation-delay:.48s; }
 .mx-route { animation-delay:.6s; }
 .mx-hero-meta, .mx-hero-cue { animation-delay:.8s; }
-html:not(.sx-seen) .maison-home .mx-line > * { animation-delay:1.75s; }
-html:not(.sx-seen) .maison-home .mx-line:nth-child(2) > * { animation-delay:1.9s; }
-html:not(.sx-seen) .maison-home :is(.mx-eyeline, .mx-hero-lead, .mx-hero-actions, .mx-route, .mx-hero-meta, .mx-hero-cue) { animation-delay:2s; }
 
 /* Route card */
 .mx-route { position:absolute; right:4.5%; bottom:11vh; width:350px; padding:22px; border-radius:18px; pointer-events:auto; color:#f4efe4; background:linear-gradient(160deg,#0d3446c4,#061f2bd9); border:1px solid #ffffff26; box-shadow:0 30px 80px -30px #000a,inset 0 1px 0 #ffffff1c; backdrop-filter:blur(18px) saturate(1.2); }

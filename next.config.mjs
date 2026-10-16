@@ -3,7 +3,8 @@ const nextConfig = {
   output: "export",
   distDir: process.env.ALTHEA_BUILD ? ".next" : ".next-dev",
   images: {
-    unoptimized: true,
+    loader: "custom",
+    loaderFile: "./src/lib/imageLoader.ts",
   },
 };
 
