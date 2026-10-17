@@ -137,3 +137,90 @@
   .lx-reviews-bars button { height:40px; padding:18px 0; }
   .ms-stage-dots button { height:44px; }
 }
+
+/* ---------- Phone compaction: every page in fewer screens ----------
+   Shared parts (cover, closing, footer) repeat on all pages, so trimming them shortens
+   every page; long lists become swipe rows or two columns. */
+@media (max-width:640px) {
+  /* Cover: a shorter photo strip, title closer to the top. */
+  .ms-cover { padding-block:86px 26px !important; }
+  .ms-cover-media { aspect-ratio:16/8 !important; margin-top:12px !important; border-radius:22px; }
+  .ms-cover .ms-crumbs { margin-top:-18px; }
+  .ms-cover h1 { margin:12px 0 16px !important; }
+  .ms-cover-intro { display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
+  .ms-cover-actions { margin-top:20px; }
+
+  /* Closing call to action. */
+  .ms-closing { padding-block:44px !important; }
+  .ms-closing h2 { margin-block:10px 14px; }
+  .ms-closing-copy { gap:14px !important; }
+  .ms-closing-copy > p { font-size:15px; line-height:1.55; }
+  .ms-closing .mx-orb { display:inline-flex !important; grid-auto-flow:column; gap:10px; width:auto !important; height:auto !important; min-height:52px; padding:14px 24px; margin-top:4px; border-radius:999px; font-size:15px; animation:none; }
+  .ms-closing .mx-orb svg { width:18px; height:18px; }
+
+  /* Footer: contact details as a compact block, link lists two to a row. */
+  .ms-footer-grid { gap:18px 14px !important; padding:24px 0 18px !important; }
+  .ms-footer-brand p { margin:10px 0 12px; font-size:14px; line-height:1.5; }
+  .ms-footer-contact { display:flex !important; flex-wrap:wrap; gap:6px 16px !important; }
+  .ms-footer-contact a, .ms-footer-contact span { font-size:13px; }
+  .ms-footer-col:last-of-type { grid-column:1/-1; }
+  .ms-footer-col:last-of-type ul { display:grid !important; grid-template-columns:1fr 1fr; column-gap:14px; }
+  .ms-footer-col a { padding-block:3px !important; font-size:13.5px !important; }
+  .ms-footer-title { margin-bottom:6px !important; }
+  .ms-footer-legal { padding-block:16px !important; }
+  .ms-footer-legal p { font-size:12px; }
+  .ms-footer-word { font-size:56px !important; line-height:.9 !important; }
+
+  /* Filter pills: one swipe row instead of four or five wrapped rows. */
+  .ms-pills, .ms-chips { flex-wrap:nowrap !important; overflow-x:auto; margin-inline:calc(50% - 50vw); padding:2px 5vw 6px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  :is(.ms-pills, .ms-chips)::-webkit-scrollbar { display:none; }
+  :is(.ms-pills, .ms-chips) > * { flex:none; }
+
+  /* Live job cards: date beside the title, no duplicate apply link (it is in the job view). */
+  .ms-livejob { gap:8px; padding:16px; }
+  .ms-livejob-head { flex-direction:row !important; gap:10px; }
+  .ms-livejob h3 { font-size:17px; }
+  .ms-livejob-summary { -webkit-line-clamp:2; font-size:14px; }
+  .ms-livejob-actions .ms-btn { min-height:44px; }
+  .ms-livejob-tool { min-height:38px; }
+  .ms-livejob-apply { display:none !important; }
+
+  /* Jobs explorer intro: drop the decorative radar, figures in one row. */
+  .ms-radar { display:none !important; }
+  .ms-jobs-stats { display:grid !important; grid-template-columns:repeat(3,1fr) !important; gap:10px !important; }
+  .ms-jobs-stats > div { padding:12px 0 !important; }
+  .ms-jobs-stats dd { font-size:30px !important; }
+  .ms-jobs-stats dt { font-size:11.5px !important; line-height:1.35 !important; }
+
+  /* Departure planner: tighter step cards. */
+  .lx-planner-steps li { gap:6px; }
+  .lx-planner-body { padding:14px 16px !important; gap:6px !important; }
+  .lx-planner-body h3 { font-size:17px !important; }
+  .lx-planner-body p { font-size:14px !important; line-height:1.5 !important; margin:0; }
+
+  /* Photo credits: two columns of short rows. */
+  .ms-credits { display:grid !important; grid-template-columns:1fr 1fr; column-gap:14px; }
+  .ms-credits li { padding-block:8px !important; font-size:13px; }
+  .ms-credits li span { font-size:11px; }
+}
+
+/* ---------- Home page on phones ---------- */
+@media (max-width:640px) {
+  .lx-scroll { display:none !important; }
+  .lx-planner-steps.is-collapsed li:nth-child(n+4) { display:none; }
+  .lx-planner-money > div { padding:10px 12px !important; }
+  .lx-hero { padding-bottom:40px !important; }
+  /* Destination and chapter cards: shorter, still photo-led. */
+  .lx-dest { height:52vh !important; max-height:420px !important; }
+  .lx-bento > * { min-height:280px !important; }
+  /* Manifesto statement at reading size. */
+  .lx-manifesto .mx-scroll-words { font-size:clamp(21px,6vw,25px) !important; line-height:1.25 !important; }
+  .lx-pin { padding-block:56px 48px !important; }
+  /* Final call to action: a button, not a large circle. */
+  .lx-final { padding-block:64px !important; }
+  .lx-final-title { font-size:clamp(40px,12vw,56px) !important; }
+  .lx-final .lx-center { gap:16px !important; }
+  .lx-final .mx-orb { display:inline-flex !important; grid-auto-flow:column; gap:10px; width:auto !important; height:auto !important; min-height:52px; padding:14px 26px; margin-top:4px; border-radius:999px; font-size:15px; animation:none; }
+  .lx-final .mx-orb svg { width:18px; height:18px; }
+  :is(.lx-final, .ms-closing) .mx-orb span { white-space:nowrap; padding:0 !important; }
+}

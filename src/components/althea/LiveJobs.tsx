@@ -12,6 +12,7 @@ const GUIDE: Record<string, string> = { france: "/france/jobs" };
 const guidePath = (c: string) => GUIDE[c] || `/destinations/${c}/jobs`;
 const ENTRY = /\b(intern|internship|stage|stagiaire|junior|graduate|trainee|apprentice|apprenti|alternance|alternant|werkstudent|working student|entry|débutant)\b/i;
 const PAGE = 12;
+const PAGE_PHONE = 6; // phones show fewer cards per step so the list stays short
 
 function ago(iso: string) {
   const days = Math.floor((Date.now() - new Date(iso).getTime()) / 864e5);
@@ -38,6 +39,7 @@ export default function LiveJobs() {
   const [mode, setMode] = useState<"all" | "onsite" | "remote">("all");
   const [lang, setLang] = useState<"all" | "en" | "fr" | "de">("all");
   const [entry, setEntry] = useState(false);
+  const [page, setPage] = useState(PAGE);
   const [shown, setShown] = useState(PAGE);
   const [open, setOpen] = useState<LiveJob | null>(null);
   const [tab, setTab] = useState<JobTab>("about");
@@ -63,7 +65,8 @@ export default function LiveJobs() {
     loadList(c).then((list) => { const job = list.find((j) => j.id === decodeURIComponent(id)); if (job) { setOpen(job); document.getElementById("live-jobs")?.scrollIntoView(); } }).catch(() => {});
   }, []);
 
-  useEffect(() => { setShown(PAGE); }, [country, query, mode, lang, entry]);
+  useEffect(() => { if (window.matchMedia("(max-width: 640px)").matches) setPage(PAGE_PHONE); }, []);
+  useEffect(() => { setShown(page); }, [page, country, query, mode, lang, entry]);
 
   const openJob = useCallback((job: LiveJob, t: JobTab = "about") => {
     setTab(t); setOpen(job);
@@ -142,7 +145,7 @@ export default function LiveJobs() {
           </div>
         </li>)}
       </ol>
-      {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + PAGE)}><span>Show more jobs ({jobs.length - shown} left)</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
+      {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + page)}><span>Show more jobs ({jobs.length - shown} left)</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
       </div>
 
       <aside className="ms-livejobs-help" aria-label="Help with your application">
