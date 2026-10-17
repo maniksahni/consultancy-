@@ -117,6 +117,7 @@ export default function LiveJobs() {
     </p>
 
     <div className="ms-livejobs-layout">
+      <div className="ms-livejobs-main">
       <ol className="ms-livejobs-list">
         {jobs.slice(0, shown).map((job) => <li key={job.id} className="ms-livejob">
           <div className="ms-livejob-head">
@@ -141,6 +142,8 @@ export default function LiveJobs() {
           </div>
         </li>)}
       </ol>
+      {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + PAGE)}><span>Show more jobs ({jobs.length - shown} left)</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
+      </div>
 
       <aside className="ms-livejobs-help" aria-label="Help with your application">
         <p className="ms-kicker">BEFORE YOU APPLY</p>
@@ -155,7 +158,6 @@ export default function LiveJobs() {
       </aside>
     </div>
 
-    {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + PAGE)}><span>Show more jobs ({jobs.length - shown} left)</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
     {all && !jobs.length && <div className="ms-empty"><h3>No jobs match these filters.</h3><p>Try another field or language, include remote roles, or switch off the entry-level filter.</p></div>}
 
     <p className="ms-livejobs-note">

@@ -50,7 +50,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
     if (!dialog) return;
     // The page's smooth scrolling would otherwise take the wheel away from the drawer.
     const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
-    if (job && !dialog.open) { dialog.showModal(); lenis?.stop(); }
+    if (job && !dialog.open) { dialog.showModal(); dialog.querySelector<HTMLElement>(".ms-jobdrawer-panel")?.focus({ preventScroll: true }); lenis?.stop(); }
     if (!job && dialog.open) dialog.close();
     if (!job) lenis?.start();
   }, [job]);
@@ -72,7 +72,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
 
   return <dialog ref={ref} className="ms-jobdrawer" aria-labelledby="ms-jobdrawer-title" onClose={onClose} data-lenis-prevent
     onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-    {job && <div className="ms-jobdrawer-panel">
+    {job && <div className="ms-jobdrawer-panel" tabIndex={-1}>
       <header className="ms-jobdrawer-head">
         <div>
           <p className="ms-jobdrawer-company"><Briefcase size={14} aria-hidden="true" />{job.company}</p>

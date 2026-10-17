@@ -914,12 +914,13 @@ html.ms-menu-open { overflow:hidden; }
 .ms-livejobs-help h3 { margin:0; font:650 22px/1.2 var(--ms-serif); color:var(--ms-text); }
 .ms-livejobs-help h3 em { font-style:italic; color:var(--ms-champagne); }
 .ms-livejobs-help ul { margin:0; padding-left:18px; display:grid; gap:8px; font-size:14.5px; color:var(--ms-muted); }
+.ms-livejobs-main { display:grid; gap:16px; min-width:0; }
 .ms-livejobs-more { justify-self:start; }
 .ms-livejobs-note { margin:0; max-width:900px; font-size:13px; line-height:1.6; color:var(--ms-muted); }
 .ms-livejobs-note a { color:var(--ms-text); text-decoration:underline; text-underline-offset:3px; }
 @media (max-width:900px) {
   .ms-livejobs-layout { grid-template-columns:1fr; }
-  .ms-livejobs-help { position:static; order:-1; }
+  .ms-livejobs-help { position:static; }
   .ms-livejobs-filters { grid-template-columns:1fr 1fr; }
   .ms-livejobs-search { grid-column:1/-1; }
 }
@@ -952,6 +953,7 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
 .ms-jobdrawer[open] { animation:ms-drawer-in .38s var(--ms-ease) both; }
 @keyframes ms-drawer-in { from { transform:translateX(40px); opacity:0; } to { transform:none; opacity:1; } }
 .ms-jobdrawer-panel { display:grid; grid-template-rows:auto auto minmax(0,1fr) auto; height:100%; background:radial-gradient(70% 40% at 100% 0%,#5b3dff2e,transparent 70%),#0e0c16; border-left:1px solid #c9bcff2e; }
+.ms-jobdrawer-panel:focus { outline:none; }
 .ms-jobdrawer-head { display:flex; justify-content:space-between; gap:16px; padding:26px 28px 16px; }
 .ms-jobdrawer-head > div { display:grid; gap:9px; min-width:0; }
 .ms-jobdrawer-company { display:inline-flex; align-items:center; gap:7px; margin:0; font:700 12px/1 var(--ms-sans); letter-spacing:.12em; text-transform:uppercase; color:var(--ms-champagne); }
@@ -1041,7 +1043,9 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
   @keyframes ms-sheet-in { from { transform:translateY(40px); opacity:0; } to { transform:none; opacity:1; } }
   .ms-jobdrawer-panel { border-left:0; border-top:1px solid #c9bcff2e; border-radius:24px 24px 0 0; }
   .ms-jobdrawer-head { padding:20px 18px 12px; }
-  .ms-jobdrawer-tabs { padding:0 18px 12px; }
+  .ms-jobdrawer-tabs { padding:0 18px 12px; gap:6px; }
+  .ms-jobdrawer-tabs button { flex:1 1 0; min-width:0; justify-content:center; gap:5px; padding:9px 6px; font-size:13px; }
+  .ms-livejobs-more { justify-self:stretch; justify-content:center; }
   .ms-jobdrawer-body { padding:18px; }
   .ms-jobdrawer-foot { padding:12px 18px calc(12px + env(safe-area-inset-bottom)); }
   .ms-jobdrawer-foot { flex-wrap:nowrap; gap:14px; }
@@ -1058,6 +1062,7 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
   .ms-ats-verdict p { font-size:14px; }
   .ms-frwords dl { grid-template-columns:1fr; }
 }
+@media (max-width:380px) { .ms-jobdrawer-tabs button svg { display:none; } }
 @media (prefers-reduced-motion:reduce) { .ms-jobdrawer[open] { animation:none; } }
 
 /* ---------- Reviews: "Which story sounds like you?" ---------- */

@@ -131,3 +131,9 @@
 .ms-prog-charges > summary h3 { margin:0; }
 .ms-prog-charges > summary::after { content:"+"; flex:0 0 28px; height:28px; display:grid; place-items:center; border-radius:50%; border:1px solid #ffffff2a; font:500 18px/1 var(--ms-sans); transition:transform .3s; }
 .ms-prog-charges[open] > summary::after { transform:rotate(45deg); }
+
+/* Thumb-sized hit areas for the story progress bars (the visible bar stays thin). */
+@media (max-width:640px) {
+  .lx-reviews-bars button { height:40px; padding:18px 0; }
+  .ms-stage-dots button { height:44px; }
+}
