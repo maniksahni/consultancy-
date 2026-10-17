@@ -1,5 +1,5 @@
 import GuideChapterPage from "@/components/guides/GuideChapterPage";
-import { franceChapter, franceGuide } from "@/data/guides/france";
+import { franceChapterFull as franceChapter, franceGuideFull as franceGuide } from "@/data/guides";
 
 export default function CampusFranceContent() {
   return <GuideChapterPage guide={franceGuide} chapter={franceChapter("campus-france")!} />;

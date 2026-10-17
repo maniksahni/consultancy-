@@ -843,6 +843,16 @@ html.ms-menu-open { overflow:hidden; }
 .ms-guide-body { display:grid; gap:56px; max-width:900px; }
 .ms-guide-block > h2, .ms-guide-block > summary > h2 { margin:0 0 18px; font:650 clamp(26px,2.6vw,38px)/1.08 var(--ms-serif); letter-spacing:-.02em; color:var(--ms-text); }
 .ms-guide-block .ms-prose { max-width:none; }
+.ms-guide-more-kicker { margin:34px 0 4px !important; }
+.ms-guide-block.is-more { border-top:1px solid var(--ms-line); }
+.ms-guide-block.is-more:last-child { border-bottom:1px solid var(--ms-line); }
+.ms-guide-block.is-more > summary { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 0; cursor:pointer; list-style:none; }
+.ms-guide-block.is-more > summary::-webkit-details-marker { display:none; }
+.ms-guide-block.is-more > summary > h2 { margin:0; font-size:clamp(20px,1.8vw,26px); }
+.ms-guide-block.is-more > summary::after { content:"+"; flex:0 0 34px; height:34px; display:grid; place-items:center; border-radius:50%; border:1px solid var(--ms-line); font:500 20px/1 var(--ms-sans); color:var(--ms-gold-text); transition:transform .3s var(--ms-ease); }
+.ms-guide-block.is-more[open] > summary::after { transform:rotate(45deg); }
+.ms-guide-block.is-more[open] { padding-bottom:22px; }
+@media (min-width:641px) { .ms-guide-body > .ms-guide-block.is-more + .ms-guide-block.is-more { margin-top:-56px; } .ms-guide-more-kicker + .ms-guide-block.is-more { margin-top:-40px; } }
 .ms-guide-block .ms-steps, .ms-guide-block .ms-checklist { margin-top:12px; }
 .ms-guide-table { overflow-x:auto; margin-top:16px; border:1px solid var(--ms-line); border-radius:var(--ms-radius); background:var(--ms-paper); }
 .ms-guide-table table { width:100%; border-collapse:collapse; font:400 15px/1.5 var(--ms-sans); color:var(--ms-muted); }

@@ -7,6 +7,7 @@ import { isoDate } from "@/lib/trail";
 import { coverFor } from "@/lib/paris";
 import type { CountryGuide, GuideChapter } from "@/data/guides/types";
 import Link from "next/link";
+import { Fragment } from "react";
 import GuideTocScroll from "./GuideTocScroll";
 
 const countryNames: Record<string, string> = { uk: "United Kingdom", usa: "United States" };
@@ -48,8 +49,10 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
         <GuideTocScroll />
         {chapter.facts?.length ? <div className="ms-guide-facts"><Facts items={chapter.facts} /></div> : null}
         <div className="ms-guide-body">
-          {chapter.blocks.map((block) => (
-            <details key={block.heading} className="ms-guide-block" open>
+          {chapter.blocks.map((block, i) => (
+            <Fragment key={block.heading}>
+            {block.more && !chapter.blocks[i - 1]?.more ? <p className="ms-kicker ms-guide-more-kicker">IN DEPTH · TAP A TOPIC TO OPEN</p> : null}
+            <details className={`ms-guide-block${block.more ? " is-more" : ""}`} open={!block.more}>
               <summary><h2>{block.heading}</h2></summary>
               {block.paragraphs?.length ? <Prose>{block.paragraphs.map((p) => <p key={p}>{p}</p>)}</Prose> : null}
               {block.steps?.length ? <Steps items={block.steps.map((s) => ({ title: s.title, body: <p>{s.body}</p> }))} /> : null}
@@ -62,6 +65,7 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
                 </table>
               </div> : null}
             </details>
+            </Fragment>
           ))}
         </div>
       </Section>

@@ -7,7 +7,12 @@ export type GuideBlock = {
   steps?: { title: string; body: string }[];
   checklist?: string[];
   table?: { head: string[]; rows: string[][]; caption?: string };
+  /** In-depth detail: shown collapsed under "In depth" so the chapter stays scannable. */
+  more?: boolean;
 };
+
+/** Extra depth for a chapter, kept in guides/deep/<country>.ts and merged into the chapter. */
+export type ChapterDepth = { facts?: GuideChapter["facts"]; blocks?: GuideBlock[]; faqs?: GuideChapter["faqs"]; sources?: GuideSource[] };
 
 export type GuideChapter = {
   slug: string;

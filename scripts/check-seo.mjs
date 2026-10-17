@@ -14,7 +14,7 @@ for (const path of pages) {
   for (const pattern of [/<title>[^<]+<\/title>/, /name="description" content="[^"]+"/, /property="og:title" content="[^"]+"/, /property="og:description" content="[^"]+"/, /name="twitter:card" content="summary_large_image"/]) {
     assert.match(html, pattern, `Missing search metadata: ${path}`);
   }
-  const title = html.match(/<title>([^<]+)<\/title>/)?.[1]?.replaceAll('&amp;', '&');
+  const title = html.match(/<title>([^<]+)<\/title>/)?.[1]?.replaceAll('&amp;', '&').replace(/&#x27;|&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
   const description = html.match(/name="description" content="([^"]+)"/)?.[1]?.replaceAll('&amp;', '&');
   assert.ok(title && title.length <= 60, `Search title should be concise (max 60 chars): ${path} (${title?.length ?? 0})`);
   assert.equal([...html.matchAll(/<h1\b/g)].length, 1, `Page must have one clear primary heading: ${path}`);

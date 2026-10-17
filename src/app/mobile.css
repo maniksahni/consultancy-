@@ -117,7 +117,7 @@
 
 /* On larger screens the section headings stay static, never collapsible. */
 @media (min-width:641px) {
-  .ms-guide-block > summary { list-style:none; pointer-events:none; }
+  .ms-guide-block:not(.is-more) > summary { list-style:none; pointer-events:none; }
   .ms-guide-block > summary::-webkit-details-marker { display:none; }
 }
 

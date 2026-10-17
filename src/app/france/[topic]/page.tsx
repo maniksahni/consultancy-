@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import GuideChapterPage from "@/components/guides/GuideChapterPage";
-import { franceChapter, franceGuide } from "@/data/guides/france";
+import { franceChapterFull as franceChapter, franceGuideFull as franceGuide } from "@/data/guides";
 
 const topicChapters = franceGuide.chapters.filter((c) => c.path.startsWith("/france/"));
 export function generateStaticParams() { return topicChapters.map((c) => ({ topic: c.slug })); }
