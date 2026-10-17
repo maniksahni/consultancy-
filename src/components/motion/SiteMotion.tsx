@@ -1,16 +1,14 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
-import Lenis from "lenis";
+import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Site-wide motion layer: smooth scrolling, scroll reveals, a scroll-aware
-// header, a reading progress line, a trailing cursor, magnetic buttons and
-// cursor spotlights. Everything is progressive: without JavaScript, or with
-// reduced motion requested, content is simply shown.
+// Site-wide motion layer: a scroll-aware header, magnetic buttons and cursor
+// spotlights. Scrolling itself stays native, so the page follows the wheel or
+// finger instantly instead of easing behind it.
 const REVEAL = [
   "main section:not(:first-of-type) :is(h2, .mx-kicker, blockquote, figure)",
   "main section:not(:first-of-type) article",
@@ -23,28 +21,6 @@ const INTERACTIVE = "a, button, select, input, textarea, label, [role=button]";
 
 export default function SiteMotion() {
   const pathname = usePathname();
-  const lenis = useRef<Lenis | null>(null);
-  // Smooth scrolling and the cursor live for the whole visit.
-  useEffect(() => {
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const fine = matchMedia("(pointer: fine)").matches;
-    const cleanups: (() => void)[] = [];
-
-    if (!reduced) {
-      const instance = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: { offset: -90 } });
-      lenis.current = instance;
-      (window as unknown as { __lenis?: Lenis }).__lenis = instance;
-      instance.on("scroll", ScrollTrigger.update);
-      const raf = (time: number) => instance.raf(time * 1000);
-      gsap.ticker.add(raf);
-      gsap.ticker.lagSmoothing(0);
-      document.documentElement.classList.add("sx-smooth");
-      cleanups.push(() => { gsap.ticker.remove(raf); instance.destroy(); lenis.current = null; delete (window as unknown as { __lenis?: Lenis }).__lenis; document.documentElement.classList.remove("sx-smooth"); });
-    }
-
-    return () => cleanups.forEach((fn) => fn());
-  }, []);
-
   // Per-page behaviour, re-run on every route change.
   useEffect(() => {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -52,9 +28,6 @@ export default function SiteMotion() {
     const root = document.documentElement;
     const header = document.querySelector<HTMLElement>(".ms-nav");
     let lastY = scrollY, frame = 0;
-    const anchor = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
-    if (anchor) lenis.current?.scrollTo(anchor, { immediate: true, offset: -100 });
-    else lenis.current?.scrollTo(0, { immediate: true });
 
     const update = () => {
       frame = 0;

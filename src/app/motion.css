@@ -10,12 +10,9 @@
 
 /* Scroll reveals */
 .sx-wait { opacity:0; transform:translateY(28px); }
-.sx-wait.sx-in { opacity:1; transform:none; transition:opacity .9s var(--sx-ease) var(--sx-delay,0ms),transform 1s var(--sx-ease) var(--sx-delay,0ms); }
+.sx-wait.sx-in { opacity:1; transform:none; transition:opacity .55s var(--sx-ease) var(--sx-delay,0ms),transform .6s var(--sx-ease) var(--sx-delay,0ms); }
 
-/* Smooth scrolling (Lenis) */
-html.sx-smooth { scroll-behavior:auto !important; }
-html.lenis, html.lenis body { height:auto; }
-.lenis.lenis-stopped { overflow:hidden; }
+/* Inner scroll areas keep the wheel to themselves */
 [data-lenis-prevent] { overscroll-behavior:contain; }
 
 /* First-visit intro curtain */
@@ -49,8 +46,8 @@ html.sx-seen .sx-intro { display:none; }
 /* Character cascades */
 .sx-word { display:inline-block; white-space:nowrap; }
 .sx-chars .ch { display:inline-block; }
-.sx-wait .sx-chars .ch { opacity:0; transform:translateY(.6em) rotate(6deg); filter:blur(6px); }
-.sx-wait.sx-in .sx-chars .ch { opacity:1; transform:none; filter:none; transition:opacity .7s var(--sx-ease),transform .9s var(--sx-ease),filter .7s; transition-delay:calc(var(--i) * 22ms + 120ms); }
+.sx-wait .sx-chars .ch { opacity:0; transform:translateY(.6em) rotate(6deg); }
+.sx-wait.sx-in .sx-chars .ch { opacity:1; transform:none; transition:opacity .5s var(--sx-ease),transform .6s var(--sx-ease); transition-delay:calc(var(--i) * 18ms + 60ms); }
 .sx-wait.sx-in { transform:none; }
 
 /* Live status dot */

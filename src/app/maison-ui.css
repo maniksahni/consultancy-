@@ -139,7 +139,7 @@ html.ms-menu-open { overflow:hidden; }
 .ms-cols-2 { grid-template-columns:repeat(2,1fr); }
 .ms-cols-3 { grid-template-columns:repeat(3,1fr); }
 .ms-cols-4 { grid-template-columns:repeat(4,1fr); }
-.ms-card { position:relative; isolation:isolate; display:flex; flex-direction:column; gap:14px; min-height:100%; padding:clamp(26px,2.6vw,36px); border-radius:var(--ms-radius); background:linear-gradient(160deg,#ffffff0d,#ffffff03); border:1px solid #ffffff14; backdrop-filter:blur(16px); color:var(--ms-text); transition:transform .5s var(--ms-ease),box-shadow .5s,border-color .3s; }
+.ms-card { position:relative; isolation:isolate; display:flex; flex-direction:column; gap:14px; min-height:100%; padding:clamp(26px,2.6vw,36px); border-radius:var(--ms-radius); background:linear-gradient(160deg,#ffffff0d,#ffffff03); border:1px solid #ffffff14; color:var(--ms-text); transition:transform .5s var(--ms-ease),box-shadow .5s,border-color .3s; }
 .ms-tone-paper .ms-card { background:linear-gradient(160deg,#ffffff0d,#ffffff03); }
 .ms-tone-ink .ms-card { background:#ffffff08; border-color:#ffffff1a; color:var(--ms-text); }
 .ms-card.is-link:hover { transform:translateY(-6px); box-shadow:0 34px 70px -36px #00000066; border-color:#7c6cff; }

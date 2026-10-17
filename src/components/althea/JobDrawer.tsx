@@ -49,13 +49,9 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    // The page's smooth scrolling would otherwise take the wheel away from the drawer.
-    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
-    if (job && !dialog.open) { dialog.showModal(); dialog.querySelector<HTMLElement>(".ms-jobdrawer-panel")?.focus({ preventScroll: true }); lenis?.stop(); }
+    if (job && !dialog.open) { dialog.showModal(); dialog.querySelector<HTMLElement>(".ms-jobdrawer-panel")?.focus({ preventScroll: true }); }
     if (!job && dialog.open) dialog.close();
-    if (!job) lenis?.start();
   }, [job]);
-  useEffect(() => () => (window as unknown as { __lenis?: { start: () => void } }).__lenis?.start(), []);
 
   useEffect(() => {
     if (!job) return;

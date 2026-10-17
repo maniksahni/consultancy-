@@ -40,16 +40,16 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       gsap.to(q(".lx-hero-stage"), { scale: 0.86, opacity: 0.25, yPercent: 10, ease: "none", scrollTrigger: { trigger: q(".lx-hero")[0], start: "top top", end: "bottom top", scrub: true } });
       gsap.to(q(".lx-hero-copy"), { yPercent: -18, opacity: 0, ease: "none", scrollTrigger: { trigger: q(".lx-hero")[0], start: "20% top", end: "bottom top", scrub: true } });
       // Bento tiles rise in a cascade.
-      gsap.from(q(".lx-tile"), { y: 80, opacity: 0, rotateX: 8, transformOrigin: "50% 100%", duration: 1.1, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger: q(".lx-bento")[0], start: "top 78%" } });
+      gsap.from(q(".lx-tile"), { y: 80, opacity: 0, rotateX: 8, transformOrigin: "50% 100%", duration: 0.7, ease: "expo.out", stagger: 0.05, scrollTrigger: { trigger: q(".lx-bento")[0], start: "top 78%" } });
       // Destinations travel sideways while the page holds still.
       if (desktop) {
         const track = q(".lx-dest-track")[0] as HTMLElement;
         const distance = () => track.scrollWidth - innerWidth + innerWidth * 0.08;
-        const travel = gsap.to(track, { x: () => -distance(), ease: "none", scrollTrigger: { trigger: q(".lx-pin")[0], start: "top top", end: () => `+=${distance()}`, scrub: 0.8, pin: true, invalidateOnRefresh: true, onUpdate: (self) => setActive(Math.min(countries.length - 1, Math.floor(self.progress * countries.length))) } });
+        const travel = gsap.to(track, { x: () => -distance(), ease: "none", scrollTrigger: { trigger: q(".lx-pin")[0], start: "top top", end: () => `+=${distance()}`, scrub: 0.3, pin: true, invalidateOnRefresh: true, onUpdate: (self) => setActive(Math.min(countries.length - 1, Math.floor(self.progress * countries.length))) } });
         q(".lx-dest-img img").forEach((img) => gsap.fromTo(img, { xPercent: -8, scale: 1.12 }, { xPercent: 8, scale: 1.12, ease: "none", scrollTrigger: { trigger: img.closest(".lx-dest"), containerAnimation: travel, start: "left right", end: "right left", scrub: true } }));
       }
       // The finale ring opens.
-      gsap.fromTo(q(".lx-final-ring"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, ease: "none", scrollTrigger: { trigger: q(".lx-final")[0], start: "top 85%", end: "top 15%", scrub: 0.6 } });
+      gsap.fromTo(q(".lx-final-ring"), { scale: 0.55, opacity: 0 }, { scale: 1, opacity: 1, ease: "none", scrollTrigger: { trigger: q(".lx-final")[0], start: "top 85%", end: "top 15%", scrub: 0.3 } });
     });
     return () => mm.revert();
   }, []);

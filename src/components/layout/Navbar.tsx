@@ -21,7 +21,6 @@ const menu = [
   { label: "The journal", href: "/knowledge", image: paris("student-cafe").file, note: "Reviewed guidance, seven countries" },
   { label: "About Althéa", href: "/about", image: paris("ile-de-la-cite").file, note: "Founded in Paris by Harshita Kohli" },
 ];
-type LenisLike = { stop: () => void; start: () => void };
 
 export default function Navbar(_props: { appearance?: "light" | "dark" }) {
   const [open, setOpen] = useState(false);
@@ -34,12 +33,10 @@ export default function Navbar(_props: { appearance?: "light" | "dark" }) {
   useEffect(() => { const i = menu.findIndex((item) => item.href === pathname); setPreview(i < 0 ? 0 : i); }, [pathname]);
 
   useEffect(() => {
-    const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis;
     const node = panel.current;
     document.documentElement.classList.toggle("ms-menu-open", open);
     if (node) { if (open) node.removeAttribute("inert"); else node.setAttribute("inert", ""); }
-    if (!open) { lenis?.start(); return; }
-    lenis?.stop();
+    if (!open) return;
     const first = node?.querySelector<HTMLElement>(".ms-menu-list a");
     const focusTimer = window.setTimeout(() => first?.focus(), 80);
     const key = (event: KeyboardEvent) => {
