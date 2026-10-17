@@ -21,7 +21,7 @@ code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; 
 
 /* The Althéa brand lockup */
 .althea-brand-lockup { display:inline-flex; align-items:center; gap:11px; color:inherit; white-space:nowrap; vertical-align:middle; }
-.althea-brand-mark { display:inline-block; flex-shrink:0; width:36px; height:36px; object-fit:contain; border-radius:9px; }
+.althea-brand-mark { display:inline-block; flex-shrink:0; width:36px; height:36px; object-fit:contain; border-radius:0 !important; } /* the SVG draws its own rounded corners; a second CSS clip leaves a light rim in Safari */
 .althea-brand-name { font:400 28px/1 var(--font-italic),Georgia,serif; letter-spacing:-.01em; }
 
 /* Quiet scrollbars that match the palette */

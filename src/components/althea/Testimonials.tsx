@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { sampleReviews } from "@/data/reviews";
 import { Kicker, TextLink } from "@/components/maison/ui";
 
-/** Student stories: a featured stage that turns on its own, plus the full collection. */
+/** Student stories: a featured stage that turns on its own. */
 export default function Testimonials({ full = false }: { full?: boolean }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -40,11 +40,6 @@ export default function Testimonials({ full = false }: { full?: boolean }) {
           </div>
         </div>
       </div>
-      {full && <div className="ms-story-notes">{sampleReviews.map((r, i) => <article key={r.id} className="ms-card" data-spotlight>
-        <div className="ms-card-top"><span className="ms-card-kicker">{r.badge} · {r.stage}</span><span className="ms-card-index">{String(i + 1).padStart(2, "0")}</span></div>
-        <h3>{r.takeaway}</h3>
-        <div className="ms-card-body"><p>{r.outcome}</p><p className="ms-story-who"><strong>{r.name}</strong> · {r.location} · {r.topic}</p></div>
-      </article>)}</div>}
     </div>
   </section>;
 }

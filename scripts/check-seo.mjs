@@ -49,7 +49,7 @@ for (const path of pages) {
   }
 }
 const home = await readFile('out/index.html', 'utf8');
-assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon-20261016.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
+assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon-20261017.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
 assert.match(home, /<nav class="ms-nav-links" aria-label="Main navigation">/, 'Homepage must render the primary desktop navigation');
 const homeEntities = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
   .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] || [data]; });
@@ -66,7 +66,7 @@ for (const offer of organization.hasOfferCatalog.itemListElement) {
 for (const [, asset] of home.matchAll(/<link[^>]+rel="(?:icon|shortcut icon|apple-touch-icon)"[^>]+href="([^"]+)"/g)) {
   assert.ok(exportFiles.has(`out${asset}`), `Missing advertised favicon: ${asset}`);
 }
-const favicon = await readFile('out/brand/favicon-20261016.png');
+const favicon = await readFile('out/brand/favicon-20261017.png');
 assert.equal(favicon.readUInt32BE(16), 512, 'Brand favicon width');
 assert.equal(favicon.readUInt32BE(20), 512, 'Brand favicon height');
 for (const route of ['study-in-france', 'settle-in-france', 'career-support', 'jobs', 'about', 'reviews', 'book-consultation']) {
