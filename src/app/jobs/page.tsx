@@ -21,7 +21,7 @@ export default function JobsPage() {
       accent="starts here."
       intro="Explore roles, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland with official statutory work rights and ATS resume standards."
     >
-      <Section tone="ivory" id="live-jobs" kicker="JOB BOARD · 1,500+ OPEN ROLES" title="Real jobs." accent="Apply today." intro="Open roles, internships and alternance in Paris, London, Berlin and beyond. Read the full description, learn the French words for each job, check your CV against it with our free ATS checker — then apply on the original posting.">
+      <Section tone="ivory" id="live-jobs" kicker="JOB BOARD · 5,000+ OPEN ROLES" title="Real jobs." accent="Apply today." intro="Open roles, internships and alternance in Paris, London, Berlin and beyond — straight from the career pages of Doctolib, Datadog, Ubisoft, Accor, Qonto, Stripe and 70 more companies. Read the full description, learn the French words for each job, check your CV against it with our free ATS checker — then apply on the original posting.">
         <LiveJobs />
       </Section>
       <JobsExplorer />

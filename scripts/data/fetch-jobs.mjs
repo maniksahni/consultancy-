@@ -5,7 +5,7 @@
 // Every listing keeps its source and the source's own URL, so visitors apply where
 // the job is actually posted.
 //
-// Sources that need no key run every time: Arbeitnow (on-site jobs in France, the UK,
+// Sources that need no key run every time: company career sites (see BOARDS), Arbeitnow (on-site jobs in France, the UK,
 // Germany, Ireland) and Jobicy (remote jobs open to each country). These switch on
 // automatically when their free keys are set in .env.local or the build environment:
 //   FRANCE_TRAVAIL_CLIENT_ID, FRANCE_TRAVAIL_CLIENT_SECRET  (francetravail.io — official French job board)
@@ -17,7 +17,7 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 const DIR = 'public/data/jobs';
 const OUT = `${DIR}/live.json`;
 const MAX_AGE_DAYS = 45;
-const PER_COUNTRY = 400;
+const PER_COUNTRY = 900;
 const CHUNK = 40;
 const UA = 'AltheaConsulting-JobsFeed/1.1 (+https://altheaconsulting.in/jobs)';
 const COUNTRIES = ['france', 'uk', 'usa', 'canada', 'germany', 'australia', 'ireland'];
@@ -97,6 +97,9 @@ const CITY_COUNTRY = [
   [/united kingdom|\buk\b|england|scotland|london|manchester|edinburgh|birmingham|glasgow|bristol|leeds|cambridge|oxford|reading|belfast/i, 'uk'],
   [/ireland|dublin|cork|galway|limerick/i, 'ireland'],
   [/germany|deutschland|berlin|munich|münchen|hamburg|frankfurt|cologne|köln|stuttgart|düsseldorf|dusseldorf|leipzig|dresden|hannover|nuremberg|nürnberg|bremen|essen|dortmund|bonn|karlsruhe|mannheim|heidelberg|freiburg|münster|aachen|augsburg|wiesbaden|potsdam|darmstadt|rosenheim|regensburg|ulm|kiel|lübeck|mainz|bochum|duisburg|wuppertal|bielefeld|braunschweig|kassel|erlangen|ingolstadt|würzburg|jena|magdeburg|rostock|saarbrücken|baden|bayern|bavaria|hessen|nordrhein|sachsen|thüringen|niedersachsen|brandenburg/i, 'germany'],
+  [/canada|toronto|vancouver|montr[ée]al|ottawa|calgary|edmonton|waterloo|ontario|qu[ée]bec|british columbia|alberta/i, 'canada'],
+  [/australia|sydney|melbourne|brisbane|perth|adelaide|canberra|new south wales|victoria, au|queensland/i, 'australia'],
+  [/united states|\busa?\b|new york|san francisco|seattle|boston|chicago|austin|los angeles|denver|atlanta|washington,? d\.?c|miami|dallas|houston|san diego|san jose|palo alto|mountain view|menlo park|sunnyvale|redmond|pittsburgh|philadelphia|portland|salt lake|nashville|raleigh|phoenix|minneapolis|detroit|, (al|ak|az|ar|ca|co|ct|de|fl|ga|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|tx|ut|vt|va|wa|wv|wi|wy)\b/i, 'usa'],
 ];
 const placeOf = (location) => CITY_COUNTRY.find(([re]) => re.test(location || ''))?.[1] || null;
 
@@ -106,7 +109,7 @@ async function arbeitnow() {
     const data = await getJson(`https://www.arbeitnow.com/api/job-board-api?page=${page}`);
     for (const j of data.data || []) {
       const country = placeOf(j.location);
-      if (!country) continue;
+      if (!['france', 'uk', 'ireland', 'germany'].includes(country)) continue;
       const item = job({
         id: `arbeitnow-${j.slug}`, country, title: j.title, company: j.company_name, location: j.remote ? `${j.location} · remote possible` : j.location,
         remote: j.remote, type: (j.job_types || []).join(', ') || null, category: (j.tags || [])[0], description: j.description,
@@ -201,6 +204,99 @@ async function muse(country) {
   });
 }
 
+
+// ---------- Company career sites ----------
+// Many employers publish their open roles through their applicant-tracking system's public
+// job-board feed (Greenhouse, Lever, Ashby, SmartRecruiters). These feeds exist so anyone can
+// list the company's jobs; each listing carries the company's own description and apply link.
+const BOARDS = {
+  greenhouse: { doctolib: 'Doctolib', datadog: 'Datadog', algolia: 'Algolia', mirakl: 'Mirakl', dataiku: 'Dataiku', dropbox: 'Dropbox', monzo: 'Monzo', n26: 'N26', wise: 'Wise', discord: 'Discord', squarespace: 'Squarespace', figma: 'Figma', twilio: 'Twilio', airbnb: 'Airbnb', intercom: 'Intercom', pinterest: 'Pinterest', asana: 'Asana', robinhood: 'Robinhood', gitlab: 'GitLab', toast: 'Toast', reddit: 'Reddit', coinbase: 'Coinbase', hellofresh: 'HelloFresh', cloudflare: 'Cloudflare', stripe: 'Stripe', celonis: 'Celonis', elastic: 'Elastic', okta: 'Okta', deliveroo: 'Deliveroo', mongodb: 'MongoDB', duolingo: 'Duolingo', chime: 'Chime', instacart: 'Instacart', lyft: 'Lyft', affirm: 'Affirm', epicgames: 'Epic Games', brex: 'Brex', fivetran: 'Fivetran', samsara: 'Samsara', riotgames: 'Riot Games', roblox: 'Roblox', anthropic: 'Anthropic', databricks: 'Databricks', getyourguide: 'GetYourGuide', cognite: 'Cognite', scaleai: 'Scale AI', contentful: 'Contentful', workato: 'Workato', shifttechnology: 'Shift Technology', ivalua: 'Ivalua', adyen: 'Adyen', sumup: 'SumUp' },
+  lever: { spotify: 'Spotify', agicap: 'Agicap', palantir: 'Palantir', swile: 'Swile', ogury: 'Ogury', qonto: 'Qonto', zopa: 'Zopa', aircall: 'Aircall' },
+  ashby: { cohere: 'Cohere', linear: 'Linear', notion: 'Notion', ramp: 'Ramp', pennylane: 'Pennylane', photoroom: 'Photoroom', synthesia: 'Synthesia', posthog: 'PostHog', elevenlabs: 'ElevenLabs', perplexity: 'Perplexity', alan: 'Alan', openai: 'OpenAI', docker: 'Docker', lovable: 'Lovable', dust: 'Dust', supabase: 'Supabase' },
+  smartrecruiters: { Ubisoft2: 'Ubisoft', BoschGroup: 'Bosch', Sodexo: 'Sodexo', ServiceNow: 'ServiceNow', Accor: 'Accor', Mazars: 'Forvis Mazars', Continental: 'Continental', LVMH: 'LVMH', SaintGobain: 'Saint-Gobain' },
+};
+const SR_COUNTRY = { france: 'fr', uk: 'gb', usa: 'us', canada: 'ca', germany: 'de', australia: 'au', ireland: 'ie' };
+const PER_COMPANY = 30;
+const isEntry = (title) => /\b(intern|internship|stage|stagiaire|alternance|alternant|apprenti|apprentice|graduate|junior|trainee|werkstudent|working student|praktikum|new grad|entry)\b/i.test(title);
+/** One company's roles in one country: internships and junior roles first, then the newest. */
+const capCompany = (rows) => rows.sort((a, b) => (isEntry(b.title) - isEntry(a.title)) || (new Date(b.posted) - new Date(a.posted))).slice(0, PER_COMPANY);
+async function pool(items, size, fn) {
+  const out = []; let i = 0;
+  await Promise.all(Array.from({ length: size }, async () => { while (i < items.length) { const item = items[i++]; try { out.push(...await fn(item)); } catch {} } }));
+  return out;
+}
+const direct = (fields) => { const row = job({ ...fields, source: `${fields.company} careers` }); if (row) row.direct = true; return row; };
+const spread = (rows) => {
+  const groups = new Map();
+  for (const r of rows) { const k = `${r.country}|${r.company}`; groups.set(k, [...(groups.get(k) || []), r]); }
+  return [...groups.values()].flatMap(capCompany);
+};
+
+async function greenhouse() {
+  return spread(await pool(Object.entries(BOARDS.greenhouse), 6, async ([slug, company]) => {
+    const data = await getJson(`https://boards-api.greenhouse.io/v1/boards/${slug}/jobs?content=true`);
+    return (data.jobs || []).flatMap((j) => {
+      const location = j.location?.name || '';
+      const country = placeOf(location);
+      if (!country) return [];
+      const row = direct({ id: `gh-${slug}-${j.id}`, country, title: j.title, company, location, remote: /remote/i.test(location),
+        category: j.departments?.[0]?.name, description: j.content, posted: j.first_published || j.updated_at, url: j.absolute_url });
+      return row ? [row] : [];
+    });
+  }));
+}
+
+async function lever() {
+  return spread(await pool(Object.entries(BOARDS.lever), 4, async ([slug, company]) => {
+    const data = await getJson(`https://api.lever.co/v0/postings/${slug}?mode=json`);
+    return (Array.isArray(data) ? data : []).flatMap((j) => {
+      const location = [j.categories?.location, ...(j.categories?.allLocations || [])].filter(Boolean).join(' · ');
+      const country = placeOf(location) || placeOf(j.country === 'FR' ? 'France' : j.country === 'GB' ? 'United Kingdom' : j.country === 'DE' ? 'Germany' : '');
+      if (!country) return [];
+      const lists = (j.lists || []).map((l) => `<h3>${l.text}</h3><ul>${l.content}</ul>`).join('');
+      const row = direct({ id: `lever-${slug}-${j.id}`, country, title: j.text, company, location: [...new Set(location.split(' · '))].join(' · '),
+        remote: j.workplaceType === 'remote', type: j.categories?.commitment, category: j.categories?.team,
+        description: `${j.description || ''}${lists}${j.additional || ''}`, posted: j.createdAt, url: j.hostedUrl });
+      return row ? [row] : [];
+    });
+  }));
+}
+
+async function ashby() {
+  return spread(await pool(Object.entries(BOARDS.ashby), 4, async ([slug, company]) => {
+    const data = await getJson(`https://api.ashbyhq.com/posting-api/job-board/${slug}?includeCompensation=true`);
+    return (data.jobs || []).flatMap((j) => {
+      if (j.isListed === false) return [];
+      const location = [j.location, j.address?.postalAddress?.addressCountry, ...(j.secondaryLocations || []).map((l) => l.location)].filter(Boolean).join(' · ');
+      const country = placeOf(location);
+      if (!country) return [];
+      const row = direct({ id: `ashby-${slug}-${j.id}`, country, title: j.title, company, location: [...new Set([j.location, ...(j.secondaryLocations || []).map((l) => l.location)].filter(Boolean))].join(' · '), remote: Boolean(j.isRemote),
+        type: j.employmentType?.replace(/([a-z])([A-Z])/g, '$1 $2'), category: j.department || j.team,
+        salary: j.compensation?.compensationTierSummary || null, description: j.descriptionHtml, posted: j.publishedAt, url: j.jobUrl });
+      return row ? [row] : [];
+    });
+  }));
+}
+
+async function smartRecruiters() {
+  const lists = await pool(Object.entries(BOARDS.smartrecruiters).flatMap(([slug, company]) => COUNTRIES.map((country) => [slug, company, country])), 6, async ([slug, company, country]) => {
+    const data = await getJson(`https://api.smartrecruiters.com/v1/companies/${slug}/postings?country=${SR_COUNTRY[country]}&limit=100`);
+    const rows = (data.content || []).map((p) => ({ slug, company, country, p }));
+    return rows.sort((a, b) => (isEntry(b.p.name) - isEntry(a.p.name)) || (new Date(b.p.releasedDate) - new Date(a.p.releasedDate))).slice(0, PER_COMPANY);
+  });
+  return pool(lists, 8, async ({ slug, company, country, p }) => {
+    const d = await getJson(`https://api.smartrecruiters.com/v1/companies/${slug}/postings/${p.id}`);
+    const sections = d.jobAd?.sections || {};
+    const html = ['companyDescription', 'jobDescription', 'qualifications', 'additionalInformation']
+      .map((k) => sections[k]?.text ? `<h3>${sections[k].title || ''}</h3>${sections[k].text}` : '').join('');
+    const loc = [p.location?.city, p.location?.region, COUNTRY_NAMES[country]].filter(Boolean).join(', ');
+    const row = direct({ id: `sr-${slug}-${p.id}`, country, title: p.name, company, location: loc, remote: Boolean(p.location?.remote),
+      type: p.typeOfEmployment?.label, category: p.function?.label || p.department?.label, level: p.experienceLevel?.label,
+      description: html, posted: p.releasedDate, url: d.postingUrl || `https://jobs.smartrecruiters.com/${slug}/${p.id}` });
+    return row ? [row] : [];
+  });
+}
+
 // ---------- Run ----------
 // When every source fails, the files from the previous run are left untouched.
 const byCountry = Object.fromEntries(COUNTRIES.map((c) => [c, []]));
@@ -217,6 +313,9 @@ for (const country of COUNTRIES) {
   await sleep(1200);
 }
 byCountry.france.push(...await collect('France Travail', franceTravail));
+for (const [name, fn] of [['Company career sites', greenhouse], ['Company career sites', lever], ['Company career sites', ashby], ['Company career sites', smartRecruiters]]) {
+  for (const row of await collect(name, fn)) byCountry[row.country].push(row);
+}
 for (const row of await collect('Arbeitnow', arbeitnow)) byCountry[row.country].push(row);
 
 const cutoff = Date.now() - MAX_AGE_DAYS * 864e5;
@@ -224,10 +323,12 @@ const countries = {};
 for (const country of COUNTRIES) {
   const seen = new Set();
   // Newest first; on-site roles lead, remote roles fill the rest (at most a third when on-site roles exist).
+  // The same job on a board and on the company's own site keeps the company's listing.
   const fresh = byCountry[country]
-    .filter((j) => new Date(j.posted).getTime() >= cutoff)
-    .sort((a, b) => new Date(b.posted) - new Date(a.posted))
-    .filter((j) => { const k = `${j.title}|${j.company}`.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
+    .filter((j) => j.direct || new Date(j.posted).getTime() >= cutoff)
+    .sort((a, b) => (b.direct ? 1 : 0) - (a.direct ? 1 : 0))
+    .filter((j) => { const k = `${j.title}|${j.company}`.toLowerCase().replace(/[^a-z0-9|]+/g, ''); if (seen.has(k)) return false; seen.add(k); return true; })
+    .sort((a, b) => new Date(b.posted) - new Date(a.posted));
   const onsite = fresh.filter((j) => !j.remote);
   const remoteRoom = onsite.length ? Math.max(Math.round(PER_COUNTRY / 3), PER_COUNTRY - onsite.length) : PER_COUNTRY;
   const remote = fresh.filter((j) => j.remote).slice(0, remoteRoom);
@@ -249,7 +350,7 @@ if (!total) {
       const chunk = `${country}-${i / CHUNK}`;
       const part = rows.slice(i, i + CHUNK);
       await writeFile(`${DIR}/desc/${chunk}.json`, JSON.stringify(Object.fromEntries(part.map((j) => [j.id, j.description || j.summary]))));
-      for (const { description, ...rest } of part) list[country].push({ ...rest, d: description ? chunk : null });
+      for (const { description, direct: _direct, ...rest } of part) list[country].push({ ...rest, d: description ? chunk : null });
     }
   }
   for (const country of COUNTRIES) await writeFile(`${DIR}/list-${country}.json`, JSON.stringify(list[country]));

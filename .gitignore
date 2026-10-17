@@ -63,3 +63,7 @@ public/images/paris/.variants-q*
 
 # pdf.js for the CV checker, copied from node_modules by scripts/vendor-pdfjs.mjs
 public/vendor/pdfjs/
+
+# Job board data, regenerated on every build by scripts/data/fetch-jobs.mjs
+public/data/jobs/list-*.json
+public/data/jobs/desc/
