@@ -1,6 +1,7 @@
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { franceGuide } from "@/data/guides/france";
 import { destinationGuides } from "@/data/guides";
+import { indiaGuide } from "@/data/guides/india";
 import type { MetadataRoute } from "next";
 import {programmeResearch} from "@/data/programmeResearch";
 import { articles, checked, cities } from "@/data/france";
@@ -9,7 +10,8 @@ import { isoDate } from "@/lib/trail";
 // The date each page's facts were last checked; jobs refresh with every daily build.
 const siteReviewed = "2026-10-17";
 const reviewed: Record<string, string | undefined> = Object.fromEntries([
-  ...destinationGuides.concat(franceGuide).flatMap(g => g.chapters.map(c => [c.path.slice(1), isoDate(c.reviewedAt)])),
+  ["from-india", isoDate(indiaGuide.chapters[0].reviewedAt)],
+  ...destinationGuides.concat(franceGuide, indiaGuide).flatMap(g => g.chapters.map(c => [c.path.slice(1), isoDate(c.reviewedAt)])),
   ...programmeResearch.map(p => [`programmes/${p.slug}`, isoDate(p.reviewedAt)]),
   ...articles.map(a => [`insights/${a.slug}`, isoDate(checked)]),
   ...cities.map(c => [`cities/${c.slug}`, isoDate(checked)]),
@@ -56,6 +58,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       (s) => `destinations/${s}`,
     ),
     ...destinationGuides.flatMap(g => g.chapters.map(c => c.path.slice(1))),
+    "from-india",
+    ...indiaGuide.chapters.map(c => c.path.slice(1)),
   ];
   const canonicalHost = host.replace(/\/$/, "");
   return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost, lastModified: reviewed[p] || siteReviewed }));

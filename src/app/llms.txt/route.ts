@@ -2,6 +2,7 @@ import { brand } from "@/config/brand";
 import { articles, cities, faqs } from "@/data/france";
 import { franceGuide } from "@/data/guides/france";
 import { destinationGuides } from "@/data/guides";
+import { indiaGuide } from "@/data/guides/india";
 import { siteUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -31,6 +32,10 @@ export function GET() {
     link("Scholarships", "/scholarships", "study abroad scholarships and funding"),
     link("Universities in France", "/france/universities", "researched programmes, tuition and application timing"),
     link("Jobs", "/jobs", "jobs, internships and work-study pathways in France and six other countries"),
+    "",
+    "## From India: what every Indian student needs, for any destination",
+    link("From India: the essentials", indiaGuide.hubPath, "education loans, sending money, documents, language tests, packing and degree recognition"),
+    ...indiaGuide.chapters.map(c => link(c.label, c.path, c.summary)),
     "",
     ...destinationGuides.flatMap(g => ["", `## The complete ${g.name} guide`, ...g.chapters.map(c => link(c.label, c.path, c.summary))]),
     "",

@@ -1,4 +1,5 @@
 import { countryGuides } from "@/data/guides";
+import { indiaGuide } from "@/data/guides/india";
 import { programmeResearch } from "@/data/programmeResearch";
 import { articles, cities } from "@/data/france";
 import { destinations } from "@/data/destinations";
@@ -37,13 +38,14 @@ const names: Record<string, string> = {
   "/scholarships": "Scholarships",
   "/outcomes": "Consultation outcomes",
   "/admissions-process": "Admissions process",
+  "/from-india": "From India",
 };
 for (const g of countryGuides) if (g.hubPath.startsWith("/destinations/")) names[g.hubPath] = `Study in ${g.prose}`;
 for (const d of destinations) names[`/destinations/${d.slug}`] ??= `Study in ${d.name}`;
 for (const c of cities) names[`/cities/${c.slug}`] = `Study in ${c.name}`;
 for (const p of programmeResearch) names[`/programmes/${p.slug}`] = `${p.title}, ${p.institution}`;
 for (const a of articles) names[`/insights/${a.slug}`] = a.title.replace(/\.$/, "");
-for (const g of countryGuides) for (const c of g.chapters) names[c.path] ??= c.label;
+for (const g of [...countryGuides, indiaGuide]) for (const c of g.chapters) names[c.path] ??= c.label;
 
 /** Pages whose parent is not the URL's own parent folder (or whose folder has no page). */
 const parents: Record<string, string> = {};

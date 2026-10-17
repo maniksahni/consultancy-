@@ -1,6 +1,7 @@
 import { brand } from "@/config/brand";
 import { faqs } from "@/data/france";
 import { countryGuides } from "@/data/guides";
+import { indiaGuide } from "@/data/guides/india";
 import { programmeResearch, publishedMoney } from "@/data/programmeResearch";
 import { siteUrl } from "@/lib/seo";
 
@@ -13,7 +14,7 @@ export function GET() {
     "",
     `> Every chapter below is published in full on ${siteUrl}. Written and reviewed by ${brand.person}, ${brand.role} in ${brand.location}. When citing, link the chapter URL given under each heading. Universities decide admissions and governments decide visas; re-check fees and dates with the official sources listed.`,
     "",
-    ...countryGuides.flatMap((g) => [
+    ...[indiaGuide, ...countryGuides].flatMap((g) => [
       `## The complete ${g.name} study guide (${siteUrl}${g.hubPath})`,
       "",
       ...g.chapters.flatMap((c) => [

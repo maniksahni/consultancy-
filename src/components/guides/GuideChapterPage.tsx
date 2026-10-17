@@ -10,7 +10,13 @@ import Link from "next/link";
 import { Fragment } from "react";
 import GuideTocScroll from "./GuideTocScroll";
 
-const countryNames: Record<string, string> = { uk: "United Kingdom", usa: "United States" };
+const countryNames: Record<string, string> = { uk: "United Kingdom", usa: "United States", india: "India" };
+
+/** Country chapters that point to the shared "From India" chapters. */
+const fromIndia: Record<string, [string, string][]> = {
+  "funding-loans": [["Education loans from India", "/from-india/education-loans"], ["Sending money abroad: LRS and TCS", "/from-india/sending-money-abroad"]],
+  "pre-departure": [["Packing and customs from India", "/from-india/packing-customs"], ["Documents and attestation", "/from-india/documents-attestation"]],
+};
 
 /** Renders one chapter of a country guide, with the full answer on the page and sources as small citations. */
 export default function GuideChapterPage({ guide, chapter }: { guide: CountryGuide; chapter: GuideChapter }) {
@@ -68,6 +74,9 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
             </Fragment>
           ))}
         </div>
+        {guide.country !== "india" && fromIndia[chapter.slug] ? <Notice kicker="FROM INDIA">
+          <p>The Indian side of this step, for every destination: {fromIndia[chapter.slug].map(([label, href], i) => <span key={href}>{i > 0 && " · "}<Link href={href}>{label}</Link></span>)} · <Link href="/from-india">All From India chapters</Link></p>
+        </Notice> : null}
       </Section>
       {chapter.faqs?.length ? <Section tone="paper" kicker="QUICK ANSWERS" title="Your questions," accent="answered." align="split">
         <Accordion items={chapter.faqs.map((f) => ({ q: f.q, a: <p>{f.a}</p> }))} />

@@ -72,7 +72,7 @@ export default function StudyFranceContent({ imagePlacement = "/study-in-france"
           <Card title="Independent guidance, clearly scoped"><p>Althéa is not a university representative. Any partner-supported application assistance is described before work begins; admission, scholarships and visas are decided by the relevant institutions and authorities and cannot be guaranteed.</p></Card>
         </Grid>
         <Notice kicker="YOUR OFFICIAL STARTING POINTS">
-          <div className="ms-row"><TextLink href="/programmes">Explore the programme directory</TextLink><TextLink href="/campus-france-guide">Explore the application procedure guide</TextLink><TextLink href="/france/visas">Explore the student visa guide</TextLink></div>
+          <div className="ms-row"><TextLink href="/programmes">Explore the programme directory</TextLink><TextLink href="/campus-france-guide">Explore the application procedure guide</TextLink><TextLink href="/france/visas">Explore the student visa guide</TextLink><TextLink href="/from-india">Loans, money & documents from India</TextLink></div>
           <p className="ms-muted" style={{ marginTop: 16 }}>Editorial overview checked {checked}. This is independent orientation; official requirements must be checked for your own circumstances.</p>
         </Notice>
       </Section>
