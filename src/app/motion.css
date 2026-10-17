@@ -49,6 +49,9 @@ html.sx-seen .sx-intro { display:none; }
 .sx-wait .sx-chars .ch { opacity:0; transform:translateY(.6em) rotate(6deg); }
 .sx-wait.sx-in .sx-chars .ch { opacity:1; transform:none; transition:opacity .5s var(--sx-ease),transform .6s var(--sx-ease); transition-delay:calc(var(--i) * 18ms + 60ms); }
 .sx-wait.sx-in { transform:none; }
+/* Safari drops gradient text (background-clip:text) on inline-block children, so gradient
+   words fade in as plain inline text instead of rising letter by letter. */
+em .sx-word, em .sx-chars .ch { display:inline; }
 
 /* Live status dot */
 .mx-live { display:inline-block; width:7px; height:7px; border-radius:50%; background:#7fe0b0; box-shadow:0 0 0 0 #7fe0b0aa; animation:sx-pulse 2.2s infinite; flex:none; }
