@@ -128,7 +128,7 @@ export default function LiveJobs() {
           <p className="ms-livejob-tags">
             <span className={job.remote ? "is-remote" : "is-onsite"}>{job.remote ? "Remote" : "On-site"}</span>
             {job.type && <span>{job.type}</span>}
-            {job.level && <span>{job.level}</span>}
+            {job.level && !/not applicable|^n\/a$/i.test(job.level) && <span>{job.level}</span>}
             {job.lang === "fr" && <span className="is-fr">Ad in French</span>}
             {job.lang === "de" && <span>Ad in German</span>}
             {job.salary && <span className="is-salary">{job.salary}</span>}

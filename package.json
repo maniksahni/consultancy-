@@ -13,14 +13,15 @@
     "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
     "prebuild": "npm run brand:sync && node scripts/vendor-pdfjs.mjs && python3 scripts/data/build-home-explorer.py && python3 scripts/data/build-image-variants.py && node scripts/data/fetch-jobs.mjs",
-    "data:jobs": "node scripts/data/fetch-jobs.mjs",
+    "data:jobs": "JOBS_REFRESH=1 node scripts/data/fetch-jobs.mjs",
     "indexnow": "node scripts/data/indexnow.mjs",
     "data:import": "node scripts/data/import.mjs",
     "data:validate": "node scripts/data/validate.mjs",
     "data:publish": "node scripts/data/publish.mjs",
     "data:refresh-registries": "python3 scripts/data/refresh-global-registries.py",
     "data:build-home-explorer": "python3 scripts/data/build-home-explorer.py",
-    "predev": "node scripts/vendor-pdfjs.mjs"
+    "predev": "node scripts/vendor-pdfjs.mjs",
+    "data:job-boards": "node scripts/data/discover-job-boards.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

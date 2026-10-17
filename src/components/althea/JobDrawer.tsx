@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, Briefcase, Languages, MapPin, MessageCircle, ScanSearch, Wifi, X } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Briefcase, CalendarCheck, FileCheck2, Languages, MapPin, MessageCircle, ScanSearch, Wifi, X } from "lucide-react";
 import { brand } from "@/config/brand";
 import { wordsForJob } from "@/data/frenchJobWords";
 import AtsChecker from "./AtsChecker";
@@ -81,7 +82,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
           <p className="ms-livejob-tags">
             <span className={job.remote ? "is-remote" : "is-onsite"}>{job.remote ? "Remote" : "On-site"}</span>
             {job.type && <span>{job.type}</span>}
-            {job.level && <span>{job.level}</span>}
+            {job.level && !/not applicable|^n\/a$/i.test(job.level) && <span>{job.level}</span>}
             {job.lang && <span>Ad in {LANG[job.lang]}</span>}
             {job.salary && <span className="is-salary">{job.salary}</span>}
           </p>
@@ -96,6 +97,16 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
 
       <div className="ms-jobdrawer-body">
         {tab === "about" && <section id="ms-jobtab-about" role="tabpanel" aria-labelledby="ms-jobtabbtn-about">
+          <aside className="ms-cvhelp" aria-label="Help with your CV">
+            <FileCheck2 size={22} aria-hidden="true" />
+            <div>
+              <p><b>Need help with your CV?</b> See if it gets past {job.company}’s screening software in seconds — or let {brand.person.split(" ")[0]} rewrite it with you for this role.</p>
+              <div className="ms-cvhelp-actions">
+                <button type="button" className="ms-cvhelp-check" onClick={() => onTab("ats")}><ScanSearch size={15} aria-hidden="true" />Check my CV free</button>
+                <Link className="ms-cvhelp-book" href="/book-consultation"><CalendarCheck size={15} aria-hidden="true" />Book a CV session</Link>
+              </div>
+            </div>
+          </aside>
           {text ? <Description text={text} /> : failed ? <p className="ms-jobdesc">{job.summary} <br /><br />The full description could not load — read it on the original posting.</p> : <p className="ms-jobdesc-loading">Loading the full job description…</p>}
           <p className="ms-jobdrawer-source">Description as published by {job.company} on <a href={job.url} target="_blank" rel="noopener noreferrer nofollow">{job.source}</a>. Check the original posting for the latest version.</p>
         </section>}
@@ -118,7 +129,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
 
       <footer className="ms-jobdrawer-foot">
         <a className="ms-btn ms-btn-gold" href={job.url} target="_blank" rel="noopener noreferrer nofollow"><span>Apply on {job.source}</span><ArrowUpRight size={16} aria-hidden="true" /></a>
-        {tab !== "ats" ? <button type="button" className="ms-livejob-help" onClick={() => onTab("ats")}><ScanSearch size={15} aria-hidden="true" />Check my CV first</button>
+        {tab !== "ats" ? <button type="button" className="ms-livejob-help" onClick={() => onTab("ats")}><ScanSearch size={15} aria-hidden="true" /><span className="ms-only-wide">Need help with your CV?</span><span className="ms-only-narrow">CV help</span></button>
           : <a className="ms-livejob-help" href={help} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Get help applying</a>}
       </footer>
     </div>}
