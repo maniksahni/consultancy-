@@ -1,0 +1,41 @@
+name: Refresh jobs and deploy
+# Every morning: fetch fresh listings from the job boards and employer career sites,
+# rebuild the site and publish it to Firebase Hosting.
+on:
+  schedule:
+    - cron: '30 3 * * *' # 05:30 Paris (summer time), 09:00 India
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: refresh-jobs
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The branch the live site is built from; set the DEPLOY_BRANCH repository variable to change it.
+          ref: ${{ vars.DEPLOY_BRANCH || 'codex/althea-parisian' }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+        env:
+          JOBS_REFRESH: '1'
+      - run: node scripts/check-seo.mjs
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: consultancyworld2
+          channelId: live
