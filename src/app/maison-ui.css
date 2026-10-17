@@ -98,10 +98,10 @@ html.ms-menu-open { overflow:hidden; }
 .ms-cover .ms-kicker { animation:sx-fade .45s var(--ms-ease) .03s both; }
 .ms-cover h1 { display:flex; flex-direction:column; max-width:15ch; margin:20px 0 28px; font:650 clamp(44.3px,6.1vw,101.7px)/.95 var(--ms-serif); letter-spacing:-.035em; color:#fff; }
 .ms-cover-line { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.06em; }
-.ms-cover-line > * { display:inline-block; animation:sx-rise .7s var(--ms-ease) .04s both; }
-.ms-cover-line:nth-child(2) > * { animation-delay:.1s; }
+/* Page titles paint immediately (they are usually the largest element). */
+.ms-cover-line > * { display:inline-block; }
 .ms-cover h1 em { color:var(--ms-champagne); font-style:italic; }
-.ms-cover-intro { max-width:620px; font-size:18px; line-height:1.7; color:#d8d4e6; animation:sx-fade .5s var(--ms-ease) .14s both; }
+.ms-cover-intro { max-width:620px; font-size:18px; line-height:1.7; color:#d8d4e6; }
 .ms-cover-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; animation:sx-fade .5s var(--ms-ease) .18s both; }
 .ms-cover-actions :is(a, .button) { display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:12px 20px; border-radius:999px; background:#ffffff14; border:1px solid #ffffff38; color:#fff; font:600 13px/1.2 var(--ms-sans); backdrop-filter:blur(10px); transition:background .3s; }
 .ms-cover-actions :is(a, .button):hover { background:#ffffff26; }

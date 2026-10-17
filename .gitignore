@@ -59,3 +59,4 @@ data/review/*.json
 
 # Resized photo copies, generated at build by scripts/data/build-image-variants.py
 public/images/paris/w*/
+public/images/paris/.variants-q*

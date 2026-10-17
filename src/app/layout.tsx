@@ -17,6 +17,7 @@ const handwriting = Caveat({
   weight: ["400", "500", "600"],
   variable: "--font-handwriting",
   display: "swap",
+  preload: false, // only the signature uses it; keep it off the critical path
 });
 // Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
 const display = Syne({
@@ -37,6 +38,7 @@ const italic = Instrument_Serif({
   style: ["normal", "italic"],
   variable: "--font-italic",
   display: "swap",
+  preload: false, // accent words swap in; the main faces load first
 });
 export const viewport: Viewport = {
   width: "device-width",
