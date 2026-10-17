@@ -7,7 +7,7 @@ import { destinations } from "@/data/destinations";
 import { GuideChapterIndex } from "@/components/guides/GuideChapterPage";
 import { guideFor } from "@/data/guides";
 export function generateStaticParams(){return destinations.filter(d=>d.slug!=='france').map(d=>({slug:d.slug}));}
-export function generateMetadata({params}:{params:{slug:string}}){return pageMetadata(`/destinations/${params.slug}`, {title:`Study in ${destinations.find(d=>d.slug===params.slug)?.name||'your destination'}`, description: destinations.find(d=>d.slug===params.slug)?.application });}
+export function generateMetadata({params}:{params:{slug:string}}){return pageMetadata(`/destinations/${params.slug}`, {title:`Study in ${guideFor(params.slug)?.prose||destinations.find(d=>d.slug===params.slug)?.name||'your destination'} from India 2027`, description: destinations.find(d=>d.slug===params.slug)?.application });}
 export default function Destination({ params }: { params: { slug: string } }) {
   const d = destinations.find((d) => d.slug === params.slug);
   if (!d || d.slug === "france") notFound();

@@ -5,7 +5,7 @@ import Page from "@/components/althea/Page";
 import Booking from "@/components/althea/Booking";
 import { Checklist, Kicker, Section } from "@/components/maison/ui";
 export const metadata: Metadata = pageMetadata('/book-consultation', {
-  title: 'Book a Study Abroad Consultation',
+  title: 'Book a Study in France Consultation',
   description:
     "Book a study abroad consultation with Harshita Kohli in Paris: France universities, Campus France, visa, budget, housing and career questions, one to one.",
 });

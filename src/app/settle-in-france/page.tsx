@@ -5,7 +5,7 @@ import { Btn, Card, Checklist, Grid, Kicker, Notice, Section, Split, TextLink } 
 import { paris } from "@/lib/paris";
 
 export const metadata = pageMetadata("/settle-in-france", {
-  title: "Settle in France: Student Support",
+  title: "Moving to France as a Student: Support",
   description: `Practical arrival, student life and career orientation for international students and young professionals in France, with ${brand.shortName}.`,
 });
 

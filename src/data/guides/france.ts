@@ -678,7 +678,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
   {
     slug: "faq", path: "/france/faq", label: "France study FAQ", eyebrow: "CHAPTER 18 · QUICK ANSWERS",
     title: "Studying in France:", accent: "your questions answered.",
-    seoTitle: "France Study FAQ",
+    seoTitle: "Study in France FAQ for Indian Students",
     description: "Quick answers on studying in France from India: fees, Campus France, visa, IELTS, scholarships, jobs and post-study work for 2026–27.",
     summary: "The short answers Indian students ask us most often, each linked to the chapter with full detail.",
     blocks: [

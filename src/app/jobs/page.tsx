@@ -7,7 +7,7 @@ import { Card, Grid, Section } from "@/components/maison/ui";
 import { countryGuides } from "@/data/guides";
 
 export const metadata: Metadata = pageMetadata("/jobs", {
-  title: "Jobs Across France and Six Countries",
+  title: "Live Jobs in France for Internationals",
   description: "Find jobs, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland. Check official work rules.",
 });
 

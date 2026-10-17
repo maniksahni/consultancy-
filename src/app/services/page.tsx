@@ -9,7 +9,7 @@ import { Btn, Card, Grid, Kicker, Section, Split, Steps } from "@/components/mai
 import { paris } from "@/lib/paris";
 
 export const metadata: Metadata = pageMetadata("/services", {
-  title: "France Arrival, Career & Study Support",
+  title: "Study in France Consultancy Services",
   description: `Study in France guidance, arrival and settling support, and career coaching in France from ${brand.person} in Paris, for Indian and international students.`,
 });
 

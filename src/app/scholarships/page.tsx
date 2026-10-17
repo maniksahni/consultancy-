@@ -7,7 +7,7 @@ import Page from "@/components/althea/Page";
 import { Card, Checklist, Grid, Notice, Section, Steps, TextLink } from "@/components/maison/ui";
 
 export const metadata: Metadata = pageMetadata('/scholarships', {
-  title: 'Study Abroad Scholarships & Funding',
+  title: 'Scholarships for Indian Students Abroad',
   description:
     "Study abroad scholarships for Indian students: France Eiffel, DAAD and university awards, with eligibility, coverage and deadlines from official sources.",
 });

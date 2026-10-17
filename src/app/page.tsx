@@ -6,7 +6,7 @@ import manifest from "../../public/data/universities/manifest.json";
 
 export const metadata = pageMetadata("/", {
   title: {
-    absolute: "Althéa Consulting | Study in France Consultant, Paris",
+    absolute: "Study in France Consultant for Indians | Althéa Consulting",
   },
   description:
     "Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France.",
@@ -25,7 +25,7 @@ export default function Home() {
     <>
       <PageIdentity
         path="/"
-        title="Althéa Consulting | Study in France Consultant, Paris"
+        title="Study in France Consultant for Indians | Althéa Consulting"
         description="Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France."
       />
       <LumiereHome stats={stats} coverage={countryCoverage} />

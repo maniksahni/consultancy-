@@ -9,8 +9,8 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const city = cities.find((c) => c.slug === params.slug);
   return pageMetadata(`/cities/${params.slug}`, {
-    title: `Study in ${city?.name || "France"}`,
-    description: city ? `Explore student life in ${city.name}, France. Compare campus locations, transport, housing research and official local resources.` : "Explore student life and practical study resources in France." });
+    title: `Study in ${city?.name || "France"}: Student City Guide`,
+    description: city ? `Study in ${city.name}, France as an international or Indian student: universities and campuses, transport, student housing and official city resources.` : "Explore student life and practical study resources in France." });
 }
 export default function City({ params }: { params: { slug: string } }) {
   const c = cities.find((c) => c.slug === params.slug);
