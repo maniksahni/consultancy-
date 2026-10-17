@@ -60,8 +60,8 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     <section className="lx-hero" aria-labelledby="lx-hero-title">
       <div className="lx-hero-stage lx-paris-stage"><Image src={paris("eiffel-autumn-sky").file} alt={paris("eiffel-autumn-sky").alt} fill priority sizes="100vw" /><span className="lx-paris-caption">PARIS, FRANCE · YOUR NEXT CHAPTER</span></div>
       <div className="lx-hero-copy lx-wrap">
-        <h1 id="lx-hero-title"><span className="lx-h1-line"><span>Bonjour,</span></span><span className="lx-h1-line"><em>future.</em></span></h1>
-        <p className="lx-hero-lead">Study, settle and build a career in France — guided from Paris by an adviser who was once an international student herself.</p>
+        <h1 id="lx-hero-title"><span className="lx-h1-kicker">Study in France consultant · Paris ⇄ India</span><span className="lx-h1-line"><span>Bonjour,</span></span><span className="lx-h1-line"><em>future.</em></span></h1>
+        <p className="lx-hero-lead">Study in France from India with a Paris-based adviser: universities, Campus France, student visa, housing and your first job — guided by someone who was once an international student herself.</p>
         <div className="lx-hero-actions">
           <Link href="/book-consultation" className="ms-btn ms-btn-gold mx-magnetic" data-cursor="Begin"><span>Plan my move</span><ArrowUpRight size={18} aria-hidden="true" /></Link>
           <a href="#destinations" className="ms-btn ms-btn-light"><span>Explore 7 destinations</span><Compass size={17} aria-hidden="true" /></a>

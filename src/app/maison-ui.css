@@ -1051,3 +1051,8 @@ html.ms-menu-open { overflow:hidden; }
   .lx-planner-count strong { font-size:30px; }
 }
 @media (prefers-reduced-motion:reduce) { .lx-planner-count .fill { transition:none; } }
+
+/* Home hero: the keyword line that opens the H1 */
+.lx-h1-kicker { display:inline-flex; align-self:flex-start; align-items:center; gap:10px; margin:0 0 22px; padding:9px 16px; border-radius:999px; background:#ffffff0d; border:1px solid #ffffff1f; backdrop-filter:blur(14px); font:600 12px/1 var(--ms-sans); letter-spacing:.12em; text-transform:uppercase; color:#ffd2b0; }
+.lx-h1-kicker::before { content:""; width:7px; height:7px; border-radius:50%; background:#7fe0b0; box-shadow:0 0 10px #7fe0b0; }
+@media (max-width:640px) { .lx-h1-kicker { font-size:10.5px; letter-spacing:.08em; padding:8px 12px; margin-bottom:16px; } }

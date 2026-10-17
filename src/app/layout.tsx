@@ -96,7 +96,7 @@ export default function RootLayout({
           "@context": "https://schema.org",
           "@graph": [
             { "@type": "Organization", "@id": `${siteUrl}/#organization`,
-              name: brand.name, alternateName: ["Althea Consulting", "Althéa Consulting Paris"], url: siteUrl,
+              name: brand.name, alternateName: ["Althea Consulting", "Althèa Consulting", "Althéa Consulting Paris", "Althea Consultancy", "Althéa Study in France"], url: siteUrl,
               mainEntityOfPage: `${siteUrl}/about`,
               logo: { "@type": "ImageObject", "@id": `${siteUrl}/#logo`,
                 url: `${siteUrl}${brand.assets.faviconPng}`, contentUrl: `${siteUrl}${brand.assets.faviconPng}`,
@@ -133,7 +133,7 @@ export default function RootLayout({
               knowsAbout: ["Studying in France", "Campus France applications", "Career coaching in France", "Settling in France"],
               worksFor: { "@id": `${siteUrl}/#organization` } },
             { "@type": "WebSite", "@id": `${siteUrl}/#website`, name: brand.name,
-              alternateName: ["Althea Consulting", "Althéa Consulting Paris", "altheaconsulting.in"],
+              alternateName: ["Althea Consulting", "Althèa Consulting", "Althéa Consulting Paris", "altheaconsulting.in"],
               url: siteUrl, inLanguage: "en",
               publisher: { "@id": `${siteUrl}/#organization` } },
           ],
