@@ -48,9 +48,13 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    if (job && !dialog.open) dialog.showModal();
+    // The page's smooth scrolling would otherwise take the wheel away from the drawer.
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+    if (job && !dialog.open) { dialog.showModal(); lenis?.stop(); }
     if (!job && dialog.open) dialog.close();
+    if (!job) lenis?.start();
   }, [job]);
+  useEffect(() => () => (window as unknown as { __lenis?: { start: () => void } }).__lenis?.start(), []);
 
   useEffect(() => {
     if (!job) return;
@@ -66,7 +70,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
 
   const help = job ? `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(`Hello Harshita, I found this job on the Althéa website and would like help applying:\n${job.title} — ${job.company} (${job.location})\n${job.url}`)}` : "#";
 
-  return <dialog ref={ref} className="ms-jobdrawer" aria-labelledby="ms-jobdrawer-title" onClose={onClose}
+  return <dialog ref={ref} className="ms-jobdrawer" aria-labelledby="ms-jobdrawer-title" onClose={onClose} data-lenis-prevent
     onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
     {job && <div className="ms-jobdrawer-panel">
       <header className="ms-jobdrawer-head">
