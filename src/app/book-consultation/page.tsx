@@ -7,7 +7,7 @@ import { Checklist, Kicker, Section } from "@/components/maison/ui";
 export const metadata: Metadata = pageMetadata('/book-consultation', {
   title: 'Book a Study Abroad Consultation',
   description:
-    "Request a conversation. Preferred times are requests, and an appointment is confirmed separately.",
+    "Book a study abroad consultation with Harshita Kohli in Paris: France universities, Campus France, visa, budget, housing and career questions, one to one.",
 });
 export default function Content() {
   return (

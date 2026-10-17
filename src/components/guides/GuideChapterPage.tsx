@@ -2,10 +2,14 @@ import Page from "@/components/althea/Page";
 import Accordion from "@/components/maison/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
 import { Checklist, Facts, Notice, Prose, Section, Steps } from "@/components/maison/ui";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, siteUrl } from "@/lib/seo";
+import { isoDate } from "@/lib/trail";
+import { coverFor } from "@/lib/paris";
 import type { CountryGuide, GuideChapter } from "@/data/guides/types";
 import Link from "next/link";
 import GuideTocScroll from "./GuideTocScroll";
+
+const countryNames: Record<string, string> = { uk: "United Kingdom", usa: "United States" };
 
 /** Renders one chapter of a country guide, with the full answer on the page and sources as small citations. */
 export default function GuideChapterPage({ guide, chapter }: { guide: CountryGuide; chapter: GuideChapter }) {
@@ -13,8 +17,23 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
   const prev = guide.chapters[index - 1];
   const next = guide.chapters[index + 1];
   return (
-    <Page path={chapter.path} eyebrow={chapter.eyebrow} title={chapter.title} accent={chapter.accent} intro={chapter.summary}
+    <Page path={chapter.path} modified={chapter.reviewedAt} eyebrow={chapter.eyebrow} title={chapter.title} accent={chapter.accent} intro={chapter.summary}
       closing={{ kicker: "YOUR OWN PLAN", title: "Questions about", accent: `${guide.prose}?`, body: "Bring your profile, budget and timeline. We will turn this guide into a plan for you.", href: `/book-consultation?destination=${guide.country}`, action: "Book a consultation" }}>
+      <JsonLd data={{
+        "@context": "https://schema.org", "@type": "Article", "@id": `${absoluteUrl(chapter.path)}#article`,
+        headline: chapter.seoTitle, alternativeHeadline: `${chapter.title} ${chapter.accent}`.trim(),
+        description: chapter.description, abstract: chapter.summary, inLanguage: "en",
+        mainEntityOfPage: { "@id": `${absoluteUrl(chapter.path)}#webpage` },
+        image: absoluteUrl(coverFor(chapter.path).file),
+        dateModified: isoDate(chapter.reviewedAt),
+        author: { "@id": `${siteUrl}/#adviser` }, publisher: { "@id": `${siteUrl}/#organization` },
+        isPartOf: { "@type": "CreativeWorkSeries", name: `The complete ${guide.name} study guide`, url: absoluteUrl(guide.hubPath) },
+        position: index + 1,
+        about: { "@type": "Country", name: countryNames[guide.country] ?? guide.prose },
+        audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "International students, including students from India" },
+        articleSection: chapter.blocks.map((b) => b.heading),
+        citation: chapter.sources.map((s) => ({ "@type": "CreativeWork", name: s.label, url: s.url })),
+      }} />
       {chapter.faqs?.length ? <JsonLd data={{
         "@context": "https://schema.org", "@type": "FAQPage", "@id": `${absoluteUrl(chapter.path)}#faq`,
         mainEntity: chapter.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),

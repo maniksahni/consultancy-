@@ -39,6 +39,16 @@ for (const path of pages) {
     const breadcrumb = entities.find(entity => entity['@type'] === 'BreadcrumbList');
     assert.ok(breadcrumb, `Missing breadcrumb: ${path}`);
     assert.equal(breadcrumb.itemListElement.at(-1).item, canonical[1], `Breadcrumb must resolve to canonical: ${path}`);
+    const depth = new URL(canonical[1]).pathname.split('/').length - 1;
+    if (/\/(destinations\/[^/]+\/|france\/|programmes\/|insights\/)/.test(canonical[1])) assert.ok(breadcrumb.itemListElement.length >= 3, `Nested page needs its section in the breadcrumb: ${path}`);
+    assert.ok(breadcrumb.itemListElement.length <= depth + 2, `Breadcrumb deeper than the URL: ${path}`);
+  }
+  const pathname = new URL(canonical[1]).pathname;
+  if (/^\/programmes\/./.test(pathname)) assert.ok(entities.some(e => e['@type'] === 'Course' && e.provider?.name && e.offers?.price), `Programme needs Course data: ${path}`);
+  if (/^\/(destinations\/[^/]+\/|france\/(?!institutions|programmes|universities|resources)|insights\/)./.test(pathname)) {
+    const article = entities.find(e => e['@type'] === 'Article');
+    assert.ok(article?.author && /^\d{4}-\d{2}-\d{2}$/.test(article.dateModified), `Guide page needs a dated, authored Article: ${path}`);
+    assert.ok(webpage.dateModified, `Guide page needs dateModified: ${path}`);
   }
   // Check local navigation in the exported HTML, without depending on hydration.
   for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"#]+)"/g)) {
@@ -74,6 +84,10 @@ for (const route of ['study-in-france', 'settle-in-france', 'career-support', 'j
 }
 const sitemap = await readFile('out/sitemap.xml', 'utf8');
 const sitemapUrls = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]));
+assert.equal((sitemap.match(/<lastmod>\d{4}-\d{2}-\d{2}/g) || []).length, sitemapUrls.size, 'Every sitemap URL needs a lastmod date');
+const llmsFull = await readFile('out/llms-full.txt', 'utf8');
+assert.ok(llmsFull.length > 50000 && llmsFull.includes('https://altheaconsulting.in/france/costs'), 'llms-full.txt must carry the full guide text');
+assert.match(await readFile('out/llms.txt', 'utf8'), /llms-full\.txt/, 'llms.txt must point to the full corpus');
 const robots = await readFile('out/robots.txt', 'utf8');
 assert.match(robots, /Allow: \//);
 assert.doesNotMatch(robots, /Disallow: \//);

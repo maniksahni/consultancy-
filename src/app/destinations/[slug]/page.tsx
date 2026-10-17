@@ -12,6 +12,7 @@ export default function Destination({ params }: { params: { slug: string } }) {
   const d = destinations.find((d) => d.slug === params.slug);
   if (!d || d.slug === "france") notFound();
   return <Page path={`/destinations/${d.slug}`} eyebrow={`${d.region.toUpperCase()} · ${d.city.toUpperCase()}`} title="Bonjour," accent={`${d.name}.`} intro={d.mood}
+    modified={guideFor(d.slug)?.chapters[0]?.reviewedAt} about={{ "@type": "Country", name: d.name }}
     headerActions={<><a href={`#${d.slug}-admissions`}>Admissions</a><a href={`#${d.slug}-costs`}>Costs</a><a href={`#${d.slug}-visa`}>Visa</a><a href="/destinations">← The destination atlas</a></>}
     closing={{ kicker: "LET’S EXPLORE THE POSSIBILITIES", title: "Your future.", accent: "Thoughtfully guided.", body: `Talk through your plans and confirm the support available for ${d.name}.`, href: `/book-consultation?destination=${d.slug}`, action: "Start a conversation" }}>
     <Section tone="ivory" kicker="YOUR OWN WAY FORWARD" title="A destination is only" accent="the beginning." intro={d.planning} action={<TextLink href="/knowledge">Explore our reviewed destination guidance</TextLink>} />

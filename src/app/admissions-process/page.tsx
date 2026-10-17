@@ -5,7 +5,7 @@ import Procedure from "@/components/althea/Procedure";
 export const metadata: Metadata = pageMetadata('/admissions-process', {
   title: 'Study Abroad Admissions Process',
   description:
-    "Follow the programme and country-specific official instructions.",
+    "How study abroad admissions work, step by step: shortlisting, documents, Campus France or direct applications, offers and visa planning for Indian students.",
 });
 export default function Content() {
   return (

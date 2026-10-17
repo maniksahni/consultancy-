@@ -2,7 +2,7 @@ import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { Card, Grid, Section } from "@/components/maison/ui";
-export const metadata: Metadata = pageMetadata('/privacy', { title: "Privacy Policy", description: "Privacy information for the consultation enquiry and this website." });
+export const metadata: Metadata = pageMetadata('/privacy', { title: "Privacy Policy", description: "How Althéa Consulting handles your details when you book a consultation or use this website: what is collected, why, how long it is kept, your rights." });
 export default function Content() {
   return <Page path="/privacy" eyebrow="PRIVACY" title="Your information," accent="considered." intro="Privacy information for the consultation enquiry and this website." closing={false}>
     <Section tone="ivory" kicker="IN PLAIN LANGUAGE" title="What happens" accent="to your details." intro="Updated 14 October 2026.">

@@ -16,7 +16,8 @@ export default function City({ params }: { params: { slug: string } }) {
   const c = cities.find((c) => c.slug === params.slug);
   if (!c) notFound();
   return (
-    <Page path={`/cities/${params.slug}`} eyebrow="LE CHAPITRE FRANÇAIS" title={c.name} accent="as your campus." intro={c.tag}>
+    <Page path={`/cities/${params.slug}`} eyebrow="LE CHAPITRE FRANÇAIS" title={c.name} accent="as your campus." intro={c.tag}
+      modified="14 October 2026" about={{ "@type": "City", name: c.name, sameAs: c.url, containedInPlace: { "@type": "Country", name: "France" } }}>
       <Section tone="ivory" kicker={`STUDENT LIFE IN ${c.name.toUpperCase()}`} title="Picture the" accent="everyday." intro={c.text}>
         <Grid cols={2}>
           <Card index={1} title="Plan around your campus."><p>Confirm your campus address, compare commuting options and research housing with verified providers. Ask the institution about student support and accommodation resources. Budget amounts depend on your own choices and current availability.</p></Card>

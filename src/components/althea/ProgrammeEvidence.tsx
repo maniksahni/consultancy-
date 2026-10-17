@@ -5,6 +5,8 @@ import {ProgrammeResearch,publishedMoney} from '@/data/programmeResearch';
 import {destinations} from '@/data/destinations';
 import {studyKnowledge} from '@/data/studyKnowledge';
 import {programmePlanning} from '@/lib/programmePlanning';
+import JsonLd from '@/components/seo/JsonLd';
+import {absoluteUrl} from '@/lib/seo';
 export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
   const plan=programmePlanning(p);
   const scholarship=studyKnowledge.find(e=>e.country===p.country&&e.topic==='Scholarships');
@@ -13,7 +15,14 @@ export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
   const countryName=destinations.find(d=>d.slug===p.country)?.name;
   return <Page path={`/programmes/${p.slug}`} eyebrow={`${countryName} / ${p.level}`} title={p.title} intro={`${p.institution} · ${p.city} · ${p.duration}`}
     headerActions={<><a href={`/programmes?country=${p.country}`}>← Programme research</a><a href="#programme-fees">Tuition & charges</a><a href="#programme-dates">Application dates</a><a href="#programme-requirements">Requirements</a><a href="#programme-budget">Living & funding</a></>}
+    modified={p.reviewedAt} about={{"@id":`${absoluteUrl(`/programmes/${p.slug}`)}#course`}}
     closing={{kicker:"YOUR NEXT STEP",title:"A programme is a start.",accent:"A plan makes it real.",body:"Talk through fit, timing and budget for this programme and its alternatives.",href:`/book-consultation?destination=${p.country}`,action:"Discuss your study plan"}}>
+    <JsonLd data={{"@context":"https://schema.org","@type":"Course","@id":`${absoluteUrl(`/programmes/${p.slug}`)}#course`,
+      name:p.title,description:`${p.duration} ${p.level} programme at ${p.institution}, ${p.city}. ${p.requirements}`,sameAs:p.programmeUrl,inLanguage:"en",
+      educationalLevel:p.level,educationalCredentialAwarded:`${p.level}'s degree`,coursePrerequisites:p.requirements,
+      provider:{"@type":"CollegeOrUniversity",name:p.institution,address:{"@type":"PostalAddress",addressLocality:p.city,addressCountry:countryName}},
+      offers:{"@type":"Offer",category:"Paid",price:p.fee.amount,priceCurrency:p.fee.currency,description:`${p.fee.period} · ${p.fee.category}`,url:p.fee.source},
+      hasCourseInstance:{"@type":"CourseInstance",courseMode:"Onsite",location:{"@type":"Place",name:p.institution,address:{"@type":"PostalAddress",addressLocality:p.city,addressCountry:countryName}}}}}/>
     <Section tone="ivory">
       <p className="ms-kh-review"><span className="mx-live"/>Source-linked programme profile · updated 16 October 2026<span>Fee and calendar evidence retain their stated year</span></p>
       <div className="ms-prog-hero">

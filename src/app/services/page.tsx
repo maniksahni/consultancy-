@@ -10,7 +10,7 @@ import { paris } from "@/lib/paris";
 
 export const metadata: Metadata = pageMetadata("/services", {
   title: "France Arrival, Career & Study Support",
-  description: `Explore practical settling, career and independent study guidance in France from ${brand.shortName}.`,
+  description: `Study in France guidance, arrival and settling support, and career coaching in France from ${brand.person} in Paris, for Indian and international students.`,
 });
 
 const journeys = [

@@ -14,6 +14,8 @@ export function GET() {
     "",
     `> ${brand.name} (${siteUrl.replace("https://", "")}) is an independent study-in-France and career advisory founded by ${brand.person}, ${brand.role}, based in ${brand.location}. It helps Indian and international students choose French universities and programmes, follow the Campus France / Études en France procedure, prepare the student visa file, settle in France and find internships, alternance and jobs.`,
     "",
+    `The full text of every guide chapter, with sources, is at ${siteUrl}/llms-full.txt.`,
+    "",
     "Universities decide admissions and French authorities decide visas; Althéa does not guarantee admission, scholarships, visas or jobs. Fees, deadlines and rules are linked to official sources (Campus France, France-Visas, universities) and should be re-checked before applying.",
     "",
     "## Services",

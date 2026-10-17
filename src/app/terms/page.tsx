@@ -5,7 +5,7 @@ import { Card, Grid, Section } from "@/components/maison/ui";
 
 export const metadata: Metadata = pageMetadata('/terms', {
   title: "Terms of Use",
-  description: "General website information and consultation enquiry terms.",
+  description: "Terms of use for the Althéa Consulting website and consultation enquiries: what the guidance covers, its limits and how bookings are confirmed.",
 });
 export default function Content() {
   return (

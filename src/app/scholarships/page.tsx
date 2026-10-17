@@ -9,7 +9,7 @@ import { Card, Checklist, Grid, Notice, Section, Steps, TextLink } from "@/compo
 export const metadata: Metadata = pageMetadata('/scholarships', {
   title: 'Study Abroad Scholarships & Funding',
   description:
-    "Use official award information and plan without assuming an award.",
+    "Study abroad scholarships for Indian students: France Eiffel, DAAD and university awards, with eligibility, coverage and deadlines from official sources.",
 });
 export default function Content() {
   const awards = studyKnowledge.filter(entry => entry.topic === "Scholarships");

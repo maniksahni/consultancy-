@@ -6,7 +6,7 @@ import { parisPhotos, photoPlace } from "@/lib/paris";
 
 export const metadata: Metadata = pageMetadata('/acknowledgements', {
   title: "Sources & Photo Credits",
-  description: "Attribution and the limits of this editorial collection.",
+  description: "Official sources, data registries and photo credits behind the Althéa Consulting study abroad guides, and the limits of this editorial collection.",
 });
 export default function Content() {
   return (

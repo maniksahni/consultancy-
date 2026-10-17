@@ -3,7 +3,18 @@ import { franceGuide } from "@/data/guides/france";
 import { destinationGuides } from "@/data/guides";
 import type { MetadataRoute } from "next";
 import {programmeResearch} from "@/data/programmeResearch";
-import { articles, cities } from "@/data/france";
+import { articles, checked, cities } from "@/data/france";
+import { isoDate } from "@/lib/trail";
+
+// The date each page's facts were last checked; jobs refresh with every daily build.
+const siteReviewed = "2026-10-17";
+const reviewed: Record<string, string | undefined> = Object.fromEntries([
+  ...destinationGuides.concat(franceGuide).flatMap(g => g.chapters.map(c => [c.path.slice(1), isoDate(c.reviewedAt)])),
+  ...programmeResearch.map(p => [`programmes/${p.slug}`, isoDate(p.reviewedAt)]),
+  ...articles.map(a => [`insights/${a.slug}`, isoDate(checked)]),
+  ...cities.map(c => [`cities/${c.slug}`, isoDate(checked)]),
+  ["jobs", new Date().toISOString().slice(0, 10)],
+]);
 export default function sitemap(): MetadataRoute.Sitemap {
   const host = isIndexable ? siteUrl : undefined;
   if (!host) return [];
@@ -47,5 +58,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...destinationGuides.flatMap(g => g.chapters.map(c => c.path.slice(1))),
   ];
   const canonicalHost = host.replace(/\/$/, "");
-  return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost }));
+  return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost, lastModified: reviewed[p] || siteReviewed }));
 }
