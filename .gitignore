@@ -60,3 +60,6 @@ data/review/*.json
 # Resized photo copies, generated at build by scripts/data/build-image-variants.py
 public/images/paris/w*/
 public/images/paris/.variants-q*
+
+# pdf.js for the CV checker, copied from node_modules by scripts/vendor-pdfjs.mjs
+public/vendor/pdfjs/

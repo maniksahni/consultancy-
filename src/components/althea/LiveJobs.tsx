@@ -1,20 +1,16 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Briefcase, Clock, MapPin, MessageCircle, Search, Wifi } from "lucide-react";
+import { ArrowUpRight, Briefcase, Clock, Languages, MapPin, MessageCircle, ScanSearch, Search, Wifi } from "lucide-react";
 import { brand } from "@/config/brand";
+import JobDrawer, { type JobTab, type LiveJob } from "./JobDrawer";
 
-type LiveJob = {
-  id: string; country: string; title: string; company: string; location: string; remote: boolean;
-  type: string | null; category: string | null; level: string | null; salary: string | null;
-  summary: string; posted: string; url: string; source: string;
-};
-type Feed = { updatedAt: string; sources: string[]; countries: Record<string, LiveJob[]> };
+type Feed = { updatedAt: string; sources: string[]; counts: Record<string, number> };
 
 const COUNTRIES: [string, string][] = [["france", "France"], ["uk", "UK"], ["germany", "Germany"], ["ireland", "Ireland"], ["canada", "Canada"], ["usa", "USA"], ["australia", "Australia"]];
 const GUIDE: Record<string, string> = { france: "/france/jobs" };
 const guidePath = (c: string) => GUIDE[c] || `/destinations/${c}/jobs`;
-const ENTRY = /\b(intern|internship|stage|stagiaire|junior|graduate|trainee|apprentice|alternance|werkstudent|working student|entry)\b/i;
+const ENTRY = /\b(intern|internship|stage|stagiaire|junior|graduate|trainee|apprentice|apprenti|alternance|alternant|werkstudent|working student|entry|débutant)\b/i;
 const PAGE = 12;
 
 function ago(iso: string) {
@@ -26,43 +22,77 @@ function ago(iso: string) {
   return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`;
 }
 
-const helpLink = (job: LiveJob) => `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(
-  `Hello Harshita, I found this job on the Althéa website and would like help applying:\n${job.title} — ${job.company} (${job.location})\n${job.url}`,
-)}`;
+const lists = new Map<string, Promise<LiveJob[]>>();
+const loadList = (country: string) => {
+  if (!lists.has(country)) lists.set(country, fetch(`/data/jobs/list-${country}.json`).then((r) => (r.ok ? r.json() : Promise.reject())).catch((e) => { lists.delete(country); throw e; }));
+  return lists.get(country)!;
+};
 
-/** Real, open listings from public job boards; every job links to where it is posted. */
+/** A job board built from public listings: full descriptions, French vocabulary and a CV check, then apply on the original posting. */
 export default function LiveJobs() {
   const [feed, setFeed] = useState<Feed | null>(null);
+  const [jobsBy, setJobsBy] = useState<Record<string, LiveJob[]>>({});
   const [error, setError] = useState(false);
   const [country, setCountry] = useState("france");
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<"all" | "onsite" | "remote">("all");
+  const [lang, setLang] = useState<"all" | "en" | "fr" | "de">("all");
   const [entry, setEntry] = useState(false);
   const [shown, setShown] = useState(PAGE);
+  const [open, setOpen] = useState<LiveJob | null>(null);
+  const [tab, setTab] = useState<JobTab>("about");
 
   useEffect(() => {
     let live = true;
     fetch("/data/jobs/live.json").then((r) => (r.ok ? r.json() : Promise.reject())).then((d: Feed) => { if (live) setFeed(d); }).catch(() => { if (live) setError(true); });
     return () => { live = false; };
   }, []);
-  useEffect(() => { setShown(PAGE); }, [country, query, mode, entry]);
 
+  useEffect(() => {
+    let live = true;
+    loadList(country).then((list) => { if (live) setJobsBy((prev) => ({ ...prev, [country]: list })); }).catch(() => { if (live) setError(true); });
+    return () => { live = false; };
+  }, [country]);
+
+  // A shared link (#job=france~id) opens that job directly.
+  useEffect(() => {
+    const m = window.location.hash.match(/^#job=([a-z]+)~(.+)$/);
+    if (!m) return;
+    const [, c, id] = m;
+    if (COUNTRIES.some(([k]) => k === c)) setCountry(c);
+    loadList(c).then((list) => { const job = list.find((j) => j.id === decodeURIComponent(id)); if (job) { setOpen(job); document.getElementById("live-jobs")?.scrollIntoView(); } }).catch(() => {});
+  }, []);
+
+  useEffect(() => { setShown(PAGE); }, [country, query, mode, lang, entry]);
+
+  const openJob = useCallback((job: LiveJob, t: JobTab = "about") => {
+    setTab(t); setOpen(job);
+    try { history.replaceState(null, "", `#job=${job.country}~${encodeURIComponent(job.id)}`); } catch {}
+  }, []);
+  const closeJob = useCallback(() => {
+    setOpen(null);
+    try { history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
+  }, []);
+
+  const all = jobsBy[country];
   const jobs = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return (feed?.countries[country] || []).filter((j) =>
+    return (all || []).filter((j) =>
       (mode === "all" || (mode === "remote") === j.remote) &&
-      (!entry || ENTRY.test(`${j.title} ${j.level || ""}`) || /junior|entry/i.test(j.level || "")) &&
+      (lang === "all" || j.lang === lang) &&
+      (!entry || ENTRY.test(`${j.title} ${j.level || ""} ${j.type || ""}`) || /junior|entry/i.test(j.level || "")) &&
       (!q || `${j.title} ${j.company} ${j.category || ""} ${j.location}`.toLowerCase().includes(q)));
-  }, [feed, country, query, mode, entry]);
+  }, [all, query, mode, lang, entry]);
 
   const name = COUNTRIES.find(([c]) => c === country)?.[1] || "";
   const updated = feed ? new Date(feed.updatedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : null;
+  const total = feed ? Object.values(feed.counts).reduce((a, b) => a + b, 0) : 0;
 
   return <div className="ms-livejobs">
     <div className="ms-livejobs-bar">
       <div className="ms-pills ms-livejobs-countries" role="group" aria-label="Country">
         {COUNTRIES.map(([c, label]) => <button key={c} type="button" aria-pressed={country === c} onClick={() => setCountry(c)}>
-          {label}{feed ? <span>{feed.countries[c]?.length || 0}</span> : null}
+          {label}{feed ? <span>{feed.counts[c] || 0}</span> : null}
         </button>)}
       </div>
       <div className="ms-livejobs-filters">
@@ -72,21 +102,25 @@ export default function LiveJobs() {
           <select value={mode} onChange={(e) => setMode(e.target.value as typeof mode)} aria-label="Work mode">
             <option value="all">On-site and remote</option><option value="onsite">On-site only</option><option value="remote">Remote only</option>
           </select></label>
+        <label className="ms-field"><span className="sr-only">Language of the job ad</span>
+          <select value={lang} onChange={(e) => setLang(e.target.value as typeof lang)} aria-label="Language of the job ad">
+            <option value="all">Any language</option><option value="en">Ads in English</option><option value="fr">Ads in French</option><option value="de">Ads in German</option>
+          </select></label>
         <label className="ms-livejobs-check"><input type="checkbox" checked={entry} onChange={(e) => setEntry(e.target.checked)} /> Internships &amp; entry-level</label>
       </div>
     </div>
 
     <p className="ms-livejobs-status" role="status">
-      {error ? "Live jobs could not load right now. Please refresh, or browse the career guide below."
-        : !feed ? "Loading today’s open jobs…"
-        : <><strong>{jobs.length}</strong> open {jobs.length === 1 ? "job" : "jobs"} in {name}{updated ? <> · updated {updated}</> : null}</>}
+      {error && !all ? "Live jobs could not load right now. Please refresh, or browse the career guide below."
+        : !all ? "Loading today’s open jobs…"
+        : <><strong>{jobs.length}</strong> open {jobs.length === 1 ? "job" : "jobs"} in {name}{total ? <> · {total.toLocaleString("en-GB")} across seven countries</> : null}{updated ? <> · updated {updated}</> : null}</>}
     </p>
 
     <div className="ms-livejobs-layout">
       <ol className="ms-livejobs-list">
         {jobs.slice(0, shown).map((job) => <li key={job.id} className="ms-livejob">
           <div className="ms-livejob-head">
-            <h3><a href={job.url} target="_blank" rel="noopener noreferrer nofollow">{job.title}</a></h3>
+            <h3><button type="button" className="ms-livejob-open" onClick={() => openJob(job)}>{job.title}</button></h3>
             <span className="ms-livejob-when"><Clock size={13} aria-hidden="true" />{ago(job.posted)}</span>
           </div>
           <p className="ms-livejob-meta"><Briefcase size={14} aria-hidden="true" /><strong>{job.company}</strong><span aria-hidden="true">·</span>{job.remote ? <Wifi size={14} aria-hidden="true" /> : <MapPin size={14} aria-hidden="true" />}{job.location}</p>
@@ -94,36 +128,41 @@ export default function LiveJobs() {
             <span className={job.remote ? "is-remote" : "is-onsite"}>{job.remote ? "Remote" : "On-site"}</span>
             {job.type && <span>{job.type}</span>}
             {job.level && <span>{job.level}</span>}
-            {job.category && <span>{job.category}</span>}
+            {job.lang === "fr" && <span className="is-fr">Ad in French</span>}
+            {job.lang === "de" && <span>Ad in German</span>}
             {job.salary && <span className="is-salary">{job.salary}</span>}
           </p>
           {job.summary && <p className="ms-livejob-summary">{job.summary}</p>}
           <div className="ms-livejob-actions">
-            <a className="ms-btn ms-btn-gold" href={job.url} target="_blank" rel="noopener noreferrer nofollow"><span>Apply on {job.source}</span><ArrowUpRight size={16} aria-hidden="true" /></a>
-            <a className="ms-livejob-help" href={helpLink(job)} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Get help applying</a>
+            <button type="button" className="ms-btn ms-btn-gold" onClick={() => openJob(job)}><span>View full job</span><ArrowUpRight size={16} aria-hidden="true" /></button>
+            <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "french")}><Languages size={15} aria-hidden="true" />French words</button>
+            <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "ats")}><ScanSearch size={15} aria-hidden="true" />ATS CV check</button>
+            <a className="ms-livejob-apply" href={job.url} target="_blank" rel="noopener noreferrer nofollow">Apply on {job.source}<ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>
         </li>)}
       </ol>
 
       <aside className="ms-livejobs-help" aria-label="Help with your application">
-        <p className="ms-kicker">NEED HELP APPLYING?</p>
-        <h3>Found a job? <em>Let’s make your application count.</em></h3>
+        <p className="ms-kicker">BEFORE YOU APPLY</p>
+        <h3>Read it, learn the words, <em>check your CV.</em></h3>
         <ul>
-          <li>CV and cover letter rewritten for the country and the role</li>
-          <li>Check of your work rights and visa route for this job</li>
-          <li>Interview preparation with someone who lives in Paris</li>
+          <li><b>Full job description</b> for every listing, then apply on the original posting</li>
+          <li><b>French words</b> you will meet in that ad, the contract and the interview</li>
+          <li><b>ATS check</b> of your CV against the exact job — read on your device, never uploaded</li>
         </ul>
         <a className="ms-btn ms-btn-gold" href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent("Hello Harshita, I would like help with job applications abroad.")}`} target="_blank" rel="noopener noreferrer"><span>Contact us on WhatsApp</span><MessageCircle size={16} aria-hidden="true" /></a>
-        <Link className="ms-link" href="/book-consultation">Book a career consultation</Link>
+        <Link className="ms-link" href="/book-consultation">Book a CV and career session</Link>
       </aside>
     </div>
 
-    {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + PAGE)}><span>Show more jobs</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
-    {feed && !jobs.length && !error && <div className="ms-empty"><h3>No jobs match these filters.</h3><p>Try another field, include remote roles, or switch off the entry-level filter.</p></div>}
+    {jobs.length > shown && <button type="button" className="ms-btn ms-btn-ghost ms-livejobs-more" onClick={() => setShown((n) => n + PAGE)}><span>Show more jobs ({jobs.length - shown} left)</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
+    {all && !jobs.length && <div className="ms-empty"><h3>No jobs match these filters.</h3><p>Try another field or language, include remote roles, or switch off the entry-level filter.</p></div>}
 
     <p className="ms-livejobs-note">
-      Listings come from public job boards{feed?.sources.length ? ` (${feed.sources.join(", ")})` : ""} and open on the original posting. {brand.shortName} does not post, screen or guarantee these jobs.
+      Listings come from public job boards{feed?.sources.length ? ` (${feed.sources.join(", ")})` : ""}; descriptions are shown as each company published them and every application happens on the original posting. {brand.shortName} does not post, screen or guarantee these jobs.
       Before applying, check the work rights attached to your visa — see our <Link href={guidePath(country)}>{name} jobs guide</Link>.
     </p>
+
+    <JobDrawer job={open} tab={tab} onTab={setTab} onClose={closeJob} />
   </div>;
 }

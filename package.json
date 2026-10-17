@@ -12,14 +12,15 @@
     "test": "playwright test",
     "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
-    "prebuild": "npm run brand:sync && python3 scripts/data/build-home-explorer.py && python3 scripts/data/build-image-variants.py && node scripts/data/fetch-jobs.mjs",
+    "prebuild": "npm run brand:sync && node scripts/vendor-pdfjs.mjs && python3 scripts/data/build-home-explorer.py && python3 scripts/data/build-image-variants.py && node scripts/data/fetch-jobs.mjs",
     "data:jobs": "node scripts/data/fetch-jobs.mjs",
     "indexnow": "node scripts/data/indexnow.mjs",
     "data:import": "node scripts/data/import.mjs",
     "data:validate": "node scripts/data/validate.mjs",
     "data:publish": "node scripts/data/publish.mjs",
     "data:refresh-registries": "python3 scripts/data/refresh-global-registries.py",
-    "data:build-home-explorer": "python3 scripts/data/build-home-explorer.py"
+    "data:build-home-explorer": "python3 scripts/data/build-home-explorer.py",
+    "predev": "node scripts/vendor-pdfjs.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -56,6 +57,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.35",
     "localtunnel": "^2.0.2",
+    "pdfjs-dist": "^4.10.38",
     "postcss": "^8.4.45",
     "prettier": "^3.9.10",
     "tailwindcss": "^3.4.11",
