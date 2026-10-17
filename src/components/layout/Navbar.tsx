@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import { paris } from "@/lib/paris";
 
-const primary = [["Destinations", "/destinations"], ["Universities", "/universities"], ["Our support", "/services"], ["About", "/about"]];
+const primary = [["Destinations", "/destinations"], ["Universities", "/universities"], ["Our support", "/services"], ["Jobs & Careers", "/jobs"], ["About", "/about"]];
 const menu = [
   { label: "Home", href: "/", image: paris("eiffel-autumn-sky").file, note: "Go further. Become more." },
   { label: "Study in France", href: "/study-in-france", image: paris("bnf-salle-ovale").file, note: "Programmes, routes and budgets" },
@@ -17,7 +17,7 @@ const menu = [
   { label: "Programmes & fees", href: "/programmes", image: paris("louvre-night").file, note: "Published tuition and timing" },
   { label: "Our support", href: "/services", image: paris("cafe-palais-royal").file, note: "Study, settle and succeed" },
   { label: "Settle in France", href: "/settle-in-france", image: paris("paris-window").file, note: "Your first address, your first month" },
-  { label: "Careers & jobs", href: "/jobs", image: paris("la-defense-skyline").file, note: "Work rights and opportunities" },
+  { label: "Jobs & Careers", href: "/jobs", image: paris("la-defense-skyline").file, note: "Work rights and opportunities" },
   { label: "The journal", href: "/knowledge", image: paris("student-cafe").file, note: "Reviewed guidance, seven countries" },
   { label: "About Althéa", href: "/about", image: paris("ile-de-la-cite").file, note: "Founded in Paris by Harshita Kohli" },
 ];
