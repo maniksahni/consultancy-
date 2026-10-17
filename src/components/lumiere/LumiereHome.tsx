@@ -9,7 +9,7 @@ import { ArrowUpRight, Briefcase, Command, Compass, GraduationCap, Plane, Sparkl
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HomeFinder from "@/components/redesign/HomeFinder";
-import Testimonials from "@/components/althea/Testimonials";
+import MovePlanner from "./MovePlanner";
 import Accordion from "@/components/maison/Accordion";
 import { countries, services, questions } from "@/components/redesign/content";
 import { ScrollWords, JourneyTrack, Chars, type HomeStats } from "@/components/redesign/HorizonMotion";
@@ -60,7 +60,6 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     <section className="lx-hero" aria-labelledby="lx-hero-title">
       <div className="lx-hero-stage lx-paris-stage"><Image src={paris("eiffel-autumn-sky").file} alt={paris("eiffel-autumn-sky").alt} fill priority sizes="100vw" /><span className="lx-paris-caption">PARIS, FRANCE · YOUR NEXT CHAPTER</span></div>
       <div className="lx-hero-copy lx-wrap">
-        <p className="lx-badge"><span className="mx-live" />Independent advisory · Paris ⇄ India</p>
         <h1 id="lx-hero-title"><span className="lx-h1-line"><span>Bonjour,</span></span><span className="lx-h1-line"><em>future.</em></span></h1>
         <p className="lx-hero-lead">Study, settle and build a career in France — guided from Paris by an adviser who was once an international student herself.</p>
         <div className="lx-hero-actions">
@@ -164,8 +163,8 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       </div>
     </section>
 
-    {/* 9 · Stories */}
-    <div id="outcomes"><Testimonials /></div>
+    {/* 9 · Departure planner: a dated plan from today to arrival */}
+    <MovePlanner />
 
     {/* 10 · Questions */}
     <section className="lx-section" aria-labelledby="lx-faq-title">
