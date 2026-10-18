@@ -39,6 +39,7 @@ const names: Record<string, string> = {
   "/outcomes": "Consultation outcomes",
   "/admissions-process": "Admissions process",
   "/from-india": "From India",
+  "/site-map": "Site map",
 };
 for (const g of countryGuides) if (g.hubPath.startsWith("/destinations/")) names[g.hubPath] = `Study in ${g.prose}`;
 for (const d of destinations) names[`/destinations/${d.slug}`] ??= `Study in ${d.name}`;

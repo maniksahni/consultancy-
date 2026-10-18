@@ -51,6 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "scholarships",
     "outcomes",
     "admissions-process",
+    "site-map",
     ...cities.map((c) => `cities/${c.slug}`),
     ...programmeResearch.map((p) => `programmes/${p.slug}`),
     ...articles.map((a) => `insights/${a.slug}`),

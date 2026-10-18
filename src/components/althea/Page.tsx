@@ -4,6 +4,7 @@ import { brand } from "@/config/brand";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Closing } from "@/components/maison/ui";
+import NextSteps from "@/components/althea/NextSteps";
 import Link from "next/link";
 import Image from "next/image";
 import { Fragment, type ComponentProps, type ReactNode } from "react";
@@ -74,6 +75,7 @@ export default function Page({
           <div className="ms-cover-cue" aria-hidden="true"><span>SCROLL</span><i /></div>
         </header>
         <div className="ms-page-body">{children}</div>
+        {path && <NextSteps path={path} />}
         {closing !== false && <Closing {...(closing || {})} />}
       </main>
       <Footer />
