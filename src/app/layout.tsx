@@ -5,20 +5,13 @@ import SwipeHints from "@/components/motion/SwipeHints";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
-import { Caveat, Instrument_Serif, Manrope, Syne } from "next/font/google";
+import { Instrument_Serif, Manrope, Syne } from "next/font/google";
 import "./base.css";
 import "./maison-ui.css";
 import "./maison.css";
 import "./lumiere.css";
 import "./motion.css";
 import "./mobile.css";
-const handwriting = Caveat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-handwriting",
-  display: "swap",
-  preload: false, // only the signature uses it; keep it off the critical path
-});
 // Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
 const display = Syne({
   subsets: ["latin"],
@@ -87,7 +80,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${italic.variable} ${handwriting.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${body.variable} ${italic.variable}`} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content

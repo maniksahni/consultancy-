@@ -349,7 +349,7 @@ html.ms-menu-open { overflow:hidden; }
 /* ---------- Small helpers ---------- */
 .ms-row { display:flex; flex-wrap:wrap; align-items:center; gap:14px 24px; }
 .ms-signature { display:grid; gap:4px; }
-.ms-signature span { font:400 44px/1 var(--font-handwriting),cursive; color:var(--ms-champagne); }
+.ms-signature span { font:italic 400 44px/1 var(--font-italic),Georgia,serif; color:var(--ms-champagne); }
 .ms-tone-ivory .ms-signature span, .ms-tone-paper .ms-signature span { color:var(--ms-gold-text); }
 .ms-signature small { font-size:13px; color:#a8a3bd; letter-spacing:.04em; }
 .ms-card-note { margin:6px 0 0; padding-top:14px; border-top:1px solid var(--ms-line); font-size:13px; color:var(--ms-gold-text); }

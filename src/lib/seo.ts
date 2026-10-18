@@ -18,7 +18,8 @@ export function pageMetadata(path: string, metadata: Metadata): Metadata {
   return {
     ...metadata,
     description,
-    alternates: { ...metadata.alternates, canonical: absoluteUrl(path) },
+    // English pages written for students in India and everywhere else: en-IN plus x-default, both the canonical URL.
+    alternates: { ...metadata.alternates, canonical: absoluteUrl(path), languages: { "en-IN": absoluteUrl(path), "x-default": absoluteUrl(path) } },
     openGraph: {
       type: "website", locale: "en_IN", siteName: brand.name,
       title: socialTitle, description, url: absoluteUrl(path),
