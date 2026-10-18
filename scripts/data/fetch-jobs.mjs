@@ -19,6 +19,7 @@ const DIR = 'public/data/jobs';
 const OUT = `${DIR}/live.json`;
 const MAX_AGE_DAYS = 45;
 const PER_COUNTRY = 2500;
+const PER_COUNTRY_FRANCE = 4000; // France is the priority: room for company sites and recruitment agencies
 const CHUNK = 40;
 const UA = 'AltheaConsulting-JobsFeed/1.1 (+https://altheaconsulting.in/jobs)';
 const COUNTRIES = ['france', 'uk', 'usa', 'canada', 'germany', 'australia', 'ireland'];
@@ -363,6 +364,72 @@ async function companyCareerSites() {
   return [...capped, ...sr, ...wd];
 }
 
+// ---------- Recruitment agencies ----------
+// Agencies (cabinets de recrutement) post roles for client companies they often do not name. Their sites
+// publish every open role in a job sitemap with schema.org JobPosting data (JSON-LD or microdata) for
+// search engines; we read that same data, newest first, and keep the agency's own apply link.
+// Sites that refuse automated reading (Robert Walters returns 403) are left out, not worked around.
+const AGENCIES = [
+  { name: 'Hays', sitemap: 'https://www.hays.fr/sitemap/fr-FR/job-sitemap.xml', match: /\/description-emploi\//, max: 900 },
+  { name: 'Robert Half', sitemap: 'https://www.roberthalf.com/content/roberthalf.sitemap.fr-external-job-details-sitemap.xml', match: /\/fr\/fr\/emploi\//, max: 400 },
+];
+/** Agencies whose public ATS feed lists roles for clients in France. */
+const AGENCY_BOARDS = [{ provider: 'recruitee', slug: 'rhpartners', company: 'RH Partners' }];
+
+const COUNTRY_CODES = { FR: 'france', GB: 'uk', UK: 'uk', US: 'usa', CA: 'canada', DE: 'germany', AU: 'australia', IE: 'ireland' };
+function jobPostingFrom(html) {
+  for (const [, raw] of html.matchAll(/<script[^>]*ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data; try { data = JSON.parse(raw.trim()); } catch { continue; }
+    // The JobPosting can sit at the top, in an @graph or nested inside a WebPage.
+    const find = (d) => { if (!d || typeof d !== 'object') return null; if ([].concat(d['@type']).includes('JobPosting')) return d; for (const v of Object.values(d)) { const hit = find(v); if (hit) return hit; } return null; };
+    const posting = find(data);
+    if (posting) return posting;
+  }
+  if (!/schema\.org\/JobPosting/i.test(html)) return null;
+  // Microdata: read the itemprops the job page marks up.
+  const prop = (name) => { const m = html.match(new RegExp(`itemprop="${name}"[^>]*?(?:content="([^"]*)"[^>]*)?>([\\s\\S]*?)<`, 'i')); return m ? decode((m[1] ?? m[2] ?? '').trim()) : ''; };
+  const start = html.search(/itemprop="description"/i);
+  const description = start < 0 ? '' : html.slice(html.indexOf('>', start) + 1).split(/<div class="job-advert-(?!description)|<footer|itemprop="(?:hiringOrganization|jobLocation)"/i)[0];
+  return { title: prop('title').replace(/<[^>]*>/g, '').trim() || (html.match(/<h1[^>]*>([^<]+)/) || [])[1], description, datePosted: prop('datePosted'), employmentType: prop('employmentType'), industry: prop('industry'),
+    jobLocation: { address: { addressLocality: prop('addressLocality'), addressRegion: prop('addressRegion'), addressCountry: prop('addressCountry') } } };
+}
+const salaryOf = (s) => {
+  const v = s?.value || {}; const min = Number(v.minValue ?? v.value), max = Number(v.maxValue);
+  if (!min) return null;
+  const range = max && max !== min ? `${min.toLocaleString('en-GB')}–${max.toLocaleString('en-GB')}` : min.toLocaleString('en-GB');
+  const unit = min >= 10000 || /year|ann/i.test(v.unitText || '') ? ' / year' : /month|mois/i.test(v.unitText || '') ? ' / month' : /hour|heure/i.test(v.unitText || '') ? ' / hour' : '';
+  return unit ? `${s.currency === 'EUR' || !s.currency ? '€' : `${s.currency} `}${range}${unit}` : null;
+};
+
+async function agencySitemaps() {
+  const pages = (await pool(AGENCIES, 3, async (agency) => {
+    const xml = await getText(agency.sitemap);
+    const rows = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, u]) => {
+      const clean = (t) => ((u.match(new RegExp(`<${t}>\\s*(?:<!\\[CDATA\\[)?\\s*([^<\\]]+?)\\s*(?:\\]\\]>)?\\s*</${t}>`)) || [])[1] || '').trim();
+      return { agency, url: clean('loc'), lastmod: clean('lastmod') };
+    }).filter((r) => agency.match.test(r.url));
+    return rows.sort((a, b) => (b.lastmod > a.lastmod ? 1 : -1)).slice(0, agency.max);
+  }));
+  return placed(await pool(pages, 4, async ({ agency, url }) => {
+    const p = jobPostingFrom(await getText(url));
+    if (!p?.title) return [];
+    const where = [].concat(p.jobLocation || [])[0]?.address || {};
+    const code = String(where.addressCountry?.name || where.addressCountry || '').toUpperCase();
+    const location = String(where.addressLocality || where.addressRegion || '').replace(/[A-Za-zÀ-ÿ]+/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
+    const country = COUNTRY_CODES[code] || (/^fran/i.test(code) ? 'france' : placeOf(`${location} ${code}`)) || 'france';
+    const row = job({ id: `agency-${agency.name.toLowerCase().replace(/\W+/g, '')}-${url.split(/[/_]/).pop().replace(/\W+/g, '').slice(-24)}`, country,
+      title: p.title, company: `${agency.name} · recruiting for a client`, location: location ? `${location}, ${COUNTRY_NAMES[country]}` : COUNTRY_NAMES[country],
+      remote: /t[ée]l[ée]travail|remote/i.test(String(p.jobLocationType || '')), type: [].concat(p.employmentType || []).filter(Boolean).join(', ') || null,
+      category: [].concat(p.industry || [])[0] || null, salary: salaryOf(p.baseSalary), description: p.description, posted: p.datePosted || Date.now(), url, source: agency.name });
+    if (row) { row.direct = true; row.agency = agency.name; }
+    return row ? [row] : [];
+  }));
+}
+
+async function agencyBoards() {
+  return pool(AGENCY_BOARDS, 2, async (b) => (await FETCHERS[b.provider](b)).map((r) => ({ ...r, company: `${b.company} · recruiting for a client`, source: b.company, agency: b.company })));
+}
+
 // ---------- Run ----------
 // When every source fails, the files from the previous run are left untouched.
 const byCountry = Object.fromEntries(COUNTRIES.map((c) => [c, []]));
@@ -381,6 +448,7 @@ for (const country of COUNTRIES) {
 byCountry.france.push(...await collect('France Travail', franceTravail));
 for (const row of await collect('Company career sites', companyCareerSites)) byCountry[row.country].push(row);
 for (const row of await collect('Arbeitnow', arbeitnow)) byCountry[row.country].push(row);
+for (const row of await collect('Recruitment agencies', async () => [...await agencySitemaps(), ...await agencyBoards()])) byCountry[row.country].push(row);
 
 const cutoff = Date.now() - MAX_AGE_DAYS * 864e5;
 const countries = {};
@@ -393,10 +461,11 @@ for (const country of COUNTRIES) {
     .sort((a, b) => (b.direct ? 1 : 0) - (a.direct ? 1 : 0))
     .filter((j) => { const k = `${j.title}|${j.company}`.toLowerCase().replace(/[^a-z0-9|]+/g, ''); if (seen.has(k)) return false; seen.add(k); return true; })
     .sort((a, b) => new Date(b.posted) - new Date(a.posted));
+  const cap = country === 'france' ? PER_COUNTRY_FRANCE : PER_COUNTRY;
   const onsite = fresh.filter((j) => !j.remote);
-  const remoteRoom = onsite.length ? Math.max(Math.round(PER_COUNTRY / 3), PER_COUNTRY - onsite.length) : PER_COUNTRY;
+  const remoteRoom = onsite.length ? Math.max(Math.round(cap / 3), cap - onsite.length) : cap;
   const remote = fresh.filter((j) => j.remote).slice(0, remoteRoom);
-  countries[country] = [...onsite.slice(0, PER_COUNTRY - remote.length), ...remote];
+  countries[country] = [...onsite.slice(0, cap - remote.length), ...remote];
 }
 
 const total = Object.values(countries).reduce((n, rows) => n + rows.length, 0);

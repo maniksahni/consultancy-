@@ -139,7 +139,7 @@ export default function LiveJobs() {
           {job.summary && <p className="ms-livejob-summary">{job.summary}</p>}
           <div className="ms-livejob-actions">
             <button type="button" className="ms-btn ms-btn-gold" onClick={() => openJob(job)}><span>View full job</span><ArrowUpRight size={16} aria-hidden="true" /></button>
-            <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "french")}><Languages size={15} aria-hidden="true" />French words</button>
+            <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "french")}><Languages size={15} aria-hidden="true" />French for this job</button>
             <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "ats")}><ScanSearch size={15} aria-hidden="true" />ATS CV check</button>
             <a className="ms-livejob-apply" href={job.url} target="_blank" rel="noopener noreferrer nofollow">Apply on {job.source}<ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>
@@ -153,7 +153,7 @@ export default function LiveJobs() {
         <h3>Read it, learn the words, <em>check your CV.</em></h3>
         <ul>
           <li><b>Full job description</b> for every listing, then apply on the original posting</li>
-          <li><b>French words</b> you will meet in that ad, the contract and the interview</li>
+          <li><b>French words you need to know for the job</b>: the vocabulary of that role, not just the basics</li>
           <li><b>ATS check</b> of your CV against the exact job — read on your device, never uploaded</li>
         </ul>
         <a className="ms-btn ms-btn-gold" href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent("Hello Harshita, I would like help with job applications abroad.")}`} target="_blank" rel="noopener noreferrer"><span>Contact us on WhatsApp</span><MessageCircle size={16} aria-hidden="true" /></a>

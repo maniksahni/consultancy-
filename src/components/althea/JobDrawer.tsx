@@ -9,7 +9,7 @@ import AtsChecker from "./AtsChecker";
 export type LiveJob = {
   id: string; country: string; title: string; company: string; location: string; remote: boolean;
   type: string | null; category: string | null; level: string | null; salary: string | null;
-  summary: string; lang: "en" | "fr" | "de" | null; posted: string; url: string; source: string; d: string;
+  summary: string; lang: "en" | "fr" | "de" | null; posted: string; url: string; source: string; d: string; agency?: string;
 };
 export type JobTab = "about" | "french" | "ats";
 
@@ -87,7 +87,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
       </header>
 
       <div className="ms-jobdrawer-tabs" role="tablist" aria-label="Job details">
-        {([["about", "The job", Briefcase], ["french", "French words", Languages], ["ats", "Check my CV", ScanSearch]] as const).map(([id, label, Icon]) =>
+        {([["about", "The job", Briefcase], ["french", "French for this job", Languages], ["ats", "Check my CV", ScanSearch]] as const).map(([id, label, Icon]) =>
           <button key={id} type="button" role="tab" aria-selected={tab === id} aria-controls={`ms-jobtab-${id}`} id={`ms-jobtabbtn-${id}`} onClick={() => onTab(id)}><Icon size={15} aria-hidden="true" />{label}</button>)}
       </div>
 
@@ -104,17 +104,17 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
             </div>
           </aside>
           {text ? <Description text={text} /> : failed ? <p className="ms-jobdesc">{job.summary} <br /><br />The full description could not load — read it on the original posting.</p> : <p className="ms-jobdesc-loading">Loading the full job description…</p>}
-          <p className="ms-jobdrawer-source">Description as published by {job.company} on <a href={job.url} target="_blank" rel="noopener noreferrer nofollow">{job.source}</a>. Check the original posting for the latest version.</p>
+          <p className="ms-jobdrawer-source">{job.agency ? <>Posted by {job.agency}, a recruitment agency hiring for a client company it may name only at interview. Description as published on </> : <>Description as published by {job.company} on </>}<a href={job.url} target="_blank" rel="noopener noreferrer nofollow">{job.source}</a>. Check the original posting for the latest version.</p>
         </section>}
 
         {tab === "french" && words && <section id="ms-jobtab-french" role="tabpanel" aria-labelledby="ms-jobtabbtn-french" className="ms-frwords">
           <p className="ms-frwords-lead">{job.country === "france"
-            ? "French you will meet in this application — in the ad, the contract and the interview, even when the job is in English."
-            : "Working towards France later? These are the French words for this kind of job."}</p>
-          {words.inAd.length > 0 && <><h3>In this job ad</h3>
-            <dl>{words.inAd.map((w) => <div key={w.fr} className="is-inad"><dt lang="fr">{w.fr}</dt><dd>{w.en}</dd></div>)}</dl></>}
-          {words.more.length > 0 && <><h3>{words.inAd.length ? "Also useful" : "Words to know"}</h3>
-            <dl>{words.more.map((w) => <div key={w.fr}><dt lang="fr">{w.fr}</dt><dd>{w.en}</dd></div>)}</dl></>}
+            ? "The French your colleagues, the ad and the interview will use for this kind of work, even when the job is in English. Highlighted words appear in this ad."
+            : "Working towards France later? This is the French vocabulary for this kind of work."}</p>
+          <h3>French words you need to know for this job</h3>
+          <dl>{words.forJob.map((w) => <div key={w.fr} className={words.seen.has(w) ? "is-inad" : undefined}><dt lang="fr">{w.fr}</dt><dd>{w.en}</dd></div>)}</dl>
+          {words.general.length > 0 && <><h3>Also in this ad: contract and application words</h3>
+            <dl>{words.general.map((w) => <div key={w.fr} className="is-inad"><dt lang="fr">{w.fr}</dt><dd>{w.en}</dd></div>)}</dl></>}
           <p className="ms-frwords-tip"><b>Interview tip:</b> even for an English-speaking role, open with a sentence in French — <span lang="fr">« Bonjour, je suis ravi(e) de vous rencontrer »</span> (Hello, I’m delighted to meet you). French recruiters notice the effort.</p>
         </section>}
 
