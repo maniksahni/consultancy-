@@ -105,6 +105,7 @@ function pathsFor(path: string): string[] {
   if (fixed[path]) return fixed[path];
   if (["/services", "/about", "/reviews", "/mentorship-model", "/outcomes"].includes(path)) return ["/book-consultation", "/services", "/reviews", "/about", "/mentorship-model", "/from-india/timeline"];
   if (["/privacy", "/terms", "/acknowledgements"].includes(path)) return ["/about", "/faq", "/site-map", "/book-consultation"];
+  if (path.startsWith("/france/universities/")) return ["/france/admissions", "/campus-france-guide", "/france/costs", "/france/visas", "/france/scholarships", "/france/universities"];
   if (path.startsWith("/cities/")) return ["/study-in-france", "/france/living", "/france/costs", "/first-30-days-france", "/universities", "/jobs"];
   if (path.startsWith("/programmes/")) return ["/programmes", "/france/admissions", "/campus-france-guide", "/scholarships", "/france/costs", "/universities"];
   if (path.startsWith("/insights")) return ["/study-in-france", "/knowledge", "/insights", "/from-india/timeline", "/jobs", "/book-consultation"];

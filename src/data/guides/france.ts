@@ -267,7 +267,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
   {
     slug: "costs", path: "/france/costs", label: "Fees & cost of living", eyebrow: "CHAPTER 7 · YOUR BUDGET",
     title: "The real cost", accent: "of studying in France.",
-    seoTitle: "Cost of Studying in France 2026",
+    seoTitle: "Cost of Studying in France 2026–27",
     description: "2026–27 tuition fees, CVEC, visa and Campus France costs, and monthly living costs in Paris and other French cities for Indian students.",
     summary: "For 2026–27, non-EU students pay €2,902 a year for a public Licence and €3,950 for a public Master, plus €105 CVEC. Business schools set their own fees. Budget roughly €1,200–1,800 a month in Paris and €850–1,200 in other cities; the visa requires proof of at least €877.50 a month.",
     facts: [
@@ -386,7 +386,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
   {
     slug: "visas", path: "/france/visas", label: "Student visa", eyebrow: "CHAPTER 10 · THE VISA",
     title: "The French student visa,", accent: "step by step.",
-    seoTitle: "France Student Visa Guide 2026",
+    seoTitle: "France Student Visa for Indians 2026",
     description: "France long-stay student visa (VLS-TS) for Indians: documents, €50 fee via Campus France, VFS biometrics, €150 validation and renewal rules.",
     summary: "Most Indian students receive a long-stay visa that also serves as a residence permit (VLS-TS étudiant). After the Campus France procedure, you apply on France-Visas, give biometrics at VFS, and pay €50. Within three months of arriving you validate it online and pay €150. You can then renew or move to a multi-year permit.",
     facts: [

@@ -3,6 +3,7 @@ import { indiaGuide } from "@/data/guides/india";
 import { programmeResearch } from "@/data/programmeResearch";
 import { articles, cities } from "@/data/france";
 import { destinations } from "@/data/destinations";
+import { frenchInstitutions } from "@/lib/frenchInstitutions";
 
 export type Crumb = { name: string; path: string };
 
@@ -47,6 +48,7 @@ for (const c of cities) names[`/cities/${c.slug}`] = `Study in ${c.name}`;
 for (const p of programmeResearch) names[`/programmes/${p.slug}`] = `${p.title}, ${p.institution}`;
 for (const a of articles) names[`/insights/${a.slug}`] = a.title.replace(/\.$/, "");
 for (const g of [...countryGuides, indiaGuide]) for (const c of g.chapters) names[c.path] ??= c.label;
+for (const i of frenchInstitutions()) names[`/france/universities/${i.slug}`] = i.name;
 
 /** Pages whose parent is not the URL's own parent folder (or whose folder has no page). */
 const parents: Record<string, string> = {};

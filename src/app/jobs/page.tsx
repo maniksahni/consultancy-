@@ -8,7 +8,7 @@ import { countryGuides } from "@/data/guides";
 
 export const metadata: Metadata = pageMetadata("/jobs", {
   title: "Live Jobs in France for Internationals",
-  description: "Find jobs, internships and work-study pathways across France, the UK, USA, Canada, Germany, Australia and Ireland. Check official work rules.",
+  description: "Thousands of live jobs, internships and alternance in France and six more countries, updated daily, with the French words for each job and a free CV check.",
 });
 
 export default function JobsPage() {

@@ -7,8 +7,8 @@ import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import FAQ from "@/components/althea/FAQ";
 export const metadata: Metadata = pageMetadata('/faq', {
-  title: 'France Study & Arrival FAQ',
-  description: "Clear answers about practical France support, career guidance and independent study admissions preparation.",
+  title: 'Study Abroad FAQ: Students & Parents',
+  description: "Straight answers on studying in France from India: fees, Campus France, student visa, housing, part-time work, jobs after graduation and how Althéa helps.",
 });
 export default function Content() {
   return (

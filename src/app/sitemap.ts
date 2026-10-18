@@ -6,6 +6,7 @@ import type { MetadataRoute } from "next";
 import {programmeResearch} from "@/data/programmeResearch";
 import { articles, checked, cities } from "@/data/france";
 import { isoDate } from "@/lib/trail";
+import { frenchInstitutions } from "@/lib/frenchInstitutions";
 
 // The date each page's facts were last checked; jobs refresh with every daily build.
 const siteReviewed = "2026-10-17";
@@ -15,6 +16,7 @@ const reviewed: Record<string, string | undefined> = Object.fromEntries([
   ...programmeResearch.map(p => [`programmes/${p.slug}`, isoDate(p.reviewedAt)]),
   ...articles.map(a => [`insights/${a.slug}`, isoDate(checked)]),
   ...cities.map(c => [`cities/${c.slug}`, isoDate(checked)]),
+  ...frenchInstitutions().map(i => [`france/universities/${i.slug}`, i.sourceDate]),
   ["jobs", new Date().toISOString().slice(0, 10)],
 ]);
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -33,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "france/institutions",
     "france/programmes",
     "france/universities",
+    ...frenchInstitutions().map((i) => `france/universities/${i.slug}`),
     "france/resources",
     ...franceGuide.chapters.filter(c => c.path.startsWith("/france/")).map(c => c.path.slice(1)),
     "universities",
