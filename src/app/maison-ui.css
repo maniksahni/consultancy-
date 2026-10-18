@@ -179,8 +179,8 @@ html.ms-menu-open { overflow:hidden; }
 .ms-split-copy h2 { margin:0; font:650 clamp(34.4px,3.8vw,60.7px)/1 var(--ms-serif); letter-spacing:-.03em; }
 .ms-split-copy h2 em { font-style:italic; color:var(--ms-gold-text); }
 .ms-tone-ink .ms-split-copy h2 em { color:var(--ms-champagne); }
-.ms-split-copy > p { margin:0; font-size:17px; line-height:1.8; color:var(--ms-muted); max-width:560px; }
-.ms-tone-ink .ms-split-copy > p { color:#c0bcd3; }
+.ms-split-copy > p:not(.ms-kicker) { margin:0; font-size:17px; line-height:1.8; color:var(--ms-muted); max-width:560px; }
+.ms-tone-ink .ms-split-copy > p:not(.ms-kicker) { color:#c0bcd3; }
 
 /* ---------- Steps ---------- */
 .ms-steps { list-style:none; margin:0; padding:0; display:grid; position:relative; }

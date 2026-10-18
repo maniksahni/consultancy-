@@ -144,7 +144,7 @@
 @media (max-width:640px) {
   /* Cover: a shorter photo strip, title closer to the top. */
   .ms-cover { padding-block:86px 26px !important; }
-  .ms-cover-media { aspect-ratio:16/8 !important; margin-top:12px !important; border-radius:22px; }
+  .ms-cover-media { aspect-ratio:5/2 !important; margin-top:12px !important; border-radius:22px; }
   .ms-cover .ms-crumbs { margin-top:-18px; }
   .ms-cover h1 { margin:12px 0 16px !important; }
   .ms-cover-intro { display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; }
@@ -243,7 +243,7 @@
   .ms-split { gap:22px; }
   .ms-split-media, .ms-split.is-tall .ms-split-media { aspect-ratio:16/10; }
   .ms-split-copy { gap:16px; }
-  .ms-split-copy > p { font-size:16px; line-height:1.65; }
+  .ms-split-copy > p:not(.ms-kicker) { font-size:16px; line-height:1.65; }
   /* Destination atlas: compact two-column country list, shorter photo card. */
   .ms-atlas-layout { min-height:0; }
   .ms-atlas-index button { grid-template-columns:1fr auto; padding:12px 0 !important; }
@@ -270,4 +270,149 @@
   .ms-cover-actions { flex-wrap:nowrap; gap:8px; overflow-x:auto; margin-inline:calc(50% - 50vw); padding:2px 5vw 6px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   .ms-cover-actions::-webkit-scrollbar { display:none; }
   .ms-cover-actions :is(a, .button) { flex:none; min-height:44px; padding:10px 16px; white-space:nowrap; }
+}
+
+/* ---------- Phone footer: about one screen instead of two ----------
+   Contacts become a row of icon buttons (link text stays for screen readers),
+   each link group flows as wrapped lines, and the oversized wordmark is dropped. */
+@media (max-width:640px) {
+  .ms-footer-grid { grid-template-columns:1fr !important; gap:14px !important; padding:22px 0 14px !important; }
+  .ms-footer-brand p { display:none; }
+  .ms-footer-contact { display:flex !important; flex-wrap:wrap; gap:8px !important; margin-top:12px !important; }
+  .ms-footer-contact li:has(span) { display:none; }
+  .ms-footer-contact a { width:42px; height:42px; justify-content:center; gap:0 !important; border:1px solid #ffffff24; border-radius:50%; font-size:0 !important; color:transparent; overflow:hidden; }
+  .ms-footer-contact a svg { width:17px; height:17px; flex:none; }
+  .ms-footer-col, .ms-footer-col:last-of-type { grid-column:auto !important; }
+  .ms-footer-title { margin:0 0 6px !important; font-size:10.5px; }
+  .ms-footer-col ul, .ms-footer-col:last-of-type ul { display:flex !important; flex-wrap:wrap; gap:0 16px !important; }
+  .ms-footer-col a { padding-block:4px !important; font-size:13.5px !important; }
+  .ms-footer-legal { gap:8px !important; padding:12px 0 18px !important; }
+  .ms-footer-legal p { font-size:11.5px !important; line-height:1.45; }
+  .ms-footer-legal div { gap:18px; font-size:12.5px; }
+  .ms-footer-word { display:none; }
+  .ms-footer { padding-top:0 !important; }
+  .ms-closing { min-height:0 !important; }
+  /* Step cards: number above the text so the copy gets the full card width, in reading size. */
+  .ms-steps { grid-auto-columns:min(90%,360px) !important; }
+  .ms-steps li { grid-template-columns:1fr !important; gap:10px !important; }
+  .ms-steps .ms-step-body, .ms-steps .ms-step-body :is(p, li) { font-size:15px; line-height:1.55; }
+  .ms-steps h3 { margin:0 0 6px !important; }
+  .ms-steps li > div { display:grid; gap:8px; }
+  /* Kickers: tighter tracking so short labels stay on one line; long ones wrap under the dash. */
+  .ms-kicker { letter-spacing:.14em; align-items:flex-start; }
+  .ms-kicker::before { flex:none; margin-top:.75em; }
+  /* Planner result card: reading-size copy. */
+  .ms-planner-result { padding:22px; gap:12px; }
+  .ms-planner-result p { font-size:15px; line-height:1.55; }
+  /* Fact boxes: values a step smaller so each pair of boxes stays short. */
+  .ms-facts > div { padding:14px 12px !important; }
+  .ms-facts dt { font-size:10.5px; letter-spacing:.12em; }
+  .ms-facts dd:not(.ms-facts-note) { font-size:17px !important; line-height:1.15; margin-top:6px; }
+  .ms-facts dd.ms-facts-note { line-height:1.4; }
+  /* Destination comparison: no sideways scrolling. Each row label spans the width,
+     the chosen destinations sit side by side beneath it. */
+  .comparison-table-wrap { overflow:visible; }
+  .comparison-table { min-width:0 !important; display:block; }
+  .comparison-table :is(thead, tbody) { display:block; }
+  .comparison-table caption { display:block; padding:12px 14px; }
+  .comparison-table tr { display:flex; flex-wrap:wrap; }
+  .comparison-table tr > * { flex:1 1 0; min-width:0; }
+  .comparison-table tr > th:first-child { flex-basis:100%; }
+  .comparison-table thead th:first-child { display:none; }
+  .comparison-table :is(th,td) { display:block; width:auto !important; padding:12px 14px; }
+  .comparison-table tbody th { padding-bottom:6px; border-bottom:0; }
+  .comparison-table tbody th small { display:inline; margin:0 0 0 8px; }
+  .comparison-table td { font-size:13.5px; line-height:1.5; }
+  .comparison-table thead strong { font-size:19px; }
+  .comparison-table thead button { margin-top:6px; }
+  /* Card and notice copy at reading size: cards in a swipe row stay well under a screen tall. */
+  .ms-card p:not(.ms-kicker):not(.ms-card-kicker), .ms-card li, .ms-card-body { font-size:15px !important; line-height:1.55 !important; }
+  .ms-notice > div { font-size:15.5px; line-height:1.55; }
+  .ms-notice { margin-top:24px; gap:10px; }
+  .ms-card { gap:8px; }
+  .ms-checklist { gap:8px; }
+  .ms-checklist li { gap:10px; font-size:15px; line-height:1.5; }
+  /* Linked cards open the full page, so long summaries fade out after ~7 lines;
+     one long card no longer stretches every card in its swipe row. */
+  .ms-card.is-link .ms-card-body:not(:has(ul, ol)) { max-height:calc(15px * 1.55 * 7); overflow:hidden; -webkit-mask-image:linear-gradient(#000 72%, transparent); mask-image:linear-gradient(#000 72%, transparent); }
+}
+
+/* ---------- Phones: no stacked blank bands between blocks ----------
+   Gaps were the sum of several small spacings (section padding, heading margin,
+   box margin, box padding); each one is trimmed so no band exceeds ~70px. */
+@media (max-width:640px) {
+  .ms-section { padding-block:28px; }
+  .lx-section { padding-block:28px !important; }
+  .lx-pin { padding-block:28px 22px !important; }
+  .ms-head, .lx-head { margin-bottom:18px !important; }
+  .lx-head .ms-kicker, .ms-head .ms-kicker { margin-bottom:8px !important; }
+  .ms-notice { margin-top:16px !important; padding:18px !important; }
+  .ms-quote { padding-block:18px !important; }
+  .ms-acc-panel > div { padding-bottom:12px !important; }
+  .ms-wrap > :first-child { margin-top:0 !important; }
+  .ms-closing { padding-block:36px !important; }
+  .lx-final { padding-block:36px !important; }
+}
+@media (max-width:640px) {
+  .ms-prose > :last-child, .ms-guide-block .ms-prose > :last-child { margin-bottom:0 !important; }
+  .ms-guide-block[open] { padding-bottom:12px !important; }
+}
+/* Home on phones: section intros at reading size; departure planner as a compact card. */
+@media (max-width:640px) {
+  .lx-lead { font-size:16px !important; line-height:1.55 !important; }
+  .lx-planner-controls { gap:10px; margin-bottom:14px; }
+  .lx-planner-intake { grid-template-columns:auto 1fr; align-items:center; gap:12px; min-width:0; width:100%; }
+  .lx-planner-intake select { min-height:44px; padding-block:10px; font-size:16px; }
+  .lx-planner-summary { position:static; grid-template-columns:96px 1fr; gap:12px 14px; padding:16px; border-radius:20px; }
+  .lx-planner-count { width:96px; height:96px; margin:0; grid-row:span 2; }
+  .lx-planner-count strong { font-size:26px; }
+  .lx-planner-count span { font-size:9.5px; letter-spacing:.08em; }
+  .lx-planner-where { text-align:left; align-self:end; font-size:14px; }
+  .lx-planner-progress { text-align:left; margin:0; align-self:start; }
+  .lx-planner-money, .lx-planner-actions { grid-column:1/-1; }
+  .lx-planner-grid { gap:14px; }
+}
+/* Live job cards on phones: one row of actions (view, French words, CV check), tighter card. */
+@media (max-width:640px) {
+  .ms-livejob { gap:7px !important; padding:14px !important; border-radius:16px; }
+  .ms-livejob h3 { font-size:16px !important; line-height:1.25; }
+  .ms-livejob-meta { font-size:13px; gap:5px; }
+  .ms-livejob-tags span { padding:4px 8px; font-size:11px; }
+  .ms-livejob-summary { -webkit-line-clamp:1 !important; font-size:13.5px !important; }
+  .ms-livejob-actions { display:grid !important; grid-template-columns:1.3fr 1fr 1fr; gap:6px !important; margin-top:2px; }
+  .ms-livejob-actions .ms-btn { min-height:40px !important; padding:8px 10px !important; font-size:13px; gap:4px; }
+  .ms-livejob-actions .ms-btn svg { width:14px; }
+  .ms-livejob-tool { min-height:40px !important; padding:6px 6px !important; gap:4px; font-size:11.5px !important; line-height:1.1; text-align:center; }
+  .ms-livejob-tool svg { flex:none; width:13px; }
+  .ms-livejobs-list { gap:8px; }
+}
+@media (max-width:640px) {
+  .ms-livejobs-bar { padding:12px !important; gap:10px !important; }
+  .ms-livejobs-filters { grid-template-columns:1fr 1fr !important; gap:8px !important; }
+  .ms-livejobs-filters > :first-child, .ms-livejobs-filters > .ms-livejobs-check { grid-column:1/-1; }
+  .ms-livejobs-filters :is(select, input) { min-height:44px !important; padding-block:10px !important; }
+  .ms-livejobs-filters select { padding-inline:12px 8px !important; }
+}
+/* Jobs explorer on phones: cards sized to their own content, compact calculator. */
+@media (max-width:640px) {
+  .ms-jobs-grid, .ms-jobs-types { align-items:start; }
+  .ms-job-foot { margin-top:6px !important; }
+  .ms-jobs-type { padding:16px !important; gap:6px; }
+  .ms-jobs-type strong { font-size:21px; }
+  .ms-dir-note { padding:12px 14px; font-size:13.5px; line-height:1.5; }
+  .ms-calc { gap:12px !important; }
+  .ms-calc-controls { padding:18px !important; gap:12px !important; border-radius:20px; }
+  .ms-calc-controls p { font-size:15px; line-height:1.55; }
+  .ms-calc-summary { padding:18px !important; gap:8px !important; border-radius:20px; }
+  .ms-calc-figure { font-size:48px !important; }
+  .ms-calc-summary dl { grid-template-columns:1fr 1fr; gap:8px 12px; margin-top:4px; padding-top:10px; }
+  .ms-calc-summary dd { font-size:14px; }
+}
+/* Pathway cards: fixed-length summary and skills so every card in the swipe row is the same short height. */
+@media (max-width:640px) {
+  .ms-job { padding:16px !important; gap:8px !important; }
+  .ms-job-title { font-size:20px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .ms-job-summary { font-size:14px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .ms-job-skills { padding-top:8px; font-size:13px; }
+  .ms-job-skills > span { display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
 }
