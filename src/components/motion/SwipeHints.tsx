@@ -64,7 +64,7 @@ export default function SwipeHints() {
     if (phone.matches) document.querySelectorAll<HTMLDetailsElement>("details.ms-guide-block").forEach((d, i) => { if (i > 0) d.open = false; });
 
     let timer = 0;
-    const schedule = () => { window.clearTimeout(timer); timer = window.setTimeout(scan, 120); };
+    const schedule = () => { if (timer) return; timer = window.setTimeout(() => { timer = 0; scan(); }, 150); };
     const observer = new MutationObserver(schedule);
     observer.observe(document.body, { childList: true, subtree: true });
     window.addEventListener("resize", schedule);

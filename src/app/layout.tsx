@@ -2,6 +2,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import FloatingWhatsApp from "@/components/common/FloatingWhatsApp";
 import SiteMotion from "@/components/motion/SiteMotion";
 import SwipeHints from "@/components/motion/SwipeHints";
+import ReadMore from "@/components/motion/ReadMore";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
@@ -89,6 +90,7 @@ export default function RootLayout({
         <FloatingWhatsApp />
         <SiteMotion />
         <SwipeHints />
+        <ReadMore />
         <JsonLd data={{
           "@context": "https://schema.org",
           "@graph": [

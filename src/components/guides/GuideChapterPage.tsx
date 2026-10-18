@@ -67,7 +67,7 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
                 <table>
                   {block.table.caption && <caption>{block.table.caption}</caption>}
                   <thead><tr>{block.table.head.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
-                  <tbody>{block.table.rows.map((row) => <tr key={row.join("|")}>{row.map((cell, i) => i === 0 ? <th key={i} scope="row">{cell}</th> : <td key={i}>{cell}</td>)}</tr>)}</tbody>
+                  <tbody>{block.table.rows.map((row) => <tr key={row.join("|")}>{row.map((cell, i) => i === 0 ? <th key={i} scope="row">{cell}</th> : <td key={i} data-label={block.table!.head[i]}>{cell}</td>)}</tr>)}</tbody>
                 </table>
               </div> : null}
             </details>
