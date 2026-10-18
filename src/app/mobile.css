@@ -416,3 +416,37 @@
   .ms-job-skills { padding-top:8px; font-size:13px; }
   .ms-job-skills > span { display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
 }
+/* Home course finder on phones: the whole search fits in one screen.
+   Destination and city sit side by side, chrome bar hidden, quick searches swipe in one row. */
+@media (max-width:640px) {
+  .lx-hero { padding-top:150px !important; padding-bottom:28px !important; }
+  .lx-finder { padding-top:24px !important; }
+  .lx-finder .lx-center { gap:8px !important; margin-bottom:14px !important; }
+  .lx-finder .lx-title { font-size:clamp(32px,9vw,38px) !important; }
+  .lx-finder .lx-lead { font-size:14.5px !important; line-height:1.45 !important; }
+  .lx-palette { padding:6px !important; border-radius:22px !important; }
+  .lx-palette-bar { display:none !important; }
+  .lx-palette .ms-finder { grid-template-columns:1fr 1fr !important; gap:10px 8px !important; padding:12px !important; border-radius:18px !important; }
+  .lx-palette .ms-finder-query, .lx-palette .ms-finder-go { grid-column:1/-1; }
+  .lx-palette .ms-finder-query, .lx-palette .ms-finder-field { gap:5px; }
+  .lx-palette .ms-finder-query > label, .lx-palette .ms-finder-field > span { font-size:10px; letter-spacing:.12em; }
+  .lx-palette .ms-finder :is(input, select) { min-height:48px; padding:12px 14px; border-radius:14px; font-size:16px; }
+  .lx-palette .ms-finder select { padding-inline:12px 8px; text-overflow:ellipsis; }
+  .lx-palette .ms-finder-go { min-height:50px; }
+  .lx-quick { flex-wrap:nowrap !important; overflow-x:auto; padding:10px 6px 4px !important; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .lx-quick::-webkit-scrollbar { display:none; }
+  .lx-quick > * { flex:none; }
+  .lx-quick a { padding:7px 12px; }
+}
+@media (max-width:640px) {
+  .lx-paris-caption { display:none !important; }
+  .lx-hero { padding-top:112px !important; }
+  .lx-hero-lead { font-size:15px !important; line-height:1.5 !important; }
+  .lx-hero-actions { display:grid !important; grid-template-columns:1fr 1fr; gap:8px !important; margin-top:18px !important; }
+  .lx-hero-actions .ms-btn { min-height:48px !important; padding:10px 12px !important; justify-content:center; gap:6px; font-size:13.5px; white-space:nowrap; }
+  .lx-hero-actions .ms-btn svg { width:15px; flex:none; }
+}
+@media (max-width:640px) {
+  .lx-ribbon { padding-block:8px !important; }
+  .lx-ribbon span { font-size:22px !important; }
+}
