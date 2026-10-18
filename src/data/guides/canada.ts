@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -114,7 +115,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     description: "In-demand sectors, starting salaries, co-op, and where to search for graduate jobs in Canada.",
     summary: "Healthcare, technology, engineering, trades, finance and supply chain are hiring. Co-op placements during your programme are the strongest route to a first job.",
     blocks: [{ heading: "Typical starting salaries", table: { head: ["Field", "CAD / year"], rows: [["Software / data", "65,000–90,000"], ["Engineering", "60,000–80,000"], ["Business / finance", "50,000–70,000"], ["Healthcare (licensed)", "Varies by province"]], caption: "Althéa planning ranges." } }, { heading: "Where to search", checklist: ["Job Bank", "LinkedIn, Indeed", "University co-op portal", "Provincial job boards"] }], sources: [S.jobbank] },
-  { slug: "faq", path: p("faq"), label: "Canada study FAQ", eyebrow: "CANADA · CHAPTER 18", title: "Studying in Canada:", accent: "your questions answered.", seoTitle: "Canada Study FAQ for Indian Students",
+  { slug: "faq", path: p("faq"), label: "Canada study FAQ", eyebrow: "CANADA · CHAPTER 19", title: "Studying in Canada:", accent: "your questions answered.", seoTitle: "Canada Study FAQ for Indian Students",
     description: "Quick answers on Canada study from India: funds, PAL, IELTS, work hours, PGWP and PR in 2026.",
     summary: "Short answers to the questions Indian students ask most about Canada.",
     blocks: [{ heading: "Read the full guide", paragraphs: ["Use the chapter list above for full detail."] }],
@@ -127,4 +128,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.funds, S.pal, S.work, S.pgwp] },
 ];
 
-export const canadaGuide: CountryGuide = { country: "canada", name: "Canada", prose: "Canada", hubPath: "/destinations/canada", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const canadaGuide: CountryGuide = { country: "canada", name: "Canada", prose: "Canada", hubPath: "/destinations/canada", chapters: withSafety("canada", chapters).map((c) => ({ ...c, reviewedAt })) };

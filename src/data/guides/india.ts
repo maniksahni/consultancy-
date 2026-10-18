@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { parentsChapter, scamsChapter, timelineChapter } from "./indiaPlanning";
 
 /** The chapters every Indian student needs, whichever country they choose. Rendered at /from-india. */
 const reviewedAt = "18 October 2026";
@@ -43,7 +44,7 @@ const S = {
 
 const chapters: GuideChapter[] = [
   {
-    slug: "education-loans", path: p("education-loans"), label: "Education loans from India", eyebrow: "FROM INDIA · CHAPTER 1",
+    slug: "education-loans", path: p("education-loans"), label: "Education loans from India", eyebrow: "FROM INDIA · CHAPTER 2",
     title: "Education loans", accent: "from India, compared.",
     seoTitle: "Education Loans from India 2026",
     description: "Study abroad education loans from India: public banks, private banks, NBFCs and international lenders, collateral, margin money, moratorium and 80E.",
@@ -111,7 +112,7 @@ const chapters: GuideChapter[] = [
     reviewedAt,
   },
   {
-    slug: "sending-money-abroad", path: p("sending-money-abroad"), label: "Sending money abroad", eyebrow: "FROM INDIA · CHAPTER 2",
+    slug: "sending-money-abroad", path: p("sending-money-abroad"), label: "Sending money abroad", eyebrow: "FROM INDIA · CHAPTER 3",
     title: "Sending money abroad:", accent: "LRS, TCS and the best route.",
     seoTitle: "Send Money Abroad: LRS & TCS 2026",
     description: "Pay foreign university fees from India: LRS limit of USD 250,000, TCS from April 2026 (nil on loans, 2% above ₹10 lakh), Form A2, forex cards and TCS refunds.",
@@ -179,7 +180,7 @@ const chapters: GuideChapter[] = [
     reviewedAt,
   },
   {
-    slug: "documents-attestation", path: p("documents-attestation"), label: "Documents & attestation", eyebrow: "FROM INDIA · CHAPTER 3",
+    slug: "documents-attestation", path: p("documents-attestation"), label: "Documents & attestation", eyebrow: "FROM INDIA · CHAPTER 4",
     title: "Documents, attestation", accent: "and apostille.",
     seoTitle: "Document Attestation & Apostille",
     description: "Indian documents for study abroad: transcripts, degree certificates, MOI letters, gap explanations, MEA apostille, notarisation, WES/ECA and sworn translations.",
@@ -253,7 +254,7 @@ const chapters: GuideChapter[] = [
     reviewedAt,
   },
   {
-    slug: "language-tests", path: p("language-tests"), label: "Choosing your language test", eyebrow: "FROM INDIA · CHAPTER 4",
+    slug: "language-tests", path: p("language-tests"), label: "Choosing your language test", eyebrow: "FROM INDIA · CHAPTER 5",
     title: "IELTS, TOEFL, PTE", accent: "or Duolingo?",
     seoTitle: "IELTS vs TOEFL vs PTE vs Duolingo",
     description: "Which English or language test to take from India: IELTS, TOEFL, PTE, Duolingo, DELF, TCF and Goethe compared by country acceptance, validity, fees and booking.",
@@ -321,7 +322,7 @@ const chapters: GuideChapter[] = [
     reviewedAt,
   },
   {
-    slug: "packing-customs", path: p("packing-customs"), label: "Packing & customs", eyebrow: "FROM INDIA · CHAPTER 5",
+    slug: "packing-customs", path: p("packing-customs"), label: "Packing & customs", eyebrow: "FROM INDIA · CHAPTER 6",
     title: "Packing from India,", accent: "and clearing customs.",
     seoTitle: "Packing & Customs from India",
     description: "What to pack from India for study abroad: medicines with prescriptions, food rules for the EU, UK, USA, Canada and Australia, cash limits and baggage tips.",
@@ -394,7 +395,7 @@ const chapters: GuideChapter[] = [
     reviewedAt,
   },
   {
-    slug: "coming-back", path: p("coming-back"), label: "Coming back to India", eyebrow: "FROM INDIA · CHAPTER 6",
+    slug: "coming-back", path: p("coming-back"), label: "Coming back to India", eyebrow: "FROM INDIA · CHAPTER 9",
     title: "Coming back to India,", accent: "with a degree that counts.",
     seoTitle: "Foreign Degree Recognition in India",
     description: "Returning to India with a foreign degree: UGC equivalence (formerly AIU), professional council rules, documents to bring home and using your work experience.",
@@ -463,5 +464,5 @@ export const indiaGuide: CountryGuide = {
   name: "Indian student",
   prose: "studying abroad from India",
   hubPath: "/from-india",
-  chapters,
+  chapters: [timelineChapter, ...chapters.slice(0, 5), scamsChapter, parentsChapter, ...chapters.slice(5)],
 };

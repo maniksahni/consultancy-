@@ -34,7 +34,7 @@ export function GET() {
     link("Jobs", "/jobs", "jobs, internships and work-study pathways in France and six other countries"),
     "",
     "## From India: what every Indian student needs, for any destination",
-    link("From India: the essentials", indiaGuide.hubPath, "education loans, sending money, documents, language tests, packing and degree recognition"),
+    link("From India: the essentials", indiaGuide.hubPath, "month-by-month timeline, education loans, sending money, documents, language tests, packing, scams and emergencies, a parents' guide and degree recognition"),
     ...indiaGuide.chapters.map(c => link(c.label, c.path, c.summary)),
     "",
     ...destinationGuides.flatMap(g => ["", `## The complete ${g.name} guide`, ...g.chapters.map(c => link(c.label, c.path, c.summary))]),

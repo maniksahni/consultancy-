@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -111,7 +112,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     description: "In-demand fields in Germany, graduate salaries, Werkstudent jobs, German language and where to search.",
     summary: "Engineering, IT, automotive, renewable energy, healthcare and logistics are short of skilled workers. Werkstudent jobs and master's theses written with companies are the most common bridge to a first job.",
     blocks: [{ heading: "Typical starting salaries", table: { head: ["Field", "Gross / year"], rows: [["Software / data", "€50,000–65,000"], ["Mechanical / electrical engineering", "€48,000–60,000"], ["Business / consulting", "€45,000–55,000"]], caption: "Althéa planning ranges." } }, { heading: "Where to search", checklist: ["Federal Employment Agency job board", "LinkedIn, StepStone, XING", "University career fairs", "Company thesis and Werkstudent portals"] }], sources: [S.ba, S.blue] },
-  { slug: "faq", path: p("faq"), label: "Germany study FAQ", eyebrow: "GERMANY · CHAPTER 18", title: "Studying in Germany:", accent: "your questions answered.", seoTitle: "Germany Study FAQ for Indians",
+  { slug: "faq", path: p("faq"), label: "Germany study FAQ", eyebrow: "GERMANY · CHAPTER 19", title: "Studying in Germany:", accent: "your questions answered.", seoTitle: "Germany Study FAQ for Indians",
     description: "Quick answers on studying in Germany from India: tuition, APS, blocked account, IELTS, work hours and post-study options.",
     summary: "Short answers to the questions Indian students ask most about Germany.",
     blocks: [{ heading: "Read the full guide", paragraphs: ["Use the chapter list above for full detail."] }],
@@ -124,4 +125,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.study, S.aps, S.jobsearch] },
 ];
 
-export const germanyGuide: CountryGuide = { country: "germany", name: "Germany", prose: "Germany", hubPath: "/destinations/germany", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const germanyGuide: CountryGuide = { country: "germany", name: "Germany", prose: "Germany", hubPath: "/destinations/germany", chapters: withSafety("germany", chapters).map((c) => ({ ...c, reviewedAt })) };

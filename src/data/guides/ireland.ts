@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -96,7 +97,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     description: "In-demand sectors in Ireland, graduate salaries, Critical Skills occupations and where to search.",
     summary: "Software, data, cloud, pharma and medical devices, finance and accounting are the main graduate employers. Many multinational companies run graduate programmes in Dublin and Cork.",
     blocks: [{ heading: "Typical starting salaries", table: { head: ["Field", "€ / year"], rows: [["Software / data", "40,000–55,000"], ["Pharma / engineering", "35,000–45,000"], ["Finance / accounting", "32,000–42,000"]], caption: "Althéa planning ranges." } }, { heading: "Where to search", checklist: ["LinkedIn, Indeed, IrishJobs, gradireland", "University careers service", "Company graduate programmes"] }], sources: [S.permits] },
-  { slug: "faq", path: p("faq"), label: "Ireland study FAQ", eyebrow: "IRELAND · CHAPTER 18", title: "Studying in Ireland:", accent: "your questions answered.", seoTitle: "Ireland Study FAQ for Indians",
+  { slug: "faq", path: p("faq"), label: "Ireland study FAQ", eyebrow: "IRELAND · CHAPTER 19", title: "Studying in Ireland:", accent: "your questions answered.", seoTitle: "Ireland Study FAQ for Indians",
     description: "Quick answers on studying in Ireland from India: costs, funds, IELTS, work hours and Stamp 1G.",
     summary: "Short answers to the questions Indian students ask most about Ireland.",
     blocks: [{ heading: "Read the full guide", paragraphs: ["Use the chapter list above for full detail."] }],
@@ -109,4 +110,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.finance, S.plan, S.graduate] },
 ];
 
-export const irelandGuide: CountryGuide = { country: "ireland", name: "Ireland", prose: "Ireland", hubPath: "/destinations/ireland", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const irelandGuide: CountryGuide = { country: "ireland", name: "Ireland", prose: "Ireland", hubPath: "/destinations/ireland", chapters: withSafety("ireland", chapters).map((c) => ({ ...c, reviewedAt })) };

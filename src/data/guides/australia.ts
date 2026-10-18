@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -101,7 +102,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     description: "In-demand occupations in Australia, graduate salaries, graduate programs and where to search for jobs.",
     summary: "Healthcare, engineering, IT, construction, education and accounting are in demand. Large employers run graduate programs that open a year ahead; many require PR, so check eligibility.",
     blocks: [{ heading: "Typical starting salaries", table: { head: ["Field", "AUD / year"], rows: [["Software / data", "75,000–95,000"], ["Engineering", "70,000–85,000"], ["Nursing", "70,000–80,000"], ["Accounting", "60,000–75,000"]], caption: "Althéa planning ranges." } }, { heading: "Where to search", checklist: ["SEEK, LinkedIn, Indeed", "University careers hub", "Government graduate programs (check citizenship rules)"] }], sources: [S.fairwork] },
-  { slug: "faq", path: p("faq"), label: "Australia study FAQ", eyebrow: "AUSTRALIA · CHAPTER 18", title: "Studying in Australia:", accent: "your questions answered.", seoTitle: "Australia Study FAQ for Indians",
+  { slug: "faq", path: p("faq"), label: "Australia study FAQ", eyebrow: "AUSTRALIA · CHAPTER 19", title: "Studying in Australia:", accent: "your questions answered.", seoTitle: "Australia Study FAQ for Indians",
     description: "Quick answers on Australia study from India: visa fee, funds, IELTS, work hours, 485 lengths and PR.",
     summary: "Short answers to the questions Indian students ask most about Australia.",
     blocks: [{ heading: "Read the full guide", paragraphs: ["Use the chapter list above for full detail."] }],
@@ -114,4 +115,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.visa, S.grad, S.ecta] },
 ];
 
-export const australiaGuide: CountryGuide = { country: "australia", name: "Australia", prose: "Australia", hubPath: "/destinations/australia", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const australiaGuide: CountryGuide = { country: "australia", name: "Australia", prose: "Australia", hubPath: "/destinations/australia", chapters: withSafety("australia", chapters).map((c) => ({ ...c, reviewedAt })) };

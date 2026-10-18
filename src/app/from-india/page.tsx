@@ -5,10 +5,10 @@ import { GuideChapterIndex } from "@/components/guides/GuideChapterPage";
 import { indiaGuide } from "@/data/guides/india";
 import { countryGuides } from "@/data/guides";
 
-const intro = "Loans, sending money, documents, language tests, packing and coming home: the steps every Indian student takes whichever country they choose, answered on one site and checked against official Indian and foreign sources.";
+const intro = "A month-by-month timeline, loans, sending money, documents, language tests, packing, scams to avoid, a guide for parents and coming home: the steps every Indian student takes whichever country they choose, answered on one site and checked against official Indian and foreign sources.";
 export const metadata = pageMetadata("/from-india", {
   title: "Study Abroad from India: The Essentials",
-  description: "Study abroad from India, the essentials: education loans, LRS and TCS, attestation and apostille, IELTS vs PTE, packing and customs, and degree recognition.",
+  description: "Study abroad from India: a month-by-month timeline, education loans, LRS and TCS, apostille, IELTS vs PTE, packing, scams, a parents' guide, coming home.",
 });
 export default function FromIndia() {
   return <Page path="/from-india" modified={indiaGuide.chapters[0].reviewedAt} eyebrow="FOR INDIAN STUDENTS · EVERY DESTINATION" title="Leaving India" accent="to study, step by step." intro={intro}

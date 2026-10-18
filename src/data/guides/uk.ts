@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -440,7 +441,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.skilled, S.graduate],
   },
   {
-    slug: "faq", path: p("faq"), label: "UK study FAQ", eyebrow: "UK · CHAPTER 18",
+    slug: "faq", path: p("faq"), label: "UK study FAQ", eyebrow: "UK · CHAPTER 19",
     title: "Studying in the UK:", accent: "your questions answered.",
     seoTitle: "UK Study FAQ for Indian Students",
     description: "Quick answers on UK study from India: fees, IELTS, visa, funds, work hours, Graduate visa and dependants for 2026–27.",
@@ -458,4 +459,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
   },
 ];
 
-export const ukGuide: CountryGuide = { country: "uk", name: "UK", prose: "the UK", hubPath: "/destinations/uk", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const ukGuide: CountryGuide = { country: "uk", name: "UK", prose: "the UK", hubPath: "/destinations/uk", chapters: withSafety("uk", chapters).map((c) => ({ ...c, reviewedAt })) };

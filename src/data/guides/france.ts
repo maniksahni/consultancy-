@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 
 const reviewedAt = "17 October 2026";
 const S = {
@@ -676,7 +677,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.workAfter, S.apec, S.francetravail, S.rece],
   },
   {
-    slug: "faq", path: "/france/faq", label: "France study FAQ", eyebrow: "CHAPTER 18 · QUICK ANSWERS",
+    slug: "faq", path: "/france/faq", label: "France study FAQ", eyebrow: "CHAPTER 19 · QUICK ANSWERS",
     title: "Studying in France:", accent: "your questions answered.",
     seoTitle: "Study in France FAQ for Indian Students",
     description: "Quick answers on studying in France from India: fees, Campus France, visa, IELTS, scholarships, jobs and post-study work for 2026–27.",
@@ -707,7 +708,7 @@ export const franceGuide: CountryGuide = {
   name: "France",
   prose: "France",
   hubPath: "/study-in-france",
-  chapters: chapters.map((c) => ({ ...c, reviewedAt })),
+  chapters: withSafety("france", chapters).map((c) => ({ ...c, reviewedAt })),
 };
 
 export const franceChapter = (slug: string) => franceGuide.chapters.find((c) => c.slug === slug);

@@ -1,4 +1,5 @@
 import type { CountryGuide, GuideChapter } from "./types";
+import { withSafety } from "./safety";
 import { chapterPath } from "./paths";
 
 const reviewedAt = "17 October 2026";
@@ -232,7 +233,7 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
     sources: [S.h1b, S.opt],
   },
   {
-    slug: "faq", path: p("faq"), label: "USA study FAQ", eyebrow: "USA · CHAPTER 18",
+    slug: "faq", path: p("faq"), label: "USA study FAQ", eyebrow: "USA · CHAPTER 19",
     title: "Studying in the USA:", accent: "your questions answered.",
     seoTitle: "USA Study FAQ for Indian Students",
     description: "Quick answers on US study from India: costs, GRE, TOEFL, F-1 visa fees, work rules, OPT, STEM OPT and H-1B in 2026.",
@@ -249,4 +250,4 @@ const chapters: Omit<GuideChapter, "reviewedAt">[] = [
   },
 ];
 
-export const usaGuide: CountryGuide = { country: "usa", name: "USA", prose: "the USA", hubPath: "/destinations/usa", chapters: chapters.map((c) => ({ ...c, reviewedAt })) };
+export const usaGuide: CountryGuide = { country: "usa", name: "USA", prose: "the USA", hubPath: "/destinations/usa", chapters: withSafety("usa", chapters).map((c) => ({ ...c, reviewedAt })) };
