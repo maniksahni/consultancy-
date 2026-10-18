@@ -450,3 +450,10 @@
   .lx-ribbon { padding-block:8px !important; }
   .lx-ribbon span { font-size:22px !important; }
 }
+/* Home on phones: the landing screen fills the phone, the word ribbon starts just below it,
+   and the course finder is its own full screen after that. svh = the visible height with the browser bars shown. */
+@media (max-width:640px) {
+  .lx-hero { min-height:100svh !important; align-items:flex-end; padding-top:112px !important; padding-bottom:max(32px, env(safe-area-inset-bottom)) !important; }
+  .lx-ribbon > div { animation-duration:26s; }
+  .lx-finder { min-height:100svh; display:flex !important; flex-direction:column; justify-content:center; padding-block:40px !important; }
+}

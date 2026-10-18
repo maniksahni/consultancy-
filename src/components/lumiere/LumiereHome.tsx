@@ -28,6 +28,17 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
   const root = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
 
+  // The word ribbon also travels with the reader's scroll, so it moves even where autoplay is reduced.
+  useEffect(() => {
+    const ribbon = root.current?.querySelector<HTMLElement>(".lx-ribbon > div");
+    if (!ribbon) return;
+    let frame = 0;
+    const update = () => { frame = 0; ribbon.style.translate = `${-(window.scrollY * 0.6) % (ribbon.scrollWidth / 2)}px 0`; };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
+  }, []);
+
   useEffect(() => {
     const scope = root.current;
     if (!scope) return;
