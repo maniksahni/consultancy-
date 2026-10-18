@@ -293,10 +293,10 @@ export const brand = {
     "mark": "/brand/mark-20261016.svg",
     "illustration": "/brand/paris-balloon.svg",
     "leaf": "/brand/leaf.svg",
-    "favicon": "/brand/favicon-20261017.svg",
-    "faviconPng": "/brand/favicon-20261017.png",
-    "faviconIco": "/favicon-20261017.ico",
-    "appleTouch": "/brand/apple-touch-icon-20261017.png",
+    "favicon": "/brand/favicon.svg",
+    "faviconPng": "/brand/favicon.png",
+    "faviconIco": "/favicon.ico",
+    "appleTouch": "/apple-touch-icon.png",
     "og": "/brand/og-20261015.svg"
   },
   "svg": {

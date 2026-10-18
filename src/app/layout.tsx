@@ -59,6 +59,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: brand.assets.faviconIco, type: "image/x-icon", sizes: "16x16 32x32 48x48" },
+      // Stable URLs in multiples of 48px, the sizes Google Search reads for the result favicon.
+      { url: "/brand/icon-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/brand/icon-96.png", type: "image/png", sizes: "96x96" },
+      { url: "/brand/icon-192.png", type: "image/png", sizes: "192x192" },
       { url: brand.assets.faviconPng, type: "image/png", sizes: "512x512" },
       { url: brand.assets.favicon, type: "image/svg+xml" },
     ],
