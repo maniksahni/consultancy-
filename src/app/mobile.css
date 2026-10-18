@@ -450,10 +450,14 @@
   .lx-ribbon { padding-block:8px !important; }
   .lx-ribbon span { font-size:22px !important; }
 }
-/* Home on phones: the landing screen fills the phone, the word ribbon starts just below it,
-   and the course finder is its own full screen after that. svh = the visible height with the browser bars shown. */
+/* Home on phones: one full screen per section, and each swipe snaps to the next one, like slides.
+   The landing screen keeps the moving word ribbon along its bottom edge.
+   svh = the visible height with the browser bars shown. Sections taller than a screen still scroll inside. */
 @media (max-width:640px) {
-  .lx-hero { min-height:100svh !important; align-items:flex-end; padding-top:112px !important; padding-bottom:max(32px, env(safe-area-inset-bottom)) !important; }
+  html:has(.lumiere-home) { scroll-snap-type:y mandatory; scroll-padding-top:0 !important; }
+  .lumiere-home main > section { min-height:100svh !important; scroll-snap-align:start; scroll-snap-stop:always; display:flex !important; flex-direction:column; justify-content:center; padding-block:72px 40px !important; }
+  .lumiere-home .ms-footer { scroll-snap-align:end; }
+  .lumiere-home main > .lx-hero { justify-content:flex-end !important; align-items:stretch; padding-top:112px !important; padding-bottom:calc(64px + env(safe-area-inset-bottom)) !important; }
+  .lx-ribbon { position:relative; z-index:3; height:44px; margin-top:-44px; padding-block:0 !important; display:flex; align-items:center; background:#0b0a12b3 !important; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
   .lx-ribbon > div { animation-duration:26s; }
-  .lx-finder { min-height:100svh; display:flex !important; flex-direction:column; justify-content:center; padding-block:40px !important; }
 }
