@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-const CAROUSELS = ".ms-grid, .ms-kh-grid, .ms-dir-grid, .ms-jobs-grid, .ms-jobs-types, .ms-dir-countries, .ms-story-notes, .ms-cities, .ms-journal, .ms-steps, .ms-guide-index, .lx-bento, .lx-quotes, .ms-prog-hero";
+const CAROUSELS = ".ms-grid, .ms-kh-grid, .ms-dir-grid, .ms-jobs-grid, .ms-jobs-types, .ms-dir-countries, .ms-story-notes, .ms-cities, .ms-journal, .ms-steps, .ms-guide-index, .lx-bento, .lx-quotes, .ms-prog-hero, .comparison-verdicts";
 
 /**
  * On phones, card groups scroll sideways (see mobile.css). This adds a small progress meter
