@@ -1,0 +1,30 @@
+/* Home hero: soft sunset clouds drift slowly across the Paris sky behind the tower.
+   One blurred layer, twice the screen width, painted as two identical halves so the
+   loop is seamless; it moves by transform only (GPU), sits under the hero's shade
+   overlay, and fades out below the skyline so the city and text stay still. */
+.lx-paris-stage::before {
+  content:""; position:absolute; z-index:1; top:-6%; left:0; width:200%; height:72%;
+  background:
+    radial-gradient(22% 16% at 12% 34%, #ffb3c6aa, transparent 70%),
+    radial-gradient(18% 11% at 30% 16%, #ffd0b088, transparent 70%),
+    radial-gradient(24% 15% at 47% 42%, #c9b2ff77, transparent 70%),
+    radial-gradient(16% 10% at 38% 60%, #ff9fbc66, transparent 70%);
+  background-size:50% 100%; background-repeat:repeat-x;
+  filter:blur(22px); mix-blend-mode:screen; opacity:.5; pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);
+  animation:lx-sky-drift 140s linear infinite;
+  will-change:transform;
+}
+.lx-paris-stage::after { z-index:2; }
+@keyframes lx-sky-drift {
+  from { transform:translate3d(0,0,0); }
+  50% { transform:translate3d(-25%,1.5%,0); }
+  to { transform:translate3d(-50%,0,0); }
+}
+@media (max-width:640px) {
+  .lx-paris-stage::before { height:60%; opacity:.45; animation-duration:110s; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .lx-paris-stage::before { animation:none; }
+}

@@ -14,6 +14,7 @@ import "./lumiere.css";
 import "./motion.css";
 import "./mobile.css";
 import "./compare.css";
+import "./sky.css";
 // Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
 const display = Syne({
   subsets: ["latin"],
