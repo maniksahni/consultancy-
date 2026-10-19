@@ -1,3 +1,4 @@
+import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
 import Accordion from "@/components/maison/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
@@ -46,6 +47,14 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
         mainEntity: chapter.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
       }} /> : null}
       <Section tone="ivory">
+        <div className="ms-guide-editorial">
+          <p>Published by <Link href="/about">{brand.name}</Link> · Adviser: <Link href="/about">{brand.person}</Link></p>
+          <p>Source review: <time dateTime={isoDate(chapter.reviewedAt)}>{chapter.reviewedAt}</time> · <Link href="/acknowledgements#editorial-standards">How to use our guides</Link></p>
+        </div>
+        <nav className="ms-guide-jumps" aria-label="On this page">
+          <p className="ms-kicker">ON THIS PAGE</p>
+          <ul>{chapter.blocks.map((block, i) => <li key={block.heading}><a href={`#guide-topic-${i + 1}`}>{block.heading}</a></li>)}<li><a href="#guide-sources">Official sources</a></li></ul>
+        </nav>
         <nav className="ms-guide-toc" aria-label={`${guide.name} guide chapters`}>
           <p className="ms-kicker">THE COMPLETE {guide.name.toUpperCase()} GUIDE · CHAPTER {index + 1} OF {guide.chapters.length}</p>
           <ol>{guide.chapters.map((c) => <li key={c.slug}>{c.slug === chapter.slug
@@ -58,7 +67,7 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
           {chapter.blocks.map((block, i) => (
             <Fragment key={block.heading}>
             {block.more && !chapter.blocks[i - 1]?.more ? <p className="ms-kicker ms-guide-more-kicker">IN DEPTH · TAP A TOPIC TO OPEN</p> : null}
-            <details className={`ms-guide-block${block.more ? " is-more" : ""}`} open={!block.more}>
+            <details id={`guide-topic-${i + 1}`} className={`ms-guide-block${block.more ? " is-more" : ""}`} open={!block.more}>
               <summary><h2>{block.heading}</h2></summary>
               {block.paragraphs?.length ? <Prose>{block.paragraphs.map((p) => <p key={p}>{p}</p>)}</Prose> : null}
               {block.steps?.length ? <Steps items={block.steps.map((s) => ({ title: s.title, body: <p>{s.body}</p> }))} /> : null}
@@ -81,10 +90,10 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
       {chapter.faqs?.length ? <Section tone="paper" kicker="QUICK ANSWERS" title="Your questions," accent="answered." align="split">
         <Accordion items={chapter.faqs.map((f) => ({ q: f.q, a: <p>{f.a}</p> }))} />
       </Section> : null}
-      <Section tone="ivory">
+      <Section tone="ivory" id="guide-sources">
         <Notice kicker={`REVIEWED ${chapter.reviewedAt.toUpperCase()}`}>
-          <p>Everything you need is on this page. Rules, fees and dates change, so we re-check them against the official publications below before every intake.</p>
-          <p className="ms-guide-sources">Sources: {chapter.sources.map((s, i) => <span key={s.url}>{i > 0 && " · "}<a href={s.url} target="_blank" rel="noopener noreferrer nofollow">{s.label}</a></span>)}</p>
+          <p>The review date describes the source review recorded for this guide. It is not a promise that every rule remains current. Use the official publications below to confirm the requirements for your own application.</p>
+          <p className="ms-guide-sources">Sources: {chapter.sources.map((s, i) => <span key={s.url}>{i > 0 && " · "}<a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></span>)}</p>
         </Notice>
         <nav className="ms-guide-pager" aria-label="Chapter navigation">
           {prev ? <Link href={prev.path} rel="prev"><small>Previous chapter</small>{prev.label}</Link> : <Link href={guide.hubPath}><small>Back to</small>{guide.name} overview</Link>}

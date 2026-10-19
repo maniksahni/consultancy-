@@ -44,6 +44,26 @@ export default function StudyFranceContent({ imagePlacement = "/study-in-france"
         </Grid>
       </Section>
 
+      <Section tone="paper" id="shortlist-worksheet" kicker="YOUR SHORTLIST WORKSHEET" title="Compare the course," accent="then choose the school." intro="Use the same questions for every programme. A famous institution is only useful if the exact course fits your background, budget and plans.">
+        <div className="ms-guide-table" role="region" aria-label="France programme comparison worksheet" tabIndex={0}>
+          <table>
+            <caption>Fill one copy for each programme on your shortlist.</caption>
+            <thead><tr><th scope="col">Decision</th><th scope="col">Evidence to collect</th><th scope="col">Question to resolve</th></tr></thead>
+            <tbody>{[
+              ["Course and qualification", "Official programme page, award title and curriculum", "Is this the qualification and subject I actually want?"],
+              ["Academic fit", "Entry requirements and prerequisite subjects", "Which requirements does my transcript meet, and what is missing?"],
+              ["Teaching language", "Programme-specific language requirements", "Which test, score or exemption will the institution accept?"],
+              ["Total budget", "Tuition for my applicant category, fee period and city costs", "Can I fund the plan before relying on a scholarship or paid work?"],
+              ["Application route", "Institution instructions and Campus France India guidance", "Do I apply on the institution portal, Études en France, or another route?"],
+              ["Calendar", "The live programme deadline and intended intake", "When must my application, references and test scores arrive?"],
+              ["Career fit", "Curriculum projects, placement terms and language expectations", "Does the programme build the skills for my intended role?"],
+            ].map(row => <tr key={row[0]}><th scope="row">{row[0]}</th><td data-label="Evidence to collect">{row[1]}</td><td data-label="Question to resolve">{row[2]}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <p><a className="ms-link" href="/resources/france-shortlist-worksheet.txt" download>Download the blank shortlist worksheet</a></p>
+        <p className="ms-muted">This is a planning worksheet, not an eligibility decision. Start with the <Link href="/france/admissions">admissions guide</Link>, <Link href="/france/costs">France budget guide</Link> and <Link href="/campus-france-guide">Campus France procedure</Link>. Bring your completed comparison to a <Link href="/book-consultation?destination=france#consultation-form">study planning conversation</Link>.</p>
+      </Section>
+
       <Section tone="paper" kicker={`THE COMPLETE FRANCE GUIDE · ${franceGuide.chapters.length} CHAPTERS`} title="Everything, A to Z." accent="On one site." intro="From choosing a programme to your first job in France: fees, Campus France, visa, housing, work and post-study rules, all checked against official French sources in October 2026.">
         <GuideChapterIndex guide={franceGuide} />
       </Section>

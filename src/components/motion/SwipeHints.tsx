@@ -61,7 +61,7 @@ export default function SwipeHints() {
     };
 
     // Guide chapters: keep the first section open on phones, the rest one tap away.
-    if (phone.matches) document.querySelectorAll<HTMLDetailsElement>("details.ms-guide-block").forEach((d, i) => { if (i > 0) d.open = false; });
+    if (phone.matches) document.querySelectorAll<HTMLDetailsElement>("details.ms-guide-block").forEach((d, i) => { if (i > 0) d.open = Boolean(d.id && window.location.hash === `#${d.id}`); });
 
     let timer = 0;
     const schedule = () => { if (timer) return; timer = window.setTimeout(() => { timer = 0; scan(); }, 150); };

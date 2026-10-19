@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { countryGuides } from "@/data/guides";
 import { pageMetadata } from "@/lib/seo";
 import Page from '@/components/althea/Page';
 import KnowledgeHub from '@/components/althea/KnowledgeHub';
@@ -9,6 +11,12 @@ export default function Knowledge() {
   return <Page path="/knowledge" eyebrow="THE OCTOBER 2026 EDITION" title="Better information." accent="Better decisions." intro="Explore the requirements behind the dream. Search seven countries, follow the official evidence and build your own practical study plan.">
     <Section tone="ivory" kicker="SEVEN COUNTRIES · ONE LIBRARY" title="The guidance," accent="properly sourced." intro="Choose a destination and a chapter, search for what matters and download the results as your own plan.">
       <KnowledgeHub />
+    </Section>
+    <Section tone="paper" kicker="READ BY DESTINATION" title="Find the right guide" accent="for your next decision." intro="Application routes, tuition planning and visa preparation, with official sources inside each guide.">
+      <Grid cols={3}>{countryGuides.map(guide => <Card key={guide.country} title={`Study in ${guide.prose}`}>
+        <p><Link href={guide.hubPath}>Read the complete {guide.name} guide</Link></p>
+        <ul>{["admissions", "costs", guide.country === "france" ? "visas" : "visa"].map(slug => guide.chapters.find(chapter => chapter.slug === slug)).filter(chapter => chapter !== undefined).map(chapter => <li key={chapter.path}><Link href={chapter.path}>{chapter.label}</Link></li>)}</ul>
+      </Card>)}</Grid>
     </Section>
     <Section tone="paper"><BudgetPlanner /></Section>
     <Section tone="ink" kicker="YOUR APPLICATION WORKSPACE" title="Prepare" accent="with purpose." intro="An adaptable planning checklist. The institution and immigration authority provide your exact required documents.">

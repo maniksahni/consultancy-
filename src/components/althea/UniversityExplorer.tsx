@@ -83,8 +83,6 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
     if (requestedQuery || requestedSubject) setQuery(requestedQuery || requestedSubject || "");
     if (requestedCity && params.get("view") === "courses") setCourseCityFilter(requestedCity);
     else if (requestedCity) setInstitutionCityFilter(requestedCity);
-    // The home finder defaults to France when no country is selected so a live directory opens.
-    if (!requestedCountry && params.get("view") === "courses") setCountry("france");
     const degree = params.get("level");
     if (degree === "Bachelor's") setCourseLevelFilter("degree:bachelor");
     if (degree === "Master's") setCourseLevelFilter("degree:master");

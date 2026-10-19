@@ -56,11 +56,11 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
   const levels = [...new Set(i.courses.map((c) => c.level))].map((level) => ({ level, items: i.courses.filter((c) => c.level === level) })).sort((a, b) => b.items.length - a.items.length);
   const apprenticeships = i.courses.filter((c) => c.apprenticeship).length;
   const fee = i.isPublic
-    ? `As a public institution, ${i.name} charges the national registration fees: ${PUBLIC_FEES}. Some universities waive the higher non-EU fee for part of their students, within national caps; ask the institution in writing which fee you will pay.`
+    ? `Public status alone does not confirm a programme’s tuition. National-degree fee benchmarks are ${PUBLIC_FEES}. Different tariffs and exemptions can apply; ask ${i.name} for the fee for your exact programme, applicant category and academic year.`
     : `${i.name} is a private institution and sets its own tuition, usually much higher than public university fees. Ask the school for the fee for your programme and year before you apply.`;
   const faqs = [
     { q: `How much does ${i.name} cost for Indian students?`, a: fee },
-    { q: `How do Indian students apply to ${i.name}?`, a: `Through Études en France, the Campus France procedure: create your account, choose ${i.name}’s programme, upload documents, pay the Campus France fee and attend the interview. First-year (Licence 1) places at public universities usually close by 15 December; master’s and school programmes set their own dates.` },
+    { q: `How do Indian students apply to ${i.name}?`, a: `First check ${i.name}’s instructions for your exact programme, nationality and country of residence. Applicants living in India should check Campus France India’s Études en France procedure alongside the institution’s application route. A catalogue listing does not establish eligibility, an application portal or a current deadline.` },
     { q: `Where is ${i.name}?`, a: `${i.name} is in ${city}${i.region ? `, ${i.region}` : ""}, France.${i.enrolment ? ` It had about ${Math.round(i.enrolment).toLocaleString("en-IN")} students enrolled in ${i.enrolmentYear}.` : ""}` },
   ];
   const facts = [
@@ -79,7 +79,7 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
       <div className="ms-guide-body">
         {levels.length ? <>
           <details className="ms-guide-block" open><summary><h2>Programmes at {i.name}</h2></summary>
-            <Prose><p>These are the first-year programmes {i.name} lists on Parcoursup 2026, the French government catalogue. Students from India apply to them through Études en France (Campus France), not Parcoursup. Master’s programmes are listed separately on the national MonMaster platform.</p></Prose>
+            <Prose><p>These are the first-year programmes {i.name} lists on Parcoursup 2026, the French government catalogue. A catalogue listing is not an application instruction for students in India: confirm the route with the institution and Campus France India. Mon Master can help you research national master’s degrees, but its application eligibility depends on nationality and residence; do not assume it is your application portal.</p></Prose>
           </details>
           {levels.map(({ level, items }, n) => <details key={level} className={`ms-guide-block${n > 1 ? " is-more" : ""}`} open={n <= 1}>
             <summary><h2>{level} ({items.length})</h2></summary>
@@ -87,15 +87,15 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
             {items.length > PER_LEVEL && <Prose><p>And {items.length - PER_LEVEL} more. <Link href={`/universities?country=france&view=courses&q=${encodeURIComponent(i.name)}`}>Search all {i.name} programmes</Link>.</p></Prose>}
           </details>)}
         </> : <details className="ms-guide-block" open><summary><h2>Programmes at {i.name}</h2></summary>
-          <Prose><p>{i.name} does not list first-year programmes on Parcoursup 2026. Its master’s, doctoral or specialised programmes are published on its own site and, for master’s degrees, on the national MonMaster platform. <Link href={`/universities?country=france&q=${encodeURIComponent(city)}`}>See other institutions in {city}</Link>.</p></Prose>
+          <Prose><p>{i.name} does not list first-year programmes on Parcoursup 2026. Check its own website for master’s, doctoral or specialised programmes. Mon Master lists national master’s degrees, but does not cover every specialised qualification or applicant route. <Link href={`/universities?country=france&q=${encodeURIComponent(city)}`}>See other institutions in {city}</Link>.</p></Prose>
         </details>}
         <details className="ms-guide-block" open><summary><h2>Fees for students from India</h2></summary>
-          <Prose><p>{fee}</p><p>On top of tuition, every student pays the CVEC student life contribution, and you need to budget for living costs in {city}. <Link href="/france/costs">See the full cost of studying in France</Link>.</p></Prose>
+          <Prose><p>{fee}</p><p>Check whether the CVEC student life contribution applies to your enrolment or whether you qualify for an exemption, and budget for living costs in {city}. <Link href="/france/costs">See the full cost of studying in France</Link>.</p></Prose>
         </details>
         <details className="ms-guide-block" open><summary><h2>How to apply from India</h2></summary>
           <Steps items={[
             { title: "Pick the programme", body: <p>Check the entry level, language of teaching and your eligibility. <Link href="/france/admissions">Admission requirements in France</Link>.</p> },
-            { title: "Apply through Études en France", body: <p>Create your Campus France account, add {i.name}, upload your documents and statement, pay the fee and attend the interview. <Link href="/campus-france-guide">The Campus France process, step by step</Link>.</p> },
+            { title: "Confirm your application route", body: <p>Check {i.name}’s programme-specific instructions and the Campus France procedure applicable to your residence and nationality before choosing a portal. <Link href="/campus-france-guide">The Campus France process, step by step</Link>.</p> },
             { title: "Accept the offer and get the visa", body: <p>Once {i.name} accepts you, confirm on the platform and apply for the long-stay student visa. <Link href="/france/visas">France student visa for Indians</Link>.</p> },
             { title: "Arrive and settle", body: <p>Housing, bank, health cover and validating your visa in the first weeks. <Link href={cityGuide || "/first-30-days-france"}>{cityGuide ? `Studying in ${city}` : "Your first 30 days in France"}</Link>.</p> },
           ]} />
@@ -107,6 +107,8 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
     </Section>
     <Section tone="ivory">
       <Notice kicker={`OFFICIAL DATA · ${i.sourceDate}`}>
+        <p>Application-route evidence: <a href="https://www.inde.campusfrance.org/application-and-admission-procedure" target="_blank" rel="noopener noreferrer">Campus France India application procedure</a> · <a href="https://www.campusfrance.org/fr/candidature-enseignement-superieur-france" target="_blank" rel="noopener noreferrer">Campus France: choosing the correct admissions platform</a>. Check the live institution calendar before applying.</p>
+        <p>Fee evidence: <a href="https://www.campusfrance.org/en/tuition-fees-France" target="_blank" rel="noopener noreferrer">Campus France tuition guidance</a> · <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2865" target="_blank" rel="noopener noreferrer">Service-Public university registration fees</a>.</p>
         <p>Institution details come from the French Ministry of Higher Education register (UAI {i.identifier}, Open Licence 2.0); programmes from the Parcoursup 2026 open-data catalogue. Fees follow Campus France and Service-Public for 2026–27. Programmes and fees change each year, so confirm with {i.name} before applying.</p>
       </Notice>
     </Section>

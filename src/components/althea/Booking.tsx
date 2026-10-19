@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
-import { buildConsultationWhatsAppUrl, enquiryLimits, enquirySchema } from "@/lib/consultation";
+import { buildConsultationWhatsAppUrl, enquiryLimits, enquirySchema, referralSources } from "@/lib/consultation";
 import { ArrowUpRight, Lock, MessageCircle } from "lucide-react";
 
 export default function Booking({ defaultCountry = "France", defaultMessage }: { defaultCountry?: string; defaultMessage?: string }) {
@@ -68,6 +68,9 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
       </label>
       <label className="ms-field" htmlFor={fieldId("preferredTime")}><span>Preferred time & time zone (optional)</span>
         <input id={fieldId("preferredTime")} name="preferredTime" maxLength={enquiryLimits.preferredTime} placeholder="e.g. weekday afternoons, India time" />
+      </label>
+      <label className="ms-field ms-field-wide" htmlFor={fieldId("referralSource")}><span>How did you find Althéa? (optional)</span>
+        <select id={fieldId("referralSource")} name="referralSource" defaultValue=""><option value="">Prefer not to say</option>{referralSources.map(source => <option key={source}>{source}</option>)}</select>
       </label>
       <label className="ms-field ms-field-wide" htmlFor={fieldId("background")}><span>Academic background (optional)</span>
         <textarea id={fieldId("background")} name="background" maxLength={enquiryLimits.background} rows={2} />

@@ -1213,3 +1213,12 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
 .lx-h1-kicker { display:inline-flex; align-self:flex-start; align-items:center; gap:10px; margin:0 0 22px; padding:9px 16px; border-radius:999px; background:#ffffff0d; border:1px solid #ffffff1f; backdrop-filter:blur(14px); font:600 12px/1 var(--ms-sans); letter-spacing:.12em; text-transform:uppercase; color:#ffd2b0; }
 .lx-h1-kicker::before { content:""; width:7px; height:7px; border-radius:50%; background:#7fe0b0; box-shadow:0 0 10px #7fe0b0; }
 @media (max-width:640px) { .lx-h1-kicker { font-size:10.5px; letter-spacing:.08em; padding:8px 12px; margin-bottom:16px; } }
+
+/* Guide navigation and visible editorial context. */
+.ms-guide-editorial { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; margin-bottom:24px; font-size:13px; color:var(--muted, #737080); }
+.ms-guide-editorial p { margin:0; }
+.ms-guide-editorial a, .ms-guide-jumps a { text-decoration:underline; text-underline-offset:4px; }
+.ms-guide-jumps { padding:20px; margin-bottom:28px; border:1px solid var(--line, #d9d5de); border-radius:16px; }
+.ms-guide-jumps ul { display:flex; flex-wrap:wrap; gap:8px 24px; list-style:none; padding:0; margin:12px 0 0; font-size:14px; }
+.ms-guide-jumps a { display:inline-block; padding:7px 0; }
+.ms-guide-block[id], #guide-sources { scroll-margin-top:110px; }

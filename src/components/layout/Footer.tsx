@@ -33,7 +33,7 @@ export default function Footer({ showCallout = true }: { showCallout?: boolean }
 
       <div className="ms-footer-legal">
         <p>© {new Date().getFullYear()} {brand.name} · Independent advisory based in France. Admissions, scholarships and visas are decided by institutions and authorities.</p>
-        <div><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="#main-content" className="ms-top">Back to top<ArrowUp size={14} aria-hidden="true" /></a></div>
+        <div><Link href="/acknowledgements#editorial-standards">Sources & editorial standards</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><a href="#main-content" className="ms-top">Back to top<ArrowUp size={14} aria-hidden="true" /></a></div>
       </div>
     </div>
     <div className="ms-footer-word" aria-hidden="true">Althéa</div>

@@ -62,3 +62,23 @@ Opened the signed-in Safari Search Console domain property. Homepage URL Inspect
 Sitemaps report verified directly: https://altheaconsulting.in/sitemap.xml, submitted 14 Oct, last read 16 Oct, Success, 68 discovered pages. Thus the URL Inspection “no referring sitemaps” field is not a sitemap submission error. Homepage indexing request progressed from live testing to “Submitting request”.
 
 Confirmed final Search Console dialog: “Indexing requested”; “URL was added to a priority crawl queue.” Request accepted, not merely attempted. Google explicitly states repeated submissions do not change queue position or priority. Actual favicon/AI Overview resolution remains unverified and is the follow-up's success condition.
+
+## Follow-up — 19 October 2026 (IST)
+
+Live homepage, /favicon.ico, /brand/favicon-20261015.png, robots.txt and sitemap.xml all returned HTTP 200 with appropriate content types. Homepage is index, follow; current title is “Study in France Consultant for Indians | Althéa Consulting”. The site has changed since the earlier deployment; favicon bytes also changed at the existing stable paths. No changes to assets or indexing submissions were made in this monitoring run.
+
+Meaningful search appearance improvement observed directly in Safari Google results for “Althéa Consulting”: both homepage and about result now display the branded blue/red/white leaf favicon rather than the globe. Homepage remains the first ordinary result in this personalized session. Its snippet now explicitly identifies altheaconsulting.in as Harshita Kohli's independent study abroad, settling and career advisory in Paris. Screenshot was emitted in this chat. This is an observed improvement, not a guarantee across all users/locations.
+
+The same query's AI Overview still prioritizes Althéa Groupe and other advisory firms; full resolution is NOT established. An already-open result for the longer homepage-title query also showed an incorrect corporate-firm interpretation, but that was not a fresh check of the required France-qualified query. A fresh France-qualified query and Search Console crawl date could not be reliably inspected in this run because native Safari navigation did not consistently follow the requested destinations. Do not infer new crawl dates or submit indexing requests from these observations. Keep the follow-up active for the unresolved AI entity issue.
+
+### Follow-up — 19 October 2026, 10:03 IST
+
+Live homepage, ICO, stable PNG favicon, robots.txt and sitemap all return 200 with appropriate content types. Homepage remains index, follow, its title is unchanged from the preceding check, and embedded JSON-LD parses successfully. No technical regression requiring a change was found.
+
+Fresh signed-out in-app Google query “Althea Consulting study in France” returned an AI Overview generation-unavailable message (“Can't generate an AI overview right now”). This is not evidence of entity resolution or a site fault. The visible first-page ordinary results in that session did not contain this domain, unlike the preceding personalized Safari brand query; do not compare them as a like-for-like ranking measurement. Navigation to the exact accented brand query timed out, so current favicon appearance and unqualified AI identity were not reverified in this run. Search Console crawl status was not obtained. Previous observed branded-favicon improvement stands as historical evidence only. No indexing requests, asset rotation, or content changes were made. Follow-up remains active; no new confirmed resolution.
+
+## Search and AI discovery work — 19 October 2026
+
+Read the signed-in property's 28-day Web report: 12 clicks, 54 impressions, 22.2% CTR, average position 6.5; chart dates available were only 13–17 October. This is a small baseline, not evidence of growth. A separate **Generative AI features (Beta)** report is now visible for this property and shows 1 homepage impression. This supersedes the earlier report-availability note above. Do not infer AI referrals, clicks or leads from it.
+
+Implementation and the 90-day measurement/content plan are documented in `docs/organic-growth-plan.md`; observed values are in `audit/search-growth/baseline-2026-10-19.json`. Changes improve guide topic navigation, visible editorial context, primary-source links, static country-guide discovery, institution-template qualifications and a practical shortlist worksheet. An optional self-reported discovery source is included in the existing WhatsApp message; it adds no form storage or hidden tracking. Real student cases, original adviser contributions and external profile/outreach work remain dependent on genuine business inputs and specific authorization.

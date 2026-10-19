@@ -18,7 +18,7 @@ function getFinderIndex(prefix: string) {
 export default function HomeFinder() {
   const chosenQuery = useRef<string | null>(null);
   const [query, setQuery] = useState("");
-  const [highlightedSuggestion, setHighlightedSuggestion] = useState(0);
+  const [highlightedSuggestion, setHighlightedSuggestion] = useState(-1);
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [suggestionIndex, setSuggestionIndex] = useState<FinderEntry[]>([]);
@@ -37,7 +37,7 @@ export default function HomeFinder() {
   function chooseSuggestion(suggestion: FinderSuggestion) {
     chosenQuery.current = suggestion.label;
     setQuery(suggestion.label);
-    setCountry(suggestion.country);
+    if (!country) setCountry(suggestion.country);
     setCity("");
     setSuggestionOpen(false);
   }
@@ -60,28 +60,30 @@ export default function HomeFinder() {
     fetch(`/data/universities/home-search/${country}-cities.json`).then((response) => response.ok ? response.json() as Promise<CityOption[]> : []).then((items) => { if (active) setCityOptions(items); }).catch(() => { if (active) setCityOptions([]); });
     return () => { active = false; };
   }, [country]);
-  /** Only search once there is something to search for: a course, subject or university (2+ letters) or a destination. */
+  /** Require an interest and an explicit destination before opening results. */
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     const typed = query.trim();
-    if (typed.length >= 2 || (!typed && country)) { setHint(""); return; }
+    if (typed.length >= 2 && country) { setHint(""); return; }
     event.preventDefault();
     setSuggestionOpen(false);
-    setHint(typed ? "Type at least two letters, or pick a suggestion." : "Type a course, subject or university, or choose where you want to study.");
-    document.getElementById("home-course-search")?.focus();
+    setHint(typed.length < 2 ? "Tell us your interest: type at least two letters for a course, subject or university." : "Choose a study destination to see options in that country.");
+    document.getElementById(typed.length < 2 ? "home-course-search" : "home-study-destination")?.focus();
   }
-  return <form className={`ms-finder${hint ? " has-hint" : ""}`} action="/universities" method="get" role="search" aria-label="Find a course, subject or university" onSubmit={onSubmit} noValidate>
+  return <><form className={`ms-finder${hint ? " has-hint" : ""}`} action="/universities" method="get" role="search" aria-label="Find a course, subject or university" onSubmit={onSubmit} noValidate>
     <input type="hidden" name="view" value={city && selectedCityOption?.kind === "institutions" ? "institutions" : "courses"} />
     <input type="hidden" name="city" value={city} />
     <div className="ms-finder-query">
       <label htmlFor="home-course-search">I want to explore</label>
       <span className="ms-input-icon"><Search size={18} aria-hidden="true" />
-        <input id="home-course-search" name="q" autoComplete="off" value={query} onFocus={() => { if (query !== chosenQuery.current && query.trim().length >= 1) setSuggestionOpen(true); }} onChange={(event) => { chosenQuery.current = null; setQuery(event.target.value); setHighlightedSuggestion(0); setHint(""); }} onKeyDown={(event) => { if (event.key === "ArrowDown" && filteredSuggestions.length) { event.preventDefault(); setSuggestionOpen(true); setHighlightedSuggestion((index) => Math.min(index + 1, filteredSuggestions.length - 1)); } else if (event.key === "ArrowUp" && filteredSuggestions.length) { event.preventDefault(); setHighlightedSuggestion((index) => Math.max(index - 1, 0)); } else if (event.key === "Enter" && suggestionOpen && filteredSuggestions[highlightedSuggestion]) { event.preventDefault(); chooseSuggestion(filteredSuggestions[highlightedSuggestion]); } else if (event.key === "Escape") setSuggestionOpen(false); }} onBlur={() => setSuggestionOpen(false)} aria-label="Course, subject or university" aria-invalid={hint ? true : undefined} aria-describedby={hint ? "home-finder-hint" : undefined} aria-expanded={suggestionOpen && filteredSuggestions.length > 0} aria-controls="home-search-suggestions" aria-activedescendant={suggestionOpen ? `home-suggestion-${highlightedSuggestion}` : undefined} role="combobox" aria-autocomplete="list" placeholder="A course, a subject, a university…" />
+        <input id="home-course-search" name="q" autoComplete="off" value={query} onFocus={() => { if (query !== chosenQuery.current && query.trim().length >= 1) setSuggestionOpen(true); }} onChange={(event) => { chosenQuery.current = null; setQuery(event.target.value); setHighlightedSuggestion(-1); setHint(""); }} onKeyDown={(event) => { if (event.key === "ArrowDown" && filteredSuggestions.length) { event.preventDefault(); setSuggestionOpen(true); setHighlightedSuggestion((index) => Math.min(index + 1, filteredSuggestions.length - 1)); } else if (event.key === "ArrowUp" && filteredSuggestions.length) { event.preventDefault(); setHighlightedSuggestion((index) => Math.max(index - 1, 0)); } else if (event.key === "Enter" && suggestionOpen && filteredSuggestions[highlightedSuggestion]) { event.preventDefault(); chooseSuggestion(filteredSuggestions[highlightedSuggestion]); } else if (event.key === "Escape") setSuggestionOpen(false); }} onBlur={() => setSuggestionOpen(false)} aria-label="Course, subject or university" aria-invalid={hint ? true : undefined} aria-describedby={hint ? "home-finder-hint" : undefined} aria-expanded={suggestionOpen && filteredSuggestions.length > 0} aria-controls="home-search-suggestions" aria-activedescendant={suggestionOpen ? `home-suggestion-${highlightedSuggestion}` : undefined} role="combobox" aria-autocomplete="list" placeholder="A course, a subject, a university…" />
       </span>
       {hint && <p className="ms-finder-hint" id="home-finder-hint" role="alert">{hint}</p>}
       {suggestionOpen && filteredSuggestions.length > 0 && <div className="ms-finder-suggest" id="home-search-suggestions" role="listbox" aria-label="Search suggestions">{filteredSuggestions.map((suggestion, index) => <button id={`home-suggestion-${index}`} type="button" role="option" aria-selected={highlightedSuggestion === index} className={highlightedSuggestion === index ? "is-highlighted" : ""} key={`${suggestion.country}-${suggestion.kind}-${suggestion.label}`} onMouseDown={(event) => event.preventDefault()} onMouseEnter={() => setHighlightedSuggestion(index)} onClick={() => chooseSuggestion(suggestion)}><Search size={14} aria-hidden="true" /><span><strong>{suggestion.label}</strong><small>{suggestion.kind} · {countryLabels[suggestion.country]}</small></span><ArrowUpRight size={15} aria-hidden="true" /></button>)}</div>}
     </div>
-    <label className="ms-finder-field"><span>Take me to</span><select name="country" aria-label="Study destination" value={country} onChange={(event) => { setCountry(event.target.value); setCity(""); setHint(""); }}><option value="">Anywhere</option>{countries.map((c) => <option value={c.slug} key={c.slug}>{c.name}</option>)}</select></label>
+    <label className="ms-finder-field"><span>Take me to</span><select id="home-study-destination" name="country" aria-label="Study destination" value={country} onChange={(event) => { setCountry(event.target.value); setCity(""); setHint(""); }}><option value="">Choose a country</option>{countries.map((c) => <option value={c.slug} key={c.slug}>{c.name}</option>)}</select></label>
     <label className="ms-finder-field"><span>Or a city</span><select aria-label="Study city" value={city} disabled={!country} onChange={(event) => setCity(event.target.value)}><option value="">Any city</option>{cityOptions.map((item) => <option key={item.city} value={item.city}>{item.city}</option>)}</select></label>
     <button className="ms-btn ms-btn-gold ms-finder-go" type="submit"><span>Find my options</span><ArrowUpRight size={18} aria-hidden="true" /></button>
-  </form>;
+  </form>
+    <div className="lx-quick"><span>Try</span>{["Business", "Data science", "Engineering", "Hospitality", "Design", "Law"].map((interest) => <button key={interest} type="button" onClick={() => { chosenQuery.current = interest; setQuery(interest); setSuggestionOpen(false); setHighlightedSuggestion(-1); setHint(""); document.getElementById("home-course-search")?.focus(); }}>{interest}<ArrowUpRight size={13} aria-hidden="true" /></button>)}</div>
+  </>;
 }

@@ -24,6 +24,8 @@ const field = (key: keyof typeof enquiryLimits, required = false) =>
   z.preprocess(value => sanitizeEnquiryValue(value, enquiryLimits[key]),
     required ? z.string().min(1, key === "fullName" ? "Enter your full name." : "Please share what you would like to explore.") : z.string());
 
+export const referralSources = ["Google Search", "Bing or another search engine", "ChatGPT or another AI answer", "Instagram", "LinkedIn", "Friend or family", "Other"] as const;
+
 export const enquirySchema = z.object({
   fullName: field("fullName", true),
   phone: field("phone"),
@@ -31,6 +33,7 @@ export const enquirySchema = z.object({
   background: field("background"),
   message: field("message", true),
   preferredTime: field("preferredTime"),
+  referralSource: z.enum(["", ...referralSources]).optional(),
 });
 export type Enquiry = z.output<typeof enquirySchema>;
 
@@ -44,6 +47,7 @@ export function buildConsultationWhatsAppUrl(input: Enquiry): string {
     ["Academic background", data.background],
     ["I'd like to explore", data.message],
     ["Preferred time & time zone", data.preferredTime],
+    ["How I found Althéa", data.referralSource || ""],
   ].filter(([, value]) => value);
   const prefix = `https://wa.me/${brand.whatsappNumber}?text=`;
   const url = () => new URL(prefix + encodeURIComponent([

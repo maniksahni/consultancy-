@@ -50,6 +50,14 @@ for (const path of pages) {
     assert.ok(article?.author && /^\d{4}-\d{2}-\d{2}$/.test(article.dateModified), `Guide page needs a dated, authored Article: ${path}`);
     assert.ok(webpage.dateModified, `Guide page needs dateModified: ${path}`);
   }
+  if (html.includes('class="ms-guide-jumps"')) {
+    assert.match(html, /class="ms-guide-editorial"/, `Guide needs visible editorial context: ${path}`);
+    assert.match(html, /id="guide-sources"/, `Guide needs a linkable source section: ${path}`);
+    const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+    for (const [, anchor] of html.matchAll(/href="#(guide-topic-\d+|guide-sources)"/g)) {
+      assert.ok(ids.has(anchor), `Guide topic link must resolve: ${anchor} on ${path}`);
+    }
+  }
   // Check local navigation in the exported HTML, without depending on hydration.
   for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"#]+)"/g)) {
     const target = new URL(href.replaceAll('&amp;', '&'), canonical[1]);

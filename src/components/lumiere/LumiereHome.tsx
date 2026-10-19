@@ -20,7 +20,6 @@ gsap.registerPlugin(ScrollTrigger);
 export type CountryCoverage = Record<string, { institutions: number; courses: number }>;
 
 const serviceLinks = ["/book-consultation", "/universities", "/admissions-process", "/scholarships", "/france/visas", "/settle-in-france", "/first-30-days-france"];
-const quickSearches = [["Business", "Management"], ["Data science", "Data"], ["Engineering", "Engineering"], ["Hospitality", "Hospitality"], ["Design", "Design"], ["Law", "Droit"]];
 const journeySteps: [string, string][] = [["Say hello.", "Your goals, your questions, your starting point — in one honest conversation."], ["Find your direction.", "Compare programmes, cities and costs. Build a plan that actually fits."], ["Make your move.", "Applications, documents and timelines, prepared together."], ["Land, then grow.", "Your first 30 days in France, and the career you came for."]];
 
 
@@ -94,7 +93,6 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       <div className="lx-wrap lx-palette">
         <div className="lx-palette-bar" aria-hidden="true"><span><Command size={14} /> Althéa search</span><span className="lx-dots"><i /><i /><i /></span></div>
         <HomeFinder />
-        <div className="lx-quick"><span>Try</span>{quickSearches.map(([label, q]) => <Link key={label} href={`/universities?country=france&view=courses&q=${encodeURIComponent(q)}`}>{label}<ArrowUpRight size={13} aria-hidden="true" /></Link>)}</div>
       </div>
     </section>
 
