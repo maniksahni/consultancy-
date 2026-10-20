@@ -103,7 +103,7 @@ export default function RootLayout({
                 url: `${siteUrl}${brand.assets.faviconPng}`, contentUrl: `${siteUrl}${brand.assets.faviconPng}`,
                 width: 512, height: 512, caption: brand.name },
               address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
-              disambiguatingDescription: "Althéa Consulting at altheaconsulting.in is the independent student and career advisory founded by Harshita Kohli in Paris, serving Indian and international students planning studies and life in France. It is not the management consulting firm Althéa of the Alan Allman Associates group and is not affiliated with it.",
+              disambiguatingDescription: "Althéa Consulting at altheaconsulting.in is the independent student and career advisory founded by Harshita Kohli in Paris, serving Indian and international students planning studies and life in France. It is not the management consulting firm Althéa of the Alan Allman Associates group, nor Alethe Consulting (an IT firm in Gurugram), and is not affiliated with either.",
               hasOfferCatalog: { "@type": "OfferCatalog", name: "Student and career advisory services",
                 itemListElement: [
                   { name: "Study in France guidance", path: "/study-in-france" },
