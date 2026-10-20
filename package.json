@@ -11,7 +11,7 @@
     "check:seo": "node scripts/check-seo.mjs",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
-    "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
+    "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && node scripts/deploy-guard.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
     "prebuild": "npm run brand:sync && node scripts/vendor-pdfjs.mjs && python3 scripts/data/build-home-explorer.py && python3 scripts/data/build-image-variants.py && node scripts/data/fetch-jobs.mjs",
     "data:jobs": "JOBS_REFRESH=1 node scripts/data/fetch-jobs.mjs",
