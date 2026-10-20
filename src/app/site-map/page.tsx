@@ -26,6 +26,7 @@ const groups: { title: string; accent: string; items: Item[] }[] = [
   ] },
   { title: "Courses", accent: "and universities.", items: [
     page("/universities", "Search courses and institutions"), page("/programmes", "Researched programmes with fees and deadlines"),
+    page("/france/universities", "Every French institution, A–Z"), page("/universities/australia", "Every Australian provider, A–Z"), page("/universities/uk", "Every UK provider, A–Z"), page("/universities/canada", "PGWP-eligible colleges by province"),
     ...programmeResearch.map((p) => ({ href: `/programmes/${p.slug}`, title: `${p.title}`, note: `${p.institution} · ${p.city}` })),
     page("/scholarships", "Funding you can apply for"),
   ] },

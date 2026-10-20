@@ -106,6 +106,9 @@ function pathsFor(path: string): string[] {
   if (["/services", "/about", "/reviews", "/mentorship-model", "/outcomes"].includes(path)) return ["/book-consultation", "/services", "/reviews", "/about", "/mentorship-model", "/from-india/timeline"];
   if (["/privacy", "/terms", "/acknowledgements"].includes(path)) return ["/about", "/faq", "/site-map", "/book-consultation"];
   if (path.startsWith("/france/universities/")) return ["/france/admissions", "/campus-france-guide", "/france/costs", "/france/visas", "/france/scholarships", "/france/universities"];
+  if (path.startsWith("/universities/australia")) return ["/destinations/australia/costs", "/destinations/australia/visa", "/destinations/australia/admissions", "/destinations/australia/after-graduation", "/universities/australia", "/from-india/education-loans"];
+  if (path.startsWith("/universities/uk")) return ["/destinations/uk/costs", "/destinations/uk/visa", "/destinations/uk/application-process", "/destinations/uk/after-graduation", "/universities/uk", "/from-india/education-loans"];
+  if (path.startsWith("/universities/canada")) return ["/destinations/canada/after-graduation", "/destinations/canada/visa", "/destinations/canada/costs", "/destinations/canada/education-system", "/universities/canada", "/from-india/timeline"];
   if (path.startsWith("/cities/")) return ["/study-in-france", "/france/living", "/france/costs", "/first-30-days-france", "/universities", "/jobs"];
   if (path.startsWith("/programmes/")) return ["/programmes", "/france/admissions", "/campus-france-guide", "/scholarships", "/france/costs", "/universities"];
   if (path.startsWith("/insights")) return ["/study-in-france", "/knowledge", "/insights", "/from-india/timeline", "/jobs", "/book-consultation"];
