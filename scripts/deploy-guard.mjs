@@ -22,11 +22,16 @@ async function count(dir) {
 const problems = [];
 for (const p of KEY_PAGES) if (!(await exists(p))) problems.push(`missing key page ${p}`);
 
-let live = [];
-try {
-  const xml = await (await fetch(`${SITE}/sitemap.xml`, { signal: AbortSignal.timeout(20000) })).text();
-  live = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname.replace(/\/$/, '') || '/');
-} catch (e) { console.warn(`Deploy guard: could not read the live sitemap (${e.message}); checking key pages only.`); }
+// Read the live sitemap, retrying; if it cannot be read at all, do not deploy blind.
+let live = null;
+for (let attempt = 1; attempt <= 4 && !live; attempt++) {
+  try {
+    const res = await fetch(`${SITE}/sitemap.xml`, { signal: AbortSignal.timeout(20000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    live = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname.replace(/\/$/, '') || '/');
+  } catch (e) { console.warn(`Deploy guard: live sitemap attempt ${attempt} failed (${e.message}).`); await new Promise((r) => setTimeout(r, 3000 * attempt)); }
+}
+if (!live) { problems.push('could not read the live sitemap to compare against (set ALLOW_PAGE_REMOVAL=1 to deploy anyway)'); live = []; }
 const lost = [];
 for (const p of live) if (!(await exists(p))) lost.push(p);
 if (lost.length > MAX_LOST) problems.push(`${lost.length} live pages would disappear, e.g. ${lost.slice(0, 5).join(', ')}`);
