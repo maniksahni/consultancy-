@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
 import { Btn, Card, Checklist, Grid, Kicker, Notice, Section, Split, TextLink } from "@/components/maison/ui";
 import { paris } from "@/lib/paris";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export const metadata = pageMetadata("/settle-in-france", {
   title: "Moving to France as a Student: Support",
@@ -19,7 +20,7 @@ const packages = [
 
 export default function SettleInFrancePage() {
   const metro = paris("metro-platform");
-  return <Page path="/settle-in-france" eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France," accent="with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
+  return <Page path="/settle-in-france" faqs={quickAnswers["/settle-in-france"]} eyebrow="ARRIVAL · STUDENT LIFE · CAREER" title="Settle in France," accent="with a local guide." intro="You’ve arrived. Get practical, personal support for the everyday systems, student life and career questions that come next.">
     <Section tone="ivory" kicker="SUPPORT THAT MEETS YOU HERE" title="Less guesswork." accent="More confidence in your next step." intro="Choose a focused session or explore a broader support package. We’ll agree what’s included and the fee before any work begins. Every service is guidance and preparation tailored to your situation.">
       <Grid cols={3} className="ms-package-grid">{packages.map((item, i) => <Card key={item.name} index={i + 1} kicker={item.label} title={item.name} href={`/book-consultation?service=${encodeURIComponent(item.name)}#consultation-form`} cta="Ask about this package" feature={i === 0}>
         <Checklist items={item.includes} />

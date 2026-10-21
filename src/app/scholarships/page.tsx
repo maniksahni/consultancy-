@@ -5,6 +5,7 @@ import { destinations } from "@/data/destinations";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import { Card, Checklist, Grid, Notice, Section, Steps, TextLink } from "@/components/maison/ui";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export const metadata: Metadata = pageMetadata('/scholarships', {
   title: 'Scholarships for Indian Students Abroad',
@@ -14,7 +15,7 @@ export const metadata: Metadata = pageMetadata('/scholarships', {
 export default function Content() {
   const awards = studyKnowledge.filter(entry => entry.topic === "Scholarships");
   return (
-    <Page path="/scholarships" eyebrow="FUNDING, CAREFULLY RESEARCHED" title="Research" accent="your funding." intro="Use official award information and plan without assuming an award.">
+    <Page path="/scholarships" faqs={quickAnswers["/scholarships"]} eyebrow="FUNDING, CAREFULLY RESEARCHED" title="Research" accent="your funding." intro="Use official award information and plan without assuming an award.">
       <Section tone="ivory" kicker="SEVEN DESTINATIONS" title="Where funding" accent="is published." intro="Each card opens the full scholarships chapter for that country: who can apply, what is covered and when to apply.">
         <Grid cols={3}>{awards.map(entry => <Card key={entry.id} kicker={destinations.find(d => d.slug === entry.country)?.name} title={entry.title} href={chapterForTopic(entry.country, "Scholarships")} cta={`Read the ${destinations.find(d => d.slug === entry.country)?.name} scholarships chapter`}>
           <p>{entry.summary}</p>

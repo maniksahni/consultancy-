@@ -11,7 +11,7 @@ export const metadata = pageMetadata("/from-india", {
   description: "Study abroad from India: a month-by-month timeline, education loans, LRS and TCS, apostille, IELTS vs PTE, packing, scams, a parents' guide, coming home.",
 });
 export default function FromIndia() {
-  return <Page path="/from-india" modified={indiaGuide.chapters[0].reviewedAt} eyebrow="FOR INDIAN STUDENTS · EVERY DESTINATION" title="Leaving India" accent="to study, step by step." intro={intro}
+  return <Page path="/from-india" items={indiaGuide.chapters.filter((c) => c.path !== "/from-india").map((c) => ({ name: c.label, path: c.path }))} modified={indiaGuide.chapters[0].reviewedAt} eyebrow="FOR INDIAN STUDENTS · EVERY DESTINATION" title="Leaving India" accent="to study, step by step." intro={intro}
     about={{ "@type": "Country", name: "India" }}
     closing={{ kicker: "YOUR OWN PLAN", title: "Questions about", accent: "studying abroad from India?", body: "Bring your profile, budget and timeline. We will turn these chapters into a plan for you.", href: "/book-consultation", action: "Book a consultation" }}>
     <Section tone="ivory" kicker={`THE COMPLETE INDIAN STUDENT GUIDE · ${indiaGuide.chapters.length} CHAPTERS`} title="What every destination" accent="has in common." intro="Each chapter is written for students and parents in India, with Indian rules (RBI, Income Tax, MEA, UGC) and the rules of the country you land in side by side.">

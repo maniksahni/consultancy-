@@ -7,12 +7,13 @@ import { franceGuide } from "@/data/guides/france";
 import { Btn, Card, Checklist, Grid, Kicker, Notice, Section, Split, TextLink } from "@/components/maison/ui";
 import { checked, cities } from "@/data/france";
 import { coverFor, paris } from "@/lib/paris";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export default function StudyFranceContent({ imagePlacement = "/study-in-france" }: { imagePlacement?: string }) {
   const student = paris("student-cafe");
   return (
     <Page
-      path="/study-in-france"
+      path="/study-in-france" faqs={quickAnswers["/study-in-france"]}
       imagePlacement={imagePlacement}
       eyebrow="INDEPENDENT ADMISSIONS GUIDANCE"
       title="Study in France from India,"

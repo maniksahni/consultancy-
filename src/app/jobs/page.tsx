@@ -5,6 +5,7 @@ import LiveJobs from "@/components/althea/LiveJobs";
 import { pageMetadata } from "@/lib/seo";
 import { Card, Grid, Section } from "@/components/maison/ui";
 import { countryGuides } from "@/data/guides";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export const metadata: Metadata = pageMetadata("/jobs", {
   title: "Live Jobs in France for Internationals",
@@ -14,7 +15,7 @@ export const metadata: Metadata = pageMetadata("/jobs", {
 export default function JobsPage() {
   return (
     <Page
-      path="/jobs"
+      path="/jobs" faqs={quickAnswers["/jobs"]}
       imagePlacement="/jobs"
       eyebrow="CAREER OPPORTUNITIES · FRANCE & SIX DESTINATIONS"
       title="Your next move"

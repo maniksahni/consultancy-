@@ -144,7 +144,7 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     <section className="lx-section lx-manifesto">
       <div className="lx-wrap lx-narrow">
         <p className="ms-kicker">ALTHÉA CONSULTING · PARIS, FRANCE</p>
-        <p>Althéa Consulting (altheaconsulting.in) is an independent study abroad, settling and career advisory founded by Harshita Kohli in Paris. We help Indian and international students plan their studies and prepare for life and work in France.</p>
+        <p>Althéa Consulting (altheaconsulting.in) is an independent study abroad, settling and career advisory founded by Harshita Kohli in Paris. We help Indian and international students plan their studies and prepare for life and work in France. You may also see the name written Althea or Althèa Consulting.</p>
         <ScrollWords text="We don’t start with a university list. We start with you — your ambitions, your circumstances, your version of a good life. Then we build a plan that makes sense, before the applications and long after arrival." emphasis={["you", "good", "life", "plan"]} />
         <Link className="ms-link" href="/about">Meet Harshita, your adviser in Paris</Link>
       </div>

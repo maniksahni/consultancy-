@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
 import { Btn, Kicker, Section, Split, Steps, TextLink } from "@/components/maison/ui";
 import { paris } from "@/lib/paris";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export const metadata = pageMetadata("/career-support", {
   title: "Career Coach in France for Students",
@@ -18,7 +19,7 @@ const steps = [
 
 export default function CareerSupportPage() {
   const walk = paris("la-defense-walk");
-  return <Page path="/career-support" eyebrow="CAREER SUPPORT IN FRANCE" title="Career support" accent="in France." intro="Practical career preparation for international students and young professionals building a future in France.">
+  return <Page path="/career-support" faqs={quickAnswers["/career-support"]} eyebrow="CAREER SUPPORT IN FRANCE" title="Career support" accent="in France." intro="Practical career preparation for international students and young professionals building a future in France.">
     <Section tone="ivory" kicker="WHERE WE START" title="Your experience." accent="A workable plan." intro="Start with your goals, current experience, language level and the reality of your target sector. Together, we turn those details into a clear and workable plan." action={<Btn href="/book-consultation">Book a career support call</Btn>}>
       <Steps items={steps.map(([title, text]) => ({ title, body: <p>{text}</p> }))} />
     </Section>

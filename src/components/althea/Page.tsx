@@ -3,7 +3,11 @@ import PageIdentity from "@/components/seo/PageIdentity";
 import { brand } from "@/config/brand";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Closing } from "@/components/maison/ui";
+import { Closing, Section, TextLink } from "@/components/maison/ui";
+import Accordion from "@/components/maison/Accordion";
+import JsonLd from "@/components/seo/JsonLd";
+import { absoluteUrl } from "@/lib/seo";
+import type { QuickAnswer } from "@/data/quickAnswers";
 import NextSteps from "@/components/althea/NextSteps";
 import Link from "next/link";
 import Image from "next/image";
@@ -24,6 +28,8 @@ export default function Page({
   closing,
   modified,
   about,
+  faqs,
+  items,
   children,
 }: {
   path?: string;
@@ -41,6 +47,10 @@ export default function Page({
   modified?: string;
   /** Structured-data entity the page is about. */
   about?: Record<string, unknown>;
+  /** Direct answers shown above the closing and published as FAQPage. */
+  faqs?: QuickAnswer[];
+  /** Pages this one lists, published as an ItemList. */
+  items?: { name: string; path: string }[];
   children: ReactNode;
 }) {
   const cover = photo ? paris(photo) : coverFor(imagePlacement || path);
@@ -50,7 +60,7 @@ export default function Page({
   const trail = path ? trailFor(path, heading) : [{ path: "/", name: "Home" }, { path: "", name: heading }];
   return (
     <>
-      {path && <PageIdentity path={path} title={heading} description={intro} image={pageImage} imageAlt={imageAlt} modified={modified} about={about} />}
+      {path && <PageIdentity path={path} title={heading} description={intro} image={pageImage} imageAlt={imageAlt} modified={modified} about={about} items={items} />}
       <Navbar />
       <main id="main-content" className="ms-page">
         <header className="ms-cover">
@@ -74,7 +84,15 @@ export default function Page({
           </div>
           <div className="ms-cover-cue" aria-hidden="true"><span>SCROLL</span><i /></div>
         </header>
-        <div className="ms-page-body">{children}</div>
+        <div className="ms-page-body">{children}
+          {faqs?.length ? <Section tone="paper" kicker="QUICK ANSWERS" title="Your questions," accent="answered." align="split">
+            <Accordion items={faqs.map((f) => ({ q: f.q, a: <><p>{f.a}</p>{f.href && <TextLink href={f.href}>Read the full chapter</TextLink>}</> }))} />
+          </Section> : null}
+        </div>
+        {path && faqs?.length ? <JsonLd data={{
+          "@context": "https://schema.org", "@type": "FAQPage", "@id": `${absoluteUrl(path)}#faq`,
+          mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+        }} /> : null}
         {path && <NextSteps path={path} />}
         {closing !== false && <Closing {...(closing || {})} />}
       </main>

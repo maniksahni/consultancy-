@@ -22,7 +22,7 @@ export default function AboutPage() {
       accent="& Harshita Kohli."
       intro="France-based, shaped by lived experience and focused on the practical realities of studying, settling and building a career here."
     >
-      <Section tone="ivory" kicker="MAISON IDENTITY · PARIS, FRANCE" title="Althéa Consulting" accent="at a glance." intro={`${brand.name} is an independent advisory based in Paris, France, founded by ${brand.person}. We support international students and young professionals with study planning, settling into life in France, and career preparation. Not to be confused with Althéa, the management consulting firm in the Alan Allman Associates group: we are a separate, independent study-abroad advisory.`}>
+      <Section tone="ivory" kicker="MAISON IDENTITY · PARIS, FRANCE" title="Althéa Consulting" accent="at a glance." intro={`${brand.name} is an independent advisory based in Paris, France, founded by ${brand.person}. We support international students and young professionals with study planning, settling into life in France, and career preparation. Not to be confused with Althéa, the management consulting firm in the Alan Allman Associates group: we are a separate, independent study-abroad advisory, and we are not Alethe Consulting, the IT firm in Gurugram. The name is sometimes written Althea or Althèa Consulting.`}>
         <Facts items={[
           { label: "Founder & adviser", value: brand.person, note: "Career Coach & France Expert" },
           { label: "Headquarters", value: brand.location, note: "Île-de-France, France" },

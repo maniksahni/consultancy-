@@ -2,6 +2,7 @@ import { pageMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Procedure from "@/components/althea/Procedure";
+import { quickAnswers } from "@/data/quickAnswers";
 export const metadata: Metadata = pageMetadata('/admissions-process', {
   title: 'Study Abroad Admissions Process',
   description:
@@ -9,7 +10,7 @@ export const metadata: Metadata = pageMetadata('/admissions-process', {
 });
 export default function Content() {
   return (
-    <Page path="/admissions-process"
+    <Page path="/admissions-process" faqs={quickAnswers["/admissions-process"]}
       eyebrow="THE ADMISSIONS PROCESS"
       title="Your application,"
       accent="organised."

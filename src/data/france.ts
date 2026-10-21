@@ -133,6 +133,10 @@ export const stages = [
 ];
 export const faqs = [
   [
+    "Is Althéa Consulting the same as Althéa, the management consulting firm, or Alethe Consulting?",
+    "No. Althéa Consulting (altheaconsulting.in, also written Althea or Althèa Consulting) is an independent study-abroad and career advisory founded by Harshita Kohli in Paris. It is not Althéa, the management consulting firm in the Alan Allman Associates group, nor Alethe Consulting, an IT firm in Gurugram, and is not affiliated with either.",
+  ],
+  [
     "What does Settle in France support include?",
     "Practical guidance, checklists, preparation and referrals where appropriate for arrival essentials, student life and career readiness. Each package is scoped with you before work begins.",
   ],

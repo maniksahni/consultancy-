@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata('/insights', {
 });
 export default function Content() {
   return (
-    <Page path="/insights" eyebrow="LE JOURNAL" title="Le journal" accent={`${brand.shortName}.`} intro="Practical notes for a thoughtful French chapter, with official sources.">
+    <Page path="/insights" items={articles.map((a) => ({ name: a.title, path: `/insights/${a.slug}` }))} eyebrow="LE JOURNAL" title="Le journal" accent={`${brand.shortName}.`} intro="Practical notes for a thoughtful French chapter, with official sources.">
       <Section tone="ivory" kicker="THE LATEST GUIDES" title="Read slowly." accent="Decide well.">
         <div className="ms-journal">{articles.map((a, i) => { const photo = coverFor(`/insights/${a.slug}`); return (
           <Link key={a.slug} href={`/insights/${a.slug}`} className={`ms-journal-card${i === 0 ? " is-lead" : ""}`} data-cursor="Read">

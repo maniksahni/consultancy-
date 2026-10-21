@@ -3,7 +3,9 @@ import { absoluteUrl, siteUrl } from "@/lib/seo";
 import { isoDate, pageName, trailFor } from "@/lib/trail";
 
 /** Describe the same title, introduction and breadcrumb trail shown to visitors. */
-export default function PageIdentity({ path, title, description, image, imageAlt, modified, about }: {
+const pageTypes: Record<string, string> = { "/about": "AboutPage", "/book-consultation": "ContactPage" };
+
+export default function PageIdentity({ path, title, description, image, imageAlt, modified, about, items }: {
   path: string;
   title: string;
   description: string;
@@ -14,6 +16,8 @@ export default function PageIdentity({ path, title, description, image, imageAlt
   modified?: string;
   /** Entity the page is about (a city, a country, a programme). */
   about?: Record<string, unknown>;
+  /** The pages this one lists, published as an ItemList. */
+  items?: { name: string; path: string }[];
 }) {
   const url = absoluteUrl(path);
   const date = isoDate(modified);
@@ -22,7 +26,7 @@ export default function PageIdentity({ path, title, description, image, imageAlt
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage", "@id": `${url}#webpage`, url,
+        "@type": items?.length ? ["WebPage", "CollectionPage"] : pageTypes[path] ? ["WebPage", pageTypes[path]] : "WebPage", "@id": `${url}#webpage`, url,
         // A plain, searchable name; the editorial heading stays as the alternate.
         name: pageName(path, title), ...(pageName(path, title) !== title ? { alternateName: title } : {}),
         description, inLanguage: "en",
@@ -33,6 +37,8 @@ export default function PageIdentity({ path, title, description, image, imageAlt
         speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".ms-cover-intro"] },
         ...(date ? { dateModified: date, lastReviewed: date, reviewedBy: { "@id": `${siteUrl}/#adviser` } } : {}),
         ...(path === "/about" ? { mainEntity: { "@id": `${siteUrl}/#organization` } } : {}),
+        ...(items?.length ? { mainEntity: { "@type": "ItemList", numberOfItems: items.length,
+          itemListElement: items.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, url: absoluteUrl(item.path) })) } } : {}),
         ...(path === "/" ? { about: { "@id": `${siteUrl}/#organization` } }
           : { breadcrumb: { "@id": `${url}#breadcrumb` }, ...(about ? { about } : {}) }),
       },

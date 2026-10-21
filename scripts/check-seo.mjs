@@ -32,7 +32,7 @@ for (const path of pages) {
   urls.add(canonical[1]);
   const entities = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] || [data]; });
-  const webpage = entities.find(entity => entity['@type'] === 'WebPage');
+  const webpage = entities.find(entity => [entity['@type']].flat().includes('WebPage'));
   assert.ok(webpage, `Missing WebPage identity: ${path}`);
   assert.equal(webpage.url, canonical[1], `WebPage identity must match canonical: ${path}`);
   if (new URL(canonical[1]).pathname !== '/') {
