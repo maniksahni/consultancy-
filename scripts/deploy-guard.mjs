@@ -5,6 +5,7 @@
 //   - key pages must be present
 // To remove pages on purpose, run with ALLOW_PAGE_REMOVAL=1.
 import { access, readdir } from 'node:fs/promises';
+import { execSync } from 'node:child_process';
 
 const SITE = 'https://altheaconsulting.in';
 const MAX_LOST = 3;
@@ -20,6 +21,12 @@ async function count(dir) {
 }
 
 const problems = [];
+// Files the site uses must be committed: the daily GitHub build only has what is in git, and a file that
+// exists only on one computer made that build fail for days.
+try {
+  const untracked = execSync('git ls-files --others --exclude-standard public src scripts', { encoding: 'utf8' }).trim();
+  if (untracked) problems.push(`uncommitted site files (commit and push them first):\n      ${untracked.split('\n').join('\n      ')}`);
+} catch { /* not a git checkout: skip */ }
 for (const p of KEY_PAGES) if (!(await exists(p))) problems.push(`missing key page ${p}`);
 
 // Read the live sitemap, retrying; if it cannot be read at all, do not deploy blind.
