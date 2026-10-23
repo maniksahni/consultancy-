@@ -21,7 +21,7 @@ jobs:
           ref: ${{ vars.DEPLOY_BRANCH || 'codex/althea-parisian' }}
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - uses: actions/setup-python@v5
         with:
