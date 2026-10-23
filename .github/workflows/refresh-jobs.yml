@@ -41,3 +41,5 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: consultancyworld2
           channelId: live
+          # Pinned: firebase-tools 15.34 asks the service account for a Service Usage permission it does not have.
+          firebaseToolsVersion: '15.28.2'
