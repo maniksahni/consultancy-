@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { pageMetadata } from "@/lib/seo";
+import { institutionSearchTitle } from "@/lib/institutionSeo";
 import Page from "@/components/althea/Page";
 import Accordion from "@/components/maison/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
@@ -22,17 +23,12 @@ const abbreviate = (name: string) => name
   .replace(/^École normale supérieure (de |d['’])?/i, "ENS ")
   .replace(/^Institut d['’]études politiques (de |d['’])/i, "Sciences Po ");
 
-function titleFor(i: Institution): string | { absolute: string } {
-  for (const t of [`${i.name} for Indian Students`, `${i.name}: Courses & Fees`, i.name]) if (t.length <= 39) return t;
-  const short = abbreviate(i.name);
-  if (short.length <= 39) return short;
-  // Still too long: keep the start of the name and add the city, so sister schools stay distinct.
-  const city = i.city.replace(/\s+\d+e$/, "");
-  return { absolute: short.length <= 60 ? short : `${short.slice(0, 54 - city.length).replace(/\s+\S*$/, "")}… (${city})` };
+function titleFor(i: Institution) {
+  return institutionSearchTitle(i.name, abbreviate(i.name), i.city.replace(/\s+\d+e$/, ""));
 }
 function descriptionFor(i: Institution) {
   const what = i.courses.length ? `${i.courses.length} programmes on Parcoursup 2026` : `${i.typeLabel.toLowerCase().split(" (")[0]} in ${i.city}`;
-  const d = `${i.name} (${i.city}) for Indian students: ${what}, ${i.isPublic ? "public" : "private"} status, fees for non-EU students and how to apply through Campus France.`;
+  const d = `${i.name} fees and admission for Indian students: ${what}, ${i.isPublic ? "public" : "private"} tuition for non-EU students and how to apply via Campus France.`;
   // Apostrophes are escaped in HTML (&#x27;), so keep a margin under the 160-character limit.
   const fit = (s: string) => s.length + (s.match(/['"&]/g) || []).length * 5 <= 158;
   if (fit(d)) return d;
@@ -89,10 +85,10 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
         </> : <details className="ms-guide-block" open><summary><h2>Programmes at {i.name}</h2></summary>
           <Prose><p>{i.name} does not list first-year programmes on Parcoursup 2026. Check its own website for master’s, doctoral or specialised programmes. Mon Master lists national master’s degrees, but does not cover every specialised qualification or applicant route. <Link href={`/universities?country=france&q=${encodeURIComponent(city)}`}>See other institutions in {city}</Link>.</p></Prose>
         </details>}
-        <details className="ms-guide-block" open><summary><h2>Fees for students from India</h2></summary>
+        <details className="ms-guide-block" open><summary><h2>{i.name} fees for Indian students</h2></summary>
           <Prose><p>{fee}</p><p>Check whether the CVEC student life contribution applies to your enrolment or whether you qualify for an exemption, and budget for living costs in {city}. <Link href="/france/costs">See the full cost of studying in France</Link>.</p></Prose>
         </details>
-        <details className="ms-guide-block" open><summary><h2>How to apply from India</h2></summary>
+        <details className="ms-guide-block" open><summary><h2>Admission: how to apply to {i.name} from India</h2></summary>
           <Steps items={[
             { title: "Pick the programme", body: <p>Check the entry level, language of teaching and your eligibility. <Link href="/france/admissions">Admission requirements in France</Link>.</p> },
             { title: "Confirm your application route", body: <p>Check {i.name}’s programme-specific instructions and the Campus France procedure applicable to your residence and nationality before choosing a portal. <Link href="/campus-france-guide">The Campus France process, step by step</Link>.</p> },

@@ -22,7 +22,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   if (!i) return pageMetadata(`/universities/australia/${params.slug}`, { title: "Australian institution" });
   const m = range(i, masters);
   return pageMetadata(`/universities/australia/${i.slug}`, { title: institutionTitle(i.name), description: institutionDescription(
-    `${i.name} (${i.city}) for Indian students: ${i.courses.length} CRICOS courses${m ? `, master's from ${money(m.yMin)} a year` : ""}, Student visa and how to apply from India.`,
+    `${i.name} fees and admission for Indian students: ${i.courses.length} CRICOS courses${m ? `, master's from ${money(m.yMin)} a year` : ""}, Student visa and how to apply from India.`,
     `${i.name}: ${i.courses.length} CRICOS-registered courses, fees and how Indian students apply.`) });
 }
 

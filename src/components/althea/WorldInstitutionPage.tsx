@@ -5,15 +5,13 @@ import Accordion from "@/components/maison/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
 import { Checklist, Facts, Notice, Prose, Section, Steps } from "@/components/maison/ui";
 import { absoluteUrl } from "@/lib/seo";
+import { institutionSearchTitle } from "@/lib/institutionSeo";
 import { byLevel, type Course, type WorldInstitution } from "@/lib/worldInstitutions";
 
 const PER_LEVEL = 25;
 
 /** A search title of at most 39 characters (the brand suffix is appended), or the name alone when it must be longer. */
-export function institutionTitle(name: string): string | { absolute: string } {
-  for (const t of [`${name} for Indian Students`, `${name}: Courses & Fees`, `${name} Courses`, name]) if (t.length <= 39) return t;
-  return { absolute: name.length <= 60 ? name : `${name.slice(0, 57).replace(/\s+\S*$/, "")}…` };
-}
+export function institutionTitle(name: string) { return institutionSearchTitle(name); }
 /** A description under 160 characters even after HTML escaping. */
 export function institutionDescription(full: string, short: string) {
   const fit = (s: string) => s.length + (s.match(/['"&]/g) || []).length * 5 <= 158;
@@ -44,9 +42,9 @@ export default function WorldInstitutionPage({ i, path, country, eyebrow, intro,
           <Checklist columns={items.length > 6 ? 2 : 1} items={items.slice(0, PER_LEVEL).map((c) => courseLine(c))} />
           {items.length > PER_LEVEL && <Prose><p>And {items.length - PER_LEVEL} more. <Link href={searchHref}>Search all {i.name} courses</Link>.</p></Prose>}
         </details>)}
-        <details className="ms-guide-block" open><summary><h2>Fees and money for students from India</h2></summary><Prose>{moneyBlock}</Prose></details>
+        <details className="ms-guide-block" open><summary><h2>{i.name} fees for Indian students</h2></summary><Prose>{moneyBlock}</Prose></details>
         <details className="ms-guide-block" open><summary><h2>Visa and work rights</h2></summary><Prose>{visa}</Prose></details>
-        <details className="ms-guide-block" open><summary><h2>How to apply from India</h2></summary><Steps items={apply.map((s) => ({ title: s.title, body: <p>{s.body}</p> }))} /></details>
+        <details className="ms-guide-block" open><summary><h2>Admission: how to apply to {i.name} from India</h2></summary><Steps items={apply.map((s) => ({ title: s.title, body: <p>{s.body}</p> }))} /></details>
       </div>
     </Section>
     <Section tone="paper" kicker="QUICK ANSWERS" title="Your questions," accent="answered." align="split">

@@ -114,7 +114,7 @@ const chapters: GuideChapter[] = [
   {
     slug: "sending-money-abroad", path: p("sending-money-abroad"), label: "Sending money abroad", eyebrow: "FROM INDIA · CHAPTER 3",
     title: "Sending money abroad:", accent: "LRS, TCS and the best route.",
-    seoTitle: "Send Money Abroad: LRS & TCS 2026",
+    seoTitle: "TCS on Study Abroad Fees & LRS 2026",
     description: "Pay foreign university fees from India: LRS limit of USD 250,000, TCS from April 2026 (nil on loans, 2% above ₹10 lakh), Form A2, forex cards and TCS refunds.",
     summary: "Each resident Indian can send up to USD 250,000 a financial year abroad under the Liberalised Remittance Scheme. From 1 April 2026, education remittances funded by a loan from a specified financial institution carry no TCS; self-funded education remittances above ₹10 lakh a year carry 2% TCS. TCS is not a fee: it is tax collected in advance that the remitter adjusts against income tax or gets refunded.",
     facts: [

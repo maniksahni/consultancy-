@@ -19,7 +19,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const i = find(params.slug);
   if (!i) return pageMetadata(`/universities/uk/${params.slug}`, { title: "UK institution" });
   return pageMetadata(`/universities/uk/${i.slug}`, { title: institutionTitle(i.name), description: institutionDescription(
-    `${i.name} (${i.city}) for Indian students: ${i.courses.length} undergraduate courses, Student visa sponsor status, fees and the Graduate visa.`,
+    `${i.name} fees and admission for Indian students: ${i.courses.length} undergraduate courses, Student visa sponsor status and the Graduate visa.`,
     `${i.name}: ${i.courses.length} undergraduate courses, sponsor status and how Indian students apply.`) });
 }
 
