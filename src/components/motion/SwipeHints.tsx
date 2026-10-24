@@ -14,6 +14,7 @@ export default function SwipeHints() {
     const still = window.matchMedia("(prefers-reduced-motion:reduce)");
     const meters = new Map<HTMLElement, HTMLElement>();
     const nudged = new WeakSet<HTMLElement>();
+    const keyboardTargets = new Set<HTMLElement>();
 
     const update = (el: HTMLElement) => {
       const meter = meters.get(el);
@@ -42,10 +43,15 @@ export default function SwipeHints() {
 
     const scan = () => {
       for (const [el, meter] of meters) if (!el.isConnected || !phone.matches) { meter.remove(); meters.delete(el); }
+      for (const el of keyboardTargets) if (!el.isConnected || !phone.matches || el.scrollWidth <= el.clientWidth + 8) { el.removeAttribute("tabindex"); keyboardTargets.delete(el); }
       if (!phone.matches) return;
       document.querySelectorAll<HTMLElement>(CAROUSELS).forEach((el) => {
         const scrollable = el.scrollWidth > el.clientWidth + 8 && el.children.length > 1;
         if (!scrollable) { meters.get(el)?.remove(); meters.delete(el); return; }
+        if (!el.hasAttribute("tabindex") && !el.querySelector('a[href],button,input,select,textarea,[tabindex="0"]')) {
+          el.tabIndex = 0;
+          keyboardTargets.add(el);
+        }
         if (!meters.has(el)) {
           const meter = document.createElement("div");
           meter.className = "ms-swipe-meter";
@@ -70,7 +76,7 @@ export default function SwipeHints() {
     window.addEventListener("resize", schedule);
     phone.addEventListener("change", schedule);
     scan();
-    return () => { observer.disconnect(); nudge.disconnect(); window.removeEventListener("resize", schedule); phone.removeEventListener("change", schedule); meters.forEach((m) => m.remove()); };
+    return () => { observer.disconnect(); nudge.disconnect(); window.removeEventListener("resize", schedule); phone.removeEventListener("change", schedule); meters.forEach((m) => m.remove()); keyboardTargets.forEach(el => el.removeAttribute("tabindex")); };
   }, []);
   return null;
 }

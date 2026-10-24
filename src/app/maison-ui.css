@@ -1215,7 +1215,7 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
 @media (max-width:640px) { .lx-h1-kicker { font-size:10.5px; letter-spacing:.08em; padding:8px 12px; margin-bottom:16px; } }
 
 /* Guide navigation and visible editorial context. */
-.ms-guide-editorial { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; margin-bottom:24px; font-size:13px; color:var(--muted, #737080); }
+.ms-guide-editorial { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; margin-bottom:24px; font-size:13px; color:#a8a5b8; }
 .ms-guide-editorial p { margin:0; }
 .ms-guide-editorial a, .ms-guide-jumps a { text-decoration:underline; text-underline-offset:4px; }
 .ms-guide-jumps { padding:20px; margin-bottom:28px; border:1px solid var(--line, #d9d5de); border-radius:16px; }

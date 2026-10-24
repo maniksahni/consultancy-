@@ -2,11 +2,11 @@ import { test, expect } from "@playwright/test";
 import { buildConsultationWhatsAppUrl, enquirySchema } from "../src/lib/consultation";
 import { brand } from "../src/config/brand";
 
-const sample = { fullName: "Asha Rao", phone: "+91 9876543210", targetCountry: "France", background: "BSc Computer Science", message: "Masters in France", preferredTime: "Weekdays 4 pm IST" };
+const sample = { fullName: "Asha Rao", email: "asha.rao@gmail.com", phone: "+91 9876543210", targetCountry: "France", background: "BSc Computer Science", message: "Masters in France", preferredTime: "Weekdays 4 pm IST" };
 test("message includes every detail, sanitizes input, skips empty fields, and bounds Unicode URLs", () => {
   const url = buildConsultationWhatsAppUrl(sample);
   expect(url.startsWith(`https://wa.me/${brand.whatsappNumber}?text=`)).toBe(true);
-  expect(new URL(url).searchParams.get("text")).toBe("Bonjour Althéa, I'd like to book a consultation.\nName: Asha Rao\nPhone: +91 9876543210\nStudy destination: France\nAcademic background: BSc Computer Science\nI'd like to explore: Masters in France\nPreferred time & time zone: Weekdays 4 pm IST");
+  expect(new URL(url).searchParams.get("text")).toBe("Bonjour Althéa, I'd like to book a consultation.\nName: Asha Rao\nEmail: asha.rao@gmail.com\nPhone: +91 9876543210\nStudy destination: France\nAcademic background: BSc Computer Science\nI'd like to explore: Masters in France\nPreferred time & time zone: Weekdays 4 pm IST");
   const minimal = buildConsultationWhatsAppUrl({ ...sample, fullName: "  <b>Asha</b>\n Rao  ", phone: "", background: "", preferredTime: "" });
   expect(new URL(minimal).searchParams.get("text")).toContain("Name: Asha Rao");
   expect(new URL(minimal).searchParams.get("text")).not.toMatch(/Phone:|Academic background:|Preferred time/);
@@ -15,6 +15,8 @@ test("message includes every detail, sanitizes input, skips empty fields, and bo
   expect(new URL(long).searchParams.get("text")).toContain("Preferred time & time zone:");
   expect(enquirySchema.safeParse({ ...sample, fullName: "<b></b>" }).success).toBe(false);
   expect(enquirySchema.safeParse({ ...sample, message: "\n\t " }).success).toBe(false);
+  expect(enquirySchema.safeParse({ ...sample, email: "" }).success).toBe(false);
+  expect(enquirySchema.safeParse({ ...sample, email: "asha@gmail" }).success).toBe(false);
 });
 
 for (const width of [320, 390, 1440]) test(`WhatsApp form at ${width}px: validation, redirect, fallback, and no storage`, async ({ page }) => {
@@ -26,15 +28,16 @@ for (const width of [320, 390, 1440]) test(`WhatsApp form at ${width}px: validat
   await page.setViewportSize({ width, height: 900 });
   await page.goto("/book-consultation");
   const form = page.locator(".booking-form");
-  await expect(form.locator('input[type="email"]')).toHaveCount(0);
+  await expect(form.locator('input[type="email"]')).toHaveCount(1);
   await expect(page.getByText("Online enquiries are being configured", { exact: false })).toHaveCount(0);
-  await expect(form.locator("[required]")).toHaveCount(2);
+  await expect(form.locator("[required]")).toHaveCount(3);
   const button = form.getByRole("button", { name: "Continue to WhatsApp" });
   await expect(button).toBeEnabled();
   await button.click();
   await expect(form.getByRole("status")).toHaveText("Please check the highlighted fields.");
   await expect(form.getByLabel("Full name")).toBeFocused();
   await form.getByLabel("Full name").fill(sample.fullName);
+  await form.getByLabel("Email").fill(sample.email);
   await form.getByLabel("Phone number").fill(sample.phone);
   await form.locator("select[name=targetCountry]").selectOption(sample.targetCountry);
   await form.getByLabel("Academic background").fill(sample.background);

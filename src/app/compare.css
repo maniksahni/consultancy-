@@ -38,3 +38,7 @@ em .sx-word, em .sx-chars .ch, .lx-title em .sx-word, .lx-title em .ch { display
   .lx-palette .ms-finder { grid-template-columns:minmax(0,1.45fr) minmax(0,1.15fr) minmax(0,1fr) auto; }
   .lx-palette .ms-finder select { text-overflow:ellipsis; }
 }
+
+/* Booking form: quiet helper line under a field (e.g. why we ask for email). */
+.ms-field-hint { display:block; margin-top:6px; font-size:12.5px; line-height:1.4; color:var(--ms-muted); }
+.ms-field > .ms-field-error { font-weight:600; color:#ff9aa6; }

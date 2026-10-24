@@ -16,7 +16,8 @@ for (const width of [320, 390, 430, 768, 1440]) {
       await viewport.evaluate(el => el.scrollBy({ left: 400 }));
       await expect.poll(() => viewport.evaluate(el => el.scrollLeft)).toBeGreaterThan(50);
     }
-    for (const id of ['finder', 'destinations', 'about', 'outcomes', 'booking']) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    for (const id of ['finder', 'destinations', 'about', 'booking']) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    await expect(page.getByRole('region', { name: 'Student stories' })).toBeVisible();
     expect(errors).toEqual([]);
   });
 }

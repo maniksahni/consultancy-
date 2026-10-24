@@ -4,7 +4,7 @@ test('retired elements stay hidden across the home and inner pages', async ({ pa
   for (const route of ['/', '/about', '/universities', '/book-consultation']) {
     await page.goto(route);
     await expect(page.locator('.sx-intro,.sx-curtain,.ms-footer-call,.lx-hero-stats,.lx-pass,.lx-tile-stat,.lx-quotes')).toHaveCount(0);
-    await page.locator('footer').scrollIntoViewIfNeeded();
+    await page.locator('#footer').scrollIntoViewIfNeeded();
     await expect(page.locator('.ms-footer-brand')).toBeVisible();
     expect(await page.locator('.ms-footer-brand').evaluate(el => getComputedStyle(el).opacity)).toBe('1');
   }

@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 
 export const enquiryLimits = {
   fullName: 80,
+  email: 120,
   phone: 32,
   targetCountry: 32,
   background: 160,
@@ -28,6 +29,8 @@ export const referralSources = ["Google Search", "Bing or another search engine"
 
 export const enquirySchema = z.object({
   fullName: field("fullName", true),
+  email: z.preprocess(value => sanitizeEnquiryValue(value, enquiryLimits.email).replace(/\s/g, ""),
+    z.string().min(1, "Enter your email so we can send your meeting link.").email("Enter a valid email, like name@gmail.com.")),
   phone: field("phone"),
   targetCountry: field("targetCountry"),
   background: field("background"),
@@ -42,6 +45,7 @@ export function buildConsultationWhatsAppUrl(input: Enquiry): string {
   const data = enquirySchema.parse(input);
   const entries = [
     ["Name", data.fullName],
+    ["Email", data.email],
     ["Phone", data.phone],
     ["Study destination", data.targetCountry],
     ["Academic background", data.background],

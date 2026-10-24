@@ -61,6 +61,12 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
       <div className="ms-form-grid">
       {field("fullName", "Full name *", "text", true)}
       {field("phone", "Phone number (optional)", "tel")}
+      <label className="ms-field ms-field-wide" htmlFor={fieldId("email")}><span>Email *</span>
+        <input id={fieldId("email")} name="email" type="email" inputMode="email" required autoComplete="email"
+          maxLength={enquiryLimits.email} placeholder="name@gmail.com"
+          aria-invalid={!!errors.email} aria-describedby={errors.email ? `${fieldId("email")}-error` : `${fieldId("email")}-hint`} />
+        {errors.email ? error("email") : <small className="ms-field-hint" id={`${fieldId("email")}-hint`}>We’ll send your meeting link and confirmation here.</small>}
+      </label>
       <label className="ms-field" htmlFor={fieldId("targetCountry")}><span>Destination</span>
         <select name="targetCountry" id={fieldId("targetCountry")} defaultValue={defaultCountry}>
           {["France", "UK", "USA", "Canada", "Germany", "Australia", "Ireland", "Undecided"].map(country => <option key={country}>{country}</option>)}

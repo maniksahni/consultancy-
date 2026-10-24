@@ -101,7 +101,7 @@ export function ScrollWords({ text, emphasis = [] }: { text: string; emphasis?: 
   return <p className="mx-scroll-words" ref={ref}><span className="sr-only">{text}</span>{words.map((word, i) => {
     const lit = Math.max(0, Math.min(1, progress * words.length * 1.15 - i));
     const clean = word.replace(/[.,—]/g, "");
-    return <span aria-hidden="true" key={i} className={emphasis.includes(clean) ? "is-emphasis" : undefined} style={{ opacity: 0.16 + lit * 0.84 }}>{word} </span>;
+    return <span aria-hidden="true" key={i} className={emphasis.includes(clean) ? "is-emphasis" : undefined} style={{ opacity: 0.65 + lit * 0.35 }}>{word} </span>;
   })}</p>;
 }
 

@@ -16,19 +16,19 @@ test('chosen search suggestion stays dismissed until the query changes', async (
 });
 
 test('comparison links preserve selection and identify shared and different attributes',async({page})=>{
-  await page.goto('/compare?destinations=uk,germany');
+  await page.goto('/compare?destinations=uk,ireland');
   await expect(page.getByRole('table')).toBeVisible();
-  const region=page.getByRole('row',{name:/Region Shared/});
+  const region=page.getByRole('row',{name:/Language Shared/});
   await expect(region).toBeVisible();
   await page.getByRole('checkbox',{name:'Show differences only'}).check();
   await expect(region).toHaveCount(0);
-  await expect(page.getByRole('row',{name:/Academic focus/})).toContainText('Engineering');
+  await expect(page.getByRole('row',{name:/Tuition a year/})).toContainText('£');
   await page.getByRole('checkbox',{name:'Canada',exact:true}).check();
-  await expect(page).toHaveURL(/destinations=uk%2Cgermany%2Ccanada/);
+  await expect(page).toHaveURL(/destinations=uk%2Cireland%2Ccanada/);
   await page.reload();
   await expect(page.getByRole('checkbox',{name:'Canada',exact:true})).toBeChecked();
-  await page.getByRole('button',{name:'Remove Germany from comparison'}).click();
-  await expect(page.getByRole('checkbox',{name:'Germany',exact:true})).not.toBeChecked();
+  await page.getByRole('button',{name:'Remove Ireland from comparison'}).click();
+  await expect(page.getByRole('checkbox',{name:'Ireland',exact:true})).not.toBeChecked();
   await page.setViewportSize({width:390,height:844});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.goto('/compare?destinations=invalid,uk,uk');
@@ -40,7 +40,7 @@ test('directory uses rows and shows university names without record totals',asyn
   await page.goto('/universities?country=france&view=courses');
   const cards=page.locator('.course-results .ms-dir-card');
   await expect(cards.first()).toBeVisible({timeout:30000});
-  const first=(await cards.first().boundingBox())!,second=(await cards.nth(1).boundingBox())!;
+  const [first,second]=await cards.evaluateAll(elements=>elements.slice(0,2).map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,height:r.height};}));
   expect(Math.abs(first.x-second.x)).toBeLessThan(1);
   expect(second.y).toBeGreaterThanOrEqual(first.y+first.height);
   const university=page.getByRole('combobox',{name:'University',exact:true});

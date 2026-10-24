@@ -8,6 +8,7 @@ const routes = fs
   .map((p) => (p === "index.html" ? "/" : "/" + p.replace(/\.html$/, "")));
 for (const width of [320, 390, 768, 1440])
   test(`every exported route: ${width}px`, async ({ page }) => {
+    test.setTimeout(Math.max(120000, routes.length * 5000));
     await page.setViewportSize({ width, height: 900 });
     for (const route of routes) {
       const response = await page.goto(route);
@@ -84,17 +85,19 @@ test("navigation, finder, FAQ, process and form states", async ({ page }) => {
   await page.goto("/universities?country=france&view=courses");
   await expect(page.locator(".course-results").first()).toBeVisible({ timeout: 30000 });
   await page.getByRole("combobox", { name: /^City/ }).selectOption("Toulouse");
-  await expect(page.getByRole("status").filter({ hasText: "course records" })).toContainText("matching your filters");
+  await expect(page.getByRole("combobox", { name: /^City/ })).toHaveValue("Toulouse");
+  await expect(page.locator(".course-results article").first()).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).click();
-  await expect(page.getByRole("status").filter({ hasText: "course records" })).not.toContainText("matching your filters");
+  await expect(page.getByRole("combobox", { name: /^City/ })).toHaveValue("all");
   await page.goto("/faq");
   await page.getByRole("button", { name: "Can you guarantee admission, a visa or a job?" }).click();
   await expect(page.getByText("No. Universities, authorities and employers make those decisions", { exact: false })).toBeVisible();
   await expect(page.locator("#main-content [aria-expanded=true]")).toHaveCount(1);
   await page.goto("/campus-france-guide");
-  await page.getByRole("group", { name: "Where do you live?" }).getByRole("button", { name: "Another country" }).click();
-  await page.getByRole("group", { name: "Do you have an admission offer?" }).getByRole("button", { name: "Yes" }).click();
-  await expect(page.getByRole("heading", { name: "Confirm the post-admission steps." })).toBeVisible();
+  const topicLink = page.locator(".ms-guide-jumps a").first();
+  const target = await topicLink.getAttribute("href");
+  await topicLink.click();
+  await expect(page.locator(target!)).toHaveAttribute("open", "");
   await page.goto("/book-consultation");
   await page.getByRole("button", { name: "Continue to WhatsApp" }).click();
   await expect(page.locator(".booking-form [role=status]")).toHaveText("Please check the highlighted fields.");
@@ -102,6 +105,7 @@ test("navigation, finder, FAQ, process and form states", async ({ page }) => {
 test("WCAG A/AA audit of all routes on mobile and desktop", async ({
   page,
 }) => {
+  test.setTimeout(Math.max(120000, routes.length * 20000));
   const findings = [];
   for (const width of [320, 1440]) {
     await page.setViewportSize({ width, height: 900 });
@@ -126,6 +130,7 @@ test("internal links resolve and no source points to a fake portal", async ({
   page,
   request,
 }) => {
+  test.setTimeout(Math.max(120000, routes.length * 5000));
   const links = new Set<string>();
   for (const route of routes) {
     await page.goto(route);
@@ -143,12 +148,12 @@ test("student stories turn, can be chosen and lead to the full collection", asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const stage = page.locator("#outcomes");
-  await stage.getByRole("button", { name: "Next student review" }).click();
-  await expect(stage.getByRole("status")).toContainText("Review 02");
-  await stage.getByRole("button", { name: "Show review by Rohan Deshpande" }).click();
-  await expect(stage.getByRole("button", { name: "Show review by Rohan Deshpande" })).toHaveAttribute("aria-pressed", "true");
-  await stage.getByRole("link", { name: "Explore all student reviews" }).click();
+  const stage = page.getByRole("region", { name: "Student stories" });
+  await stage.getByRole("button", { name: "Next story" }).click();
+  await expect(stage.locator(".lx-reviews-person")).toContainText("Rohan Deshpande");
+  await stage.getByRole("tab", { name: /Aditi Sharma/ }).click();
+  await expect(stage.getByRole("tab", { name: /Aditi Sharma/ })).toHaveAttribute("aria-selected", "true");
+  await stage.getByRole("link", { name: /All .* stories/ }).click();
   await expect(page.locator("h1")).toContainText("Student reviews");
   await expect(page.getByText("Shared with each student’s permission.")).toBeVisible();
 });

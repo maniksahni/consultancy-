@@ -67,7 +67,7 @@ for (const path of pages) {
   }
 }
 const home = await readFile('out/index.html', 'utf8');
-assert.match(home, /rel="icon"[^>]+href="\/brand\/favicon.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square brand favicon');
+assert.match(home, /rel="icon"[^>]+href="\/brand\/(?:favicon|icon-512(?:-v\d{8})?)\.png"[^>]+sizes="512x512"/, 'Homepage must advertise the square 512px brand icon');
 assert.match(home, /<nav class="ms-nav-links" aria-label="Main navigation">/, 'Homepage must render the primary desktop navigation');
 const homeEntities = [...home.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
   .flatMap(match => { const data = JSON.parse(match[1]); return data['@graph'] || [data]; });

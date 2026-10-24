@@ -9,15 +9,17 @@ import AtsChecker from "./AtsChecker";
 export type LiveJob = {
   id: string; country: string; title: string; company: string; location: string; remote: boolean;
   type: string | null; category: string | null; level: string | null; salary: string | null;
-  summary: string; lang: "en" | "fr" | "de" | null; posted: string; url: string; source: string; d: string; agency?: string;
+  summary: string; lang: "en" | "fr" | "de" | null; posted: string; url: string; source: string; d: string | null; agency?: string;
 };
 export type JobTab = "about" | "french" | "ats";
 
 const chunks = new Map<string, Promise<Record<string, string>>>();
 /** Descriptions are stored in small files of about 40 jobs; each file is fetched once. */
 export function loadDescription(job: LiveJob): Promise<string> {
-  if (!chunks.has(job.d)) chunks.set(job.d, fetch(`/data/jobs/desc/${job.d}.json`).then((r) => (r.ok ? r.json() : Promise.reject())).catch((e) => { chunks.delete(job.d); throw e; }));
-  return chunks.get(job.d)!.then((all) => all[job.id] || job.summary);
+  const chunk = job.d;
+  if (!chunk) return Promise.resolve(job.summary);
+  if (!chunks.has(chunk)) chunks.set(chunk, fetch(`/data/jobs/desc/${chunk}.json`).then((r) => (r.ok ? r.json() : Promise.reject())).catch((e) => { chunks.delete(chunk); throw e; }));
+  return chunks.get(chunk)!.then((all) => all[job.id] || job.summary);
 }
 
 const LANG: Record<string, string> = { en: "English", fr: "French", de: "German" };
@@ -103,7 +105,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
               </div>
             </div>
           </aside>
-          {text ? <Description text={text} /> : failed ? <p className="ms-jobdesc">{job.summary} <br /><br />The full description could not load — read it on the original posting.</p> : <p className="ms-jobdesc-loading">Loading the full job description…</p>}
+          {text !== null ? <>{!job.d && <p className="ms-muted">{text ? "Only a summary is available for this listing. Read the full description on the original posting before applying." : "The description is not available here. Read the original posting for the role requirements before applying."}</p>}<Description text={text} /></> : failed ? <p className="ms-jobdesc">{job.summary} <br /><br />The full description could not load — read it on the original posting.</p> : <p className="ms-jobdesc-loading">Loading the full job description…</p>}
           <p className="ms-jobdrawer-source">{job.agency ? <>Posted by {job.agency}, a recruitment agency hiring for a client company it may name only at interview. Description as published on </> : <>Description as published by {job.company} on </>}<a href={job.url} target="_blank" rel="noopener noreferrer nofollow">{job.source}</a>. Check the original posting for the latest version.</p>
         </section>}
 
@@ -119,7 +121,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
         </section>}
 
         {tab === "ats" && <section id="ms-jobtab-ats" role="tabpanel" aria-labelledby="ms-jobtabbtn-ats">
-          <AtsChecker title={job.title} company={job.company} url={job.url} description={text || job.summary} />
+          {text || job.summary ? <AtsChecker title={job.title} company={job.company} url={job.url} description={text || job.summary} /> : <p className="ms-muted">A job description is needed for a role-specific CV check. Please read the original posting; a score cannot be calculated from the title alone.</p>}
         </section>}
       </div>
 
