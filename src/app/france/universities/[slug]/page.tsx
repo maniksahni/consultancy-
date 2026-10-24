@@ -8,6 +8,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { Checklist, Facts, Notice, Prose, Section, Steps } from "@/components/maison/ui";
 import { cityGuideFor, frenchInstitution, frenchInstitutions, type Institution } from "@/lib/frenchInstitutions";
 import { absoluteUrl } from "@/lib/seo";
+import { frenchSchoolFee, type SchoolFee } from "@/data/frenchSchoolFees";
 
 /** Fees for non-EU students at public institutions, 2026–27; the same figures as the France costs chapter. */
 const PUBLIC_FEES = "€2,902 a year for a Licence (bachelor’s) and €3,950 for a Master at public institutions for non-EU students in 2026–27 (EU rates €178 and €255; PhD €398 for everyone)";
@@ -26,11 +27,23 @@ const abbreviate = (name: string) => name
 function titleFor(i: Institution) {
   return institutionSearchTitle(i.name, abbreviate(i.name), i.city.replace(/\s+\d+e$/, ""));
 }
+const checkedOn = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+/** Basis and year for short labels; pages without a stated year show the basis alone. */
+const feeWhen = (t: SchoolFee) => [t.basis, /not stated/.test(t.year) ? "" : t.year].filter(Boolean).join(", ");
+const sourceHost = (t: SchoolFee) => new URL(t.url).hostname.replace(/^www\./, "");
+
 function descriptionFor(i: Institution) {
+  const tuition = frenchSchoolFee(i.slug);
   const what = i.courses.length ? `${i.courses.length} programmes on Parcoursup 2026` : `${i.typeLabel.toLowerCase().split(" (")[0]} in ${i.city}`;
   const d = `${i.name} fees and admission for Indian students: ${what}, ${i.isPublic ? "public" : "private"} tuition for non-EU students and how to apply via Campus France.`;
   // Apostrophes are escaped in HTML (&#x27;), so keep a margin under the 160-character limit.
   const fit = (s: string) => s.length + (s.match(/['"&]/g) || []).length * 5 <= 158;
+  if (tuition) {
+    const official = `${i.name} fees for Indian students: ${tuition.figure} official tuition (${feeWhen(tuition)}), plus admission and how to apply from India.`;
+    if (fit(official)) return official;
+    const brief = `${i.name} fees for Indian students: ${tuition.figure} (${feeWhen(tuition)}) and how to apply from India.`;
+    if (fit(brief)) return brief;
+  }
   if (fit(d)) return d;
   const short = `${i.name} (${i.city}): ${what}, fees for non-EU students and how to apply from India.`;
   if (fit(short)) return short;
@@ -51,19 +64,22 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
   const cityGuide = cityGuideFor(i.city);
   const levels = [...new Set(i.courses.map((c) => c.level))].map((level) => ({ level, items: i.courses.filter((c) => c.level === level) })).sort((a, b) => b.items.length - a.items.length);
   const apprenticeships = i.courses.filter((c) => c.apprenticeship).length;
+  const tuition = frenchSchoolFee(i.slug);
   const fee = i.isPublic
     ? `Public status alone does not confirm a programme’s tuition. National-degree fee benchmarks are ${PUBLIC_FEES}. Different tariffs and exemptions can apply; ask ${i.name} for the fee for your exact programme, applicant category and academic year.`
+    : tuition ? `Official tuition for the ${tuition.programme} at ${i.name}: ${tuition.detail} (${tuition.year}, from the school’s own website, checked ${checkedOn(tuition.checked)}). ${i.name} is private and sets its own fees, which differ by programme, so confirm the fee for your programme and intake before you apply.`
     : `${i.name} is a private institution and sets its own tuition, usually much higher than public university fees. Ask the school for the fee for your programme and year before you apply.`;
   const faqs = [
     { q: `How much does ${i.name} cost for Indian students?`, a: fee },
     { q: `How do Indian students apply to ${i.name}?`, a: `First check ${i.name}’s instructions for your exact programme, nationality and country of residence. Applicants living in India should check Campus France India’s Études en France procedure alongside the institution’s application route. A catalogue listing does not establish eligibility, an application portal or a current deadline.` },
     { q: `Where is ${i.name}?`, a: `${i.name} is in ${city}${i.region ? `, ${i.region}` : ""}, France.${i.enrolment ? ` It had about ${Math.round(i.enrolment).toLocaleString("en-IN")} students enrolled in ${i.enrolmentYear}.` : ""}` },
-    { q: `Is ${i.name} free for international students?`, a: i.isPublic ? `Not free. Public institutions in France charge registration fees, and non-EU students usually pay the higher national rate (${PUBLIC_FEES}) unless the institution grants a waiver. ${i.name} may set different tariffs for some programmes, so confirm your fee in writing.` : `No. ${i.name} is private and charges its own tuition, usually much more than public universities. Scholarships and early-application discounts sometimes reduce it.` },
+    { q: `Is ${i.name} free for international students?`, a: i.isPublic ? `Not free. Public institutions in France charge registration fees, and non-EU students usually pay the higher national rate (${PUBLIC_FEES}) unless the institution grants a waiver. ${i.name} may set different tariffs for some programmes, so confirm your fee in writing.` : tuition ? `No. ${i.name} is private and charges its own tuition: its ${tuition.programme} costs ${tuition.detail} (${tuition.year}). Scholarships and early-application discounts sometimes reduce it.` : `No. ${i.name} is private and charges its own tuition, usually much more than public universities. Scholarships and early-application discounts sometimes reduce it.` },
     { q: `Does ${i.name} accept Indian students?`, a: `Yes, international students, including students from India, can apply when they meet the entry requirements for the programme (qualifications, language level and any portfolio or test). Most applicants living in India apply through the Études en France procedure run by Campus France India.` },
   ];
   const facts = [
     { label: "City", value: city, note: i.region },
     { label: "Type", value: i.typeLabel.split(" (")[0], note: i.isPublic ? "Public" : "Private" },
+    ...(tuition ? [{ label: "Official tuition", value: tuition.figure, note: feeWhen(tuition).replace(", ", " · ") }] : []),
     ...(i.enrolment ? [{ label: "Students enrolled", value: Math.round(i.enrolment).toLocaleString("en-IN"), note: i.enrolmentYear }] : []),
     ...(i.courses.length ? [{ label: "First-year programmes", value: String(i.courses.length), note: apprenticeships ? `${apprenticeships} as alternance` : "Parcoursup 2026" }] : []),
   ];
@@ -88,7 +104,7 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
           <Prose><p>{i.name} does not list first-year programmes on Parcoursup 2026. Check its own website for master’s, doctoral or specialised programmes. Mon Master lists national master’s degrees, but does not cover every specialised qualification or applicant route. <Link href={`/universities?country=france&q=${encodeURIComponent(city)}`}>See other institutions in {city}</Link>.</p></Prose>
         </details>}
         <details className="ms-guide-block" open><summary><h2>{i.name} fees for Indian students</h2></summary>
-          <Prose><p>{fee}</p><p>Check whether the CVEC student life contribution applies to your enrolment or whether you qualify for an exemption, and budget for living costs in {city}. <Link href="/france/costs">See the full cost of studying in France</Link>.</p></Prose>
+          <Prose><p>{fee}</p>{tuition && <p><small>Source: <a href={tuition.url} target="_blank" rel="noopener noreferrer">{i.name} fees ({sourceHost(tuition)})</a>, checked {checkedOn(tuition.checked)}.</small></p>}<p>Check whether the CVEC student life contribution applies to your enrolment or whether you qualify for an exemption, and budget for living costs in {city}. <Link href="/france/costs">See the full cost of studying in France</Link>.</p></Prose>
         </details>
         <details className="ms-guide-block" open><summary><h2>Admission: how to apply to {i.name} from India</h2></summary>
           <Steps items={[
@@ -106,8 +122,8 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
     <Section tone="ivory">
       <Notice kicker={`OFFICIAL DATA · ${i.sourceDate}`}>
         <p>Application-route evidence: <a href="https://www.inde.campusfrance.org/application-and-admission-procedure" target="_blank" rel="noopener noreferrer">Campus France India application procedure</a> · <a href="https://www.campusfrance.org/fr/candidature-enseignement-superieur-france" target="_blank" rel="noopener noreferrer">Campus France: choosing the correct admissions platform</a>. Check the live institution calendar before applying.</p>
-        <p>Fee evidence: <a href="https://www.campusfrance.org/en/tuition-fees-France" target="_blank" rel="noopener noreferrer">Campus France tuition guidance</a> · <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2865" target="_blank" rel="noopener noreferrer">Service-Public university registration fees</a>.</p>
-        <p>Institution details come from the French Ministry of Higher Education register (UAI {i.identifier}, Open Licence 2.0); programmes from the Parcoursup 2026 open-data catalogue. Fees follow Campus France and Service-Public for 2026–27. Programmes and fees change each year, so confirm with {i.name} before applying.</p>
+        <p>Fee evidence: <a href="https://www.campusfrance.org/en/tuition-fees-France" target="_blank" rel="noopener noreferrer">Campus France tuition guidance</a> · <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2865" target="_blank" rel="noopener noreferrer">Service-Public university registration fees</a>{tuition && <> · <a href={tuition.url} target="_blank" rel="noopener noreferrer">{i.name} official tuition</a></>}.</p>
+        <p>Institution details come from the French Ministry of Higher Education register (UAI {i.identifier}, Open Licence 2.0); programmes from the Parcoursup 2026 open-data catalogue. {tuition ? `Tuition comes from ${i.name}’s own website, checked ${checkedOn(tuition.checked)}.` : "Fees follow Campus France and Service-Public for 2026–27."} Programmes and fees change each year, so confirm with {i.name} before applying.</p>
       </Notice>
     </Section>
   </Page>;
