@@ -102,8 +102,22 @@ function agendaBlock_() {
     }).join('') + '</table>';
 }
 
+/**
+ * Sends through Resend when RESEND_API_KEY is set (DKIM-signed for altheaconsulting.in, so Gmail accepts it).
+ * MailApp is the fallback: it works for Hostinger inboxes, but Gmail blocks it because Google cannot sign mail for the domain.
+ */
 function send_(to, subject, html, text, replyTo) {
-  MailApp.sendEmail({ to: to, subject: subject, htmlBody: html, body: text, name: settings_().brandName, replyTo: replyTo || settings_().ownerEmail });
+  var s = settings_();
+  var key = PropertiesService.getScriptProperties().getProperty('RESEND_API_KEY');
+  if (key) {
+    var res = UrlFetchApp.fetch('https://api.resend.com/emails', {
+      method: 'post', contentType: 'application/json', muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + key },
+      payload: JSON.stringify({ from: s.brandName + ' <' + s.ownerEmail + '>', to: [to], subject: subject, html: html, text: text, reply_to: replyTo || s.ownerEmail })
+    });
+    if (res.getResponseCode() < 300) return;
+    console.error('Resend ' + res.getResponseCode() + ': ' + res.getContentText());
+  }
+  MailApp.sendEmail({ to: to, subject: subject, htmlBody: html, body: text, name: s.brandName, replyTo: replyTo || s.ownerEmail });
 }
 
 /* ------------------------------------------------------------------ messages */
@@ -132,14 +146,20 @@ function sendOwnerNotification_(b) {
   var digits = String(b.phone).replace(/\D/g, '');
   var rows = [['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination], ['Level', b.level], ['Intake', b.intake], ['Current status', b.currentStatus],
     ['Education', b.background], ['Experience', b.experience || '—'], ['Challenges', b.challenges], ['Wants to explore', b.message], ['Found us via', b.source || '—']];
-  var inner = '<div style="font:600 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:' + BRAND.green + '">New booking · ' + esc_(b.id) + '</div>'
-    + '<h1 style="margin:6px 0 4px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">' + esc_(b.name) + '</h1>'
-    + '<p style="margin:0;font-size:16px"><strong>' + esc_(paris) + '</strong> Paris · ' + esc_(clientTime) + ' for the client · 15 min</p>'
+  var inner = '<h1 style="margin:0 0 6px;font:600 28px/1.15 Georgia,serif;color:' + BRAND.text + '">New booking: ' + esc_(b.name) + '</h1>'
+    + '<p style="margin:0;color:' + BRAND.muted + '">Booked on altheaconsulting.in. The Meet invitation is already in your Google Calendar.</p>'
+    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0 6px;border-radius:16px;background:#f4f0ff;border:1px solid #e2dafe"><tr><td style="padding:18px 20px">'
+    + '<div style="font:600 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:' + BRAND.lilac + '">15-minute call · ' + esc_(b.id) + '</div>'
+    + '<div style="margin-top:6px;font:600 22px/1.25 Georgia,serif;color:' + BRAND.text + '">' + esc_(fmt_(start, s.timeZone, 'EEEE d MMMM yyyy')) + '</div>'
+    + '<div style="margin-top:2px;font:600 17px/1.4 Helvetica,Arial,sans-serif;color:' + BRAND.text + '">' + esc_(fmt_(start, s.timeZone, 'HH:mm')) + ' Paris <span style="font-weight:400;color:' + BRAND.muted + '">(' + esc_(clientTime) + ' for ' + esc_(b.firstName) + ')</span></div>'
+    + '<div style="margin-top:8px;font:400 14px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.muted + '">Google Meet · ' + esc_(b.email) + '</div>'
+    + '</td></tr></table>'
     + '<div style="margin:16px 0 6px">' + button_(b.meetLink, 'Join Google Meet') + (digits ? button_('https://wa.me/' + digits, 'WhatsApp ' + b.firstName, false) : '') + '</div>'
-    + '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-top:12px">' + rows.map(function (r) {
+    + '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Student profile</h2>'
+    + '<table role="presentation" cellpadding="0" cellspacing="0" width="100%">' + rows.map(function (r) {
       return '<tr><td valign="top" style="padding:9px 14px 9px 0;width:130px;font:600 13px/1.4 Helvetica,Arial,sans-serif;color:' + BRAND.muted + ';border-bottom:1px solid ' + BRAND.line + '">' + esc_(r[0]) + '</td><td style="padding:9px 0;font:400 14.5px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.text + ';border-bottom:1px solid ' + BRAND.line + '">' + esc_(r[1]) + '</td></tr>';
     }).join('') + '</table>'
-    + '<p style="margin:16px 0 0">' + button_(s.siteUrl + '/admin', 'Open admin', false) + '</p>';
+    + '<div style="margin:18px 0 0">' + button_(s.siteUrl + '/admin', 'Open admin', false) + '</div>';
   var text = 'New booking ' + b.id + ': ' + b.name + '\n' + paris + ' Paris (' + clientTime + ' client)\nMeet: ' + b.meetLink + '\n\n' + rows.map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
   send_(settings_().ownerEmail, 'New booking: ' + b.name + ' · ' + paris + ' Paris', layout_('New 15-minute consultation booked.', inner), text, b.email);
 }
