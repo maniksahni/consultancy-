@@ -23,6 +23,7 @@ var DEFAULT_SETTINGS = {
   siteUrl: 'https://altheaconsulting.in',
   ownerName: 'Harshita Kohli',
   ownerRole: 'Career Coach & France Expert',
+  ownerEmail: 'harshita@altheaconsulting.in',
   brandName: 'Althéa Consulting',
   whatsapp: '33755749029'
 };

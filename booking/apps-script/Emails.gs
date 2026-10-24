@@ -103,7 +103,7 @@ function agendaBlock_() {
 }
 
 function send_(to, subject, html, text, replyTo) {
-  MailApp.sendEmail({ to: to, subject: subject, htmlBody: html, body: text, name: settings_().brandName, replyTo: replyTo || Session.getEffectiveUser().getEmail() });
+  MailApp.sendEmail({ to: to, subject: subject, htmlBody: html, body: text, name: settings_().brandName, replyTo: replyTo || settings_().ownerEmail });
 }
 
 /* ------------------------------------------------------------------ messages */
@@ -141,7 +141,7 @@ function sendOwnerNotification_(b) {
     }).join('') + '</table>'
     + '<p style="margin:16px 0 0">' + button_(s.siteUrl + '/admin', 'Open admin', false) + '</p>';
   var text = 'New booking ' + b.id + ': ' + b.name + '\n' + paris + ' Paris (' + clientTime + ' client)\nMeet: ' + b.meetLink + '\n\n' + rows.map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
-  send_(Session.getEffectiveUser().getEmail(), 'New booking: ' + b.name + ' · ' + paris + ' Paris', layout_('New 15-minute consultation booked.', inner), text, b.email);
+  send_(settings_().ownerEmail, 'New booking: ' + b.name + ' · ' + paris + ' Paris', layout_('New 15-minute consultation booked.', inner), text, b.email);
 }
 
 function sendReminder_(b, which) {
@@ -177,12 +177,12 @@ function sendOwnerFeedback_(b, rating, comment) {
   var inner = '<div style="font:600 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:' + BRAND.green + '">Feedback · ' + esc_(b.id) + '</div>'
     + '<h1 style="margin:6px 0 4px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">' + esc_(b.name) + ' rated the call ' + rating + '/5</h1>'
     + (comment ? '<p style="margin:12px 0 0;padding:14px 16px;border-radius:14px;background:' + BRAND.paper + '">“' + esc_(comment) + '”</p>' : '');
-  send_(Session.getEffectiveUser().getEmail(), 'Feedback ' + rating + '/5 from ' + b.name, layout_('New feedback from ' + b.name, inner), b.name + ' rated the call ' + rating + '/5. ' + comment, b.email);
+  send_(settings_().ownerEmail, 'Feedback ' + rating + '/5 from ' + b.name, layout_('New feedback from ' + b.name, inner), b.name + ' rated the call ' + rating + '/5. ' + comment, b.email);
 }
 
 /** Sends every email template to you, for checking the design. Run from the editor. */
 function previewEmails() {
-  var me = Session.getEffectiveUser().getEmail();
+  var me = settings_().ownerEmail;
   var start = new Date(Date.now() + 2 * 86400000);
   var b = { id: 'ALT-PREVIEW', token: 'preview', start: start.toISOString(), end: new Date(start.getTime() + 15 * 60000).toISOString(), timeZone: 'Asia/Kolkata',
     name: 'Rahul Sharma', firstName: 'Rahul', email: me, phone: '+91 98765 43210', destination: 'France', level: "Master's", intake: 'September 2027',
