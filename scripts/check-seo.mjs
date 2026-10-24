@@ -4,7 +4,13 @@ async function files(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   return (await Promise.all(entries.map(e => e.isDirectory() ? files(`${dir}/${e.name}`) : `${dir}/${e.name}`))).flat();
 }
-const pages = (await files('out')).filter(p => p.endsWith('.html') && !p.endsWith('/404.html'));
+// Private tools: never indexed, never in the sitemap.
+const privatePages = ['out/admin.html', 'out/feedback.html'];
+for (const path of privatePages) {
+  const html = await readFile(path, 'utf8').catch(() => null);
+  if (html) assert.match(html, /name="robots" content="noindex, nofollow/, `Private page must be noindex: ${path}`);
+}
+const pages = (await files('out')).filter(p => p.endsWith('.html') && !p.endsWith('/404.html') && !privatePages.includes(p));
 const exportFiles = new Set(await files('out'));
 const urls = new Set();
 const descriptionCanonicals = new Map();

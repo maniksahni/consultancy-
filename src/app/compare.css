@@ -42,3 +42,45 @@ em .sx-word, em .sx-chars .ch, .lx-title em .sx-word, .lx-title em .ch { display
 /* Booking form: quiet helper line under a field (e.g. why we ask for email). */
 .ms-field-hint { display:block; margin-top:6px; font-size:12.5px; line-height:1.4; color:var(--ms-muted); }
 .ms-field > .ms-field-error { font-weight:600; color:#ff9aa6; }
+
+/* Booking form: optional extras fold away on phones; on larger screens they sit in the grid as before. */
+.ms-form-more-toggle { display:none; }
+@media (min-width:641px) {
+  .ms-form-grid { grid-auto-flow:row dense; }
+  .ms-form-more { display:contents; }
+}
+@media (max-width:640px) {
+  /* Book page: form first, short header, details about the adviser after it. */
+  .ms-page:has(#consultation-form) .ms-cover-media { display:none !important; }
+  .ms-page:has(#consultation-form) .ms-cover { padding-block:76px 12px !important; }
+  .ms-page:has(#consultation-form) .ms-cover-intro { display:none !important; }
+  .ms-booking:has(#consultation-form) { gap:24px; }
+  .ms-booking > #consultation-form { order:-1; }
+  .ms-booking-copy { gap:14px; }
+  .ms-booking-copy .ms-title { font-size:28px; }
+
+  #consultation-form { gap:12px; padding:16px !important; border-radius:20px; }
+  #consultation-form .ms-form-head { gap:10px; padding-bottom:12px; }
+  #consultation-form .ms-form-icon { display:none; }
+  #consultation-form .ms-form-title { margin-top:4px; font-size:21px; }
+  #consultation-form .ms-form-grid { grid-template-columns:1fr 1fr !important; gap:10px; }
+  #consultation-form .ms-form-grid > *:not(:nth-child(-n+2)) { grid-column:1/-1; }
+  #consultation-form .ms-field { gap:5px; min-width:0; }
+  #consultation-form .ms-field > span { font-size:12.5px; }
+  #consultation-form :is(input, select) { min-height:46px !important; padding-block:10px !important; }
+  #consultation-form textarea { min-height:76px; padding-block:10px !important; }
+  #consultation-form .ms-field-hint { margin-top:2px; font-size:12px; }
+  .ms-form-more-toggle { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; min-height:44px; padding:10px 14px; border:1px dashed var(--ms-line); border-radius:14px; background:none; color:var(--ms-gold-text); font:600 13.5px/1.2 var(--ms-sans); cursor:pointer; }
+  .ms-form-more-toggle[aria-expanded=true] svg { transform:rotate(180deg); }
+  .ms-form-more { display:none; }
+  .ms-form-more.is-open { display:grid; gap:10px; }
+  #consultation-form .ms-form-note { font-size:12px; line-height:1.4; }
+  #consultation-form .ms-form-submit { min-height:50px; }
+}
+@media (max-width:640px) {
+  .ms-page:has(#consultation-form) .ms-cover { padding-block:72px 8px !important; }
+  .ms-page:has(#consultation-form) .ms-cover .ms-crumbs { margin:0 0 6px !important; }
+  .ms-page:has(#consultation-form) .ms-cover h1 { font-size:clamp(30px,9vw,38px) !important; margin:6px 0 0 !important; }
+  #consultation-form > .ms-form-note:last-child { display:none; }
+  .ms-page:has(#consultation-form) .ms-page-body > .ms-section:first-child { padding-top:12px !important; }
+}
