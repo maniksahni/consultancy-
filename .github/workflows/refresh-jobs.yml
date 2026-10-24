@@ -33,6 +33,8 @@ jobs:
         env:
           JOBS_REFRESH: '1'
       - run: node scripts/check-seo.mjs
+      # Keep the previous builds' JS chunks so Google can still render HTML it fetched before this deploy.
+      - run: node scripts/keep-old-chunks.mjs
       # Stop if this build would remove pages that are live (for example an out-of-date branch).
       - run: node scripts/deploy-guard.mjs
       - uses: FirebaseExtended/action-hosting-deploy@v0
