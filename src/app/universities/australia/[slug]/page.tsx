@@ -38,6 +38,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     { q: `How much does ${i.name} cost for Indian students?`, a: feeText ? `${feeText}. These are the tuition fees ${i.name} registers on CRICOS; living costs, health cover (OSHC) and the visa are extra.` : `Tuition for each course is listed on CRICOS; living costs, OSHC health cover and the visa are extra.` },
     { q: `Can Indian students get an Australian Student visa for ${i.name}?`, a: `Yes, for its CRICOS-registered courses: only CRICOS courses can be studied on a Student visa (subclass 500). The visa fee is AUD 2,500 from 1 July 2026 and you must meet the Genuine Student requirement.` },
     { q: `Where is ${i.name}?`, a: `Its registered location is ${where}. Course locations can differ; check the campus for your course.` },
+    { q: `Is ${i.name} free for international students?`, a: `No. International students pay full tuition${feeText ? `: ${feeText}` : ", listed for each course on CRICOS"}. Some providers offer merit scholarships that reduce it.` },
+    { q: `Does ${i.name} accept Indian students?`, a: `Yes. Its courses are registered on CRICOS, which is what allows a provider to enrol international students, including students from India, on a Student visa (subclass 500).` },
   ];
   return <WorldInstitutionPage i={i} path={`/universities/australia/${i.slug}`} country="AU" eyebrow={`AUSTRALIA · ${i.isPublic ? "PUBLIC" : "PRIVATE"} · ${(i.region || i.city).toUpperCase()}`}
     intro={`${i.name} is a ${i.isPublic ? "public (government)" : "private"} provider in ${where}, with ${i.courses.length} courses registered on CRICOS for international students. Here are its courses, the fees it registers, and how students from India apply.`}

@@ -58,6 +58,8 @@ export default function InstitutionPage({ params }: { params: { slug: string } }
     { q: `How much does ${i.name} cost for Indian students?`, a: fee },
     { q: `How do Indian students apply to ${i.name}?`, a: `First check ${i.name}’s instructions for your exact programme, nationality and country of residence. Applicants living in India should check Campus France India’s Études en France procedure alongside the institution’s application route. A catalogue listing does not establish eligibility, an application portal or a current deadline.` },
     { q: `Where is ${i.name}?`, a: `${i.name} is in ${city}${i.region ? `, ${i.region}` : ""}, France.${i.enrolment ? ` It had about ${Math.round(i.enrolment).toLocaleString("en-IN")} students enrolled in ${i.enrolmentYear}.` : ""}` },
+    { q: `Is ${i.name} free for international students?`, a: i.isPublic ? `Not free. Public institutions in France charge registration fees, and non-EU students usually pay the higher national rate (${PUBLIC_FEES}) unless the institution grants a waiver. ${i.name} may set different tariffs for some programmes, so confirm your fee in writing.` : `No. ${i.name} is private and charges its own tuition, usually much more than public universities. Scholarships and early-application discounts sometimes reduce it.` },
+    { q: `Does ${i.name} accept Indian students?`, a: `Yes, international students, including students from India, can apply when they meet the entry requirements for the programme (qualifications, language level and any portfolio or test). Most applicants living in India apply through the Études en France procedure run by Campus France India.` },
   ];
   const facts = [
     { label: "City", value: city, note: i.region },
