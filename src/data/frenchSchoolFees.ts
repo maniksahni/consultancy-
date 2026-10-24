@@ -17,6 +17,8 @@ export type SchoolFee = {
   year: string;
   url: string;
   checked: string;
+  /** Who publishes the figure, when it is not the school's own website. */
+  source?: string;
 };
 
 export const FRENCH_SCHOOL_FEES: Record<string, SchoolFee> = {
@@ -110,6 +112,14 @@ export const FRENCH_SCHOOL_FEES: Record<string, SchoolFee> = {
     detail: "€10,500 for Year 1, then €13,700 for each of Years 2 and 3",
     year: "September 2027 intake",
     url: "https://www.iscparis.com/en/program/isc-paris-master-in-management/", checked: "2026-10-24",
+  },
+  "ecole-du-louvre": {
+    programme: "Diplôme de premier cycle (first cycle, 3 years)",
+    figure: "€438 a year", basis: "€1,314 over 3 years",
+    detail: "€438 a year, €1,314 for the three years; ONISEP does not give a separate rate for non-EU students",
+    year: "2026",
+    url: "https://www.onisep.fr/ressources/structures-enseignement/ile-de-france/paris/ecole-du-louvre/diplome-du-premier-cycle-de-l-ecole-du-louvre", checked: "2026-10-25",
+    source: "ONISEP, the French government’s study information service",
   },
 };
 
