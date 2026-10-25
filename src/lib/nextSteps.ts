@@ -1,4 +1,5 @@
 import { countryGuides } from "@/data/guides";
+import { comingSoonFor } from "@/lib/comingSoon";
 import { indiaGuide } from "@/data/guides/india";
 import { pageName } from "@/lib/trail";
 
@@ -128,9 +129,11 @@ function pathsFor(path: string): string[] {
 
 /** Up to six pages worth opening after this one, each with what the reader will find there. */
 export function nextStepsFor(path: string, limit = 6): NextStep[] {
-  const seen = new Set([path]);
+  // Coming-soon destinations offer no booking; point those readers to France instead.
+  const soon = Boolean(comingSoonFor(path));
+  const seen = new Set(soon ? [path, "/book-consultation"] : [path]);
   const out: NextStep[] = [];
-  for (const href of pathsFor(path)) {
+  for (const href of soon ? [...pathsFor(path), "/study-in-france"] : pathsFor(path)) {
     if (seen.has(href) || out.length >= limit) continue;
     seen.add(href);
     const c = chapterAt.get(href);
