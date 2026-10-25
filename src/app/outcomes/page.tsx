@@ -18,7 +18,7 @@ export default function Content() {
         </Grid>
         <Notice kicker="HONEST EXPECTATIONS" tone="ink"><p>We do not publish success rates or student stories without documentary evidence and permission. No offer, scholarship or visa decision is guaranteed.</p></Notice>
       </Section>
-      <Section tone="paper" kicker="WHAT YOU CAN PREPARE NOW" title="Bring these" accent="to your call." action={<Btn href="/book-consultation">Request a consultation</Btn>} intro="Consultations open WhatsApp with your details ready to send. No fee or service commitment is created by the enquiry; scope and any fee are discussed before work begins.">
+      <Section tone="paper" kicker="WHAT YOU CAN PREPARE NOW" title="Bring these" accent="to your call." action={<Btn href="/book-consultation">Request a consultation</Btn>} intro="Book a free 15-minute Google Meet call online; your Meet link arrives by email straight away. The call creates no commitment; scope and any fee are agreed before further work begins.">
         <Checklist columns={2} items={["Your preferred study level, subject or career direction.", "Two or three questions that would unblock your next decision.", "Your target timing, budget range and any practical constraints.", "Links to official programme, employer or authority pages you have already checked."]} />
       </Section>
     </Page>

@@ -267,7 +267,7 @@ export const usaDepth: Record<string, ChapterDepth> = {
       ] },
     ],
     faqs: [
-      { q: "How do Indian students find roommates in the US?", a: "Through university Indian student association groups, WhatsApp and Facebook groups for incoming students, and university housing portals." },
+      { q: "How do Indian students find roommates in the US?", a: "Through university Indian student association groups, messaging-app and Facebook groups for incoming students, and university housing portals." },
     ],
   },
 

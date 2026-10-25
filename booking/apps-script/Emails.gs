@@ -158,7 +158,6 @@ function sendOwnerNotification_(b) {
   var s = settings_(), start = new Date(b.start);
   var paris = fmt_(start, s.timeZone, 'EEE d MMM, HH:mm');
   var clientTime = fmt_(start, b.timeZone, 'HH:mm z');
-  var digits = String(b.phone).replace(/\D/g, '');
   // Only what the student filled in; the form asks for the help needed and where they are now.
   var rows = [['Help needed', b.message], ['Current status', b.currentStatus], ['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination],
     ['Level', b.level], ['Intake', b.intake], ['Education', b.background], ['Experience', b.experience], ['Challenges', b.challenges], ['Found us via', b.source]]
@@ -171,7 +170,7 @@ function sendOwnerNotification_(b) {
     + '<div style="margin-top:2px;font:600 17px/1.4 Helvetica,Arial,sans-serif;color:' + BRAND.text + '">' + esc_(fmt_(start, s.timeZone, 'HH:mm')) + ' Paris <span style="font-weight:400;color:' + BRAND.muted + '">(' + esc_(clientTime) + ' for ' + esc_(b.firstName) + ')</span></div>'
     + '<div style="margin-top:8px;font:400 14px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.muted + '">Google Meet · ' + esc_(b.email) + '</div>'
     + '</td></tr></table>'
-    + '<div style="margin:16px 0 6px">' + button_(b.meetLink, 'Join Google Meet') + (digits ? button_('https://wa.me/' + digits, 'WhatsApp ' + b.firstName, false) : '') + '</div>'
+    + '<div style="margin:16px 0 6px">' + button_(b.meetLink, 'Join Google Meet') + '</div>'
     + '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Student profile</h2>'
     + '<table role="presentation" cellpadding="0" cellspacing="0" width="100%">' + rows.map(function (r) {
       return '<tr><td valign="top" style="padding:9px 14px 9px 0;width:130px;font:600 13px/1.4 Helvetica,Arial,sans-serif;color:' + BRAND.muted + ';border-bottom:1px solid ' + BRAND.line + '">' + esc_(r[0]) + '</td><td style="padding:9px 0;font:400 14.5px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.text + ';border-bottom:1px solid ' + BRAND.line + '">' + esc_(r[1]) + '</td></tr>';
