@@ -89,7 +89,7 @@ export function Chips({ items }: { items: { label: ReactNode; href: string }[] }
   return <div className="ms-chips">{items.map((item, i) => isExternal(item.href) ? <a key={i} href={item.href} target="_blank" rel="noreferrer">{item.label}<ArrowUpRight size={13} aria-hidden="true" /></a> : <Link key={i} href={item.href}>{item.label}<ArrowUpRight size={13} aria-hidden="true" /></Link>)}</div>;
 }
 
-export function Closing({ kicker = "LET’S BEGIN", title = "A wider world.", accent = "A personal way forward.", body = "Bring your questions. Let’s find your first step together.", href = "/book-consultation", action = "Request a consultation", image = paris("seine-sunset").file }: { kicker?: ReactNode; title?: ReactNode; accent?: ReactNode; body?: ReactNode; href?: string; action?: ReactNode; image?: string }) {
+export function Closing({ kicker = "LET’S BEGIN", title = "A wider world.", accent = "A personal way forward.", body = "Bring your questions. Let’s find your first step together.", href = "/book-consultation", action = "Request a consultation", image = paris("seine-sunset").file, soon = false }: { kicker?: ReactNode; title?: ReactNode; accent?: ReactNode; body?: ReactNode; href?: string; action?: ReactNode; image?: string; soon?: boolean }) {
   return <section className="ms-closing" aria-label="Start a conversation">
     <Image className="ms-closing-img" src={image} alt="" fill sizes="100vw" />
     <div className="ms-closing-shade" />
@@ -97,7 +97,9 @@ export function Closing({ kicker = "LET’S BEGIN", title = "A wider world.", ac
       <Kicker>{kicker}</Kicker>
       <h2>{title}<br /><em>{accent}</em></h2>
       <p>{body}</p>
-      <Link className="mx-orb mx-magnetic" href={href} data-cursor="Let’s talk"><span>{action}</span><ArrowUpRight size={24} aria-hidden="true" /></Link>
+      {soon
+        ? <><span className="mx-orb ms-orb-soon" aria-disabled="true"><span>Coming soon</span></span><TextLink href="/study-in-france">Explore France while you wait</TextLink></>
+        : <Link className="mx-orb mx-magnetic" href={href} data-cursor="Let’s talk"><span>{action}</span><ArrowUpRight size={24} aria-hidden="true" /></Link>}
     </div>
   </section>;
 }

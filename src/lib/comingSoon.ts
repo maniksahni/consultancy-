@@ -1,17 +1,29 @@
 /**
  * Althéa supports France today: students coming to study there and everyone already living there.
- * The other destinations keep their research guides, labelled "Coming soon" until support opens.
+ * Other destinations keep their information pages, but every button that would lead to booking for them
+ * says "Coming soon", and the booking form only accepts live countries.
+ * To switch a destination on everywhere, add its slug to `liveCountries`.
  */
-export const liveCountry = "france";
+export const liveCountries: string[] = ["france"];
 
-const soonNames: Record<string, string> = {
-  uk: "the UK", usa: "the USA", canada: "Canada", germany: "Germany", ireland: "Ireland", australia: "Australia",
+const names: Record<string, { name: string; prose: string }> = {
+  france: { name: "France", prose: "France" },
+  uk: { name: "United Kingdom", prose: "the UK" },
+  usa: { name: "United States", prose: "the USA" },
+  canada: { name: "Canada", prose: "Canada" },
+  germany: { name: "Germany", prose: "Germany" },
+  ireland: { name: "Ireland", prose: "Ireland" },
+  australia: { name: "Australia", prose: "Australia" },
 };
 
-export const isComingSoon = (slug: string) => slug in soonNames;
+export const isLive = (slug: string) => liveCountries.includes(slug);
+export const isComingSoon = (slug: string) => slug in names && !isLive(slug);
+export const countryName = (slug: string) => names[slug]?.name ?? slug;
+export const countryProse = (slug: string) => names[slug]?.prose ?? slug;
 
-/** The country a page belongs to when Althéa's support there is still coming soon. */
+/** The coming-soon country a path belongs to (country guides, university directories), if any. */
 export function comingSoonFor(path: string): string | undefined {
   const m = path.match(/^\/(?:destinations|universities)\/([a-z]+)(?:\/|$)/);
-  return m ? soonNames[m[1]] : undefined;
+  return m && isComingSoon(m[1]) ? m[1] : undefined;
 }
+

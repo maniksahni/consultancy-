@@ -1,5 +1,6 @@
 import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
+import { isComingSoon } from "@/lib/comingSoon";
 import Accordion from "@/components/maison/Accordion";
 import JsonLd from "@/components/seo/JsonLd";
 import { Checklist, Facts, Notice, Prose, Section, Steps } from "@/components/maison/ui";
@@ -97,7 +98,7 @@ export default function GuideChapterPage({ guide, chapter }: { guide: CountryGui
         </Notice>
         <nav className="ms-guide-pager" aria-label="Chapter navigation">
           {prev ? <Link href={prev.path} rel="prev"><small>Previous chapter</small>{prev.label}</Link> : <Link href={guide.hubPath}><small>Back to</small>{guide.name} overview</Link>}
-          {next ? <Link href={next.path} rel="next"><small>Next chapter</small>{next.label}</Link> : <Link href={`/book-consultation?destination=${guide.country}`}><small>Next step</small>Book a consultation</Link>}
+          {next ? <Link href={next.path} rel="next"><small>Next chapter</small>{next.label}</Link> : isComingSoon(guide.country) ? <span className="ms-guide-soon"><small>Next step</small>Coming soon</span> : <Link href={`/book-consultation?destination=${guide.country}`}><small>Next step</small>Book a consultation</Link>}
         </nav>
       </Section>
     </Page>

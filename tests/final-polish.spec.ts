@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+import { liveCountries } from '../src/lib/comingSoon';
 
 test('package enquiry opens the form with package context and keyboard focus',async({page})=>{
  await page.goto('/settle-in-france');
@@ -13,6 +14,7 @@ test('package enquiry opens the form with package context and keyboard focus',as
 });
 
 test('university options obey city, qualification and budget and reset stale choices',async({page})=>{
+ test.skip(!liveCountries.includes('australia'),'Australia is coming soon');
  const record=(id:string,institutionId:string,city:string,tuition:number,level='Bachelor Degree')=>({id,institutionId,institution:institutionId,name:`${institutionId} ${level}`,country:'australia',city,tuition,currency:'AUD',level,durationWeeks:'52'});
  await page.route('**/australia-courses.json',route=>route.fulfill({json:{country:'australia',refreshedAt:'2026-10-16',courses:[record('1','Local College','ABBOTSFORD',12000),record('2','Other City College','SYDNEY',12000),record('3','Expensive College','ABBOTSFORD',60000),record('4','Postgraduate College','ABBOTSFORD',12000,'Masters Degree'),record('5','Multiple Campuses','ABBOTSFORD',15000),record('6','Multiple Campuses','SYDNEY',18000)]}}));
  await page.goto('/universities?country=australia&view=courses');

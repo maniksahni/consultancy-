@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarCheck, CalendarPlus, Check
 import { brand } from "@/config/brand";
 import { meetingMinutes } from "@/config/booking";
 import { bookingSchema, buildConsultationWhatsAppUrl, currentStatuses, enquiryLimits, intakes, referralSources, studyLevels, type BookingDetails } from "@/lib/consultation";
+import { isComingSoon } from "@/lib/comingSoon";
 import { bookSlot, bookingMode, fetchSlots, formatIn, googleCalendarUrl, visitorTimeZone, zoneLabel, type BookingMode } from "@/lib/booking";
 
 type Step = 0 | 1 | 2;
@@ -16,6 +17,9 @@ const STEP_FIELDS: (keyof BookingDetails)[][] = [
 ];
 const STEPS = ["About you", "Your profile", "Pick a time"];
 const COUNTRIES = ["France", "UK", "USA", "Canada", "Germany", "Australia", "Ireland", "Undecided"];
+const COUNTRY_SLUGS: Record<string, string> = { france: "France", uk: "UK", usa: "USA", canada: "Canada", germany: "Germany", australia: "Australia", ireland: "Ireland" };
+/** Destinations shown but not bookable yet. */
+const SOON = Object.entries(COUNTRY_SLUGS).filter(([slug]) => isComingSoon(slug)).map(([, label]) => label);
 
 /**
  * Three-step consultation booking: contact details, a preparation profile, then a free 15-minute slot.
@@ -45,9 +49,9 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
     const slug = params.get("destination");
     const role = params.get("careerRole");
     const service = params.get("service");
-    const countries: Record<string, string> = { france: "France", uk: "UK", usa: "USA", canada: "Canada", germany: "Germany", australia: "Australia", ireland: "Ireland" };
+    const countries = COUNTRY_SLUGS;
     const select = formRef.current?.elements.namedItem("targetCountry") as HTMLSelectElement | null;
-    if (select && slug && countries[slug]) select.value = countries[slug];
+    if (select && slug && countries[slug] && !isComingSoon(slug)) select.value = countries[slug];
     const message = formRef.current?.elements.namedItem("message") as HTMLTextAreaElement | null;
     if (message) {
       if (defaultMessage) message.value = defaultMessage;
@@ -154,11 +158,13 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
       {error(name)}
     </label>
   );
-  const select = (name: keyof BookingDetails, label: string, options: readonly string[], opts: { required?: boolean; placeholder?: string; defaultValue?: string; wide?: boolean } = {}) => (
+  const select = (name: keyof BookingDetails, label: string, options: readonly string[], opts: { required?: boolean; placeholder?: string; defaultValue?: string; wide?: boolean; disabled?: readonly string[] } = {}) => (
     <label className={`ms-field${opts.wide ? " ms-field-wide" : ""}`} htmlFor={fieldId(name)}><span>{label}{opts.required ? " *" : ""}</span>
       <select id={fieldId(name)} name={name} defaultValue={opts.defaultValue ?? ""} aria-invalid={!!errors[name]} aria-describedby={described(name)}>
         {opts.placeholder !== undefined && <option value="">{opts.placeholder}</option>}
-        {options.map(option => <option key={option}>{option}</option>)}
+        {options.map(option => opts.disabled?.includes(option)
+          ? <option key={option} value={option} disabled>{option} (coming soon)</option>
+          : <option key={option}>{option}</option>)}
       </select>
       {error(name)}
     </label>
@@ -218,7 +224,7 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
           {input("fullName", "Full name", { required: true, autoComplete: "name" })}
           {input("phone", "WhatsApp number", { type: "tel", required: true, autoComplete: "tel", placeholder: "+91 98765 43210" })}
           {input("email", "Email", { type: "email", required: true, autoComplete: "email", placeholder: "name@gmail.com", hint: "Your Google Meet link and preparation guide are sent here.", wide: true })}
-          {select("targetCountry", "Destination", COUNTRIES, { defaultValue: defaultCountry })}
+          {select("targetCountry", "Destination", COUNTRIES, { defaultValue: SOON.includes(defaultCountry) ? "France" : defaultCountry, disabled: SOON })}
           {select("referralSource", "How did you find Althéa?", referralSources, { placeholder: "Prefer not to say" })}
         </div>
       </fieldset>

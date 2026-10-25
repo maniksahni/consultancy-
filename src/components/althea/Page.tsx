@@ -14,7 +14,7 @@ import Image from "next/image";
 import { Fragment, type ComponentProps, type ReactNode } from "react";
 import { trailFor } from "@/lib/trail";
 import { coverFor, photoPlace, paris, type ParisSlug } from "@/lib/paris";
-import { comingSoonFor } from "@/lib/comingSoon";
+import { comingSoonFor, countryProse } from "@/lib/comingSoon";
 
 /** The shell for every inner page: cinematic cover, page body, closing invitation. */
 export default function Page({
@@ -31,6 +31,7 @@ export default function Page({
   about,
   faqs,
   items,
+  soonCountry,
   children,
 }: {
   path?: string;
@@ -52,13 +53,16 @@ export default function Page({
   faqs?: QuickAnswer[];
   /** Pages this one lists, published as an ItemList. */
   items?: { name: string; path: string }[];
+  /** A coming-soon destination this page is about, when the path alone does not say so (e.g. a programme). */
+  soonCountry?: string;
   children: ReactNode;
 }) {
   const cover = photo ? paris(photo) : coverFor(imagePlacement || path);
   const pageImage = cover.file;
   const imageAlt = cover.alt;
   const heading = accent ? `${title} ${accent}` : title;
-  const soon = path ? comingSoonFor(path) : undefined;
+  const soonSlug = soonCountry ?? (path ? comingSoonFor(path) : undefined);
+  const soon = soonSlug ? countryProse(soonSlug) : undefined;
   const trail = path ? trailFor(path, heading) : [{ path: "/", name: "Home" }, { path: "", name: heading }];
   return (
     <>
@@ -102,7 +106,9 @@ export default function Page({
           mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
         }} /> : null}
         {path && <NextSteps path={path} />}
-        {closing !== false && <Closing {...(closing || {})} />}
+        {soon
+          ? <Closing kicker="COMING SOON" title={`Support for ${soon}`} accent="opens soon." body={`Althéa’s personal support for ${soon} is coming soon. Today we help students coming to study in France, and everyone already living in France.`} soon />
+          : closing !== false && <Closing {...(closing || {})} />}
       </main>
       <Footer />
     </>

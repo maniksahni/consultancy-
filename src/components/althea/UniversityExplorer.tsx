@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { isComingSoon, isLive } from "@/lib/comingSoon";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpRight, RotateCcw, Search } from "lucide-react";
@@ -52,7 +53,8 @@ function courseCategory(course: RegistryCourse) {
 }
 
 export default function UniversityExplorer({ initialCountry = "all" }: { initialCountry?: string }) {
-  const [country, setCountry] = useState(initialCountry);
+  // Only open destinations can be browsed; "all" and coming-soon countries start on France.
+  const [country, setCountry] = useState(isLive(initialCountry) ? initialCountry : "france");
   const [query, setQuery] = useState("");
   const [institutionCityFilter, setInstitutionCityFilter] = useState("");
   const [kind, setKind] = useState<"institutions" | "courses">("institutions");
@@ -74,9 +76,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const requestedCountry = params.get("country");
-    if (requestedCountry && (requestedCountry === "all" || destinations.some((destination) => destination.slug === requestedCountry))) {
-      setCountry(requestedCountry);
-    }
+    if (requestedCountry && isLive(requestedCountry)) setCountry(requestedCountry);
     const requestedQuery = params.get("q")?.trim();
     const requestedSubject = params.get("subject")?.trim();
     const requestedCity = params.get("city")?.trim();
@@ -181,6 +181,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
   }, [kind, currentPageRecords, resolveTuition, directory]);
 
   function chooseCountry(slug: string) {
+    if (!isLive(slug)) return;
     setCountry(slug); setQuery(""); setInstitutionCityFilter(""); setPage(0);
     setKind(manifest?.countries[slug]?.courseCount ? "courses" : "institutions");
     setCourseCategoryFilter("all"); setCourseInstitutionFilter("all"); setCourseCityFilter("all"); setCourseLevelFilter("all"); setCourseFeeLimit("");
@@ -192,7 +193,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
   return <section className="university-explorer ms-dir" aria-label="University and student cost explorer">
     <div className="ms-kh-bar ms-dir-bar">
-      <label className="ms-field"><span>Country</span><select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}><option value="all">All countries</option>{destinations.map((d) => <option key={d.slug} value={d.slug}>{d.slug === "france" ? d.name : `${d.name} (coming soon)`}</option>)}</select></label>
+      <label className="ms-field"><span>Country</span><select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}>{destinations.map((d) => <option key={d.slug} value={d.slug} disabled={isComingSoon(d.slug)}>{isComingSoon(d.slug) ? `${d.name} (coming soon)` : d.name}</option>)}</select></label>
       {country !== "all" && <label className="ms-field ms-kh-search"><span>Find by name, subject, city or ID</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" /><input type="search" value={query} onChange={(e) => { setQuery(e.target.value); setPage(0); }} placeholder="Search this directory" /></span></label>}
       {country !== "all" && <div className="ms-dir-mode" role="group" aria-label="Choose what to browse">
         <button type="button" aria-pressed={kind === "courses"} disabled={!manifest?.countries[country]?.courseCount && country !== "australia" && country !== "france"} onClick={() => { setKind("courses"); setPage(0); }}>{country === "usa" ? "Fields of study" : "Courses"}</button>

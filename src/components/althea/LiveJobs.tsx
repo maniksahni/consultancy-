@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { isComingSoon } from "@/lib/comingSoon";
 import Link from "next/link";
 import { ArrowUpRight, Briefcase, Clock, Languages, MapPin, MessageCircle, ScanSearch, Search, Wifi } from "lucide-react";
 import { brand } from "@/config/brand";
@@ -61,7 +62,8 @@ export default function LiveJobs() {
     const m = window.location.hash.match(/^#job=([a-z]+)~(.+)$/);
     if (!m) return;
     const [, c, id] = m;
-    if (COUNTRIES.some(([k]) => k === c)) setCountry(c);
+    if (!COUNTRIES.some(([k]) => k === c) || isComingSoon(c)) return;
+    setCountry(c);
     loadList(c).then((list) => { const job = list.find((j) => j.id === decodeURIComponent(id)); if (job) { setOpen(job); document.getElementById("live-jobs")?.scrollIntoView(); } }).catch(() => {});
   }, []);
 
@@ -94,9 +96,11 @@ export default function LiveJobs() {
   return <div className="ms-livejobs">
     <div className="ms-livejobs-bar">
       <div className="ms-pills ms-livejobs-countries" role="group" aria-label="Country">
-        {COUNTRIES.map(([c, label]) => <button key={c} type="button" aria-pressed={country === c} onClick={() => setCountry(c)}>
-          {label}{feed ? <span>{feed.counts[c] || 0}</span> : null}
-        </button>)}
+        {COUNTRIES.map(([c, label]) => isComingSoon(c)
+          ? <button key={c} type="button" disabled aria-disabled="true" className="ms-pill-soon" title="Coming soon">{label}<span>Soon</span></button>
+          : <button key={c} type="button" aria-pressed={country === c} onClick={() => setCountry(c)}>
+            {label}{feed ? <span>{feed.counts[c] || 0}</span> : null}
+          </button>)}
       </div>
       <div className="ms-livejobs-filters">
         <label className="ms-field ms-livejobs-search"><span className="sr-only">Search jobs</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" />

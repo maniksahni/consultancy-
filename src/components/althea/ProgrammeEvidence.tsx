@@ -7,13 +7,14 @@ import {studyKnowledge} from '@/data/studyKnowledge';
 import {programmePlanning} from '@/lib/programmePlanning';
 import JsonLd from '@/components/seo/JsonLd';
 import {absoluteUrl} from '@/lib/seo';
+import {isComingSoon} from '@/lib/comingSoon';
 export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
   const plan=programmePlanning(p);
   const scholarship=studyKnowledge.find(e=>e.country===p.country&&e.topic==='Scholarships');
   const admissions=studyKnowledge.find(e=>e.country===p.country&&e.topic==='Admissions');
   const extras=p.slug.startsWith('uci-')?(p.charges?.find(c=>c.label==='Published total fees paid — not an additional charge')?.amount||0)-(p.charges?.find(c=>c.label==='Programme instalments — first four quarters')?.amount||0):0;
   const countryName=destinations.find(d=>d.slug===p.country)?.name;
-  return <Page path={`/programmes/${p.slug}`} eyebrow={`${countryName} / ${p.level}`} title={p.title} intro={`${p.institution} · ${p.city} · ${p.duration}`}
+  return <Page path={`/programmes/${p.slug}`} soonCountry={isComingSoon(p.country)?p.country:undefined} eyebrow={`${countryName} / ${p.level}`} title={p.title} intro={`${p.institution} · ${p.city} · ${p.duration}`}
     headerActions={<><a href={`/programmes?country=${p.country}`}>← Programme research</a><a href="#programme-fees">Tuition & charges</a><a href="#programme-dates">Application dates</a><a href="#programme-requirements">Requirements</a><a href="#programme-budget">Living & funding</a></>}
     modified={p.reviewedAt} about={{"@id":`${absoluteUrl(`/programmes/${p.slug}`)}#course`}}
     closing={{kicker:"YOUR NEXT STEP",title:"A programme is a start.",accent:"A plan makes it real.",body:"Talk through fit, timing and budget for this programme and its alternatives.",href:`/book-consultation?destination=${p.country}`,action:"Discuss your study plan"}}>
@@ -58,7 +59,7 @@ export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
     <Section tone="paper" id="programme-budget" kicker="BEYOND TUITION" title="Living, funding" accent="and next steps.">
       <Grid cols={2}>
         <Card kicker="LIVING & ACCOMMODATION" title="Plan beyond tuition."><p><strong>{plan.living.living}</strong></p><p>{plan.living.housing}</p><p>{plan.living.basis}</p><p>{plan.living.planning}</p>{plan.living.sourceUrls&&<Chips items={plan.living.sourceUrls.map(source=>({label:source.label,href:source.url}))}/>}<TextLink href="/knowledge#budget">Build your personal budget</TextLink></Card>
-        <Card kicker="SCHOLARSHIPS & NEXT STEPS" title="Build your funding plan." feature>{scholarship&&<><p>{scholarship.summary}</p><p><a href={scholarship.source} target="_blank" rel="noreferrer">Official scholarship opportunities ↗</a></p></>}<p>Prepare academic results, references and a strong motivation statement. Check award coverage, nationality eligibility, separate application dates and renewal conditions. Keep a self-funded budget until an award is confirmed.</p><div><Btn href={`/book-consultation?destination=${p.country}`}>Discuss your study plan</Btn></div></Card>
+        <Card kicker="SCHOLARSHIPS & NEXT STEPS" title="Build your funding plan." feature>{scholarship&&<><p>{scholarship.summary}</p><p><a href={scholarship.source} target="_blank" rel="noreferrer">Official scholarship opportunities ↗</a></p></>}<p>Prepare academic results, references and a strong motivation statement. Check award coverage, nationality eligibility, separate application dates and renewal conditions. Keep a self-funded budget until an award is confirmed.</p><div>{isComingSoon(p.country)?<span className="ms-soon-tag">Coming soon</span>:<Btn href={`/book-consultation?destination=${p.country}`}>Discuss your study plan</Btn>}</div></Card>
       </Grid>
     </Section>
   </Page>;

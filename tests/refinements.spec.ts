@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
+import { liveCountries } from '../src/lib/comingSoon';
 
 test('chosen search suggestion stays dismissed until the query changes', async ({ page }) => {
-  await page.route('**/home-search/prefixes/**', route=>route.fulfill({json:[['uk','university','Example University'],['uk','university','Example University of Design']]}));
+  await page.route('**/home-search/prefixes/**', route=>route.fulfill({json:[['france','university','Example University'],['france','university','Example University of Design']]}));
   await page.goto('/');
   const input=page.getByRole('combobox',{name:'Course, subject or university'});
   await input.fill('Example');
@@ -16,6 +17,7 @@ test('chosen search suggestion stays dismissed until the query changes', async (
 });
 
 test('comparison links preserve selection and identify shared and different attributes',async({page})=>{
+  test.skip(!['uk','ireland','canada'].every(c=>liveCountries.includes(c)),'Comparison opens with more destinations');
   await page.goto('/compare?destinations=uk,ireland');
   await expect(page.getByRole('table')).toBeVisible();
   const region=page.getByRole('row',{name:/Language Shared/});

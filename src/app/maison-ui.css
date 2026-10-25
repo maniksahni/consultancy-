@@ -1232,3 +1232,10 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
 .ms-source-list { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
 .ms-source-list a { color:var(--ms-text); text-decoration:underline; text-decoration-color:var(--ms-line); text-underline-offset:4px; font-size:15px; line-height:1.5; }
 .ms-source-list a:hover { text-decoration-color:currentColor; }
+/* "Coming soon" in place of a booking button, for destinations that are not open yet. */
+.ms-orb-soon { cursor:default; opacity:.85; background:var(--ms-champagne) !important; color:#1b1530 !important; }
+.ms-closing-copy .ms-orb-soon + a { display:inline-block; margin-top:18px; }
+.ms-guide-soon { display:flex; flex-direction:column; gap:4px; padding:18px 20px; border:1px dashed var(--ms-line); border-radius:16px; color:var(--ms-muted); }
+/* A destination that is not open yet, inside a pill or tab group. */
+.ms-pill-soon { opacity:.55; cursor:not-allowed; }
+.ms-pill-soon span { margin-left:6px; padding:2px 7px; border-radius:999px; background:var(--ms-champagne); color:#1b1530; font-size:10px; letter-spacing:.08em; text-transform:uppercase; }

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check, Plus, X } from "lucide-react";
 import { destinations, destinationHref } from "@/data/destinations";
 import { countryPhoto, paris } from "@/lib/paris";
-import { isComingSoon } from "@/lib/comingSoon";
+import { isComingSoon, liveCountries } from "@/lib/comingSoon";
 
 /** The destination atlas: choose a country, save up to three and compare them side by side. */
 export default function DestinationAtlas({ compact = false }: { compact?: boolean }) {
@@ -22,7 +22,7 @@ export default function DestinationAtlas({ compact = false }: { compact?: boolea
   return <div className="ms-atlas" data-hydrated="true">
     <div className="ms-atlas-bar">
       <div className="ms-pills" role="group" aria-label="Filter destinations">{["All destinations", "Europe", "North America", "Oceania"].map((r) => <button type="button" key={r} aria-pressed={region === r} onClick={() => { setRegion(r); const first = destinations.find((x) => r === "All destinations" || x.region === r)!; setActive(first.slug); }}>{r}</button>)}</div>
-      <button type="button" className="ms-btn ms-btn-ink" disabled={saved.length < 2} onClick={() => router.push(`/compare?destinations=${saved.join(",")}`)}><span>{`Compare shortlist (${saved.length}/3)`}</span><ArrowUpRight size={16} aria-hidden="true" /></button>
+      {liveCountries.length > 1 && <button type="button" className="ms-btn ms-btn-ink" disabled={saved.length < 2} onClick={() => router.push(`/compare?destinations=${saved.join(",")}`)}><span>{`Compare shortlist (${saved.length}/3)`}</span><ArrowUpRight size={16} aria-hidden="true" /></button>}
     </div>
     <div className="ms-atlas-layout">
       <div className="ms-atlas-index" role="group" aria-label="Choose a destination">{options.map((x, i) => <button type="button" key={x.slug} aria-pressed={active === x.slug} onClick={() => setActive(x.slug)} onMouseEnter={() => setActive(x.slug)}>
@@ -38,7 +38,7 @@ export default function DestinationAtlas({ compact = false }: { compact?: boolea
           <p>{d.mood}</p>
           <div className="ms-row">
             <Link className="ms-btn ms-btn-gold" href={destinationHref(d.slug)}><span>{isComingSoon(d.slug) ? `Read the ${d.name} guide` : `Explore ${d.name}`}</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
-            <button type="button" className="ms-btn ms-btn-light" aria-pressed={saved.includes(d.slug)} disabled={saved.length === 3 && !saved.includes(d.slug)} onClick={() => toggle(d.slug)}><span>{saved.includes(d.slug) ? "Saved to shortlist" : saved.length === 3 ? "Shortlist full" : "Save destination"}</span>{saved.includes(d.slug) ? <Check size={16} aria-hidden="true" /> : <Plus size={16} aria-hidden="true" />}</button>
+            {liveCountries.length > 1 && <button type="button" className="ms-btn ms-btn-light" aria-pressed={saved.includes(d.slug)} disabled={saved.length === 3 && !saved.includes(d.slug)} onClick={() => toggle(d.slug)}><span>{saved.includes(d.slug) ? "Saved to shortlist" : saved.length === 3 ? "Shortlist full" : "Save destination"}</span>{saved.includes(d.slug) ? <Check size={16} aria-hidden="true" /> : <Plus size={16} aria-hidden="true" />}</button>}
           </div>
           <small className="ms-atlas-credit">{d.city}</small>
         </div>

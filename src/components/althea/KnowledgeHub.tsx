@@ -1,5 +1,6 @@
 "use client";
 import { brand } from "@/config/brand";
+import { isComingSoon } from "@/lib/comingSoon";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowDownToLine, ArrowUpRight, RotateCcw, Search } from "lucide-react";
@@ -9,7 +10,7 @@ import { chapterForTopic } from "@/data/guides/paths";
 
 /** Source-reviewed guidance for seven countries, filterable and downloadable as a plain-text plan. */
 export default function KnowledgeHub({ country, compact = false }: { country?: string; compact?: boolean }) {
-  const [selected, setSelected] = useState(country || "france");
+  const [selected, setSelected] = useState(country && !isComingSoon(country) ? country : "france");
   const [topic, setTopic] = useState("all");
   const [query, setQuery] = useState("");
   const topics = Array.from(new Set(studyKnowledge.filter((e) => selected === "all" || e.country === selected).map((e) => e.topic)));
@@ -30,7 +31,7 @@ export default function KnowledgeHub({ country, compact = false }: { country?: s
     <div className="ms-kh-review"><span className="mx-live" />Source review · {knowledgeReviewedAt} · updated {knowledgeUpdatedAt}<span>Manual review · recheck before applying</span></div>
     {!compact && <details className="ms-kh-scope"><summary>How this source review works</summary><p>These country summaries draw on official pages and clearly labelled search listings. The programme research desk provides published tuition and dates. Individual admission decisions, fee exceptions and visa eligibility depend on the applicable requirements. This is a dated editorial review, not a live sync of every university catalogue.</p><Link href="/knowledge#coverage">See coverage and review limits ↗</Link></details>}
     <div className="ms-kh-bar">
-      {!country && <label className="ms-field"><span>Destination</span><select aria-label="Destination" value={selected} onChange={(e) => { setSelected(e.target.value); setTopic("all"); }}><option value="all">All countries</option>{destinations.map((d) => <option value={d.slug} key={d.slug}>{d.name}</option>)}</select></label>}
+      {!country && <label className="ms-field"><span>Destination</span><select aria-label="Destination" value={selected} onChange={(e) => { setSelected(e.target.value); setTopic("all"); }}>{destinations.map((d) => <option value={d.slug} key={d.slug} disabled={isComingSoon(d.slug)}>{isComingSoon(d.slug) ? `${d.name} (coming soon)` : d.name}</option>)}</select></label>}
       <label className="ms-field ms-kh-search"><span>Search guidance</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" /><input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Scholarships, funds, APS, visa…" /></span></label>
       <button type="button" className="ms-btn ms-btn-ink" onClick={download}><span>Download your guide</span><ArrowDownToLine size={17} aria-hidden="true" /></button>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { isComingSoon } from "@/lib/comingSoon";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -254,8 +255,10 @@ export default function JobsExplorer() {
           <div className="ms-jobs-hero-copy">
             <Kicker>THE OPPORTUNITY RADAR · 2026 EDITION</Kicker>
             <h2 className="ms-title">Make your next move <em>mean something.</em></h2>
-            <p className="ms-lead">Explore roles, internships, and work-study routes that turn your degree into an international career. Start with {destination.name}, or explore seven global destinations.</p>
-            <div className="ms-pills ms-pills-dark" role="group" aria-label="Select destination">{destinations.map((d) => <button key={d.slug} type="button" aria-pressed={country === d.slug} onClick={() => { setCountry(d.slug); setSelected(null); }}>{d.name}</button>)}</div>
+            <p className="ms-lead">Explore roles, internships, and work-study routes that turn your degree into an international career. Start with {destination.name}; six more destinations are coming soon.</p>
+            <div className="ms-pills ms-pills-dark" role="group" aria-label="Select destination">{destinations.map((d) => isComingSoon(d.slug)
+              ? <button key={d.slug} type="button" disabled aria-disabled="true" className="ms-pill-soon" title="Coming soon">{d.name}<span>Soon</span></button>
+              : <button key={d.slug} type="button" aria-pressed={country === d.slug} onClick={() => { setCountry(d.slug); setSelected(null); }}>{d.name}</button>)}</div>
             <div className="ms-row">
               <a href="#jobs-discover" className="ms-btn ms-btn-gold mx-magnetic"><span>Explore {destination.name} pathways</span><ArrowUpRight size={17} aria-hidden="true" /></a>
               <button type="button" onClick={() => setIsConsultationOpen(true)} className="ms-btn ms-btn-light"><span>Book a strategy session</span><Calendar size={16} aria-hidden="true" /></button>
@@ -318,7 +321,7 @@ export default function JobsExplorer() {
         })}</div>
 
         <div className="ms-kh-bar ms-jobs-filters">
-          <label className="ms-field"><span><MapPin size={13} aria-hidden="true" /> Destination</span><select aria-label="Job destination" value={country} onChange={(event) => { setCountry(event.target.value); setSelected(null); }}>{destinations.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}</select></label>
+          <label className="ms-field"><span><MapPin size={13} aria-hidden="true" /> Destination</span><select aria-label="Job destination" value={country} onChange={(event) => { setCountry(event.target.value); setSelected(null); }}>{destinations.map((item) => <option key={item.slug} value={item.slug} disabled={isComingSoon(item.slug)}>{isComingSoon(item.slug) ? `${item.name} (coming soon)` : item.name}</option>)}</select></label>
           <label className="ms-field"><span><Briefcase size={13} aria-hidden="true" /> Opportunity route</span><select aria-label="Opportunity type" value={opportunityType} onChange={(event) => setOpportunityType(event.target.value as OpportunityType | "all")}><option value="all">All pathways ({careerRoles.length})</option>{(Object.entries(opportunityTypeLabels) as [OpportunityType, string][]).map(([type, label]) => <option key={type} value={type}>{label}</option>)}</select></label>
           <label className="ms-field"><span><Compass size={13} aria-hidden="true" /> Sector / industry</span><select aria-label="Job sector" value={sector} onChange={(event) => setSector(event.target.value)}><option value="all">All sectors ({sectors.length})</option>{sectors.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
           <label className="ms-field ms-kh-search"><span><Search size={13} aria-hidden="true" /> Search roles or skills</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" /><input aria-label="Search roles and skills" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="e.g. data, nursing, CAD, Python..." /></span></label>

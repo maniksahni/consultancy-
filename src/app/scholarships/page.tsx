@@ -1,4 +1,5 @@
 import { pageMetadata } from "@/lib/seo";
+import { isLive } from "@/lib/comingSoon";
 import { studyKnowledge } from "@/data/studyKnowledge";
 import { chapterForTopic } from "@/data/guides/paths";
 import { destinations } from "@/data/destinations";
@@ -16,8 +17,8 @@ export default function Content() {
   const awards = studyKnowledge.filter(entry => entry.topic === "Scholarships");
   return (
     <Page path="/scholarships" faqs={quickAnswers["/scholarships"]} eyebrow="FUNDING, CAREFULLY RESEARCHED" title="Research" accent="your funding." intro="Use official award information and plan without assuming an award.">
-      <Section tone="ivory" kicker="SEVEN DESTINATIONS" title="Where funding" accent="is published." intro="Each card opens the full scholarships chapter for that country: who can apply, what is covered and when to apply.">
-        <Grid cols={3}>{awards.map(entry => <Card key={entry.id} kicker={destinations.find(d => d.slug === entry.country)?.name} title={entry.title} href={chapterForTopic(entry.country, "Scholarships")} cta={`Read the ${destinations.find(d => d.slug === entry.country)?.name} scholarships chapter`}>
+      <Section tone="ivory" kicker="FRANCE · MORE COUNTRIES SOON" title="Where funding" accent="is published." intro="The card opens the full France scholarships chapter: who can apply, what is covered and when to apply. Funding guides for six more countries are coming soon.">
+        <Grid cols={3}>{awards.filter(entry => isLive(entry.country)).map(entry => <Card key={entry.id} kicker={destinations.find(d => d.slug === entry.country)?.name} title={entry.title} href={chapterForTopic(entry.country, "Scholarships")} cta={`Read the ${destinations.find(d => d.slug === entry.country)?.name} scholarships chapter`}>
           <p>{entry.summary}</p>
           <p className="ms-card-note">{entry.effective || "Award eligibility, coverage and deadlines follow the individual competition."}</p>
         </Card>)}</Grid>

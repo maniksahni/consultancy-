@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { isComingSoon } from "@/lib/comingSoon";
 import Link from "next/link";
 import { ArrowUpRight, CalendarPlus, Check, MessageCircle } from "lucide-react";
 import { brand } from "@/config/brand";
@@ -82,7 +83,9 @@ export default function MovePlanner() {
 
       <div className="lx-planner-controls">
         <div className="ms-pills lx-planner-countries" role="group" aria-label="Destination">
-          {plannerCountries.map((c) => <button key={c.id} type="button" aria-pressed={c.id === countryId} onClick={() => { setCountryId(c.id); setIntakeKey(null); }}>{c.name.replace(/^the /, "").replace(/^(uk|usa)$/i, (m) => m.toUpperCase())}</button>)}
+          {plannerCountries.map((c) => { const label = c.name.replace(/^the /, "").replace(/^(uk|usa)$/i, (m) => m.toUpperCase()); return isComingSoon(c.id)
+            ? <button key={c.id} type="button" disabled aria-disabled="true" className="ms-pill-soon" title="Coming soon">{label}<span>Soon</span></button>
+            : <button key={c.id} type="button" aria-pressed={c.id === countryId} onClick={() => { setCountryId(c.id); setIntakeKey(null); }}>{label}</button>; })}
         </div>
         <label className="ms-field lx-planner-intake"><span>Intake</span>
           <select value={intake?.key || ""} onChange={(e) => setIntakeKey(e.target.value)} aria-label="Intake">
