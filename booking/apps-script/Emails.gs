@@ -216,7 +216,7 @@ function sendOwnerFeedback_(b, rating, comment) {
   send_(settings_().ownerEmail, 'Feedback ' + rating + '/5 from ' + b.name, layout_('New feedback from ' + b.name, inner), b.name + ' rated the call ' + rating + '/5. ' + comment, b.email);
 }
 
-/** Sends every email template to you, for checking the design. Run from the editor. */
+/** Sends one branded client confirmation to the owner mailbox for design review. */
 function previewEmails() {
   var me = settings_().ownerEmail;
   var start = new Date(Date.now() + 2 * 86400000);
@@ -224,5 +224,5 @@ function previewEmails() {
     name: 'Rahul Sharma', firstName: 'Rahul', email: me, phone: '+91 98765 43210', destination: 'France', level: "Master's", intake: 'September 2027',
     currentStatus: 'Working professional', background: 'B.Tech CSE, 2023, 8.1 CGPA', experience: 'Software engineer at TCS, 2 years',
     challenges: 'Confused between France and Germany; budget around ₹25 lakh', message: "Master's in data science", source: 'Instagram', meetLink: 'https://meet.google.com/abc-defg-hij' };
-  sendClientConfirmation_(b); sendOwnerNotification_(b); sendReminder_(b, 'day'); sendReminder_(b, 'hour'); sendFeedbackRequest_(b); sendOwnerFeedback_(b, 5, 'Very clear guidance, thank you!');
+  sendClientConfirmation_(b);
 }

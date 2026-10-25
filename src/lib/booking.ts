@@ -7,7 +7,7 @@ import type { BookingDetails } from "@/lib/consultation";
  * `?preview=booking` on any page switches to sample data with no network calls, for reviewing the design.
  */
 export type BookingMode = "live" | "preview" | "off";
-export type BookingResult = { ok: true; id: string; start: string; end: string; meetLink: string } | { ok: false; error: string; code?: string };
+export type BookingResult = { ok: true; id: string; start: string; end: string; meetLink: string; confirmationSent?: boolean; ownerNoticeSent?: boolean } | { ok: false; error: string; code?: string };
 export type AdminBooking = {
   id: string; status: string; bookedOn: string; start: string; end: string; timeZone: string; name: string; firstName: string;
   email: string; phone: string; destination: string; level: string; intake: string; currentStatus: string; background: string;

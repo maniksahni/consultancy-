@@ -7,7 +7,7 @@ import { bookingSchema, buildConsultationWhatsAppUrl, currentStatuses, enquiryLi
 import { bookSlot, bookingMode, fetchSlots, formatIn, googleCalendarUrl, visitorTimeZone, zoneLabel, type BookingMode } from "@/lib/booking";
 
 type Step = 0 | 1 | 2;
-type Booked = { id: string; start: string; end: string; meetLink: string; email: string; firstName: string; whatsapp: string };
+type Booked = { id: string; start: string; end: string; meetLink: string; email: string; firstName: string; whatsapp: string; confirmationSent: boolean };
 
 const STEP_FIELDS: (keyof BookingDetails)[][] = [
   ["fullName", "email", "phone", "targetCountry", "referralSource"],
@@ -133,7 +133,7 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
         if (result.code === "slot-taken") loadSlots();
         return;
       }
-      setBooked({ id: result.id, start: result.start, end: result.end, meetLink: result.meetLink, email: details.email, firstName: details.fullName.split(" ")[0], whatsapp: buildConsultationWhatsAppUrl(details, `${longWhen(result.start)} (${parisWhen(result.start)}) · ${result.id}`) });
+      setBooked({ id: result.id, start: result.start, end: result.end, meetLink: result.meetLink, email: details.email, firstName: details.fullName.split(" ")[0], whatsapp: buildConsultationWhatsAppUrl(details, `${longWhen(result.start)} (${parisWhen(result.start)}) · ${result.id}`), confirmationSent: result.confirmationSent ?? true });
       setStatus("");
       requestAnimationFrame(() => doneRef.current?.scrollIntoView({ block: "start", behavior: "smooth" }));
     } catch {
@@ -185,7 +185,7 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
         <a className="ms-btn ms-btn-gold" href={booked.meetLink} target="_blank" rel="noreferrer"><span>Open your Meet link</span><ArrowUpRight size={17} aria-hidden="true" /></a>
         <a className="ms-btn ms-btn-ghost" href={googleCalendarUrl(booked.start, booked.end, booked.meetLink, brand.person)} target="_blank" rel="noreferrer"><CalendarPlus size={17} aria-hidden="true" /><span>Add to calendar</span></a>
       </div>
-      <p className="bk-sent">We’ve emailed your Meet link and a preparation guide to <strong>{booked.email}</strong>. A Google Calendar invite is on its way too.</p>
+      <p className="bk-sent">{booked.confirmationSent ? <>We’ve emailed your Meet link and a preparation guide to <strong>{booked.email}</strong>. A Google Calendar invite is on its way too.</> : <>Your Google Calendar invite is on its way. We couldn’t send the branded confirmation email, so use the Meet link above and message Harshita on WhatsApp if you need help.</>}</p>
       <div className="bk-prep">
         <p className="bk-prep-title">Before your call, be ready with</p>
         <ol>

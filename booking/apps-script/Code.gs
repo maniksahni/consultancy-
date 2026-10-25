@@ -295,10 +295,21 @@ function book_(body) {
     row['Meet link'] = meet; row['Calendar event ID'] = event.id;
     appendRow_(row);
 
-    var booking = bookingView_(row);
-    sendClientConfirmation_(booking);
-    sendOwnerNotification_(booking);
-    return { ok: true, id: id, start: booking.start, end: booking.end, meetLink: meet, timeZone: clientTz };
+    var booking = bookingView_(row), confirmationSent = false, ownerNoticeSent = false;
+    try {
+      sendClientConfirmation_(booking);
+      confirmationSent = true;
+    } catch (emailError) {
+      console.error('Client confirmation failed for ' + id + ': ' + emailError);
+    }
+    try {
+      sendOwnerNotification_(booking);
+      ownerNoticeSent = true;
+    } catch (emailError) {
+      console.error('Owner notification failed for ' + id + ': ' + emailError);
+    }
+    return { ok: true, id: id, start: booking.start, end: booking.end, meetLink: meet, timeZone: clientTz,
+      confirmationSent: confirmationSent, ownerNoticeSent: ownerNoticeSent };
   } finally {
     lock.releaseLock();
   }
@@ -310,20 +321,18 @@ function meetFromConference_(event) {
   return '';
 }
 
-/** Event description. Google sends it to the student in the invite, so it reads as their confirmation; the profile follows for Harshita. */
+/** Google controls the invitation email's appearance. Keep its event description concise and student-facing;
+ * the student's private intake profile belongs only in the owner notification. */
 function profileText_(d, id) {
   var s = settings_();
-  var e = function (v) { return esc_(v || '—'); };
   var reschedule = 'https://wa.me/' + s.whatsapp + '?text=' + encodeURIComponent('Bonjour Althéa, I need to reschedule booking ' + id + '.');
-  return '<b>Your 15-minute call with ' + e(s.ownerName) + ', ' + e(s.brandName) + '</b><br>Booking ' + e(id) + ' · join with the Google Meet link in this invitation.<br><br>'
-    + '<b>Before we meet, please be ready with</b><ol>' + PREP_ITEMS.map(function (p) { return '<li><b>' + esc_(p[0]) + ':</b> ' + esc_(p[1]) + '</li>'; }).join('') + '</ol>'
-    + '<b>Keep handy:</b> mark sheets or transcripts, your CV, test scores, a rough budget and your shortlist.<br><br>'
-    + 'Need to change the time? <a href="' + reschedule + '">Message us on WhatsApp</a> with your booking number.<br><br>'
-    + '<b>Your details</b><br>'
-    + [['Name', d.fullName], ['WhatsApp', d.phone], ['Email', d.email], ['Destination', d.targetCountry], ['Level', d.level], ['Intake', d.intake],
-      ['Current status', d.currentStatus], ['Education', d.background], ['Experience', d.experience], ['Challenges', d.challenges],
-      ['Wants to explore', d.message], ['Found us via', d.referralSource]].map(function (r) { return r[0] + ': ' + e(r[1]); }).join('<br>')
-    + '<br><br><a href="' + s.siteUrl + '">altheaconsulting.in</a>';
+  return '<b>Your 15-minute call with ' + esc_(s.ownerName) + ' is booked.</b><br>'
+    + esc_(s.brandName) + ' · Booking ' + esc_(id) + '<br><br>'
+    + 'Join using the Google Meet link in this invitation.<br><br>'
+    + '<b>Before we meet</b><br>Think about your current status, education and experience, the questions or challenges you want to discuss, and your top three priorities.<br><br>'
+    + '<b>Keep handy</b><br>Transcripts or mark sheets, your CV, language or test scores, a rough budget and any courses or universities you have shortlisted.<br><br>'
+    + 'Need to change the time? <a href="' + reschedule + '">Message us on WhatsApp</a> with booking number ' + esc_(id) + '.<br><br>'
+    + '<a href="' + s.siteUrl + '">altheaconsulting.in</a>';
 }
 
 /* ------------------------------------------------------------------ sheet rows */
