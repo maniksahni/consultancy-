@@ -8,7 +8,7 @@ import { quickAnswers } from "@/data/quickAnswers";
 export const metadata: Metadata = pageMetadata('/book-consultation', {
   title: 'Book a Study in France Consultation',
   description:
-    "Book a free 15-minute Google Meet call with Harshita Kohli in Paris: pick a time online and get the Meet link by email instantly. Study abroad, visa and career questions.",
+    "Book a free 15-minute Google Meet call with Harshita Kohli in Paris. Pick a time online and get the Meet link by email instantly. Study, visa and career help.",
 });
 export default function Content() {
   return (
