@@ -13,7 +13,7 @@ export function GET() {
   const body = [
     `# ${brand.name}`,
     "",
-    `> ${brand.name} (${siteUrl.replace("https://", "")}) is an independent study-in-France and career advisory founded by ${brand.person}, ${brand.role}, based in ${brand.location}. It helps Indian and international students choose French universities and programmes, follow the Campus France / Études en France procedure, prepare the student visa file, settle in France and find internships, alternance and jobs.`,
+    `> ${brand.name} (${siteUrl.replace("https://", "")}) is an independent study-in-France and career advisory founded by ${brand.person}, ${brand.role}, based in ${brand.location}. It helps Indian and international students choose French universities and programmes, follow the Campus France / Études en France procedure, prepare the student visa file, settle in France and find internships, alternance and jobs. It also helps people already living in France with internships, jobs, CAF, housing, residence permits and the route to PR. France is the only destination supported today; support for the UK, USA, Canada, Australia, Germany and Ireland is coming soon.`,
     "",
     "Not to be confused with Althéa, the management consulting firm in the Alan Allman Associates group: Althéa Consulting (altheaconsulting.in) is an independent study-abroad advisory and is not affiliated with it, nor with Alethe Consulting, an IT firm in Gurugram.",
     "",
@@ -23,6 +23,8 @@ export function GET() {
     "",
     "## Services",
     link("Study in France from India", "/study-in-france", "course and university shortlisting, Campus France route, requirements and budget planning"),
+    link("Already in France", "/in-france", "help for people already living in France: internships, alternance, first job, CAF, housing and titre de séjour"),
+    link("PR in France for Indian students", "/pr-in-france", "job-search permit, work permit or Talent Passport, 10-year resident card after 5 years, French nationality"),
     link("Settle in France", "/settle-in-france", "arrival, housing, bank, insurance and student-life orientation"),
     link("Career support in France", "/career-support", "French-style CV, LinkedIn, interviews, internships and alternance"),
     link("Book a free 15-minute consultation", "/book-consultation", `free Google Meet call with ${brand.person}, booked online with the Meet link emailed instantly`),

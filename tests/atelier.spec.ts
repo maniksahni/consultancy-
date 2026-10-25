@@ -55,12 +55,12 @@ test('FAQ expands and collapses; the finale opens the booking flow', async ({ pa
   const question = page.getByRole('button', { name: 'Can you assist with scholarships?', exact: true });
   await question.click();
   await expect(question).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#atelier-answer-2')).toBeVisible();
+  await expect(page.locator('#atelier-answer-3')).toBeVisible();
   await question.click();
-  await expect(page.locator('#atelier-answer-2')).toBeHidden();
+  await expect(page.locator('#atelier-answer-3')).toBeHidden();
   await page.locator('#booking').getByRole('link', { name: /Let’s have a conversation/ }).click();
   await expect(page.locator('.booking-form')).toBeVisible();
   await page.locator('.booking-form button[type=submit]').click();
-  await expect(page.locator('.booking-form [role=status]')).toContainText('Please check');
+  await expect(page.locator('.booking-form .ms-form-status')).toContainText('Please check');
   await expect(page.locator('input[name=fullName]')).toBeFocused();
 });

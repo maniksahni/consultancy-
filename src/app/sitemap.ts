@@ -29,6 +29,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "",
     "study-in-france",
+    "in-france",
+    "pr-in-france",
     "settle-in-france",
     "career-support",
     "jobs",

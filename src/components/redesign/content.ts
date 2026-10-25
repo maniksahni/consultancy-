@@ -122,7 +122,11 @@ export const reviews = [
 export const questions = [
   [
     "Which countries can I apply to through Althéa Consulting?",
-    "Explore study opportunities in France, the United Kingdom, the United States, Canada, Australia, Germany and Ireland. Book a consultation to discuss the guidance available for your chosen destination.",
+    "France. Althéa helps you come to study in France, and helps people already living in France with internships, jobs and paperwork. Support for the UK, USA, Canada, Australia, Germany and Ireland is coming soon; their research guides are already on the site.",
+  ],
+  [
+    "I already live in France. Can Althéa still help me?",
+    "Yes. Harshita Kohli, based in Paris, helps students and young professionals already in France find internships and alternance, prepare a French-style CV and interviews, move from student to job-search or work permit, and handle CAF, housing, bank and health paperwork.",
   ],
   [
     "Do you help with university shortlisting and applications?",

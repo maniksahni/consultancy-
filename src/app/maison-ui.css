@@ -1222,3 +1222,13 @@ html:has(.ms-jobdrawer[open]) { overflow:hidden; }
 .ms-guide-jumps ul { display:flex; flex-wrap:wrap; gap:8px 24px; list-style:none; padding:0; margin:12px 0 0; font-size:14px; }
 .ms-guide-jumps a { display:inline-block; padding:7px 0; }
 .ms-guide-block[id], #guide-sources { scroll-margin-top:110px; }
+
+/* Destinations other than France: research guide stays open, support is coming soon. */
+.ms-soon { display:flex; flex-wrap:wrap; align-items:center; gap:12px 22px; margin:clamp(20px,3vw,32px) auto 0; width:min(1180px, calc(100% - 32px)); padding:16px 20px; border:1px solid var(--ms-line); border-radius:var(--ms-radius); background:var(--ms-paper); }
+.ms-soon p { flex:1 1 420px; margin:0; font-size:15px; line-height:1.6; color:var(--ms-muted); }
+.ms-soon p strong { color:var(--ms-text); }
+.ms-soon a { font-weight:600; color:var(--ms-text); text-decoration:underline; text-underline-offset:3px; }
+.ms-soon-tag, .lx-soon { display:inline-flex; align-items:center; padding:5px 11px; border-radius:999px; font:600 11px/1 var(--ms-sans); letter-spacing:.12em; text-transform:uppercase; background:var(--ms-champagne); color:#1b1530; white-space:nowrap; }
+.ms-source-list { display:grid; gap:10px; margin:0; padding:0; list-style:none; }
+.ms-source-list a { color:var(--ms-text); text-decoration:underline; text-decoration-color:var(--ms-line); text-underline-offset:4px; font-size:15px; line-height:1.5; }
+.ms-source-list a:hover { text-decoration-color:currentColor; }

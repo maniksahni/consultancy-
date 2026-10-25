@@ -192,7 +192,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
 
   return <section className="university-explorer ms-dir" aria-label="University and student cost explorer">
     <div className="ms-kh-bar ms-dir-bar">
-      <label className="ms-field"><span>Country</span><select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}><option value="all">All countries</option>{destinations.map((d) => <option key={d.slug} value={d.slug}>{d.name}</option>)}</select></label>
+      <label className="ms-field"><span>Country</span><select aria-label="University country" value={country} onChange={(e) => chooseCountry(e.target.value)}><option value="all">All countries</option>{destinations.map((d) => <option key={d.slug} value={d.slug}>{d.slug === "france" ? d.name : `${d.name} (coming soon)`}</option>)}</select></label>
       {country !== "all" && <label className="ms-field ms-kh-search"><span>Find by name, subject, city or ID</span><span className="ms-input-icon"><Search size={16} aria-hidden="true" /><input type="search" value={query} onChange={(e) => { setQuery(e.target.value); setPage(0); }} placeholder="Search this directory" /></span></label>}
       {country !== "all" && <div className="ms-dir-mode" role="group" aria-label="Choose what to browse">
         <button type="button" aria-pressed={kind === "courses"} disabled={!manifest?.countries[country]?.courseCount && country !== "australia" && country !== "france"} onClick={() => { setKind("courses"); setPage(0); }}>{country === "usa" ? "Fields of study" : "Courses"}</button>
@@ -254,7 +254,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
             {kind === "courses" && filtersActive && <button className="ms-btn ms-btn-ghost ms-dir-reset" type="button" onClick={resetFilters}><span>Clear filters</span><RotateCcw size={15} aria-hidden="true" /></button>}
           </div>
 
-          {kind === "institutions" ? <div className="ms-dir-grid">{(currentPageRecords as RegistryInstitution[]).map((r) => <article key={r.id} className="ms-dir-card" data-spotlight>
+          {kind === "institutions" ? <div className="ms-dir-grid" role="region" aria-label="Institutions" tabIndex={0}>{(currentPageRecords as RegistryInstitution[]).map((r) => <article key={r.id} className="ms-dir-card" data-spotlight>
             <p className="ms-card-kicker">{r.region || countryName}{r.city ? ` · ${r.city}` : ""}</p>
             <h3>{r.name}</h3>
             {r.nativeName && r.nativeName !== r.name && <p className="ms-dir-native">{r.nativeName}</p>}

@@ -20,7 +20,7 @@ export const metadata = pageMetadata("/site-map", {
 const groups: { title: string; accent: string; items: Item[] }[] = [
   { title: "Start here:", accent: "plan your move.", items: [
     page("/from-india/timeline", "Month-by-month plan from 18 months out to arrival"),
-    page("/destinations", "All seven study countries"), page("/compare", "Countries side by side"),
+    page("/destinations", "France today; six more countries coming soon"), page("/compare", "Countries side by side"),
     page("/knowledge", "Search every answer, plus the budget planner"), page("/faq", "Quick answers"),
     page("/admissions-process", "How applications work"), page("/book-consultation", "Talk to Harshita"),
   ] },
@@ -36,7 +36,7 @@ const groups: { title: string; accent: string; items: Item[] }[] = [
   ] })),
   { title: "France,", accent: "beyond the guide.", items: [
     page("/campus-france-guide", "Études en France step by step"), page("/first-30-days-france", "Your first month, day by day"),
-    page("/settle-in-france", "Housing, permit, bank, health"), page("/france/universities"), page("/france/programmes"), page("/france/institutions"), page("/france/resources"),
+    page("/in-france", "Already in France: internships, jobs, papers"), page("/pr-in-france", "PR in France for Indian students"), page("/settle-in-france", "Housing, permit, bank, health"), page("/france/universities"), page("/france/programmes"), page("/france/institutions"), page("/france/resources"),
     ...cities.map((c) => ({ href: `/cities/${c.slug}`, title: `Study in ${c.name}` })),
   ] },
   { title: "From India:", accent: "every destination.", items: [{ href: "/from-india", title: "From India overview" }, ...indiaGuide.chapters.map((c) => ({ href: c.path, title: c.label }))] },

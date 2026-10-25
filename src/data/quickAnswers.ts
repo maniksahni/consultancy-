@@ -64,6 +64,19 @@ export const quickAnswers: Record<string, QuickAnswer[]> = {
     { q: "What should I prepare before the consultation?", a: "Your current status, education background (degree, grades, gaps), work experience, the problems you are facing and your top three questions. Keep mark sheets, your CV, test scores, a rough budget and any shortlist handy." },
     { q: "Can I reschedule or cancel my consultation?", a: "Yes. Reply to your confirmation email or message Althéa on WhatsApp with your booking number, and a new time will be arranged." },
   ],
+  "/in-france": [
+    { q: "I already live in France. Can Althéa help me find an internship?", a: "Yes. Harshita Kohli helps students already in France target the right internships (stages) and alternance, adapt a French-style CV and LinkedIn, and prepare for interviews. Internships over two months must pay at least €4.50 an hour in 2026.", href: "/france/part-time-work" },
+    france("part-time-work", "How many hours can international students work in France?"),
+    france("after-graduation", "Can I stay in France after my master's to look for a job?"),
+    { q: "Can Althéa help with CAF, housing and my titre de séjour?", a: "Yes, with guidance and checklists: CAF housing aid, a guarantor through Visale, opening a bank account, health cover, and renewing or changing your residence permit on time. Decisions stay with the administrations, and complex legal cases are referred to a qualified lawyer.", href: "/settle-in-france" },
+  ],
+  "/pr-in-france": [
+    { q: "Can Indian students get PR in France?", a: "Yes. The usual route is study, then a job-search permit, then a work permit or Talent Passport, then a 10-year resident card after five years of legal residence with B1 French, the civic exam and income at least at minimum wage." },
+    { q: "How long does it take to get PR in France after studies?", a: "Plan on about five years of legal, continuous residence on qualifying permits before the 10-year resident card. French nationality can be requested after two years of residence if you graduated from a French higher education institution after two years of study." },
+    { q: "What salary do I need to stay and work in France after my degree?", a: "To switch from the job-search permit to an employee permit, the job must relate to your studies and pay at least €2,800.53 gross a month. The Talent Passport for qualified employees needs at least €39,582 gross a year in 2026." },
+    { q: "Do I need to speak French for PR in France?", a: "Yes. The 10-year resident card requires French at level B1 and success in the civic exam. Naturalisation also requires proof of sufficient French and the civic exam, plus an interview at the prefecture." },
+    { q: "Can I keep my Indian passport if I become French?", a: "No. India does not allow dual citizenship, so taking French nationality means giving up Indian citizenship. You can then apply for an OCI card to live and work in India without a visa." },
+  ],
 };
 
 /** Questions every student asks about a French city, answered from the France guide. */

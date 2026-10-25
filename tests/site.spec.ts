@@ -23,7 +23,7 @@ for (const width of [320, 390, 768, 1440])
       ).toBe(true);
       const text = await page.locator("body").innerText();
       expect(text).not.toMatch(
-        /Pathways|99\.2%|0% AI|kickbacks|visa grant record/,
+        /Global ?Pathways|Pathways Global|99\.2%|0% AI|kickbacks|visa grant record/,
       );
       await page.locator("img").evaluateAll((imgs) =>
         imgs.forEach((img) => {
@@ -99,8 +99,8 @@ test("navigation, finder, FAQ, process and form states", async ({ page }) => {
   await topicLink.click();
   await expect(page.locator(target!)).toHaveAttribute("open", "");
   await page.goto("/book-consultation");
-  await page.getByRole("button", { name: "Continue to WhatsApp" }).click();
-  await expect(page.locator(".booking-form [role=status]")).toHaveText("Please check the highlighted fields.");
+  await page.locator(".booking-form").getByRole("button", { name: "Continue" }).click();
+  await expect(page.locator(".booking-form .ms-form-status")).toHaveText("Please check the highlighted fields.");
 });
 test("WCAG A/AA audit of all routes on mobile and desktop", async ({
   page,

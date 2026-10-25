@@ -12,7 +12,7 @@ export const metadata = pageMetadata("/", {
     absolute: "Study in France Consultant for Indians | Althéa Consulting",
   },
   description:
-    "Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France.",
+    "Study in France consultant in Paris: Harshita Kohli helps Indian students come to study in France, and helps those already here with internships, jobs and CAF.",
 });
 
 export default function Home() {
@@ -29,7 +29,7 @@ export default function Home() {
       <PageIdentity
         path="/"
         title="Study in France Consultant for Indians | Althéa Consulting"
-        description="Study in France consultant in Paris: Harshita Kohli guides Indian students on universities, Campus France, student visa, housing and jobs in France."
+        description="Study in France consultant in Paris: Harshita Kohli helps Indian students come to study in France, and helps those already here with internships, jobs and CAF."
       />
       {/* The same questions answered visibly in the home FAQ, for answer engines. */}
       <JsonLd data={{

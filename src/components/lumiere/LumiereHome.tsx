@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import ReviewShowcase from "./ReviewShowcase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Briefcase, Command, Compass, GraduationCap, Plane, Sparkles } from "lucide-react";
+import { ArrowUpRight, Briefcase, Check, Command, Compass, GraduationCap, MapPin, Plane, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HomeFinder from "@/components/redesign/HomeFinder";
@@ -14,13 +14,24 @@ import Accordion from "@/components/maison/Accordion";
 import { countries, services, questions } from "@/components/redesign/content";
 import { ScrollWords, JourneyTrack, Chars, type HomeStats } from "@/components/redesign/HorizonMotion";
 import { countryPhoto, paris } from "@/lib/paris";
+import { isComingSoon } from "@/lib/comingSoon";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export type CountryCoverage = Record<string, { institutions: number; courses: number }>;
 
 const serviceLinks = ["/book-consultation", "/universities", "/admissions-process", "/scholarships", "/france/visas", "/settle-in-france", "/first-30-days-france"];
-const journeySteps: [string, string][] = [["Say hello.", "Your goals, your questions, your starting point — in one honest conversation."], ["Find your direction.", "Compare programmes, cities and costs. Build a plan that actually fits."], ["Make your move.", "Applications, documents and timelines, prepared together."], ["Land, then grow.", "Your first 30 days in France, and the career you came for."]];
+const journeySteps: [string, string][] = [["Say hello.", "Your goals, your questions, your starting point — in one free 15-minute call."], ["Find your direction.", "Programmes, cities and costs in France. A plan that actually fits."], ["Make your move.", "Campus France, the visa and your documents, prepared together."], ["Land, then grow.", "Housing, CAF and your residence permit, then the internship and career you came for."]];
+
+/** The two people the site is for: those coming to study in France, and those already living there. */
+const paths = [
+  { id: "coming", kicker: "NOT IN FRANCE YET", icon: Plane, title: "Come study in France.", accent: "We stay with you after you land.",
+    items: ["The right programme and university for your profile and budget", "Campus France, Études en France and your student visa", "Proof of funds, housing and your pre-departure checklist", "Once you arrive: CAF, bank, internship and your first job"],
+    href: "/study-in-france", cta: "Plan my studies in France" },
+  { id: "here", kicker: "ALREADY IN FRANCE", icon: MapPin, title: "Already here?", accent: "Let’s get you hired.",
+    items: ["Internships (stage) and alternance, from search to signed agreement", "French-style CV, LinkedIn and interview practice", "After your degree: job-search permit and switching to a work permit", "Titre de séjour, CAF, bank, health and the road to PR in France"],
+    href: "/in-france", cta: "Get help in France" },
+];
 
 
 export default function LumiereHome({ stats, coverage }: { stats: HomeStats; coverage: CountryCoverage }) {
@@ -71,24 +82,37 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       <div className="lx-hero-stage lx-paris-stage"><Image src={paris("eiffel-autumn-sky").file} alt={paris("eiffel-autumn-sky").alt} fill priority sizes="100vw" /><span className="lx-paris-caption">PARIS, FRANCE · YOUR NEXT CHAPTER</span></div>
       <div className="lx-hero-copy lx-wrap">
         <h1 id="lx-hero-title"><span className="lx-h1-kicker">Study in France consultant · Paris ⇄ India</span><span className="lx-h1-line"><span>Bonjour,</span></span><span className="lx-h1-line"><em>future.</em></span></h1>
-        <p className="lx-hero-lead">Study in France from India with a Paris-based adviser: universities, Campus France, student visa, housing and your first job — guided by someone who was once an international student herself.</p>
+        <p className="lx-hero-lead">Coming to study in France, or already living here? Your adviser in Paris helps with all of it: universities, Campus France and the visa before you fly — then housing, CAF, internships, jobs and your residence permit once you’re here.</p>
         <div className="lx-hero-actions">
-          <Link href="/book-consultation" className="ms-btn ms-btn-gold mx-magnetic" data-cursor="Begin"><span>Plan my move</span><ArrowUpRight size={18} aria-hidden="true" /></Link>
-          <a href="#destinations" className="ms-btn ms-btn-light"><span>Explore 7 destinations</span><Compass size={17} aria-hidden="true" /></a>
+          <Link href="/study-in-france" className="ms-btn ms-btn-gold mx-magnetic" data-cursor="Begin"><span>I want to study in France</span><ArrowUpRight size={18} aria-hidden="true" /></Link>
+          <Link href="/in-france" className="ms-btn ms-btn-light"><span>I already live in France</span><MapPin size={17} aria-hidden="true" /></Link>
         </div>
       </div>
-      <a href="#finder" className="lx-scroll" aria-label="Scroll to the course finder"><span /></a>
+      <a href="#paths" className="lx-scroll" aria-label="Scroll to how we help"><span /></a>
+    </section>
+
+    {/* 1b · Two ways in: coming to France, or already here */}
+    <section className="lx-section lx-paths-section" id="paths" aria-labelledby="lx-paths-title">
+      <div className="lx-wrap">
+        <div className="lx-head"><div><p className="ms-kicker">ONE ADVISER IN PARIS · TWO WAYS IN</p><h2 id="lx-paths-title" className="lx-title">Wherever you are today, <em>France is the plan.</em></h2></div><p className="lx-lead">Study here, then stay and work here. Althéa helps before you arrive and long after — with internships, jobs and every piece of French paperwork.</p></div>
+        <div className="lx-paths">{paths.map(({ id, kicker, icon: Icon, title, accent, items, href, cta }) => <article key={id} className={`lx-path lx-path-${id}`}>
+          <span className="lx-tag"><Icon size={14} aria-hidden="true" />{kicker}</span>
+          <h3>{title} <em>{accent}</em></h3>
+          <ul>{items.map((item) => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>
+          <div className="lx-path-actions"><Link href={href} className="ms-btn ms-btn-gold"><span>{cta}</span><ArrowUpRight size={17} aria-hidden="true" /></Link><Link href="/book-consultation" className="ms-link">Free 15-minute call</Link></div>
+        </article>)}</div>
+      </div>
     </section>
 
     {/* 2 · Words that move */}
-    <div className="lx-ribbon" aria-hidden="true"><div>{Array.from({ length: 2 }).map((_, k) => <span key={k}>Study <i>✦</i> Settle <i>✦</i> Succeed <i>✦</i> Paris <i>✦</i> Lyon <i>✦</i> London <i>✦</i> Toronto <i>✦</i> Dublin <i>✦</i> Berlin <i>✦</i> Sydney <i>✦</i> Boston <i>✦</i> </span>)}</div></div>
+    <div className="lx-ribbon" aria-hidden="true"><div>{Array.from({ length: 2 }).map((_, k) => <span key={k}>Study <i>✦</i> Intern <i>✦</i> Work <i>✦</i> Settle <i>✦</i> Paris <i>✦</i> Lyon <i>✦</i> Toulouse <i>✦</i> Lille <i>✦</i> Bordeaux <i>✦</i> Nantes <i>✦</i> Grenoble <i>✦</i> Nice <i>✦</i> </span>)}</div></div>
 
     {/* 3 · Command-palette search */}
     <section className="lx-section lx-finder" id="finder" aria-labelledby="lx-finder-title">
       <div className="lx-wrap lx-center">
         <p className="ms-kicker">SEARCH THE DIRECTORY</p>
         <h2 id="lx-finder-title" className="lx-title"><Chars text="Find your course" /> <em><Chars text="in seconds." start={16} /></em></h2>
-        <p className="lx-lead">Real course, subject and institution records across seven destinations — not a brochure.</p>
+        <p className="lx-lead">Real course, subject and institution records — France first, with more destinations coming soon. Not a brochure.</p>
       </div>
       <div className="lx-wrap lx-palette">
         <div className="lx-palette-bar" aria-hidden="true"><span><Command size={14} /> Althéa search</span><span className="lx-dots"><i /><i /><i /></span></div>
@@ -125,17 +149,16 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     {/* 5 · Destinations, travelling sideways */}
     <section className="lx-pin" id="destinations" aria-label="Study destinations">
       <div className="lx-wrap lx-pin-head">
-        <div><p className="ms-kicker">THE WORLD IS OPEN</p><h2 className="lx-title">Seven destinations. <em>One plan.</em></h2></div>
+        <div><p className="ms-kicker">WHERE WE SUPPORT YOU</p><h2 className="lx-title">France today. <em>More destinations soon.</em></h2></div>
         <div className="lx-pin-progress" aria-hidden="true"><b>{String(active + 1).padStart(2, "0")}</b><span><i style={{ transform: `scaleX(${(active + 1) / countries.length})` }} /></span><small>{String(countries.length).padStart(2, "0")}</small></div>
       </div>
       <div className="lx-dest-viewport"><div className="lx-dest-track">
-        {countries.map((country, i) => { const photo = paris(countryPhoto[country.slug]); const c = coverage[country.slug]; return <Link className="lx-dest" key={country.slug} href={country.slug === "france" ? "/france" : `/destinations/${country.slug}`} data-cursor="Explore">
+        {countries.map((country, i) => { const photo = paris(countryPhoto[country.slug]); const soon = isComingSoon(country.slug); const inner = <>
           <div className="lx-dest-img"><Image src={photo.file} alt={photo.alt} fill sizes="(max-width:900px) 85vw, 42vw" /></div>
           <span className="lx-dest-index">{String(i + 1).padStart(2, "0")} <span aria-hidden="true">{country.flag}</span></span>
-          <div className="lx-dest-copy"><p>{country.line.replace(/\n/g, " ")}</p><h3>{country.name}</h3>
-          </div>
-          <span className="lx-dest-arrow"><ArrowUpRight size={20} aria-hidden="true" /></span>
-        </Link>; })}
+          <div className="lx-dest-copy">{soon ? <span className="lx-soon">Coming soon</span> : <p>{country.line.replace(/\n/g, " ")}</p>}<h3>{country.name}</h3></div>
+          {!soon && <span className="lx-dest-arrow"><ArrowUpRight size={20} aria-hidden="true" /></span>}
+        </>; return soon ? <div className="lx-dest lx-dest-soon" key={country.slug}>{inner}</div> : <Link className="lx-dest" key={country.slug} href="/france" data-cursor="Explore">{inner}</Link>; })}
         <Link className="lx-dest lx-dest-end" href="/destinations"><p className="ms-kicker">STILL DECIDING?</p><h3>Compare every <em>destination.</em></h3><span className="ms-btn ms-btn-gold"><span>Open the atlas</span><ArrowUpRight size={17} aria-hidden="true" /></span></Link>
       </div></div>
     </section>
@@ -191,7 +214,7 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
         <h2 id="lx-final-title" className="lx-final-title">Your Paris chapter <em>starts with hello.</em></h2>
         <p className="lx-lead">Bring your questions, your ambitions, your what-ifs. We’ll find your first step — together.</p>
         <Link className="mx-orb lx-orb mx-magnetic" href="/book-consultation" data-cursor="Let’s talk"><span>Let’s have a<br />conversation</span><ArrowUpRight size={24} aria-hidden="true" /></Link>
-        <small className="lx-muted">No commitment. Just a personal conversation.</small>
+        <small className="lx-muted">A free 15-minute call. No commitment.</small>
       </div>
     </section>
   </main><Footer showCallout={false} /></div>;

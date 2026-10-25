@@ -14,6 +14,7 @@ import Image from "next/image";
 import { Fragment, type ComponentProps, type ReactNode } from "react";
 import { trailFor } from "@/lib/trail";
 import { coverFor, photoPlace, paris, type ParisSlug } from "@/lib/paris";
+import { comingSoonFor } from "@/lib/comingSoon";
 
 /** The shell for every inner page: cinematic cover, page body, closing invitation. */
 export default function Page({
@@ -57,6 +58,7 @@ export default function Page({
   const pageImage = cover.file;
   const imageAlt = cover.alt;
   const heading = accent ? `${title} ${accent}` : title;
+  const soon = path ? comingSoonFor(path) : undefined;
   const trail = path ? trailFor(path, heading) : [{ path: "/", name: "Home" }, { path: "", name: heading }];
   return (
     <>
@@ -84,7 +86,13 @@ export default function Page({
           </div>
           <div className="ms-cover-cue" aria-hidden="true"><span>SCROLL</span><i /></div>
         </header>
-        <div className="ms-page-body">{children}
+        <div className="ms-page-body">
+          {soon && <aside className="ms-soon" aria-label="Coming soon">
+            <span className="ms-soon-tag">Coming soon</span>
+            <p><strong>Althéa’s personal support for {soon} is coming soon.</strong> Today we help students coming to study in France, and everyone already living in France with internships, jobs and paperwork. This guide stays open for your research.</p>
+            <Link href="/study-in-france">Study in France</Link>
+          </aside>}
+          {children}
           {faqs?.length ? <Section tone="paper" kicker="QUICK ANSWERS" title="Your questions," accent="answered." align="split">
             <Accordion items={faqs.map((f) => ({ q: f.q, a: <><p>{f.a}</p>{f.href && <TextLink href={f.href}>Read the full chapter</TextLink>}</> }))} />
           </Section> : null}

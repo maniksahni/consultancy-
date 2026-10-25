@@ -8,16 +8,18 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import { paris } from "@/lib/paris";
 
-const primary = [["Destinations", "/destinations"], ["Universities", "/universities"], ["Our support", "/services"], ["Jobs & Careers", "/jobs"], ["About", "/about"]];
+const primary = [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["Jobs & internships", "/jobs"], ["Our support", "/services"], ["About", "/about"]];
 const menu = [
   { label: "Home", href: "/", image: paris("eiffel-autumn-sky").file, note: "Go further. Become more." },
   { label: "Study in France", href: "/study-in-france", image: paris("bnf-salle-ovale").file, note: "Programmes, routes and budgets" },
-  { label: "Destinations", href: "/destinations", image: paris("paris-night-aerial").file, note: "Seven countries, one plan" },
+  { label: "Already in France", href: "/in-france", image: paris("metro-platform").file, note: "Internships, jobs, CAF and your titre de séjour" },
+  { label: "PR in France", href: "/pr-in-france", image: paris("pont-alexandre-night").file, note: "Study, work, then a 10-year card" },
   { label: "Universities & courses", href: "/universities", image: paris("rooftops-eiffel").file, note: "Search the live directory" },
   { label: "Programmes & fees", href: "/programmes", image: paris("louvre-night").file, note: "Published tuition and timing" },
   { label: "Our support", href: "/services", image: paris("cafe-palais-royal").file, note: "Study, settle and succeed" },
   { label: "Settle in France", href: "/settle-in-france", image: paris("paris-window").file, note: "Your first address, your first month" },
   { label: "Jobs & Careers", href: "/jobs", image: paris("la-defense-skyline").file, note: "Work rights and opportunities" },
+  { label: "Destinations", href: "/destinations", image: paris("paris-night-aerial").file, note: "France today · six more coming soon" },
   { label: "The journal", href: "/knowledge", image: paris("student-cafe").file, note: "Reviewed guidance, seven countries" },
   { label: "About Althéa", href: "/about", image: paris("ile-de-la-cite").file, note: "Founded in Paris by Harshita Kohli" },
 ];

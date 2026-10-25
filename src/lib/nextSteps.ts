@@ -8,11 +8,13 @@ export type NextStep = { href: string; title: string; see: string; kind: string 
 /** What each main page answers, in one line, so a reader knows why to open it. */
 const about: Record<string, [kind: string, see: string]> = {
   "/study-in-france": ["FRANCE", "The full France guide: degrees, fees, Campus France, visa, housing and work, chapter by chapter."],
+  "/in-france": ["IN FRANCE", "Already in France: internships, alternance, your first job, CAF, housing and your titre de séjour."],
+  "/pr-in-france": ["PR", "From student to resident: job-search permit, work permit, the 10-year card and French nationality."],
   "/settle-in-france": ["FRANCE", "Housing, residence permit, bank, health cover and daily life once you land in France."],
   "/career-support": ["CAREERS", "How we help with CVs, interviews, internships and your first job in France."],
   "/jobs": ["JOBS", "Thousands of real, open jobs, internships and alternance, with the French words for each job."],
   "/first-30-days-france": ["FRANCE", "Your first month in France, day by day: permit validation, bank, SIM, CAF and transport."],
-  "/destinations": ["DESTINATIONS", "All seven study countries side by side, each with a complete guide."],
+  "/destinations": ["DESTINATIONS", "France today, with six more countries coming soon: each has a complete research guide."],
   "/compare": ["TOOL", "Compare countries on fees, living costs, visa rules and post-study work, in one table."],
   "/knowledge": ["TOOL", "Search every study-abroad answer by topic, plus a budget planner for your city."],
   "/universities": ["DIRECTORY", "Search real universities and courses by subject, country and city."],

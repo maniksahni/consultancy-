@@ -12,6 +12,8 @@ export type Crumb = { name: string; path: string };
 const names: Record<string, string> = {
   "/": "Home",
   "/study-in-france": "Study in France",
+  "/in-france": "Already in France",
+  "/pr-in-france": "PR in France",
   "/settle-in-france": "Settle in France",
   "/career-support": "Career support in France",
   "/jobs": "Jobs & careers",

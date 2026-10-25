@@ -16,6 +16,8 @@ const covers: Record<string, ParisSlug> = {
   "/study-in-france": "bnf-salle-ovale",
   "/france": "eiffel-sun-rays",
   "/settle-in-france": "paris-window",
+  "/in-france": "metro-platform",
+  "/pr-in-france": "pont-alexandre-night",
   "/career-support": "la-defense-skyline",
   "/jobs": "la-defense-walk",
   "/first-30-days-france": "tgv-arrival",
