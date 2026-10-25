@@ -31,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "study-in-france",
     "in-france",
     "pr-in-france",
+    "partnerships",
     "settle-in-france",
     "career-support",
     "jobs",

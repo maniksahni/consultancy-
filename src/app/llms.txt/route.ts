@@ -29,6 +29,7 @@ export function GET() {
     link("Career support in France", "/career-support", "French-style CV, LinkedIn, interviews, internships and alternance"),
     link("Book a free 15-minute consultation", "/book-consultation", `free Google Meet call with ${brand.person}, booked online with the Meet link emailed instantly`),
     link("About", "/about", `${brand.name} and ${brand.person}`),
+    link("Partnerships", "/partnerships", "for universities, employers and student-service providers proposing a partnership (partnership enquiries only)"),
     "",
     "## The complete France guide",
     ...franceGuide.chapters.map(c => link(c.label, c.path, c.summary)),

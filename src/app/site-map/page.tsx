@@ -42,7 +42,7 @@ const groups: { title: string; accent: string; items: Item[] }[] = [
   { title: "From India:", accent: "every destination.", items: [{ href: "/from-india", title: "From India overview" }, ...indiaGuide.chapters.map((c) => ({ href: c.path, title: c.label }))] },
   { title: "Jobs", accent: "and careers.", items: [page("/jobs", "Live jobs and internships with French words for each job"), page("/career-support", "CV, interviews and internships")] },
   { title: "The journal.", accent: "Short reads.", items: [page("/insights"), ...articles.map((a) => ({ href: `/insights/${a.slug}`, title: a.title.replace(/\.$/, "") }))] },
-  { title: "About", accent: "Althéa.", items: [page("/about"), page("/services"), page("/mentorship-model"), page("/reviews"), page("/outcomes"), page("/acknowledgements"), page("/privacy"), page("/terms")] },
+  { title: "About", accent: "Althéa.", items: [page("/about"), page("/partnerships", "For universities, employers and partners"), page("/services"), page("/mentorship-model"), page("/reviews"), page("/outcomes"), page("/acknowledgements"), page("/privacy"), page("/terms")] },
 ];
 
 export default function SiteMap() {
