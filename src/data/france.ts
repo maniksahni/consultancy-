@@ -185,7 +185,7 @@ export const articles = [
     title: "Plan for a life in France, beyond tuition.",
     category: "STUDENT LIFE",
     intro:
-      "A useful budget includes the ordinary costs of arriving and living.",
+      "Plan a France student budget beyond tuition: housing deposits, insurance, transport, food and a contingency for the first months.",
     paragraphs: [
       "Make separate lines for tuition, housing, deposits, transport, food, insurance and initial travel. Use current university and accommodation information for the city and campus you are considering.",
       "Do not treat an unconfirmed scholarship as available funding. Check eligibility and deadlines with the awarding body, and build a plan that explains how you will cover the costs.",
@@ -199,7 +199,7 @@ export const articles = [
     title: "Campus France: find the path that applies to you.",
     category: "FRANCE GUIDE",
     intro:
-      "Your country of residence and chosen programme shape the procedure.",
+      "Find which Campus France route applies to you, Études en France, DAP or a direct application, from your residence, nationality and study level.",
     paragraphs: [
       "Études en France supports application procedures for applicants in participating countries. Your local Campus France office and the institution explain the applicable route and calendar.",
       "For applicants resident in India, start with Campus France India's application guidance. If you already have an admission offer, confirm the next steps with the local office rather than assuming the process is complete.",

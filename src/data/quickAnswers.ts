@@ -58,6 +58,12 @@ export const quickAnswers: Record<string, QuickAnswer[]> = {
     const guide = countryGuides.find((g) => g.country === country)!;
     return from(country, "costs", `How much does it cost to study in ${guide.prose}?`);
   }).concat(france("costs", "How much does it cost to study in France?")),
+  "/book-consultation": [
+    { q: "Is the first consultation with Althéa Consulting free?", a: "Yes. The first call with Harshita Kohli is a free 15-minute Google Meet call with no commitment. If you want further support afterwards, its scope and any fees are agreed with you separately before it starts." },
+    { q: "How do I book a call with Harshita Kohli?", a: "Fill in the three short steps on this page: your contact details, your study profile, then a free time. The call is booked straight into her calendar and the Google Meet link is emailed to you immediately, with a calendar invitation." },
+    { q: "What should I prepare before the consultation?", a: "Your current status, education background (degree, grades, gaps), work experience, the problems you are facing and your top three questions. Keep mark sheets, your CV, test scores, a rough budget and any shortlist handy." },
+    { q: "Can I reschedule or cancel my consultation?", a: "Yes. Reply to your confirmation email or message Althéa on WhatsApp with your booking number, and a new time will be arranged." },
+  ],
 };
 
 /** Questions every student asks about a French city, answered from the France guide. */

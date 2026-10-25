@@ -1,4 +1,5 @@
 import JsonLd from "@/components/seo/JsonLd";
+import { sourceModified } from "@/lib/sourceModified";
 import { absoluteUrl, siteUrl } from "@/lib/seo";
 import { isoDate, pageName, trailFor } from "@/lib/trail";
 
@@ -21,6 +22,8 @@ export default function PageIdentity({ path, title, description, image, imageAlt
 }) {
   const url = absoluteUrl(path);
   const date = isoDate(modified);
+  // Pages without a fact-check date still say when they last changed, without claiming a review.
+  const updated = date ? undefined : sourceModified(path);
   const trail = trailFor(path, title);
   return <JsonLd data={{
     "@context": "https://schema.org",
@@ -35,7 +38,7 @@ export default function PageIdentity({ path, title, description, image, imageAlt
         ...(image ? { primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl(image), ...(imageAlt ? { caption: imageAlt } : {}) } } : {}),
         // The heading and the direct answer under it are written to be read aloud or quoted as-is.
         speakable: { "@type": "SpeakableSpecification", cssSelector: ["h1", ".ms-cover-intro"] },
-        ...(date ? { dateModified: date, lastReviewed: date, reviewedBy: { "@id": `${siteUrl}/#adviser` } } : {}),
+        ...(date ? { dateModified: date, lastReviewed: date, reviewedBy: { "@id": `${siteUrl}/#adviser` } } : updated ? { dateModified: updated } : {}),
         ...(path === "/about" ? { mainEntity: { "@id": `${siteUrl}/#organization` } } : {}),
         ...(items?.length ? { mainEntity: { "@type": "ItemList", numberOfItems: items.length,
           itemListElement: items.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, url: absoluteUrl(item.path) })) } } : {}),

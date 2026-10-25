@@ -25,7 +25,7 @@ export function GET() {
     link("Study in France from India", "/study-in-france", "course and university shortlisting, Campus France route, requirements and budget planning"),
     link("Settle in France", "/settle-in-france", "arrival, housing, bank, insurance and student-life orientation"),
     link("Career support in France", "/career-support", "French-style CV, LinkedIn, interviews, internships and alternance"),
-    link("Book a consultation", "/book-consultation", `speak with ${brand.person}`),
+    link("Book a free 15-minute consultation", "/book-consultation", `free Google Meet call with ${brand.person}, booked online with the Meet link emailed instantly`),
     link("About", "/about", `${brand.name} and ${brand.person}`),
     "",
     "## The complete France guide",
