@@ -63,17 +63,15 @@ export const bookingEndpoint = "https://script.google.com/macros/s/…/exec";
 
 Then build and deploy the site. Live slots, bookings, emails and the admin page now work.
 
-## 7. Make student emails reach Gmail (10 min, needed)
+## 7. Make student emails reach Gmail (5 min, needed)
 
-Google can't sign email for altheaconsulting.in from a personal Google account, so Gmail blocks the branded emails ("Message blocked"). Hostinger inboxes still get them. Resend (free, 3,000 emails a month) signs them for the domain:
+Google can't sign email for altheaconsulting.in from a personal Google account, so Gmail blocks those emails ("Message blocked"). The script sends through Hostinger instead, which signs for the domain and keeps a copy in Sent:
 
-1. Sign up at https://resend.com. **Domains → Add domain** → `altheaconsulting.in`, region **Ireland (eu-west-1)**.
-2. In **Hostinger → DNS records**, add the records Resend shows (a TXT `resend._domainkey`, plus an MX and a TXT on `send`). Leave the existing `@` SPF and MX records alone. Click **Verify** in Resend.
-3. Resend → **API Keys → Create API key** (Sending access). Copy it.
-4. Apps Script → **⚙ Project Settings → Script Properties → Add property**: `RESEND_API_KEY` = the key.
-5. Paste the new `appsscript.json` (it adds permission to call Resend), run **previewEmails** once and allow the new permission, then publish a new version (below).
+1. **Hostinger → Emails → altheaconsulting.in → Agentic mail → API access → Set up**: create a token for harshita@altheaconsulting.in and copy it (it is shown once).
+2. Apps Script → **⚙ Project Settings → Script Properties → Add property**: `HOSTINGER_MAIL_TOKEN` = the token.
+3. Paste the new `appsscript.json` (it adds permission to call Hostinger), run **previewEmails** once and allow the new permission, then publish a new version (below).
 
-If Resend ever fails, emails fall back to Google automatically.
+If Hostinger ever fails, emails fall back to Google automatically.
 
 ## Everyday use
 

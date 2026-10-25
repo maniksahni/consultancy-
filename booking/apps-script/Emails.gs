@@ -103,19 +103,35 @@ function agendaBlock_() {
 }
 
 /**
- * Sends through Resend when RESEND_API_KEY is set (DKIM-signed for altheaconsulting.in, so Gmail accepts it).
- * MailApp is the fallback: it works for Hostinger inboxes, but Gmail blocks it because Google cannot sign mail for the domain.
+ * Sends from the Hostinger mailbox through the Hostinger Mail API when HOSTINGER_MAIL_TOKEN is set: Hostinger signs
+ * mail for altheaconsulting.in, so Gmail accepts it, and a copy lands in Sent. MailApp is the fallback: it reaches
+ * Hostinger inboxes, but Gmail blocks it because Google cannot sign mail for the domain.
  */
 function send_(to, subject, html, text, replyTo) {
   var s = settings_();
-  var key = PropertiesService.getScriptProperties().getProperty('RESEND_API_KEY');
-  if (key) {
-    var res = UrlFetchApp.fetch('https://api.resend.com/emails', {
-      method: 'post', contentType: 'application/json', muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + key },
-      payload: JSON.stringify({ from: s.brandName + ' <' + s.ownerEmail + '>', to: [to], subject: subject, html: html, text: text, reply_to: replyTo || s.ownerEmail })
-    });
-    if (res.getResponseCode() < 300) return;
-    console.error('Resend ' + res.getResponseCode() + ': ' + res.getContentText());
+  var props = PropertiesService.getScriptProperties();
+  var token = props.getProperty('HOSTINGER_MAIL_TOKEN');
+  if (token) {
+    try {
+      var call = function (method, path, body) {
+        var res = UrlFetchApp.fetch('https://api.mail.hostinger.com/api/v1' + path, {
+          method: method, contentType: 'application/json', muteHttpExceptions: true, headers: { Authorization: 'Bearer ' + token },
+          payload: body ? JSON.stringify(body) : undefined
+        });
+        if (res.getResponseCode() >= 300) throw new Error('Hostinger Mail ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 300));
+        return res.getContentText() ? JSON.parse(res.getContentText()) : {};
+      };
+      var mailbox = props.getProperty('HOSTINGER_MAILBOX_ID');
+      if (!mailbox) {
+        var boxes = call('get', '/me').data.mailboxes;
+        mailbox = (boxes.filter(function (m) { return m.address.toLowerCase() === s.ownerEmail.toLowerCase(); })[0] || boxes[0]).resourceId;
+        props.setProperty('HOSTINGER_MAILBOX_ID', mailbox);
+      }
+      call('post', '/mailboxes/' + mailbox + '/send', { to: [to], displayName: s.brandName, subject: subject, html: html, text: text });
+      return;
+    } catch (err) {
+      console.error(err);
+    }
   }
   MailApp.sendEmail({ to: to, subject: subject, htmlBody: html, body: text, name: s.brandName, replyTo: replyTo || s.ownerEmail });
 }
