@@ -67,7 +67,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
   const words = useMemo(() => (job ? wordsForJob(job.title, text || job.summary, job.category) : null), [job, text]);
   useEffect(() => { ref.current?.querySelector(".ms-jobdrawer-body")?.scrollTo({ top: 0 }); }, [tab, job]);
 
-  const help = job ? `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(`Hello Harshita, I found this job on the Althéa website and would like help applying:\n${job.title} — ${job.company} (${job.location})\n${job.url}`)}` : "#";
+  const help = job ? `/book-consultation?careerRole=${encodeURIComponent(job.title)}` : "/book-consultation";
 
   return <dialog ref={ref} className="ms-jobdrawer" aria-labelledby="ms-jobdrawer-title" onClose={onClose} data-lenis-prevent
     onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -128,7 +128,7 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
       <footer className="ms-jobdrawer-foot">
         <a className="ms-btn ms-btn-gold" href={job.url} target="_blank" rel="noopener noreferrer nofollow"><span>Apply on {job.source}</span><ArrowUpRight size={16} aria-hidden="true" /></a>
         {tab !== "ats" ? <button type="button" className="ms-livejob-help" onClick={() => onTab("ats")}><ScanSearch size={15} aria-hidden="true" /><span className="ms-only-wide">Need help with your CV?</span><span className="ms-only-narrow">CV help</span></button>
-          : <a className="ms-livejob-help" href={help} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Get help applying</a>}
+          : <Link className="ms-livejob-help" href={help}><CalendarCheck size={15} aria-hidden="true" />Get help applying</Link>}
       </footer>
     </div>}
   </dialog>;

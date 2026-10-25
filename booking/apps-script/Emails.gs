@@ -58,8 +58,7 @@ function layout_(preheader, inner) {
     + '<tr><td style="background:' + BRAND.card + ';padding:30px;border-radius:0 0 22px 22px;font:400 15px/1.65 Helvetica,Arial,sans-serif;color:' + BRAND.text + '">' + inner
     + '<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:28px;border-top:1px solid ' + BRAND.line + ';padding-top:18px;width:100%"><tr><td style="font:400 14px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.muted + '">'
     + '<strong style="color:' + BRAND.text + ';font-family:Georgia,serif;font-size:16px">' + esc_(s.ownerName) + '</strong><br>' + esc_(s.ownerRole) + ' · Paris, France<br>'
-    + '<a href="' + s.siteUrl + '" style="color:' + BRAND.lilac + ';text-decoration:none">altheaconsulting.in</a> · '
-    + '<a href="https://wa.me/' + s.whatsapp + '" style="color:' + BRAND.lilac + ';text-decoration:none">WhatsApp</a>'
+    + '<a href="' + s.siteUrl + '" style="color:' + BRAND.lilac + ';text-decoration:none">altheaconsulting.in</a>'
     + '</td></tr></table></td></tr>'
     + '<tr><td style="padding:16px 8px;text-align:center;font:400 12px/1.5 Helvetica,Arial,sans-serif;color:' + BRAND.muted + '">'
     + esc_(s.brandName) + ' · Independent study, settling and career guidance from Paris.</td></tr>'
@@ -148,10 +147,10 @@ function sendClientConfirmation_(b) {
     + prepBlock_(false)
     + agendaBlock_()
     + '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Need to change the time?</h2>'
-    + '<p style="margin:0">Reply to this email or <a href="https://wa.me/' + s.whatsapp + '?text=' + encodeURIComponent('Bonjour Althéa, I need to reschedule booking ' + b.id + '.') + '" style="color:' + BRAND.lilac + '">message us on WhatsApp</a> with your booking number <strong>' + esc_(b.id) + '</strong>.</p>';
+    + '<p style="margin:0">Reply to this email with your booking number <strong>' + esc_(b.id) + '</strong> and a few times that suit you.</p>';
   var text = 'Bonjour ' + b.firstName + ', your 15-minute call with ' + s.ownerName + ' is booked.\n\n' + w.day + '\n' + w.time + ' (' + w.paris + ')\nGoogle Meet: ' + b.meetLink + '\nBooking: ' + b.id + '\n\n'
     + 'Before we meet, please be ready with:\n' + PREP_ITEMS.map(function (p, i) { return (i + 1) + '. ' + p[0] + ': ' + p[1]; }).join('\n')
-    + '\n\nKeep handy: mark sheets, CV, test scores, a rough budget and your shortlist.\n\nTo reschedule, reply to this email or message us on WhatsApp: https://wa.me/' + s.whatsapp;
+    + '\n\nKeep handy: mark sheets, CV, test scores, a rough budget and your shortlist.\n\nTo reschedule, reply to this email with your booking number.';
   send_(b.email, 'Your call with ' + s.ownerName + ' is booked · ' + w.short, layout_('Your 15-minute call is confirmed. Join with Google Meet.', inner), text);
 }
 
@@ -160,8 +159,10 @@ function sendOwnerNotification_(b) {
   var paris = fmt_(start, s.timeZone, 'EEE d MMM, HH:mm');
   var clientTime = fmt_(start, b.timeZone, 'HH:mm z');
   var digits = String(b.phone).replace(/\D/g, '');
-  var rows = [['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination], ['Level', b.level], ['Intake', b.intake], ['Current status', b.currentStatus],
-    ['Education', b.background], ['Experience', b.experience || '—'], ['Challenges', b.challenges], ['Wants to explore', b.message], ['Found us via', b.source || '—']];
+  // Only what the student filled in; the form asks for the help needed and where they are now.
+  var rows = [['Help needed', b.message], ['Current status', b.currentStatus], ['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination],
+    ['Level', b.level], ['Intake', b.intake], ['Education', b.background], ['Experience', b.experience], ['Challenges', b.challenges], ['Found us via', b.source]]
+    .filter(function (r) { return r[1]; });
   var inner = '<h1 style="margin:0 0 6px;font:600 28px/1.15 Georgia,serif;color:' + BRAND.text + '">New booking: ' + esc_(b.name) + '</h1>'
     + '<p style="margin:0;color:' + BRAND.muted + '">Booked on altheaconsulting.in. The Meet invitation is already in your Google Calendar.</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:18px 0 6px;border-radius:16px;background:#f4f0ff;border:1px solid #e2dafe"><tr><td style="padding:18px 20px">'
@@ -188,7 +189,7 @@ function sendReminder_(b, which) {
     + meetingCard_(b, w)
     + '<div style="margin:14px 0 4px">' + button_(b.meetLink, 'Join Google Meet') + '</div>'
     + prepBlock_(true)
-    + '<p style="margin:18px 0 0;color:' + BRAND.muted + '">Join from a quiet place with a stable connection. Can\'t make it? <a href="https://wa.me/' + s.whatsapp + '?text=' + encodeURIComponent('Bonjour Althéa, I need to reschedule booking ' + b.id + '.') + '" style="color:' + BRAND.lilac + '">Tell us on WhatsApp</a>.</p>';
+    + '<p style="margin:18px 0 0;color:' + BRAND.muted + '">Join from a quiet place with a stable connection. Can\'t make it? Reply to this email and we will find a new time.</p>';
   var text = title + '\n' + w.day + ', ' + w.time + ' (' + w.paris + ')\nGoogle Meet: ' + b.meetLink;
   send_(b.email, (which === 'day' ? 'Tomorrow: ' : 'In 1 hour: ') + 'your call with ' + s.ownerName + ' · ' + w.short, layout_(title, inner), text);
 }
@@ -204,7 +205,7 @@ function sendFeedbackRequest_(b) {
     + '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 8px"><tr>' + stars + '</tr></table>'
     + '<div style="margin:16px 0 0">' + button_(base, 'Tell us about your meeting') + '</div>'
     + '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Your next steps</h2>'
-    + '<p style="margin:0">Keep your notes from today handy. If you would like Althéa to support your application, visa or move to France, simply reply to this email or <a href="https://wa.me/' + s.whatsapp + '" style="color:' + BRAND.lilac + '">message us on WhatsApp</a>.</p>';
+    + '<p style="margin:0">Keep your notes from today handy. If you would like Althéa to support your application, visa or move to France, simply reply to this email.</p>';
   var text = 'Merci ' + b.firstName + '! How was your call with ' + s.ownerName + '? Rate it in ten seconds: ' + base;
   send_(b.email, 'How was your call with ' + s.ownerName + '?', layout_('Rate your call in ten seconds.', inner), text);
 }

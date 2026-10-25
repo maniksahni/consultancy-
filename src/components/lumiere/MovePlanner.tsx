@@ -74,7 +74,6 @@ export default function MovePlanner() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
-  const whatsapp = intake ? `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(`Hello Harshita, I'm planning to study in ${country.name} for the ${intake.label} intake. I've done ${completed} of ${steps.length} steps on the Althéa planner — can you check my timeline?`)}` : "#";
 
   return <section className="lx-section lx-planner" id="planner" aria-labelledby="lx-planner-title">
     <div className="lx-wrap">
@@ -104,7 +103,7 @@ export default function MovePlanner() {
           <dl className="lx-planner-money">{country.money.map((m) => <div key={m.label}><dt>{m.label}</dt><dd>{m.value}</dd></div>)}</dl>
           <div className="lx-planner-actions">
             <button type="button" className="ms-btn ms-btn-gold" onClick={downloadCalendar} disabled={!intake}><span>Add all dates to my calendar</span><CalendarPlus size={17} aria-hidden="true" /></button>
-            <a className="lx-planner-help" href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Ask Harshita to check my timeline</a>
+            <Link className="lx-planner-help" href="/book-consultation"><MessageCircle size={15} aria-hidden="true" />Ask Harshita to check my timeline</Link>
           </div>
         </aside>
 

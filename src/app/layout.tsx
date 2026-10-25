@@ -117,10 +117,9 @@ export default function RootLayout({
                 } })),
               },
               ...(brand.email ? { email: brand.email } : {}),
-              ...(brand.whatsappNumber || brand.email ? { contactPoint: {
+              ...(brand.email ? { contactPoint: {
                 "@type": "ContactPoint",
-                ...(brand.whatsappNumber ? { telephone: `+${brand.whatsappNumber}` } : {}),
-                ...(brand.email ? { email: brand.email } : {}),
+                email: brand.email,
                 contactType: "customer support",
               } } : {}),
               description: "France-based practical support for settling, student life and career readiness, with independent study guidance.",

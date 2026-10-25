@@ -36,9 +36,7 @@ export default function AtsChecker({ title, company, url, description }: Props) 
     }
   };
 
-  const whatsapp = `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(
-    `Hello Harshita, I checked my CV on the Althéa ATS checker for this job and ${result ? `scored ${result.score}/100` : "need help"}:\n${title} — ${company}\n${url}\nCan we book a CV session?`,
-  )}`;
+  const book = `/book-consultation?careerRole=${encodeURIComponent(title)}`;
 
   return <div className="ms-ats">
     {!result && <>
@@ -75,8 +73,7 @@ export default function AtsChecker({ title, company, url, description }: Props) 
       {!result.pass && <div className="ms-ats-cta">
         <p><b>Let’s book an appointment with {brand.person.split(" ")[0]}.</b> In one session we rewrite your CV for recruiters and for this exact role.</p>
         <div className="ms-ats-cta-actions">
-          <Link className="ms-btn ms-btn-gold" href="/book-consultation"><span>Book an appointment with {brand.person.split(" ")[0]}</span><CalendarCheck size={16} aria-hidden="true" /></Link>
-          <a className="ms-ats-wa" href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Send my score on WhatsApp</a>
+          <Link className="ms-btn ms-btn-gold" href={book}><span>Book an appointment with {brand.person.split(" ")[0]}</span><CalendarCheck size={16} aria-hidden="true" /></Link>
         </div>
       </div>}
 
@@ -96,7 +93,7 @@ export default function AtsChecker({ title, company, url, description }: Props) 
 
       <div className="ms-ats-again">
         <button type="button" className="ms-btn ms-btn-ghost" onClick={() => { setResult(null); setTimeout(() => input.current?.click(), 0); }}><span>Check another version</span><Upload size={15} aria-hidden="true" /></button>
-        {result.pass && <a className="ms-ats-wa" href={whatsapp} target="_blank" rel="noopener noreferrer"><MessageCircle size={15} aria-hidden="true" />Ask {brand.person.split(" ")[0]} for a final review</a>}
+        {result.pass && <Link className="ms-ats-wa" href={book}><CalendarCheck size={15} aria-hidden="true" />Ask {brand.person.split(" ")[0]} for a final review</Link>}
       </div>
       <p className="ms-ats-privacy">An estimate based on common tracking-system rules — every company’s software differs. Your file was not uploaded.</p>
     </div>}

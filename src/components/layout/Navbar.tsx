@@ -80,7 +80,6 @@ export default function Navbar(_props: { appearance?: "light" | "dark" }) {
       </div>
       <div className="ms-menu-foot">
         <a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a>
-        <a href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noreferrer"><MessageCircle size={15} aria-hidden="true" />WhatsApp +33 7 55 74 90 29</a>
         <span><MapPin size={15} aria-hidden="true" />{brand.location}</span>
         <Link className="ms-btn ms-btn-gold" href="/book-consultation" onClick={() => setOpen(false)}><span>Start a conversation</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
       </div>

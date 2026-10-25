@@ -43,6 +43,8 @@ export const referralSources = ["Google Search", "Bing or another search engine"
 export const currentStatuses = ["In Class 11 or 12", "Bachelor's student", "Recent graduate, not yet working", "Working professional", "Master's student", "Gap year / career break", "Already abroad"] as const;
 export const studyLevels = ["Bachelor's", "Master's", "MBA", "PhD", "Diploma / short course", "Not sure yet"] as const;
 export const intakes = ["2026", "Jan 2027", "Sept 2027", "2028 or later", "Not sure yet"] as const;
+/** What a free call can help with; the booking form asks the visitor to tick at least one. */
+export const assistanceOptions = ["CV review", "Career guidance", "Interview preparation"] as const;
 
 export const enquirySchema = z.object({
   fullName: field("fullName", true),
@@ -62,17 +64,20 @@ export const enquirySchema = z.object({
 });
 export type Enquiry = z.output<typeof enquirySchema>;
 
-/** The booking form asks for more: a WhatsApp number and the preparation profile. */
+/** The booking form asks for a WhatsApp number, where the visitor is now and the help they need (sent as the message). */
 export const bookingSchema = enquirySchema.extend({
   phone: field("phone", true),
   currentStatus: field("currentStatus", true),
-  background: field("background", true),
-  challenges: field("challenges", true),
+  message: z.preprocess(value => sanitizeEnquiryValue(value, enquiryLimits.message),
+    z.string().min(1, "Choose the help you need: CV review, career guidance or interview preparation.")),
 });
 export type BookingDetails = z.output<typeof bookingSchema>;
 
-/** Pure URL construction: no persistence, network calls, or logging. */
-export function buildConsultationWhatsAppUrl(input: Partial<Enquiry> & Pick<Enquiry, "fullName" | "email" | "message">, bookedTime?: string): string {
+/**
+ * Pure mailto construction for when the calendar cannot be reached: the visitor's email app opens with
+ * their details addressed to Althéa. No persistence, network calls, or logging.
+ */
+export function buildConsultationEmailUrl(input: Partial<Enquiry> & Pick<Enquiry, "fullName" | "email" | "message">, bookedTime?: string): string {
   const data = enquirySchema.parse(input);
   const entries = [
     ["Name", data.fullName],
@@ -86,16 +91,17 @@ export function buildConsultationWhatsAppUrl(input: Partial<Enquiry> & Pick<Enqu
     ["Academic background", data.background],
     ["Work experience", data.experience],
     ["Challenges", data.challenges],
-    ["I'd like to explore", data.message],
+    ["Help I need", data.message],
     ["Preferred time & time zone", data.preferredTime],
     ["How I found Althéa", data.referralSource || ""],
   ].filter(([, value]) => value);
-  const prefix = `https://wa.me/${brand.whatsappNumber}?text=`;
-  const url = () => new URL(prefix + encodeURIComponent([
+  const subject = bookedTime ? `Booked consultation · ${data.fullName}` : `Consultation request · ${data.fullName}`;
+  const url = () => `mailto:${brand.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent([
     bookedTime ? `Bonjour ${brand.shortName}, I've booked a consultation.` : `Bonjour ${brand.shortName}, I'd like to book a consultation.`,
+    "",
     ...entries.map(([label, value]) => `${label}: ${value}`),
-  ].join("\n"))).href;
-  // Bound encoded bytes, including emoji and non-Latin scripts, preserving each nonempty line.
+  ].join("\n"))}`;
+  // Bound the encoded length (some mail apps truncate long links), shortening the longest answer first.
   while (url().length > 1800) {
     const entry = entries.filter(([label, value]) => label !== "Booked call" && Array.from(value).length > 1)
       .sort((a, b) => encodeURIComponent(b[1]).length - encodeURIComponent(a[1]).length)[0];

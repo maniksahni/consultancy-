@@ -26,7 +26,6 @@ export default function FloatingWhatsApp() {
       <p className="ms-float-title">What’s on <em>your mind?</em></p>
       <p>Tell {brand.person} a little about your plans. We’ll help you find a place to start.</p>
       <Link className="ms-btn ms-btn-gold" href="/book-consultation" onClick={() => setOpen(false)}><span>Start a conversation</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
-      <a href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noreferrer"><MessageCircle size={15} aria-hidden="true" />WhatsApp</a>
       <a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a>
     </div>}
     <button type="button" className="ms-float-btn" tabIndex={visible || open ? 0 : -1} aria-expanded={open} aria-label={open ? "Close contact options" : "Talk to Althéa"} onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <MessageCircle size={20} />}</button>

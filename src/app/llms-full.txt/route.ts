@@ -57,7 +57,7 @@ export function GET() {
     "## Contact",
     `- Book a consultation: ${siteUrl}/book-consultation`,
     `- Email: ${brand.email}`,
-    `- WhatsApp: +${brand.whatsappNumber}`,
+    `- Book a free 15-minute call: ${siteUrl}/book-consultation`,
     "",
   ].join("\n");
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });

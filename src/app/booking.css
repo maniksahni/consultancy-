@@ -125,3 +125,13 @@
 .fb-scale { display:block; max-width:none; margin:10px 0 0; font-size:13.5px; }
 .fb-scale strong { color:var(--ms-text); }
 .adm-hour input { min-width:0; }
+/* "What help do you need?": tick one or more. */
+.bk-choices { border:0; margin:0; padding:0; min-width:0; }
+.bk-choices legend { padding:0; margin-bottom:8px; font:600 13px/1.3 var(--ms-sans); color:var(--ms-text); }
+.bk-choices > div { display:flex; flex-wrap:wrap; gap:10px; }
+.bk-choice { position:relative; display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border:1px solid var(--ms-line); border-radius:999px; background:var(--ms-paper); color:var(--ms-text); font:500 14.5px/1.2 var(--ms-sans); cursor:pointer; }
+.bk-choice input { position:absolute; opacity:0; inset:0; margin:0; cursor:pointer; }
+.bk-choice:has(input:checked) { border-color:#7fe0b0; background:#7fe0b01a; color:#c9f3df; }
+.bk-choice:has(input:focus-visible) { outline:2px solid var(--lx-violet); outline-offset:2px; }
+.bk-choice:has(input:checked) span::before { content:"✓ "; }
+.bk-choices[aria-invalid="true"] .bk-choice { border-color:#ff8fa3; }

@@ -19,7 +19,6 @@ export default function Footer({ showCallout = true }: { showCallout?: boolean }
           <p>A wider world. A personal way forward. Independent study, settling and career guidance from Paris.</p>
           <ul className="ms-footer-contact">
             <li><a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a></li>
-            <li><a href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noreferrer"><MessageCircle size={15} aria-hidden="true" />+33 7 55 74 90 29</a></li>
             <li><span><MapPin size={15} aria-hidden="true" />{brand.location}</span></li>
             <li><a href={brand.socialLinks.instagram} target="_blank" rel="me noreferrer"><Instagram size={15} aria-hidden="true" />Instagram · @helloharshitainparis</a></li>
             <li><a href={brand.socialLinks.linkedin} target="_blank" rel="me noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn · {brand.person}</a></li>

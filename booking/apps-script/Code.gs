@@ -112,7 +112,7 @@ function doPost(e) {
     }
   } catch (err) {
     console.error(err);
-    return json_({ ok: false, error: 'Something went wrong. Please try again or message us on WhatsApp.' });
+    return json_({ ok: false, error: 'Something went wrong. Please try again in a moment.' });
   }
 }
 
@@ -255,7 +255,7 @@ function book_(body) {
   var d = {};
   Object.keys(FIELD_LIMITS).forEach(function (k) { d[k] = clean_(body[k], FIELD_LIMITS[k]); });
   d.email = d.email.replace(/\s/g, '').toLowerCase();
-  if (!d.fullName || !d.phone || !d.message || !d.currentStatus || !d.background || !d.challenges) return { ok: false, error: 'Please complete the required fields.' };
+  if (!d.fullName || !d.phone || !d.message || !d.currentStatus) return { ok: false, error: 'Please complete the required fields.' };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(d.email)) return { ok: false, error: 'Enter a valid email address.' };
   var start = new Date(body.start);
   if (isNaN(start.getTime())) return { ok: false, error: 'Choose a time for your call.' };
@@ -265,7 +265,7 @@ function book_(body) {
   lock.waitLock(25000);
   try {
     var already = rows_().filter(function (r) { return r['Email'] === d.email && r['Status'] === 'Booked' && new Date(r['Start ISO']).getTime() > Date.now(); })[0];
-    if (already) return { ok: false, code: 'already-booked', error: 'You already have a call booked for ' + fmt_(new Date(already['Start ISO']), clientTz, 'EEE d MMM, HH:mm z') + '. Check your email for the Meet link, or message us on WhatsApp to change it.' };
+    if (already) return { ok: false, code: 'already-booked', error: 'You already have a call booked for ' + fmt_(new Date(already['Start ISO']), clientTz, 'EEE d MMM, HH:mm z') + '. Check your email for the Meet link, or reply to that email to change it.' };
     if (computeSlots_().indexOf(start.toISOString()) === -1) return { ok: false, code: 'slot-taken', error: 'That time was just taken. Please pick another slot.' };
 
     var s = settings_();
@@ -325,13 +325,12 @@ function meetFromConference_(event) {
  * the student's private intake profile belongs only in the owner notification. */
 function profileText_(d, id) {
   var s = settings_();
-  var reschedule = 'https://wa.me/' + s.whatsapp + '?text=' + encodeURIComponent('Bonjour Althéa, I need to reschedule booking ' + id + '.');
   return '<b>Your 15-minute call with ' + esc_(s.ownerName) + ' is booked.</b><br>'
     + esc_(s.brandName) + ' · Booking ' + esc_(id) + '<br><br>'
     + 'Join using the Google Meet link in this invitation.<br><br>'
     + '<b>Before we meet</b><br>Think about your current status, education and experience, the questions or challenges you want to discuss, and your top three priorities.<br><br>'
     + '<b>Keep handy</b><br>Transcripts or mark sheets, your CV, language or test scores, a rough budget and any courses or universities you have shortlisted.<br><br>'
-    + 'Need to change the time? <a href="' + reschedule + '">Message us on WhatsApp</a> with booking number ' + esc_(id) + '.<br><br>'
+    + 'Need to change the time? Reply to your confirmation email with booking number ' + esc_(id) + '.<br><br>'
     + '<a href="' + s.siteUrl + '">altheaconsulting.in</a>';
 }
 

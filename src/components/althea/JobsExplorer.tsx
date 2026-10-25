@@ -221,13 +221,7 @@ export default function JobsExplorer() {
 
   const hasActiveFilters = opportunityType !== "all" || sector !== "all" || query.trim().length > 0;
 
-  const whatsappHref = role
-    ? `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(
-        `Bonjour Althéa, I am exploring the ${opportunityTypeLabels[opportunityType === "all" ? roleTypes[0] : opportunityType]} pathway for ${role.title} in ${destination.name}. I would like help preparing my CV and understanding the legal next steps. Can you guide me?`
-      )}`
-    : `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(
-        `Bonjour Althéa, I would like to schedule a career and work-visa advisory consultation for ${destination.name}.`
-      )}`;
+  const bookHref = role ? `/book-consultation?careerRole=${encodeURIComponent(role.title)}` : "/book-consultation";
 
   useEffect(() => {
     if (!role) return;
@@ -354,7 +348,7 @@ export default function JobsExplorer() {
         ]} />
         <div className="ms-row" style={{ marginTop: 36 }}>
           <button type="button" onClick={() => setIsConsultationOpen(true)} className="ms-btn ms-btn-gold"><span>Book a career strategy session</span><ArrowUpRight size={17} aria-hidden="true" /></button>
-          <a href={whatsappHref} target="_blank" rel="noreferrer" className="ms-btn ms-btn-light"><span>Chat directly on WhatsApp</span><MessageCircle size={17} aria-hidden="true" /></a>
+          <Link href={bookHref} className="ms-btn ms-btn-light"><span>Book a free 15-minute call</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
         </div>
       </Section>
 
@@ -369,11 +363,11 @@ export default function JobsExplorer() {
             </div>
             <button className="ms-dialog-close" type="button" autoFocus onClick={() => setSelected(null)} aria-label="Close role details"><X size={20} /></button>
           </div>
-          <a className="ms-dialog-cta" href={whatsappHref} target="_blank" rel="noreferrer">
+          <Link className="ms-dialog-cta" href={bookHref}>
             <span className="ms-form-icon"><MessageCircle size={22} aria-hidden="true" /></span>
-            <span><strong>Need dedicated help with your CV & applications?</strong><small>Message Harshita on WhatsApp about this {role.title} pathway in {destination.name}</small></span>
+            <span><strong>Need dedicated help with your CV & applications?</strong><small>Book a free call with Harshita about this {role.title} pathway in {destination.name}</small></span>
             <ArrowUpRight size={18} aria-hidden="true" />
-          </a>
+          </Link>
           <div className="ms-dialog-grid">
             <section><h4><FileCheck size={17} aria-hidden="true" /> What employers commonly look for</h4><ul>{role.qualifications.map((item) => <li key={item}>{item}</li>)}</ul></section>
             <section><h4><Sparkles size={17} aria-hidden="true" /> Skills to highlight on your CV</h4><ul>{role.skills.map((item) => <li key={item}>{item}</li>)}</ul></section>

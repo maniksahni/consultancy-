@@ -39,9 +39,9 @@ export default function FeedbackForm() {
     <div className="ms-form fb" role="status">
       <span className="bk-done-badge"><Heart size={24} aria-hidden="true" /></span>
       <p className="ms-form-title">Merci{thanked ? `, ${thanked}` : ""}. Your feedback reached {brand.person}.</p>
-      <p className="ms-form-note">If you would like Althéa’s help with your applications, visa or move, we’re one message away.</p>
+      <p className="ms-form-note">If you would like Althéa’s help with your applications, visa or move, book another free call any time.</p>
       <div className="bk-actions">
-        <a className="ms-btn ms-btn-gold" href={`https://wa.me/${brand.whatsappNumber}`} target="_blank" rel="noreferrer"><span>Message on WhatsApp</span><ArrowUpRight size={17} aria-hidden="true" /></a>
+        <Link className="ms-btn ms-btn-gold" href="/book-consultation"><span>Book another call</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
         <Link className="ms-btn ms-btn-ghost" href="/study-in-france"><span>Read the France guide</span></Link>
       </div>
     </div>

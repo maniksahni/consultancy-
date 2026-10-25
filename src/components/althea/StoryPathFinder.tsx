@@ -15,7 +15,6 @@ export default function StoryPathFinder({ paths }: { paths: ResolvedStoryPath[] 
   const [active, setActive] = useState(paths[0].id);
   const p = paths.find((x) => x.id === active) || paths[0];
   const first = p.story.name.split(" ")[0];
-  const whatsapp = `https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent(`Hello Harshita, I read ${first}'s story on the Althéa website. ${p.situation} — can we plan my next steps?`)}`;
 
   return <div className="ms-pathfinder">
     <div className="ms-pathfinder-choices" role="tablist" aria-label="Your situation">
@@ -43,7 +42,7 @@ export default function StoryPathFinder({ paths }: { paths: ResolvedStoryPath[] 
         <p className="ms-kicker">YOUR NEXT THREE READS</p>
         <ol>{p.chapters.map((c) => <li key={c.path}><Link href={c.path}><strong>{c.label}</strong><span>{c.summary}</span><ArrowUpRight size={16} aria-hidden="true" /></Link></li>)}</ol>
         <div className="ms-pathfinder-cta">
-          <a className="ms-btn ms-btn-gold" href={whatsapp} target="_blank" rel="noopener noreferrer"><span>Plan a path like {first}’s</span><MessageCircle size={16} aria-hidden="true" /></a>
+          <Link className="ms-btn ms-btn-gold" href="/book-consultation"><span>Plan a path like {first}’s</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
           <Link className="ms-link" href="/book-consultation">Book a consultation</Link>
         </div>
       </div>

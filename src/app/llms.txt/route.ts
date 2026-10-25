@@ -57,7 +57,7 @@ export function GET() {
     ...faqs.flatMap(([q, a]) => [`### ${q}`, a, ""]),
     "## Contact",
     `- Email: ${brand.email}`,
-    `- WhatsApp: +${brand.whatsappNumber}`,
+    `- Book a free 15-minute call: ${siteUrl}/book-consultation`,
     `- Instagram: ${brand.socialLinks.instagram}`,
     `- LinkedIn (${brand.person}): ${brand.socialLinks.linkedin}`,
     `- Website: ${siteUrl}`,

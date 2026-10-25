@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { buildConsultationWhatsAppUrl, enquirySchema } from '../src/lib/consultation';
+import { buildConsultationEmailUrl, enquirySchema } from '../src/lib/consultation';
 
 test('guides expose topic links, editorial context and sources without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
@@ -41,7 +41,7 @@ test('shortlisting worksheet is public and referral answers are optional and bou
   await expect(page.getByLabel('How did you find Althéa?')).toHaveValue('');
   const sample = { fullName: 'Test Visitor', email: 'visitor@example.com', message: 'Programme planning', referralSource: 'ChatGPT or another AI answer' };
   const parsed = enquirySchema.parse(sample);
-  expect(new URL(buildConsultationWhatsAppUrl(parsed)).searchParams.get('text')).toContain('How I found Althéa: ChatGPT or another AI answer');
+  expect(decodeURIComponent(buildConsultationEmailUrl(parsed))).toContain('How I found Althéa: ChatGPT or another AI answer');
   expect(enquirySchema.safeParse({ ...sample, referralSource: 'unlisted tracking value' }).success).toBe(false);
   expect(enquirySchema.safeParse({ fullName: 'Test Visitor', email: 'visitor@example.com', message: 'Programme planning' }).success).toBe(true);
 });

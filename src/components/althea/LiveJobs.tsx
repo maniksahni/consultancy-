@@ -160,8 +160,7 @@ export default function LiveJobs() {
           <li><b>French words you need to know for the job</b>: the vocabulary of that role, not just the basics</li>
           <li><b>ATS check</b> of your CV against the exact job — read on your device, never uploaded</li>
         </ul>
-        <a className="ms-btn ms-btn-gold" href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent("Hello Harshita, I would like help with job applications abroad.")}`} target="_blank" rel="noopener noreferrer"><span>Contact us on WhatsApp</span><MessageCircle size={16} aria-hidden="true" /></a>
-        <Link className="ms-link" href="/book-consultation">Book a CV and career session</Link>
+        <Link className="ms-btn ms-btn-gold" href="/book-consultation"><span>Book a free CV and career call</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
       </aside>
     </div>
 
