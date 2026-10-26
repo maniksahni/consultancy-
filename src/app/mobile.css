@@ -498,3 +498,51 @@
   .ms-guide-sources, .ms-guide-sources * { min-width:0; max-width:100%; white-space:normal !important; overflow-wrap:anywhere; }
   .ms-guide-sources a { display:inline; }
 }
+
+/* Compact phone rhythm: content sets the height, not the tallest sibling or viewport. */
+@media (max-width:640px) {
+  html:has(.lumiere-home) { scroll-snap-type:none; }
+  .lumiere-home main > section { min-height:0 !important; scroll-snap-align:none; scroll-snap-stop:normal; padding-block:36px !important; justify-content:flex-start; }
+  .lumiere-home main > .lx-hero { min-height:0 !important; padding-top:108px !important; padding-bottom:36px !important; }
+  :is(.ms-grid,.ms-kh-grid,.ms-dir-grid,.ms-jobs-grid,.ms-jobs-types,.ms-story-notes,.ms-journal,.ms-steps,.lx-bento,.lx-quotes,.lx-paths) { align-items:start !important; }
+  :is(.ms-card,.ms-kh-card,.ms-dir-card,.ms-job,.ms-jobs-type) { min-height:0 !important; height:auto; padding:16px !important; gap:8px !important; border-radius:16px; }
+  .ms-card h3,.ms-dir-card h3,.ms-kh-card h3 { font-size:20px !important; line-height:1.2 !important; }
+  .ms-card-body { gap:8px; }
+  .ms-card p:not(.ms-kicker):not(.ms-card-kicker),.ms-card li,.ms-card-body { font-size:14px !important; line-height:1.5 !important; }
+  .ms-card-top { margin:0; }
+  .ms-card-icon { width:34px; height:34px; }
+  .ms-card-icon svg { width:18px; height:18px; }
+  .ms-card-cta { padding-top:8px; min-height:40px; margin-top:4px; }
+  .ms-dir-card .ms-dir-fee { padding:8px 10px; font-size:13px; }
+  .ms-dir-facts { gap:8px; }
+  .ms-dir-facts div { padding-block:8px; }
+  .ms-dir-source { font-size:12px; line-height:1.5; }
+  .ms-dir-details summary { min-height:44px; display:flex; align-items:center; }
+  .ms-dir-card>.ms-dir-details { margin-top:0; }
+  .lx-path { min-height:0 !important; padding:20px !important; gap:14px !important; }
+  .lx-path h3 { font-size:26px; line-height:1.15; }
+  .lx-path ul { gap:8px; }
+  .lx-path li { font-size:14px; line-height:1.5; }
+  .lx-path-actions { gap:8px 14px; margin-top:0; }
+  .lx-path-actions .ms-btn { min-height:44px; padding:11px 16px; font-size:13px; }
+  .lx-bento > * { min-height:0 !important; }
+  .lx-bento > a { min-height:230px !important; }
+  .ms-stage-card { padding:18px; }
+  .ms-stage-card blockquote { font-size:16px; line-height:1.5; margin-block:12px; }
+  .ms-form { padding:20px; gap:16px; border-radius:20px; }
+  .ms-field :is(input,select,textarea) { font-size:16px; }
+  .ms-cover { min-height:0 !important; padding-bottom:32px; }
+  .ms-cover h1 { font-size:clamp(34px,9.5vw,46px); }
+  .ms-crumbs { margin-bottom:20px; }
+  .ms-cover-intro { margin-top:18px; }
+  .ms-closing h2 { font-size:34px; }
+}
+@media(max-width:640px){
+  .ms-job-title{font-size:20px !important;line-height:1.2 !important}
+  .ms-job-top{font-size:10px;gap:8px}
+  .ms-job-skills{gap:5px;font-size:12px}
+  .ms-job-skills small{font-size:9px}
+  .ms-job-foot{gap:8px;flex-wrap:wrap;padding-top:8px}
+  .ms-job-foot .ms-card-cta{min-height:32px;padding-top:0;font-size:11px}
+  .ms-job-tags{gap:5px}
+}

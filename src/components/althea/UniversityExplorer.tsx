@@ -259,6 +259,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
             <p className="ms-card-kicker">{r.region || countryName}{r.city ? ` · ${r.city}` : ""}</p>
             <h3>{r.name}</h3>
             {r.nativeName && r.nativeName !== r.name && <p className="ms-dir-native">{r.nativeName}</p>}
+            <details className="ms-dir-details"><summary>Institution details</summary>
             <dl className="ms-dir-facts">
               {r.institutionType && <div><dt>Institution type</dt><dd>{r.institutionType}</dd></div>}
               {r.campus && <div><dt>Campus / additional locations</dt><dd>{r.campus}</dd></div>}
@@ -269,6 +270,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
               {r.enrolment && <div><dt>Student enrolment</dt><dd>{r.enrolment}<small>2024 reported count</small></dd></div>}
             </dl>
             <p className="ms-dir-source">Source: {r.registrySource} · record date {r.sourceDate}. Current course fees, housing availability and admissions are not part of this institution record.</p>
+            </details>
           </article>)}</div> : directory.courses.length ? <>
             <p className="ms-dir-note">Every course shows a published fee or a sourced approximate tuition budget. “Approx.” amounts are benchmarks, not confirmed course prices. Check the fee status, source year and methodology in Course details. Budget filtering uses the upper estimate; published amounts retain their stated period.</p>
             <div className="ms-dir-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => {
