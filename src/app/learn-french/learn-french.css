@@ -3,3 +3,5 @@
 .french-card,.french-card h3,.french-card p{color:#142b3e}.french-card .french-note,.french-card .french-number{color:#596877}
 .french-tip{margin-top:12px;font-size:13px}.french-tip summary{cursor:pointer;color:#596877}.french-tip[open] summary{margin-bottom:8px}
 @media(max-width:600px){.french-phrases{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}.french-card{padding:14px 12px;border-radius:12px}.french-number{font-size:10px}.french-card h3{font-size:19px;line-height:1.25;margin:9px 0 7px}.french-card p{font-size:12px;line-height:1.45;margin:5px 0}.french-card .french-meaning{font-size:12px}.french-sound{padding:9px 0;font-size:11px!important;overflow-wrap:anywhere}.french-sound span{font-size:8px;line-height:1.5;letter-spacing:.04em}.french-tip{margin-top:8px;font-size:11px}.french-card .french-note{font-size:11px}}
+/* Expanding one usage tip must not stretch its neighbouring cards. */
+.french-phrases{align-items:start}
