@@ -15,6 +15,7 @@ const names: Record<string, string> = {
   "/in-france": "Already in France",
   "/pr-in-france": "PR in France",
   "/partnerships": "Partnerships",
+  "/learn-french": "Learn French",
   "/settle-in-france": "Settle in France",
   "/career-support": "Career support in France",
   "/jobs": "Jobs & careers",

@@ -6,7 +6,7 @@ import { ArrowUp, Instagram, Linkedin, Mail, MapPin, MessageCircle } from "lucid
 const groups = [
   { title: "Explore", links: [["Destinations (more coming soon)", "/destinations"], ["Universities & courses", "/universities"], ["Programmes & fees", "/programmes"], ["Student stories", "/reviews"], ["The journal", "/knowledge"], ["Insights", "/insights"]] },
   { title: "Your next step", links: [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["PR in France", "/pr-in-france"], ["Settle in France", "/settle-in-france"], ["Career support", "/career-support"], ["Scholarship guidance", "/scholarships"], ["Jobs & opportunities", "/jobs"], ["Our support", "/services"]] },
-  { title: "Good to know", links: [["Admissions process", "/admissions-process"], ["From India: the essentials", "/from-india"], ["Campus France guide", "/campus-france-guide"], ["First 30 days in France", "/first-30-days-france"], ["The mentorship model", "/mentorship-model"], ["Your questions, answered", "/faq"], ["About Harshita", "/about"], ["Partnerships", "/partnerships"], ["Site map: every page", "/site-map"]] },
+  { title: "Good to know", links: [["Admissions process", "/admissions-process"], ["From India: the essentials", "/from-india"], ["Campus France guide", "/campus-france-guide"], ["First 30 days in France", "/first-30-days-france"], ["Learn French", "/learn-french"], ["The mentorship model", "/mentorship-model"], ["Your questions, answered", "/faq"], ["About Harshita", "/about"], ["Partnerships", "/partnerships"], ["Site map: every page", "/site-map"]] },
 ];
 
 export default function Footer({ showCallout = true }: { showCallout?: boolean }) {

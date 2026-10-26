@@ -35,7 +35,7 @@ const groups: { title: string; accent: string; items: Item[] }[] = [
     ...g.chapters.map((c) => ({ href: c.path, title: c.label })),
   ] })),
   { title: "France,", accent: "beyond the guide.", items: [
-    page("/campus-france-guide", "Études en France step by step"), page("/first-30-days-france", "Your first month, day by day"),
+    page("/campus-france-guide", "Études en France step by step"), page("/learn-french", "15 everyday phrases and French-learning enquiries"), page("/first-30-days-france", "Your first month, day by day"),
     page("/in-france", "Already in France: internships, jobs, papers"), page("/pr-in-france", "PR in France for Indian students"), page("/settle-in-france", "Housing, permit, bank, health"), page("/france/universities"), page("/france/programmes"), page("/france/institutions"), page("/france/resources"),
     ...cities.map((c) => ({ href: `/cities/${c.slug}`, title: `Study in ${c.name}` })),
   ] },

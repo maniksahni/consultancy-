@@ -8,8 +8,9 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import { paris } from "@/lib/paris";
 
-const primary = [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["Jobs & internships", "/jobs"], ["Our support", "/services"], ["About", "/about"]];
+const primary = [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["Jobs & internships", "/jobs"], ["Our support", "/services"], ["Learn French", "/learn-french"], ["About", "/about"]];
 const menu = [
+  { label: "Learn French", href: "/learn-french", image: paris("student-cafe").file, note: "15 everyday phrases · start your learning journey" },
   { label: "Home", href: "/", image: paris("eiffel-autumn-sky").file, note: "Go further. Become more." },
   { label: "Study in France", href: "/study-in-france", image: paris("bnf-salle-ovale").file, note: "Programmes, routes and budgets" },
   { label: "Already in France", href: "/in-france", image: paris("metro-platform").file, note: "Internships, jobs, CAF and your titre de séjour" },
