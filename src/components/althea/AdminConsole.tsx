@@ -41,7 +41,7 @@ export default function AdminConsole() {
   const upcoming = useMemo(() => bookings.filter(b => b.status === "Booked" && new Date(b.end).getTime() > now).sort((a, b) => a.start.localeCompare(b.start)), [bookings, now]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return q ? bookings.filter(b => [b.name, b.email, b.phone, b.destination, b.currentStatus, b.id, b.source].join(" ").toLowerCase().includes(q)) : bookings;
+    return q ? bookings.filter(b => [b.name, b.email, b.phone, b.homeCountry, b.destination, b.currentStatus, b.id, b.source].join(" ").toLowerCase().includes(q)) : bookings;
   }, [bookings, query]);
   const rated = bookings.filter(b => Number(b.rating) > 0);
   const enquiries = bookings.filter(isEnquiry);
@@ -158,7 +158,7 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         <dl className="adm-profile">
           {(enquiry
             ? [["Email", b.email], ["WhatsApp", b.phone], ["Request", b.destination], ["French level", b.level], ["Preferred start", b.intake], ["Goal and enquiry", b.message], ["Received", b.bookedOn]]
-            : [["Email", b.email], ["WhatsApp", b.phone], ["Destination", b.destination], ["Level", b.level], ["Intake", b.intake], ["Current status", b.currentStatus],
+            : [["Email", b.email], ["WhatsApp", b.phone], ["From", b.homeCountry ?? ""], ["Destination", b.destination], ["Level", b.level], ["Intake", b.intake], ["Current status", b.currentStatus],
               ["Education", b.background], ["Experience", b.experience || "—"], ["Challenges", b.challenges], ["Wants from the call", b.message], ["Found us via", b.source || "—"], ["Booked on", b.bookedOn]] as [string, string][])
             .map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value || "—"}</dd></div>)}
           {b.rating && <div><dt>Feedback</dt><dd><span className="adm-stars">{"★".repeat(Number(b.rating))}</span> {b.feedback}</dd></div>}

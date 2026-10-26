@@ -159,7 +159,7 @@ function sendOwnerNotification_(b) {
   var paris = fmt_(start, s.timeZone, 'EEE d MMM, HH:mm');
   var clientTime = fmt_(start, b.timeZone, 'HH:mm z');
   // Only what the student filled in; the form asks for the help needed and where they are now.
-  var rows = [['Help needed', b.message], ['Current status', b.currentStatus], ['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination],
+  var rows = [['Help needed', b.message], ['Current status', b.currentStatus], ['From', b.homeCountry], ['WhatsApp', b.phone], ['Email', b.email], ['Destination', b.destination],
     ['Level', b.level], ['Intake', b.intake], ['Education', b.background], ['Experience', b.experience], ['Challenges', b.challenges], ['Found us via', b.source]]
     .filter(function (r) { return r[1]; });
   var inner = '<h1 style="margin:0 0 6px;font:600 28px/1.15 Georgia,serif;color:' + BRAND.text + '">New booking: ' + esc_(b.name) + '</h1>'

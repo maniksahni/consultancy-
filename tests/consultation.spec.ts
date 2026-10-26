@@ -3,7 +3,7 @@ import { bookingSchema, buildConsultationEmailUrl, enquirySchema } from "../src/
 import { brand } from "../src/config/brand";
 
 const sample = {
-  fullName: "Asha Rao", email: "asha.rao@gmail.com", phone: "+91 9876543210", targetCountry: "France",
+  fullName: "Asha Rao", email: "asha.rao@gmail.com", phone: "+91 9876543210", targetCountry: "France", homeCountry: "India",
   currentStatus: "Working professional", message: "CV review, Interview preparation", preferredTime: "Weekdays 4 pm IST",
 };
 
@@ -27,6 +27,7 @@ test("email fallback carries the details, sanitizes input, skips empty fields, a
   expect(bookingSchema.safeParse({ ...sample, phone: "" }).success).toBe(false);
   expect(bookingSchema.safeParse({ ...sample, message: " " }).success).toBe(false);
   expect(bookingSchema.safeParse({ ...sample, currentStatus: "" }).success).toBe(false);
+  expect(bookingSchema.safeParse({ ...sample, homeCountry: "" }).success).toBe(false);
   expect(bookingSchema.safeParse(sample).success).toBe(true);
 });
 
@@ -35,6 +36,7 @@ async function fillSteps(page: Page) {
   await form.getByLabel("Full name").fill(sample.fullName);
   await form.getByLabel("WhatsApp number").fill(sample.phone);
   await form.getByLabel("Email").fill(sample.email);
+  await form.getByLabel("Which country are you from?").selectOption(sample.homeCountry);
   await form.getByLabel("Where are you right now?").selectOption(sample.currentStatus);
   await form.getByLabel("CV review").check();
   await form.getByLabel("Interview preparation").check();

@@ -5,13 +5,14 @@ import { brand } from "@/config/brand";
 import { meetingMinutes } from "@/config/booking";
 import { assistanceOptions, bookingSchema, buildConsultationEmailUrl, currentStatuses, enquiryLimits, referralSources, type BookingDetails } from "@/lib/consultation";
 import { isComingSoon } from "@/lib/comingSoon";
+import { commonHomeCountries, otherHomeCountries } from "@/lib/countries";
 import { bookSlot, bookingMode, fetchSlots, formatIn, googleCalendarUrl, visitorTimeZone, zoneLabel, type BookingMode } from "@/lib/booking";
 
 type Step = 0 | 1;
 type Booked = { id: string; start: string; end: string; meetLink: string; email: string; firstName: string; confirmationSent: boolean };
 
 const STEP_FIELDS: (keyof BookingDetails)[][] = [
-  ["fullName", "email", "phone", "targetCountry", "currentStatus", "message", "referralSource"],
+  ["fullName", "email", "phone", "homeCountry", "targetCountry", "currentStatus", "message", "referralSource"],
   [],
 ];
 const STEPS = ["Your details", "Book your call"];
@@ -228,6 +229,14 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
           {input("fullName", "Full name", { required: true, autoComplete: "name" })}
           {input("phone", "WhatsApp number", { type: "tel", required: true, autoComplete: "tel", placeholder: "+91 98765 43210" })}
           {input("email", "Email", { type: "email", required: true, autoComplete: "email", placeholder: "name@gmail.com", hint: "Your Google Meet link is sent here.", wide: true })}
+          <label className="ms-field" htmlFor={fieldId("homeCountry")}><span>Which country are you from? *</span>
+            <select id={fieldId("homeCountry")} name="homeCountry" defaultValue="" autoComplete="country-name" aria-invalid={!!errors.homeCountry} aria-describedby={described("homeCountry")}>
+              <option value="">Choose your country</option>
+              <optgroup label="Most of our students">{commonHomeCountries.map(c => <option key={c}>{c}</option>)}</optgroup>
+              <optgroup label="All countries">{otherHomeCountries.map(c => <option key={c}>{c}</option>)}</optgroup>
+            </select>
+            {error("homeCountry")}
+          </label>
           {select("targetCountry", "Destination", COUNTRIES, { defaultValue: SOON.includes(defaultCountry) ? "France" : defaultCountry, disabled: SOON })}
           {select("currentStatus", "Where are you right now?", currentStatuses, { required: true, placeholder: "Choose one" })}
           <fieldset className="ms-field ms-field-wide bk-choices" aria-invalid={!!errors.message} aria-describedby={described("message")}>

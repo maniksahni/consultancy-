@@ -10,7 +10,7 @@ export type BookingMode = "live" | "preview" | "off";
 export type BookingResult = { ok: true; id: string; start: string; end: string; meetLink: string; confirmationSent?: boolean; ownerNoticeSent?: boolean } | { ok: false; error: string; code?: string };
 export type AdminBooking = {
   id: string; status: string; bookedOn: string; start: string; end: string; timeZone: string; name: string; firstName: string;
-  email: string; phone: string; destination: string; level: string; intake: string; currentStatus: string; background: string;
+  email: string; phone: string; destination: string; level: string; intake: string; currentStatus: string; homeCountry?: string; background: string;
   experience: string; challenges: string; message: string; source: string; meetLink: string; rating: string; feedback: string; notes: string;
 };
 export type Availability = { day: string; start: string; end: string };

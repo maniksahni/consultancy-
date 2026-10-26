@@ -9,6 +9,7 @@ export const enquiryLimits = {
   level: 40,
   intake: 40,
   currentStatus: 60,
+  homeCountry: 60,
   background: 300,
   experience: 300,
   challenges: 500,
@@ -30,6 +31,7 @@ const requiredMessages: Partial<Record<keyof typeof enquiryLimits, string>> = {
   fullName: "Enter your full name.",
   phone: "Enter your WhatsApp number so Harshita can reach you.",
   currentStatus: "Choose where you are right now.",
+  homeCountry: "Choose the country you are from.",
   background: "Share your education so far, for example B.Tech CSE, 2025, 8.1 CGPA.",
   challenges: "Tell us what is holding you back, so the 15 minutes go to what matters.",
   message: "Please share what you would like to explore.",
@@ -55,6 +57,7 @@ export const enquirySchema = z.object({
   level: field("level"),
   intake: field("intake"),
   currentStatus: field("currentStatus"),
+  homeCountry: field("homeCountry"),
   background: field("background"),
   experience: field("experience"),
   challenges: field("challenges"),
@@ -64,10 +67,11 @@ export const enquirySchema = z.object({
 });
 export type Enquiry = z.output<typeof enquirySchema>;
 
-/** The booking form asks for a WhatsApp number, where the visitor is now and the help they need (sent as the message). */
+/** The booking form asks for a WhatsApp number, the country they are from, where the visitor is now and the help they need (sent as the message). */
 export const bookingSchema = enquirySchema.extend({
   phone: field("phone", true),
   currentStatus: field("currentStatus", true),
+  homeCountry: field("homeCountry", true),
   message: z.preprocess(value => sanitizeEnquiryValue(value, enquiryLimits.message),
     z.string().min(1, "Choose the help you need: CV review, career guidance or interview preparation.")),
 });
@@ -83,6 +87,7 @@ export function buildConsultationEmailUrl(input: Partial<Enquiry> & Pick<Enquiry
     ["Name", data.fullName],
     ["Email", data.email],
     ["Phone", data.phone],
+    ["Country I am from", data.homeCountry],
     ["Booked call", bookedTime ?? ""],
     ["Study destination", data.targetCountry],
     ["Level", data.level],

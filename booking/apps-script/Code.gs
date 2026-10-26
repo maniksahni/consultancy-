@@ -36,7 +36,7 @@ var DEFAULT_AVAILABILITY = [
 var BOOKING_HEADERS = ['ID', 'Token', 'Booked on', 'Status', 'Meeting (Paris time)', 'Start ISO', 'End ISO', 'Client time zone',
   'Name', 'Email', 'WhatsApp', 'Destination', 'Level', 'Intake', 'Current status', 'Education background', 'Work experience',
   'Challenges', 'Wants to explore', 'Found us via', 'Meet link', 'Calendar event ID',
-  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes'];
+  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes', 'Home country'];
 
 var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 var STATUSES = ['Booked', 'Completed', 'Attended', 'No-show', 'Cancelled', 'New enquiry', 'Contacted'];
@@ -245,7 +245,7 @@ function computeSlots_() {
 
 /* ------------------------------------------------------------------ booking */
 
-var FIELD_LIMITS = { fullName: 80, email: 120, phone: 32, targetCountry: 32, level: 40, intake: 40, currentStatus: 60, background: 300, experience: 300, challenges: 500, message: 400, referralSource: 60 };
+var FIELD_LIMITS = { fullName: 80, email: 120, phone: 32, targetCountry: 32, level: 40, intake: 40, currentStatus: 60, homeCountry: 60, background: 300, experience: 300, challenges: 500, message: 400, referralSource: 60 };
 
 function clean_(value, limit) {
   return String(value == null ? '' : value).replace(/<[^>]*>/g, '').replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, limit);
@@ -256,7 +256,7 @@ function book_(body) {
   var d = {};
   Object.keys(FIELD_LIMITS).forEach(function (k) { d[k] = clean_(body[k], FIELD_LIMITS[k]); });
   d.email = d.email.replace(/\s/g, '').toLowerCase();
-  if (!d.fullName || !d.phone || !d.message || !d.currentStatus) return { ok: false, error: 'Please complete the required fields.' };
+  if (!d.fullName || !d.phone || !d.message || !d.currentStatus || !d.homeCountry) return { ok: false, error: 'Please complete the required fields.' };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(d.email)) return { ok: false, error: 'Enter a valid email address.' };
   var start = new Date(body.start);
   if (isNaN(start.getTime())) return { ok: false, error: 'Choose a time for your call.' };
@@ -291,7 +291,7 @@ function book_(body) {
     row['Status'] = 'Booked'; row['Meeting (Paris time)'] = fmt_(start, s.timeZone, 'EEE d MMM yyyy, HH:mm');
     row['Start ISO'] = start.toISOString(); row['End ISO'] = end.toISOString(); row['Client time zone'] = clientTz;
     row['Name'] = d.fullName; row['Email'] = d.email; row['WhatsApp'] = d.phone; row['Destination'] = d.targetCountry;
-    row['Level'] = d.level; row['Intake'] = d.intake; row['Current status'] = d.currentStatus; row['Education background'] = d.background;
+    row['Level'] = d.level; row['Intake'] = d.intake; row['Current status'] = d.currentStatus; row['Home country'] = d.homeCountry; row['Education background'] = d.background;
     row['Work experience'] = d.experience; row['Challenges'] = d.challenges; row['Wants to explore'] = d.message; row['Found us via'] = d.referralSource;
     row['Meet link'] = meet; row['Calendar event ID'] = event.id;
     appendRow_(row);
@@ -364,7 +364,17 @@ function profileText_(d, id) {
 
 /* ------------------------------------------------------------------ sheet rows */
 
-function bookingsSheet_() { return sheet_(spreadsheet_(), 'Bookings', BOOKING_HEADERS); }
+var headersChecked_ = false;
+function bookingsSheet_() {
+  var sh = sheet_(spreadsheet_(), 'Bookings', BOOKING_HEADERS);
+  // Columns added later (e.g. 'Home country') get their header written once on an existing sheet.
+  if (!headersChecked_) {
+    var head = sh.getRange(1, 1, 1, BOOKING_HEADERS.length).getDisplayValues()[0];
+    BOOKING_HEADERS.forEach(function (h, i) { if (!head[i]) sh.getRange(1, i + 1).setValue(h).setFontWeight('bold').setBackground('#1b1530').setFontColor('#ffffff'); });
+    headersChecked_ = true;
+  }
+  return sh;
+}
 
 function rows_() {
   var sh = bookingsSheet_();
@@ -403,7 +413,7 @@ function bookingView_(r) {
     id: r['ID'], token: r['Token'], status: r['Status'], bookedOn: r['Booked on'],
     start: r['Start ISO'], end: r['End ISO'], timeZone: validTz_(r['Client time zone']),
     name: r['Name'], firstName: String(r['Name']).split(' ')[0], email: r['Email'], phone: r['WhatsApp'],
-    destination: r['Destination'], level: r['Level'], intake: r['Intake'], currentStatus: r['Current status'],
+    destination: r['Destination'], level: r['Level'], intake: r['Intake'], currentStatus: r['Current status'], homeCountry: r['Home country'] || '',
     background: r['Education background'], experience: r['Work experience'], challenges: r['Challenges'],
     message: r['Wants to explore'], source: r['Found us via'], meetLink: r['Meet link'], eventId: r['Calendar event ID'],
     reminder24: r['Reminder 24h sent'], reminder1: r['Reminder 1h sent'], feedbackSent: r['Feedback email sent'],
