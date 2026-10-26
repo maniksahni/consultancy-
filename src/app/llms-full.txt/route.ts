@@ -55,8 +55,10 @@ export function GET() {
     "",
     ...faqs.flatMap(([q, a]) => [`Q: ${q}`, `A: ${a}`, ""]),
     "## Contact",
-    `- Book a consultation: ${siteUrl}/book-consultation`,
     `- Email: ${brand.email}`,
+    `- LinkedIn (${brand.name}): ${brand.socialLinks.linkedinCompany}`,
+    `- LinkedIn (${brand.person}): ${brand.socialLinks.linkedin}`,
+    `- Instagram: ${brand.socialLinks.instagram}`,
     `- Book a free 15-minute call: ${siteUrl}/book-consultation`,
     "",
   ].join("\n");

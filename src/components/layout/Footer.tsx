@@ -21,6 +21,7 @@ export default function Footer({ showCallout = true }: { showCallout?: boolean }
             <li><a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a></li>
             <li><span><MapPin size={15} aria-hidden="true" />{brand.location}</span></li>
             <li><a href={brand.socialLinks.instagram} target="_blank" rel="me noreferrer"><Instagram size={15} aria-hidden="true" />Instagram · @helloharshitainparis</a></li>
+            <li><a href={brand.socialLinks.linkedinCompany} target="_blank" rel="me noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn · {brand.name}</a></li>
             <li><a href={brand.socialLinks.linkedin} target="_blank" rel="me noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn · {brand.person}</a></li>
           </ul>
         </div>

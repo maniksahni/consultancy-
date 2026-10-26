@@ -2,6 +2,7 @@ import Page from "@/components/althea/Page";
 import { Section } from "@/components/maison/ui";
 import FrenchEnquiry from "@/components/althea/FrenchEnquiry";
 import { pageMetadata } from "@/lib/seo";
+import { quickAnswers } from "@/data/quickAnswers";
 import "./learn-french.css";
 
 export const metadata = pageMetadata("/learn-french", {
@@ -26,7 +27,7 @@ const phrases = [
   ["Où est la gare ?", "Where is the station?", "रेलवे स्टेशन कहाँ है?", "oo eh lah GAHR", "A practical question when finding your way around a city."],
 ];
 export default function LearnFrench() {
-  return <Page path="/learn-french" photo="student-cafe" eyebrow="A LITTLE FRENCH, EVERY DAY" title="Learn French." accent="Start with bonjour." intro="Fifteen useful words and phrases for your first conversations in France. Read the meaning, try saying it aloud, and take one small step towards feeling at home." closing={false} headerActions={<a className="ms-btn ms-btn-gold" href="#french-enquiry">Enquire about learning French</a>}>
+  return <Page path="/learn-french" faqs={quickAnswers["/learn-french"]} photo="student-cafe" eyebrow="A LITTLE FRENCH, EVERY DAY" title="Learn French." accent="Start with bonjour." intro="Fifteen useful words and phrases for your first conversations in France. Read the meaning, try saying it aloud, and take one small step towards feeling at home." closing={false} headerActions={<a className="ms-btn ms-btn-gold" href="#french-enquiry">Enquire about learning French</a>}>
     <Section tone="ivory" kicker="YOUR FIRST 15" title="Small phrases." accent="Everyday confidence.">
       <p className="ms-lead">English and Hindi meanings help you get started. The pronunciation hints are approximate: French nasal vowels and the French “r” do not have exact English equivalents.</p>
       <div className="french-phrases">{phrases.map(([french, english, hindi, sound, note], i) => <article className="french-card" key={french}>

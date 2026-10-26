@@ -10,6 +10,7 @@ export type NextStep = { href: string; title: string; see: string; kind: string 
 const about: Record<string, [kind: string, see: string]> = {
   "/study-in-france": ["FRANCE", "The full France guide: degrees, fees, Campus France, visa, housing and work, chapter by chapter."],
   "/in-france": ["IN FRANCE", "Already in France: internships, alternance, your first job, CAF, housing and your titre de séjour."],
+  "/learn-french": ["FRENCH", "Fifteen everyday French phrases with English and Hindi meanings, and how to start learning French."],
   "/partnerships": ["PARTNERS", "For universities, employers and student-service providers proposing a partnership with Althéa."],
   "/pr-in-france": ["PR", "From student to resident: job-search permit, work permit, the 10-year card and French nationality."],
   "/settle-in-france": ["FRANCE", "Housing, residence permit, bank, health cover and daily life once you land in France."],

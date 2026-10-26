@@ -77,6 +77,17 @@ export const quickAnswers: Record<string, QuickAnswer[]> = {
     { q: "Do I need to speak French for PR in France?", a: "Yes. The 10-year resident card requires French at level B1 and success in the civic exam. Naturalisation also requires proof of sufficient French and the civic exam, plus an interview at the prefecture." },
     { q: "Can I keep my Indian passport if I become French?", a: "No. India does not allow dual citizenship, so taking French nationality means giving up Indian citizenship. You can then apply for an OCI card to live and work in India without a visa." },
   ],
+  "/learn-french": [
+    france("language-tests", "Do I need to speak French to study in France?"),
+    { q: "How do you say hello in French?", a: "Say “Bonjour” (bohn-ZHOOR) during the day and “Bonsoir” (bohn-SWAHR) in the evening. “Salut” is an informal hi or bye for friends and people you know." },
+    { q: "Which French phrases should I learn before moving to France?", a: "Start with bonjour, merci, s’il vous plaît, excusez-moi, je m’appelle…, je ne comprends pas, parlez-vous anglais ?, pouvez-vous répéter ?, combien ça coûte ? and où est la gare ?. They cover greetings, shops, help and getting around." },
+    { q: "Can Althéa Consulting help me learn French?", a: "Yes. Send an enquiry from this page with your current level, your goal and when you would like to start; available options, timings and any fees are discussed before you commit." },
+  ],
+  "/partnerships": [
+    { q: "Does Althéa Consulting partner with universities and employers?", a: "Yes. Althéa works with universities and grandes écoles, employers and recruiters, housing and student-service providers, schools and counsellors in India, student communities and French or English language trainers that serve Indian students in France." },
+    { q: "How do I propose a partnership to Althéa Consulting?", a: "Send a short proposal to harshita@altheaconsulting.in with the subject “Partnership proposal”: your organisation, website, your name and role, what you propose and who it serves. If there is a fit, an introductory call follows and terms are agreed in writing before launch." },
+    { q: "Can students or parents use the partnership contact?", a: "No. The partnership contact details are only for organisations proposing a collaboration. Students and parents should book the free 15-minute call on the booking page instead." },
+  ],
 };
 
 /** Questions every student asks about a French city, answered from the France guide. */

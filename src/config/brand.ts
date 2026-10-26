@@ -15,7 +15,8 @@ export const brand = {
   "email": "harshita@altheaconsulting.in",
   "socialLinks": {
     "instagram": "https://www.instagram.com/helloharshitainparis/",
-    "linkedin": "https://www.linkedin.com/in/harshita-kohli-imtbs/"
+    "linkedin": "https://www.linkedin.com/in/harshita-kohli-imtbs/",
+    "linkedinCompany": "https://www.linkedin.com/company/altheaconsults/"
   },
   "fonts": {
     "display": "var(--font-cormorant), Georgia, serif",

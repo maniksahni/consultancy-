@@ -3,6 +3,7 @@ import { brand } from "@/config/brand";
 import Page from "@/components/althea/Page";
 import { Card, Checklist, Grid, Notice, Section, Steps, TextLink } from "@/components/maison/ui";
 import { Mail, MessageCircle, ShieldAlert } from "lucide-react";
+import { quickAnswers } from "@/data/quickAnswers";
 
 export const metadata = pageMetadata("/partnerships", {
   title: "Partner with Althéa Consulting",
@@ -34,7 +35,7 @@ const process = [
 ];
 
 export default function PartnershipsPage() {
-  return <Page path="/partnerships" eyebrow="PARTNERSHIPS · PARIS ⇄ INDIA" title="Partner with" accent="Althéa Consulting."
+  return <Page path="/partnerships" faqs={quickAnswers["/partnerships"]} eyebrow="PARTNERSHIPS · PARIS ⇄ INDIA" title="Partner with" accent="Althéa Consulting."
     intro="Althéa works with universities, employers, housing and student-service providers that make studying, living and working in France better for Indian students. If that is you, we would like to hear your proposal."
     headerActions={<><a href="#who">Who we partner with</a><a href="#how">How it works</a><a href="#contact">Contact</a></>}
     closing={false}>
