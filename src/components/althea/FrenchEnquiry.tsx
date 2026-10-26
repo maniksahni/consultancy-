@@ -19,7 +19,7 @@ export default function FrenchEnquiry() {
     const data = new FormData(form);
     const value = (key: string, max = 120) => sanitizeEnquiryValue(data.get(key), max);
     const details = { name: value("name", 80), email: value("email").replace(/\s/g, ""), phone: value("phone", 32), level: value("level", 40), goal: value("goal", 60), availability: value("availability"), message: value("message", 600) };
-    if (!details.name || !details.level || !details.goal || !details.message) { setError("Please fill in your name, level, goal and enquiry."); return; }
+    if (!details.name || !details.phone || !details.level || !details.goal || !details.message) { setError("Please fill in your name, phone, level, goal and enquiry."); return; }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(details.email)) { setError("Enter a valid email, like name@gmail.com."); return; }
     if (!data.get("consent")) { setError("Please agree to be contacted about your request."); return; }
     setError(""); setBusy(true);
@@ -40,7 +40,7 @@ export default function FrenchEnquiry() {
     <div className="french-form-grid">
       <label className="ms-field" htmlFor={`${id}-name`}><span>Your name *</span><input id={`${id}-name`} name="name" required maxLength={80} autoComplete="name" /></label>
       <label className="ms-field" htmlFor={`${id}-email`}><span>Email *</span><input id={`${id}-email`} name="email" required type="email" maxLength={120} autoComplete="email" /></label>
-      <label className="ms-field" htmlFor={`${id}-phone`}><span>Phone / WhatsApp (optional)</span><input id={`${id}-phone`} name="phone" type="tel" maxLength={32} autoComplete="tel" /></label>
+      <label className="ms-field" htmlFor={`${id}-phone`}><span>Phone / WhatsApp *</span><input id={`${id}-phone`} name="phone" type="tel" required maxLength={32} autoComplete="tel" placeholder="+91 98765 43210" /></label>
       <label className="ms-field" htmlFor={`${id}-level`}><span>Your French level *</span><select id={`${id}-level`} name="level" required defaultValue=""><option value="" disabled>Select your level</option><option>Complete beginner</option><option>A1 / A2 — elementary</option><option>B1 / B2 — intermediate</option><option>C1 / C2 — advanced</option><option>Not sure</option></select></label>
       <label className="ms-field" htmlFor={`${id}-goal`}><span>Your goal *</span><select id={`${id}-goal`} name="goal" required defaultValue=""><option value="" disabled>What would you like to work towards?</option><option>Everyday conversations</option><option>Study in France</option><option>Work and interviews</option><option>Exam preparation</option><option>Other / not sure yet</option></select></label>
       <label className="ms-field" htmlFor={`${id}-availability`}><span>Preferred start / availability</span><input id={`${id}-availability`} name="availability" maxLength={120} placeholder="For example: November, weekday evenings" /></label>

@@ -321,7 +321,8 @@ function enquiry_(body) {
   if (body.website) return { ok: false, error: 'Bad request.' };
   var name = clean_(body.name, 80), email = clean_(body.email, 120).replace(/\s/g, '').toLowerCase();
   var level = clean_(body.level, 40), goal = clean_(body.goal, 60), message = clean_(body.message, 600);
-  if (!name || !level || !goal || !message) return { ok: false, error: 'Please complete the required fields.' };
+  var phone = clean_(body.phone, 32);
+  if (!name || !phone || !level || !goal || !message) return { ok: false, error: 'Please complete the required fields.' };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return { ok: false, error: 'Enter a valid email address.' };
   var s = settings_();
   var lock = LockService.getScriptLock();
@@ -332,7 +333,7 @@ function enquiry_(body) {
     row['Booked on'] = fmt_(new Date(), s.timeZone, 'yyyy-MM-dd HH:mm');
     row['Status'] = 'New enquiry';
     row['Client time zone'] = validTz_(body.timeZone);
-    row['Name'] = name; row['Email'] = email; row['WhatsApp'] = clean_(body.phone, 32);
+    row['Name'] = name; row['Email'] = email; row['WhatsApp'] = phone;
     row['Destination'] = 'Learn French'; row['Level'] = level; row['Intake'] = clean_(body.availability, 120);
     row['Wants to explore'] = goal + ': ' + message; row['Found us via'] = 'Learn French page';
     appendRow_(row);
