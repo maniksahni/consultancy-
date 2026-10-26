@@ -5,3 +5,5 @@
 @media(max-width:600px){.french-phrases{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}.french-card{padding:14px 12px;border-radius:12px}.french-number{font-size:10px}.french-card h3{font-size:19px;line-height:1.25;margin:9px 0 7px}.french-card p{font-size:12px;line-height:1.45;margin:5px 0}.french-card .french-meaning{font-size:12px}.french-sound{padding:9px 0;font-size:11px!important;overflow-wrap:anywhere}.french-sound span{font-size:8px;line-height:1.5;letter-spacing:.04em}.french-tip{margin-top:8px;font-size:11px}.french-card .french-note{font-size:11px}}
 /* Expanding one usage tip must not stretch its neighbouring cards. */
 .french-phrases{align-items:start}
+/* After Book: the request is saved; a short confirmation replaces the form. */
+.french-done{display:grid;gap:10px;justify-items:start;color:#7fe0b0}.french-done .ms-form-title{margin:0;color:var(--ms-text,#f4f1ea)}.french-done .ms-muted{margin:0}

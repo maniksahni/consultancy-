@@ -41,7 +41,7 @@ export default function LearnFrench() {
       <p className="ms-lead">Practise a few phrases each day. Getting comfortable greeting people is a useful first step; this short introduction is not a complete language course.</p>
     </Section>
     <Section tone="ivory" kicker="TAKE THE NEXT STEP" title="Wish to learn French?" accent="Tell us about you.">
-      <div id="french-enquiry" className="french-enquiry"><p className="ms-lead">If you wish to learn French, send your enquiry. Share your current level, your goal and when you would like to start. We’ll discuss available options, timings and any fees before you commit.</p><FrenchEnquiry /></div>
+      <div id="french-enquiry" className="french-enquiry"><p className="ms-lead">If you wish to learn French, book your place below. Share your current level, your goal and when you would like to start; you will be contacted soon to discuss options, timings and any fees before you commit.</p><FrenchEnquiry /></div>
     </Section>
   </Page>;
 }

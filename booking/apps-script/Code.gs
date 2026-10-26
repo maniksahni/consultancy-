@@ -39,7 +39,7 @@ var BOOKING_HEADERS = ['ID', 'Token', 'Booked on', 'Status', 'Meeting (Paris tim
   'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes'];
 
 var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-var STATUSES = ['Booked', 'Completed', 'Attended', 'No-show', 'Cancelled'];
+var STATUSES = ['Booked', 'Completed', 'Attended', 'No-show', 'Cancelled', 'New enquiry', 'Contacted'];
 
 /* ------------------------------------------------------------------ setup */
 
@@ -103,6 +103,7 @@ function doPost(e) {
   try {
     switch (body.action) {
       case 'book': return json_(book_(body));
+      case 'enquiry': return json_(enquiry_(body));
       case 'feedback': return json_(feedback_(body));
       case 'admin.data': return json_(adminGuard_(body) || adminData_());
       case 'admin.update': return json_(adminGuard_(body) || adminUpdate_(body));
@@ -310,6 +311,32 @@ function book_(body) {
     }
     return { ok: true, id: id, start: booking.start, end: booking.end, meetLink: meet, timeZone: clientTz,
       confirmationSent: confirmationSent, ownerNoticeSent: ownerNoticeSent };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/** A "Learn French" request: saved as a client row (no call, no calendar event) for Harshita to follow up from admin. */
+function enquiry_(body) {
+  if (body.website) return { ok: false, error: 'Bad request.' };
+  var name = clean_(body.name, 80), email = clean_(body.email, 120).replace(/\s/g, '').toLowerCase();
+  var level = clean_(body.level, 40), goal = clean_(body.goal, 60), message = clean_(body.message, 600);
+  if (!name || !level || !goal || !message) return { ok: false, error: 'Please complete the required fields.' };
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return { ok: false, error: 'Enter a valid email address.' };
+  var s = settings_();
+  var lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    var row = {};
+    row['ID'] = 'FR-' + fmt_(new Date(), s.timeZone, 'yyMMdd') + '-' + Utilities.getUuid().slice(0, 4).toUpperCase();
+    row['Booked on'] = fmt_(new Date(), s.timeZone, 'yyyy-MM-dd HH:mm');
+    row['Status'] = 'New enquiry';
+    row['Client time zone'] = validTz_(body.timeZone);
+    row['Name'] = name; row['Email'] = email; row['WhatsApp'] = clean_(body.phone, 32);
+    row['Destination'] = 'Learn French'; row['Level'] = level; row['Intake'] = clean_(body.availability, 120);
+    row['Wants to explore'] = goal + ': ' + message; row['Found us via'] = 'Learn French page';
+    appendRow_(row);
+    return { ok: true, id: row['ID'] };
   } finally {
     lock.releaseLock();
   }

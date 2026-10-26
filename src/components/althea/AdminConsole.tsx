@@ -5,7 +5,9 @@ import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type Ad
 
 const KEY = "althea-admin-key";
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-type Tab = "upcoming" | "clients" | "availability" | "feedback";
+type Tab = "upcoming" | "enquiries" | "clients" | "availability" | "feedback";
+/** Requests saved without a call (e.g. Learn French): they have no call time. */
+const isEnquiry = (b: AdminBooking) => !b.start;
 
 /**
  * Private admin for Harshita: every client and their preparation profile, upcoming calls,
@@ -42,6 +44,8 @@ export default function AdminConsole() {
     return q ? bookings.filter(b => [b.name, b.email, b.phone, b.destination, b.currentStatus, b.id, b.source].join(" ").toLowerCase().includes(q)) : bookings;
   }, [bookings, query]);
   const rated = bookings.filter(b => Number(b.rating) > 0);
+  const enquiries = bookings.filter(isEnquiry);
+  const newEnquiries = enquiries.filter(b => b.status === "New enquiry").length;
   const month = new Date().toISOString().slice(0, 7);
   const sources = Object.entries(bookings.reduce<Record<string, number>>((acc, b) => { if (b.source) acc[b.source] = (acc[b.source] ?? 0) + 1; return acc; }, {})).sort((a, b) => b[1] - a[1]);
 
@@ -72,6 +76,7 @@ export default function AdminConsole() {
 
       <div className="adm-stats">
         <div className="adm-stat"><small>Upcoming calls</small><strong>{upcoming.length}</strong></div>
+        <div className="adm-stat"><small>New enquiries</small><strong>{newEnquiries}</strong></div>
         <div className="adm-stat"><small>Booked this month</small><strong>{bookings.filter(b => b.bookedOn.startsWith(month)).length}</strong></div>
         <div className="adm-stat"><small>All clients</small><strong>{bookings.length}</strong></div>
         <div className="adm-stat"><small>Average rating</small><strong>{rated.length ? (rated.reduce((s, b) => s + Number(b.rating), 0) / rated.length).toFixed(1) : "—"}</strong></div>
@@ -79,12 +84,16 @@ export default function AdminConsole() {
       </div>
 
       <div className="adm-tabs" role="tablist">
-        {([["upcoming", `Upcoming (${upcoming.length})`], ["clients", `All clients (${bookings.length})`], ["availability", "Availability"], ["feedback", `Feedback (${rated.length})`]] as [Tab, string][]).map(([id, label]) =>
+        {([["upcoming", `Upcoming (${upcoming.length})`], ["enquiries", `Enquiries (${enquiries.length})`], ["clients", `All clients (${bookings.length})`], ["availability", "Availability"], ["feedback", `Feedback (${rated.length})`]] as [Tab, string][]).map(([id, label]) =>
           <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>)}
       </div>
 
       {tab === "upcoming" && <div className="adm-list">
         {upcoming.length ? upcoming.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open />) : <p className="bk-empty">No upcoming calls yet.</p>}
+      </div>}
+
+      {tab === "enquiries" && <div className="adm-list">
+        {enquiries.length ? enquiries.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open={b.status === "New enquiry"} />) : <p className="bk-empty">No enquiries yet. Learn French requests appear here.</p>}
       </div>}
 
       {tab === "clients" && <div className="adm-list">
@@ -98,7 +107,7 @@ export default function AdminConsole() {
         {rated.length ? rated.map(b => <article key={b.id} className="adm-item">
           <div className="adm-item-head"><h3>{b.name}</h3><span className="adm-stars" aria-label={`${b.rating} out of 5`}>{"★".repeat(Number(b.rating))}{"☆".repeat(5 - Number(b.rating))}</span></div>
           {b.feedback && <p style={{ margin: 0 }}>“{b.feedback}”</p>}
-          <small className="adm-when">{formatIn(b.start, "Europe/Paris", { day: "numeric", month: "short", year: "numeric" })} · {b.destination}</small>
+          <small className="adm-when">{b.start ? formatIn(b.start, "Europe/Paris", { day: "numeric", month: "short", year: "numeric" }) : b.bookedOn} · {b.destination}</small>
         </article>) : <p className="bk-empty">Feedback appears here after calls. Clients get the request automatically when a call ends.</p>}
       </div>}
     </div>
@@ -110,9 +119,10 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
   const [notes, setNotes] = useState(b.notes);
   const [saving, setSaving] = useState("");
   const digits = b.phone.replace(/\D/g, "");
-  const paris = `${formatIn(b.start, "Europe/Paris", { weekday: "short", day: "numeric", month: "short" })}, ${formatIn(b.start, "Europe/Paris", { hour: "2-digit", minute: "2-digit", hour12: false })} Paris`;
-  const client = `${formatIn(b.start, b.timeZone, { hour: "2-digit", minute: "2-digit", hour12: false })} ${zoneLabel(b.timeZone, b.start)} for ${b.firstName}`;
-  const soon = b.status === "Booked" && new Date(b.start).getTime() - Date.now() < 30 * 60000 && new Date(b.end).getTime() > Date.now();
+  const enquiry = isEnquiry(b);
+  const paris = enquiry ? "" : `${formatIn(b.start, "Europe/Paris", { weekday: "short", day: "numeric", month: "short" })}, ${formatIn(b.start, "Europe/Paris", { hour: "2-digit", minute: "2-digit", hour12: false })} Paris`;
+  const client = enquiry ? "" : `${formatIn(b.start, b.timeZone, { hour: "2-digit", minute: "2-digit", hour12: false })} ${zoneLabel(b.timeZone, b.start)} for ${b.firstName}`;
+  const soon = !enquiry && b.status === "Booked" && new Date(b.start).getTime() - Date.now() < 30 * 60000 && new Date(b.end).getTime() > Date.now();
 
   async function save(patch: { status?: string; notes?: string }) {
     setSaving("Saving…");
@@ -134,7 +144,7 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         <h3>{b.name}</h3>
         <span className="adm-pill" data-s={b.status}>{b.status}</span>
       </div>
-      <p className="adm-when" style={{ margin: 0 }}><CalendarClock size={14} aria-hidden="true" /> {paris} <small>· {client} · {b.id}</small></p>
+      <p className="adm-when" style={{ margin: 0 }}><CalendarClock size={14} aria-hidden="true" /> {enquiry ? <>{b.destination} enquiry · received {b.bookedOn} <small>· {b.id}</small></> : <>{paris} <small>· {client} · {b.id}</small></>}</p>
       <div className="adm-row">
         {b.meetLink && b.status === "Booked" && <a className={`ms-btn ${soon ? "ms-btn-gold" : "ms-btn-ghost"}`} href={b.meetLink} target="_blank" rel="noreferrer"><Video size={15} aria-hidden="true" /><span>Join Meet</span></a>}
         {digits && <a className="ms-btn ms-btn-ghost" href={`https://wa.me/${digits}`} target="_blank" rel="noreferrer"><MessageCircle size={15} aria-hidden="true" /><span>WhatsApp</span></a>}
@@ -146,8 +156,10 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
       </div>
       {expanded && <>
         <dl className="adm-profile">
-          {([["Email", b.email], ["WhatsApp", b.phone], ["Destination", b.destination], ["Level", b.level], ["Intake", b.intake], ["Current status", b.currentStatus],
-            ["Education", b.background], ["Experience", b.experience || "—"], ["Challenges", b.challenges], ["Wants from the call", b.message], ["Found us via", b.source || "—"], ["Booked on", b.bookedOn]] as [string, string][])
+          {(enquiry
+            ? [["Email", b.email], ["WhatsApp", b.phone], ["Request", b.destination], ["French level", b.level], ["Preferred start", b.intake], ["Goal and enquiry", b.message], ["Received", b.bookedOn]]
+            : [["Email", b.email], ["WhatsApp", b.phone], ["Destination", b.destination], ["Level", b.level], ["Intake", b.intake], ["Current status", b.currentStatus],
+              ["Education", b.background], ["Experience", b.experience || "—"], ["Challenges", b.challenges], ["Wants from the call", b.message], ["Found us via", b.source || "—"], ["Booked on", b.bookedOn]] as [string, string][])
             .map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value || "—"}</dd></div>)}
           {b.rating && <div><dt>Feedback</dt><dd><span className="adm-stars">{"★".repeat(Number(b.rating))}</span> {b.feedback}</dd></div>}
         </dl>

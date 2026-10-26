@@ -113,6 +113,14 @@ export async function bookSlot(details: BookingDetails, start: string, website =
   return post<BookingResult>({ action: "book", ...details, start, timeZone: visitorTimeZone(), website });
 }
 
+/** A "Learn French" request with no call: saved as a client row for Harshita to follow up from admin. */
+export type FrenchEnquiryDetails = { name: string; email: string; phone: string; level: string; goal: string; availability: string; message: string };
+export async function sendEnquiry(details: FrenchEnquiryDetails, website = ""): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+  if (bookingMode() === "preview") { await wait(700); return { ok: true, id: "FR-PREVIEW" }; }
+  if (!bookingEndpoint) return { ok: false, error: "Requests can't be sent just now. Please email harshita@altheaconsulting.in." };
+  return post({ action: "enquiry", ...details, timeZone: visitorTimeZone(), website });
+}
+
 export async function sendFeedback(id: string, token: string, rating: number, comment: string): Promise<{ ok: boolean; error?: string; firstName?: string }> {
   if (bookingMode() === "preview") { await wait(600); return { ok: true, firstName: "Rahul" }; }
   if (!bookingEndpoint) return { ok: false, error: "Feedback is not available yet." };
