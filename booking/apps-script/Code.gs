@@ -26,8 +26,17 @@ var DEFAULT_SETTINGS = {
   ownerRole: 'Career Coach & France Expert',
   ownerEmail: 'harshita@altheaconsulting.in',
   brandName: 'Althéa Consulting',
-  whatsapp: '33755749029'
+  whatsapp: '33755749029',
+  // Self-service switches Harshita controls from the admin "Site settings" tab, no code change needed.
+  liveCountries: 'france',
+  bookingPaused: '',
+  bookingPausedMessage: '',
+  frenchPaused: '',
+  frenchPausedMessage: '',
+  bannerMessage: ''
 };
+/** Country slugs the booking form and admin recognise; anything else is ignored when saving. */
+var COUNTRY_SLUGS = ['france', 'uk', 'usa', 'canada', 'germany', 'ireland', 'australia'];
 
 var DEFAULT_AVAILABILITY = [
   ['Mon', '10:00', '16:00'], ['Tue', '10:00', '16:00'], ['Wed', '10:00', '16:00'],
@@ -92,6 +101,7 @@ function doGet(e) {
   try {
     if (action === 'slots') return json_({ ok: true, timeZone: settings_().timeZone, durationMinutes: settings_().slotMinutes, slots: computeSlots_() });
     if (action === 'ping') return json_({ ok: true });
+    if (action === 'publicSettings') return json_(publicSettings_());
     return json_({ ok: false, error: 'Unknown action.' });
   } catch (err) {
     return json_({ ok: false, error: 'Times could not be loaded. Please try again.' });
@@ -111,6 +121,7 @@ function doPost(e) {
       case 'admin.cancel': return json_(adminGuard_(body) || adminCancel_(body));
       case 'admin.sendFeedback': return json_(adminGuard_(body) || adminSendFeedback_(body));
       case 'admin.saveAvailability': return json_(adminGuard_(body) || adminSaveAvailability_(body));
+      case 'admin.saveSettings': return json_(adminGuard_(body) || adminSaveSettings_(body));
       default: return json_({ ok: false, error: 'Unknown action.' });
     }
   } catch (err) {
@@ -491,8 +502,27 @@ function adminData_() {
   if (bsh && bsh.getLastRow() > 1) bsh.getRange(2, 1, bsh.getLastRow() - 1, 2).getDisplayValues().forEach(function (r) { if (r[0]) blocked.push({ date: r[0], reason: r[1] }); });
   return {
     ok: true, bookings: bookings, availability: availability, blocked: blocked, statuses: STATUSES,
-    settings: { slotMinutes: s.slotMinutes, bufferMinutes: s.bufferMinutes, maxPerDay: s.maxPerDay, minNoticeHours: s.minNoticeHours, windowDays: s.windowDays, timeZone: s.timeZone },
+    settings: {
+      slotMinutes: s.slotMinutes, bufferMinutes: s.bufferMinutes, maxPerDay: s.maxPerDay, minNoticeHours: s.minNoticeHours, windowDays: s.windowDays, timeZone: s.timeZone,
+      ownerName: s.ownerName, ownerRole: s.ownerRole, whatsapp: s.whatsapp,
+      liveCountries: String(s.liveCountries || 'france').split(',').map(function (c) { return c.trim(); }).filter(Boolean),
+      bookingPaused: s.bookingPaused === 'yes', bookingPausedMessage: s.bookingPausedMessage || '',
+      frenchPaused: s.frenchPaused === 'yes', frenchPausedMessage: s.frenchPausedMessage || '',
+      bannerMessage: s.bannerMessage || ''
+    },
     sheetUrl: spreadsheet_().getUrl()
+  };
+}
+
+/** The slice of settings visitors' browsers may read without the admin key: used to gate booking/enquiries live. */
+function publicSettings_() {
+  var s = settings_();
+  return {
+    ok: true,
+    liveCountries: String(s.liveCountries || 'france').split(',').map(function (c) { return c.trim(); }).filter(Boolean),
+    bookingPaused: s.bookingPaused === 'yes', bookingPausedMessage: s.bookingPausedMessage || '',
+    frenchPaused: s.frenchPaused === 'yes', frenchPausedMessage: s.frenchPausedMessage || '',
+    bannerMessage: s.bannerMessage || '', whatsapp: s.whatsapp, ownerName: s.ownerName, ownerRole: s.ownerRole
   };
 }
 
@@ -535,6 +565,31 @@ function adminCancel_(body) {
     try { Calendar.Events.remove('primary', r['Calendar event ID'], { sendUpdates: 'all' }); } catch (err) { console.warn(err); }
   }
   setCell_(r._row, 'Status', 'Cancelled');
+  return { ok: true };
+}
+
+/** Site-wide switches: live countries, pausing bookings/enquiries, the owner's name shown in emails, the banner. */
+function adminSaveSettings_(body) {
+  var st = sheet_(spreadsheet_(), 'Settings', []);
+  var incoming = body.settings || {};
+  var current = st.getLastRow() > 1 ? st.getRange(2, 1, st.getLastRow() - 1, 2).getValues() : [];
+  function setKey(key, value) {
+    var idx = -1;
+    current.forEach(function (r, i) { if (r[0] === key) idx = i; });
+    if (idx === -1) { st.appendRow([key, value]); current.push([key, value]); } else st.getRange(idx + 2, 2).setValue(value);
+  }
+  setKey('ownerName', clean_(incoming.ownerName, 80) || DEFAULT_SETTINGS.ownerName);
+  setKey('ownerRole', clean_(incoming.ownerRole, 80) || DEFAULT_SETTINGS.ownerRole);
+  var wa = clean_(incoming.whatsapp, 20).replace(/[^\d]/g, '');
+  setKey('whatsapp', wa || DEFAULT_SETTINGS.whatsapp);
+  var countries = (Array.isArray(incoming.liveCountries) ? incoming.liveCountries : []).filter(function (c) { return COUNTRY_SLUGS.indexOf(c) !== -1; });
+  setKey('liveCountries', (countries.length ? countries : ['france']).join(','));
+  setKey('bookingPaused', incoming.bookingPaused ? 'yes' : '');
+  setKey('bookingPausedMessage', clean_(incoming.bookingPausedMessage, 300));
+  setKey('frenchPaused', incoming.frenchPaused ? 'yes' : '');
+  setKey('frenchPausedMessage', clean_(incoming.frenchPausedMessage, 300));
+  setKey('bannerMessage', clean_(incoming.bannerMessage, 200));
+  settings_.cache = null;
   return { ok: true };
 }
 

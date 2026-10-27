@@ -5,6 +5,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { brand } from "@/config/brand";
 import { sanitizeEnquiryValue } from "@/lib/consultation";
 import { sendEnquiry } from "@/lib/booking";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 
 /** "Learn French" request: Book saves the details straight to the admin panel; no call is scheduled. */
 export default function FrenchEnquiry() {
@@ -12,6 +13,7 @@ export default function FrenchEnquiry() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ name: string; email: string } | null>(null);
+  const site = useSiteSettings();
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
@@ -31,6 +33,10 @@ export default function FrenchEnquiry() {
       setError(`We couldn't send your request just now. Please try again, or email ${brand.email}.`);
     } finally { setBusy(false); }
   }
+  if (site.frenchPaused) return <div className="ms-form french-form french-done" role="status" aria-live="polite">
+    <p className="ms-form-title">We’re not taking new requests right now.</p>
+    <p className="ms-muted">{site.frenchPausedMessage || `Please check back soon, or email ${brand.email} and we'll get back to you.`}</p>
+  </div>;
   if (done) return <div className="ms-form french-form french-done" role="status" aria-live="polite">
     <CheckCircle2 size={28} aria-hidden="true" />
     <p className="ms-form-title">Merci, {done.name}! You will be contacted soon.</p>

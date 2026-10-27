@@ -1,4 +1,5 @@
 import { bookingEndpoint, meetingMinutes } from "@/config/booking";
+import { liveCountries as staticLiveCountries } from "@/lib/comingSoon";
 import type { BookingDetails } from "@/lib/consultation";
 
 /**
@@ -17,8 +18,32 @@ export type AdminBooking = {
 };
 export type Availability = { day: string; start: string; end: string };
 export type Blocked = { date: string; reason: string };
-export type BookingSettings = { slotMinutes: number; bufferMinutes: number; maxPerDay: number; minNoticeHours: number; windowDays: number; timeZone: string };
+export type BookingSettings = {
+  slotMinutes: number; bufferMinutes: number; maxPerDay: number; minNoticeHours: number; windowDays: number; timeZone: string;
+  ownerName: string; ownerRole: string; whatsapp: string; liveCountries: string[];
+  bookingPaused: boolean; bookingPausedMessage: string; frenchPaused: boolean; frenchPausedMessage: string; bannerMessage: string;
+};
 export type AdminData = { ok: true; bookings: AdminBooking[]; availability: Availability[]; blocked: Blocked[]; settings: BookingSettings; statuses: string[]; sheetUrl: string };
+
+/** The site-wide switches Harshita edits herself in admin (Site settings tab): any page can read these live, with no redeploy. */
+export type PublicSettings = {
+  liveCountries: string[]; bookingPaused: boolean; bookingPausedMessage: string;
+  frenchPaused: boolean; frenchPausedMessage: string; bannerMessage: string; whatsapp: string; ownerName: string; ownerRole: string;
+};
+export const defaultPublicSettings: PublicSettings = {
+  liveCountries: [...staticLiveCountries], bookingPaused: false, bookingPausedMessage: "",
+  frenchPaused: false, frenchPausedMessage: "", bannerMessage: "", whatsapp: "33755749029", ownerName: "Harshita Kohli", ownerRole: "Career Coach & France Expert",
+};
+/** Reads the live switches. Falls back to the static defaults in preview mode, offline, or before the backend answers. */
+export async function fetchPublicSettings(): Promise<PublicSettings> {
+  if (bookingMode() !== "live") return defaultPublicSettings;
+  try {
+    const response = await fetch(`${bookingEndpoint}?action=publicSettings`);
+    const data = await response.json();
+    if (!data.ok) return defaultPublicSettings;
+    return { ...defaultPublicSettings, ...data };
+  } catch { return defaultPublicSettings; }
+}
 
 export function bookingMode(): BookingMode {
   if (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("preview") === "booking") return "preview";
@@ -91,7 +116,11 @@ function previewAdmin(): AdminData {
     ok: true, bookings, statuses: ["Booked", "Completed", "Attended", "No-show", "Cancelled"], sheetUrl: "https://docs.google.com/spreadsheets/",
     availability: ["Mon", "Tue", "Wed", "Thu", "Fri"].map(day => ({ day, start: "10:00", end: "16:00" })),
     blocked: [{ date: "2026-12-25", reason: "Christmas" }],
-    settings: { slotMinutes: meetingMinutes, bufferMinutes: 5, maxPerDay: 8, minNoticeHours: 12, windowDays: 21, timeZone: "Europe/Paris" },
+    settings: {
+      slotMinutes: meetingMinutes, bufferMinutes: 5, maxPerDay: 8, minNoticeHours: 12, windowDays: 21, timeZone: "Europe/Paris",
+      ownerName: "Harshita Kohli", ownerRole: "Career Coach & France Expert", whatsapp: "33755749029", liveCountries: [...staticLiveCountries],
+      bookingPaused: false, bookingPausedMessage: "", frenchPaused: false, frenchPausedMessage: "", bannerMessage: "",
+    },
   };
 }
 

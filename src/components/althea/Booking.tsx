@@ -5,6 +5,7 @@ import { brand } from "@/config/brand";
 import { meetingMinutes } from "@/config/booking";
 import { assistanceOptions, bookingSchema, buildConsultationEmailUrl, currentStatuses, enquiryLimits, referralSources, type BookingDetails } from "@/lib/consultation";
 import { isComingSoon } from "@/lib/comingSoon";
+import { useSiteSettings } from "@/lib/useSiteSettings";
 import { commonHomeCountries, otherHomeCountries } from "@/lib/countries";
 import { bookSlot, bookingMode, fetchSlots, formatIn, googleCalendarUrl, visitorTimeZone, zoneLabel, type BookingMode } from "@/lib/booking";
 
@@ -18,9 +19,6 @@ const STEP_FIELDS: (keyof BookingDetails)[][] = [
 const STEPS = ["Your details", "Book your call"];
 const COUNTRIES = ["France", "UK", "USA", "Canada", "Germany", "Australia", "Ireland", "Undecided"];
 const COUNTRY_SLUGS: Record<string, string> = { france: "France", uk: "UK", usa: "USA", canada: "Canada", germany: "Germany", australia: "Australia", ireland: "Ireland" };
-/** Destinations shown but not bookable yet. */
-const SOON = Object.entries(COUNTRY_SLUGS).filter(([slug]) => isComingSoon(slug)).map(([, label]) => label);
-
 /**
  * Two-step consultation booking: your details and the help you need, then a free 15-minute slot.
  * "Book now" books the slot through the Apps Script backend (Calendar event + Meet link + emails + sheet row).
@@ -44,6 +42,9 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
   /** Context from the link that opened the form (a service, a job role), added after the chosen help. */
   const [context, setContext] = useState("");
   const tz = useMemo(() => (typeof window === "undefined" ? "Asia/Kolkata" : visitorTimeZone()), []);
+  /** Harshita's live switches: which countries are open for booking, and whether booking is paused. */
+  const site = useSiteSettings();
+  const SOON = Object.entries(COUNTRY_SLUGS).filter(([slug]) => !site.liveCountries.includes(slug)).map(([, label]) => label);
 
   useEffect(() => {
     setMode(bookingMode());
@@ -183,6 +184,15 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
     </label>
   );
 
+  if (site.bookingPaused) return (
+    <section id="consultation-form" className="booking-form ms-form bk-done" aria-live="polite">
+      <p className="ms-kicker">BOOKINGS ARE PAUSED</p>
+      <h3 className="bk-done-title">We’re not taking new calls <em>right now.</em></h3>
+      <p className="ms-muted">{site.bookingPausedMessage || "Please check back soon, or email us and we’ll get back to you."}</p>
+      <a className="ms-btn ms-btn-gold" href={`mailto:${brand.email}`}><span>Email {brand.person}</span></a>
+    </section>
+  );
+
   if (booked) return (
     <section id="consultation-form" ref={doneRef} className="booking-form ms-form bk-done" aria-live="polite">
       <div className="bk-done-badge"><CalendarCheck size={26} aria-hidden="true" /></div>
@@ -214,6 +224,7 @@ export default function Booking({ defaultCountry = "France", defaultMessage }: {
   const progress = ((step + 1) / STEPS.length) * 100;
   return (
     <form id="consultation-form" ref={formRef} className="booking-form ms-form bk-form" onSubmit={submit} noValidate data-step={step}>
+      {site.bannerMessage && <p className="bk-banner">{site.bannerMessage}</p>}
       <div className="ms-form-head"><span className="ms-form-icon"><CalendarCheck size={20} aria-hidden="true" /></span><div><p className="ms-kicker">FREE {meetingMinutes}-MINUTE CALL</p><p className="ms-form-title">{["Tell us what you need.", "Book your call."][step]}</p></div></div>
 
       <ol className="bk-steps" aria-label="Booking steps">

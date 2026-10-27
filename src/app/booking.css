@@ -18,6 +18,7 @@
 .bk-form textarea::placeholder, .bk-form input::placeholder { color:#8f8aa6; }
 .bk-zone { display:flex; align-items:center; gap:8px; margin:0; font-size:13.5px; color:var(--ms-muted); }
 .bk-preview { margin:0; padding:10px 14px; border-radius:12px; background:#ffb46b1a; border:1px solid #ffb46b40; color:#ffd6ad; font-size:13.5px; }
+.bk-banner { margin:0 0 16px; padding:10px 14px; border-radius:12px; background:rgba(181,156,255,.1); border:1px solid rgba(181,156,255,.32); color:inherit; font-size:13.5px; font-weight:600; }
 .bk-loading, .bk-empty { display:flex; align-items:center; gap:10px; margin:0; padding:16px; border-radius:14px; background:#ffffff08; border:1px dashed var(--ms-line); color:var(--ms-muted); font-size:14px; line-height:1.55; }
 .bk-spin { animation:bk-spin 1s linear infinite; }
 @keyframes bk-spin { to { transform:rotate(360deg); } }
@@ -107,6 +108,7 @@
 .adm-hours { display:grid; gap:8px; }
 .adm-hour { display:grid; grid-template-columns:90px minmax(0,1fr) minmax(0,1fr) auto; gap:8px; align-items:center; }
 .adm-settings { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
+.adm-countries { display:flex; flex-wrap:wrap; gap:10px; }
 .adm-stars { color:#ffd27a; letter-spacing:2px; }
 @media (max-width:640px) {
   .adm-hour { grid-template-columns:64px minmax(0,1fr) minmax(0,1fr) auto; }

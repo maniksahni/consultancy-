@@ -5,7 +5,8 @@ import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type Ad
 
 const KEY = "althea-admin-key";
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-type Tab = "upcoming" | "enquiries" | "clients" | "availability" | "feedback";
+type Tab = "upcoming" | "enquiries" | "clients" | "availability" | "settings" | "feedback";
+const COUNTRY_OPTIONS: [string, string][] = [["france", "France"], ["uk", "United Kingdom"], ["usa", "USA"], ["canada", "Canada"], ["germany", "Germany"], ["ireland", "Ireland"], ["australia", "Australia"]];
 /** Requests saved without a call (e.g. Learn French): they have no call time. */
 const isEnquiry = (b: AdminBooking) => !b.start;
 /** A call that has ended and was not cancelled or missed: its feedback email (with the package) is sent from admin. */
@@ -87,7 +88,7 @@ export default function AdminConsole() {
       </div>
 
       <div className="adm-tabs" role="tablist">
-        {([["upcoming", `Upcoming (${upcoming.length})`], ["enquiries", `Enquiries (${enquiries.length})`], ["clients", `All clients (${bookings.length})`], ["availability", "Availability"], ["feedback", `Feedback (${rated.length})`]] as [Tab, string][]).map(([id, label]) =>
+        {([["upcoming", `Upcoming (${upcoming.length})`], ["enquiries", `Enquiries (${enquiries.length})`], ["clients", `All clients (${bookings.length})`], ["availability", "Availability"], ["settings", "Site settings"], ["feedback", `Feedback (${rated.length})`]] as [Tab, string][]).map(([id, label]) =>
           <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>)}
       </div>
 
@@ -105,6 +106,8 @@ export default function AdminConsole() {
       </div>}
 
       {tab === "availability" && <AvailabilityEditor adminKey={key} initial={data} onSaved={() => load()} />}
+
+      {tab === "settings" && <SiteSettingsEditor adminKey={key} initial={data} onSaved={() => load()} />}
 
       {tab === "feedback" && <div className="adm-list">
         {rated.length ? rated.map(b => <article key={b.id} className="adm-item">
@@ -270,6 +273,88 @@ function AvailabilityEditor({ adminKey, initial, onSaved }: { adminKey: string; 
       </section>
 
       <div className="adm-row"><button type="button" className="ms-btn ms-btn-gold" onClick={save}><span>Save availability</span></button>{status && <span className="adm-when" role="status">{status}</span>}</div>
+    </div>
+  );
+}
+
+/**
+ * Everything else Harshita can change herself, no code or redeploy needed: which countries are open for
+ * booking, pausing bookings or Learn French requests (with her own message), her name and WhatsApp shown
+ * in emails, and a short announcement banner. Changes here take effect on the live site within a minute.
+ */
+function SiteSettingsEditor({ adminKey, initial, onSaved }: { adminKey: string; initial: AdminData; onSaved: () => void }) {
+  const s = initial.settings;
+  const [countries, setCountries] = useState<string[]>(s.liveCountries.length ? s.liveCountries : ["france"]);
+  const [bookingPaused, setBookingPaused] = useState(s.bookingPaused);
+  const [bookingPausedMessage, setBookingPausedMessage] = useState(s.bookingPausedMessage);
+  const [frenchPaused, setFrenchPaused] = useState(s.frenchPaused);
+  const [frenchPausedMessage, setFrenchPausedMessage] = useState(s.frenchPausedMessage);
+  const [bannerMessage, setBannerMessage] = useState(s.bannerMessage);
+  const [ownerName, setOwnerName] = useState(s.ownerName);
+  const [ownerRole, setOwnerRole] = useState(s.ownerRole);
+  const [whatsapp, setWhatsapp] = useState(s.whatsapp);
+  const [status, setStatus] = useState("");
+
+  function toggleCountry(slug: string) {
+    setCountries(list => list.includes(slug) ? list.filter(c => c !== slug) : [...list, slug]);
+  }
+  async function save() {
+    setStatus("Saving…");
+    const result = await adminCall("admin.saveSettings", adminKey, {
+      settings: { liveCountries: countries.length ? countries : ["france"], bookingPaused, bookingPausedMessage, frenchPaused, frenchPausedMessage, bannerMessage, ownerName, ownerRole, whatsapp },
+    });
+    setStatus(result.ok ? "Saved. Live on the website within a minute." : result.error ?? "Couldn't save.");
+    if (result.ok) onSaved();
+  }
+
+  return (
+    <div className="adm-list">
+      <section className="adm-card">
+        <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 4 }}>Countries open for booking</p>
+        <p className="adm-when" style={{ marginBottom: 12 }}>Students can book a call, see jobs and courses for a ticked country. Unticked countries still show their information pages, but every action says “Coming soon”.</p>
+        <div className="adm-countries">
+          {COUNTRY_OPTIONS.map(([slug, label]) => <label key={slug} className="bk-choice"><input type="checkbox" checked={countries.includes(slug)} onChange={() => toggleCountry(slug)} /><span>{label}</span></label>)}
+        </div>
+      </section>
+
+      <section className="adm-card">
+        <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 12 }}>Pause new requests</p>
+        <div className="adm-settings">
+          <div className="ms-field"><span>Booking calls</span>
+            <label className="bk-choice"><input type="checkbox" checked={bookingPaused} onChange={e => setBookingPaused(e.target.checked)} /><span>Pause — hides the booking form everywhere</span></label>
+          </div>
+          <label className="ms-field ms-field-wide"><span>Message shown instead</span>
+            <input value={bookingPausedMessage} onChange={e => setBookingPausedMessage(e.target.value)} maxLength={300} placeholder="e.g. Back from 5 November. Email us and we'll get back to you." />
+          </label>
+          <div className="ms-field"><span>Learn French requests</span>
+            <label className="bk-choice"><input type="checkbox" checked={frenchPaused} onChange={e => setFrenchPaused(e.target.checked)} /><span>Pause — hides the Learn French form</span></label>
+          </div>
+          <label className="ms-field ms-field-wide"><span>Message shown instead</span>
+            <input value={frenchPausedMessage} onChange={e => setFrenchPausedMessage(e.target.value)} maxLength={300} placeholder="e.g. Taking a short break, back soon." />
+          </label>
+        </div>
+      </section>
+
+      <section className="adm-card">
+        <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 4 }}>Announcement banner</p>
+        <p className="adm-when" style={{ marginBottom: 12 }}>An optional short line shown above the booking form. Leave empty to show nothing.</p>
+        <label className="ms-field ms-field-wide"><span>Banner text</span>
+          <input value={bannerMessage} onChange={e => setBannerMessage(e.target.value)} maxLength={200} placeholder="e.g. Limited slots this week — book early." />
+        </label>
+      </section>
+
+      <section className="adm-card">
+        <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 12 }}>Your details in emails</p>
+        <div className="adm-settings">
+          <label className="ms-field"><span>Your name</span><input value={ownerName} onChange={e => setOwnerName(e.target.value)} maxLength={80} /></label>
+          <label className="ms-field"><span>Your title</span><input value={ownerRole} onChange={e => setOwnerRole(e.target.value)} maxLength={80} /></label>
+          <label className="ms-field"><span>Partnerships WhatsApp</span><input value={whatsapp} onChange={e => setWhatsapp(e.target.value.replace(/[^\d]/g, ""))} maxLength={20} placeholder="33755749029" />
+            <small className="bk-hint">Digits only, with country code — no + or spaces.</small>
+          </label>
+        </div>
+      </section>
+
+      <div className="adm-row"><button type="button" className="ms-btn ms-btn-gold" onClick={save}><span>Save site settings</span></button>{status && <span className="adm-when" role="status">{status}</span>}</div>
     </div>
   );
 }
