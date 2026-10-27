@@ -12,6 +12,8 @@ export type AdminBooking = {
   id: string; status: string; bookedOn: string; start: string; end: string; timeZone: string; name: string; firstName: string;
   email: string; phone: string; destination: string; level: string; intake: string; currentStatus: string; homeCountry?: string; background: string;
   experience: string; challenges: string; message: string; source: string; meetLink: string; rating: string; feedback: string; notes: string;
+  /** When the feedback email was sent ('yes' on older rows), and the package written for that student. */
+  feedbackSent?: string; package?: string;
 };
 export type Availability = { day: string; start: string; end: string };
 export type Blocked = { date: string; reason: string };

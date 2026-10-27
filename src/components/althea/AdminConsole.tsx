@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { CalendarClock, ExternalLink, Loader2, LogOut, MessageCircle, Plus, RefreshCw, Search, Trash2, Video } from "lucide-react";
+import { CalendarClock, ExternalLink, Loader2, LogOut, Mail, MessageCircle, Plus, RefreshCw, Search, Trash2, Video } from "lucide-react";
 import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type AdminData, type Availability, type Blocked, type BookingSettings } from "@/lib/booking";
 
 const KEY = "althea-admin-key";
@@ -8,6 +8,8 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 type Tab = "upcoming" | "enquiries" | "clients" | "availability" | "feedback";
 /** Requests saved without a call (e.g. Learn French): they have no call time. */
 const isEnquiry = (b: AdminBooking) => !b.start;
+/** A call that has ended and was not cancelled or missed: its feedback email (with the package) is sent from admin. */
+const needsFeedbackMail = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && b.status !== "No-show" && new Date(b.end).getTime() <= Date.now();
 
 /**
  * Private admin for Harshita: every client and their preparation profile, upcoming calls,
@@ -77,6 +79,7 @@ export default function AdminConsole() {
       <div className="adm-stats">
         <div className="adm-stat"><small>Upcoming calls</small><strong>{upcoming.length}</strong></div>
         <div className="adm-stat"><small>New enquiries</small><strong>{newEnquiries}</strong></div>
+        <div className="adm-stat"><small>Feedback emails to send</small><strong>{bookings.filter(b => needsFeedbackMail(b) && !b.feedbackSent).length}</strong></div>
         <div className="adm-stat"><small>Booked this month</small><strong>{bookings.filter(b => b.bookedOn.startsWith(month)).length}</strong></div>
         <div className="adm-stat"><small>All clients</small><strong>{bookings.length}</strong></div>
         <div className="adm-stat"><small>Average rating</small><strong>{rated.length ? (rated.reduce((s, b) => s + Number(b.rating), 0) / rated.length).toFixed(1) : "—"}</strong></div>
@@ -108,7 +111,7 @@ export default function AdminConsole() {
           <div className="adm-item-head"><h3>{b.name}</h3><span className="adm-stars" aria-label={`${b.rating} out of 5`}>{"★".repeat(Number(b.rating))}{"☆".repeat(5 - Number(b.rating))}</span></div>
           {b.feedback && <p style={{ margin: 0 }}>“{b.feedback}”</p>}
           <small className="adm-when">{b.start ? formatIn(b.start, "Europe/Paris", { day: "numeric", month: "short", year: "numeric" }) : b.bookedOn} · {b.destination}</small>
-        </article>) : <p className="bk-empty">Feedback appears here after calls. Clients get the request automatically when a call ends.</p>}
+        </article>) : <p className="bk-empty">Feedback appears here after calls. Send each client’s feedback email, with their package, from their card under Clients once the call has ended.</p>}
       </div>}
     </div>
   );
@@ -154,6 +157,7 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         <button type="button" className="ms-btn ms-btn-ghost" onClick={() => setExpanded(x => !x)} aria-expanded={expanded}><span>{expanded ? "Hide profile" : "Full profile"}</span></button>
         {saving && <small className="adm-when" role="status">{saving}</small>}
       </div>
+      {needsFeedbackMail(b) && <FeedbackMailer b={b} adminKey={adminKey} onChange={onChange} />}
       {expanded && <>
         <dl className="adm-profile">
           {(enquiry
@@ -168,6 +172,44 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         </label>
       </>}
     </article>
+  );
+}
+
+/** After a call: Harshita writes this student's package, then sends the feedback email that carries it. */
+function FeedbackMailer({ b, adminKey, onChange }: { b: AdminBooking; adminKey: string; onChange: (id: string, patch: Partial<AdminBooking>) => void }) {
+  const sent = b.feedbackSent ?? "";
+  const [open, setOpen] = useState(!sent);
+  const [pkg, setPkg] = useState(b.package ?? "");
+  const [status, setStatus] = useState("");
+
+  async function send() {
+    if (!pkg.trim() && !confirm(`Send ${b.firstName}'s feedback email without a package?`)) return;
+    setStatus("Sending…");
+    const result = await adminCall<{ ok: boolean; error?: string; sentOn?: string }>("admin.sendFeedback", adminKey, { id: b.id, package: pkg });
+    if (!result.ok) return setStatus(result.error ?? "Couldn't send. Please try again.");
+    setStatus(`Sent to ${b.email}`);
+    setOpen(false);
+    onChange(b.id, { feedbackSent: result.sentOn ?? "yes", package: pkg.trim(), status: b.status === "Booked" ? "Completed" : b.status });
+  }
+
+  if (!open) return (
+    <div className="adm-row adm-feedback-mail">
+      <small className="adm-when"><Mail size={14} aria-hidden="true" /> Feedback email sent{sent && sent !== "yes" ? ` ${sent}` : ""}{status ? ` · ${status}` : ""}</small>
+      <button type="button" className="ms-btn ms-btn-ghost" onClick={() => { setOpen(true); setStatus(""); }}><span>Edit package and resend</span></button>
+    </div>
+  );
+  return (
+    <div className="adm-feedback-mail">
+      <label className="ms-field adm-note"><span>Package for {b.firstName} (goes in the feedback email)</span>
+        <textarea rows={5} value={pkg} onChange={e => setPkg(e.target.value)} maxLength={3000}
+          placeholder={"e.g. Complete France application package: €___\nIncludes: shortlist, SOP and CV review, Campus France and visa guidance\nValid until: ___"} />
+      </label>
+      <div className="adm-row">
+        <button type="button" className="ms-btn ms-btn-gold" onClick={send} disabled={status === "Sending…"}><Mail size={15} aria-hidden="true" /><span>{sent ? "Resend feedback email" : "Send feedback email"}</span></button>
+        {sent && <button type="button" className="ms-btn ms-btn-ghost" onClick={() => setOpen(false)}><span>Close</span></button>}
+        {status && <small className="adm-when" role="status">{status}</small>}
+      </div>
+    </div>
   );
 }
 

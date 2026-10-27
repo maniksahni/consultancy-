@@ -203,9 +203,15 @@ function sendFeedbackRequest_(b) {
     + '<p style="margin:0 0 18px;color:' + BRAND.muted + '">It takes ten seconds and helps ' + esc_(s.ownerName) + ' guide every student better. Tap a number: 1 is poor, 5 is excellent.</p>'
     + '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 8px"><tr>' + stars + '</tr></table>'
     + '<div style="margin:16px 0 0">' + button_(base, 'Tell us about your meeting') + '</div>'
-    + '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Your next steps</h2>'
-    + '<p style="margin:0">Keep your notes from today handy. If you would like Althéa to support your application, visa or move to France, simply reply to this email.</p>';
-  var text = 'Merci ' + b.firstName + '! How was your call with ' + s.ownerName + '? Rate it in ten seconds: ' + base;
+    + (b.package
+      ? '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Your package with Althéa</h2>'
+        + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-radius:16px;background:#f4f0ff;border:1px solid #e2dafe"><tr><td style="padding:18px 20px;color:' + BRAND.text + '">'
+        + esc_(b.package).replace(/\n/g, '<br>') + '</td></tr></table>'
+        + '<p style="margin:14px 0 0">To go ahead, or if you have any questions, simply reply to this email.</p>'
+      : '<h2 style="margin:26px 0 8px;font:600 20px/1.25 Georgia,serif;color:' + BRAND.text + '">Your next steps</h2>'
+        + '<p style="margin:0">Keep your notes from today handy. If you would like Althéa to support your application, visa or move to France, simply reply to this email.</p>');
+  var text = 'Merci ' + b.firstName + '! How was your call with ' + s.ownerName + '? Rate it in ten seconds: ' + base
+    + (b.package ? '\n\nYour package with Althéa:\n' + b.package + '\n\nTo go ahead, simply reply to this email.' : '');
   send_(b.email, 'How was your call with ' + s.ownerName + '?', layout_('Rate your call in ten seconds.', inner), text);
 }
 

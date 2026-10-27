@@ -8,7 +8,8 @@
  *     branded confirmation email, and a row in the "Althéa bookings" Google Sheet
  *   - record post-meeting feedback
  *   - power the admin page (clients, statuses, notes, availability), protected by ADMIN_KEY
- * A 5-minute trigger sends the 24-hour and 1-hour reminders and the feedback email after each call.
+ * A 5-minute trigger sends the 24-hour and 1-hour reminders and marks calls Completed when they end.
+ * The feedback email is sent from the admin page, with the package Harshita writes for that student.
  *
  * Setup: see booking/SETUP.md. Run setup() once from the editor, then deploy as a web app.
  */
@@ -36,7 +37,7 @@ var DEFAULT_AVAILABILITY = [
 var BOOKING_HEADERS = ['ID', 'Token', 'Booked on', 'Status', 'Meeting (Paris time)', 'Start ISO', 'End ISO', 'Client time zone',
   'Name', 'Email', 'WhatsApp', 'Destination', 'Level', 'Intake', 'Current status', 'Education background', 'Work experience',
   'Challenges', 'Wants to explore', 'Found us via', 'Meet link', 'Calendar event ID',
-  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes', 'Home country'];
+  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes', 'Home country', 'Package'];
 
 var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 var STATUSES = ['Booked', 'Completed', 'Attended', 'No-show', 'Cancelled', 'New enquiry', 'Contacted'];
@@ -108,6 +109,7 @@ function doPost(e) {
       case 'admin.data': return json_(adminGuard_(body) || adminData_());
       case 'admin.update': return json_(adminGuard_(body) || adminUpdate_(body));
       case 'admin.cancel': return json_(adminGuard_(body) || adminCancel_(body));
+      case 'admin.sendFeedback': return json_(adminGuard_(body) || adminSendFeedback_(body));
       case 'admin.saveAvailability': return json_(adminGuard_(body) || adminSaveAvailability_(body));
       default: return json_({ ok: false, error: 'Unknown action.' });
     }
@@ -417,7 +419,7 @@ function bookingView_(r) {
     background: r['Education background'], experience: r['Work experience'], challenges: r['Challenges'],
     message: r['Wants to explore'], source: r['Found us via'], meetLink: r['Meet link'], eventId: r['Calendar event ID'],
     reminder24: r['Reminder 24h sent'], reminder1: r['Reminder 1h sent'], feedbackSent: r['Feedback email sent'],
-    rating: r['Rating'], feedback: r['Feedback'], notes: r['Notes']
+    rating: r['Rating'], feedback: r['Feedback'], notes: r['Notes'], package: r['Package'] || ''
   };
 }
 
@@ -440,11 +442,8 @@ function tick() {
         if (start - booked > 2 * 3600000) sendReminder_(b, 'hour');
         setCell_(r._row, 'Reminder 1h sent', 'yes');
       }
-      if (!r['Feedback email sent'] && now >= end) {
-        sendFeedbackRequest_(b);
-        setCell_(r._row, 'Feedback email sent', 'yes');
-        setCell_(r._row, 'Status', 'Completed');
-      }
+      // The feedback email waits for Harshita: she adds the student's package in admin and sends it.
+      if (now >= end) setCell_(r._row, 'Status', 'Completed');
     } catch (err) { console.error('tick ' + r['ID'] + ': ' + err); }
   });
 }
@@ -505,6 +504,28 @@ function adminUpdate_(body) {
   if (body.status && STATUSES.indexOf(body.status) !== -1) setCell_(r._row, 'Status', body.status);
   if (typeof body.notes === 'string') setCell_(r._row, 'Notes', clean_(body.notes, 2000));
   return { ok: true };
+}
+
+/** Package text keeps its line breaks; tags and control characters are removed. */
+function cleanText_(value, limit) {
+  return String(value == null ? '' : value).replace(/<[^>]*>/g, '').replace(/\r\n?/g, '\n').replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, ' ')
+    .replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, limit);
+}
+
+/** Sends (or re-sends) the feedback email with the package Harshita wrote for this student. */
+function adminSendFeedback_(body) {
+  var r = findRow_(clean_(body.id, 40));
+  if (!r) return { ok: false, error: 'Booking not found.' };
+  if (!r['Start ISO']) return { ok: false, error: 'Feedback emails are for calls only.' };
+  var pkg = cleanText_(body.package, 3000);
+  setCell_(r._row, 'Package', pkg);
+  var b = bookingView_(r);
+  b.package = pkg;
+  sendFeedbackRequest_(b);
+  var sentOn = fmt_(new Date(), settings_().timeZone, 'yyyy-MM-dd HH:mm');
+  setCell_(r._row, 'Feedback email sent', sentOn);
+  if (r['Status'] === 'Booked') setCell_(r._row, 'Status', 'Completed');
+  return { ok: true, sentOn: sentOn };
 }
 
 function adminCancel_(body) {
