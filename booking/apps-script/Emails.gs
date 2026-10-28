@@ -215,6 +215,18 @@ function sendFeedbackRequest_(b) {
   send_(b.email, 'How was your call with ' + s.ownerName + '?', layout_('Rate your call in ten seconds.', inner), text);
 }
 
+/** A student who couldn't make their call: a short email inviting them to pick a new time. */
+function sendRescheduleEmail_(b) {
+  var s = settings_();
+  var w = whenClient_(b);
+  var inner = '<h1 style="margin:0 0 6px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">Sorry we missed you, ' + esc_(b.firstName) + '.</h1>'
+    + '<p style="margin:0;color:' + BRAND.muted + '">Your call on ' + esc_(w.day) + ' at ' + esc_(w.time) + ' didn\'t happen. No problem at all \u2014 pick a new time that works for you.</p>'
+    + '<div style="margin:18px 0 4px">' + button_(s.siteUrl + '/book-consultation', 'Book a new time') + '</div>'
+    + '<p style="margin:18px 0 0;color:' + BRAND.muted + '">Or simply reply to this email and ' + esc_(s.ownerName) + ' will help you find a time.</p>';
+  var text = 'Sorry we missed you, ' + b.firstName + '! Your call on ' + w.day + ' at ' + w.time + ' didn\'t happen. Book a new time: ' + s.siteUrl + '/book-consultation';
+  send_(b.email, 'Let\'s find you a new time, ' + b.firstName, layout_('Pick a new time for your call.', inner), text);
+}
+
 function sendOwnerFeedback_(b, rating, comment) {
   var inner = '<div style="font:600 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:' + BRAND.green + '">Feedback · ' + esc_(b.id) + '</div>'
     + '<h1 style="margin:6px 0 4px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">' + esc_(b.name) + ' rated the call ' + rating + '/5</h1>'

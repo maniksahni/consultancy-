@@ -46,7 +46,7 @@ var DEFAULT_AVAILABILITY = [
 var BOOKING_HEADERS = ['ID', 'Token', 'Booked on', 'Status', 'Meeting (Paris time)', 'Start ISO', 'End ISO', 'Client time zone',
   'Name', 'Email', 'WhatsApp', 'Destination', 'Level', 'Intake', 'Current status', 'Education background', 'Work experience',
   'Challenges', 'Wants to explore', 'Found us via', 'Meet link', 'Calendar event ID',
-  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes', 'Home country', 'Package'];
+  'Reminder 24h sent', 'Reminder 1h sent', 'Feedback email sent', 'Rating', 'Feedback', 'Notes', 'Home country', 'Package', 'Reschedule sent'];
 
 var DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 var STATUSES = ['Booked', 'Completed', 'Attended', 'No-show', 'Cancelled', 'New enquiry', 'Contacted'];
@@ -120,6 +120,7 @@ function doPost(e) {
       case 'admin.update': return json_(adminGuard_(body) || adminUpdate_(body));
       case 'admin.cancel': return json_(adminGuard_(body) || adminCancel_(body));
       case 'admin.sendFeedback': return json_(adminGuard_(body) || adminSendFeedback_(body));
+      case 'admin.sendReschedule': return json_(adminGuard_(body) || adminSendReschedule_(body));
       case 'admin.saveAvailability': return json_(adminGuard_(body) || adminSaveAvailability_(body));
       case 'admin.saveSettings': return json_(adminGuard_(body) || adminSaveSettings_(body));
       default: return json_({ ok: false, error: 'Unknown action.' });
@@ -430,7 +431,7 @@ function bookingView_(r) {
     background: r['Education background'], experience: r['Work experience'], challenges: r['Challenges'],
     message: r['Wants to explore'], source: r['Found us via'], meetLink: r['Meet link'], eventId: r['Calendar event ID'],
     reminder24: r['Reminder 24h sent'], reminder1: r['Reminder 1h sent'], feedbackSent: r['Feedback email sent'],
-    rating: r['Rating'], feedback: r['Feedback'], notes: r['Notes'], package: r['Package'] || ''
+    rating: r['Rating'], feedback: r['Feedback'], notes: r['Notes'], package: r['Package'] || '', rescheduleSent: r['Reschedule sent'] || ''
   };
 }
 
@@ -555,6 +556,17 @@ function adminSendFeedback_(body) {
   var sentOn = fmt_(new Date(), settings_().timeZone, 'yyyy-MM-dd HH:mm');
   setCell_(r._row, 'Feedback email sent', sentOn);
   if (r['Status'] === 'Booked') setCell_(r._row, 'Status', 'Completed');
+  return { ok: true, sentOn: sentOn };
+}
+
+/** Sends a "pick a new time" email to a student who couldn't make their call; doesn't touch Status, Harshita sets that herself. */
+function adminSendReschedule_(body) {
+  var r = findRow_(clean_(body.id, 40));
+  if (!r) return { ok: false, error: 'Booking not found.' };
+  if (!r['Start ISO']) return { ok: false, error: 'Reschedule emails are for calls only.' };
+  sendRescheduleEmail_(bookingView_(r));
+  var sentOn = fmt_(new Date(), settings_().timeZone, 'yyyy-MM-dd HH:mm');
+  setCell_(r._row, 'Reschedule sent', sentOn);
   return { ok: true, sentOn: sentOn };
 }
 

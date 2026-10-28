@@ -15,6 +15,8 @@ export type AdminBooking = {
   experience: string; challenges: string; message: string; source: string; meetLink: string; rating: string; feedback: string; notes: string;
   /** When the feedback email was sent ('yes' on older rows), and the package written for that student. */
   feedbackSent?: string; package?: string;
+  /** When Harshita last sent this student a "pick a new time" email for a call they missed. */
+  rescheduleSent?: string;
 };
 export type Availability = { day: string; start: string; end: string };
 export type Blocked = { date: string; reason: string };

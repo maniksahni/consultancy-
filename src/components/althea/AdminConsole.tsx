@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { CalendarClock, ExternalLink, Loader2, LogOut, Mail, MessageCircle, Plus, RefreshCw, Search, Trash2, Video } from "lucide-react";
+import { CalendarClock, ExternalLink, Loader2, LogOut, Mail, MessageCircle, Plus, RefreshCw, Search, Send, Trash2, Video } from "lucide-react";
 import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type AdminData, type Availability, type Blocked, type BookingSettings } from "@/lib/booking";
 
 const KEY = "althea-admin-key";
@@ -11,6 +11,8 @@ const COUNTRY_OPTIONS: [string, string][] = [["france", "France"], ["uk", "Unite
 const isEnquiry = (b: AdminBooking) => !b.start;
 /** A call that has ended and was not cancelled or missed: its feedback email (with the package) is sent from admin. */
 const needsFeedbackMail = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && b.status !== "No-show" && new Date(b.end).getTime() <= Date.now();
+/** Any past, non-cancelled call: covers a no-show as much as one she hasn't updated the status of yet. */
+const canReschedule = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && new Date(b.end).getTime() <= Date.now();
 
 /**
  * Private admin for Harshita: every client and their preparation profile, upcoming calls,
@@ -143,6 +145,13 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
     setSaving(result.ok ? "Cancelled" : result.error ?? "Couldn't cancel");
     if (result.ok) onChange(b.id, { status: "Cancelled" });
   }
+  async function sendReschedule() {
+    if (!confirm(`Send ${b.firstName} an email to pick a new time?`)) return;
+    setSaving("Sending…");
+    const result = await adminCall<{ ok: boolean; error?: string; sentOn?: string }>("admin.sendReschedule", adminKey, { id: b.id });
+    setSaving(result.ok ? `Reschedule email sent to ${b.email}` : result.error ?? "Couldn't send.");
+    if (result.ok) onChange(b.id, { rescheduleSent: result.sentOn ?? "yes" });
+  }
 
   return (
     <article className="adm-item">
@@ -157,6 +166,7 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         <a className="ms-btn ms-btn-ghost" href={`mailto:${b.email}`}><span>Email</span></a>
         <select aria-label="Status" value={b.status} onChange={e => save({ status: e.target.value })}>{statuses.map(s => <option key={s}>{s}</option>)}</select>
         {b.status === "Booked" && <button type="button" className="ms-btn ms-btn-ghost" onClick={cancel}><span>Cancel call</span></button>}
+        {canReschedule(b) && <button type="button" className="ms-btn ms-btn-ghost" onClick={sendReschedule}><Send size={15} aria-hidden="true" /><span>{b.rescheduleSent ? "Resend reschedule email" : "Send reschedule email"}</span></button>}
         <button type="button" className="ms-btn ms-btn-ghost" onClick={() => setExpanded(x => !x)} aria-expanded={expanded}><span>{expanded ? "Hide profile" : "Full profile"}</span></button>
         {saving && <small className="adm-when" role="status">{saving}</small>}
       </div>
