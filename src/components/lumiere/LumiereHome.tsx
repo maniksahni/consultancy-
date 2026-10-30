@@ -27,7 +27,7 @@ const journeySteps: [string, string][] = [["Say hello.", "Your goals, your quest
 const paths = [
   { id: "coming", kicker: "NOT IN FRANCE YET", icon: Plane, title: "Come study in France.", accent: "We stay with you after you land.",
     items: ["The right programme and university for your profile and budget", "Campus France, Études en France and your student visa", "Proof of funds, housing and your pre-departure checklist", "Once you arrive: CAF, bank, internship and your first job"],
-    href: "/study-in-france", cta: "Plan my studies in France" },
+    href: "/study-in-france", cta: "Plan my studies" },
   { id: "here", kicker: "ALREADY IN FRANCE", icon: MapPin, title: "Already here?", accent: "Let’s get you hired.",
     items: ["Internships (stage) and alternance, from search to signed agreement", "French-style CV, LinkedIn and interview practice", "After your degree: job-search permit and switching to a work permit", "Titre de séjour, CAF, bank, health and the road to PR in France"],
     href: "/in-france", cta: "Get help in France" },
