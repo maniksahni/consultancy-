@@ -522,7 +522,10 @@
      not shrunk to fit two side by side. Same card people see on desktop, just one per
      swipe so nothing is cut down. */
   .lx-paths-section .lx-lead { display:none; }
-  .lx-paths { display:flex !important; grid-template-columns:none !important; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:20px; gap:14px !important; margin:0 -20px; padding:0 20px 6px; scrollbar-width:none; }
+  /* overflow-x:auto forces the browser to clip overflow-y too, right at this row's own
+     top edge — with no top padding that line cut straight through the cards' rounded
+     corner and border. A few px of padding here gives it room to round off cleanly. */
+  .lx-paths { display:flex !important; grid-template-columns:none !important; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:20px; gap:14px !important; margin:0 -20px; padding:10px 20px 10px; scrollbar-width:none; }
   .lx-paths::-webkit-scrollbar { display:none; }
   .lx-path { flex:0 0 86%; scroll-snap-align:center; min-height:min(66svh,520px) !important; padding:22px !important; gap:14px !important; }
   .lx-path .lx-tag { font-size:10.5px; padding:6px 10px; white-space:nowrap; }
