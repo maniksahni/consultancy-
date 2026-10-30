@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AdminConsole from "@/components/althea/AdminConsole";
 import { BrandMark } from "@/components/brand/BrandLockup";
+import "../booking.css";
 
 export const metadata: Metadata = {
   title: "Admin · Althéa bookings",

@@ -3,6 +3,7 @@ import { Section } from "@/components/maison/ui";
 import FrenchEnquiry from "@/components/althea/FrenchEnquiry";
 import { pageMetadata } from "@/lib/seo";
 import { quickAnswers } from "@/data/quickAnswers";
+import "../booking.css";
 import "./learn-french.css";
 
 export const metadata = pageMetadata("/learn-french", {

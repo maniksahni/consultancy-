@@ -4,6 +4,7 @@ import { Notice, Section, TextLink } from '@/components/maison/ui';
 import { liveCountries } from '@/lib/comingSoon';
 import { pageMetadata } from '@/lib/seo';
 import { quickAnswers } from "@/data/quickAnswers";
+import "../compare.css";
 
 export const metadata = pageMetadata('/compare', {title:'Compare Study Abroad Countries', description:'Compare France vs UK, USA, Canada, Germany, Australia and Ireland for study abroad: academic focus, cities, application approach and priorities.'});
 export default function ComparePage() {

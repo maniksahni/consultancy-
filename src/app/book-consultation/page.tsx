@@ -1,5 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
+import "../booking.css";
 import type { Metadata } from "next";
 import Page from "@/components/althea/Page";
 import Booking from "@/components/althea/Booking";

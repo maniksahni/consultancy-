@@ -4,6 +4,7 @@ import JobsExplorer from "@/components/althea/JobsExplorer";
 import LiveJobs from "@/components/althea/LiveJobs";
 import { pageMetadata } from "@/lib/seo";
 import { Card, Grid, Section } from "@/components/maison/ui";
+import "../booking.css";
 import { countryGuides } from "@/data/guides";
 import { quickAnswers } from "@/data/quickAnswers";
 import { isLive } from "@/lib/comingSoon";

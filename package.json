@@ -2,6 +2,13 @@
   "name": "althea-consulting",
   "version": "1.0.0",
   "private": true,
+  "browserslist": [
+    "chrome >= 91",
+    "edge >= 91",
+    "firefox >= 90",
+    "safari >= 15.4",
+    "ios_saf >= 15.4"
+  ],
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "ALTHEA_BUILD=1 next build",
