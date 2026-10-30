@@ -524,7 +524,13 @@
   .lx-paths-section .lx-lead { display:none; }
   .lx-paths { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
   .lx-path { min-height:min(52svh,420px) !important; padding:18px !important; gap:10px !important; justify-content:flex-end; }
-  .lx-path .lx-tag { font-size:10px; padding:5px 9px; }
+  /* Text sits at the bottom here (justify-content:flex-end above), so the overlay
+     should be dark there and clear higher up — the photo was barely visible before
+     because the desktop radial overlay darkens the top-left, exactly where mobile
+     has nothing but open sky. */
+  .lx-path::after { background:linear-gradient(0deg,#050508f5 0%,#050508c2 44%,#05050840 72%,#0505081a 100%) !important; }
+  .lx-path .lx-tag { font-size:9px; padding:6px 9px; gap:5px; letter-spacing:.03em; white-space:nowrap; }
+  .lx-path .lx-tag svg { width:11px; height:11px; flex:none; }
   .lx-path h3 { font-size:17px; line-height:1.25; }
   .lx-path h3 em { display:block; font-size:12.5px; font-weight:500; margin-top:3px; }
   .lx-path ul { display:none; }
