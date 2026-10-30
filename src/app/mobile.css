@@ -455,7 +455,7 @@
    svh = the visible height with the browser bars shown. Sections taller than a screen still scroll inside. */
 @media (max-width:640px) {
   html:has(.lumiere-home) { scroll-snap-type:y mandatory; scroll-padding-top:0 !important; }
-  .lumiere-home main > section { min-height:100svh !important; scroll-snap-align:start; scroll-snap-stop:always; display:flex !important; flex-direction:column; justify-content:center; padding-block:72px 40px !important; }
+  .lumiere-home main > section { min-height:100svh !important; scroll-snap-align:start; scroll-snap-stop:always; display:flex !important; flex-direction:column; justify-content:safe center; padding-block:72px 40px !important; }
   .lumiere-home .ms-footer { scroll-snap-align:end; }
   .lumiere-home main > .lx-hero { justify-content:flex-end !important; align-items:stretch; padding-top:112px !important; padding-bottom:calc(64px + env(safe-area-inset-bottom)) !important; }
   .lx-ribbon { position:relative; z-index:3; height:44px; margin-top:-44px; padding-block:0 !important; display:flex; align-items:center; background:#0b0a12b3 !important; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
