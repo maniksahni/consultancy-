@@ -518,13 +518,14 @@
   .ms-dir-source { font-size:12px; line-height:1.5; }
   .ms-dir-details summary { min-height:44px; display:flex; align-items:center; }
   .ms-dir-card>.ms-dir-details { margin-top:0; }
-  /* "Two ways in": two short tappable cards side by side, not two tall stacked lists —
-     the full checklist already lives on the page each card opens. */
+  /* "Two ways in": two short tappable photo cards side by side, not two tall stacked
+     lists — the full checklist already lives on the page each card opens. Tall enough
+     to show their photo properly and fill the screen, not float in empty space. */
   .lx-paths-section .lx-lead { display:none; }
   .lx-paths { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
-  .lx-path { min-height:0 !important; padding:16px !important; gap:10px !important; }
+  .lx-path { min-height:min(52svh,420px) !important; padding:18px !important; gap:10px !important; justify-content:flex-end; }
   .lx-path .lx-tag { font-size:10px; padding:5px 9px; }
-  .lx-path h3 { font-size:16px; line-height:1.25; }
+  .lx-path h3 { font-size:17px; line-height:1.25; }
   .lx-path h3 em { display:block; font-size:12.5px; font-weight:500; margin-top:3px; }
   .lx-path ul { display:none; }
   .lx-path-actions { flex-direction:column; align-items:flex-start; gap:8px; margin-top:0; }

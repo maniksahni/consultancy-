@@ -25,10 +25,10 @@ const journeySteps: [string, string][] = [["Say hello.", "Your goals, your quest
 
 /** The two people the site is for: those coming to study in France, and those already living there. */
 const paths = [
-  { id: "coming", kicker: "NOT IN FRANCE YET", icon: Plane, title: "Come study in France.", accent: "We stay with you after you land.",
+  { id: "coming", kicker: "NOT IN FRANCE YET", icon: Plane, title: "Come study in France.", accent: "We stay with you after you land.", photo: "eiffel-sun-rays" as const,
     items: ["The right programme and university for your profile and budget", "Campus France, Études en France and your student visa", "Proof of funds, housing and your pre-departure checklist", "Once you arrive: CAF, bank, internship and your first job"],
     href: "/study-in-france", cta: "Plan my studies" },
-  { id: "here", kicker: "ALREADY IN FRANCE", icon: MapPin, title: "Already here?", accent: "Let’s get you hired.",
+  { id: "here", kicker: "ALREADY IN FRANCE", icon: MapPin, title: "Already here?", accent: "Let’s get you hired.", photo: "metro-platform" as const,
     items: ["Internships (stage) and alternance, from search to signed agreement", "French-style CV, LinkedIn and interview practice", "After your degree: job-search permit and switching to a work permit", "Titre de séjour, CAF, bank, health and the road to PR in France"],
     href: "/in-france", cta: "Get help in France" },
 ];
@@ -95,7 +95,8 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     <section className="lx-section lx-paths-section" id="paths" aria-labelledby="lx-paths-title">
       <div className="lx-wrap">
         <div className="lx-head"><div><p className="ms-kicker">ONE ADVISER IN PARIS · TWO WAYS IN</p><h2 id="lx-paths-title" className="lx-title">Wherever you are today, <em>France is the plan.</em></h2></div><p className="lx-lead">Study here, then stay and work here. Althéa helps before you arrive and long after — with internships, jobs and every piece of French paperwork.</p></div>
-        <div className="lx-paths">{paths.map(({ id, kicker, icon: Icon, title, accent, items, href, cta }) => <article key={id} className={`lx-path lx-path-${id}`}>
+        <div className="lx-paths">{paths.map(({ id, kicker, icon: Icon, title, accent, items, href, cta, photo }) => <article key={id} className={`lx-path lx-path-${id}`}>
+          <div className="lx-path-photo"><Image src={paris(photo).file} alt="" fill sizes="(max-width:640px) 50vw, (max-width:900px) 45vw, 24vw" /></div>
           <span className="lx-tag"><Icon size={14} aria-hidden="true" />{kicker}</span>
           <h3>{title} <em>{accent}</em></h3>
           <ul>{items.map((item) => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>

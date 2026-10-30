@@ -482,8 +482,13 @@ a.lx-tile:hover { transform:translateY(-6px); border-color:#9d8bff66; box-shadow
 
 /* Two ways in: coming to study in France, or already living there. */
 .lx-paths { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(14px,2vw,24px); }
-.lx-path { display:flex; flex-direction:column; gap:18px; padding:clamp(24px,3vw,40px); border-radius:30px; border:1px solid #ffffff1a; background:radial-gradient(120% 120% at 0% 0%,#2a1f6355,#0b0a12 62%); }
-.lx-path-here { background:radial-gradient(120% 120% at 100% 0%,#ff6fa333,#0b0a12 62%); }
+.lx-path { position:relative; isolation:isolate; overflow:hidden; display:flex; flex-direction:column; gap:18px; padding:clamp(24px,3vw,40px); border-radius:30px; border:1px solid #ffffff1a; color:var(--ms-text); transition:transform .5s var(--ms-ease),border-color .4s; }
+.lx-path:hover { transform:translateY(-4px); border-color:#9d8bff55; }
+.lx-path-photo { position:absolute; inset:0; z-index:-2; }
+.lx-path-photo img { object-fit:cover; filter:saturate(1.08); transition:transform 1.2s var(--ms-ease); }
+.lx-path:hover .lx-path-photo img { transform:scale(1.06); }
+.lx-path::after { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(120% 120% at 0% 0%,#2a1f63a6,#05050ae8 68%); }
+.lx-path-here::after { background:radial-gradient(120% 120% at 100% 0%,#ff6fa399,#05050ae8 68%); }
 .lx-path h3 { margin:0; font:600 clamp(28px,2.6vw,42px)/1.05 var(--ms-serif); letter-spacing:-.04em; color:var(--ms-text); }
 .lx-path h3 em { display:block; font-family:var(--ms-italic); font-style:italic; font-weight:400; background:var(--lx-grad); -webkit-background-clip:text; background-clip:text; color:transparent; padding-right:.08em; }
 .lx-path ul { display:grid; gap:12px; margin:0; padding:0; list-style:none; }
