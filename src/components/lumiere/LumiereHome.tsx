@@ -96,12 +96,13 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       <div className="lx-wrap">
         <div className="lx-head"><div><p className="ms-kicker">ONE ADVISER IN PARIS · TWO WAYS IN</p><h2 id="lx-paths-title" className="lx-title">Wherever you are today, <em>France is the plan.</em></h2></div><p className="lx-lead">Study here, then stay and work here. Althéa helps before you arrive and long after — with internships, jobs and every piece of French paperwork.</p></div>
         <div className="lx-paths">{paths.map(({ id, kicker, icon: Icon, title, accent, items, href, cta, photo }) => <article key={id} className={`lx-path lx-path-${id}`}>
-          <div className="lx-path-photo"><Image src={paris(photo).file} alt="" fill sizes="(max-width:640px) 50vw, (max-width:900px) 45vw, 24vw" /></div>
+          <div className="lx-path-photo"><Image src={paris(photo).file} alt="" fill sizes="(max-width:640px) 86vw, (max-width:900px) 45vw, 24vw" /></div>
           <span className="lx-tag"><Icon size={14} aria-hidden="true" />{kicker}</span>
           <h3>{title} <em>{accent}</em></h3>
           <ul>{items.map((item) => <li key={item}><Check size={16} aria-hidden="true" />{item}</li>)}</ul>
           <div className="lx-path-actions"><Link href={href} className="ms-btn ms-btn-gold"><span>{cta}</span><ArrowUpRight size={17} aria-hidden="true" /></Link><Link href="/book-consultation" className="ms-link">Free 15-minute call</Link></div>
         </article>)}</div>
+        <div className="lx-paths-dots" aria-hidden="true">{paths.map(({ id }) => <span key={id} />)}</div>
       </div>
     </section>
 

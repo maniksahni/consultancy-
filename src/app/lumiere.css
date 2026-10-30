@@ -499,3 +499,4 @@ a.lx-tile:hover { transform:translateY(-6px); border-color:#9d8bff66; box-shadow
 .lx-dest-soon .lx-dest-img { filter:grayscale(.65) brightness(.62); }
 .lx-dest-copy .lx-soon { margin-bottom:12px; }
 @media (max-width:900px) { .lx-paths { grid-template-columns:1fr; } }
+.lx-paths-dots { display:none; }

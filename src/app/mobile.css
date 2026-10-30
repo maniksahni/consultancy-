@@ -518,24 +518,23 @@
   .ms-dir-source { font-size:12px; line-height:1.5; }
   .ms-dir-details summary { min-height:44px; display:flex; align-items:center; }
   .ms-dir-card>.ms-dir-details { margin-top:0; }
-  /* "Two ways in": two short tappable photo cards side by side, not two tall stacked
-     lists — the full checklist already lives on the page each card opens. Tall enough
-     to show their photo properly and fill the screen, not float in empty space. */
+  /* "Two ways in": the full card (photo, checklist and all), one at a time, swipeable —
+     not shrunk to fit two side by side. Same card people see on desktop, just one per
+     swipe so nothing is cut down. */
   .lx-paths-section .lx-lead { display:none; }
-  .lx-paths { grid-template-columns:repeat(2,1fr) !important; gap:10px !important; }
-  .lx-path { min-height:min(52svh,420px) !important; padding:18px !important; gap:10px !important; justify-content:flex-end; }
-  /* Text sits at the bottom here (justify-content:flex-end above), so the overlay
-     should be dark there and clear higher up — the photo was barely visible before
-     because the desktop radial overlay darkens the top-left, exactly where mobile
-     has nothing but open sky. */
-  .lx-path::after { background:linear-gradient(0deg,#050508f5 0%,#050508c2 44%,#05050840 72%,#0505081a 100%) !important; }
-  .lx-path .lx-tag { font-size:9px; padding:6px 9px; gap:5px; letter-spacing:.03em; white-space:nowrap; }
-  .lx-path .lx-tag svg { width:11px; height:11px; flex:none; }
-  .lx-path h3 { font-size:17px; line-height:1.25; }
-  .lx-path h3 em { display:block; font-size:12.5px; font-weight:500; margin-top:3px; }
-  .lx-path ul { display:none; }
-  .lx-path-actions { flex-direction:column; align-items:flex-start; gap:8px; margin-top:0; }
-  .lx-path-actions .ms-btn { min-height:40px; padding:9px 10px; font-size:12px; line-height:1.2; width:100%; justify-content:center; white-space:normal; }
+  .lx-paths { display:flex !important; grid-template-columns:none !important; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-inline:20px; gap:14px !important; margin:0 -20px; padding:0 20px 6px; scrollbar-width:none; }
+  .lx-paths::-webkit-scrollbar { display:none; }
+  .lx-path { flex:0 0 86%; scroll-snap-align:center; min-height:min(66svh,520px) !important; padding:22px !important; gap:14px !important; }
+  .lx-path .lx-tag { font-size:10.5px; padding:6px 10px; white-space:nowrap; }
+  .lx-path h3 { font-size:24px; line-height:1.15; }
+  .lx-path h3 em { display:block; font-size:16px; font-weight:500; margin-top:4px; }
+  .lx-path ul { gap:10px; }
+  .lx-path li { font-size:14.5px; line-height:1.5; }
+  .lx-path-actions { gap:8px 16px; margin-top:auto; }
+  .lx-path-actions .ms-btn { min-height:44px; padding:11px 16px; font-size:13.5px; }
+  /* A dot per card so a swipe isn't a guessing game. */
+  .lx-paths-dots { display:flex; justify-content:center; gap:8px; margin-top:14px; }
+  .lx-paths-dots span { width:6px; height:6px; border-radius:50%; background:#ffffff33; }
   .lx-path-actions .ms-btn svg { flex:none; width:14px; }
   .lx-path-actions .ms-link { font-size:11.5px; }
   .lx-bento > * { min-height:0 !important; }
