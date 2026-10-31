@@ -17,6 +17,8 @@ export type AdminBooking = {
   feedbackSent?: string; package?: string;
   /** When Harshita last sent this student a "pick a new time" email for a call they missed. */
   rescheduleSent?: string;
+  /** When Harshita last sent the package by itself, separate from the post-call feedback email. */
+  packageSent?: string;
 };
 export type Availability = { day: string; start: string; end: string };
 export type Blocked = { date: string; reason: string };

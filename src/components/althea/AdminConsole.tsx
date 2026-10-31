@@ -13,6 +13,8 @@ const isEnquiry = (b: AdminBooking) => !b.start;
 const needsFeedbackMail = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && b.status !== "No-show" && new Date(b.end).getTime() <= Date.now();
 /** Any past, non-cancelled call: covers a no-show as much as one she hasn't updated the status of yet. */
 const canReschedule = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && new Date(b.end).getTime() <= Date.now();
+/** From the moment a call starts — mid-call included — so she can type the package and send it right away, not just after. */
+const canSendPackage = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && new Date(b.start).getTime() <= Date.now();
 
 /**
  * Private admin for Harshita: every client and their preparation profile, upcoming calls,
@@ -170,6 +172,7 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         <button type="button" className="ms-btn ms-btn-ghost" onClick={() => setExpanded(x => !x)} aria-expanded={expanded}><span>{expanded ? "Hide profile" : "Full profile"}</span></button>
         {saving && <small className="adm-when" role="status">{saving}</small>}
       </div>
+      {canSendPackage(b) && !needsFeedbackMail(b) && <PackageSender b={b} adminKey={adminKey} onChange={onChange} />}
       {needsFeedbackMail(b) && <FeedbackMailer b={b} adminKey={adminKey} onChange={onChange} />}
       {expanded && <>
         <dl className="adm-profile">
@@ -185,6 +188,44 @@ function BookingItem({ b, adminKey, statuses, onChange, open = false }: { b: Adm
         </label>
       </>}
     </article>
+  );
+}
+
+/** From when the call starts — mid-call included — so she can type the package and send it immediately, not wait till it ends. */
+function PackageSender({ b, adminKey, onChange }: { b: AdminBooking; adminKey: string; onChange: (id: string, patch: Partial<AdminBooking>) => void }) {
+  const sent = b.packageSent ?? "";
+  const [open, setOpen] = useState(!sent);
+  const [pkg, setPkg] = useState(b.package ?? "");
+  const [status, setStatus] = useState("");
+
+  async function send() {
+    if (!pkg.trim()) { setStatus("Write the package first."); return; }
+    setStatus("Sending…");
+    const result = await adminCall<{ ok: boolean; error?: string; sentOn?: string }>("admin.sendPackage", adminKey, { id: b.id, package: pkg });
+    if (!result.ok) return setStatus(result.error ?? "Couldn't send. Please try again.");
+    setStatus(`Sent to ${b.email}`);
+    setOpen(false);
+    onChange(b.id, { packageSent: result.sentOn ?? "yes", package: pkg.trim() });
+  }
+
+  if (!open) return (
+    <div className="adm-row adm-feedback-mail">
+      <small className="adm-when"><Mail size={14} aria-hidden="true" /> Package sent{sent && sent !== "yes" ? ` ${sent}` : ""}{status ? ` · ${status}` : ""}</small>
+      <button type="button" className="ms-btn ms-btn-ghost" onClick={() => { setOpen(true); setStatus(""); }}><span>Edit and resend</span></button>
+    </div>
+  );
+  return (
+    <div className="adm-feedback-mail">
+      <label className="ms-field adm-note"><span>Package for {b.firstName} — send it now, mid-call or any time</span>
+        <textarea rows={5} value={pkg} onChange={e => setPkg(e.target.value)} maxLength={3000}
+          placeholder={"e.g. Complete France application package: €___\nIncludes: shortlist, SOP and CV review, Campus France and visa guidance\nValid until: ___"} />
+      </label>
+      <div className="adm-row">
+        <button type="button" className="ms-btn ms-btn-gold" onClick={send} disabled={status === "Sending…"}><Mail size={15} aria-hidden="true" /><span>{sent ? "Resend package" : "Send package now"}</span></button>
+        {sent && <button type="button" className="ms-btn ms-btn-ghost" onClick={() => setOpen(false)}><span>Close</span></button>}
+        {status && <small className="adm-when" role="status">{status}</small>}
+      </div>
+    </div>
   );
 }
 

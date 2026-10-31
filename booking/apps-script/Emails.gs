@@ -227,6 +227,18 @@ function sendRescheduleEmail_(b) {
   send_(b.email, 'Let\'s find you a new time, ' + b.firstName, layout_('Pick a new time for your call.', inner), text);
 }
 
+/** The package by itself — sent any time, including mid-call. No rating ask, unlike the post-call feedback email. */
+function sendPackageEmail_(b) {
+  var s = settings_();
+  var inner = '<h1 style="margin:0 0 6px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">Your package with ' + esc_(s.brandName) + '</h1>'
+    + '<p style="margin:0 0 18px;color:' + BRAND.muted + '">Hi ' + esc_(b.firstName) + ', here\'s what we discussed.</p>'
+    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-radius:16px;background:#f4f0ff;border:1px solid #e2dafe"><tr><td style="padding:18px 20px;color:' + BRAND.text + '">'
+    + esc_(b.package).replace(/\n/g, '<br>') + '</td></tr></table>'
+    + '<p style="margin:18px 0 0;color:' + BRAND.muted + '">Any questions, or to go ahead, simply reply to this email.</p>';
+  var text = 'Your package with ' + s.brandName + ':\n\n' + b.package + '\n\nAny questions, or to go ahead, simply reply to this email.';
+  send_(b.email, 'Your package with ' + s.brandName, layout_('Your package, as discussed.', inner), text);
+}
+
 function sendOwnerFeedback_(b, rating, comment) {
   var inner = '<div style="font:600 11px/1.4 Helvetica,Arial,sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:' + BRAND.green + '">Feedback · ' + esc_(b.id) + '</div>'
     + '<h1 style="margin:6px 0 4px;font:600 26px/1.2 Georgia,serif;color:' + BRAND.text + '">' + esc_(b.name) + ' rated the call ' + rating + '/5</h1>'
