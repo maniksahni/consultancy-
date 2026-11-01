@@ -47,7 +47,7 @@ export default function ServicesPage() {
         <h2>Personal guidance.<br /><em>Agreed before we begin.</em></h2>
         <p>We discuss your situation, confirm what the chosen support includes and agree the fee before work begins.</p>
         <p>Althéa provides independent guidance and preparation. Official decisions belong to institutions and authorities; legal, immigration, banking and housing outcomes are outside our control.</p>
-        <Btn href="/book-consultation">Book a call</Btn>
+        <Btn href="/book-consultation">Book your consultation</Btn>
       </Split>
     </Section>
   </Page>;

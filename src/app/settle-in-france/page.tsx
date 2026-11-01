@@ -32,7 +32,7 @@ export default function SettleInFrancePage() {
         <Kicker>CLEAR SCOPE, REALISTIC EXPECTATIONS</Kicker>
         <h2>Guidance you can use.<br /><em>Decisions stay yours.</em></h2>
         <p>Althéa provides orientation, preparation, checklists and referrals where appropriate. We do not provide legal or immigration advice, make decisions for banks or housing providers, guarantee accommodation, or guarantee administrative outcomes. For regulated or official decisions, we’ll point you to the relevant organisation or qualified professional.</p>
-        <Btn href="/book-consultation">Book a call</Btn>
+        <Btn href="/book-consultation">Book your consultation</Btn>
       </Split>
     </Section>
     <Section tone="ivory">

@@ -38,7 +38,7 @@ export default function InFrancePage() {
     intro="Studying or working in France already? Get help with internships, alternance, your first job, your titre de séjour, CAF and housing, and the road to PR — from an adviser who lives in Paris."
     headerActions={<><a href="#help">How we help</a><a href="#stages">Where are you now?</a><a href="/book-consultation">Free 15-minute call</a></>}
     closing={{ kicker: "YOU’RE ALREADY HERE", title: "Now let’s make it", accent: "your career.", body: "Tell Harshita where you are — internship search, job hunt, papers or PR — and leave the call with your next three steps.", href: "/book-consultation", action: "Book a free 15-minute call" }}>
-    <Section id="help" tone="ivory" kicker="WHAT WE HELP WITH" title="Everything after" accent="you land in France." intro="Each area links to the full, checked guide on this site. Book a call when you want a plan for your own situation.">
+    <Section id="help" tone="ivory" kicker="WHAT WE HELP WITH" title="Everything after" accent="you land in France." intro="Each area links to the full, checked guide on this site. Book your consultation when you want a plan for your own situation.">
       <Grid cols={3}>{help.map((item, i) => <Card key={item.title} index={i + 1} kicker={item.kicker} title={item.title} href={item.href} cta={item.cta} feature={i === 0}>
         <Checklist items={item.items} />
       </Card>)}</Grid>
