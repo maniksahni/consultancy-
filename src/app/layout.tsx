@@ -6,7 +6,7 @@ import ReadMore from "@/components/motion/ReadMore";
 import { isIndexable, siteUrl } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Manrope, Syne } from "next/font/google";
+import localFont from "next/font/local";
 import "./base.css";
 import "./maison-ui.css";
 import "./maison.css";
@@ -15,22 +15,26 @@ import "./motion.css";
 import "./mobile.css";
 import "./sky.css";
 // Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
-const display = Syne({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+// Self-hosted (not next/font/google): the live Google Fonts fetch next/font/google does at build
+// time was flaky on the daily GitHub Actions runner and crashed the whole "Refresh jobs and
+// deploy" build about a third of the time with no network to blame it on in the logs.
+const display = localFont({
+  src: "../fonts/syne-variable.woff2",
+  weight: "500 800",
   variable: "--font-display",
   display: "swap",
 });
-const body = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const body = localFont({
+  src: "../fonts/manrope-variable.woff2",
+  weight: "400 700",
   variable: "--font-body",
   display: "swap",
 });
-const italic = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+const italic = localFont({
+  src: [
+    { path: "../fonts/instrument-serif-normal.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/instrument-serif-italic.woff2", weight: "400", style: "italic" },
+  ],
   variable: "--font-italic",
   display: "swap",
   preload: false, // accent words swap in; the main faces load first
