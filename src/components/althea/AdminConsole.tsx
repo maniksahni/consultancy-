@@ -43,6 +43,17 @@ export default function AdminConsole() {
     if (saved) { setKey(saved); load(saved); }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Keep this screen in step with whatever just changed the Google Sheet - a direct edit there, or
+  // another tab/device saving from this same admin - without Harshita having to remember to hit Refresh.
+  useEffect(() => {
+    if (!data) return;
+    const tick = () => { if (document.visibilityState === "visible") load(); };
+    const id = setInterval(tick, 45000);
+    document.addEventListener("visibilitychange", tick);
+    window.addEventListener("focus", tick);
+    return () => { clearInterval(id); document.removeEventListener("visibilitychange", tick); window.removeEventListener("focus", tick); };
+  }, [Boolean(data), key]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const now = Date.now();
   const bookings = data?.bookings ?? [];
   const upcoming = useMemo(() => bookings.filter(b => b.status === "Booked" && new Date(b.end).getTime() > now).sort((a, b) => a.start.localeCompare(b.start)), [bookings, now]);
