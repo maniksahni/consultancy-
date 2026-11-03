@@ -58,7 +58,8 @@ function setup() {
   var ss = spreadsheet_();
   sheet_(ss, 'Bookings', BOOKING_HEADERS).getRange(1, 1, 2000, BOOKING_HEADERS.length).setNumberFormat('@');
   var availability = sheet_(ss, 'Availability', ['Day', 'Start (HH:MM, Paris)', 'End (HH:MM, Paris)']);
-  if (availability.getLastRow() < 2) availability.getRange(2, 1, DEFAULT_AVAILABILITY.length, 3).setNumberFormat('@').setValues(DEFAULT_AVAILABILITY);
+  availability.getRange(2, 1, 500, 3).setNumberFormat('@');
+  if (availability.getLastRow() < 2) availability.getRange(2, 1, DEFAULT_AVAILABILITY.length, 3).setValues(DEFAULT_AVAILABILITY);
   sheet_(ss, 'Blocked dates', ['Date (YYYY-MM-DD)', 'Reason']);
   var settings = sheet_(ss, 'Settings', ['Key', 'Value']);
   if (settings.getLastRow() < 2) {
@@ -177,10 +178,21 @@ function blockedDates_() {
 }
 
 function minutes_(hhmm) {
-  var m = String(hhmm).trim().match(/^(\d{1,2}):(\d{2})/);
+  // A direct edit to the Availability sheet can leave Sheets to auto-format the cell as a time,
+  // which displays as "7:00:00 PM" instead of "19:00" - parse that 12-hour form too, not just HH:MM,
+  // so a row never silently vanishes (and every evening slot) just because of how the cell rendered.
+  var m = String(hhmm).trim().match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*([AaPp]\.?[Mm]\.?)?$/);
   if (!m) return null;
   var h = Number(m[1]), mi = Number(m[2]);
-  return h > 24 || mi > 59 ? null : h * 60 + mi;
+  if (mi > 59) return null;
+  var ap = m[3] ? m[3].replace(/\./g, '').toUpperCase() : null;
+  if (ap) {
+    if (h < 1 || h > 12) return null;
+    h = ap === 'AM' ? (h === 12 ? 0 : h) : (h === 12 ? 12 : h + 12);
+  } else if (h > 24) {
+    return null;
+  }
+  return h * 60 + mi;
 }
 
 /* ------------------------------------------------------------------ time zones */
@@ -624,11 +636,19 @@ function adminSaveSettings_(body) {
 
 function adminSaveAvailability_(body) {
   var ss = spreadsheet_();
-  var rows = (body.availability || []).map(function (a) { return [String(a.day).slice(0, 3), String(a.start), String(a.end)]; })
+  var incoming = body.availability || [];
+  var rows = incoming.map(function (a) { return [String(a.day).slice(0, 3), String(a.start), String(a.end)]; })
     .filter(function (r) { return DAY_NAMES.indexOf(r[0]) !== -1 && minutes_(r[1]) !== null && minutes_(r[2]) !== null && minutes_(r[2]) > minutes_(r[1]); });
+  // Never silently drop an hour row - if something didn't parse, say so instead of saving a quietly
+  // incomplete week (this is what used to make bookings disappear with no visible cause).
+  if (rows.length !== incoming.length) return { ok: false, error: 'One of the times looks wrong (' + (incoming.length - rows.length) + ' of ' + incoming.length + ' rows). Fix it and save again - nothing was changed.' };
   var av = ss.getSheetByName('Availability');
   if (av.getLastRow() > 1) av.getRange(2, 1, av.getLastRow() - 1, 3).clearContent();
-  if (rows.length) av.getRange(2, 1, rows.length, 3).setNumberFormat('@').setValues(rows);
+  // Keep a generous block of rows forced to plain text, not just the ones we're writing now, so a row
+  // Harshita later types directly into the sheet (below the ones we wrote) can't get Sheets' own
+  // auto-formatting turned into a 12-hour time that minutes_() then has to guess at.
+  av.getRange(2, 1, 500, 3).setNumberFormat('@');
+  if (rows.length) av.getRange(2, 1, rows.length, 3).setValues(rows);
 
   var blocked = (body.blocked || []).map(function (b) { return [String(b.date), clean_(b.reason, 120)]; }).filter(function (r) { return /^\d{4}-\d{2}-\d{2}$/.test(r[0]); });
   var bl = ss.getSheetByName('Blocked dates');
