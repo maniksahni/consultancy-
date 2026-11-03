@@ -8,6 +8,7 @@ import {programmePlanning} from '@/lib/programmePlanning';
 import JsonLd from '@/components/seo/JsonLd';
 import {absoluteUrl} from '@/lib/seo';
 import {isComingSoon} from '@/lib/comingSoon';
+import {formatReviewDate} from '@/lib/latestReview';
 export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
   const plan=programmePlanning(p);
   const scholarship=studyKnowledge.find(e=>e.country===p.country&&e.topic==='Scholarships');
@@ -25,7 +26,7 @@ export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
       offers:{"@type":"Offer",category:"Paid",price:p.fee.amount,priceCurrency:p.fee.currency,description:`${p.fee.period} · ${p.fee.category}`,url:p.fee.source},
       hasCourseInstance:{"@type":"CourseInstance",courseMode:"Onsite",location:{"@type":"Place",name:p.institution,address:{"@type":"PostalAddress",addressLocality:p.city,addressCountry:countryName}}}}}/>
     <Section tone="ivory">
-      <p className="ms-kh-review"><span className="mx-live"/>Source-linked programme profile · updated 16 October 2026<span>Fee and calendar evidence retain their stated year</span></p>
+      <p className="ms-kh-review"><span className="mx-live"/>Source-linked programme profile · reviewed {formatReviewDate(p.reviewedAt)}<span>Fee and calendar evidence retain their stated year</span></p>
       <div className="ms-prog-hero">
         <section className="ms-prog-panel is-ink" id="programme-fees">
           <p className="ms-kicker">PUBLISHED FEE</p>
