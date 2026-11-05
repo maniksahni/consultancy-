@@ -1,6 +1,16 @@
 import { pageMetadata } from "@/lib/seo";
 import {notFound} from 'next/navigation';import {programmeResearch} from '@/data/programmeResearch';import ProgrammeEvidence from '@/components/althea/ProgrammeEvidence';
 export function generateStaticParams(){return programmeResearch.map(p=>({slug:p.slug}));}
+// Falls back to "<institution> <level>" when a programme's own title would push the "<title> | Althéa
+// Consulting" search title past 60 chars - so a newly added long-titled programme (the exact thing that
+// silently broke the daily build for two days straight) degrades gracefully instead of failing the build.
+// Two programmes at the same institution/level can still collide; searchTitles above is the escape hatch.
+function autoTitle(p: { title: string; institution: string; level: string }): string {
+  if (p.title.length <= 38) return p.title;
+  const institution = p.institution.split(/[–—(,]/)[0].trim();
+  const short = `${institution} ${p.level}`;
+  return short.length <= 38 ? short : institution.slice(0, 38);
+}
 const searchTitles:Record<string,string>={
   "bath-operations-logistics":"Bath MSc Operations & Supply Chain",
   "tse-international-economics":"TSE International Economics MSc",
@@ -56,5 +66,5 @@ const searchTitles:Record<string,string>={
   "sorbonne-computer-science":"Sorbonne Computer Science MSc",
   "uci-computer-science":"UC Irvine Computer Science Master's",
 };
-export function generateMetadata({params}:{params:{slug:string}}){const p=programmeResearch.find(p=>p.slug===params.slug);const description=p?(p.slug==="bath-operations-logistics"?"Bath MSc in operations and supply chain: published tuition, entry requirements and application timing.":[`${p.title} at ${p.institution}, ${p.city}: published tuition, entry requirements, application deadlines and living costs for international students.`,`${p.title} at ${p.institution}, ${p.city}: published tuition, entry requirements, deadlines and living costs.`,`${p.title} at ${p.institution}: published tuition, requirements and application timing.`].find(d=>d.length<=160)):undefined;return pageMetadata(`/programmes/${params.slug}`, {title:searchTitles[params.slug]||p?.title||'Programme', description });}
+export function generateMetadata({params}:{params:{slug:string}}){const p=programmeResearch.find(p=>p.slug===params.slug);const description=p?(p.slug==="bath-operations-logistics"?"Bath MSc in operations and supply chain: published tuition, entry requirements and application timing.":[`${p.title} at ${p.institution}, ${p.city}: published tuition, entry requirements, application deadlines and living costs for international students.`,`${p.title} at ${p.institution}, ${p.city}: published tuition, entry requirements, deadlines and living costs.`,`${p.title} at ${p.institution}: published tuition, requirements and application timing.`].find(d=>d.length<=160)):undefined;return pageMetadata(`/programmes/${params.slug}`, {title:searchTitles[params.slug]||(p&&autoTitle(p))||'Programme', description });}
 export default function Programme({params}:{params:{slug:string}}){const p=programmeResearch.find(p=>p.slug===params.slug);if(!p)notFound();return <ProgrammeEvidence p={p}/>}
