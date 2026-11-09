@@ -128,16 +128,16 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
         <div className="lx-head"><div><p className="ms-kicker">THREE CHAPTERS · ONE DIRECTION</p><h2 id="lx-bento-title" className="lx-title">Study. Settle. <em>Succeed.</em></h2></div><p className="lx-lead">One adviser for the whole journey — from the first shortlist to your first month, and the career after it.</p></div>
         <div className="lx-bento">
           <Link href="/study-in-france" className="lx-tile lx-tile-photo lx-span-2x2" data-cursor="Explore">
-            <Image src={paris("bnf-salle-ovale").file} alt={paris("bnf-salle-ovale").alt} fill sizes="(max-width:900px) 92vw, 50vw" />
+            <Image src={paris("bnf-salle-ovale").file} alt={paris("bnf-salle-ovale").alt} fill sizes="(max-width:900px) 330px, 672px" />
             <div className="lx-tile-copy"><span className="lx-tag"><GraduationCap size={14} aria-hidden="true" />Chapter 01 · Study</span><h3>Find your place. <em>Expand your mind.</em></h3><p>Programme research, applications and budgets — built around your goals.</p></div>
           </Link>
           <Link href="/settle-in-france" className="lx-tile lx-tile-photo lx-span-2x1" data-cursor="Explore">
-            <Image src={paris("cafe-night").file} alt={paris("cafe-night").alt} fill sizes="(max-width:900px) 92vw, 50vw" />
+            <Image src={paris("cafe-night").file} alt={paris("cafe-night").alt} fill sizes="(max-width:900px) 330px, 672px" />
             <div className="lx-tile-copy"><span className="lx-tag"><Compass size={14} aria-hidden="true" />Chapter 02 · Settle</span><h3>New city. <em>New rhythm.</em></h3></div>
           </Link>
           <ReviewShowcase />
           <Link href="/career-support" className="lx-tile lx-tile-photo lx-span-2x1" data-cursor="Explore">
-            <Image src={paris("la-defense-skyline").file} alt={paris("la-defense-skyline").alt} fill sizes="(max-width:900px) 92vw, 50vw" />
+            <Image src={paris("la-defense-skyline").file} alt={paris("la-defense-skyline").alt} fill sizes="(max-width:900px) 330px, 672px" />
             <div className="lx-tile-copy"><span className="lx-tag"><Briefcase size={14} aria-hidden="true" />Chapter 03 · Succeed</span><h3>Bring your ambition. <em>Find your direction.</em></h3></div>
           </Link>
           <div className="lx-tile lx-tile-services lx-span-2x1">
