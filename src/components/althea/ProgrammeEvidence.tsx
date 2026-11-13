@@ -15,7 +15,7 @@ export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
   const admissions=studyKnowledge.find(e=>e.country===p.country&&e.topic==='Admissions');
   const extras=p.slug.startsWith('uci-')?(p.charges?.find(c=>c.label==='Published total fees paid — not an additional charge')?.amount||0)-(p.charges?.find(c=>c.label==='Programme instalments — first four quarters')?.amount||0):0;
   const countryName=destinations.find(d=>d.slug===p.country)?.name;
-  return <Page path={`/programmes/${p.slug}`} soonCountry={isComingSoon(p.country)?p.country:undefined} eyebrow={`${countryName} / ${p.level}`} title={p.title} intro={`${p.institution} · ${p.city} · ${p.duration}`}
+  return <Page path={`/programmes/${p.slug}`} soonCountry={isComingSoon(p.country)?p.country:undefined} eyebrow={`${countryName} / ${p.level} / Taught in ${p.language}`} title={p.title} intro={`${p.institution} · ${p.city} · ${p.duration} · Taught in ${p.language}${p.languageNote?` — ${p.languageNote}`:''}`}
     headerActions={<><a href={`/programmes?country=${p.country}`}>← Programme research</a><a href="#programme-fees">Tuition & charges</a><a href="#programme-dates">Application dates</a><a href="#programme-requirements">Requirements</a><a href="#programme-budget">Living & funding</a></>}
     modified={p.reviewedAt} about={{"@id":`${absoluteUrl(`/programmes/${p.slug}`)}#course`}}
     closing={{kicker:"YOUR NEXT STEP",title:"A programme is a start.",accent:"A plan makes it real.",body:"Talk through fit, timing and budget for this programme and its alternatives.",href:`/book-consultation?destination=${p.country}`,action:"Discuss your study plan"}}>
@@ -32,7 +32,7 @@ export default function ProgrammeEvidence({p}:{p:ProgrammeResearch}) {
           <p className="ms-kicker">PUBLISHED FEE</p>
           <p className="ms-prog-amount">{publishedMoney(p)}</p>
           <p className="ms-prog-period">{p.fee.period}</p>
-          <dl className="ms-dir-facts"><div><dt>Fee year / cohort</dt><dd>{p.fee.year}</dd></div><div><dt>Applicant category</dt><dd>{p.fee.category}</dd></div></dl>
+          <dl className="ms-dir-facts"><div><dt>Fee year / cohort</dt><dd>{p.fee.year}</dd></div><div><dt>Applicant category</dt><dd>{p.fee.category}</dd></div><div><dt>Teaching language</dt><dd>{p.language}{p.languageNote&&<small>{p.languageNote}</small>}</dd></div></dl>
           <p>{p.fee.note}</p>
           <div className="ms-prog-reserve"><h3>Tuition planning reserve</h3><p><strong>{plan.feeBudget}</strong></p><p>{plan.feeBudgetBasis}</p></div>
           {p.country==='france'&&<p>CVEC: €105 for 2026–27 unless exempt. <a href="https://cvec.etudiant.gouv.fr/" target="_blank" rel="noreferrer">Official CVEC amount & exemptions ↗</a></p>}
