@@ -76,7 +76,6 @@ export default function AdminConsole() {
       <label className="ms-field"><span>Admin key</span><input type="password" value={key} onChange={e => setKey(e.target.value)} autoComplete="current-password" required /></label>
       <button className="ms-btn ms-btn-gold" type="submit" disabled={loading || !key}>{loading ? <Loader2 size={17} className="bk-spin" aria-hidden="true" /> : null}<span>Open admin</span></button>
       {error && <p className="ms-form-status" role="alert">{error}</p>}
-      <p className="ms-form-note">The key is shown once when the booking script is set up (booking/SETUP.md).</p>
     </form>
   );
 
