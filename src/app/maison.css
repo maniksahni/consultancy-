@@ -18,9 +18,8 @@
 .mx-finder-head em, .mx-chapters-head em, .mx-chapter:not(:nth-child(2)) .mx-chapter-copy em { color:#8f6b2c !important; }
 
 /* Shared set-pieces: the breathing orb and the scroll cue */
-.mx-orb { position:relative; display:grid; place-items:center; align-content:center; gap:10px; width:190px; height:190px; border-radius:50%; margin-top:16px; background:var(--ms-gold); color:var(--ms-deep); font:600 15px/1.25 var(--ms-sans); text-align:center; box-shadow:0 0 0 0 #e2bd7866,0 30px 80px -20px #e2bd7888; animation:mx-breathe 3.2s ease-in-out infinite; transition:background .3s; }
+.mx-orb { position:relative; display:grid; place-items:center; align-content:center; gap:10px; width:190px; height:190px; border-radius:50%; margin-top:16px; background:var(--ms-gold); color:var(--ms-deep); font:600 15px/1.25 var(--ms-sans); text-align:center; box-shadow:0 0 0 0 #e2bd7866,0 30px 80px -20px #e2bd7888; transition:background .3s; }
 .mx-orb:hover { background:var(--ms-champagne); }
-@keyframes mx-breathe { 50% { box-shadow:0 0 0 18px #e2bd7800,0 30px 80px -20px #e2bd78aa; } }
 @keyframes mx-cue { 0% { transform:translateY(-100%); } 60%,100% { transform:translateY(100%); } }
 
 /* 1 · Opening frame */

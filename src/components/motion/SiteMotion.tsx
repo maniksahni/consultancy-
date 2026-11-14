@@ -19,8 +19,44 @@ const SPOTLIGHT = ".mx-stat, .mx-quote, [data-spotlight]";
 const MAGNETIC = ".mx-magnetic, [data-magnetic]";
 const INTERACTIVE = "a, button, select, input, textarea, label, [role=button]";
 
+// Endless loops (cloud drift, marquee, glows) only run while someone can see them, and the hero's
+// cloud drift waits until the page has finished loading - so the first second goes to loading and
+// laptop GPUs aren't re-blurring the glass header over a moving sky that's scrolled out of view.
+function watchEndlessLoops() {
+  const seen = new Set<Element>();
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) (entry.target as HTMLElement).dataset.offscreen = String(!entry.isIntersecting);
+  }, { rootMargin: "120px 0px" });
+  const scan = () => {
+    for (const animation of document.getAnimations()) {
+      const effect = animation.effect as KeyframeEffect | null;
+      const target = effect?.target;
+      if (!target || seen.has(target) || effect.getTiming().iterations !== Infinity) continue;
+      seen.add(target);
+      io.observe(target);
+    }
+  };
+  scan();
+  const later = window.setTimeout(scan, 2500);
+  return () => { window.clearTimeout(later); io.disconnect(); };
+}
+
 export default function SiteMotion() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const ready = () => {
+      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+      if (idle) idle(() => { root.dataset.motion = "ready"; }, { timeout: 1500 });
+      else window.setTimeout(() => { root.dataset.motion = "ready"; }, 300);
+    };
+    if (document.readyState === "complete") ready();
+    else addEventListener("load", ready, { once: true });
+    return () => removeEventListener("load", ready);
+  }, []);
+
+  useEffect(() => watchEndlessLoops(), [pathname]);
   // Per-page behaviour, re-run on every route change.
   useEffect(() => {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;

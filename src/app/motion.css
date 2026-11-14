@@ -3,7 +3,11 @@
 @keyframes sx-drift { from { transform:scale(1.14); } to { transform:scale(1.02); } }
 @keyframes sx-rise { from { transform:translateY(105%); } to { transform:none; } }
 @keyframes sx-fade { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
-@keyframes sx-pulse { 70% { box-shadow:0 0 0 8px #7fe0b000; } 100% { box-shadow:0 0 0 0 #7fe0b000; } }
+@keyframes sx-pulse { 0% { transform:scale(1); opacity:.67; } 70% { transform:scale(3.3); opacity:0; } 100% { transform:scale(1); opacity:0; } }
+
+/* Set by SiteMotion: an endless loop scrolled out of view stops costing a frame. */
+[data-offscreen="true"], [data-offscreen="true"]::before, [data-offscreen="true"]::after { animation-play-state:paused !important; }
+html:not([data-motion="ready"]) .lx-paris-stage::before { animation-play-state:paused; }
 
 /* Reading progress */
 .sx-progress { position:fixed; inset:0 0 auto; height:2px; z-index:80; pointer-events:none; background:linear-gradient(90deg,#9d8bff,var(--sx-gold),#ffd2b0); transform-origin:0 50%; transform:scaleX(var(--sx-progress,0)); }
@@ -54,10 +58,12 @@ html.sx-seen .sx-intro { display:none; }
 em .sx-word, em .sx-chars .ch { display:inline; }
 
 /* Live status dot */
-.mx-live { display:inline-block; width:7px; height:7px; border-radius:50%; background:#7fe0b0; box-shadow:0 0 0 0 #7fe0b0aa; animation:sx-pulse 2.2s infinite; flex:none; }
+.mx-live { position:relative; display:inline-block; width:7px; height:7px; border-radius:50%; background:#7fe0b0; flex:none; }
+/* The pulse ring scales a copy of the dot (GPU) instead of animating box-shadow (a repaint every frame). */
+.mx-live::after { content:""; position:absolute; inset:0; border-radius:50%; background:#7fe0b0; animation:sx-pulse 2.2s infinite; }
 
 @media (prefers-reduced-motion:reduce) {
   .sx-intro { display:none; }
-  .mx-live { animation:none; }
+  .mx-live::after { animation:none; opacity:0; }
   .sx-curtain { display:none; }
 }
