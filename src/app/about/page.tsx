@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { pageMetadata } from "@/lib/seo";
 import { brand } from "@/config/brand";
 import type { Metadata } from "next";
@@ -5,6 +6,7 @@ import Page from "@/components/althea/Page";
 import { Btn, Card, Chips, Facts, Grid, Kicker, Notice, Quote, Section, Split, TextLink } from "@/components/maison/ui";
 import { paris } from "@/lib/paris";
 import { Compass, HeartHandshake, ScrollText } from "lucide-react";
+import HarshitaJourney from "@/components/althea/HarshitaJourney";
 
 export const metadata: Metadata = pageMetadata("/about", {
   title: "About Althéa Consulting & Harshita Kohli",
@@ -13,7 +15,9 @@ export const metadata: Metadata = pageMetadata("/about", {
 
 export default function AboutPage() {
   const philosophy = paris("haussmann-facade");
-  const adviser = paris("bnf-salle-ovale");
+  // Harshita's own photo once it is in public/images/paris; the library photo until then.
+  const own = existsSync("public/images/paris/harshita-olympics.webp");
+  const adviser = own ? { file: "/images/paris/harshita-olympics.webp", alt: "Harshita Kohli, founder of Althéa Consulting, at India House during the Paris 2024 Olympics" } : paris("bnf-salle-ovale");
   return (
     <Page
       path="/about"
@@ -34,6 +38,8 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      <HarshitaJourney />
+
       <Section tone="paper">
         <Split image={philosophy.file} alt={philosophy.alt} caption="Paris">
           <Kicker>THE ALTHÉA PHILOSOPHY</Kicker>
@@ -45,7 +51,7 @@ export default function AboutPage() {
       </Section>
 
       <Section tone="ink">
-        <Split image={adviser.file} alt={adviser.alt} caption="Paris" reverse tall>
+        <Split image={adviser.file} alt={adviser.alt} caption={own ? "India House · Paris 2024" : "Paris"} reverse tall>
           <Kicker>MEET YOUR ADVISER</Kicker>
           <h2>{brand.person}<br /><em>A personal beginning.</em></h2>
           <p>I’m {brand.person}—France-based career coach and former international student, helping you navigate the realities of life and career in France. I know that arriving is the beginning of a new set of practical questions, not the end of the journey.</p>

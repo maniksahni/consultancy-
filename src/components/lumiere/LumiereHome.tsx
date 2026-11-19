@@ -231,14 +231,14 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     {/* 8 · Founder */}
     <section className="lx-section" id="about" aria-labelledby="lx-founder-title">
       <div className="lx-wrap lx-founder">
-        <div className="lx-founder-photo"><Image src={paris("pont-alexandre-couple").file} alt={paris("pont-alexandre-couple").alt} fill sizes="(max-width:900px) 92vw, 45vw" /><span>Pont Alexandre III</span></div>
+        <div className="lx-founder-photo"><Image src="/images/paris/harshita-eiffel.webp" alt="Harshita Kohli, founder of Althéa Consulting, in front of the Eiffel Tower" fill sizes="(max-width:900px) 92vw, 45vw" /><span>Harshita in Paris</span></div>
         <div className="lx-founder-copy">
           <p className="ms-kicker">MEET YOUR ADVISER</p>
           <h2 id="lx-founder-title" className="lx-title">I was an international student here <em>too.</em></h2>
           <p>I’m Harshita Kohli. I studied in France, built my career in Paris and now coach students through the same steps: the course, Campus France, the visa, the flat, the CAF file and the first job. You talk to me directly, not to a call centre.</p>
           <div className="ms-signature"><span>Harshita</span><small>Harshita Kohli · Founder · Career Coach & France Expert</small></div>
           <p className="lx-muted">Althéa Consulting (altheaconsulting.in) is an independent study abroad, settling and career advisory founded by Harshita Kohli in Paris. You may also see the name written Althea or Althèa Consulting.</p>
-          <div className="lx-founder-actions"><WhatsAppButton text={waMessages.general} label="Message Harshita" /><Link className="ms-btn ms-btn-light" href="/about"><span>Get to know Althéa</span><ArrowUpRight size={17} aria-hidden="true" /></Link></div>
+          <div className="lx-founder-actions"><WhatsAppButton text={waMessages.general} label="Message Harshita" /><Link className="ms-btn ms-btn-light" href="/about"><span>See my life in France</span><ArrowUpRight size={17} aria-hidden="true" /></Link></div>
         </div>
       </div>
     </section>

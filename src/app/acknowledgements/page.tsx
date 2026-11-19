@@ -28,7 +28,7 @@ export default function Content() {
           <Card title="Corrections and personal advice"><p>Spotted a problem? Email <a href={`mailto:${brand.email}`}>{brand.email}</a> with the page URL, the claim and an official source. For your own plan, <Link href="/book-consultation">request a consultation</Link>. Institutions, employers and authorities make their own decisions.</p></Card>
         </Grid>
       </Section>
-      <Section tone="paper" id="photography" kicker="THE PARIS COLLECTION" title="Photographs" accent="and image licences." intro="The photographs on this site are real photographs from Pexels, used under the Pexels License. Each local copy is resized and converted to WebP; page layouts crop images to fit without generative edits. Photograph use does not imply an affiliation with a university, landmark or destination organisation.">
+      <Section tone="paper" id="photography" kicker="THE PARIS COLLECTION" title="Photographs" accent="and image licences." intro="The photographs of Harshita Kohli are her own. The other photographs on this site are real photographs from Pexels, used under the Pexels License. Each local copy is resized and converted to WebP; page layouts crop images to fit without generative edits. Photograph use does not imply an affiliation with a university, landmark or destination organisation.">
         <ul className="ms-credits">{parisPhotos.map(([slug, photo]) => <li key={slug}><a href={photo.source} target="_blank" rel="noreferrer">{photoPlace(photo)}</a><span>{photo.licence}</span></li>)}</ul>
       </Section>
     </Page>
