@@ -16,8 +16,8 @@ export const metadata: Metadata = pageMetadata("/about", {
 export default function AboutPage() {
   const philosophy = paris("haussmann-facade");
   // Harshita's own photo once it is in public/images/paris; the library photo until then.
-  const own = existsSync("public/images/paris/harshita-olympics.webp");
-  const adviser = own ? { file: "/images/paris/harshita-olympics.webp", alt: "Harshita Kohli, founder of Althéa Consulting, at India House during the Paris 2024 Olympics" } : paris("bnf-salle-ovale");
+  const own = existsSync("public/images/paris/harshita-olympics-portrait.webp");
+  const adviser = own ? { file: "/images/paris/harshita-olympics-portrait.webp", alt: "Harshita Kohli, founder of Althéa Consulting, at India House during the Paris 2024 Olympics" } : paris("bnf-salle-ovale");
   return (
     <Page
       path="/about"

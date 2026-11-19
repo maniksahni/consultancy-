@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import ReviewShowcase from "./ReviewShowcase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,11 +22,31 @@ gsap.registerPlugin(ScrollTrigger);
 export type CountryCoverage = Record<string, { institutions: number; courses: number }>;
 
 const serviceLinks = ["/book-consultation", "/universities", "/admissions-process", "/scholarships", "/france/visas", "/settle-in-france", "/first-30-days-france"];
-/** The process, as three metro lines. */
-const routeLines: { n: number; label: string; color: "red" | "blue" | "green"; stops: [string, string][] }[] = [
-  { n: 1, label: "Before you apply", color: "red", stops: [["A shortlist that fits", "Courses matched to your marks, budget and goals."], ["Tests and documents", "IELTS or DELF, transcripts and translations, in order."], ["SOP and references", "A motivation letter written for each programme."]] },
-  { n: 2, label: "Before you fly", color: "blue", stops: [["Campus France", "Études en France file and interview practice."], ["Offer, funds, visa", "Proof of funds and the VLS-TS student visa."], ["Housing and insurance", "A first address and cover before you land."]] },
-  { n: 3, label: "After you land", color: "green", stops: [["Bank, SIM, Navigo, CAF", "The first-week setup, in the order that works."], ["Your residence permit", "Validate the visa and renew your titre de séjour."], ["Internships and jobs", "Stage, alternance, French CV and your first job."]] },
+/** "Where are you right now?": each situation gets its own next steps and a WhatsApp message already written. */
+const situations = [
+  { id: "school", label: "In Class 11 or 12", kicker: "FOR A BACHELOR'S IN FRANCE", title: "Start with the right bachelor's route.",
+    steps: ["Pick between French-taught and English-taught bachelor's programmes, and see which accept Indian Class 12 marks.", "Plan the budget: tuition, a room and daily life, city by city.", "Apply through Campus France with the right documents, on time."],
+    links: [["English-taught programmes", "/programmes"], ["Study in France from India", "/study-in-france"]] as [string, string][],
+    message: "Bonjour Harshita! I'm in Class 11/12 and want to do my bachelor's in France.\nName:\nStream and marks:\nBudget per year:" },
+  { id: "bachelor", label: "Finishing my bachelor's", kicker: "FOR A MASTER'S OR MSc", title: "Build a master's shortlist that fits.",
+    steps: ["Shortlist public universities and grandes écoles that match your marks and budget.", "Prepare your Études en France file, SOP and references, then the Campus France interview.", "Look at scholarships and what your degree can lead to in France."],
+    links: [["Search courses", "/universities"], ["Campus France guide", "/campus-france-guide"], ["Scholarships", "/scholarships"]] as [string, string][],
+    message: "Bonjour Harshita! I'm finishing my bachelor's and want to do a master's in France.\nName:\nDegree and marks:\nIntake I'm aiming for:" },
+  { id: "working", label: "Working in India", kicker: "FOR A CAREER MOVE", title: "Turn your experience into a French degree and a job.",
+    steps: ["Choose an MSc, MBA or specialised master's that values your work experience.", "Work out the real cost and how to fund it.", "Plan the job search in France from day one: internships, French and your CV."],
+    links: [["Programmes & fees", "/programmes"], ["Jobs in France", "/jobs"]] as [string, string][],
+    message: "Bonjour Harshita! I'm working in India and thinking of studying in France for a career move.\nName:\nExperience:\nField I want to work in:" },
+  { id: "france", label: "Already in France", kicker: "FOR STUDENTS AND GRADUATES HERE", title: "Get the internship, the job and the papers.",
+    steps: ["Find internships, alternance and jobs, and apply with a French-style CV.", "Keep your titre de séjour, CAF and bank in order.", "Plan the step after your degree: job-search permit, work permit and residency."],
+    links: [["Jobs & internships", "/jobs"], ["Already in France", "/in-france"], ["Residency in France", "/pr-in-france"]] as [string, string][],
+    message: "Bonjour Harshita! I'm already in France and need help with jobs or paperwork.\nName:\nMy situation (student / graduate / working):\nWhat I need:" },
+];
+
+/** The process, in three chapters. */
+const routeLines: { n: number; label: string; stops: [string, string][] }[] = [
+  { n: 1, label: "Before you apply", stops: [["A shortlist that fits", "Courses matched to your marks, budget and goals."], ["Tests and documents", "IELTS or DELF, transcripts and translations, in order."], ["SOP and references", "A motivation letter written for each programme."]] },
+  { n: 2, label: "Before you fly", stops: [["Campus France", "Études en France file and interview practice."], ["Offer, funds, visa", "Proof of funds and the VLS-TS student visa."], ["Housing and insurance", "A first address and cover before you land."]] },
+  { n: 3, label: "After you land", stops: [["Bank, SIM, Navigo, CAF", "The first-week setup, in the order that works."], ["Your residence permit", "Validate the visa and renew your titre de séjour."], ["Internships and jobs", "Stage, alternance, French CV and your first job."]] },
 ];
 
 /** Free tools on the site, each a real working page (not a brochure). */
@@ -53,20 +73,19 @@ const paths = [
 ];
 
 
-export default function LumiereHome({ stats, coverage }: { stats: HomeStats; coverage: CountryCoverage }) {
-  const root = useRef<HTMLDivElement>(null);
-  
-  // The word ribbon also travels with the reader's scroll, so it moves even where autoplay is reduced.
-  useEffect(() => {
-    const ribbon = root.current?.querySelector<HTMLElement>(".lx-ribbon > div");
-    if (!ribbon) return;
-    let frame = 0;
-    const update = () => { frame = 0; ribbon.style.translate = `${-(window.scrollY * 0.6) % (ribbon.scrollWidth / 2)}px 0`; };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
-  }, []);
+export type FranceNumbers = { institutions: number; courses: number; jobs: number; programmes: number };
 
+export default function LumiereHome({ france }: { stats: HomeStats; coverage: CountryCoverage; france: FranceNumbers }) {
+  const root = useRef<HTMLDivElement>(null);
+  const [pick, setPick] = useState(0);
+  const fmt = (n: number) => n.toLocaleString("en-IN");
+  const numbers: [string, string, string][] = [
+    [fmt(france.institutions), "French universities and schools to search", "/universities"],
+    [fmt(france.courses), "French courses, with fees", "/universities"],
+    [fmt(france.jobs), "open jobs in France today", "/jobs"],
+    [fmt(france.programmes), "programmes with checked fees and deadlines", "/programmes"],
+  ];
+  
   useEffect(() => {
     const scope = root.current;
     if (!scope) return;
@@ -75,9 +94,6 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       const { motion } = ctx.conditions as { desktop: boolean; motion: boolean };
       if (!motion) return;
       const q = gsap.utils.selector(scope);
-      // The Paris photograph sinks back and the hero copy lifts away as the story begins.
-      gsap.to(q(".lx-hero-stage"), { scale: 0.86, opacity: 0.25, yPercent: 10, ease: "none", scrollTrigger: { trigger: q(".lx-hero")[0], start: "top top", end: "bottom top", scrub: true } });
-      gsap.to(q(".lx-hero-copy"), { yPercent: -18, opacity: 0, ease: "none", scrollTrigger: { trigger: q(".lx-hero")[0], start: "20% top", end: "bottom top", scrub: true } });
       // Bento tiles rise in a cascade.
       gsap.from(q(".lx-tile"), { y: 80, opacity: 0, rotateX: 8, transformOrigin: "50% 100%", duration: 0.7, ease: "expo.out", stagger: 0.05, scrollTrigger: { trigger: q(".lx-bento")[0], start: "top 78%" } });
     });
@@ -86,69 +102,54 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
 
   return <div className="lumiere-home" ref={root}><Navbar /><main id="main-content">
 
-    {/* 1 · Hero: navy, one clear promise, a real Paris photo and the student pass */}
-    <section className="lx-hero hv" aria-labelledby="lx-hero-title">
-      <span className="hv-rings" aria-hidden="true" />
-      <div className="lx-wrap hv-grid">
-        <div className="lx-hero-copy hv-copy">
-          <p className="hv-pill"><span aria-hidden="true" />Aiming for the September 2027 intake? Start now.</p>
-          <h1 id="lx-hero-title"><span className="lx-h1-kicker">Study in France consultant · Paris ⇄ India</span>Study in France, <em>planned</em> by someone who <mark>lives here.</mark></h1>
-          <p className="lx-hero-lead">Courses, Campus France and the visa before you fly. Housing, CAF, internships and your first job once you land. One adviser in Paris, from India to your first payslip.</p>
-          <div className="lx-hero-actions">
-            <Link href="/universities" className="ms-btn hv-btn-red"><span>Find my course</span><ArrowUpRight size={18} aria-hidden="true" /></Link>
+    {/* 1 · Hero: ivory paper, Harshita in a Paris arch, one clear promise */}
+    <section className="hx" aria-labelledby="lx-hero-title">
+      <div className="lx-wrap hx-grid">
+        <div className="hx-copy">
+          <h1 id="lx-hero-title"><span className="lx-h1-kicker hx-eyebrow"><i className="hx-flag" aria-hidden="true" />Study in France consultant · Paris ⇄ India</span>Study in France, <em>planned by someone</em> who lives here.</h1>
+          <p className="hx-lead">Courses, Campus France and the visa before you fly. Housing, CAF, internships and your first job once you land. One adviser in Paris, from India to your first payslip.</p>
+          <div className="hx-actions">
             <WhatsAppButton text={waMessages.general} label="WhatsApp Harshita" />
+            <Link href="/universities" className="ms-btn hx-btn-ink"><span>Find my course</span><ArrowUpRight size={18} aria-hidden="true" /></Link>
           </div>
-          <ul className="hv-ticks">
-            <li><Check size={15} aria-hidden="true" />Free first chat</li>
-            <li><Check size={15} aria-hidden="true" />Based in Paris</li>
-            <li><Check size={15} aria-hidden="true" />Indian students guided 1:1</li>
-          </ul>
-          <Link href="/in-france" className="lx-hero-alt"><MapPin size={15} aria-hidden="true" />Already in France? Jobs, internships & paperwork<ArrowUpRight size={15} aria-hidden="true" /></Link>
+          <p className="hx-alt"><MapPin size={15} aria-hidden="true" />Already in France? <Link href="/in-france">Jobs, internships & paperwork</Link></p>
         </div>
-        <div className="hv-visual" aria-hidden="true">
-          <div className="hv-photo"><Image src={paris("eiffel-autumn-sky").file} alt="" fill priority sizes="(max-width:900px) 80vw, 34vw" /></div>
-          <div className="hv-pass">
-            <p className="hv-pass-top"><span>STUDENT PASS · ALTHÉA</span><span>N° 2027</span></p>
-            <div className="hv-pass-route"><div><small>FROM</small><b>IND</b></div><i /><div><small>TO</small><b>PAR</b></div></div>
-            <dl><div><dt>Student</dt><dd>You</dd></div><div><dt>Intake</dt><dd>Sept 2027</dd></div><div><dt>Status</dt><dd className="is-ok">On track</dd></div></dl>
-            <p className="hv-pass-foot"><span>Course · Campus France · Visa · Housing</span><span className="hv-barcode" /></p>
-          </div>
-          <div className="hv-chip"><Check size={16} /><div><b>Visa approved</b><small>Next up: your first flat</small></div></div>
-          <div className="hv-sticker"><b>Free</b><small>first chat</small></div>
-        </div>
+        <figure className="hx-visual">
+          <div className="hx-arch"><Image src="/images/paris/harshita-eiffel-portrait.webp" alt="Harshita Kohli, founder of Althéa Consulting, in front of the Eiffel Tower" fill priority sizes="(max-width:900px) 80vw, 36vw" /></div>
+          <figcaption className="hx-card">
+            <strong>Harshita Kohli</strong>
+            <span>Your adviser in Paris · former international student</span>
+            <em><i aria-hidden="true" />Usually replies on WhatsApp the same day</em>
+          </figcaption>
+          <span className="hx-seal" aria-hidden="true">Paris<br /><b>Based here</b></span>
+        </figure>
       </div>
     </section>
 
-    {/* 1a · Yellow ticker */}
-    <div className="lx-ribbon hv-ticker" aria-hidden="true"><div>{Array.from({ length: 2 }).map((_, k) => <span key={k}>Course shortlist <i>✦</i> Campus France <i>✦</i> Student visa <i>✦</i> Housing <i>✦</i> CAF <i>✦</i> Bank & SIM <i>✦</i> Internships <i>✦</i> First job <i>✦</i> Titre de séjour <i>✦</i> </span>)}</div></div>
+    {/* 1a · Real numbers, from the site's own data */}
+    <section className="hx-numbers" aria-label="Althéa in numbers">
+      <div className="lx-wrap hx-numbers-grid">
+        {numbers.map(([value, label, href]) => <Link key={label} href={href}><strong>{value}</strong><span>{label}</span></Link>)}
+      </div>
+    </section>
 
-    {/* 1c · Sound familiar? */}
-    <section className="lx-section hv-familiar" aria-labelledby="hv-familiar-title">
-      <div className="lx-wrap hv-split">
+    {/* 1c · Where are you right now? Pick your situation, get your next steps */}
+    <section className="lx-section hx-pick" aria-labelledby="hx-pick-title">
+      <div className="lx-wrap hx-pick-grid">
         <div>
-          <p className="ms-kicker">SOUND FAMILIAR?</p>
-          <h2 id="hv-familiar-title" className="lx-title">You’ve read every blog and watched every reel, and you still don’t know <em>where to start.</em></h2>
-          <p className="lx-lead">Agents, cousins and group chats all say something different. Nobody tells you what fits your marks, your budget and your timeline.</p>
+          <p className="ms-kicker">START FROM WHERE YOU ARE</p>
+          <h2 id="hx-pick-title" className="lx-title">Where are you <em>right now?</em></h2>
+          <div className="hx-tabs" role="tablist" aria-label="Your situation">
+            {situations.map((sit, i) => <button key={sit.id} type="button" role="tab" id={`hx-tab-${sit.id}`} aria-controls="hx-panel" aria-selected={pick === i} onClick={() => setPick(i)}><span>{String(i + 1).padStart(2, "0")}</span>{sit.label}</button>)}
+          </div>
         </div>
-        <div className="hv-chat" aria-label="Questions students ask">
-          <p>Public university or business school? What actually fits my marks?</p>
-          <p>My agent says admission is “guaranteed”. Is that real?</p>
-          <p>How much money do I really need to show for the visa?</p>
-          <p className="is-reply">Ask Harshita. You’ll get a straight answer from Paris.</p>
+        <div className="hx-panel" id="hx-panel" role="tabpanel" aria-labelledby={`hx-tab-${situations[pick].id}`}>
+          <p className="hx-panel-kicker">{situations[pick].kicker}</p>
+          <h3>{situations[pick].title}</h3>
+          <ol>{situations[pick].steps.map((st) => <li key={st}>{st}</li>)}</ol>
+          <div className="hx-panel-links">{situations[pick].links.map(([label, href]) => <Link key={href} href={href}>{label}<ArrowUpRight size={15} aria-hidden="true" /></Link>)}</div>
+          <WhatsAppButton text={situations[pick].message} label="Ask Harshita about this" />
         </div>
-      </div>
-    </section>
-
-    {/* 1d · Myths, struck through */}
-    <section className="lx-section hv-myths" aria-labelledby="hv-myths-title">
-      <div className="lx-wrap">
-        <h2 id="hv-myths-title" className="hv-myths-title">Everyone has an opinion on France. <span>Here’s what’s true.</span></h2>
-        <ul className="hv-myth-list">
-          <li><s>You need fluent French to study in France</s><p>Many programmes are taught fully in English. Filter by teaching language in the <Link href="/programmes">programme finder</Link>.</p></li>
-          <li><s>Only expensive private schools take Indian students</s><p>Public universities publish non-EU fees of roughly €2,900 to €3,950 a year. Your profile matters more than the brand.</p></li>
-          <li><s>An agent can guarantee your admission or visa</s><p>Only the university decides admission and only the consulate decides the visa. Anyone promising more is selling.</p></li>
-          <li><s>Getting a job after graduation is easy</s><p>It is very possible with the right permit, a French-style CV and some French. <Link href="/jobs">We help with all three.</Link></p></li>
-        </ul>
       </div>
     </section>
 
@@ -167,14 +168,15 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
       </div>
     </section>
 
-    {/* 2 · The route, drawn like metro lines */}
-    <section className="lx-section hv-route" aria-labelledby="hv-route-title">
+    {/* 2 · The route, in three chapters */}
+    <section className="lx-section hx-route" aria-labelledby="hx-route-title">
       <div className="lx-wrap">
-        <div className="lx-head"><div><p className="ms-kicker">HOW IT WORKS</p><h2 id="hv-route-title" className="lx-title">Your route to France, <em>line by line.</em></h2></div><p className="lx-lead">Every step in the right order, so nothing blocks the next. Harshita walks it with you and checks each stop.</p></div>
-        <div className="hv-lines">{routeLines.map(({ n, label, color, stops }) => <article key={n} className={`hv-line hv-line-${color}`}>
-          <p className="hv-line-head"><b>LIGNE {n}</b>{label}</p>
-          <ol>{stops.map(([t, d]) => <li key={t}><strong>{t}</strong><span>{d}</span></li>)}</ol>
-        </article>)}</div>
+        <div className="lx-head"><div><p className="ms-kicker">HOW IT WORKS</p><h2 id="hx-route-title" className="lx-title">Three chapters, <em>one adviser.</em></h2></div><p className="lx-lead">Every step in the right order, so nothing blocks the next. Harshita walks it with you and checks each one.</p></div>
+        <ol className="hx-chapters">{routeLines.map(({ n, label, stops }) => <li key={n}>
+          <span className="hx-numeral" aria-hidden="true">{["I", "II", "III"][n - 1]}</span>
+          <h3>{label}</h3>
+          <ul>{stops.map(([t, dsc]) => <li key={t}><strong>{t}</strong><span>{dsc}</span></li>)}</ul>
+        </li>)}</ol>
       </div>
     </section>
 
@@ -231,7 +233,7 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     {/* 8 · Founder */}
     <section className="lx-section" id="about" aria-labelledby="lx-founder-title">
       <div className="lx-wrap lx-founder">
-        <div className="lx-founder-photo"><Image src="/images/paris/harshita-eiffel.webp" alt="Harshita Kohli, founder of Althéa Consulting, in front of the Eiffel Tower" fill sizes="(max-width:900px) 92vw, 45vw" /><span>Harshita in Paris</span></div>
+        <div className="lx-founder-photo"><Image src="/images/paris/harshita-olympics-portrait.webp" alt="Harshita Kohli at India House during the Paris 2024 Olympics" fill sizes="(max-width:900px) 92vw, 45vw" /><span>India House · Paris 2024</span></div>
         <div className="lx-founder-copy">
           <p className="ms-kicker">MEET YOUR ADVISER</p>
           <h2 id="lx-founder-title" className="lx-title">I was an international student here <em>too.</em></h2>
@@ -255,16 +257,16 @@ export default function LumiereHome({ stats, coverage }: { stats: HomeStats; cov
     </section>
 
     {/* 11 · Finale */}
-    <section className="hv-final" id="booking" aria-labelledby="lx-final-title">
-      <div className="lx-wrap hv-final-inner">
+    <section className="hx-final" id="booking" aria-labelledby="lx-final-title">
+      <div className="lx-wrap hx-final-inner">
         <div>
           <p className="ms-kicker">START HERE</p>
           <h2 id="lx-final-title" className="lx-final-title">Tell Harshita what you’re <em>planning.</em></h2>
           <p className="lx-lead">Your marks, your budget, your intake. One message is enough to get an honest first answer.</p>
         </div>
-        <div className="hv-final-actions">
+        <div className="hx-final-actions">
           <WhatsAppButton text={waMessages.general} label="WhatsApp Harshita" />
-          <Link className="ms-btn hv-btn-outline" href="/book-consultation"><span>Book a free 15-min call</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
+          <Link className="ms-btn hx-btn-outline" href="/book-consultation"><span>Book a free 15-min call</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
         </div>
       </div>
     </section>

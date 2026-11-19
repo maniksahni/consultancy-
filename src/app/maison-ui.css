@@ -4,11 +4,11 @@
    menu and the footer are "ink" scopes (navy with white text). Every colour in the stylesheets is written
    against these triplets, so a block flips cleanly just by being inside an ink scope. */
 :root {
-  --fg:11 27 63; --bg:255 255 255; --c-red:214 54 31; --c-red-2:236 92 52; --c-gold:255 201 60; --c-blue:11 27 63; --c-ok:18 122 75; --c-bad:190 30 45; --hl:214 54 31; --hl-2:236 92 52;
-  --navy:#0b1b3f; --paper:#f7f8fb; --red:#d6361f; --gold:#ffc93c;
+  --fg:14 27 58; --bg:251 248 242; --c-red:196 30 58; --c-red-2:214 64 80; --c-gold:232 178 64; --c-blue:14 27 58; --c-ok:18 122 75; --c-bad:190 30 45; --hl:196 30 58; --hl-2:214 64 80;
+  --navy:#0e1b3a; --paper:#f3eee4; --red:#c41e3a; --gold:#e8b240; --ivory:#fbf8f2;
 }
 .ink, .adm-app:not([data-adm-theme=light]), .ms-nav.is-menu, .mx-hero, .lx-hero, .ms-cover, .ms-tone-ink, .ms-footer, .ms-closing, .ms-menu, .ms-notice-ink, .ms-city, .lx-tile-photo, .lx-dest, .mx-dest, .cc-scene, .lx-paris-stage, .ms-menu-preview, .mx-route {
-  --fg:255 255 255; --bg:11 27 63; --c-red:255 112 92; --c-red-2:255 140 110; --c-blue:150 175 255; --c-ok:127 224 176; --c-bad:255 143 156; --hl:255 201 60; --hl-2:255 222 120;
+  --fg:255 255 255; --bg:14 27 58; --c-red:255 120 130; --c-red-2:255 140 110; --c-blue:150 175 255; --c-ok:127 224 176; --c-bad:255 143 156; --hl:240 196 98; --hl-2:248 216 140;
   color:rgb(var(--fg));
 }
 :root, .ink, .adm-app:not([data-adm-theme=light]), .ms-nav.is-menu, .mx-hero, .lx-hero, .ms-cover, .ms-tone-ink, .ms-footer, .ms-closing, .ms-menu, .ms-notice-ink, .ms-city, .lx-tile-photo, .lx-dest, .mx-dest, .cc-scene, .lx-paris-stage, .ms-menu-preview, .mx-route {

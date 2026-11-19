@@ -21,22 +21,19 @@ import { cmsSeo, cmsSocials } from "@/lib/cms";
 // time was flaky on the daily GitHub Actions runner and crashed the whole "Refresh jobs and
 // deploy" build about a third of the time with no network to blame it on in the logs.
 const display = localFont({
-  src: "../fonts/bricolage-grotesque-variable.woff2",
-  weight: "200 800",
+  src: "../fonts/fraunces-variable.woff2",
+  weight: "100 900",
   variable: "--font-display",
   display: "swap",
 });
 const body = localFont({
-  src: "../fonts/dm-sans-variable.woff2",
-  weight: "100 1000",
+  src: "../fonts/manrope-variable.woff2",
+  weight: "400 700",
   variable: "--font-body",
   display: "swap",
 });
 const italic = localFont({
-  src: [
-    { path: "../fonts/instrument-serif-normal.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/instrument-serif-italic.woff2", weight: "400", style: "italic" },
-  ],
+  src: [{ path: "../fonts/fraunces-italic-variable.woff2", weight: "100 900", style: "italic" }],
   variable: "--font-italic",
   display: "swap",
   preload: false, // accent words swap in; the main faces load first

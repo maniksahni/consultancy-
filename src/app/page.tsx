@@ -5,6 +5,8 @@ import JsonLd from "@/components/seo/JsonLd";
 import { questions } from "@/components/redesign/content";
 import { siteUrl } from "@/lib/seo";
 import manifest from "../../public/data/universities/manifest.json";
+import liveJobs from "../../public/data/jobs/live.json";
+import { programmeResearch } from "@/data/programmeResearch";
 
 
 export const metadata = pageMetadata("/", {
@@ -24,6 +26,8 @@ export default function Home() {
     refreshedAt: manifest.refreshedAt,
   };
   const countryCoverage = Object.fromEntries(Object.entries(manifest.countries).map(([slug, item]) => [slug, { institutions: item.uniqueInstitutionCount, courses: item.courseCount }]));
+  const fr = (manifest.countries as Record<string, { uniqueInstitutionCount: number; courseCount: number }>).france;
+  const france = { institutions: fr?.uniqueInstitutionCount ?? 0, courses: fr?.courseCount ?? 0, jobs: (liveJobs as { counts: Record<string, number> }).counts.france ?? 0, programmes: programmeResearch.filter((p) => p.country === "france").length };
   return (
     <>
       <PageIdentity
@@ -36,7 +40,7 @@ export default function Home() {
         "@context": "https://schema.org", "@type": "FAQPage", "@id": `${siteUrl}/#faq`,
         mainEntity: questions.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
       }} />
-      <LumiereHome stats={stats} coverage={countryCoverage} />
+      <LumiereHome stats={stats} coverage={countryCoverage} france={france} />
     </>
   );
 }
