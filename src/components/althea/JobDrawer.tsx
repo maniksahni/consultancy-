@@ -43,7 +43,7 @@ function Description({ text }: { text: string }) {
   })}</div>;
 }
 
-export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob | null; tab: JobTab; onTab: (t: JobTab) => void; onClose: () => void }) {
+export default function JobDrawer({ job, tab, onTab, onClose, onApply }: { job: LiveJob | null; tab: JobTab; onTab: (t: JobTab) => void; onClose: () => void; onApply?: (job: LiveJob) => void }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [desc, setDesc] = useState<{ id: string; text: string } | null>(null);
   const [failed, setFailed] = useState(false);
@@ -126,7 +126,8 @@ export default function JobDrawer({ job, tab, onTab, onClose }: { job: LiveJob |
       </div>
 
       <footer className="ms-jobdrawer-foot">
-        <a className="ms-btn ms-btn-gold" href={job.url} target="_blank" rel="noopener noreferrer nofollow"><span>Apply on {job.source}</span><ArrowUpRight size={16} aria-hidden="true" /></a>
+        {onApply ? <button type="button" className="ms-btn ms-btn-gold" onClick={() => onApply(job)}><span>Apply with Althéa</span><ArrowUpRight size={16} aria-hidden="true" /></button>
+          : <a className="ms-btn ms-btn-gold" href={job.url} target="_blank" rel="noopener noreferrer nofollow"><span>Apply on {job.source}</span><ArrowUpRight size={16} aria-hidden="true" /></a>}
         {tab !== "ats" ? <button type="button" className="ms-livejob-help" onClick={() => onTab("ats")}><ScanSearch size={15} aria-hidden="true" /><span className="ms-only-wide">Need help with your CV?</span><span className="ms-only-narrow">CV help</span></button>
           : <Link className="ms-livejob-help" href={help}><CalendarCheck size={15} aria-hidden="true" />Get help applying</Link>}
       </footer>

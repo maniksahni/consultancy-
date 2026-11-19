@@ -1,5 +1,7 @@
 "use client";
 import {useEffect,useState} from 'react';import Link from 'next/link';import {ArrowDownToLine,ArrowUpRight,RotateCcw,Search} from 'lucide-react';import {programmePlanning} from '@/lib/programmePlanning';import {destinations} from '@/data/destinations';import {programmeResearch,publishedMoney} from '@/data/programmeResearch';import {isComingSoon,isLive} from '@/lib/comingSoon';import {latestReviewedAt,formatReviewDate} from '@/lib/latestReview';
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import { waMessages } from "@/config/contact";
 // Short forms: a visitor searching "CS" or "MBA" should find "Computer Science" / "Business Administration"
 // records, and typing a school's own initials (e.g. "TSE") should match even when the full name differs slightly.
 const STOP=new Set(['of','and','in','the','a','an','for','to','on','with','&','-']);
@@ -27,7 +29,7 @@ export default function ProgrammeResearchFinder({initialCountry='france'}:{initi
    <div className="ms-prog-fee"><span>Published tuition</span><strong>{publishedMoney(p)}</strong><small>{p.fee.period} · {p.fee.year}</small></div>
    <dl className="ms-dir-facts"><div><dt>Applicant category</dt><dd>{p.fee.category}</dd></div><div><dt>Application date</dt><dd>{p.deadline.label}<small>{p.deadline.status} · {p.deadline.scope}</small></dd></div></dl>
    <div className="ms-dir-guidance"><h4>{plan.heading}</h4><p>{plan.timing}</p><p className="ms-muted">{plan.basis}</p></div>
-   <div className="ms-prog-foot"><Link href={`/programmes/${p.slug}`} className="ms-card-cta">View fees, requirements & evidence<ArrowUpRight size={16} aria-hidden="true"/></Link><span>Fee source: {new URL(p.fee.source).hostname} · Deadline source: {new URL(p.deadline.source).hostname}</span></div>
+   <div className="ms-prog-foot"><div className="ms-prog-actions"><WhatsAppButton small label="Apply via WhatsApp" text={waMessages.course(p.title, p.institution, p.city)} /><Link href={`/programmes/${p.slug}`} className="ms-card-cta">View fees & requirements<ArrowUpRight size={16} aria-hidden="true"/></Link></div><span>Fee source: {new URL(p.fee.source).hostname} · Deadline source: {new URL(p.deadline.source).hostname}</span></div>
   </article>;})}</div>
   {!rows.length&&<div className="ms-empty"><h3>No matches in this researched collection.</h3><p>Change the search or filters to see other records.</p></div>}
  </section>

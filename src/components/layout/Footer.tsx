@@ -2,12 +2,17 @@ import BrandLockup from "@/components/brand/BrandLockup";
 import { brand } from "@/config/brand";
 import Link from "next/link";
 import { ArrowUp, Instagram, Linkedin, Mail, MapPin, MessageCircle } from "lucide-react";
+import { blogPosts, footerLinks } from "@/lib/cms";
 
 const groups = [
   { title: "Explore", links: [["Destinations (more coming soon)", "/destinations"], ["Universities & courses", "/universities"], ["Programmes & fees", "/programmes"], ["Student stories", "/reviews"], ["The journal", "/knowledge"], ["Insights", "/insights"]] },
   { title: "Your next step", links: [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["PR in France", "/pr-in-france"], ["Settle in France", "/settle-in-france"], ["Career support", "/career-support"], ["Scholarship guidance", "/scholarships"], ["Jobs & opportunities", "/jobs"], ["Our support", "/services"]] },
   { title: "Good to know", links: [["Admissions process", "/admissions-process"], ["From India: the essentials", "/from-india"], ["Campus France guide", "/campus-france-guide"], ["First 30 days in France", "/first-30-days-france"], ["Learn French", "/learn-french"], ["The mentorship model", "/mentorship-model"], ["Your questions, answered", "/faq"], ["About Harshita", "/about"], ["Partnerships", "/partnerships"], ["Site map: every page", "/site-map"]] },
 ];
+
+// Admin additions: the blog once it has articles, and pages ticked "Show in footer links".
+if (blogPosts.length) groups[0].links.push(["Blog", "/blog"]);
+groups[2].links.push(...footerLinks);
 
 export default function Footer({ showCallout = true }: { showCallout?: boolean }) {
   return <footer className="ms-footer" id="footer">
@@ -16,7 +21,7 @@ export default function Footer({ showCallout = true }: { showCallout?: boolean }
       <div className="ms-footer-grid">
         <div className="ms-footer-brand">
           <Link href="/" aria-label={`${brand.name} home`}><BrandLockup /></Link>
-          <p>A wider world. A personal way forward. Independent study, settling and career guidance from Paris.</p>
+          <p>Study in France, settle in and find work, with one adviser in Paris: Harshita Kohli.</p>
           <ul className="ms-footer-contact">
             <li><a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a></li>
             <li><span><MapPin size={15} aria-hidden="true" />{brand.location}</span></li>

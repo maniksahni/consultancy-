@@ -1,8 +1,8 @@
 /* Althéa base — resets, typography defaults and accessibility helpers. */
 *, *::before, *::after { box-sizing:border-box; }
-html { -webkit-text-size-adjust:100%; scroll-padding-top:96px; color-scheme:dark; }
+html { -webkit-text-size-adjust:100%; scroll-padding-top:96px; color-scheme:light; }
 @media (prefers-reduced-motion:no-preference) { html { scroll-behavior:smooth; } }
-body { margin:0; min-height:100vh; background:#060608; color:#f4f1ea; font:400 16px/1.65 var(--font-body),system-ui,sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; overflow-x:clip; }
+body { margin:0; min-height:100vh; background:rgb(var(--bg)); color:color-mix(in srgb,rgb(var(--fg)) 94%,rgb(var(--bg))); font:400 16px/1.65 var(--font-body),system-ui,sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; overflow-x:clip; }
 h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin:0; }
 h1, h2, h3, h4, h5, h6 { font-weight:400; line-height:1.1; }
 em { font-style:italic; }
@@ -11,13 +11,13 @@ img, svg, video, canvas { display:block; max-width:100%; }
 img { height:auto; }
 button, input, select, textarea { font:inherit; color:inherit; }
 button { -webkit-tap-highlight-color:transparent; }
-select { -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23c9bcff' stroke-width='1.6'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px !important; }
+select { -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%230b1b3f' stroke-width='1.6'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px !important; }
 table { border-collapse:collapse; }
 code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; }
-::selection { background:#ffb46b; color:#0d0c16; }
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline:2px solid #9d8bff; outline-offset:4px; border-radius:6px; }
+::selection { background:rgb(var(--c-gold)); color:color-mix(in srgb,rgb(var(--fg)) 7%,rgb(var(--bg))); }
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline:2px solid rgb(var(--c-blue)); outline-offset:4px; border-radius:6px; }
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-.skip-link { position:fixed; top:-100px; left:16px; z-index:300; padding:14px 18px; border-radius:12px; background:#0d0c16; color:#fff; font-weight:600; transition:top .2s; }
+.skip-link { position:fixed; top:-100px; left:16px; z-index:300; padding:14px 18px; border-radius:12px; background:color-mix(in srgb,rgb(var(--fg)) 7%,rgb(var(--bg))); color:rgb(var(--fg)); font-weight:600; transition:top .2s; }
 .skip-link:focus { top:12px; }
 
 /* The Althéa brand lockup */
@@ -26,17 +26,17 @@ code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; 
 .althea-brand-name { font:400 28px/1 var(--font-italic),Georgia,serif; letter-spacing:-.01em; }
 
 /* Quiet scrollbars that match the palette */
-html { scrollbar-color:#3a3555 #060608; }
+html { scrollbar-color:color-mix(in srgb,rgb(var(--fg)) 27%,rgb(var(--bg))) rgb(var(--bg)); }
 ::-webkit-scrollbar { width:11px; height:11px; }
-::-webkit-scrollbar-track { background:#060608; }
-::-webkit-scrollbar-thumb { background:#3a3555; border-radius:999px; border:3px solid #060608; }
+::-webkit-scrollbar-track { background:rgb(var(--bg)); }
+::-webkit-scrollbar-thumb { background:color-mix(in srgb,rgb(var(--fg)) 27%,rgb(var(--bg))); border-radius:999px; border:3px solid rgb(var(--bg)); }
 
 /* Lumière atmosphere: still aurora light and a fine film grain behind every page.
    Both layers stay static and unblended so scrolling never repaints them. */
 body::before { content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; background:
-  radial-gradient(38vmax 30vmax at 18% 12%, #5b3dff38, transparent 70%),
-  radial-gradient(34vmax 28vmax at 86% 18%, #ff5f9e2b, transparent 70%),
-  radial-gradient(40vmax 30vmax at 70% 88%, #ff9c5a22, transparent 72%),
-  radial-gradient(30vmax 26vmax at 8% 82%, #2f7bff26, transparent 70%);
+  radial-gradient(38vmax 30vmax at 18% 12%, rgb(var(--c-blue) / 0.22), transparent 70%),
+  radial-gradient(34vmax 28vmax at 86% 18%, rgb(var(--c-red) / 0.169), transparent 70%),
+  radial-gradient(40vmax 30vmax at 70% 88%, rgb(var(--c-gold) / 0.133), transparent 72%),
+  radial-gradient(30vmax 26vmax at 8% 82%, rgb(var(--c-blue) / 0.149), transparent 70%);
   }
 body::after { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }

@@ -28,6 +28,8 @@ jobs:
           python-version: '3.12'
       - run: pip install pillow
       - run: npm ci
+      # Pages and blog articles published from /admin (typecheck needs src/data/generated/cms.json).
+      - run: node scripts/data/fetch-cms.mjs
       - run: npm run typecheck
       - run: npm run build
         env:

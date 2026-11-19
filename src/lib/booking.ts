@@ -156,14 +156,57 @@ export async function sendEnquiry(details: FrenchEnquiryDetails, website = ""): 
   return post({ action: "enquiry", ...details, timeZone: visitorTimeZone(), website });
 }
 
+/** "Apply with Althéa" for a job or internship: saved for Harshita (admin → Consultations → Enquiries). */
+export type JobApplication = { name: string; email: string; phone: string; status: string; cv: string; message: string; jobTitle: string; company: string; jobUrl: string; location: string };
+export async function sendJobApplication(details: JobApplication, website = ""): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+  if (bookingMode() === "preview") { await wait(700); return { ok: true, id: "JOB-PREVIEW" }; }
+  if (!bookingEndpoint) return { ok: false, error: "Applications can't be sent just now. Please use WhatsApp instead." };
+  return post({ action: "jobApply", ...details, timeZone: visitorTimeZone(), website });
+}
+
 export async function sendFeedback(id: string, token: string, rating: number, comment: string): Promise<{ ok: boolean; error?: string; firstName?: string }> {
   if (bookingMode() === "preview") { await wait(600); return { ok: true, firstName: "Rahul" }; }
   if (!bookingEndpoint) return { ok: false, error: "Feedback is not available yet." };
   return post({ action: "feedback", id, token, rating, comment });
 }
 
+/* ------------------------------------------------------------------ content studio (admin) */
+
+export type StudioPage = {
+  slug: string; type: "blog" | "page" | "landing"; status: "Published" | "Draft"; title: string; excerpt: string; body: string; sort: number;
+  image: string; imageAlt: string; category: string; author: string; readingTime: string; layout: "standard" | "wide";
+  showHero: boolean; inHeader: boolean; inFooter: boolean; metaTitle: string; metaDescription: string; created: string; updated: string; publishedAt: string;
+};
+export type StudioMedia = { id: string; name: string; path: string; mime: string; bytes: number; width: number; height: number; alt: string; uploaded: string };
+export type StudioSeo = {
+  instagram: string; linkedin: string; facebook: string; youtube: string; googleVerification: string; bingVerification: string;
+  robotsDisallow: string; sitemapExclude?: string; faq: string; llmsIntro: string; blogTitle: string; blogIntro: string;
+};
+export type StudioData = { ok: true; pages: StudioPage[]; media: StudioMedia[]; seo: StudioSeo; version: string };
+
+const previewStudio = (): StudioData => {
+  const now = new Date().toISOString();
+  return {
+    ok: true, version: "preview",
+    pages: [
+      { slug: "first-month-in-paris", type: "blog", status: "Published", title: "Your first month in Paris as a student", excerpt: "Housing, bank, CAF and transport: the order that saves weeks.", body: "<p>Moving to Paris starts long before your flight.</p><h2>Accommodation first</h2><p>Apply for CROUS and private options together.</p>", sort: 0, image: "", imageAlt: "", category: "Settling in", author: "Harshita Kohli", readingTime: "", layout: "standard", showHero: true, inHeader: false, inFooter: false, metaTitle: "", metaDescription: "", created: now, updated: now, publishedAt: now },
+      { slug: "campus-france-interview-tips", type: "blog", status: "Draft", title: "Campus France interview tips", excerpt: "What the interviewer is really checking.", body: "<p>Be clear about why this course and why France.</p>", sort: 0, image: "", imageAlt: "", category: "Applications", author: "Harshita Kohli", readingTime: "4 min read", layout: "wide", showHero: true, inHeader: false, inFooter: false, metaTitle: "", metaDescription: "", created: now, updated: now, publishedAt: "" },
+      { slug: "refund-policy", type: "page", status: "Published", title: "Refund policy", excerpt: "How refunds work for paid support packages.", body: "<p>Cancel 48 hours ahead for a full refund.</p>", sort: 1, image: "", imageAlt: "", category: "", author: "", readingTime: "", layout: "standard", showHero: true, inHeader: false, inFooter: true, metaTitle: "", metaDescription: "", created: now, updated: now, publishedAt: now },
+    ],
+    media: [{ id: "preview-1", name: "paris-cafe.jpg", path: "/uploads/paris-cafe.jpg", mime: "image/jpeg", bytes: 245000, width: 1800, height: 1012, alt: "Students in a Paris café", uploaded: now }],
+    seo: { instagram: "https://www.instagram.com/helloharshitainparis/", linkedin: "", facebook: "", youtube: "", googleVerification: "", bingVerification: "", robotsDisallow: "", faq: "[]", llmsIntro: "", blogTitle: "Study in France journal", blogIntro: "Practical, checked guidance on studying, settling and working in France, written from Paris." },
+  };
+};
+
 export async function adminCall<T = { ok: boolean; error?: string; code?: string }>(action: string, key: string, extra: Record<string, unknown> = {}): Promise<T> {
-  if (bookingMode() === "preview") { await wait(400); return (action === "admin.data" ? previewAdmin() : { ok: true }) as T; }
+  if (bookingMode() === "preview") {
+    await wait(400);
+    if (action === "admin.data") return previewAdmin() as T;
+    if (action === "admin.cms") return previewStudio() as T;
+    if (action === "admin.savePage") return { ok: true, page: { ...(extra.page as StudioPage), slug: (extra.page as StudioPage).slug || "new-article", updated: new Date().toISOString() }, version: "preview-2" } as T;
+    if (action === "admin.uploadMedia") return { ok: true, media: { id: `preview-${Date.now()}`, name: String(extra.name), path: `/uploads/${String(extra.name)}`, mime: String(extra.mime), bytes: 1, width: Number(extra.width) || 0, height: Number(extra.height) || 0, alt: String(extra.alt || ""), uploaded: new Date().toISOString() } } as T;
+    return { ok: true, version: "preview-2" } as T;
+  }
   if (!bookingEndpoint) return { ok: false, error: "The booking backend is not connected yet. See booking/SETUP.md." } as T;
   return post<T>({ action, key, ...extra });
 }

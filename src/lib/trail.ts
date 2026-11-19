@@ -5,6 +5,7 @@ import { articles, cities } from "@/data/france";
 import { destinations } from "@/data/destinations";
 import { frenchInstitutions } from "@/lib/frenchInstitutions";
 import { australianInstitutions, canadianProvinces, ukInstitutions } from "@/lib/worldInstitutions";
+import { blogPosts, cmsPath, sitePages } from "@/lib/cms";
 
 export type Crumb = { name: string; path: string };
 
@@ -60,6 +61,8 @@ names["/universities/canada"] = "Canada PGWP colleges";
 for (const i of australianInstitutions()) names[`/universities/australia/${i.slug}`] = i.name;
 for (const i of ukInstitutions()) names[`/universities/uk/${i.slug}`] = i.name;
 for (const p of canadianProvinces()) names[`/universities/canada/${p.slug}`] = `PGWP colleges in ${p.name}`;
+names["/blog"] = "Blog";
+for (const p of [...blogPosts, ...sitePages]) names[cmsPath(p)] ??= p.title;
 
 /** Pages whose parent is not the URL's own parent folder (or whose folder has no page). */
 const parents: Record<string, string> = {};

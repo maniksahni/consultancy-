@@ -1,0 +1,59 @@
+name: Publish admin content
+# Every 10 minutes: if Harshita published, changed or removed a page, article, photo or SEO setting in
+# /admin, rebuild the site with it and deploy. Job listings are copied from the live site (no refetch),
+# so a content publish takes a few minutes. Nothing runs past the quick version check when nothing changed.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: refresh-jobs
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Anything new to publish?
+        id: check
+        run: |
+          ENDPOINT='https://script.google.com/macros/s/AKfycbynKSM_zh2iuIPyZ8hhy7JxIwpBoFNlzqvaqVz_Fulr3AqOmVUXvKFMa-kHQTFWtY79/exec'
+          admin=$(curl -fsSL --max-time 60 "$ENDPOINT?action=cmsVersion" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("version",""))' || true)
+          live=$(curl -fsSL --max-time 30 "https://altheaconsulting.in/data/cms-version.json?t=$(date +%s)" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("version",""))' || true)
+          echo "admin=$admin live=$live"
+          if [ -n "$admin" ] && [ "$admin" != "$live" ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; else echo "changed=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ vars.DEPLOY_BRANCH || 'codex/althea-parisian' }}
+      - if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        name: Build with the new content
+        run: |
+          pip install pillow
+          npm ci
+          node scripts/data/fetch-cms.mjs
+          node scripts/data/mirror-jobs.mjs
+          npm run typecheck
+          JOBS_FROM_LIVE=1 npm run build
+          node scripts/check-seo.mjs
+          node scripts/keep-old-chunks.mjs
+          node scripts/deploy-guard.mjs
+      - if: steps.check.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: consultancyworld2
+          channelId: live
+          firebaseToolsVersion: '15.28.2'

@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { paris } from "@/lib/paris";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import { waMessages } from "@/config/contact";
 
 // Maison UI — the shared building blocks for every page on the site.
 type Tone = "ivory" | "paper" | "sand" | "ink";
@@ -99,7 +101,7 @@ export function Closing({ kicker = "LET’S BEGIN", title = "A wider world.", ac
       <p>{body}</p>
       {soon
         ? <><span className="mx-orb ms-orb-soon" aria-disabled="true"><span>Coming soon</span></span><TextLink href="/study-in-france">Explore France while you wait</TextLink></>
-        : <Link className="mx-orb mx-magnetic" href={href} data-cursor="Let’s talk"><span>{action}</span><ArrowUpRight size={24} aria-hidden="true" /></Link>}
+        : <div className="ms-closing-actions"><WhatsAppButton text={waMessages.general} label="WhatsApp Harshita" /><Link className="mx-orb mx-magnetic" href={href} data-cursor="Let’s talk"><span>{action}</span><ArrowUpRight size={24} aria-hidden="true" /></Link></div>}
     </div>
   </section>;
 }

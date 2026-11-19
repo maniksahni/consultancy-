@@ -65,11 +65,14 @@ for (const path of pages) {
     }
   }
   // Check local navigation in the exported HTML, without depending on hydration.
-  for (const [, href] of html.matchAll(/<a\b[^>]*href="([^"#]+)"/g)) {
+  for (const [tag, href] of html.matchAll(/<a\b[^>]*href="([^"#]+)"[^>]*>/g)) {
     const target = new URL(href.replaceAll('&amp;', '&'), canonical[1]);
     if (target.origin !== new URL(canonical[1]).origin) continue;
     const pathname = decodeURIComponent(target.pathname).replace(/\/$/, '') || '/';
-    assert.ok(pathname === '/' || exportFiles.has(`out${pathname}.html`) || exportFiles.has(`out${pathname}/index.html`) || exportFiles.has(`out${pathname}`), `Broken internal link: ${href} on ${path}`);
+    const ok = pathname === '/' || exportFiles.has(`out${pathname}.html`) || exportFiles.has(`out${pathname}/index.html`) || exportFiles.has(`out${pathname}`);
+    // A link Harshita typed into an admin article: report it, but never block publishing over it.
+    if (!ok && tag.includes('data-cms-link')) { console.warn(`Broken link in admin content: ${href} on ${path}`); continue; }
+    assert.ok(ok, `Broken internal link: ${href} on ${path}`);
   }
 }
 const home = await readFile('out/index.html', 'utf8');
@@ -104,6 +107,6 @@ assert.ok(llmsFull.length > 50000 && llmsFull.includes('https://altheaconsulting
 assert.match(await readFile('out/llms.txt', 'utf8'), /llms-full\.txt/, 'llms.txt must point to the full corpus');
 const robots = await readFile('out/robots.txt', 'utf8');
 assert.match(robots, /Allow: \//);
-assert.doesNotMatch(robots, /Disallow: \//);
+assert.doesNotMatch(robots, /^Disallow: \/\s*$/m, 'robots.txt must never block the whole site');
 assert.deepEqual(sitemapUrls, urls, 'Sitemap URLs must match the pages’ canonical URLs exactly');
 console.log(`Verified concise, indexable metadata, exact canonical sitemap coverage and valid JSON-LD across ${pages.length} exported pages.`);

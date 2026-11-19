@@ -1,1 +1,794 @@
-[]
+[
+  {
+    "width": 320,
+    "route": "/universities/australia/box-hill-institute",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/brisbane-college-of-australia",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/britts-college",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/bureau-of-meteorology",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/university-of-wollongong",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/unsw-sydney",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/universities/australia/usq-sydney-education-centre",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "route": "/universities/uk/university-of-greenwich-part-of-london-and-south-east-university-group",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "route": "/universities/uk/university-of-huddersfield",
+    "violations": [
+      {
+        "id": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "description": "Ensure each HTML document contains a non-empty <title> element",
+        "help": "Documents must have <title> element to aid in navigation",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/document-title?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "doc-has-title",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Document does not have a non-empty <title> element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  Document does not have a non-empty <title> element"
+          }
+        ]
+      },
+      {
+        "id": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "description": "Ensure every HTML document has a lang attribute",
+        "help": "<html> element must have a lang attribute",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/html-has-lang?application=playwright",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-lang",
+                "data": {
+                  "messageKey": "noLang"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "The <html> element does not have a lang attribute"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">Not found</pre></body></html>",
+            "target": [
+              "html"
+            ],
+            "failureSummary": "Fix any of the following:\n  The <html> element does not have a lang attribute"
+          }
+        ]
+      }
+    ]
+  }
+]

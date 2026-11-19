@@ -1,33 +1,37 @@
 "use client";
 import { brand } from "@/config/brand";
+import { waLink, waMessages, whatsApp } from "@/config/contact";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Mail, MessageCircle, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { CalendarDays, Mail, X } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 
-/** A quiet contact orb that appears mid-page and opens a small card of ways to reach Althéa. */
+/** WhatsApp, always one tap away: a green button bottom-right that opens a small card (WhatsApp first, then a call or email). */
 export default function FloatingWhatsApp() {
-  const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const update = () => setVisible(window.scrollY > 700 && window.scrollY + window.innerHeight < document.documentElement.scrollHeight - 400);
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", update);
-  }, []);
+  const pathname = usePathname();
   useEffect(() => {
     if (!open) return;
     const close = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [open]);
-  return <aside className={`ms-float${visible || open ? " is-visible" : ""}`} aria-label="Contact Althéa">
-    {open && <div className="ms-float-card">
-      <p className="ms-kicker">A PERSONAL WAY FORWARD</p>
-      <p className="ms-float-title">What’s on <em>your mind?</em></p>
-      <p>Tell {brand.person} a little about your plans. We’ll help you find a place to start.</p>
-      <Link className="ms-btn ms-btn-gold" href="/book-consultation" onClick={() => setOpen(false)}><span>Start a conversation</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
+  useEffect(() => setOpen(false), [pathname]);
+  if (pathname?.startsWith("/admin")) return null;
+  return <aside className="ms-float is-visible" aria-label="Contact Althéa">
+    {open && <div className="ms-float-card" id="wa-card">
+      <p className="ms-kicker">USUALLY REPLIES THE SAME DAY</p>
+      <p className="ms-float-title">Talk to <em>{brand.person.split(" ")[0]}</em> directly.</p>
+      <p>Message on WhatsApp about courses, applications, jobs or life in France. Your message is already written; just add your details.</p>
+      <a className="ms-btn ms-btn-wa" href={waLink(waMessages.general)} target="_blank" rel="noopener noreferrer" data-wa onClick={() => setOpen(false)}><span>Chat on WhatsApp</span><WhatsAppIcon size={18} /></a>
+      <Link href="/book-consultation" onClick={() => setOpen(false)}><CalendarDays size={15} aria-hidden="true" />Prefer a call? Book 15 minutes</Link>
       <a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a>
+      <small className="ms-float-num">WhatsApp {whatsApp.display}</small>
     </div>}
-    <button type="button" className="ms-float-btn" tabIndex={visible || open ? 0 : -1} aria-expanded={open} aria-label={open ? "Close contact options" : "Talk to Althéa"} onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <MessageCircle size={20} />}</button>
+    <button type="button" className="ms-float-btn ms-float-wa" aria-expanded={open} aria-controls="wa-card" aria-label={open ? "Close contact options" : "Chat with Harshita on WhatsApp"} onClick={() => setOpen(!open)}>
+      {open ? <X size={22} /> : <WhatsAppIcon size={28} />}
+      {!open && <span className="ms-float-label">Chat with {brand.person.split(" ")[0]}</span>}
+    </button>
   </aside>;
 }

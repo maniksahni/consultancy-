@@ -5,8 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { paris } from "@/lib/paris";
+import { blogPosts, headerLinks } from "@/lib/cms";
+import { waLink, waMessages } from "@/config/contact";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 
 const primary = [["Study in France", "/study-in-france"], ["Already in France", "/in-france"], ["Jobs & internships", "/jobs"], ["Our support", "/services"], ["Learn French", "/learn-french"], ["About", "/about"]];
 const menu = [
@@ -23,6 +26,9 @@ const menu = [
   { label: "Destinations", href: "/destinations", image: paris("paris-night-aerial").file, note: "France today · six more coming soon" },
   { label: "The journal", href: "/knowledge", image: paris("student-cafe").file, note: "Reviewed guidance, seven countries" },
   { label: "About Althéa", href: "/about", image: paris("ile-de-la-cite").file, note: "Founded in Paris by Harshita Kohli" },
+  // Added from admin: the blog once it has articles, and any page she ticks "Show in main header menu".
+  ...(blogPosts.length ? [{ label: "Blog", href: "/blog", image: paris("student-cafe").file, note: blogPosts[0].title }] : []),
+  ...headerLinks.map((l) => ({ label: l.label, href: l.href, image: paris("ile-de-la-cite").file, note: "From Althéa" })),
 ];
 
 export default function Navbar(_props: { appearance?: "light" | "dark" }) {
@@ -58,7 +64,7 @@ export default function Navbar(_props: { appearance?: "light" | "dark" }) {
     <Link href="/" className="ms-nav-brand" aria-label={`${brand.name} home`}><BrandLockup /></Link>
     <nav className="ms-nav-links" aria-label="Main navigation">{primary.map(([label, href]) => <Link href={href} aria-current={pathname === href ? "page" : undefined} key={href}>{label}</Link>)}</nav>
     <div className="ms-nav-actions">
-      <Link href="/book-consultation" className="ms-nav-cta mx-magnetic">Let’s talk<ArrowUpRight size={15} aria-hidden="true" /></Link>
+      <a href={waLink(waMessages.general)} target="_blank" rel="noopener noreferrer" className="ms-nav-cta mx-magnetic" data-wa><WhatsAppIcon size={16} />WhatsApp us</a>
       <button ref={toggle} type="button" className="ms-menu-btn" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen(!open)}>
         <span className="ms-menu-label" aria-hidden="true"><span>Menu</span><span>Close</span></span>
         <span className="ms-burger" aria-hidden="true"><i /><i /></span>
@@ -82,7 +88,8 @@ export default function Navbar(_props: { appearance?: "light" | "dark" }) {
       <div className="ms-menu-foot">
         <a href={`mailto:${brand.email}`}><Mail size={15} aria-hidden="true" />{brand.email}</a>
         <span><MapPin size={15} aria-hidden="true" />{brand.location}</span>
-        <Link className="ms-btn ms-btn-gold" href="/book-consultation" onClick={() => setOpen(false)}><span>Start a conversation</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
+        <Link className="ms-btn ms-btn-ghost" href="/book-consultation" onClick={() => setOpen(false)}><span>Book a free call</span><ArrowUpRight size={17} aria-hidden="true" /></Link>
+        <a className="ms-btn ms-btn-wa" href={waLink(waMessages.general)} target="_blank" rel="noopener noreferrer" data-wa onClick={() => setOpen(false)}><span>WhatsApp Harshita</span><WhatsAppIcon size={18} /></a>
       </div>
     </div>
   </header>;

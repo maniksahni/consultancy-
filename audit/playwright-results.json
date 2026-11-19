@@ -1,11 +1,10 @@
 {
   "config": {
     "argv": [
-      "/usr/local/bin/node",
+      "/Users/maniksahni/.nvm/versions/node/v20.20.0/bin/node",
       "/Users/maniksahni/Desktop/consultancy-website/node_modules/.bin/playwright",
       "test",
-      "--ignore-snapshots",
-      "--list"
+      "tests/consultation.spec.ts"
     ],
     "configFile": "/Users/maniksahni/Desktop/consultancy-website/playwright.config.ts",
     "rootDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
@@ -18,14 +17,18 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {},
+    "metadata": {
+      "actualWorkers": 1
+    },
     "preserveOutput": "always",
     "projects": [
       {
         "outputDir": "/Users/maniksahni/Desktop/consultancy-website/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {},
+        "metadata": {
+          "actualWorkers": 1
+        },
         "id": "",
         "name": "",
         "testDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
@@ -43,7 +46,9 @@
         "outputDir": "/Users/maniksahni/Desktop/consultancy-website/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {},
+        "metadata": {
+          "actualWorkers": 1
+        },
         "name": "",
         "testDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
         "snapshotDir": "/Users/maniksahni/Desktop/consultancy-website/tests",
@@ -55,7 +60,7 @@
           "headless": true
         },
         "dependencies": [],
-        "ignoreSnapshots": true,
+        "ignoreSnapshots": false,
         "__projectId": ""
       }
     ],
@@ -90,257 +95,13 @@
   },
   "suites": [
     {
-      "title": "atelier.spec.ts",
-      "file": "atelier.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "homepage at 320px: story sections and destination gallery",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-5a454f4752d81af3f4aa",
-          "file": "atelier.spec.ts",
-          "line": 4,
-          "column": 7
-        },
-        {
-          "title": "homepage at 390px: story sections and destination gallery",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-c9565628afa934201df2",
-          "file": "atelier.spec.ts",
-          "line": 4,
-          "column": 7
-        },
-        {
-          "title": "homepage at 430px: story sections and destination gallery",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-6b0ebb3303f288065109",
-          "file": "atelier.spec.ts",
-          "line": 4,
-          "column": 7
-        },
-        {
-          "title": "homepage at 768px: story sections and destination gallery",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-674c8afbaf4575f0a239",
-          "file": "atelier.spec.ts",
-          "line": 4,
-          "column": 7
-        },
-        {
-          "title": "homepage at 1440px: story sections and destination gallery",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-bd1564e800c84a9bc9a9",
-          "file": "atelier.spec.ts",
-          "line": 4,
-          "column": 7
-        },
-        {
-          "title": "site menu opens as a dialog, closes with Escape and returns focus",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-c0c63c611f90a4e9e39d",
-          "file": "atelier.spec.ts",
-          "line": 24,
-          "column": 5
-        },
-        {
-          "title": "homepage finder carries country and query into the course finder",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-30e9b95ebca32b7135ab",
-          "file": "atelier.spec.ts",
-          "line": 41,
-          "column": 5
-        },
-        {
-          "title": "FAQ expands and collapses; the finale opens the booking flow",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5e45d29c3e3e9c7583ac-c56782c57505aeb23cb2",
-          "file": "atelier.spec.ts",
-          "line": 52,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "atlas.spec.ts",
-      "file": "atlas.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "destination discovery, persistent shortlist and comparison",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "bed8efe74e8526a653f7-da3e8bcd5b83599f0ae1",
-          "file": "atlas.spec.ts",
-          "line": 2,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "cleanup.spec.ts",
-      "file": "cleanup.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "retired elements stay hidden across the home and inner pages",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "cfa23786225d242193fc-70d2c631ccd429c75573",
-          "file": "cleanup.spec.ts",
-          "line": 3,
-          "column": 5
-        },
-        {
-          "title": "course details expand only the selected card and keep neighbouring cards compact",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "cfa23786225d242193fc-2773457cea4c29113751",
-          "file": "cleanup.spec.ts",
-          "line": 13,
-          "column": 5
-        }
-      ]
-    },
-    {
       "title": "consultation.spec.ts",
       "file": "consultation.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "message includes every detail, sanitizes input, skips empty fields, and bounds Unicode URLs",
+          "title": "email fallback carries the details, sanitizes input, skips empty fields, and bounds Unicode URLs",
           "ok": true,
           "tags": [],
           "tests": [
@@ -350,17 +111,31 @@
               "expectedStatus": "passed",
               "projectId": "",
               "projectName": "",
-              "results": [],
-              "status": "skipped"
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:51:29.061Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
             }
           ],
-          "id": "4a3d4ba29347e6be15b4-b632a83e45ae3f274615",
+          "id": "4a3d4ba29347e6be15b4-e1bd6c304d55776f3f9d",
           "file": "consultation.spec.ts",
-          "line": 6,
+          "line": 10,
           "column": 5
         },
         {
-          "title": "WhatsApp form at 320px: validation, redirect, fallback, and no storage",
+          "title": "booking form at 320px: steps, validation and email fallback when the calendar is unreachable",
           "ok": true,
           "tags": [],
           "tests": [
@@ -370,17 +145,31 @@
               "expectedStatus": "passed",
               "projectId": "",
               "projectName": "",
-              "results": [],
-              "status": "skipped"
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4888,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:51:29.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
             }
           ],
-          "id": "4a3d4ba29347e6be15b4-3275031af092391a9c63",
+          "id": "4a3d4ba29347e6be15b4-1dae8dfd03a89adab7f9",
           "file": "consultation.spec.ts",
-          "line": 20,
+          "line": 48,
           "column": 43
         },
         {
-          "title": "WhatsApp form at 390px: validation, redirect, fallback, and no storage",
+          "title": "booking form at 390px: steps, validation and email fallback when the calendar is unreachable",
           "ok": true,
           "tags": [],
           "tests": [
@@ -390,17 +179,31 @@
               "expectedStatus": "passed",
               "projectId": "",
               "projectName": "",
-              "results": [],
-              "status": "skipped"
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3082,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:51:47.098Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
             }
           ],
-          "id": "4a3d4ba29347e6be15b4-a6ca80096e0f98bf79ff",
+          "id": "4a3d4ba29347e6be15b4-d0439eb9b1ca0844ceb4",
           "file": "consultation.spec.ts",
-          "line": 20,
+          "line": 48,
           "column": 43
         },
         {
-          "title": "WhatsApp form at 1440px: validation, redirect, fallback, and no storage",
+          "title": "booking form at 1440px: steps, validation and email fallback when the calendar is unreachable",
           "ok": true,
           "tags": [],
           "tests": [
@@ -410,45 +213,31 @@
               "expectedStatus": "passed",
               "projectId": "",
               "projectName": "",
-              "results": [],
-              "status": "skipped"
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12058,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:51:50.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
             }
           ],
-          "id": "4a3d4ba29347e6be15b4-d0949964698f55024480",
+          "id": "4a3d4ba29347e6be15b4-b0360c888df07875ad00",
           "file": "consultation.spec.ts",
-          "line": 20,
+          "line": 48,
           "column": 43
-        }
-      ]
-    },
-    {
-      "title": "final-polish.spec.ts",
-      "file": "final-polish.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "package enquiry opens the form with package context and keyboard focus",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "b7792ddc513dc20cf403-69ca6623e888ce55bf0e",
-          "file": "final-polish.spec.ts",
-          "line": 3,
-          "column": 5
         },
         {
-          "title": "university options obey city, qualification and budget and reset stale choices",
+          "title": "preview booking: pick a 15-minute slot, book, and see the confirmation",
           "ok": true,
           "tags": [],
           "tests": [
@@ -458,481 +247,27 @@
               "expectedStatus": "passed",
               "projectId": "",
               "projectName": "",
-              "results": [],
-              "status": "skipped"
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T12:52:02.460Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
             }
           ],
-          "id": "b7792ddc513dc20cf403-086fe68eabc13d76e2ea",
-          "file": "final-polish.spec.ts",
-          "line": 15,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "home-finder.spec.ts",
-      "file": "home-finder.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "requires interest and destination; chips preserve the chosen country",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "66eed4a1272d4afea887-4a29046cf02d17eff820",
-          "file": "home-finder.spec.ts",
-          "line": 3,
-          "column": 5
-        },
-        {
-          "title": "typing Enter does not silently select another country",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "66eed4a1272d4afea887-ebb8f0a66352aa193391",
-          "file": "home-finder.spec.ts",
-          "line": 19,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "knowledge.spec.ts",
-      "file": "knowledge.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "country and topic filters, dated evidence and guide download",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "0828a03cd0e93ee0ce1b-dae0ce84a4adbd57f9fc",
-          "file": "knowledge.spec.ts",
-          "line": 2,
-          "column": 5
-        },
-        {
-          "title": "budget uses entered amounts without currency conversion",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "0828a03cd0e93ee0ce1b-82c2a7738f4b29b32356",
-          "file": "knowledge.spec.ts",
-          "line": 12,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "programme-research.spec.ts",
-      "file": "programme-research.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "programme search exposes fee period, applicant category and dated evidence",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "f7a026c5d6036f0456bf-3fd7b3588e8e80160b5f",
-          "file": "programme-research.spec.ts",
-          "line": 2,
-          "column": 5
-        },
-        {
-          "title": "programme export and closed-round filters preserve provenance",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "f7a026c5d6036f0456bf-289f049b87686f2c8cdc",
-          "file": "programme-research.spec.ts",
-          "line": 7,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "refinements.spec.ts",
-      "file": "refinements.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "chosen search suggestion stays dismissed until the query changes",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "05a4bf9a14ddc208aa73-b6b43b2035bea50cb6c8",
-          "file": "refinements.spec.ts",
-          "line": 3,
-          "column": 5
-        },
-        {
-          "title": "comparison links preserve selection and identify shared and different attributes",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "05a4bf9a14ddc208aa73-0cdfa41f46b5d6707087",
-          "file": "refinements.spec.ts",
-          "line": 18,
-          "column": 5
-        },
-        {
-          "title": "directory uses rows and shows university names without record totals",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "05a4bf9a14ddc208aa73-959babd375959a38d5e4",
-          "file": "refinements.spec.ts",
-          "line": 38,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "search-growth.spec.ts",
-      "file": "search-growth.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "guides expose topic links, editorial context and sources without JavaScript",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "237fab9da8672681ac28-d2e5d0acb00d5a52caea",
-          "file": "search-growth.spec.ts",
-          "line": 4,
-          "column": 5
-        },
-        {
-          "title": "a direct link reveals an in-depth answer and stays usable on mobile",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "237fab9da8672681ac28-4215fd18d2940423b46c",
-          "file": "search-growth.spec.ts",
-          "line": 21,
-          "column": 5
-        },
-        {
-          "title": "shortlisting worksheet is public and referral answers are optional and bounded",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "237fab9da8672681ac28-84d8c7818b0a8d861903",
-          "file": "search-growth.spec.ts",
-          "line": 33,
-          "column": 5
-        }
-      ]
-    },
-    {
-      "title": "site.spec.ts",
-      "file": "site.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "every exported route: 320px",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-af44ee9cbe55d18c7f9a",
-          "file": "site.spec.ts",
-          "line": 10,
-          "column": 7
-        },
-        {
-          "title": "every exported route: 390px",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-139fb7035d5bb329d982",
-          "file": "site.spec.ts",
-          "line": 10,
-          "column": 7
-        },
-        {
-          "title": "every exported route: 768px",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-d72f6f3317390bda185c",
-          "file": "site.spec.ts",
-          "line": 10,
-          "column": 7
-        },
-        {
-          "title": "every exported route: 1440px",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-7090298c2826e5713f3b",
-          "file": "site.spec.ts",
-          "line": 10,
-          "column": 7
-        },
-        {
-          "title": "homepage fits all requested widths and landscape",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-f2f38031974f6dda842a",
-          "file": "site.spec.ts",
-          "line": 49,
-          "column": 5
-        },
-        {
-          "title": "navigation, finder, FAQ, process and form states",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-cb1dac2cb7c35e1de438",
-          "file": "site.spec.ts",
-          "line": 75,
-          "column": 5
-        },
-        {
-          "title": "WCAG A/AA audit of all routes on mobile and desktop",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-106fa5357dd4700389bf",
-          "file": "site.spec.ts",
-          "line": 102,
-          "column": 5
-        },
-        {
-          "title": "internal links resolve and no source points to a fake portal",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-f79c72ab8f8c178411b9",
-          "file": "site.spec.ts",
-          "line": 125,
-          "column": 5
-        },
-        {
-          "title": "student stories turn, can be chosen and lead to the full collection",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 120000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "",
-              "projectName": "",
-              "results": [],
-              "status": "skipped"
-            }
-          ],
-          "id": "5c02723ad68c2a0d50c5-9532fd9ae512a9d1db23",
-          "file": "site.spec.ts",
-          "line": 142,
+          "id": "4a3d4ba29347e6be15b4-6026c56edbc2e5c9e30c",
+          "file": "consultation.spec.ts",
+          "line": 74,
           "column": 5
         }
       ]
@@ -940,10 +275,10 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-24T09:33:30.972Z",
-    "duration": 199.20000000000005,
-    "expected": 0,
-    "skipped": 38,
+    "startTime": "2026-11-01T12:51:27.777Z",
+    "duration": 41720.704000000005,
+    "expected": 5,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

@@ -1,0 +1,34 @@
+Subject: Thank you for contacting Althéa Consulting, {{first_name}}
+
+Bonjour {{first_name}}, merci !
+
+Thank you for contacting Althéa Consulting. We have received your details, and your consultation will be booked soon. Harshita will personally confirm a time that suits you, on WhatsApp or by email.
+
+WHAT YOU SHARED WITH US
+Name: {{full_name}}
+Destination: {{destination}}
+Study level & subject: {{study_level}} · {{subject}}
+Planned intake: {{intake}}
+WhatsApp: {{phone}}
+Something not right? Just reply to this email and we will update it.
+
+WHAT HAPPENS NEXT
+1. We read your profile: your goals, budget and timeline, before we speak.
+2. Harshita confirms your slot on WhatsApp or email, with the date, time and call link.
+3. Your consultation: countries, courses, costs and the visa, and clear next steps.
+
+TO MAKE THE MOST OF THE CALL, KEEP HANDY
+- your latest marksheets or transcript
+- any test scores (IELTS, TOEFL, PTE, GRE, French or German)
+- a rough yearly budget your family is comfortable with
+- the questions you or your parents most want answered
+
+Chat on WhatsApp: https://wa.me/33755749029
+Your month-by-month plan: https://altheaconsulting.in/from-india/timeline
+
+À très bientôt,
+Harshita Kohli
+Career Coach & France Expert · Althéa Consulting, Paris
+https://altheaconsulting.in · harshita@altheaconsulting.in
+
+You are receiving this because you asked for a consultation on altheaconsulting.in ({{email}}).

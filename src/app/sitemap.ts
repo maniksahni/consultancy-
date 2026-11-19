@@ -8,6 +8,8 @@ import { articles, checked, cities } from "@/data/france";
 import { isoDate } from "@/lib/trail";
 import { frenchInstitutions } from "@/lib/frenchInstitutions";
 import { australianInstitutions, canadianProvinces, ukInstitutions } from "@/lib/worldInstitutions";
+import { blogPosts, cmsPath, sitePages } from "@/lib/cms";
+import { readdirSync } from "node:fs";
 
 // The date each page's facts were last checked; jobs refresh with every daily build.
 const siteReviewed = "2026-10-17";
@@ -22,7 +24,11 @@ const reviewed: Record<string, string | undefined> = Object.fromEntries([
   ...ukInstitutions().map(i => [`universities/uk/${i.slug}`, i.sourceDate]),
   ...canadianProvinces().map(p => [`universities/canada/${p.slug}`, p.sourceDate]),
   ["jobs", new Date().toISOString().slice(0, 10)],
+  ...[...blogPosts, ...sitePages].map(p => [cmsPath(p).slice(1), (p.updated || p.publishedAt).slice(0, 10)]),
+  ["blog", blogPosts[0] ? (blogPosts[0].updated || blogPosts[0].publishedAt).slice(0, 10) : undefined],
 ]);
+// Admin pages at the root are published only where they do not shadow a page of the site (see app/[slug]).
+const taken = new Set([...readdirSync("src/app"), ...readdirSync("public")].map((name) => name.replace(/\.\w+$/, "")));
 export default function sitemap(): MetadataRoute.Sitemap {
   const host = isIndexable ? siteUrl : undefined;
   if (!host) return [];
@@ -75,6 +81,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...destinationGuides.flatMap(g => g.chapters.map(c => c.path.slice(1))),
     "from-india",
     ...indiaGuide.chapters.map(c => c.path.slice(1)),
+    ...(blogPosts.length ? ["blog"] : []),
+    ...blogPosts.map(p => cmsPath(p).slice(1)),
+    ...sitePages.filter(p => !taken.has(p.slug)).map(p => p.slug),
   ];
   const canonicalHost = host.replace(/\/$/, "");
   return paths.map((p) => ({ url: p ? `${canonicalHost}/${p}` : canonicalHost, lastModified: reviewed[p] || siteReviewed }));

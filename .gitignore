@@ -67,3 +67,9 @@ public/vendor/pdfjs/
 # Job board data, regenerated on every build by scripts/data/fetch-jobs.mjs
 public/data/jobs/list-*.json
 public/data/jobs/desc/
+
+# Admin content studio: published pages/SEO and their photos, fetched at build by scripts/data/fetch-cms.mjs
+src/data/generated/
+public/uploads/
+public/data/cms-version.json
+public/data/reserved-slugs.json

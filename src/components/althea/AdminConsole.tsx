@@ -1,11 +1,15 @@
 "use client";
-import { FormEvent, useEffect, useMemo, useState } from "react";
-import { CalendarClock, ExternalLink, Loader2, LogOut, Mail, MessageCircle, Plus, RefreshCw, Search, Send, Trash2, Video } from "lucide-react";
-import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type AdminData, type Availability, type Blocked, type BookingSettings } from "@/lib/booking";
+import { FormEvent, useEffect, useMemo, useState, type ReactNode } from "react";
+import { CalendarClock, CalendarDays, ExternalLink, FileText, Gauge, Globe2, Images, LayoutDashboard, Loader2, LogOut, Mail, Menu, MessageCircle, Moon, Plus, RefreshCw, Search, Send, Settings2, SlidersHorizontal, Star, Sun, Trash2, Users, Video, Bot, Map as MapIcon } from "lucide-react";
+import { adminCall, bookingMode, formatIn, zoneLabel, type AdminBooking, type AdminData, type Availability, type Blocked, type BookingSettings, type StudioData, type StudioPage } from "@/lib/booking";
+import { BrandMark } from "@/components/brand/BrandLockup";
+import { ContentStudio, MediaGallery, PublishBadge, RobotsPanel, SeoEngine, SitemapPanel, pathOf, usePublishState } from "@/components/althea/admin/Studio";
 
 const KEY = "althea-admin-key";
+const THEME = "althea-admin-theme";
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-type Tab = "upcoming" | "enquiries" | "clients" | "availability" | "settings" | "feedback";
+type Section = "dashboard" | "control" | "content" | "media" | "consultations" | "availability" | "feedback" | "seo" | "sitemap" | "robots" | "general";
+type ClientTab = "upcoming" | "enquiries" | "clients";
 const COUNTRY_OPTIONS: [string, string][] = [["france", "France"], ["uk", "United Kingdom"], ["usa", "USA"], ["canada", "Canada"], ["germany", "Germany"], ["ireland", "Ireland"], ["australia", "Australia"]];
 /** Requests saved without a call (e.g. Learn French): they have no call time. */
 const isEnquiry = (b: AdminBooking) => !b.start;
@@ -16,31 +20,51 @@ const canReschedule = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancel
 /** From the moment a call starts — mid-call included — so she can type the package and send it right away, not just after. */
 const canSendPackage = (b: AdminBooking) => !isEnquiry(b) && b.status !== "Cancelled" && new Date(b.start).getTime() <= Date.now();
 
+const SECTION_TITLES: Record<Section, string> = {
+  dashboard: "Dashboard", control: "Site control options", content: "Pages & blog", media: "Media gallery", consultations: "Consultations",
+  availability: "Availability", feedback: "Feedback & ratings", seo: "SEO & AEO engine", sitemap: "Sitemap.xml", robots: "Robots.txt", general: "General settings",
+};
+
 /**
- * Private admin for Harshita: every client and their preparation profile, upcoming calls,
- * statuses and notes, feedback, and the weekly hours and blocked dates that drive the booking slots.
- * Data lives in her Google Sheet; this page reads and writes it through the booking backend with the admin key.
+ * Private admin for Harshita: bookings and clients, availability, the website's own switches, and a content
+ * studio (pages, blog, media, SEO) that publishes real pages to the site. Everything lives in her Google Sheet
+ * and Drive; this page reads and writes it through the booking backend with the admin key.
  */
 export default function AdminConsole() {
   const [key, setKey] = useState("");
   const [data, setData] = useState<AdminData | null>(null);
+  const [studio, setStudio] = useState<StudioData | null>(null);
+  const [studioError, setStudioError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [tab, setTab] = useState<Tab>("upcoming");
+  const [section, setSection] = useState<Section>("dashboard");
+  const [clientTab, setClientTab] = useState<ClientTab>("upcoming");
   const [query, setQuery] = useState("");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [navOpen, setNavOpen] = useState(false);
+  const [startNew, setStartNew] = useState<StudioPage["type"] | null>(null);
+  const publish = usePublishState(studio?.version);
 
-  async function load(withKey = key) {
+  async function loadStudio(withKey = key) {
+    try {
+      const r = await adminCall<StudioData | { ok: false; error: string }>("admin.cms", withKey);
+      if (r.ok) { setStudio(r); setStudioError(""); } else setStudioError(r.error);
+    } catch { setStudioError("Couldn't load the content studio."); }
+  }
+  async function load(withKey = key, withStudio = false) {
     setLoading(true); setError("");
     try {
       const result = await adminCall<AdminData | { ok: false; error: string; code?: string }>("admin.data", withKey);
       if (!result.ok) { setError(result.error); if ("code" in result && result.code === "unauthorized") { sessionStorage.removeItem(KEY); setData(null); } return; }
       setData(result); sessionStorage.setItem(KEY, withKey);
+      if (withStudio) await loadStudio(withKey);
     } catch { setError("Couldn't reach the booking backend. Check your connection and try again."); }
     finally { setLoading(false); }
   }
   useEffect(() => {
     const saved = bookingMode() === "preview" ? "preview" : sessionStorage.getItem(KEY);
-    if (saved) { setKey(saved); load(saved); }
+    if (saved) { setKey(saved); load(saved, true); }
+    try { if (localStorage.getItem(THEME) === "light") setTheme("light"); } catch { /* private mode */ }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keep this screen in step with whatever just changed the Google Sheet - a direct edit there, or
@@ -55,7 +79,7 @@ export default function AdminConsole() {
   }, [Boolean(data), key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const now = Date.now();
-  const bookings = data?.bookings ?? [];
+  const bookings = useMemo(() => data?.bookings ?? [], [data]);
   const upcoming = useMemo(() => bookings.filter(b => b.status === "Booked" && new Date(b.end).getTime() > now).sort((a, b) => a.start.localeCompare(b.start)), [bookings, now]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -66,70 +90,132 @@ export default function AdminConsole() {
   const newEnquiries = enquiries.filter(b => b.status === "New enquiry").length;
   const month = new Date().toISOString().slice(0, 7);
   const sources = Object.entries(bookings.reduce<Record<string, number>>((acc, b) => { if (b.source) acc[b.source] = (acc[b.source] ?? 0) + 1; return acc; }, {})).sort((a, b) => b[1] - a[1]);
+  const feedbackDue = bookings.filter(b => needsFeedbackMail(b) && !b.feedbackSent).length;
 
   const update = (id: string, patch: Partial<AdminBooking>) => setData(d => d && { ...d, bookings: d.bookings.map(b => (b.id === id ? { ...b, ...patch } : b)) });
+  const go = (s: Section) => { setSection(s); setNavOpen(false); if (s !== "content") setStartNew(null); window.scrollTo({ top: 0 }); };
+  const toggleTheme = () => setTheme(t => { const next = t === "dark" ? "light" : "dark"; try { localStorage.setItem(THEME, next); } catch { /* ignore */ } return next; });
 
   if (!data) return (
-    <form className="adm-card adm-login" onSubmit={(e: FormEvent) => { e.preventDefault(); load(); }}>
-      <p className="ms-kicker">PRIVATE</p>
-      <p className="ms-form-title">Sign in to your bookings</p>
-      <label className="ms-field"><span>Admin key</span><input type="password" value={key} onChange={e => setKey(e.target.value)} autoComplete="current-password" required /></label>
-      <button className="ms-btn ms-btn-gold" type="submit" disabled={loading || !key}>{loading ? <Loader2 size={17} className="bk-spin" aria-hidden="true" /> : null}<span>Open admin</span></button>
-      {error && <p className="ms-form-status" role="alert">{error}</p>}
-    </form>
+    <div className="adm-gate">
+      <form className="adm-card adm-login" onSubmit={(e: FormEvent) => { e.preventDefault(); load(key, true); }}>
+        <h1 className="sr-only">Althéa admin sign-in</h1>
+        <span className="adm-gate-brand"><BrandMark /><strong>Althéa Consulting</strong><em>Admin</em></span>
+        <p className="ms-form-title">Sign in</p>
+        <label className="ms-field"><span>Admin key</span><input type="password" value={key} onChange={e => setKey(e.target.value)} autoComplete="current-password" required /></label>
+        <button className="ms-btn ms-btn-gold" type="submit" disabled={loading || !key}>{loading ? <Loader2 size={17} className="bk-spin" aria-hidden="true" /> : null}<span>Open admin</span></button>
+        {error && <p className="ms-form-status" role="alert">{error}</p>}
+      </form>
+    </div>
   );
 
+  const pages = studio?.pages ?? [];
+  const nav: { group: string; items: { id: Section; label: string; icon: ReactNode; count?: number | string }[] }[] = [
+    { group: "Overview", items: [{ id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={17} /> }] },
+    { group: "Website customizer", items: [{ id: "control", label: "Site control options", icon: <SlidersHorizontal size={17} /> }] },
+    { group: "Content studio", items: [{ id: "content", label: "Pages & blog", icon: <FileText size={17} />, count: pages.length || undefined }, { id: "media", label: "Media gallery", icon: <Images size={17} />, count: studio?.media.length || undefined }] },
+    { group: "Client relations", items: [{ id: "consultations", label: "Consultations", icon: <Users size={17} />, count: upcoming.length || undefined }, { id: "availability", label: "Availability", icon: <CalendarDays size={17} /> }, { id: "feedback", label: "Feedback & ratings", icon: <Star size={17} />, count: rated.length || undefined }] },
+    { group: "Search & technical", items: [{ id: "seo", label: "SEO & AEO engine", icon: <Bot size={17} /> }, { id: "sitemap", label: "Sitemap.xml", icon: <MapIcon size={17} /> }, { id: "robots", label: "Robots.txt", icon: <Globe2 size={17} /> }] },
+    { group: "Settings", items: [{ id: "general", label: "General settings", icon: <Settings2 size={17} /> }] },
+  ];
+  const needsStudio = ["content", "media", "seo", "sitemap", "robots"].includes(section);
+
   return (
-    <div className="adm">
-      <div className="adm-top">
-        <div className="adm-row">
-          <button type="button" className="ms-btn ms-btn-ghost" onClick={() => load()} disabled={loading}><RefreshCw size={15} className={loading ? "bk-spin" : ""} aria-hidden="true" /><span>Refresh</span></button>
-          <a className="ms-btn ms-btn-ghost" href={data.sheetUrl} target="_blank" rel="noreferrer"><ExternalLink size={15} aria-hidden="true" /><span>Google Sheet</span></a>
+    <div className="adm-app" data-adm-theme={theme}>
+      <aside className={`adm-side${navOpen ? " is-open" : ""}`} aria-label="Admin sections">
+        <div className="adm-side-brand"><BrandMark /><strong>Althéa</strong><span>Admin</span></div>
+        <nav>{nav.map(g => <div key={g.group} className="adm-side-group"><p>{g.group}</p>
+          {g.items.map(it => <button key={it.id} type="button" className={section === it.id ? "is-on" : ""} aria-current={section === it.id ? "page" : undefined} onClick={() => go(it.id)}>{it.icon}<span>{it.label}</span>{it.count !== undefined && <em>{it.count}</em>}</button>)}
+        </div>)}</nav>
+        <div className="adm-side-foot">
+          <button type="button" className="adm-side-theme" onClick={toggleTheme}>{theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}<span>{theme === "dark" ? "Light mode" : "Dark mode"}</span></button>
+          <div className="adm-side-user"><span className="adm-avatar">{(data.settings.ownerName || "H").slice(0, 1)}</span><span><strong>{data.settings.ownerName}</strong><a href="/" target="_blank" rel="noreferrer">View site ↗</a></span>
+            <button type="button" className="adm-logout" onClick={() => { sessionStorage.removeItem(KEY); setData(null); setStudio(null); setKey(""); }} aria-label="Sign out"><LogOut size={16} /></button></div>
         </div>
-        <button type="button" className="ms-btn ms-btn-ghost" onClick={() => { sessionStorage.removeItem(KEY); setData(null); setKey(""); }}><LogOut size={15} aria-hidden="true" /><span>Sign out</span></button>
+      </aside>
+
+      <div className="adm-main">
+        <header className="adm-bar">
+          <button type="button" className="adm-burger" onClick={() => setNavOpen(o => !o)} aria-label="Open the admin menu" aria-expanded={navOpen}><Menu size={20} /></button>
+          <h1>{SECTION_TITLES[section]}</h1>
+          {studio && <PublishBadge state={publish} />}
+          <span className="adm-bar-actions">
+            <button type="button" className="stu-btn is-small" onClick={() => load(key, true)} disabled={loading}><RefreshCw size={14} className={loading ? "bk-spin" : ""} aria-hidden="true" />Refresh</button>
+            <a className="stu-btn is-small" href={data.sheetUrl} target="_blank" rel="noreferrer"><ExternalLink size={14} aria-hidden="true" />Google Sheet</a>
+            <a className="stu-btn is-small is-dark" href="/" target="_blank" rel="noreferrer">View live site ↗</a>
+          </span>
+        </header>
+        {bookingMode() === "preview" && <p className="bk-preview">Preview with sample data. Nothing here is real.</p>}
+        {error && <p className="ms-form-status" role="alert">{error}</p>}
+        {needsStudio && !studio && <div className="stu-empty">{studioError ? <><p>{studioError}</p><button type="button" className="stu-btn" onClick={() => loadStudio()}>Try again</button></> : <Loader2 size={22} className="bk-spin" aria-label="Loading" />}</div>}
+
+        <div className="adm-content">
+          {section === "dashboard" && <div className="stu-stack">
+            <div className="adm-hello"><div><h2>Hello, {(data.settings.ownerName || "Harshita").split(" ")[0]}</h2><p>Here’s what needs you today.</p></div>
+              <div className="stu-actions">
+                <button type="button" className="stu-btn is-primary" onClick={() => { setStartNew("blog"); go("content"); setStartNew("blog"); }}><Plus size={15} aria-hidden="true" />New blog article</button>
+                <button type="button" className="stu-btn" onClick={() => go("media")}><Images size={15} aria-hidden="true" />Upload photos</button>
+              </div></div>
+            <div className="adm-stats">
+              <button type="button" className="adm-stat" onClick={() => { setClientTab("upcoming"); go("consultations"); }}><small>Upcoming calls</small><strong>{upcoming.length}</strong></button>
+              <button type="button" className="adm-stat" onClick={() => { setClientTab("enquiries"); go("consultations"); }}><small>New enquiries</small><strong>{newEnquiries}</strong></button>
+              <button type="button" className="adm-stat" onClick={() => { setClientTab("clients"); go("consultations"); }}><small>Feedback emails to send</small><strong>{feedbackDue}</strong></button>
+              <div className="adm-stat"><small>Booked this month</small><strong>{bookings.filter(b => b.bookedOn.startsWith(month)).length}</strong></div>
+              <div className="adm-stat"><small>All clients</small><strong>{bookings.length}</strong></div>
+              <div className="adm-stat"><small>Average rating</small><strong>{rated.length ? (rated.reduce((s, b) => s + Number(b.rating), 0) / rated.length).toFixed(1) : "—"}</strong></div>
+              <div className="adm-stat"><small>Top source</small><strong style={{ fontSize: 18 }}>{sources[0]?.[0] ?? "—"}</strong></div>
+              <button type="button" className="adm-stat" onClick={() => go("content")}><small>Published articles &amp; pages</small><strong>{pages.filter(p => p.status === "Published").length}</strong></button>
+              <button type="button" className="adm-stat" onClick={() => go("content")}><small>Drafts</small><strong>{pages.filter(p => p.status === "Draft").length}</strong></button>
+            </div>
+            <div className="stu-grid-2">
+              <section className="stu-card"><div className="stu-card-head"><p className="stu-label">Next calls</p><button type="button" className="stu-link" onClick={() => { setClientTab("upcoming"); go("consultations"); }}>All consultations →</button></div>
+                {upcoming.length ? <ul className="adm-mini">{upcoming.slice(0, 4).map(b => <li key={b.id}><strong>{b.name}</strong><span>{formatIn(b.start, "Europe/Paris", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} Paris · {b.destination}</span>{b.meetLink && <a className="stu-link" href={b.meetLink} target="_blank" rel="noreferrer">Join Meet</a>}</li>)}</ul> : <p className="stu-muted">No calls booked yet.</p>}
+              </section>
+              <section className="stu-card"><div className="stu-card-head"><p className="stu-label">Recent content</p><button type="button" className="stu-link" onClick={() => go("content")}>Pages &amp; blog →</button></div>
+                {pages.length ? <ul className="adm-mini">{[...pages].sort((a, b) => (b.updated || "").localeCompare(a.updated || "")).slice(0, 4).map(p => <li key={p.slug}><strong>{p.title}</strong><span>{pathOf(p)} · <span className={`stu-status is-${p.status.toLowerCase()}`}>{p.status}</span></span></li>)}</ul> : <p className="stu-muted">{studio ? "No articles yet — your first one takes five minutes." : studioError || "Loading…"}</p>}
+              </section>
+            </div>
+            <section className="stu-card adm-tip"><Gauge size={18} aria-hidden="true" /><p>Published articles and pages go live on the website by themselves, about 10–20 minutes after you save. The badge at the top says when the website has caught up.</p></section>
+          </div>}
+
+          {section === "control" && <SiteSettingsEditor adminKey={key} initial={data} onSaved={() => load()} part="control" />}
+          {section === "general" && <SiteSettingsEditor adminKey={key} initial={data} onSaved={() => load()} part="general" />}
+          {section === "content" && studio && <ContentStudio adminKey={key} studio={studio} onChange={setStudio} startNew={startNew} />}
+          {section === "media" && studio && <div className="stu-stack"><div className="stu-head"><div><h2>Media gallery</h2><p>Photos for your articles and pages. Stored in your Google Drive; the website serves fast, resized copies.</p></div></div>
+            <MediaGallery adminKey={key} media={studio.media} onChange={(media) => setStudio(s => s && { ...s, media })} /></div>}
+          {section === "seo" && studio && <SeoEngine adminKey={key} studio={studio} onChange={setStudio} />}
+          {section === "sitemap" && studio && <SitemapPanel studio={studio} />}
+          {section === "robots" && studio && <RobotsPanel adminKey={key} studio={studio} onChange={setStudio} />}
+          {section === "availability" && <AvailabilityEditor adminKey={key} initial={data} onSaved={() => load()} />}
+
+          {section === "consultations" && <div className="stu-stack">
+            <div className="adm-tabs" role="tablist">
+              {([["upcoming", `Upcoming (${upcoming.length})`], ["enquiries", `Enquiries (${enquiries.length})`], ["clients", `All clients (${bookings.length})`]] as [ClientTab, string][]).map(([id, label]) =>
+                <button key={id} type="button" role="tab" aria-selected={clientTab === id} onClick={() => setClientTab(id)}>{label}</button>)}
+            </div>
+            {clientTab === "upcoming" && <div className="adm-list">
+              {upcoming.length ? upcoming.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open />) : <p className="bk-empty">No upcoming calls yet.</p>}
+            </div>}
+            {clientTab === "enquiries" && <div className="adm-list">
+              {enquiries.length ? enquiries.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open={b.status === "New enquiry"} />) : <p className="bk-empty">No enquiries yet. Learn French requests and job applications appear here.</p>}
+            </div>}
+            {clientTab === "clients" && <div className="adm-list">
+              <label className="ms-field adm-search"><span><Search size={13} aria-hidden="true" /> Search</span><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Name, email, phone, country, booking ID" /></label>
+              {filtered.length ? filtered.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} />) : <p className="bk-empty">No clients match.</p>}
+            </div>}
+          </div>}
+
+          {section === "feedback" && <div className="adm-list">
+            {rated.length ? rated.map(b => <article key={b.id} className="adm-item">
+              <div className="adm-item-head"><h3>{b.name}</h3><span className="adm-stars" aria-label={`${b.rating} out of 5`}>{"★".repeat(Number(b.rating))}{"☆".repeat(5 - Number(b.rating))}</span></div>
+              {b.feedback && <p style={{ margin: 0 }}>“{b.feedback}”</p>}
+              <small className="adm-when">{b.start ? formatIn(b.start, "Europe/Paris", { day: "numeric", month: "short", year: "numeric" }) : b.bookedOn} · {b.destination}</small>
+            </article>) : <p className="bk-empty">Feedback appears here after calls. Send each client’s feedback email, with their package, from their card under Consultations once the call has ended.</p>}
+          </div>}
+        </div>
+        <footer className="adm-foot"><span>© {new Date().getFullYear()} Althéa Consulting · Admin</span><span><a href="/sitemap.xml" target="_blank" rel="noreferrer">sitemap.xml</a><a href="/robots.txt" target="_blank" rel="noreferrer">robots.txt</a></span></footer>
       </div>
-      {bookingMode() === "preview" && <p className="bk-preview">Preview with sample clients. Nothing here is real.</p>}
-      {error && <p className="ms-form-status" role="alert">{error}</p>}
-
-      <div className="adm-stats">
-        <div className="adm-stat"><small>Upcoming calls</small><strong>{upcoming.length}</strong></div>
-        <div className="adm-stat"><small>New enquiries</small><strong>{newEnquiries}</strong></div>
-        <div className="adm-stat"><small>Feedback emails to send</small><strong>{bookings.filter(b => needsFeedbackMail(b) && !b.feedbackSent).length}</strong></div>
-        <div className="adm-stat"><small>Booked this month</small><strong>{bookings.filter(b => b.bookedOn.startsWith(month)).length}</strong></div>
-        <div className="adm-stat"><small>All clients</small><strong>{bookings.length}</strong></div>
-        <div className="adm-stat"><small>Average rating</small><strong>{rated.length ? (rated.reduce((s, b) => s + Number(b.rating), 0) / rated.length).toFixed(1) : "—"}</strong></div>
-        <div className="adm-stat"><small>Top source</small><strong style={{ fontSize: 18 }}>{sources[0]?.[0] ?? "—"}</strong></div>
-      </div>
-
-      <div className="adm-tabs" role="tablist">
-        {([["upcoming", `Upcoming (${upcoming.length})`], ["enquiries", `Enquiries (${enquiries.length})`], ["clients", `All clients (${bookings.length})`], ["availability", "Availability"], ["settings", "Site settings"], ["feedback", `Feedback (${rated.length})`]] as [Tab, string][]).map(([id, label]) =>
-          <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>)}
-      </div>
-
-      {tab === "upcoming" && <div className="adm-list">
-        {upcoming.length ? upcoming.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open />) : <p className="bk-empty">No upcoming calls yet.</p>}
-      </div>}
-
-      {tab === "enquiries" && <div className="adm-list">
-        {enquiries.length ? enquiries.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} open={b.status === "New enquiry"} />) : <p className="bk-empty">No enquiries yet. Learn French requests appear here.</p>}
-      </div>}
-
-      {tab === "clients" && <div className="adm-list">
-        <label className="ms-field adm-search"><span><Search size={13} aria-hidden="true" /> Search</span><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Name, email, phone, country, booking ID" /></label>
-        {filtered.length ? filtered.map(b => <BookingItem key={b.id} b={b} adminKey={key} statuses={data.statuses} onChange={update} />) : <p className="bk-empty">No clients match.</p>}
-      </div>}
-
-      {tab === "availability" && <AvailabilityEditor adminKey={key} initial={data} onSaved={() => load()} />}
-
-      {tab === "settings" && <SiteSettingsEditor adminKey={key} initial={data} onSaved={() => load()} />}
-
-      {tab === "feedback" && <div className="adm-list">
-        {rated.length ? rated.map(b => <article key={b.id} className="adm-item">
-          <div className="adm-item-head"><h3>{b.name}</h3><span className="adm-stars" aria-label={`${b.rating} out of 5`}>{"★".repeat(Number(b.rating))}{"☆".repeat(5 - Number(b.rating))}</span></div>
-          {b.feedback && <p style={{ margin: 0 }}>“{b.feedback}”</p>}
-          <small className="adm-when">{b.start ? formatIn(b.start, "Europe/Paris", { day: "numeric", month: "short", year: "numeric" }) : b.bookedOn} · {b.destination}</small>
-        </article>) : <p className="bk-empty">Feedback appears here after calls. Send each client’s feedback email, with their package, from their card under Clients once the call has ended.</p>}
-      </div>}
+      {navOpen && <button type="button" className="adm-scrim" aria-label="Close menu" onClick={() => setNavOpen(false)} />}
     </div>
   );
 }
@@ -343,7 +429,7 @@ function AvailabilityEditor({ adminKey, initial, onSaved }: { adminKey: string; 
  * booking, pausing bookings or Learn French requests (with her own message), her name and WhatsApp shown
  * in emails, and a short announcement banner. Changes here take effect on the live site within a minute.
  */
-function SiteSettingsEditor({ adminKey, initial, onSaved }: { adminKey: string; initial: AdminData; onSaved: () => void }) {
+function SiteSettingsEditor({ adminKey, initial, onSaved, part }: { adminKey: string; initial: AdminData; onSaved: () => void; part: "control" | "general" }) {
   const s = initial.settings;
   const [countries, setCountries] = useState<string[]>(s.liveCountries.length ? s.liveCountries : ["france"]);
   const [bookingPaused, setBookingPaused] = useState(s.bookingPaused);
@@ -370,6 +456,7 @@ function SiteSettingsEditor({ adminKey, initial, onSaved }: { adminKey: string; 
 
   return (
     <div className="adm-list">
+      {part === "control" && <>
       <section className="adm-card">
         <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 4 }}>Countries open for booking</p>
         <p className="adm-when" style={{ marginBottom: 12 }}>Students can book a call, see jobs and courses for a ticked country. Unticked countries still show their information pages, but every action says “Coming soon”.</p>
@@ -404,6 +491,8 @@ function SiteSettingsEditor({ adminKey, initial, onSaved }: { adminKey: string; 
         </label>
       </section>
 
+      </>}
+      {part === "general" && <>
       <section className="adm-card">
         <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 12 }}>Your details in emails</p>
         <div className="adm-settings">
@@ -414,8 +503,13 @@ function SiteSettingsEditor({ adminKey, initial, onSaved }: { adminKey: string; 
           </label>
         </div>
       </section>
+      <section className="adm-card">
+        <p className="ms-form-title" style={{ fontSize: 20, marginBottom: 4 }}>Security</p>
+        <p className="adm-when" style={{ margin: 0 }}>Your admin key lives in the Apps Script project (Project settings → Script properties → ADMIN_KEY). Change it there if you ever think someone else has it; this page signs out everywhere it was used. After 20 wrong attempts, sign-in pauses for 15 minutes.</p>
+      </section>
+      </>}
 
-      <div className="adm-row"><button type="button" className="ms-btn ms-btn-gold" onClick={save}><span>Save site settings</span></button>{status && <span className="adm-when" role="status">{status}</span>}</div>
+      <div className="adm-row"><button type="button" className="ms-btn ms-btn-gold" onClick={save}><span>{part === "control" ? "Save site controls" : "Save settings"}</span></button>{status && <span className="adm-when" role="status">{status}</span>}</div>
     </div>
   );
 }

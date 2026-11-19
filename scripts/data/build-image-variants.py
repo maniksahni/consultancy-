@@ -31,3 +31,26 @@ for old in SRC.glob(".variants-q*"):
     old.unlink()
 STAMP.touch()
 print(f"Image variants: {made} created (quality {QUALITY})")
+
+# Photos uploaded from the admin's Media Gallery (scripts/data/fetch-cms.mjs copies the published ones
+# here): the same WebP sizes, at public/uploads/w<width>/<name>.webp, plus their dimensions so pages can
+# reserve the right space before the image arrives.
+import json
+UPLOADS = Path("public/uploads")
+sizes = {}
+uploaded = 0
+if UPLOADS.exists():
+    for photo in sorted(p for p in UPLOADS.iterdir() if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")):
+        with Image.open(photo) as im:
+            im = im.convert("RGBA" if im.mode in ("P", "LA", "RGBA") else "RGB")
+            sizes[f"/uploads/{photo.name}"] = [im.width, im.height]
+            for width in WIDTHS:
+                out = UPLOADS / f"w{width}" / f"{photo.stem}.webp"
+                if out.exists() and out.stat().st_mtime >= photo.stat().st_mtime:
+                    continue
+                out.parent.mkdir(exist_ok=True)
+                copy = im.copy() if im.width <= width else im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+                copy.save(out, "WEBP", quality=QUALITY, method=6)
+                uploaded += 1
+    (UPLOADS / "sizes.json").write_text(json.dumps(sizes))
+    print(f"Upload variants: {uploaded} created for {len(sizes)} uploaded photos")

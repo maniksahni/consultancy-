@@ -84,7 +84,8 @@ function job(fields) {
 try {
   const previous = JSON.parse(await readFile(OUT, 'utf8'));
   const age = Date.now() - new Date(previous.updatedAt).getTime();
-  if (!process.env.JOBS_REFRESH && age < 12 * 36e5 && previous.counts) {
+  // JOBS_FROM_LIVE: a content-only publish already copied the live site's listings (mirror-jobs.mjs).
+  if (!process.env.JOBS_REFRESH && (process.env.JOBS_FROM_LIVE || age < 12 * 36e5) && previous.counts) {
     await readFile(`${DIR}/list-france.json`);
     console.log(`Jobs feed: reusing ${Object.values(previous.counts).reduce((a, b) => a + b, 0)} listings fetched ${Math.round(age / 6e4)} min ago.`);
     process.exit(0);

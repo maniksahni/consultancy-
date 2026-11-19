@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import { waMessages } from "@/config/contact";
 import { isComingSoon, isLive } from "@/lib/comingSoon";
 import Link from "next/link";
 import Image from "next/image";
@@ -271,6 +273,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
             </dl>
             <p className="ms-dir-source">Source: {r.registrySource} · record date {r.sourceDate}. Current course fees, housing availability and admissions are not part of this institution record.</p>
             </details>
+            <WhatsAppButton small className="ms-btn ms-btn-wa ms-dir-apply" label="Ask about applying" text={waMessages.institution(r.name, r.city)} />
           </article>)}</div> : directory.courses.length ? <>
             <p className="ms-dir-note">Every course shows a published fee or a sourced approximate tuition budget. “Approx.” amounts are benchmarks, not confirmed course prices. Check the fee status, source year and methodology in Course details. Budget filtering uses the upper estimate; published amounts retain their stated period.</p>
             <div className="ms-dir-grid course-results">{(currentPageRecords as RegistryCourse[]).map((r) => {
@@ -290,6 +293,7 @@ export default function UniversityExplorer({ initialCountry = "all" }: { initial
                   <div className="ms-dir-guidance"><h4>Application & funding preparation</h4><p className="ms-muted">Country-level guidance for planning this course; the institution sets its individual entry requirements and calendar.</p>{courseGuidance.map((entry) => <details className="ms-course-topic" key={entry.id}><summary>{entry.topic}</summary><p>{entry.summary}</p><a href={entry.source} target="_blank" rel="noopener noreferrer">{entry.publisher} · {entry.topic.toLowerCase()} evidence ↗</a></details>)}<p><Link href={`/programmes?country=${country}`}>Compare detailed programme profiles →</Link></p></div>
                   <p className="ms-dir-source">Registry evidence: {r.registrySource || directory.courseSource || (country === "australia" ? "Australian Government CRICOS course export" : "French Ministry of Higher Education · Parcoursup 2026 open-data catalogue")}{r.sourceDate || directory.courseSourceDate ? ` · snapshot ${r.sourceDate || directory.courseSourceDate}` : ""}. This listing does not include accommodation availability or every individual admission condition.</p></div>
                 </details>
+                <WhatsAppButton small className="ms-btn ms-btn-wa ms-dir-apply" label="Apply via WhatsApp" text={waMessages.course(r.name, r.institution, r.city)} />
               </article>;
             })}</div>
           </> : <p className="ms-dir-note">This official institution registry does not provide a line-by-line course and fee catalogue. The reviewed programme records above are the course-level information currently available in this site; no external search link is shown.</p>}

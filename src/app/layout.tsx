@@ -14,19 +14,21 @@ import "./lumiere.css";
 import "./motion.css";
 import "./mobile.css";
 import "./sky.css";
+import "./theme.css";
+import { cmsSeo, cmsSocials } from "@/lib/cms";
 // Paris Lumière typography: avant-garde display, warm humanist body, a serif italic for accents.
 // Self-hosted (not next/font/google): the live Google Fonts fetch next/font/google does at build
 // time was flaky on the daily GitHub Actions runner and crashed the whole "Refresh jobs and
 // deploy" build about a third of the time with no network to blame it on in the logs.
 const display = localFont({
-  src: "../fonts/syne-variable.woff2",
-  weight: "500 800",
+  src: "../fonts/bricolage-grotesque-variable.woff2",
+  weight: "200 800",
   variable: "--font-display",
   display: "swap",
 });
 const body = localFont({
-  src: "../fonts/manrope-variable.woff2",
-  weight: "400 700",
+  src: "../fonts/dm-sans-variable.woff2",
+  weight: "100 1000",
   variable: "--font-body",
   display: "swap",
 });
@@ -42,7 +44,7 @@ const italic = localFont({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#060608",
+  themeColor: "#ffffff",
 };
 export const metadata: Metadata = {
   metadataBase: new URL(brand.canonicalUrl),
@@ -69,9 +71,12 @@ export const metadata: Metadata = {
     shortcut: brand.assets.faviconIco,
     apple: brand.assets.appleTouch,
   },
-  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
-    : undefined,
+  // Search engine ownership tags, set in admin under SEO & AEO Engine (or the build environment).
+  verification: (() => {
+    const google = cmsSeo.googleVerification || process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+    const bing = cmsSeo.bingVerification;
+    return google || bing ? { ...(google ? { google } : {}), ...(bing ? { other: { "msvalidate.01": bing } } : {}) } : undefined;
+  })(),
   openGraph: {
     images: [{ url: brand.assets.og, width: 1200, height: 630 }],
     title: brand.name,
@@ -130,7 +135,7 @@ export default function RootLayout({
               slogan: brand.tagline,
               knowsAbout: ["Studying in France", "Study in France from India", "French university admissions", "Campus France applications", "Études en France procedure", "France student visa", "Cost of studying in France", "Scholarships in France", "Student housing in France", "Student life in France", "Internships and alternance in France", "Career guidance in France"],
               // The company's own profiles; Harshita's personal profiles sit on her Person entry below.
-              sameAs: [brand.socialLinks.linkedinCompany, brand.socialLinks.instagram],
+              sameAs: [...new Set([brand.socialLinks.linkedinCompany, brand.socialLinks.instagram, ...cmsSocials])],
               founder: { "@id": `${siteUrl}/#adviser` } },
             { "@type": "Person", "@id": `${siteUrl}/#adviser`, name: brand.person,
               jobTitle: brand.role, url: `${siteUrl}/about`,

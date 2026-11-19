@@ -103,6 +103,9 @@ function doGet(e) {
     if (action === 'slots') return json_({ ok: true, timeZone: settings_().timeZone, durationMinutes: settings_().slotMinutes, slots: computeSlots_() });
     if (action === 'ping') return json_({ ok: true });
     if (action === 'publicSettings') return json_(publicSettings_());
+    if (action === 'cmsVersion') return json_({ ok: true, version: cmsVersion_() });
+    if (action === 'cms') return json_(publicCms_());
+    if (action === 'mediaFile') return json_(publicMediaFile_(String(e.parameter.id || '')));
     return json_({ ok: false, error: 'Unknown action.' });
   } catch (err) {
     return json_({ ok: false, error: 'Times could not be loaded. Please try again.' });
@@ -116,6 +119,7 @@ function doPost(e) {
     switch (body.action) {
       case 'book': return json_(book_(body));
       case 'enquiry': return json_(enquiry_(body));
+      case 'jobApply': return json_(jobApply_(body));
       case 'feedback': return json_(feedback_(body));
       case 'admin.data': return json_(adminGuard_(body) || adminData_());
       case 'admin.update': return json_(adminGuard_(body) || adminUpdate_(body));
@@ -125,6 +129,13 @@ function doPost(e) {
       case 'admin.sendReschedule': return json_(adminGuard_(body) || adminSendReschedule_(body));
       case 'admin.saveAvailability': return json_(adminGuard_(body) || adminSaveAvailability_(body));
       case 'admin.saveSettings': return json_(adminGuard_(body) || adminSaveSettings_(body));
+      case 'admin.cms': return json_(adminGuard_(body) || adminCms_());
+      case 'admin.savePage': return json_(adminGuard_(body) || adminSavePage_(body));
+      case 'admin.deletePage': return json_(adminGuard_(body) || adminDeletePage_(body));
+      case 'admin.uploadMedia': return json_(adminGuard_(body) || adminUploadMedia_(body));
+      case 'admin.updateMedia': return json_(adminGuard_(body) || adminUpdateMedia_(body));
+      case 'admin.deleteMedia': return json_(adminGuard_(body) || adminDeleteMedia_(body));
+      case 'admin.saveSeo': return json_(adminGuard_(body) || adminSaveSeo_(body));
       default: return json_({ ok: false, error: 'Unknown action.' });
     }
   } catch (err) {
@@ -363,6 +374,37 @@ function enquiry_(body) {
     row['Name'] = name; row['Email'] = email; row['WhatsApp'] = phone;
     row['Destination'] = 'Learn French'; row['Level'] = level; row['Intake'] = clean_(body.availability, 120);
     row['Wants to explore'] = goal + ': ' + message; row['Found us via'] = 'Learn French page';
+    appendRow_(row);
+    return { ok: true, id: row['ID'] };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/** "Apply with Althéa" on a job or internship: saved as a client row (status New enquiry) that Harshita sees in admin. */
+function jobApply_(body) {
+  if (body.website) return { ok: false, error: 'Bad request.' };
+  var name = clean_(body.name, 80), email = clean_(body.email, 120).replace(/\s/g, '').toLowerCase();
+  var phone = clean_(body.phone, 32), status = clean_(body.status, 80), cv = clean_(body.cv, 300), message = clean_(body.message, 600);
+  var title = clean_(body.jobTitle, 160), company = clean_(body.company, 120), url = clean_(body.jobUrl, 400), where = clean_(body.location, 120);
+  if (!name || !phone || !title) return { ok: false, error: 'Please complete the required fields.' };
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return { ok: false, error: 'Enter a valid email address.' };
+  if (cv && !/^https?:\/\//i.test(cv)) return { ok: false, error: 'The CV link should start with https://' };
+  if (url && !/^https?:\/\//i.test(url)) url = '';
+  var s = settings_();
+  var lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    var row = {};
+    row['ID'] = 'JOB-' + fmt_(new Date(), s.timeZone, 'yyMMdd') + '-' + Utilities.getUuid().slice(0, 4).toUpperCase();
+    row['Booked on'] = fmt_(new Date(), s.timeZone, 'yyyy-MM-dd HH:mm');
+    row['Status'] = 'New enquiry';
+    row['Client time zone'] = validTz_(body.timeZone);
+    row['Name'] = name; row['Email'] = email; row['WhatsApp'] = phone;
+    row['Destination'] = 'Job application'; row['Current status'] = status;
+    row['Work experience'] = cv ? 'CV: ' + cv : '';
+    row['Wants to explore'] = 'Apply: ' + title + (company ? ' at ' + company : '') + (where ? ' (' + where + ')' : '') + (url ? '\n' + url : '') + (message ? '\n' + message : '');
+    row['Found us via'] = 'Jobs board';
     appendRow_(row);
     return { ok: true, id: row['ID'] };
   } finally {

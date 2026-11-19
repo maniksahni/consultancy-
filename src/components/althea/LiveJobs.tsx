@@ -5,6 +5,9 @@ import Link from "next/link";
 import { ArrowUpRight, Briefcase, Clock, Languages, MapPin, MessageCircle, ScanSearch, Search, Wifi } from "lucide-react";
 import { brand } from "@/config/brand";
 import JobDrawer, { type JobTab, type LiveJob } from "./JobDrawer";
+import JobApply from "./JobApply";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import { waMessages } from "@/config/contact";
 
 type Feed = { updatedAt: string; sources: string[]; counts: Record<string, number> };
 
@@ -36,6 +39,7 @@ export default function LiveJobs() {
   const [jobsBy, setJobsBy] = useState<Record<string, LiveJob[]>>({});
   const [error, setError] = useState(false);
   const [country, setCountry] = useState("france");
+  const [applying, setApplying] = useState<LiveJob | null>(null);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<"all" | "onsite" | "remote">("all");
   const [lang, setLang] = useState<"all" | "en" | "fr" | "de">("all");
@@ -142,10 +146,11 @@ export default function LiveJobs() {
           </p>
           {job.summary && <p className="ms-livejob-summary">{job.summary}</p>}
           <div className="ms-livejob-actions">
-            <button type="button" className="ms-btn ms-btn-gold" onClick={() => openJob(job)}><span>View full job</span><ArrowUpRight size={16} aria-hidden="true" /></button>
+            <button type="button" className="ms-btn ms-btn-gold" onClick={() => setApplying(job)}><span>Apply with Althéa</span><ArrowUpRight size={16} aria-hidden="true" /></button>
+            <button type="button" className="ms-livejob-tool" onClick={() => openJob(job)}><Briefcase size={15} aria-hidden="true" />Full job</button>
             <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "french")}><Languages size={15} aria-hidden="true" />French for this job</button>
             <button type="button" className="ms-livejob-tool" onClick={() => openJob(job, "ats")}><ScanSearch size={15} aria-hidden="true" />ATS CV check</button>
-            <a className="ms-livejob-apply" href={job.url} target="_blank" rel="noopener noreferrer nofollow">Apply on {job.source}<ArrowUpRight size={14} aria-hidden="true" /></a>
+            <a className="ms-livejob-apply" href={job.url} target="_blank" rel="noopener noreferrer nofollow">Original posting<ArrowUpRight size={14} aria-hidden="true" /></a>
           </div>
         </li>)}
       </ol>
@@ -153,14 +158,16 @@ export default function LiveJobs() {
       </div>
 
       <aside className="ms-livejobs-help" aria-label="Help with your application">
-        <p className="ms-kicker">BEFORE YOU APPLY</p>
-        <h3>Read it, learn the words, <em>check your CV.</em></h3>
+        <p className="ms-kicker">APPLY THROUGH ALTHÉA</p>
+        <h3>Found a role? <em>Apply with {brand.person.split(" ")[0]}.</em></h3>
         <ul>
-          <li><b>Full job description</b> for every listing, then apply on the original posting</li>
+          <li><b>Apply with Althéa</b> on any listing: {brand.person.split(" ")[0]} checks your profile for that role and helps you apply</li>
+          <li><b>Full job description</b> for every listing</li>
           <li><b>French words you need to know for the job</b>: the vocabulary of that role, not just the basics</li>
           <li><b>ATS check</b> of your CV against the exact job — read on your device, never uploaded</li>
         </ul>
-        <Link className="ms-btn ms-btn-gold" href="/book-consultation"><span>Book a free CV and career call</span><ArrowUpRight size={16} aria-hidden="true" /></Link>
+        <WhatsAppButton text={waMessages.general.replace("I'm interested in:", "I'm looking for a job / internship in:")} label="WhatsApp about jobs" />
+        <Link className="ms-link" href="/book-consultation">Or book a free CV and career call</Link>
       </aside>
     </div>
 
@@ -171,6 +178,7 @@ export default function LiveJobs() {
       Before applying, check the work rights attached to your visa — see our <Link href={guidePath(country)}>{name} jobs guide</Link>.
     </p>
 
-    <JobDrawer job={open} tab={tab} onTab={setTab} onClose={closeJob} />
+    <JobDrawer job={open} tab={tab} onTab={setTab} onClose={closeJob} onApply={(j) => { closeJob(); setApplying(j); }} />
+    <JobApply job={applying} onClose={() => setApplying(null)} />
   </div>;
 }

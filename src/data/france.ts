@@ -1,5 +1,6 @@
 import { brand } from "@/config/brand";
 import {programmeResearch} from "./programmeResearch";
+import { cmsFaq } from "@/lib/cms";
 export const checked = "14 October 2026";
 export const official = {
   india:
@@ -131,7 +132,7 @@ export const stages = [
   "Official application guidance",
   "Visa & arrival orientation",
 ];
-export const faqs = [
+const editorialFaqs: [string, string][] = [
   [
     "Is Althéa Consulting the same as Althéa, the management consulting firm, or Alethe Consulting?",
     "No. Althéa Consulting (altheaconsulting.in, also written Althea or Althèa Consulting) is an independent study-abroad and career advisory founded by Harshita Kohli in Paris. It is not Althéa, the management consulting firm in the Alan Allman Associates group, nor Alethe Consulting, an IT firm in Gurugram, and is not affiliated with either.",
@@ -165,6 +166,8 @@ export const faqs = [
     "No. Universities, authorities and employers make those decisions. Guidance can help you prepare and understand your next steps, but cannot guarantee an outcome.",
   ],
 ];
+// Questions Harshita adds in admin (SEO & AEO Engine) appear on /faq, in its FAQPage schema and in llms.txt.
+export const faqs: [string, string][] = [...editorialFaqs, ...cmsFaq.map((f): [string, string] => [f.q, f.a])];
 export const articles = [
   {
     slug: "choosing-your-programme",

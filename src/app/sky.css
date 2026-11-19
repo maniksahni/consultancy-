@@ -5,13 +5,13 @@
 .lx-paris-stage::before {
   content:""; position:absolute; z-index:1; top:-6%; left:0; width:200%; height:72%;
   background:
-    radial-gradient(16% 4.5% at 8% 18%, #ffd6c8b3, transparent 72%),
-    radial-gradient(20% 5% at 30% 34%, #ffb3c899, transparent 72%),
-    radial-gradient(14% 3.5% at 52% 12%, #ffe1d0a6, transparent 72%),
-    radial-gradient(22% 5.5% at 68% 40%, #ffa9bfa6, transparent 72%),
-    radial-gradient(16% 4% at 86% 24%, #ffd3bdb3, transparent 72%),
-    radial-gradient(18% 4% at 94% 52%, #e2c8ff8c, transparent 72%),
-    radial-gradient(12% 3% at 60% 60%, #ffc0a68c, transparent 72%);
+    radial-gradient(16% 4.5% at 8% 18%, rgb(var(--c-gold) / 0.702), transparent 72%),
+    radial-gradient(20% 5% at 30% 34%, rgb(var(--c-red) / 0.6), transparent 72%),
+    radial-gradient(14% 3.5% at 52% 12%, rgb(var(--c-gold) / 0.651), transparent 72%),
+    radial-gradient(22% 5.5% at 68% 40%, rgb(var(--c-red) / 0.651), transparent 72%),
+    radial-gradient(16% 4% at 86% 24%, rgb(var(--c-gold) / 0.702), transparent 72%),
+    radial-gradient(18% 4% at 94% 52%, rgb(var(--c-blue) / 0.549), transparent 72%),
+    radial-gradient(12% 3% at 60% 60%, rgb(var(--c-gold) / 0.549), transparent 72%);
   background-size:50% 100%; background-repeat:repeat-x;
   filter:blur(8px); mix-blend-mode:screen; opacity:.8; pointer-events:none;
   -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 55%,transparent 100%);

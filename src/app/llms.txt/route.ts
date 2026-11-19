@@ -4,6 +4,7 @@ import { franceGuide } from "@/data/guides/france";
 import { destinationGuides } from "@/data/guides";
 import { indiaGuide } from "@/data/guides/india";
 import { siteUrl } from "@/lib/seo";
+import { blogPosts, cmsPath, cmsSeo } from "@/lib/cms";
 
 export const dynamic = "force-static";
 
@@ -21,6 +22,7 @@ export function GET() {
     "",
     "Universities decide admissions and French authorities decide visas; Althéa does not guarantee admission, scholarships, visas or jobs. Fees, deadlines and rules are linked to official sources (Campus France, France-Visas, universities) and should be re-checked before applying.",
     "",
+    ...(cmsSeo.llmsIntro ? [cmsSeo.llmsIntro, ""] : []),
     "## Services",
     link("Study in France from India", "/study-in-france", "course and university shortlisting, Campus France route, requirements and budget planning"),
     link("Already in France", "/in-france", "help for people already living in France: internships, alternance, first job, CAF, housing and titre de séjour"),
@@ -54,6 +56,7 @@ export function GET() {
     "",
     "## Articles",
     ...articles.map(a => link(a.title, `/insights/${a.slug}`, a.intro)),
+    ...blogPosts.map((p) => link(p.title, cmsPath(p), p.excerpt || p.metaDescription || p.category || "Article")),
     "",
     "## Frequently asked questions",
     ...faqs.flatMap(([q, a]) => [`### ${q}`, a, ""]),
