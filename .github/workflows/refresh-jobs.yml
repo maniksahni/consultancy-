@@ -28,11 +28,15 @@ jobs:
           python-version: '3.12'
       - run: pip install pillow
       - run: npm ci
+      # Pages and blog articles published from /admin (typecheck needs src/data/generated/cms.json).
+      - run: node scripts/data/fetch-cms.mjs
       - run: npm run typecheck
       - run: npm run build
         env:
           JOBS_REFRESH: '1'
       - run: node scripts/check-seo.mjs
+      # Keep the previous builds' JS chunks so Google can still render HTML it fetched before this deploy.
+      - run: node scripts/keep-old-chunks.mjs
       # Stop if this build would remove pages that are live (for example an out-of-date branch).
       - run: node scripts/deploy-guard.mjs
       - uses: FirebaseExtended/action-hosting-deploy@v0
