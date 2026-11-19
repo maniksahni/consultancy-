@@ -16,7 +16,7 @@
     "start": "next start -p 3000",
     "lint": "next lint",
     "check:seo": "node scripts/check-seo.mjs",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node scripts/data/fetch-cms.mjs && tsc --noEmit",
     "test": "playwright test",
     "deploy": "npm run typecheck && npm run build && node scripts/check-seo.mjs && node scripts/keep-old-chunks.mjs && node scripts/deploy-guard.mjs && firebase deploy --only hosting --project consultancyworld2 --non-interactive",
     "brand:sync": "node scripts/brand-sync.mjs",
